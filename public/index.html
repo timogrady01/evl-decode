@@ -84,7 +84,7 @@ select.inp option{background:#0F1420;color:#fff}
 .status.err{color:var(--red);border-color:var(--red)}
 .status.loading{color:var(--gold);border-color:var(--gold);animation:blink 0.7s step-end infinite}
 @keyframes blink{50%{opacity:0.3}}
-.btn-confirm{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:background 0.2s}
+.btn-confirm{width:100%;background:var(--blue);color:#fff;border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:background 0.2s}
 .btn-confirm:hover{background:#0056D6}
 .btn-submit{width:100%;background:var(--green);color:#000;border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:20px;transition:all 0.2s;display:none}
 .btn-submit:hover{background:#fff;letter-spacing:5px}
@@ -101,14 +101,14 @@ select.inp option{background:#0F1420;color:#fff}
 .cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .cond-btn{background:var(--surface2);border:2px solid var(--border);padding:16px 10px;cursor:pointer;text-align:center;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:4px}
 .cond-btn .icon{font-size:1.6rem}
-.cond-btn .label{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
-.cond-btn .desc{font-size:0.75rem;color:var(--muted)}
+.cond-btn .label{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
+.cond-btn .desc{font-size:0.9rem;color:var(--muted)}
 .cond-btn.selected{border-color:var(--blue);background:#0A1525}
 .cond-btn.selected .label{color:var(--blue)}
 .value-reveal{display:none;background:linear-gradient(135deg,#0A1525,#0A0E18);border:2px solid var(--blue);padding:20px;margin:14px 0;text-align:center}
 .value-reveal.show{display:block}
 .value-label{font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.value-range{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:800;color:var(--blue);letter-spacing:2px}
+.value-range{font-family:'Barlow Condensed',sans-serif;font-size:3.4rem;font-weight:800;color:var(--blue);letter-spacing:2px}
 .value-note{font-size:0.75rem;color:var(--muted);margin-top:6px;letter-spacing:1px}
 
 /* CHECKS */
@@ -416,49 +416,22 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
       </div>
     </div>
     <div class="card-body">
-      <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:16px;font-size:0.88rem;color:#C8D8EE;line-height:1.6">
-        <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 3 OF 4 — COMPLETE YOUR CERTIFIED APPRAISAL</strong>
-        Check all boxes that apply to your vehicle. The more you complete, the more accurate your offer — and the faster our team can respond. Adding photos significantly boosts your offer.
-      </div>
-      <div class="check-section">
-        <div class="check-title">Exterior</div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="paint" data-val="Original Paint" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Original Paint</div></div></button>
-          <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Repainted</div></div></button>
-          <button class="check-btn" data-group="hail" data-val="No Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Hail Damage</div></div></button>
-          <button class="check-btn" data-group="hail" data-val="Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Hail Damage</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="body" data-val="No Body Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Body Damage</div></div></button>
-          <button class="check-btn" data-group="body" data-val="Minor Dents/Scratches" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Minor Dents/Scratches</div></div></button>
-          <button class="check-btn" data-group="glass" data-val="Windshield Clear" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Windshield Clear</div></div></button>
-          <button class="check-btn" data-group="glass" data-val="Chip or Crack" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Chip or Crack</div><span class="warn">⚠ affects value</span></div></button>
+      <div style="background:#041209;border:2px solid var(--green);padding:24px;margin-bottom:20px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:12px">🔍</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:800;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">We're On It!</div>
+        <div style="font-size:1rem;color:#C8D8EE;line-height:1.8;margin-bottom:16px">
+          Our team is preparing your <strong style="color:#fff">Certified Appraisal</strong> based on your vehicle details and condition report.<br><br>
+          We'll be in touch shortly with your personalized offer — typically within <strong style="color:var(--green)">24 hours</strong>.
+        </div>
+        <div style="background:#0A1525;border:1px solid var(--border);padding:14px;font-size:0.88rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase">
+          In the meantime — adding photos below can <strong style="color:var(--gold)">significantly increase your offer</strong>
         </div>
       </div>
-      <div class="check-section">
-        <div class="check-title">Mechanical & Safety</div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="lights" data-val="No Warning Lights" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Warning Lights</div></div></button>
-          <button class="check-btn" data-group="lights" data-val="Warning Lights On" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Warning Lights On</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="tires" data-val="Good Tread" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Good Tread</div></div></button>
-          <button class="check-btn" data-group="tires" data-val="Needs Replacement" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Tires Need Replacement</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="accident" data-val="No Accidents" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Accidents</div></div></button>
-          <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Prior Accident</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="flood" data-val="No Flood/Fire" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Flood or Fire</div></div></button>
-          <button class="check-btn" data-group="flood" data-val="Flood/Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Flood/Fire Damage</div><span class="warn">⚠ major impact</span></div></button>
-        </div>
+      <div style="background:#0A1525;border-left:3px solid var(--gold);padding:12px 14px;margin-bottom:16px;font-size:0.88rem;color:#C8D8EE;line-height:1.6">
+        <strong style="color:var(--gold);display:block;margin-bottom:4px">📸 OPTIONAL — ADD PHOTOS TO BOOST YOUR OFFER</strong>
+        Photos help our team provide the most accurate value. Each photo you add strengthens your certified appraisal.
       </div>
-      <div class="check-section">
-        <div class="check-title">Interior & Docs</div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="interior" data-val="Clean Interior" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Clean Interior</div></div></button>
-          <button class="check-btn" data-group="interior" data-val="Stains/Tears" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Stains / Tears</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="title" data-val="Clean Title" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Clean Title</div></div></button>
-          <button class="check-btn" data-group="title" data-val="Lien/Payoff" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Lien / Payoff</div></div></button>
-          <button class="check-btn" data-group="keys" data-val="2 Keys" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">2 Keys</div></div></button>
-          <button class="check-btn" data-group="keys" data-val="1 Key Only" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">1 Key Only</div></div></button>
-          <button class="check-btn" data-group="manual" data-val="Owner's Manual" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Owner's Manual</div></div></button>
-          <button class="check-btn" data-group="spare" data-val="Spare Tire & Jack" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Spare Tire & Jack</div></div></button>
-        </div>
-      </div>
+      <!-- Condition checklist hidden from customer - handled by EVL team -->
       <!-- DYNAMIC FACTORY OPTIONS - populated after vehicle ID -->
       <div id="options-wrapper">
         <div class="check-section" style="opacity:0.5">
@@ -540,7 +513,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v4.3</b></span>
+  <span>Entity Protocol <b>v4.4</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
