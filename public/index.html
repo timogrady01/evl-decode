@@ -287,33 +287,8 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
         <div class="row2">
           <div>
             <label class="lbl">Trim Level</label>
-            <select class="inp" id="ymm-trim">
-              <option value="">Select Trim (optional)</option>
-              <optgroup label="── Common Trims ──">
-                <option>Base / Standard</option>
-                <option>S</option><option>SE</option><option>SEL</option>
-                <option>SL</option><option>SR</option><option>SR5</option>
-                <option>LE</option><option>XLE</option><option>XSE</option>
-                <option>Limited</option><option>Platinum</option><option>Titanium</option>
-                <option>Sport</option><option>Premium</option><option>Luxury</option>
-                <option>EX</option><option>EX-L</option><option>Touring</option>
-                <option>LX</option><option>LT</option><option>LTZ</option>
-                <option>LS</option><option>RS</option><option>SS</option>
-                <option>GT</option><option>GT500</option>
-              </optgroup>
-              <optgroup label="── Truck / Off-Road ──">
-                <option>XL</option><option>XLT</option><option>Lariat</option>
-                <option>King Ranch</option><option>Raptor</option>
-                <option>TRD Off-Road</option><option>TRD Pro</option>
-                <option>Trail</option><option>Overland</option>
-                <option>Rubicon</option><option>Sahara</option>
-                <option>Z71</option><option>AT4</option><option>Denali</option>
-              </optgroup>
-              <optgroup label="── Electric / Hybrid ──">
-                <option>EV</option><option>Hybrid</option><option>Plug-in Hybrid</option>
-                <option>Prime</option><option>Blue</option><option>Long Range</option>
-                <option>Performance</option>
-              </optgroup>
+            <select class="inp" id="ymm-trim" disabled onchange="loadOptions()">
+              <option value="">Select Model First</option>
             </select>
           </div>
           <div>
@@ -539,7 +514,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.3</b></span>
+  <span>Entity Protocol <b>v3.4</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -640,29 +615,85 @@ async function loadModels(){
   showYmmLoading(false);
 }
 
-async function loadTrims(){
-  const year=document.getElementById('ymm-year').value;
+// Trim database keyed by make|model
+const TRIM_DB = {
+  'toyota|camry': ['LE','LE Hybrid','SE','SE Hybrid','SE Nightshade','SE Hybrid Nightshade','XLE','XLE Hybrid','XSE','TRD','XSE Nightshade'],
+  'toyota|corolla': ['L','LE','SE','XLE','XSE','Hybrid LE','Hybrid SE','GR Corolla'],
+  'toyota|rav4': ['LE','XLE','XLE Premium','TRD Off-Road','Adventure','Limited','Prime SE','Prime XSE'],
+  'toyota|highlander': ['L','LE','XLE','Limited','Platinum','Bronze Edition','Hybrid LE','Hybrid XLE','Hybrid Limited','Hybrid Platinum'],
+  'toyota|tacoma': ['SR','SR5','TRD Sport','TRD Off-Road','Limited','TRD Pro','Trail Edition'],
+  'toyota|tundra': ['SR','SR5','Limited','Platinum','1794 Edition','TRD Pro','Capstone'],
+  'toyota|4runner': ['SR5','TRD Off-Road','TRD Off-Road Premium','Limited','TRD Pro','40th Anniversary'],
+  'toyota|sienna': ['LE','XLE','XSE','Limited','Platinum'],
+  'toyota|venza': ['LE','XLE','Limited'],
+  'ford|f-150': ['XL','XLT','Lariat','King Ranch','Platinum','Limited','Raptor','Tremor'],
+  'ford|escape': ['S','SE','SE Sport','SEL','Titanium','Plug-In Hybrid SE','Plug-In Hybrid SEL','Plug-In Hybrid Titanium'],
+  'ford|explorer': ['Base','XLT','ST-Line','Limited','King Ranch','Platinum','ST','Timberline'],
+  'ford|mustang': ['EcoBoost','EcoBoost Premium','GT','GT Premium','Mach 1','Shelby GT500'],
+  'ford|bronco': ['Base','Big Bend','Black Diamond','Outer Banks','Badlands','Wildtrak','Everglades','Raptor'],
+  'chevrolet|silverado 1500': ['Work Truck','Custom','Custom Trail Boss','LT','LT Trail Boss','RST','LTZ','High Country','ZR2'],
+  'chevrolet|equinox': ['LS','LT','RS','Premier','EV 1LT','EV 2LT','EV 3LT'],
+  'chevrolet|tahoe': ['LS','LT','RST','Z71','Premier','High Country'],
+  'chevrolet|suburban': ['LS','LT','RST','Z71','Premier','High Country'],
+  'chevrolet|colorado': ['Work Truck','LT','Z71','Trail Boss','ZR2'],
+  'gmc|sierra 1500': ['Pro','SLE','Elevation','SLT','AT4','Denali','AT4X','Denali Ultimate'],
+  'gmc|terrain': ['SLE','SLT','AT4','Denali'],
+  'gmc|yukon': ['SLE','SLT','AT4','Denali','Denali Ultimate'],
+  'honda|accord': ['LX','Sport','Sport-L','EX-L','Touring','Hybrid Sport','Hybrid EX-L','Hybrid Touring'],
+  'honda|cr-v': ['LX','EX','EX-L','Sport','Touring','Hybrid Sport','Hybrid EX-L','Hybrid Touring'],
+  'honda|civic': ['LX','Sport','EX','Sport Touring','Si','Type R'],
+  'honda|pilot': ['Sport','EX-L','TrailSport','Touring','Elite','Black Edition'],
+  'honda|odyssey': ['LX','EX','EX-L','Touring','Elite'],
+  'nissan|altima': ['S','SV','SR','SL','Platinum'],
+  'nissan|rogue': ['S','SV','SL','Platinum','Rock Creek'],
+  'nissan|pathfinder': ['S','SV','SL','Platinum','Rock Creek'],
+  'ram|1500': ['Tradesman','Big Horn','Lone Star','Laramie','Sport','Rebel','Power Wagon','Laramie Longhorn','Limited','TRX'],
+  'jeep|wrangler': ['Sport','Sport S','Willys','Sahara','Sahara Altitude','Rubicon','Rubicon 392','4xe'],
+  'jeep|grand cherokee': ['Laredo','Altitude','Limited','Overland','Summit','Trailhawk','Trackhawk','4xe'],
+  'hyundai|tucson': ['SE','SEL','N Line','XRT','Limited'],
+  'hyundai|santa fe': ['SE','SEL','XRT','Limited','Calligraphy'],
+  'hyundai|sonata': ['SE','SEL','SEL Plus','N Line','Limited'],
+  'kia|telluride': ['LX','S','EX','SX','SX Prestige','X-Line','X-Pro'],
+  'kia|sportage': ['LX','S','EX','SX','SX Prestige','X-Line'],
+  'kia|sorento': ['LX','S','EX','SX','SX Prestige','X-Line'],
+  'subaru|outback': ['Base','Premium','Onyx Edition','Limited','Touring','Wilderness'],
+  'subaru|forester': ['Base','Premium','Sport','Limited','Touring','Wilderness'],
+  'subaru|crosstrek': ['Base','Premium','Sport','Limited','Wilderness'],
+  'bmw|3 series': ['330i','330i xDrive','M340i','M340i xDrive','330e','M3','M3 Competition'],
+  'bmw|5 series': ['530i','530i xDrive','540i','540i xDrive','550e','M5'],
+  'mercedes-benz|c-class': ['C 300','C 300 4MATIC','AMG C 43','AMG C 63'],
+  'mercedes-benz|gle': ['GLE 350','GLE 450','AMG GLE 53','AMG GLE 63'],
+};
+
+function loadTrims(){
   const make=document.getElementById('ymm-make').value;
   const model=document.getElementById('ymm-model').value;
   if(!model) return;
   ymmData.model=model;
   const trimEl=document.getElementById('ymm-trim');
-  trimEl.innerHTML='<option value="">Loading trims...</option>';
-  trimEl.disabled=true;
-  showYmmLoading(true);
-  try{
-    const r=await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`);
-    const d=await r.json();
-    const trims=d.Results.filter(m=>m.Model_Name===model).map(m=>m.Model_Name).filter(Boolean);
-    // NHTSA doesn't have trim data - use common trims
-    const commonTrims=['Base','S','SE','SEL','SL','SR','LE','XLE','XSE','Limited','Platinum','Titanium','Sport','Premium','Luxury','EX','EX-L','Touring','LX','EX','LTZ','LT','LS','RS','SS','ZL1','GT','GT500','Raptor','TRD','Off-Road','Trail','Overland','Rubicon','Sahara','Lariat','King Ranch','Platinum','Pro'];
-    trimEl.innerHTML='<option value="">Select Trim (optional)</option>';
-    commonTrims.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;trimEl.appendChild(o);});
-    trimEl.disabled=false;
-  }catch(e){
-    trimEl.disabled=false;
+  const key=`${make}|${model}`.toLowerCase();
+  
+  let trims = null;
+  for(const [k,v] of Object.entries(TRIM_DB)){
+    if(key===k || key.includes(k) || k.includes(make.toLowerCase()+'|'+model.toLowerCase())){
+      trims=v; break;
+    }
   }
-  showYmmLoading(false);
+  
+  trimEl.innerHTML='<option value="">Select Trim</option>';
+  if(trims){
+    trims.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;trimEl.appendChild(o);});
+  } else {
+    // Fallback generic trims
+    ['Base/Standard','S','SE','SEL','LE','XLE','LT','LTZ','EX','EX-L','Limited','Sport','Premium','Touring','Platinum'].forEach(t=>{
+      const o=document.createElement('option');o.value=t;o.textContent=t;trimEl.appendChild(o);
+    });
+  }
+  trimEl.disabled=false;
+}
+
+function loadOptions(){
+  // Options cascade is handled in Step 3 after confirm
 }
 
 function showYmmLoading(show){
