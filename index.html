@@ -349,7 +349,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           </div>
         </div>
         <div class="ymm-loading" id="ymm-loading">Loading vehicle data...</div>
-        <button class="btn-confirm" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
+        <button type="button" class="btn-confirm" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
       </div>
 
     </div>
@@ -517,7 +517,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.9</b></span>
+  <span>Entity Protocol <b>v4.0</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -802,9 +802,18 @@ function loadOptions(){
     btn.className='check-btn';
     btn.setAttribute('data-group','factory-opt');
     btn.setAttribute('data-val',opts[i]);
-    btn.setAttribute('onclick','toggleCheck(this)');
-    btn.innerHTML='<div class="chk"></div><div class="txt">'+opts[i]+'</div>';
-    btn.addEventListener('click',function(){toggleCheck(this);});
+    (function(b){
+      b.innerHTML='<div class="chk"></div><div class="txt">'+opts[i]+'</div>';
+      b.addEventListener('click',function(e){
+        e.preventDefault();
+        b.classList.toggle('selected');
+        b.querySelector('.chk').textContent=b.classList.contains('selected')?'✓':'';
+        var g=b.getAttribute('data-group'),v=b.getAttribute('data-val');
+        if(!checks[g])checks[g]=[];
+        if(b.classList.contains('selected')){if(checks[g].indexOf(v)<0)checks[g].push(v);}
+        else{checks[g]=checks[g].filter(function(x){return x!==v;});}
+      });
+    })(btn);
     grid.appendChild(btn);
   }
 }
