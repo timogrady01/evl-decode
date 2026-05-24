@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "outputDirectory": "public",
   "routes": [
     { "src": "/api/decode", "dest": "/api/decode.js" },
     { "src": "/(.*)", "dest": "/index.html" }
