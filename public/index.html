@@ -216,6 +216,10 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 
       <!-- VIN PANEL -->
       <div class="vin-panel show" id="vin-panel">
+        <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:14px;font-size:0.88rem;color:#C8D8EE;line-height:1.6">
+          <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 1 OF 4 — IDENTIFY YOUR VEHICLE</strong>
+          Enter your 17-digit VIN (found on your dashboard, door jamb, or registration) and click <strong style="color:#fff">DECODE</strong>. Your vehicle info will populate automatically.
+        </div>
         <label class="lbl">Vehicle Identification Number (VIN)</label>
         <div class="decode-row">
           <input type="text" class="inp inp-vin" id="vin-inp" placeholder="17-DIGIT VIN" maxlength="17" oninput="this.value=this.value.toUpperCase()">
@@ -247,6 +251,10 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 
       <!-- YMM PANEL -->
       <div class="ymm-panel" id="ymm-panel">
+        <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:14px;font-size:0.88rem;color:#C8D8EE;line-height:1.6">
+          <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 1 OF 4 — SELECT YOUR VEHICLE</strong>
+          Choose your Year → Make → Model → Trim in order. Each selection unlocks the next dropdown. Then fill in mileage, color, and check any factory options your vehicle has.
+        </div>
         <div class="row2">
           <div>
             <label class="lbl">Year</label>
@@ -364,6 +372,10 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
       </div>
     </div>
     <div class="card-body">
+      <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:16px;font-size:0.88rem;color:#C8D8EE;line-height:1.6">
+        <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 2 OF 4 — SELECT YOUR VEHICLE CONDITION</strong>
+        Click the button below that best describes your vehicle's overall condition. This gives you an instant estimated value range.
+      </div>
       <label class="lbl" style="margin-bottom:12px">How would you rate the overall condition?</label>
       <div class="cond-grid">
         <button class="cond-btn" data-cond="Excellent" data-mult="1.12" onclick="selectCond(this)">
@@ -383,6 +395,9 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
         <div class="value-label">Your Estimated Trade-In Range</div>
         <div class="value-range" id="value-range">—</div>
         <div class="value-note">Based on current market data · Final offer after certified appraisal</div>
+        <div style="font-size:0.82rem;color:var(--green);margin-top:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700">
+          ✓ Value estimated — now click "Continue to Certified Appraisal" below to boost your offer
+        </div>
       </div>
       <div class="mb14" style="margin-top:14px" id="miles-wrap-2" style="display:none">
         <label class="lbl">Current Mileage <span style="color:var(--muted);font-weight:400">(if not entered above)</span></label>
@@ -401,6 +416,10 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
       </div>
     </div>
     <div class="card-body">
+      <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:16px;font-size:0.88rem;color:#C8D8EE;line-height:1.6">
+        <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 3 OF 4 — COMPLETE YOUR CERTIFIED APPRAISAL</strong>
+        Check all boxes that apply to your vehicle. The more you complete, the more accurate your offer — and the faster our team can respond. Adding photos significantly boosts your offer.
+      </div>
       <div class="check-section">
         <div class="check-title">Exterior</div>
         <div class="check-grid">
@@ -481,6 +500,10 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
       </div>
     </div>
     <div class="card-body">
+      <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:16px;font-size:0.88rem;color:#C8D8EE;line-height:1.6">
+        <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 4 OF 4 — AUTHORIZE & SUBMIT</strong>
+        Enter your contact info, sign below, and hit Submit. Our team will review your certified appraisal and contact you with a real offer — typically within 24 hours.
+      </div>
       <div class="row2 mb14">
         <div><label class="lbl">First Name</label><input type="text" class="inp" id="fname"></div>
         <div><label class="lbl">Last Name</label><input type="text" class="inp" id="lname"></div>
@@ -517,7 +540,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v4.2</b></span>
+  <span>Entity Protocol <b>v4.3</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
