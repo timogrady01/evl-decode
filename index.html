@@ -13,33 +13,28 @@
   --text:#F0F4FF;--muted:#8899BB;
 }
 body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
-/* HEADER */
 .hdr{background:var(--surface);border-bottom:2px solid var(--blue);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
 .hdr-brand{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--blue);letter-spacing:2px;text-transform:uppercase}
 .hdr-sub{font-size:0.75rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
 .secure-badge{background:var(--green);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:2px;padding:5px 14px;text-transform:uppercase}
-/* HERO */
-.hero{padding:32px 20px 24px;max-width:700px;margin:0 auto}
-.hero-hed{font-family:'Barlow Condensed',sans-serif;font-size:3.2rem;font-weight:800;line-height:0.95;text-transform:uppercase;margin-bottom:16px}
+.hero{padding:28px 20px 20px;max-width:700px;margin:0 auto}
+.hero-hed{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:800;line-height:0.95;text-transform:uppercase;margin-bottom:14px}
 .hero-hed em{color:var(--blue);font-style:normal;display:block}
-.hero-desc{background:var(--surface);border-left:3px solid var(--blue);padding:14px 16px;font-size:1rem;line-height:1.7;color:#C8D8EE;margin-bottom:24px}
-/* PROGRESS */
-.progress-bar{display:flex;gap:4px;margin-bottom:28px;max-width:700px;margin-left:auto;margin-right:auto;padding:0 20px}
+.hero-desc{background:var(--surface);border-left:3px solid var(--blue);padding:12px 16px;font-size:0.95rem;line-height:1.7;color:#C8D8EE;margin-bottom:20px}
+.progress-bar{display:flex;gap:4px;margin-bottom:24px;max-width:700px;margin-left:auto;margin-right:auto;padding:0 20px}
 .prog-step{flex:1;height:4px;background:var(--border);transition:background 0.4s}
 .prog-step.done{background:var(--green)}
 .prog-step.active{background:var(--blue)}
-/* WRAP */
 .wrap{max-width:700px;margin:0 auto;padding:0 20px 60px}
-/* CARDS */
 .card{background:var(--surface);border:2px solid var(--border);margin-bottom:12px;overflow:hidden;transition:border-color 0.3s}
 .card.active{border-color:var(--blue)}
 .card.done{border-color:var(--green)}
 .card.locked{opacity:0.5;pointer-events:none}
-.card-hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:var(--surface2)}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--surface2)}
 .card.active .card-hdr{background:#0A1525}
 .card.done .card-hdr{background:#060F08}
 .card-hdr-left{display:flex;align-items:center;gap:12px}
-.step-num{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--muted);flex-shrink:0}
+.step-num{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--muted);flex-shrink:0}
 .card.active .step-num{border-color:var(--blue);color:var(--blue);background:#0A1830}
 .card.done .step-num{border-color:var(--green);color:#000;background:var(--green)}
 .step-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase}
@@ -48,105 +43,127 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .card.locked .step-title{color:var(--muted)}
 .card-body{padding:20px;display:none}
 .card.active .card-body{display:block}
+
+/* VIN / YMM TOGGLE */
+.lookup-toggle{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px;border:2px solid var(--border)}
+.lt-btn{padding:14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;border:none;background:var(--surface2);color:var(--muted);cursor:pointer;transition:all 0.2s;border-right:1px solid var(--border)}
+.lt-btn:last-child{border-right:none}
+.lt-btn.active{background:var(--blue);color:#fff}
+.lt-btn .lt-icon{font-size:1.2rem;display:block;margin-bottom:4px}
+.lt-btn .lt-sub{font-size:0.72rem;color:inherit;opacity:0.8;letter-spacing:0.5px;text-transform:none;font-weight:400}
+
+/* VIN PANEL */
+.vin-panel,.ymm-panel{display:none}
+.vin-panel.show,.ymm-panel.show{display:block}
+
 /* INPUTS */
-.lbl{display:block;font-size:0.8rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.inp{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:#fff;padding:12px 14px;font-family:'Barlow',sans-serif;font-size:1rem;font-weight:600;outline:none;border-radius:0;appearance:none;transition:border-color 0.2s}
+.lbl{display:block;font-size:0.78rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.inp{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:#fff;padding:11px 14px;font-family:'Barlow',sans-serif;font-size:1rem;font-weight:600;outline:none;border-radius:0;appearance:none;transition:border-color 0.2s}
 .inp:focus{border-color:var(--blue)}
 .inp.filled{border-color:var(--green);color:var(--green)}
-.inp-vin{font-size:1.5rem;letter-spacing:4px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.mb16{margin-bottom:16px}
-/* DECODE ROW */
+.inp:disabled{opacity:0.4;cursor:not-allowed}
+.inp-vin{font-size:1.4rem;letter-spacing:4px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23007BFF'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+select.inp option{background:#0F1420;color:#fff}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.mb14{margin-bottom:14px}
 .decode-row{display:flex;gap:8px;margin-bottom:10px}
 .decode-row .inp{flex:1}
-.btn-decode{background:var(--blue);color:#fff;border:none;padding:0 24px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.2s;flex-shrink:0}
+
+/* YMM LOADING */
+.ymm-loading{font-size:0.78rem;color:var(--gold);letter-spacing:1px;text-transform:uppercase;padding:6px 0;display:none;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.ymm-loading.show{display:block}
+
+/* BTNS */
+.btn-decode{background:var(--blue);color:#fff;border:none;padding:0 22px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.2s;flex-shrink:0}
 .btn-decode:hover{background:#0056D6}
 .btn-decode:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
-/* STATUS */
-.status{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);display:inline-block;margin-bottom:12px}
+.status{font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);display:inline-block;margin-bottom:12px}
 .status.ok{color:var(--green);border-color:var(--green)}
 .status.err{color:var(--red);border-color:var(--red)}
 .status.loading{color:var(--gold);border-color:var(--gold);animation:blink 0.7s step-end infinite}
 @keyframes blink{50%{opacity:0.3}}
-/* CONDITION BTNS */
-.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.cond-btn{background:var(--surface2);border:2px solid var(--border);padding:18px 12px;cursor:pointer;text-align:center;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px}
-.cond-btn .icon{font-size:1.8rem}
-.cond-btn .label{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
-.cond-btn .desc{font-size:0.78rem;color:var(--muted);letter-spacing:0.5px}
-.cond-btn.selected{border-color:var(--blue);background:#0A1525}
-.cond-btn.selected .label{color:var(--blue)}
-/* VALUE DISPLAY */
-.value-reveal{display:none;background:linear-gradient(135deg,#0A1525,#0A0E18);border:2px solid var(--blue);padding:24px;margin:16px 0;text-align:center}
-.value-reveal.show{display:block}
-.value-label{font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.value-range{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:800;color:var(--blue);letter-spacing:2px}
-.value-note{font-size:0.8rem;color:var(--muted);margin-top:8px;letter-spacing:1px}
-/* CHECKLIST */
-.check-section{margin-bottom:20px}
-.check-title{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.check-btn{background:var(--surface2);border:1.5px solid var(--border);padding:12px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all 0.2s;text-align:left}
-.check-btn .chk{width:20px;height:20px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;background:var(--surface)}
-.check-btn.selected{border-color:var(--green);background:#060F08}
-.check-btn.selected .chk{background:var(--green);border-color:var(--green);color:#000}
-.check-btn .txt{font-size:0.85rem;font-weight:600;color:#C8D8EE;letter-spacing:0.5px}
-.check-btn .warn{font-size:0.75rem;color:var(--gold);margin-top:2px;display:block}
-/* PHOTO GRID */
-.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.photo-slot{background:var(--surface2);border:2px dashed var(--border);padding:20px;text-align:center;cursor:pointer;position:relative;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:border-color 0.2s}
-.photo-slot:hover{border-color:var(--blue)}
-.photo-slot.uploaded{border-color:var(--green);border-style:solid}
-.photo-slot input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0}
-.photo-icon{font-size:1.6rem}
-.photo-lbl{font-size:0.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
-.photo-slot.uploaded .photo-lbl{color:var(--green)}
-/* CERT BADGE */
-.cert-box{background:var(--surface2);border:2px solid var(--border);padding:20px;text-align:center;margin:16px 0;display:none}
-.cert-box.show{display:block}
-.cert-box.verified{border-color:var(--green)}
-.cert-icon{font-size:2.5rem;display:block;margin-bottom:8px}
-.cert-name{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
-.cert-box.verified .cert-name{color:var(--green)}
-.cert-msg{font-size:0.8rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:6px}
-/* BTNS */
-.btn-confirm{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:16px;transition:background 0.2s}
+.btn-confirm{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:background 0.2s}
 .btn-confirm:hover{background:#0056D6}
 .btn-submit{width:100%;background:var(--green);color:#000;border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:20px;transition:all 0.2s;display:none}
 .btn-submit:hover{background:#fff;letter-spacing:5px}
-/* CANVAS */
-#sig-canvas{width:100%;height:80px;background:var(--surface2);border:2px dashed var(--border);cursor:crosshair;touch-action:none;display:block}
-.sig-row{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
-.sig-row span{font-size:0.75rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-.btn-clear{background:none;border:1px solid var(--border);color:var(--muted);font-size:0.75rem;padding:3px 10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
-.btn-clear:hover{border-color:var(--red);color:var(--red)}
+
 /* TOOLS ROW */
-.tools-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;display:none}
+.tools-row{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .tools-row.show{display:grid}
-.tool-btn{padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:2px solid var(--blue);background:var(--surface2);color:#fff;cursor:pointer;text-align:center;transition:all 0.2s}
+.tool-btn{padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:2px solid var(--blue);background:var(--surface2);color:#fff;cursor:pointer;text-align:center;transition:all 0.2s}
 .tool-btn:hover{background:var(--blue)}
 .tool-btn.gold{border-color:var(--gold);color:var(--gold)}
 .tool-btn.gold:hover{background:var(--gold);color:#000}
+
+/* CONDITION */
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.cond-btn{background:var(--surface2);border:2px solid var(--border);padding:16px 10px;cursor:pointer;text-align:center;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.cond-btn .icon{font-size:1.6rem}
+.cond-btn .label{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
+.cond-btn .desc{font-size:0.75rem;color:var(--muted)}
+.cond-btn.selected{border-color:var(--blue);background:#0A1525}
+.cond-btn.selected .label{color:var(--blue)}
+.value-reveal{display:none;background:linear-gradient(135deg,#0A1525,#0A0E18);border:2px solid var(--blue);padding:20px;margin:14px 0;text-align:center}
+.value-reveal.show{display:block}
+.value-label{font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.value-range{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:800;color:var(--blue);letter-spacing:2px}
+.value-note{font-size:0.75rem;color:var(--muted);margin-top:6px;letter-spacing:1px}
+
+/* CHECKS */
+.check-section{margin-bottom:18px}
+.check-title{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.check-btn{background:var(--surface2);border:1.5px solid var(--border);padding:10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;text-align:left}
+.check-btn .chk{width:18px;height:18px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;background:var(--surface)}
+.check-btn.selected{border-color:var(--green);background:#060F08}
+.check-btn.selected .chk{background:var(--green);border-color:var(--green);color:#000}
+.check-btn .txt{font-size:0.82rem;font-weight:600;color:#C8D8EE}
+.check-btn .warn{font-size:0.7rem;color:var(--gold);display:block}
+
+/* PHOTOS */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.photo-slot{background:var(--surface2);border:2px dashed var(--border);padding:18px;text-align:center;cursor:pointer;position:relative;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:border-color 0.2s}
+.photo-slot:hover{border-color:var(--blue)}
+.photo-slot.uploaded{border-color:var(--green);border-style:solid}
+.photo-slot input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0}
+.photo-icon{font-size:1.4rem}
+.photo-lbl{font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.photo-slot.uploaded .photo-lbl{color:var(--green)}
+.cert-box{background:var(--surface2);border:2px solid var(--border);padding:16px;text-align:center;margin:14px 0;display:none}
+.cert-box.show{display:block}
+.cert-box.verified{border-color:var(--green)}
+.cert-icon{font-size:2rem;display:block;margin-bottom:6px}
+.cert-name{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+.cert-box.verified .cert-name{color:var(--green)}
+.cert-msg{font-size:0.75rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:5px}
+
+/* SIG */
+#sig-canvas{width:100%;height:80px;background:var(--surface2);border:2px dashed var(--border);cursor:crosshair;touch-action:none;display:block}
+.sig-row{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
+.sig-row span{font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.btn-clear{background:none;border:1px solid var(--border);color:var(--muted);font-size:0.72rem;padding:3px 10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.btn-clear:hover{border-color:var(--red);color:var(--red)}
+
 /* MODAL */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;padding:16px}
 .modal.open{display:flex}
 .modal-box{background:var(--surface);border:2px solid var(--blue);width:100%;max-width:680px;max-height:90vh;display:flex;flex-direction:column}
-.modal-hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:2px solid var(--blue);background:#0A1525}
+.modal-hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:2px solid var(--blue);background:#0A1525}
 .modal-hdr h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase}
 .modal-close{background:none;border:1px solid var(--border);color:#fff;padding:4px 12px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .modal-close:hover{border-color:var(--red);color:var(--red)}
-.modal-body{flex:1;overflow:hidden}
 .modal-body iframe{width:100%;height:560px;border:none;display:block}
+
 /* SUCCESS */
-.success{display:none;text-align:center;padding:50px 20px;background:var(--surface);border:2px solid var(--green);margin:20px 0}
+.success{display:none;text-align:center;padding:40px 20px;background:var(--surface);border:2px solid var(--green);margin:20px 0}
 .success h2{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:800;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
-.success p{color:var(--muted);font-size:1rem;letter-spacing:1px;text-transform:uppercase;line-height:1.8}
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:16px 20px;display:flex;justify-content:space-between;max-width:700px;margin:0 auto}
-footer span{font-size:0.75rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.success p{color:var(--muted);font-size:0.95rem;letter-spacing:1px;line-height:1.8}
+footer{border-top:1px solid var(--border);padding:14px 20px;display:flex;justify-content:space-between;max-width:700px;margin:0 auto}
+footer span{font-size:0.72rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
 footer b{color:var(--blue)}
-textarea.inp{resize:none;height:80px;line-height:1.6}
-select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23007BFF'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+textarea.inp{resize:none;height:75px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -161,9 +178,7 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 
 <div class="hero">
   <div class="hero-hed">What's Your<em>Trade Worth?</em></div>
-  <div class="hero-desc">
-    Get a real estimate in minutes. Enter your VIN, tell us about the condition, and our team delivers a certified offer — backed by live market data.
-  </div>
+  <div class="hero-desc">Get a real estimate in minutes. Tell us about your vehicle and our team delivers a certified offer backed by live market data.</div>
 </div>
 
 <div class="progress-bar">
@@ -175,45 +190,127 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 
 <div class="wrap">
 
-  <!-- STEP 1: VIN DECODE -->
+  <!-- STEP 1: VEHICLE ID -->
   <div class="card active" id="card1">
     <div class="card-hdr">
       <div class="card-hdr-left">
         <div class="step-num" id="sn1">1</div>
-        <div class="step-title">Decode Your VIN</div>
+        <div class="step-title">Identify Your Vehicle</div>
       </div>
-      <span id="si1" style="font-size:0.85rem;color:var(--muted)">Step 1 of 4</span>
     </div>
     <div class="card-body">
-      <div class="mb16">
+
+      <!-- TOGGLE -->
+      <div class="lookup-toggle">
+        <button class="lt-btn active" id="toggle-vin" onclick="switchLookup('vin')">
+          <span class="lt-icon">🔍</span>
+          I HAVE MY VIN
+          <span class="lt-sub">Fastest & most accurate</span>
+        </button>
+        <button class="lt-btn" id="toggle-ymm" onclick="switchLookup('ymm')">
+          <span class="lt-icon">📋</span>
+          I DON'T HAVE MY VIN
+          <span class="lt-sub">Use Year / Make / Model</span>
+        </button>
+      </div>
+
+      <!-- VIN PANEL -->
+      <div class="vin-panel show" id="vin-panel">
         <label class="lbl">Vehicle Identification Number (VIN)</label>
         <div class="decode-row">
           <input type="text" class="inp inp-vin" id="vin-inp" placeholder="17-DIGIT VIN" maxlength="17" oninput="this.value=this.value.toUpperCase()">
           <button class="btn-decode" id="decode-btn" onclick="runDecode()">DECODE</button>
         </div>
         <span class="status" id="vin-status">READY FOR SCAN</span>
+        <div class="tools-row" id="tools-row">
+          <button class="tool-btn" onclick="openEstimator()">💰 Get Trade Value</button>
+          <button class="tool-btn gold" onclick="openSticker()">🪟 Window Sticker</button>
+        </div>
+        <div id="decoded-wrap" style="display:none">
+          <div class="row2">
+            <div>
+              <label class="lbl">Year / Make / Model</label>
+              <input type="text" class="inp filled" id="res-ymm" readonly>
+            </div>
+            <div>
+              <label class="lbl">Trim Level</label>
+              <input type="text" class="inp filled" id="res-trim" readonly>
+            </div>
+          </div>
+          <div class="mb14">
+            <label class="lbl">Decoded Specs</label>
+            <textarea class="inp filled" id="res-specs" readonly style="height:85px;color:var(--green);border-color:var(--green);background:#060F08;font-size:0.8rem;line-height:2"></textarea>
+          </div>
+          <button class="btn-confirm" onclick="confirmStep(1)">✓ Confirm Vehicle — Continue</button>
+        </div>
       </div>
-      <div class="tools-row" id="tools-row">
-        <button class="tool-btn" onclick="openEstimator()">💰 Get Trade Value</button>
-        <button class="tool-btn gold" onclick="openSticker()">🪟 Window Sticker</button>
-      </div>
-      <div id="decoded-wrap" style="display:none">
+
+      <!-- YMM PANEL -->
+      <div class="ymm-panel" id="ymm-panel">
         <div class="row2">
           <div>
-            <label class="lbl">Year / Make / Model</label>
-            <input type="text" class="inp filled" id="res-ymm" readonly>
+            <label class="lbl">Year</label>
+            <select class="inp" id="ymm-year" onchange="loadMakes()">
+              <option value="">Select Year</option>
+            </select>
           </div>
           <div>
-            <label class="lbl">Trim Level</label>
-            <input type="text" class="inp filled" id="res-trim" readonly>
+            <label class="lbl">Make</label>
+            <select class="inp" id="ymm-make" disabled onchange="loadModels()">
+              <option value="">Select Make</option>
+            </select>
           </div>
         </div>
-        <div class="mb16">
-          <label class="lbl">Decoded Specs</label>
-          <textarea class="inp filled" id="res-specs" readonly style="height:90px;color:var(--green);border-color:var(--green);background:#060F08;font-size:0.82rem;line-height:2"></textarea>
+        <div class="row2">
+          <div>
+            <label class="lbl">Model</label>
+            <select class="inp" id="ymm-model" disabled onchange="loadTrims()">
+              <option value="">Select Model</option>
+            </select>
+          </div>
+          <div>
+            <label class="lbl">Trim</label>
+            <select class="inp" id="ymm-trim" disabled>
+              <option value="">Select Trim</option>
+            </select>
+          </div>
         </div>
-        <button class="btn-confirm" onclick="confirmStep(1)">✓ Confirm Vehicle — Continue</button>
+        <div class="row3">
+          <div>
+            <label class="lbl">Exterior Color</label>
+            <select class="inp" id="ymm-color">
+              <option value="">Select Color</option>
+              <option>Black</option><option>White</option><option>Silver</option>
+              <option>Gray</option><option>Red</option><option>Blue</option>
+              <option>Brown/Tan</option><option>Green</option><option>Gold</option>
+              <option>Orange</option><option>Yellow</option><option>Purple</option><option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="lbl">Interior Color</label>
+            <select class="inp" id="ymm-int-color">
+              <option value="">Select Color</option>
+              <option>Black</option><option>Gray</option><option>Tan/Beige</option>
+              <option>Brown</option><option>White/Cream</option><option>Red</option><option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="lbl">Current Mileage</label>
+            <input type="number" class="inp" id="ymm-miles" placeholder="e.g. 45000">
+          </div>
+        </div>
+        <div class="mb14">
+          <label class="lbl">Number of Keys</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <button class="check-btn" data-group="ymm-keys" data-val="1 Key" onclick="toggleCheck(this)" style="justify-content:center"><div class="chk"></div><div class="txt">1 Key</div></button>
+            <button class="check-btn" data-group="ymm-keys" data-val="2 Keys" onclick="toggleCheck(this)" style="justify-content:center"><div class="chk"></div><div class="txt">2 Keys</div></button>
+            <button class="check-btn" data-group="ymm-keys" data-val="3+ Keys" onclick="toggleCheck(this)" style="justify-content:center"><div class="chk"></div><div class="txt">3+ Keys</div></button>
+          </div>
+        </div>
+        <div class="ymm-loading" id="ymm-loading">Loading vehicle data...</div>
+        <button class="btn-confirm" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
       </div>
+
     </div>
   </div>
 
@@ -224,7 +321,6 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
         <div class="step-num" id="sn2">2</div>
         <div class="step-title">Condition & Instant Value</div>
       </div>
-      <span id="si2" style="font-size:0.85rem;color:var(--muted)">Step 2 of 4</span>
     </div>
     <div class="card-body">
       <label class="lbl" style="margin-bottom:12px">How would you rate the overall condition?</label>
@@ -247,8 +343,8 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
         <div class="value-range" id="value-range">—</div>
         <div class="value-note">Based on current market data · Final offer after certified appraisal</div>
       </div>
-      <div class="mb16" style="margin-top:16px">
-        <label class="lbl">Current Odometer Reading (Miles)</label>
+      <div class="mb14" style="margin-top:14px" id="miles-wrap-2" style="display:none">
+        <label class="lbl">Current Mileage <span style="color:var(--muted);font-weight:400">(if not entered above)</span></label>
         <input type="number" class="inp" id="miles-inp" placeholder="e.g. 42,000">
       </div>
       <button class="btn-confirm" onclick="confirmStep(2)">✓ Continue to Certified Appraisal</button>
@@ -262,26 +358,21 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
         <div class="step-num" id="sn3">3</div>
         <div class="step-title">Certified Appraisal Report</div>
       </div>
-      <span id="si3" style="font-size:0.85rem;color:var(--muted)">Step 3 of 4</span>
     </div>
     <div class="card-body">
-
-      <!-- EXTERIOR -->
       <div class="check-section">
-        <div class="check-title">Exterior Condition</div>
+        <div class="check-title">Exterior</div>
         <div class="check-grid">
           <button class="check-btn" data-group="paint" data-val="Original Paint" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Original Paint</div></div></button>
           <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Repainted</div></div></button>
           <button class="check-btn" data-group="hail" data-val="No Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Hail Damage</div></div></button>
-          <button class="check-btn" data-group="hail" data-val="Hail Damage Present" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Hail Damage</div><span class="warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="hail" data-val="Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Hail Damage</div><span class="warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="body" data-val="No Body Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Body Damage</div></div></button>
           <button class="check-btn" data-group="body" data-val="Minor Dents/Scratches" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Minor Dents/Scratches</div></div></button>
-          <button class="check-btn" data-group="glass" data-val="No Chips/Cracks" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Windshield Clear</div></div></button>
-          <button class="check-btn" data-group="glass" data-val="Cracked/Chipped" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Chip or Crack</div><span class="warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="glass" data-val="Windshield Clear" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Windshield Clear</div></div></button>
+          <button class="check-btn" data-group="glass" data-val="Chip or Crack" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Chip or Crack</div><span class="warn">⚠ affects value</span></div></button>
         </div>
       </div>
-
-      <!-- MECHANICAL -->
       <div class="check-section">
         <div class="check-title">Mechanical & Safety</div>
         <div class="check-grid">
@@ -292,33 +383,27 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
           <button class="check-btn" data-group="accident" data-val="No Accidents" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Accidents</div></div></button>
           <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Prior Accident</div><span class="warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="flood" data-val="No Flood/Fire" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Flood or Fire</div></div></button>
-          <button class="check-btn" data-group="flood" data-val="Flood or Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Flood / Fire Damage</div><span class="warn">⚠ major impact</span></div></button>
+          <button class="check-btn" data-group="flood" data-val="Flood/Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Flood/Fire Damage</div><span class="warn">⚠ major impact</span></div></button>
         </div>
       </div>
-
-      <!-- INTERIOR -->
       <div class="check-section">
-        <div class="check-title">Interior & Documentation</div>
+        <div class="check-title">Interior & Docs</div>
         <div class="check-grid">
           <button class="check-btn" data-group="interior" data-val="Clean Interior" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Clean Interior</div></div></button>
           <button class="check-btn" data-group="interior" data-val="Stains/Tears" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Stains / Tears</div><span class="warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="title" data-val="Clean Title" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Clean Title</div></div></button>
           <button class="check-btn" data-group="title" data-val="Lien/Payoff" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Lien / Payoff</div></div></button>
           <button class="check-btn" data-group="keys" data-val="2 Keys" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">2 Keys</div></div></button>
-          <button class="check-btn" data-group="keys" data-val="1 Key" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">1 Key Only</div></div></button>
-          <button class="check-btn" data-group="manual" data-val="Owner's Manual Present" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Owner's Manual</div></div></button>
-          <button class="check-btn" data-group="spare" data-val="Spare Tire Present" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Spare Tire & Jack</div></div></button>
+          <button class="check-btn" data-group="keys" data-val="1 Key Only" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">1 Key Only</div></div></button>
+          <button class="check-btn" data-group="manual" data-val="Owner's Manual" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Owner's Manual</div></div></button>
+          <button class="check-btn" data-group="spare" data-val="Spare Tire & Jack" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Spare Tire & Jack</div></div></button>
         </div>
       </div>
-
-      <!-- NOTES -->
-      <div class="mb16">
-        <label class="lbl">Additional Notes (optional)</label>
+      <div class="mb14">
+        <label class="lbl">Additional Notes <span style="color:var(--muted);font-weight:400">(upgrades, modifications, etc.)</span></label>
         <textarea class="inp" id="notes-inp" placeholder="Describe any modifications, upgrades, or additional details..."></textarea>
       </div>
-
-      <!-- PHOTOS -->
-      <div class="check-title" style="margin-bottom:12px">Vehicle Photos <span style="color:var(--gold);font-size:0.75rem;margin-left:8px">BOOSTS YOUR OFFER</span></div>
+      <div class="check-title" style="margin-bottom:10px">Vehicle Photos <span style="color:var(--gold);font-size:0.72rem;margin-left:8px">BOOSTS YOUR OFFER</span></div>
       <div class="photo-grid">
         <div class="photo-slot" id="slot-front"><input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Front View</div></div>
         <div class="photo-slot" id="slot-rear"><input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Rear View</div></div>
@@ -327,48 +412,33 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
         <div class="photo-slot" id="slot-odometer"><input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Odometer</div></div>
         <div class="photo-slot" id="slot-damage"><input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Any Damage</div></div>
       </div>
-
       <div class="cert-box" id="cert-box">
         <span class="cert-icon" id="cert-icon">📋</span>
         <div class="cert-name" id="cert-name">EVL SUBMITTED</div>
         <div class="cert-msg" id="cert-msg">Complete more items to qualify for EVL Verified status</div>
       </div>
-
       <button class="btn-confirm" onclick="confirmStep(3)">✓ Continue to Authorization</button>
     </div>
   </div>
 
-  <!-- STEP 4: SIGNATURE & SUBMIT -->
+  <!-- STEP 4: SUBMIT -->
   <div class="card locked" id="card4">
     <div class="card-hdr">
       <div class="card-hdr-left">
         <div class="step-num" id="sn4">4</div>
         <div class="step-title">Authorization & Submit</div>
       </div>
-      <span id="si4" style="font-size:0.85rem;color:var(--muted)">Step 4 of 4</span>
     </div>
     <div class="card-body">
-      <div class="row2 mb16">
-        <div>
-          <label class="lbl">First Name</label>
-          <input type="text" class="inp" id="fname">
-        </div>
-        <div>
-          <label class="lbl">Last Name</label>
-          <input type="text" class="inp" id="lname">
-        </div>
+      <div class="row2 mb14">
+        <div><label class="lbl">First Name</label><input type="text" class="inp" id="fname"></div>
+        <div><label class="lbl">Last Name</label><input type="text" class="inp" id="lname"></div>
       </div>
-      <div class="row2 mb16">
-        <div>
-          <label class="lbl">Phone Number</label>
-          <input type="tel" class="inp" id="phone">
-        </div>
-        <div>
-          <label class="lbl">Email Address</label>
-          <input type="email" class="inp" id="email">
-        </div>
+      <div class="row2 mb14">
+        <div><label class="lbl">Phone</label><input type="tel" class="inp" id="phone"></div>
+        <div><label class="lbl">Email</label><input type="email" class="inp" id="email"></div>
       </div>
-      <div class="mb16">
+      <div class="mb14">
         <label class="lbl">Authorization Signature</label>
         <canvas id="sig-canvas"></canvas>
         <div class="sig-row">
@@ -387,29 +457,11 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 
 </div>
 
-<!-- TRADE ESTIMATOR MODAL -->
+<!-- MODALS -->
 <div class="modal" id="estimator-modal">
   <div class="modal-box">
-    <div class="modal-hdr">
-      <h3>💰 Trade-In Value Estimator</h3>
-      <button class="modal-close" onclick="closeModal('estimator-modal')">✕ Close</button>
-    </div>
-    <div class="modal-body">
-      <iframe id="estimator-frame" src="" title="Trade Estimator"></iframe>
-    </div>
-  </div>
-</div>
-
-<!-- WINDOW STICKER MODAL -->
-<div class="modal" id="sticker-modal">
-  <div class="modal-box">
-    <div class="modal-hdr">
-      <h3>🪟 Window Sticker</h3>
-      <button class="modal-close" onclick="closeModal('sticker-modal')">✕ Close</button>
-    </div>
-    <div class="modal-body">
-      <iframe id="sticker-frame" src="" title="Window Sticker"></iframe>
-    </div>
+    <div class="modal-hdr"><h3>💰 Trade-In Value Estimator</h3><button class="modal-close" onclick="closeModal('estimator-modal')">✕ Close</button></div>
+    <div class="modal-body"><iframe id="estimator-frame" src="" title="Trade Estimator"></iframe></div>
   </div>
 </div>
 
@@ -421,12 +473,14 @@ select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 <script>
 const API_KEY = 'FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU';
 const DEALER_EMAIL = 'togradyevl@gmail.com';
-let vinData = null, condMult = 1.0, condLabel = 'Good', photos = {}, checks = {};
+let vinData=null, condMult=1.0, condLabel='', photos={}, checks={};
+let lookupMode = 'vin'; // 'vin' or 'ymm'
+let ymmData = {}; // stores selected YMM values
 
-// CANVAS
-const canvas = document.getElementById('sig-canvas');
-const ctx = canvas.getContext('2d');
-let drawing = false;
+// ── CANVAS ──
+const canvas=document.getElementById('sig-canvas');
+const ctx=canvas.getContext('2d');
+let drawing=false;
 function resizeCanvas(){canvas.width=canvas.offsetWidth;canvas.height=80;}
 function getPos(e){const r=canvas.getBoundingClientRect();return{x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,y:(e.touches?e.touches[0].clientY:e.clientY)-r.top};}
 canvas.addEventListener('mousedown',e=>{drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
@@ -439,22 +493,140 @@ window.addEventListener('resize',resizeCanvas);
 resizeCanvas();
 function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height);}
 
-// DECODE
+// ── LOOKUP TOGGLE ──
+function switchLookup(mode){
+  lookupMode=mode;
+  document.getElementById('toggle-vin').classList.toggle('active',mode==='vin');
+  document.getElementById('toggle-ymm').classList.toggle('active',mode==='ymm');
+  document.getElementById('vin-panel').classList.toggle('show',mode==='vin');
+  document.getElementById('ymm-panel').classList.toggle('show',mode==='ymm');
+  if(mode==='ymm' && document.getElementById('ymm-year').options.length<=1) populateYears();
+}
+
+// ── YEAR/MAKE/MODEL CASCADING ──
+function populateYears(){
+  const sel=document.getElementById('ymm-year');
+  const cur=new Date().getFullYear();
+  for(let y=cur;y>=2000;y--){
+    const o=document.createElement('option');
+    o.value=y;o.textContent=y;
+    sel.appendChild(o);
+  }
+}
+
+async function loadMakes(){
+  const year=document.getElementById('ymm-year').value;
+  if(!year) return;
+  const makeEl=document.getElementById('ymm-make');
+  const modelEl=document.getElementById('ymm-model');
+  const trimEl=document.getElementById('ymm-trim');
+  makeEl.innerHTML='<option value="">Loading makes...</option>';
+  makeEl.disabled=true;
+  modelEl.innerHTML='<option value="">Select Model</option>';
+  modelEl.disabled=true;
+  trimEl.innerHTML='<option value="">Select Trim</option>';
+  trimEl.disabled=true;
+  showYmmLoading(true);
+  try{
+    const r=await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json`);
+    const d=await r.json();
+    const makes=d.Results.map(m=>m.MakeName).sort();
+    makeEl.innerHTML='<option value="">Select Make</option>';
+    makes.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;makeEl.appendChild(o);});
+    makeEl.disabled=false;
+  }catch(e){
+    makeEl.innerHTML='<option value="">Error loading — type make below</option>';
+    makeEl.disabled=false;
+  }
+  showYmmLoading(false);
+}
+
+async function loadModels(){
+  const year=document.getElementById('ymm-year').value;
+  const make=document.getElementById('ymm-make').value;
+  if(!make) return;
+  ymmData.make=make;
+  const modelEl=document.getElementById('ymm-model');
+  const trimEl=document.getElementById('ymm-trim');
+  modelEl.innerHTML='<option value="">Loading models...</option>';
+  modelEl.disabled=true;
+  trimEl.innerHTML='<option value="">Select Trim</option>';
+  trimEl.disabled=true;
+  showYmmLoading(true);
+  try{
+    const r=await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`);
+    const d=await r.json();
+    const models=[...new Set(d.Results.map(m=>m.Model_Name))].sort();
+    modelEl.innerHTML='<option value="">Select Model</option>';
+    models.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;modelEl.appendChild(o);});
+    modelEl.disabled=false;
+  }catch(e){
+    modelEl.innerHTML='<option value="">Error loading models</option>';
+    modelEl.disabled=false;
+  }
+  showYmmLoading(false);
+}
+
+async function loadTrims(){
+  const year=document.getElementById('ymm-year').value;
+  const make=document.getElementById('ymm-make').value;
+  const model=document.getElementById('ymm-model').value;
+  if(!model) return;
+  ymmData.model=model;
+  const trimEl=document.getElementById('ymm-trim');
+  trimEl.innerHTML='<option value="">Loading trims...</option>';
+  trimEl.disabled=true;
+  showYmmLoading(true);
+  try{
+    const r=await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`);
+    const d=await r.json();
+    const trims=d.Results.filter(m=>m.Model_Name===model).map(m=>m.Model_Name).filter(Boolean);
+    // NHTSA doesn't have trim data - use common trims
+    const commonTrims=['Base','S','SE','SEL','SL','SR','LE','XLE','XSE','Limited','Platinum','Titanium','Sport','Premium','Luxury','EX','EX-L','Touring','LX','EX','LTZ','LT','LS','RS','SS','ZL1','GT','GT500','Raptor','TRD','Off-Road','Trail','Overland','Rubicon','Sahara','Lariat','King Ranch','Platinum','Pro'];
+    trimEl.innerHTML='<option value="">Select Trim (optional)</option>';
+    commonTrims.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;trimEl.appendChild(o);});
+    trimEl.disabled=false;
+  }catch(e){
+    trimEl.disabled=false;
+  }
+  showYmmLoading(false);
+}
+
+function showYmmLoading(show){
+  document.getElementById('ymm-loading').classList.toggle('show',show);
+}
+
+function confirmYMM(){
+  const year=document.getElementById('ymm-year').value;
+  const make=document.getElementById('ymm-make').value;
+  const model=document.getElementById('ymm-model').value;
+  const trim=document.getElementById('ymm-trim').value;
+  const color=document.getElementById('ymm-color').value;
+  const intColor=document.getElementById('ymm-int-color').value;
+  const miles=document.getElementById('ymm-miles').value;
+  if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}
+  ymmData={year,make,model,trim,color,intColor,miles};
+  // Set vinData-like object for value calc
+  vinData={year:parseInt(year),make,model,trim,msrp:0,build:{year:parseInt(year),make,model,trim}};
+  confirmStep(1);
+}
+
+// ── VIN DECODE ──
 async function runDecode(){
-  const vin = document.getElementById('vin-inp').value.trim().toUpperCase();
-  const btn = document.getElementById('decode-btn');
+  const vin=document.getElementById('vin-inp').value.trim().toUpperCase();
+  const btn=document.getElementById('decode-btn');
   if(vin.length!==17){setStatus('INVALID — 17 CHARS REQUIRED','err');return;}
   setStatus('SCANNING RADAR...','loading');
   btn.disabled=true;
   try{
-    const r = await fetch(`/api/decode?vin=${vin}`,{signal:AbortSignal.timeout(10000)});
-    const d = await r.json();
+    const r=await fetch(`/api/decode?vin=${vin}`,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
     if(d.error) throw new Error(d.error);
-    vinData = d;
-    const b = d.build||d;
-    document.getElementById('res-ymm').value = `${b.year||''} ${b.make||''} ${b.model||''}`.trim();
-    document.getElementById('res-trim').value = b.trim||b.trim_name||'BASE';
-    const specs = [
+    vinData=d;
+    const b=d.build||d;
+    document.getElementById('res-ymm').value=`${b.year||''} ${b.make||''} ${b.model||''}`.trim();
+    document.getElementById('res-trim').value=b.trim||b.trim_name||'BASE';
+    const specs=[
       b.engine?`ENGINE:    ${b.engine}`:null,
       b.engine_size?`DISPLACE:  ${b.engine_size}L`:null,
       b.transmission?`TRANS:     ${b.transmission}`:null,
@@ -462,11 +634,10 @@ async function runDecode(){
       b.fuel_type?`FUEL:      ${b.fuel_type}`:null,
       b.body_type?`BODY:      ${b.body_type}`:null,
       b.doors?`DOORS:     ${b.doors}`:null,
-      b.std_seating?`SEATING:   ${b.std_seating}`:null,
       b.highway_mpg?`HWY MPG:   ${b.highway_mpg}`:null,
       b.city_mpg?`CITY MPG:  ${b.city_mpg}`:null,
     ].filter(Boolean).join('\n');
-    document.getElementById('res-specs').value = specs||'See fields above.';
+    document.getElementById('res-specs').value=specs||'Decoded — see fields above.';
     setStatus('SYNC SUCCESSFUL ✓','ok');
     document.getElementById('decoded-wrap').style.display='block';
     document.getElementById('tools-row').classList.add('show');
@@ -480,59 +651,55 @@ function setStatus(msg,type){
   el.textContent=msg;el.className='status '+(type||'');
 }
 
-// CONDITION
+// ── CONDITION ──
 function selectCond(btn){
   document.querySelectorAll('.cond-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
-  condMult = parseFloat(btn.dataset.mult);
-  condLabel = btn.dataset.cond;
+  condMult=parseFloat(btn.dataset.mult);
+  condLabel=btn.dataset.cond;
   updateValue();
   document.getElementById('value-reveal').classList.add('show');
 }
 
 function updateValue(){
   if(!vinData) return;
-  const b = vinData.build||vinData;
-  const msrp = b.msrp||b.base_price||0;
-  const year = b.year||new Date().getFullYear();
-  const age = new Date().getFullYear()-year;
-  const base = msrp||28000;
-  const dep = Math.max(0.25,1-(age*0.11));
-  const avg = Math.round(base*dep*condMult);
-  const lo = Math.round(avg*0.88);
-  const hi = Math.round(avg*1.12);
-  document.getElementById('value-range').textContent = `$${lo.toLocaleString()} — $${hi.toLocaleString()}`;
+  const b=vinData.build||vinData;
+  const msrp=b.msrp||b.base_price||0;
+  const year=b.year||new Date().getFullYear();
+  const age=new Date().getFullYear()-year;
+  const base=msrp||28000;
+  const dep=Math.max(0.25,1-(age*0.11));
+  const avg=Math.round(base*dep*condMult);
+  const lo=Math.round(avg*0.88);
+  const hi=Math.round(avg*1.12);
+  document.getElementById('value-range').textContent=`$${lo.toLocaleString()} — $${hi.toLocaleString()}`;
 }
 
-// CHECKS
+// ── CHECKS ──
 function toggleCheck(btn){
   btn.classList.toggle('selected');
-  const check = btn.querySelector('.chk');
-  check.textContent = btn.classList.contains('selected')?'✓':'';
-  const g=btn.dataset.group, v=btn.dataset.val;
+  btn.querySelector('.chk').textContent=btn.classList.contains('selected')?'✓':'';
+  const g=btn.dataset.group,v=btn.dataset.val;
   if(!checks[g]) checks[g]=[];
-  if(btn.classList.contains('selected')){
-    if(!checks[g].includes(v)) checks[g].push(v);
-  } else {
-    checks[g] = checks[g].filter(x=>x!==v);
-  }
+  if(btn.classList.contains('selected')){if(!checks[g].includes(v))checks[g].push(v);}
+  else{checks[g]=checks[g].filter(x=>x!==v);}
   updateCert();
 }
 
 function updateCert(){
-  const total = Object.keys(checks).length;
-  const photos_count = Object.keys(photos).length;
-  const box = document.getElementById('cert-box');
+  const total=Object.keys(checks).length;
+  const pc=Object.keys(photos).length;
+  const box=document.getElementById('cert-box');
   box.classList.add('show');
-  if(total>=8 && photos_count>=4){
+  if(total>=8&&pc>=4){
     box.classList.add('verified');
     document.getElementById('cert-icon').textContent='🏆';
     document.getElementById('cert-name').textContent='EVL CERTIFIED';
-    document.getElementById('cert-msg').textContent='Full documentation received — priority 24hr appraisal';
+    document.getElementById('cert-msg').textContent='Full documentation — priority 24hr appraisal';
   } else if(total>=4){
     document.getElementById('cert-icon').textContent='✅';
     document.getElementById('cert-name').textContent='EVL VERIFIED';
-    document.getElementById('cert-msg').textContent='Good coverage — standard 48hr appraisal';
+    document.getElementById('cert-msg').textContent='Standard 48hr appraisal';
   } else {
     document.getElementById('cert-icon').textContent='📋';
     document.getElementById('cert-name').textContent='EVL SUBMITTED';
@@ -540,9 +707,9 @@ function updateCert(){
   }
 }
 
-// PHOTOS
+// ── PHOTOS ──
 function handlePhoto(input){
-  const slot=input.dataset.slot, file=input.files[0];
+  const slot=input.dataset.slot,file=input.files[0];
   if(!file) return;
   photos[slot]=file;
   const el=document.getElementById('slot-'+slot);
@@ -552,28 +719,25 @@ function handlePhoto(input){
   updateCert();
 }
 
-// STEP FLOW
+// ── STEP FLOW ──
 function confirmStep(n){
-  if(n===1){
-    if(!vinData){alert('Please decode a VIN first.');return;}
-  }
+  if(n===1&&lookupMode==='vin'&&!vinData){alert('Please decode a VIN first.');return;}
   if(n===2){
-    const miles=document.getElementById('miles-inp').value;
-    if(!miles){alert('Please enter current mileage.');return;}
     if(!condLabel){alert('Please select a condition rating.');return;}
+    const miles=document.getElementById('miles-inp').value;
+    const ymmMiles=document.getElementById('ymm-miles').value;
+    if(!miles&&!ymmMiles){alert('Please enter current mileage.');return;}
   }
   if(n===3){
     document.getElementById('submit-btn').style.display='block';
     setTimeout(resizeCanvas,400);
   }
-  // Mark done
   document.getElementById('card'+n).classList.remove('active');
   document.getElementById('card'+n).classList.add('done');
   document.getElementById('sn'+n).textContent='✓';
   document.getElementById('p'+n).classList.remove('active');
   document.getElementById('p'+n).classList.add('done');
-  // Unlock next
-  const next = n+1;
+  const next=n+1;
   if(next<=4){
     document.getElementById('card'+next).classList.remove('locked');
     document.getElementById('card'+next).classList.add('active');
@@ -582,7 +746,7 @@ function confirmStep(n){
   }
 }
 
-// MODALS
+// ── MODALS ──
 function openEstimator(){
   const vin=document.getElementById('vin-inp').value.trim();
   const url=`https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key=${API_KEY}&vin=${vin}&embed=true`;
@@ -592,46 +756,44 @@ function openEstimator(){
 function openSticker(){
   const vin=document.getElementById('vin-inp').value.trim();
   navigator.clipboard.writeText(vin).catch(()=>{});
-  alert(`MarketCheck NeoVIN is opening.\n\nYour VIN (${vin}) has been copied.\nPaste it in, click DECODE VIN, then WINDOW STICKER.`);
+  alert(`MarketCheck NeoVIN is opening.\n\nVIN copied: ${vin}\nPaste it, click DECODE VIN, then WINDOW STICKER.`);
   window.open('https://universe.marketcheck.com/neovin-decode-vin','_blank');
 }
 function closeModal(id){
   document.getElementById(id).classList.remove('open');
   if(id==='estimator-modal') document.getElementById('estimator-frame').src='';
-  if(id==='sticker-modal') document.getElementById('sticker-frame').src='';
 }
 
-// SUBMIT
+// ── SUBMIT ──
 function submitAudit(){
   const fname=document.getElementById('fname').value.trim();
   const lname=document.getElementById('lname').value.trim();
+  if(!fname||!lname){alert('Please enter your name.');return;}
   const phone=document.getElementById('phone').value.trim();
   const email=document.getElementById('email').value.trim();
-  if(!fname||!lname){alert('Please enter your name.');return;}
-  const vin=document.getElementById('vin-inp').value.trim();
-  const miles=document.getElementById('miles-inp').value;
-  const ymm=document.getElementById('res-ymm').value;
-  const trim=document.getElementById('res-trim').value;
-  const specs=document.getElementById('res-specs').value;
   const notes=document.getElementById('notes-inp').value;
   const valueRange=document.getElementById('value-range').textContent;
   const certName=document.getElementById('cert-name').textContent;
+  let vehicleInfo='';
+  if(lookupMode==='vin'){
+    const b=vinData.build||vinData;
+    const vin=document.getElementById('vin-inp').value.trim();
+    const miles=document.getElementById('miles-inp').value;
+    vehicleInfo=`VIN: ${vin}\nVEHICLE: ${document.getElementById('res-ymm').value}\nTRIM: ${document.getElementById('res-trim').value}\nMILEAGE: ${miles}\nSPECS:\n${document.getElementById('res-specs').value}`;
+  } else {
+    vehicleInfo=`LOOKUP METHOD: Year/Make/Model\nYEAR: ${ymmData.year}\nMAKE: ${ymmData.make}\nMODEL: ${ymmData.model}\nTRIM: ${ymmData.trim||'Not specified'}\nEXT COLOR: ${ymmData.color||'Not specified'}\nINT COLOR: ${ymmData.intColor||'Not specified'}\nMILEAGE: ${ymmData.miles||'Not entered'}`;
+  }
   let checksText='';
   for(const[g,vals] of Object.entries(checks)){checksText+=`${g.toUpperCase()}: ${vals.join(', ')}\n`;}
-  const subject=encodeURIComponent(`EVL Certified Appraisal: ${ymm} — ${certName}`);
+  const subject=encodeURIComponent(`EVL Certified Appraisal: ${lookupMode==='vin'?document.getElementById('res-ymm').value:`${ymmData.year} ${ymmData.make} ${ymmData.model}`} — ${certName}`);
   const body=encodeURIComponent(
     `EVL CERTIFIED APPRAISAL REPORT\n================================\n`+
-    `CERTIFICATION: ${certName}\n`+
-    `CUSTOMER: ${fname} ${lname}\nPHONE: ${phone}\nEMAIL: ${email}\n`+
-    `--------------------------------\n`+
-    `VEHICLE: ${ymm}\nTRIM: ${trim}\nVIN: ${vin}\nMILEAGE: ${miles}\n`+
-    `CONDITION: ${condLabel}\nESTIMATED RANGE: ${valueRange}\n`+
-    `--------------------------------\nSPECS:\n${specs}\n`+
-    `--------------------------------\nCONDITION REPORT:\n${checksText}`+
-    `NOTES: ${notes||'None'}\n`+
-    `PHOTOS: ${Object.keys(photos).length} uploaded\n`+
-    `SIGNATURE: Captured\n================================\n`+
-    `Submitted via EVL Vehicle Acquisition Radar v3.0`
+    `CERTIFICATION: ${certName}\nCUSTOMER: ${fname} ${lname}\nPHONE: ${phone}\nEMAIL: ${email}\n`+
+    `--------------------------------\n${vehicleInfo}\n`+
+    `--------------------------------\nCONDITION: ${condLabel}\nESTIMATED RANGE: ${valueRange}\n`+
+    `--------------------------------\nAPPRAISAL CHECKLIST:\n${checksText}`+
+    `NOTES: ${notes||'None'}\nPHOTOS: ${Object.keys(photos).length} uploaded\nSIGNATURE: Captured\n================================\n`+
+    `EVL Vehicle Acquisition Radar v3.0`
   );
   window.location.href=`mailto:${DEALER_EMAIL}?subject=${subject}&body=${body}`;
   document.getElementById('submit-btn').style.display='none';
