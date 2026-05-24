@@ -517,7 +517,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v4.1</b></span>
+  <span>Entity Protocol <b>v4.2</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -823,17 +823,16 @@ function showYmmLoading(show){
 }
 
 function confirmYMM(){
-  const year=document.getElementById('ymm-year').value;
-  const make=document.getElementById('ymm-make').value;
-  const model=document.getElementById('ymm-model').value;
-  const body=document.getElementById('ymm-body').value;
-  const trim=document.getElementById('ymm-trim').value;
-  const drive=document.getElementById('ymm-drive').value;
-  const color=document.getElementById('ymm-color').value;
-  const intColor=document.getElementById('ymm-int-color').value;
-  const miles=document.getElementById('ymm-miles').value;
-  const zip=document.getElementById('ymm-zip').value;
-  // Get selected factory options from checkboxes
+  var year=document.getElementById('ymm-year').value;
+  var make=document.getElementById('ymm-make').value;
+  var model=document.getElementById('ymm-model').value;
+  var body=document.getElementById('ymm-body').value;
+  var trim=document.getElementById('ymm-trim').value;
+  var drive=document.getElementById('ymm-drive').value;
+  var color=document.getElementById('ymm-color').value;
+  var intColor=document.getElementById('ymm-int-color').value;
+  var miles=document.getElementById('ymm-miles').value;
+  var zip=document.getElementById('ymm-zip').value;
   var selectedOpts=[];
   var optBtns=document.querySelectorAll('#ymm-options-grid .check-btn.selected');
   for(var i=0;i<optBtns.length;i++){selectedOpts.push(optBtns[i].getAttribute('data-val'));}
