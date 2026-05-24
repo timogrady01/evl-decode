@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Acquisition Radar v4</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap');
+  html { font-size: clamp(15px, 1.6vw, 18px); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #060910; color: #fff; font-family: 'Inter', sans-serif; min-height: 100vh; }
+  header { background: #07090f; border-bottom: 3px solid #007BFF; padding: 0; }
+  .header-inner { max-width: 680px; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: #007BFF; text-transform: uppercase; letter-spacing: 2px; }
+  header p { font-size: 0.82rem; font-weight: 600; color: #c8d8e8; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+  .badge { background: #00FF41; color: #000; font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; padding: 5px 14px; text-transform: uppercase; }
+  .wrap { max-width: 680px; width: 100%; margin: 0 auto; padding: 1.8rem 1.5rem 2rem; }
+  .hero-title { font-family: 'Rajdhani', sans-serif; font-size: 3rem; font-weight: 700; line-height: 1; text-transform: uppercase; margin-bottom: 0.9rem; }
+  .hero-title span { color: #007BFF; display: block; }
+  .factual-box { border-left: 4px solid #007BFF; padding: 0.8rem 1rem; background: #0d1117; margin-bottom: 1.4rem; }
+  .factual-box p { font-size: 1rem; font-weight: 500; color: #ffffff; line-height: 1.6; }
+  .factual-box p span { color: #007BFF; font-weight: 700; }
+  .factual-box p strong { color: #fff; font-weight: 700; }
+  .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.6rem; }
+  .action-btn { background: #0d1117; border: 2px solid #007BFF; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; text-align: left; }
+  .action-btn:hover { background: #0a1830; }
+  .action-btn.dim { border-color: #1e3050; }
+  .action-btn.dim:hover { border-color: #007BFF; }
+  .action-btn h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: 700; color: #fff; text-transform: uppercase; margin-bottom: 3px; letter-spacing: 0.5px; }
+  .action-btn p { font-size: 0.85rem; font-weight: 600; color: #007BFF; letter-spacing: 1px; text-transform: uppercase; }
+  .action-btn.dim p { color: #eef4ff; }
+  .drawer { margin-bottom: 0.5rem; border: 2px solid #1a2535; overflow: hidden; transition: border-color 0.3s; }
+  .drawer.active { border-color: #007BFF; }
+  .drawer.done { border-color: #00a83a; }
+  .drawer.locked { border-color: #1a2535; opacity: 0.55; }
+  .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: #0d1117; cursor: pointer; user-select: none; }
+  .drawer.locked .drawer-header { cursor: not-allowed; }
+  .drawer.active .drawer-header { background: #0a1525; }
+  .drawer.done .drawer-header { background: #060f08; }
+  .drawer-header-left { display: flex; align-items: center; gap: 0.7rem; }
+  .drawer-step { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; color: #a0c0e0; letter-spacing: 2px; text-transform: uppercase; }
+  .drawer.active .drawer-step { color: #007BFF; }
+  .drawer.done .drawer-step { color: #00c853; }
+  .drawer-title { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+  .drawer.active .drawer-title { color: #fff; }
+  .drawer.done .drawer-title { color: #00c853; }
+  .drawer.locked .drawer-title { color: #a0b8d0; }
+  .drawer-icon { font-size: 0.9rem; color: #a0c0e0; transition: transform 0.3s; }
+  .drawer.active .drawer-icon { color: #007BFF; transform: rotate(180deg); }
+  .drawer.done .drawer-icon { color: #00c853; }
+  .drawer.locked .drawer-icon { color: #1e2a38; }
+  .drawer-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; background: #080c12; padding: 0 1rem; }
+  .drawer.active .drawer-body { max-height: 2000px; padding: 1rem; }
+  .field-label { display: block; font-size: 0.85rem; font-weight: 700; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; }
+  .field-input { width: 100%; background: #0d1117; color: #fff; border: 1px solid #1e3050; padding: 0.65rem 0.85rem; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; outline: none; transition: border-color 0.2s; appearance: none; border-radius: 0; }
+  .field-input:focus { border-color: #007BFF; box-shadow: 0 0 0 2px rgba(0,123,255,0.12); }
+  .field-input::placeholder { color: #6688aa; font-weight: 400; }
+  .field-input.ro { color: #00FF41; border-color: #00a83a; background: #060f08; font-size: 0.95rem; font-weight: 700; }
+  select.field-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23007BFF'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; background-color: #0d1117; padding-right: 2rem; cursor: pointer; color: #fff; }
+  select.field-input option { background: #0d1117; }
+  textarea.field-input { resize: none; line-height: 1.9; color: #00FF41; border-color: #00a83a; background: #060f08; font-size: 0.82rem; height: 95px; }
+  .vin-row { display: flex; gap: 0.6rem; }
+  .vin-row .field-input { flex: 1; font-size: 1.4rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
+  #decode-btn { background: #007BFF; color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 1px; border: none; padding: 0 1.4rem; cursor: pointer; text-transform: uppercase; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
+  #decode-btn:hover { background: #fff; color: #000; }
+  #decode-btn:disabled { background: #1e2a38; color: #a0b8d0; cursor: not-allowed; }
+  #scan-status { display: inline-block; font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #eef4ff; padding: 3px 10px; border: 1px solid #1e2a38; margin-top: 0.6rem; transition: all 0.3s; }
+  #scan-status.loading { color: #ffd700; border-color: #ffd700; animation: blink 0.8s step-end infinite; }
+  #scan-status.success { color: #00FF41; border-color: #00a83a; }
+  #scan-status.error { color: #ff5555; border-color: #ff5555; }
+  @keyframes blink { 50% { opacity: 0.3; } }
+  .tool-btn { padding: 1.2rem 0.5rem; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .tool-btn.sticker { background: #0d1117; color: #fff; border: 2px solid #007BFF; }
+  .tool-btn.sticker:hover { background: #007BFF; }
+  .tool-btn.estimator { background: #00FF41; color: #000; border: 2px solid #00FF41; }
+  .tool-btn.estimator:hover { background: #fff; border-color: #fff; }
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: #07090f; border: 2px solid #007BFF; width: 100%; max-width: 640px; max-height: 90vh; display: flex; flex-direction: column; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 2px solid #007BFF; background: #0a1525; }
+  .modal-header h3 { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+  .modal-close { background: none; border: 1px solid #1e3050; color: #ddeeff; font-size: 0.85rem; font-weight: 700; padding: 4px 12px; cursor: pointer; transition: all 0.2s; font-family: 'Rajdhani', sans-serif; }
+  .modal-close:hover { border-color: #ff5555; color: #ff5555; }
+  .modal-body { flex: 1; overflow: hidden; }
+  .modal-body iframe { width: 100%; height: 580px; border: none; display: block; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .field-group { display: flex; flex-direction: column; }
+  .mb { margin-bottom: 0.8rem; }
+  .confirm-btn { width: 100%; background: #007BFF; color: #fff; border: none; padding: 0.65rem; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; margin-top: 0.8rem; transition: background 0.2s; }
+  .confirm-btn:hover { background: #0056d6; }
+  #sig-canvas { width: 100%; height: 90px; background: #0d1117; border: 2px dashed #1e3050; cursor: crosshair; touch-action: none; display: block; }
+  .sig-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
+  .sig-footer span { font-size: 0.7rem; font-weight: 600; color: #ddeeff; letter-spacing: 1px; text-transform: uppercase; }
+  #clear-sig-btn { background: none; border: 1px solid #1e2a38; color: #eef4ff; font-size: 0.7rem; font-weight: 600; padding: 3px 10px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
+  #clear-sig-btn:hover { border-color: #ff5555; color: #ff5555; }
+  #submit-wrap { display: none; margin-top: 0.6rem; }
+  .submit-btn { width: 100%; background: #00FF41; color: #000; padding: 1rem; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; border: none; cursor: pointer; transition: all 0.2s; }
+  .submit-btn:hover { background: #fff; letter-spacing: 5px; }
+  #success-screen { display: none; text-align: center; padding: 3rem 1rem; }
+  #success-screen h1 { font-family: 'Rajdhani', sans-serif; font-size: 2.5rem; font-weight: 700; color: #00FF41; letter-spacing: 3px; text-transform: uppercase; }
+  #success-screen p { color: #ddeeff; font-size: 0.88rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 0.5rem; }
+  footer { border-top: 2px solid #1a2535; padding: 0; }
+  .footer-inner { max-width: 680px; margin: 0 auto; padding: 0.75rem 1.5rem; display: flex; justify-content: space-between; }
+  footer span { font-size: 0.82rem; font-weight: 600; color: #c8d8e8; letter-spacing: 1.5px; text-transform: uppercase; }
+  footer span b { color: #007BFF; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>◈ Vehicle Acquisition Radar</h1>
+      <p>Status: Active Searching</p>
+    </div>
+    <div class="badge">Secure</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero-title">We Find Your Car.<span>You Get the Deal.</span></div>
+  <div class="factual-box">
+    <p><span>Here's how it works:</span> Tell us what vehicle you're trading in — we decode it instantly and send the details straight to our team. <strong>No guessing. No back-and-forth. Just a fast, honest offer.</strong></p>
+  </div>
+
+  <div class="action-grid">
+    <div class="action-btn dim" onclick="location.href='https://expressvehiclelocators.com'">
+      <h3>Acquire This Vehicle</h3>
+      <p>Browse Our Inventory →</p>
+    </div>
+    <div class="action-btn" onclick="startAudit()">
+      <h3>Check My Trade-In Value</h3>
+      <p>Begin Vehicle Audit →</p>
+    </div>
+  </div>
+
+  <div id="audit-section" style="display:none;">
+
+    <div class="drawer locked" id="drawer1">
+      <div class="drawer-header" onclick="toggleDrawer('drawer1')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">① Step One</span>
+          <span class="drawer-title">Decode VIN</span>
+        </div>
+        <span class="drawer-icon">▼</span>
+      </div>
+      <div class="drawer-body">
+        <div class="vin-row" style="margin-bottom:0.6rem;">
+          <input type="text" id="vin-input" class="field-input" placeholder="ENTER 17-DIGIT VIN" maxlength="17" oninput="this.value=this.value.toUpperCase()">
+          <button onclick="runDecode()" id="decode-btn">DECODE</button>
+        </div>
+        <span id="scan-status">READY FOR SCAN</span>
+      </div>
+    </div>
+
+    <div id="post-decode-wrap" style="display:none; margin-bottom:0.5rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+        <button class="tool-btn sticker" onclick="openWindowSticker()">🪟 View Window Sticker</button>
+        <button class="tool-btn estimator" onclick="openTradeEstimator()">💰 Get Trade-In Value</button>
+      </div>
+    </div>
+
+    <div class="drawer locked" id="drawer2">
+      <div class="drawer-header" onclick="toggleDrawer('drawer2')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">② Step Two</span>
+          <span class="drawer-title">Decoded Vehicle Data</span>
+        </div>
+        <span class="drawer-icon">🔒</span>
+      </div>
+      <div class="drawer-body">
+        <div class="two-col mb">
+          <div class="field-group">
+            <label class="field-label">Year / Make / Model</label>
+            <input type="text" id="res-yr-mk-mdl" class="field-input ro" placeholder="—" readonly>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Trim Level</label>
+            <input type="text" id="res-trm" class="field-input ro" placeholder="—" readonly>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Decoded Specifications</label>
+          <textarea id="res-opt" class="field-input" readonly placeholder="ENGINE / TRANS / DRIVE / FUEL WILL POPULATE HERE..."></textarea>
+        </div>
+        <button class="confirm-btn" onclick="confirmVehicle()">✓ Confirm Vehicle — Continue</button>
+      </div>
+    </div>
+
+    <div class="drawer locked" id="drawer3">
+      <div class="drawer-header" onclick="toggleDrawer('drawer3')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">③ Step Three</span>
+          <span class="drawer-title">Odometer &amp; Condition</span>
+        </div>
+        <span class="drawer-icon">🔒</span>
+      </div>
+      <div class="drawer-body">
+        <div class="two-col mb">
+          <div class="field-group">
+            <label class="field-label">Current Odometer (Miles)</label>
+            <input type="number" id="user-miles" class="field-input" placeholder="e.g. 42000">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Overall Condition</label>
+            <select id="user-cond" class="field-input">
+              <option value="Excellent">Excellent</option>
+              <option value="Good" selected>Good</option>
+              <option value="Fair">Fair</option>
+              <option value="Poor">Poor</option>
+            </select>
+          </div>
+        </div>
+        <button class="confirm-btn" onclick="confirmOdometer()">✓ Confirm — Continue to Signature</button>
+      </div>
+    </div>
+
+    <div class="drawer locked" id="drawer4">
+      <div class="drawer-header" onclick="toggleDrawer('drawer4')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">④ Step Four</span>
+          <span class="drawer-title">Authorization Signature</span>
+        </div>
+        <span class="drawer-icon">🔒</span>
+      </div>
+      <div class="drawer-body">
+        <canvas id="sig-canvas"></canvas>
+        <div class="sig-footer">
+          <span>Sign above to authorize audit</span>
+          <button id="clear-sig-btn" onclick="clearSig()">✕ Clear</button>
+        </div>
+        <button class="confirm-btn" onclick="confirmSignature()">✓ Confirm Signature — Review &amp; Submit</button>
+      </div>
+    </div>
+
+    <div id="submit-wrap">
+      <button type="button" class="submit-btn" onclick="finalizeAudit()">⬡ Finalize &amp; Send Audit</button>
+    </div>
+
+    <div id="success-screen">
+      <h1>✓ Audit Sent</h1>
+      <p>Check your email for the data pack</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>Entity Protocol <b>v2.0</b></span>
+    <span><b>// VERIFIED_DATA_STREAM //</b></span>
+  </div>
+</footer>
+
+<!-- WINDOW STICKER MODAL -->
+<div class="modal-overlay" id="sticker-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🪟 Window Sticker</h3>
+      <button class="modal-close" onclick="closeModal('sticker-modal')">✕ Close</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="sticker-frame" src="" title="Window Sticker"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- TRADE ESTIMATOR MODAL -->
+<div class="modal-overlay" id="estimator-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>💰 Trade-In Value Estimator</h3>
+      <button class="modal-close" onclick="closeModal('estimator-modal')">✕ Close</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="estimator-frame" src="" title="Trade-In Estimator"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const DEALER_EMAIL = "togradyevl@gmail.com";
+  const API_KEY = 'krZxEXMjNJ0JxdQa';
+
+  function startAudit() {
+    ['drawer1','drawer2','drawer3','drawer4'].forEach(id => {
+      const d = document.getElementById(id);
+      d.classList.remove('active','done');
+      d.classList.add('locked');
+      d.querySelector('.drawer-icon').textContent = '🔒';
+    });
+    document.getElementById('post-decode-wrap').style.display = 'none';
+    document.getElementById('submit-wrap').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'none';
+    document.getElementById('scan-status').textContent = 'READY FOR SCAN';
+    document.getElementById('scan-status').className = '';
+    document.getElementById('vin-input').value = '';
+    document.getElementById('audit-section').style.display = 'block';
+    openDrawer('drawer1');
+    setTimeout(() => document.getElementById('vin-input').focus(), 300);
+    document.getElementById('audit-section').scrollIntoView({behavior:'smooth'});
+  }
+
+  function toggleDrawer(id) {
+    const d = document.getElementById(id);
+    if (d.classList.contains('locked')) return;
+  }
+
+  function openDrawer(id) {
+    const d = document.getElementById(id);
+    d.classList.remove('locked','done');
+    d.classList.add('active');
+    setTimeout(() => d.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
+  }
+
+  function lockDrawer(id) {
+    const d = document.getElementById(id);
+    d.classList.remove('active');
+    d.classList.add('done');
+    d.querySelector('.drawer-icon').textContent = '✓';
+  }
+
+  const canvas = document.getElementById('sig-canvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  function resizeCanvas() {
+    const img = canvas.toDataURL();
+    canvas.width = canvas.offsetWidth;
+    canvas.height = 90;
+    const image = new Image();
+    image.onload = () => ctx.drawImage(image, 0, 0);
+    image.src = img;
+  }
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return { x:(e.touches?e.touches[0].clientX:e.clientX)-rect.left, y:(e.touches?e.touches[0].clientY:e.clientY)-rect.top };
+  }
+  canvas.addEventListener('mousedown', e=>{drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+  canvas.addEventListener('mousemove', e=>{if(!drawing)return;e.preventDefault();const p=getPos(e);ctx.strokeStyle='#00FF41';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';ctx.lineTo(p.x,p.y);ctx.stroke();});
+  canvas.addEventListener('touchstart', e=>{drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+  canvas.addEventListener('touchmove', e=>{if(!drawing)return;e.preventDefault();const p=getPos(e);ctx.strokeStyle='#00FF41';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+  window.addEventListener('mouseup', ()=>drawing=false);
+  canvas.addEventListener('touchend', ()=>drawing=false);
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height);}
+
+  function populateFields(data) {
+    const b = data.build || data;
+    if (!b||!b.year) throw new Error("No vehicle data returned");
+    document.getElementById('res-yr-mk-mdl').value = `${b.year||''} ${b.make||''} ${b.model||''}`.trim();
+    document.getElementById('res-trm').value = b.trim||b.trim_name||'BASE';
+    const specs=[
+      b.engine       ?`ENGINE:    ${b.engine}`      :null,
+      b.engine_size  ?`DISPLACE:  ${b.engine_size}L`:null,
+      b.transmission ?`TRANS:     ${b.transmission}`:null,
+      b.drivetrain   ?`DRIVE:     ${b.drivetrain}`  :null,
+      b.fuel_type    ?`FUEL:      ${b.fuel_type}`   :null,
+      b.body_type    ?`BODY:      ${b.body_type}`   :null,
+      b.body_subtype ?`STYLE:     ${b.body_subtype}`:null,
+      b.doors        ?`DOORS:     ${b.doors}`       :null,
+      b.cylinders    ?`CYLINDERS: ${b.cylinders}`   :null,
+      b.std_seating  ?`SEATING:   ${b.std_seating}` :null,
+      b.highway_mpg  ?`HWY MPG:   ${b.highway_mpg}` :null,
+      b.city_mpg     ?`CITY MPG:  ${b.city_mpg}`    :null,
+      b.made_in      ?`MADE IN:   ${b.made_in}`     :null,
+    ].filter(Boolean).join('\n');
+    document.getElementById('res-opt').value = specs||'Decoded — see fields above.';
+  }
+
+  async function runDecode() {
+    const vin = document.getElementById('vin-input').value.trim().toUpperCase();
+    const btn = document.getElementById('decode-btn');
+    if (vin.length!==17){setStatus('INVALID VIN — 17 CHARS REQUIRED','error');return;}
+    setStatus('SCANNING...','loading');
+    btn.disabled=true;
+    try {
+      const url = `https://mc-api.marketcheck.com/v2/decode/car/${vin}/specs?api_key=${API_KEY}`;
+      const res = await fetch(url, {signal:AbortSignal.timeout(10000)});
+      if (!res.ok){throw new Error(`API ${res.status}`);}
+      const data = await res.json();
+      populateFields(data);
+      setStatus('SYNC SUCCESSFUL ✓','success');
+      document.getElementById('post-decode-wrap').style.display = 'block';
+      lockDrawer('drawer1');
+      openDrawer('drawer2');
+    } catch(err) {
+      console.error(err);
+      setStatus('SYNC ERROR — CHECK VIN & RETRY','error');
+    } finally {
+      btn.disabled=false;
+    }
+  }
+
+  function setStatus(msg,type=''){
+    const el=document.getElementById('scan-status');
+    el.textContent=msg;
+    el.className=type;
+  }
+
+  function confirmVehicle() { lockDrawer('drawer2'); openDrawer('drawer3'); }
+
+  function confirmOdometer() {
+    const miles = document.getElementById('user-miles').value.trim();
+    if (!miles){alert('Please enter the current odometer reading.');return;}
+    lockDrawer('drawer3');
+    openDrawer('drawer4');
+    setTimeout(resizeCanvas, 400);
+  }
+
+  function confirmSignature() {
+    lockDrawer('drawer4');
+    document.getElementById('submit-wrap').style.display='block';
+    setTimeout(()=>document.getElementById('submit-wrap').scrollIntoView({behavior:'smooth'}),100);
+  }
+
+  function finalizeAudit() {
+    const vin     = document.getElementById('vin-input').value.trim();
+    const miles   = document.getElementById('user-miles').value.trim();
+    const cond    = document.getElementById('user-cond').value;
+    const vehicle = document.getElementById('res-yr-mk-mdl').value.trim();
+    const trim    = document.getElementById('res-trm').value.trim();
+    const specs   = document.getElementById('res-opt').value.trim();
+    if (!vin){alert('Please enter a VIN before submitting.');return;}
+    const subject = encodeURIComponent('New Forensic MatchCheck Audit Received');
+    const body = encodeURIComponent(
+      `MATCHCHECK AUDIT REPORT\n========================\n`+
+      `VEHICLE:   ${vehicle}\nTRIM:      ${trim}\nVIN:       ${vin}\n`+
+      `MILES:     ${miles||'Not provided'}\nCONDITION: ${cond}\n`+
+      `------------------------\nSPECS:\n${specs||'Not decoded'}\n`+
+      `------------------------\nSIGNATURE: Captured & Digitally Logged\n========================`
+    );
+    window.location.href=`mailto:${DEALER_EMAIL}?subject=${subject}&body=${body}`;
+    document.getElementById('submit-wrap').style.display='none';
+    document.getElementById('success-screen').style.display='block';
+    document.getElementById('success-screen').scrollIntoView({behavior:'smooth'});
+  }
+
+  function openWindowSticker() {
+    const vin = document.getElementById('vin-input').value.trim().toUpperCase();
+    navigator.clipboard.writeText(vin).catch(()=>{});
+    alert(`MarketCheck NeoVIN page is opening.\n\nYour VIN has been copied to clipboard:\n${vin}\n\nPaste it in the "VIN to decode" box, click DECODE VIN, then click WINDOW STICKER.`);
+    window.open(`https://universe.marketcheck.com/neovin-decode-vin`, '_blank');
+  }
+
+  function openTradeEstimator() {
+    const vin = document.getElementById('vin-input').value.trim().toUpperCase();
+    const url = `https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key=${API_KEY}&vin=${vin}&embed=true`;
+    document.getElementById('estimator-frame').src = url;
+    document.getElementById('estimator-modal').classList.add('open');
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    if (id === 'sticker-modal') document.getElementById('sticker-frame').src = '';
+    if (id === 'estimator-modal') document.getElementById('estimator-frame').src = '';
+  }
+</script>
+</body>
+</html>
