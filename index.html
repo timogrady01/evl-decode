@@ -514,6 +514,27 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           <div class="photo-lbl">Tires & Wheels</div>
           <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Kneel down & shoot one tire.<br>Shows tread depth & wheel condition.</div>
         </div>
+        <!-- WARNING LIGHTS -->
+        <div class="photo-slot" id="slot-warninglights">
+          <input type="file" accept="image/*" data-slot="warninglights" onchange="handlePhoto(this)">
+          <div class="photo-icon">⚠️</div>
+          <div class="photo-lbl">Warning Lights</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Engine ON. Photo of dashboard<br>showing any warning lights.<br><span style="color:var(--green)">No lights? Still take the photo!</span></div>
+        </div>
+        <!-- SPARE TIRE -->
+        <div class="photo-slot" id="slot-spare">
+          <input type="file" accept="image/*" data-slot="spare" onchange="handlePhoto(this)">
+          <div class="photo-icon">🔧</div>
+          <div class="photo-lbl">Spare Tire Area</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Open trunk/cargo area.<br>Show spare tire, jack & tools.<br>No spare? Photo of empty area.</div>
+        </div>
+        <!-- KEYS -->
+        <div class="photo-slot" id="slot-keys">
+          <input type="file" accept="image/*" data-slot="keys" onchange="handlePhoto(this)">
+          <div class="photo-icon">🔑</div>
+          <div class="photo-lbl">Keys</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Lay all keys flat on a surface.<br>Photo shows how many keys<br>& type (smart key, regular, fob).</div>
+        </div>
       </div>
       <div class="cert-box" id="cert-box">
         <span class="cert-icon" id="cert-icon">📋</span>
@@ -573,7 +594,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v4.5</b></span>
+  <span>Entity Protocol <b>v4.6</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
