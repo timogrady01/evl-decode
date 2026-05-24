@@ -517,7 +517,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v4.0</b></span>
+  <span>Entity Protocol <b>v4.1</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -833,10 +833,14 @@ function confirmYMM(){
   const intColor=document.getElementById('ymm-int-color').value;
   const miles=document.getElementById('ymm-miles').value;
   const zip=document.getElementById('ymm-zip').value;
-  const engine=document.getElementById('ymm-engine').value;
+  // Get selected factory options from checkboxes
+  var selectedOpts=[];
+  var optBtns=document.querySelectorAll('#ymm-options-grid .check-btn.selected');
+  for(var i=0;i<optBtns.length;i++){selectedOpts.push(optBtns[i].getAttribute('data-val'));}
+  var engine=selectedOpts.join(', ');
   if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}
   if(!miles){alert('Please enter current mileage.');return;}
-  ymmData={year,make,model,body,trim,drive,color,intColor,miles,zip,engine};
+  ymmData={year:year,make:make,model:model,body:body,trim:trim,drive:drive,color:color,intColor:intColor,miles:miles,zip:zip,engine:engine};
   vinData={year:parseInt(year),make,model,trim,msrp:0,build:{year:parseInt(year),make,model,trim}};
   confirmStep(1);
 }
