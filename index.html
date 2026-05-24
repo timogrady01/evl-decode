@@ -39,8 +39,8 @@ html, body {
   display: flex; justify-content: space-between; align-items: center;
   position: sticky; top: 0; z-index: 100;
 }
-.hdr-title { font-size: 18px; font-weight: 700; color: var(--white); letter-spacing: 1.5px; text-transform: uppercase; }
-.hdr-sub { font-size: 11px; color: var(--blue); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+.hdr-title { font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: 1.5px; text-transform: uppercase; }
+.hdr-sub { font-size: 13px; color: var(--blue); font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
 .hdr-right { display: flex; align-items: center; gap: 12px; }
 .secure-tag { background: var(--green); color: #020203; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; }
 
@@ -50,7 +50,7 @@ html, body {
 .prog.active { background: var(--blue); }
 .prog.done { background: var(--green); }
 .prog-labels { display: flex; padding: 4px 20px 8px; gap: 4px; }
-.prog-lbl { flex: 1; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-align: center; transition: color 0.3s; }
+.prog-lbl { flex: 1; font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-align: center; transition: color 0.3s; }
 .prog-lbl.active { color: var(--blue); }
 .prog-lbl.done { color: var(--green); }
 
@@ -78,15 +78,15 @@ html, body {
 
 .drawer-hdr-left { display: flex; align-items: center; gap: 12px; }
 .step-num {
-  width: 28px; height: 28px; border: 2px solid #1a2535;
+  width: 32px; height: 32px; border: 2px solid #1a2535;
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: var(--muted);
+  font-size: 16px; font-weight: 900; color: var(--muted);
   flex-shrink: 0; transition: all 0.3s;
 }
 .drawer.active .step-num { border-color: var(--blue); color: var(--blue); background: rgba(43,132,254,0.1); }
 .drawer.done .step-num { border-color: var(--green); color: #020203; background: var(--green); }
 
-.drawer-title { font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.drawer-title { font-size: 18px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
 .drawer.active .drawer-title { color: var(--white); }
 .drawer.done .drawer-title { color: var(--green); }
 
@@ -108,19 +108,19 @@ html, body {
 .tog-btn:last-child { border-right: none; }
 .tog-btn.active { background: var(--blue); color: var(--white); }
 .tog-btn .t-icon { font-size: 1.1rem; }
-.tog-btn .t-main { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-.tog-btn .t-sub { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; opacity: 0.85; }
+.tog-btn .t-main { font-size: 15px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+.tog-btn .t-sub { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; opacity: 1; }
 
 /* ── PANELS ── */
 .panel { display: none; }
 .panel.show { display: block; }
 
 /* ── LABELS & INPUTS ── */
-.lbl { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.lbl { display: block; font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; margin-bottom: 6px; }
 .inp {
   width: 100%; background: var(--s1); border: 2px solid #1a2535;
   color: var(--white); padding: 10px 12px;
-  font-family: var(--font); font-size: 14px; font-weight: 500;
+  font-family: var(--font); font-size: 16px; font-weight: 600;
   outline: none; appearance: none; transition: border-color 0.2s;
 }
 .inp:focus { border-color: var(--blue); }
@@ -146,8 +146,8 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 .decode-row .inp { flex: 1; }
 .btn-decode {
   background: var(--blue); color: var(--white); border: none;
-  padding: 0 18px; font-family: var(--font); font-weight: 700;
-  font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+  padding: 0 20px; font-family: var(--font); font-weight: 900;
+  font-size: 15px; letter-spacing: 1px; text-transform: uppercase;
   cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: opacity 0.2s;
 }
 .btn-decode:hover { opacity: 0.85; }
@@ -156,7 +156,7 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 /* ── STATUS ── */
 .status {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
   padding: 4px 10px; border: 1px solid #1a2535; color: var(--muted);
   margin-bottom: 10px; transition: all 0.2s;
 }
@@ -195,13 +195,13 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 /* ── CONDITION BUTTONS ── */
 .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
 .cond-btn {
-  background: var(--s1); border: 2px solid #1a2535; padding: 16px 10px;
+  background: var(--s1); border: 2px solid #1a2535; padding: 20px 10px;
   cursor: pointer; text-align: center; transition: all 0.2s;
   display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
-.cond-btn .c-icon { font-size: 1.6rem; }
-.cond-btn .c-main { font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); }
-.cond-btn .c-sub { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.5px; }
+.cond-btn .c-icon { font-size: 2.2rem; }
+.cond-btn .c-main { font-size: 20px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--white); }
+.cond-btn .c-sub { font-size: 13px; color: #C8D8EE; font-weight: 600; letter-spacing: 0.5px; }
 .cond-btn.selected { border-color: var(--blue); background: rgba(43,132,254,0.1); }
 .cond-btn.selected .c-main { color: var(--blue); }
 .cond-btn.selected .c-sub { color: var(--white); }
@@ -212,15 +212,15 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
   padding: 18px; text-align: center; margin-bottom: 12px; display: none;
 }
 .value-panel.show { display: block; }
-.value-caption { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.value-num { font-size: 32px; font-weight: 900; color: var(--blue); letter-spacing: 1px; line-height: 1; }
-.value-note { font-size: 11px; color: var(--muted); margin-top: 8px; letter-spacing: 0.5px; }
-.value-cta { font-size: 12px; color: var(--green); margin-top: 6px; font-weight: 700; display: none; letter-spacing: 0.5px; }
+.value-caption { font-size: 14px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.value-num { font-size: 42px; font-weight: 900; color: var(--blue); letter-spacing: 1px; line-height: 1; }
+.value-note { font-size: 13px; color: #C8D8EE; margin-top: 8px; letter-spacing: 0.5px; }
+.value-cta { font-size: 14px; color: var(--green); margin-top: 8px; font-weight: 900; display: none; letter-spacing: 0.5px; }
 .value-cta.show { display: block; }
 
 /* ── CHECK BUTTONS ── */
 .check-section { margin-bottom: 14px; }
-.check-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #1a2535; }
+.check-title { font-size: 14px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #1a2535; }
 .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .check-btn {
   background: var(--s1); border: 2px solid #1a2535;
@@ -234,8 +234,8 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 }
 .check-btn.selected { border-color: var(--green); background: var(--s3); }
 .check-btn.selected .chk { background: var(--green); border-color: var(--green); color: #020203; }
-.check-main { font-size: 13px; font-weight: 600; color: var(--white); display: block; }
-.check-warn { font-size: 10px; color: var(--gold); font-weight: 700; display: block; letter-spacing: 0.5px; }
+.check-main { font-size: 15px; font-weight: 700; color: var(--white); display: block; }
+.check-warn { font-size: 12px; color: var(--gold); font-weight: 900; display: block; letter-spacing: 0.5px; }
 
 /* ── WE'RE ON IT ── */
 .on-it {
@@ -244,9 +244,9 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
   padding: 16px 20px; margin-bottom: 14px; text-align: center;
 }
 .on-it-icon { font-size: 1.8rem; margin-bottom: 8px; display: block; }
-.on-it-title { font-size: 22px; font-weight: 900; color: var(--green); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-.on-it-text { font-size: 14px; color: #E4E4E7; line-height: 1.7; margin-bottom: 10px; }
-.on-it-note { font-size: 12px; color: var(--muted); background: var(--s1); padding: 8px 12px; letter-spacing: 0.5px; }
+.on-it-title { font-size: 28px; font-weight: 900; color: var(--green); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.on-it-text { font-size: 16px; color: #E4E4E7; line-height: 1.7; margin-bottom: 10px; }
+.on-it-note { font-size: 14px; color: #C8D8EE; background: var(--s1); padding: 8px 12px; letter-spacing: 0.5px; }
 
 /* ── PHOTO GRID ── */
 .photo-tips { background: var(--s1); border-left: 6px solid var(--gold); padding: 12px 16px; margin-bottom: 12px; }
@@ -266,8 +266,8 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 .photo-slot.done { border-color: var(--green); border-style: solid; background: var(--s3); }
 .photo-slot input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
 .p-icon { font-size: 1.3rem; }
-.p-title { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--white); }
-.p-hint { font-size: 10px; color: var(--muted); line-height: 1.3; text-align: center; }
+.p-title { font-size: 14px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; color: var(--white); }
+.p-hint { font-size: 12px; color: #C8D8EE; line-height: 1.3; text-align: center; }
 .photo-slot.done .p-title { color: var(--green); }
 
 /* ── CERT BADGE ── */
@@ -287,23 +287,23 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 /* ── BUTTONS ── */
 .btn-primary {
   width: 100%; background: var(--blue); color: var(--white); border: none;
-  padding: 13px; font-family: var(--font); font-size: 14px; font-weight: 700;
+  padding: 15px; font-family: var(--font); font-size: 16px; font-weight: 900;
   letter-spacing: 1px; text-transform: uppercase; cursor: pointer; margin-top: 12px;
   transition: opacity 0.2s;
 }
 .btn-primary:hover { opacity: 0.88; }
 .btn-submit {
   width: 100%; background: var(--green); color: #020203; border: none;
-  padding: 16px; font-family: var(--font); font-size: 16px; font-weight: 900;
+  padding: 20px; font-family: var(--font); font-size: 20px; font-weight: 900;
   letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 12px;
   display: none; transition: opacity 0.2s;
 }
 .btn-submit:hover { opacity: 0.88; }
 
 /* ── SIGNATURE ── */
-#sig-canvas { width: 100%; height: 80px; background: var(--s1); border: 2px dashed #1a2535; cursor: crosshair; touch-action: none; display: block; }
+#sig-canvas { width: 100%; height: 100px; background: var(--s1); border: 2px dashed #1a2535; cursor: crosshair; touch-action: none; display: block; }
 .sig-row { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
-.sig-hint { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.sig-hint { font-size: 14px; color: #C8D8EE; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
 .btn-clear { background: none; border: 1px solid #1a2535; color: var(--muted); font-size: 11px; padding: 3px 10px; cursor: pointer; font-family: var(--font); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
 .btn-clear:hover { border-color: var(--red); color: var(--red); }
 
@@ -589,9 +589,18 @@ footer b { color: var(--blue); }
       <div class="cert-msg" id="cert-msg">Complete more sections to qualify for EVL Verified</div>
     </div>
 
-    <!-- PHOTOS -->
-    <div style="margin-top:16px">
-      <div class="check-title" style="margin-bottom:10px">📸 Vehicle Photos — Boosts Your Offer</div>
+    <!-- PHOTOS DRAWER -->
+    <div style="margin-top:16px;border:2px solid #1a2535;margin-bottom:8px" id="photo-drawer">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--s1);cursor:pointer" onclick="togglePhotoDrawer()">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--gold)">📸 Vehicle Photos</span>
+          <span style="font-size:13px;color:var(--green);font-weight:700">BOOSTS YOUR OFFER</span>
+        </div>
+        <span style="font-size:12px;color:var(--gold)" id="photo-arrow">▼ TAP TO ADD PHOTOS</span>
+      </div>
+      <div id="photo-body" style="display:none;padding:14px 16px">
+      <div style="margin-top:0px">
+      <div class="check-title" style="margin-bottom:10px;display:none">📸 Vehicle Photos — Boosts Your Offer</div>
       <div class="photo-tips">
         <div class="photo-tips-title">📱 Quick Photo Guide</div>
         <div class="photo-tips-grid">
@@ -616,6 +625,7 @@ footer b { color: var(--blue); }
       </div>
     </div>
 
+      </div></div></div><!-- /photo drawer -->
     <button class="btn-primary" onclick="confirmStep(3)">✓ Continue to Authorization</button>
   </div>
 </div>
@@ -639,7 +649,7 @@ footer b { color: var(--blue); }
       <div class="mb10"><label class="lbl">Email</label><input type="email" class="inp" id="email" placeholder="you@email.com"></div>
     </div>
     <div class="mb10">
-      <label class="lbl">Authorization Signature</label>
+      <label class="lbl" style="font-size:16px;color:var(--blue)">✍️ Authorization Signature — Sign Below</label>
       <canvas id="sig-canvas"></canvas>
       <div class="sig-row">
         <span class="sig-hint">Sign above to authorize appraisal submission</span>
@@ -666,7 +676,7 @@ footer b { color: var(--blue); }
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v7.0</b></span>
+  <span>Entity Protocol <b>v7.1</b></span>
   <span>// EVL CERTIFIED DATA STREAM //</span>
 </footer>
 
@@ -742,6 +752,7 @@ function openSticker(){var vin=document.getElementById('vin-inp').value.trim();n
 function closeModal(id){document.getElementById(id).classList.remove('open');if(id==='estimator-modal')document.getElementById('estimator-frame').src='';}
 
 function submitAudit(){var fname=document.getElementById('fname').value.trim(),lname=document.getElementById('lname').value.trim();if(!fname||!lname){alert('Please enter your name.');return;}var phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim(),notes=document.getElementById('notes-inp').value,valueRange=document.getElementById('value-num').textContent,certName=document.getElementById('cert-name').textContent,vehicleInfo='';if(lookupMode==='vin'){vehicleInfo='VIN: '+document.getElementById('vin-inp').value+'\nVEHICLE: '+document.getElementById('res-ymm').textContent+'\nTRIM: '+document.getElementById('res-trim').textContent+'\nMILEAGE: '+document.getElementById('miles-inp').value+'\nSPECS:\n'+document.getElementById('res-specs').textContent;}else{vehicleInfo='LOOKUP: YMM\nYEAR: '+ymmData.year+'\nMAKE: '+ymmData.make+'\nMODEL: '+ymmData.model+'\nBODY: '+(ymmData.body||'—')+'\nTRIM: '+(ymmData.trim||'—')+'\nDRIVETRAIN: '+(ymmData.drive||'—')+'\nEXT COLOR: '+(ymmData.color||'—')+'\nINT COLOR: '+(ymmData.intColor||'—')+'\nMILEAGE: '+ymmData.miles+'\nZIP: '+(ymmData.zip||'—')+'\nKEYS: '+(ymmData.keys||'—')+'\nFACTORY OPTIONS: '+(ymmData.options||'None');}var checksText='';for(var key in checks){checksText+=key.toUpperCase()+': '+checks[key].join(', ')+'\n';}var subject=encodeURIComponent('EVL Certified Appraisal — '+certName),body=encodeURIComponent('EVL CERTIFIED APPRAISAL\n========================\nCERTIFICATION: '+certName+'\nCUSTOMER: '+fname+' '+lname+'\nPHONE: '+phone+'\nEMAIL: '+email+'\n------------------------\n'+vehicleInfo+'\n------------------------\nCONDITION: '+condLabel+'\nESTIMATED RANGE: '+valueRange+'\n------------------------\nCHECKLIST:\n'+checksText+'\nNOTES: '+(notes||'None')+'\nPHOTOS: '+Object.keys(photos).length+' uploaded\nSIGNATURE: Captured\n========================\nEVL v7.0');window.location.href='mailto:'+DEALER_EMAIL+'?subject='+subject+'&body='+body;document.getElementById('submit-btn').style.display='none';document.getElementById('success').style.display='block';document.getElementById('success').scrollIntoView({behavior:'smooth'});}
+function togglePhotoDrawer(){var body=document.getElementById('photo-body'),arrow=document.getElementById('photo-arrow');var open=body.style.display==='block';body.style.display=open?'none':'block';arrow.textContent=open?'▼ TAP TO ADD PHOTOS':'▲ CLOSE PHOTOS';}
 </script>
 </body>
 </html>
