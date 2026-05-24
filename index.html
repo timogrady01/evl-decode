@@ -333,8 +333,11 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
             <input type="text" class="inp" id="ymm-zip" placeholder="e.g. 75024" maxlength="5">
           </div>
           <div>
-            <label class="lbl">Engine / Options <span style="color:var(--muted);font-weight:400">(optional)</span></label>
-            <input type="text" class="inp" id="ymm-engine" placeholder="e.g. 3.5L V6, Sunroof, Leather">
+            <label class="lbl">Factory Options / Packages</label>
+            <div id="ymm-options-wrap" style="background:var(--surface2);border:1.5px solid var(--border);padding:10px;min-height:44px">
+              <div style="font-size:0.78rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase" id="ymm-options-hint">Select Trim First</div>
+              <div id="ymm-options-grid" style="display:none;grid-template-columns:1fr;gap:6px"></div>
+            </div>
           </div>
         </div>
         <div class="mb14">
@@ -514,7 +517,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.8</b></span>
+  <span>Entity Protocol <b>v3.9</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -712,8 +715,98 @@ function loadTrims(){
   trimEl.disabled=false;
 }
 
+// Options by make|model|trim
+var OPTIONS_DB = {
+  'toyota|camry|se': ['Convenience Package (Smart Key/HomeLink)','Audio Upgrade Package (9" Screen/Wireless Charging)','Cold Weather Package (Heated Seats/Wheel)','Power Moonroof','Blind Spot Monitor + RCTA','SE Nightshade Edition'],
+  'toyota|camry|se hybrid': ['Convenience Package','Audio Upgrade Package','Cold Weather Package','Power Moonroof','Blind Spot Monitor + RCTA','SE Hybrid Nightshade Edition'],
+  'toyota|camry|le': ['Convenience Package','Power Moonroof','Blind Spot Monitor + RCTA'],
+  'toyota|camry|xle': ['Premium JBL Audio','Power Moonroof (Standard)','Blind Spot Monitor (Standard)','Ventilated Front Seats','Digital Rearview Mirror'],
+  'toyota|camry|xse': ['Power Moonroof','Blind Spot Monitor + RCTA','XSE Nightshade Edition'],
+  'toyota|camry|trd': ['TRD Performance Exhaust','TRD Suspension','TRD Wheels'],
+  'toyota|rav4|le': ['All Weather Package','Blind Spot Monitor + RCTA'],
+  'toyota|rav4|xle': ['Power Moonroof','Blind Spot Monitor + RCTA','All Weather Package','XLE Premium Package'],
+  'toyota|rav4|limited': ['Power Moonroof (Standard)','Premium JBL Audio','Digital Rearview Mirror','Panoramic Moonroof'],
+  'toyota|rav4|trd off-road': ['TRD Off-Road Package (Standard)','All Weather Package'],
+  'toyota|tacoma|sr5': ['SR5 Convenience Package','Tow Package','Bed Liner','TRD Sport Package','TRD Off-Road Package'],
+  'toyota|tacoma|trd sport': ['TRD Sport (Standard)','Tow Package','Bed Liner','Access Cab / Double Cab'],
+  'toyota|tacoma|trd off-road': ['TRD Off-Road (Standard)','Tow Package','Bed Liner','Locking Rear Differential'],
+  'toyota|tacoma|trd pro': ['TRD Pro Package (Standard)','Fox Shocks','Skid Plates','Lunar Rock Color'],
+  'toyota|tundra|sr5': ['SR5 Convenience Package','Tow Package','Spray-In Bedliner','TRD Off-Road Package'],
+  'toyota|tundra|limited': ['Power Running Boards','Tow Package','Premium Audio','Panoramic Moonroof'],
+  'toyota|tundra|trd pro': ['TRD Pro Package (Standard)','FOX Shocks','Skid Plates'],
+  'toyota|4runner|sr5': ['SR5 Premium Package','Third Row Seating','TRD Off-Road Package'],
+  'toyota|4runner|trd off-road': ['TRD Off-Road (Standard)','TRD Pro Upgrade','Crawl Control'],
+  'toyota|highlander|le': ['Blind Spot Monitor','All Weather Package'],
+  'toyota|highlander|xle': ['Power Moonroof','Premium Audio','Blind Spot Monitor'],
+  'toyota|highlander|limited': ['Premium JBL Audio','Power Moonroof','Digital Rearview Mirror'],
+  'ford|f-150|xlt': ['302A Equipment Group','Sport Appearance Package','Trailer Tow Package','FX4 Off-Road Package','Spray-In Bedliner','Power Sliding Rear Window'],
+  'ford|f-150|lariat': ['Lariat Sport Appearance','Max Trailer Tow Package','FX4 Off-Road Package','Panoramic Moonroof','Power Running Boards'],
+  'ford|f-150|king ranch': ['King Ranch Ultimate Package','Max Trailer Tow Package','FX4 Off-Road Package','Power Running Boards'],
+  'ford|f-150|platinum': ['Platinum Ultimate Package','Max Trailer Tow Package','Panoramic Moonroof','Power Running Boards'],
+  'ford|f-150|raptor': ['Raptor Package (Standard)','37" Performance Package','Recaro Seats'],
+  'ford|escape|se': ['SE Sport Appearance Package','Cold Weather Package','Panoramic Moonroof'],
+  'ford|explorer|xlt': ['XLT Sport Appearance Package','Trailer Tow Package','Third Row Seating'],
+  'chevrolet|silverado 1500|lt': ['LT Trail Boss Package','Convenience Package II','Trailering Package','Z71 Off-Road Package','Durabed Spray-On Liner'],
+  'chevrolet|silverado 1500|ltz': ['LTZ Premium Package','Duramax Diesel Option','Max Trailering Package','Z71 Off-Road Package'],
+  'chevrolet|tahoe|lt': ['LT Premium Package','Z71 Off-Road Package','Max Trailering Package','Power Running Boards'],
+  'gmc|sierra 1500|sle': ['SLE Convenience Package','Trailering Package','All Terrain Package','X31 Off-Road Package'],
+  'gmc|sierra 1500|slt': ['SLT Premium Package','Max Trailering Package','All Terrain Package','Duramax Diesel Option'],
+  'gmc|sierra 1500|denali': ['Denali Ultimate Package (Standard)','Max Trailering','Duramax Diesel Option','Power Running Boards'],
+  'honda|cr-v|ex': ['Power Moonroof (Standard)','Remote Start','Honda Sensing (Standard)'],
+  'honda|cr-v|ex-l': ['Power Moonroof (Standard)','Heated Seats (Standard)','Navigation System'],
+  'honda|accord|sport': ['Sport Special Edition','Honda Sensing (Standard)','Power Moonroof'],
+  'honda|accord|ex-l': ['Power Moonroof','Honda Sensing','Navigation System','Heated Seats'],
+  'honda|pilot|ex-l': ['Power Moonroof','Navigation','Heated Seats','Trailer Hitch'],
+  'ram|1500|big horn': ['Big Horn Sport Appearance','Tow Package','Bed Liner','Off-Road Package'],
+  'ram|1500|laramie': ['Laramie Sport Package','Night Edition','Max Tow Package','Bed Liner','Power Running Boards'],
+  'ram|1500|rebel': ['Rebel Package (Standard)','Off-Road Package','Night Edition','Bed Liner'],
+  'jeep|wrangler|sport': ['Sport S Package','Safety & Security Group','Trailer Tow Package'],
+  'jeep|wrangler|sahara': ['Sahara Altitude Package','Safety Group','Sky One-Touch Roof','Trailer Tow Package'],
+  'jeep|wrangler|rubicon': ['Rubicon Package (Standard)','Sky One-Touch Roof','Trailer Tow Package'],
+  'jeep|grand cherokee|laredo': ['Laredo X Package','Sun & Sound Group','Tow Package'],
+  'jeep|grand cherokee|limited': ['Limited X Package','Safety Tech Group','Panoramic Moonroof','Tow Package'],
+};
+
+// Generic options for vehicles not in DB
+var GENERIC_OPTIONS = ['Power Moonroof / Sunroof','Panoramic Sunroof','Blind Spot Monitor','Navigation System','Premium Audio (JBL/Bose/Harman)','Remote Start','Heated Front Seats','Ventilated/Cooled Seats','Heated Steering Wheel','Third Row Seating','Tow / Trailer Package','Power Running Boards','Bed Liner / Tonneau Cover','All Weather Package','Cold Weather Package'];
+
 function loadOptions(){
-  // Options cascade is handled in Step 3 after confirm
+  var make=document.getElementById('ymm-make').value;
+  var model=document.getElementById('ymm-model').value;
+  var trim=document.getElementById('ymm-trim').value;
+  if(!trim) return;
+  
+  var key=(make+'|'+model+'|'+trim).toLowerCase();
+  var opts=null;
+  
+  // Exact match first
+  if(OPTIONS_DB[key]) opts=OPTIONS_DB[key];
+  else {
+    // Partial match
+    for(var k in OPTIONS_DB){
+      if(key.indexOf(k)>=0||k.indexOf(make.toLowerCase()+'|'+model.toLowerCase())>=0){
+        opts=OPTIONS_DB[k]; break;
+      }
+    }
+  }
+  if(!opts) opts=GENERIC_OPTIONS;
+  
+  var hint=document.getElementById('ymm-options-hint');
+  var grid=document.getElementById('ymm-options-grid');
+  hint.style.display='none';
+  grid.style.display='grid';
+  grid.innerHTML='';
+  
+  for(var i=0;i<opts.length;i++){
+    var btn=document.createElement('button');
+    btn.className='check-btn';
+    btn.setAttribute('data-group','factory-opt');
+    btn.setAttribute('data-val',opts[i]);
+    btn.setAttribute('onclick','toggleCheck(this)');
+    btn.innerHTML='<div class="chk"></div><div class="txt">'+opts[i]+'</div>';
+    btn.addEventListener('click',function(){toggleCheck(this);});
+    grid.appendChild(btn);
+  }
 }
 
 function showYmmLoading(show){
