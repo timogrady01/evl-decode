@@ -1,1 +1,11 @@
-{"rewrites":[{"source":"/api/decode","destination":"/api/decode"},{"source":"/(.*)","destination":"/public/index.html"}]}
+{
+  "version": 2,
+  "builds": [
+    { "src": "public/index.html", "use": "@vercel/static" },
+    { "src": "api/decode.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/decode", "dest": "/api/decode.js" },
+    { "src": "/(.*)", "dest": "/public/index.html" }
+  ]
+}
