@@ -514,7 +514,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.5</b></span>
+  <span>Entity Protocol <b>v3.6</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -573,7 +573,6 @@ async function loadMakes(){
   modelEl.innerHTML='<option value="">Select Model</option>';
   modelEl.disabled=true;
   trimEl.innerHTML='<option value="">Select Trim</option>';
-  trimEl.disabled=true;
   showYmmLoading(true);
   try{
     const r=await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json`);
@@ -599,7 +598,6 @@ async function loadModels(){
   modelEl.innerHTML='<option value="">Loading models...</option>';
   modelEl.disabled=true;
   trimEl.innerHTML='<option value="">Select Trim</option>';
-  trimEl.disabled=true;
   showYmmLoading(true);
   try{
     const r=await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`);
@@ -608,6 +606,8 @@ async function loadModels(){
     modelEl.innerHTML='<option value="">Select Model</option>';
     models.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;modelEl.appendChild(o);});
     modelEl.disabled=false;
+    // Auto-load trims if model already selected
+    if(modelEl.value) loadTrims();
   }catch(e){
     modelEl.innerHTML='<option value="">Error loading models</option>';
     modelEl.disabled=false;
