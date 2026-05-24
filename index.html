@@ -31,7 +31,7 @@ html, body {
   overflow-x: hidden;
 }
 .page-center {
-  max-width: 580px;
+  max-width: 600px;
   margin: 0 auto;
   background: var(--bg);
   min-height: 100vh;
@@ -47,7 +47,7 @@ html, body {
   position: sticky; top: 0; z-index: 100;
   width: 100%;
 }
-.hdr-title { font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: 1.5px; text-transform: uppercase; }
+.hdr-title { font-size: 24px; font-weight: 900; color: var(--white); letter-spacing: 1.5px; text-transform: uppercase; }
 .hdr-sub { font-size: 13px; color: var(--blue); font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
 .hdr-right { display: flex; align-items: center; gap: 12px; }
 .secure-tag { background: var(--green); color: #020203; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; }
@@ -68,7 +68,7 @@ html, body {
 /* ── DRAWER ── */
 .drawer {
   background: var(--s2);
-  border: 2px solid #1a2535;
+  border: 2px solid #2B4480;
   margin-bottom: 8px;
   transition: border-color 0.3s;
   width: 100%;
@@ -87,7 +87,7 @@ html, body {
 
 .drawer-hdr-left { display: flex; align-items: center; gap: 12px; }
 .step-num {
-  width: 32px; height: 32px; border: 2px solid #1a2535;
+  width: 36px; height: 36px; border: 2px solid #2B84FE;
   display: flex; align-items: center; justify-content: center;
   font-size: 16px; font-weight: 900; color: var(--muted);
   flex-shrink: 0; transition: all 0.3s;
@@ -95,7 +95,7 @@ html, body {
 .drawer.active .step-num { border-color: var(--blue); color: var(--blue); background: rgba(43,132,254,0.1); }
 .drawer.done .step-num { border-color: var(--green); color: #020203; background: var(--green); }
 
-.drawer-title { font-size: 18px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.drawer-title { font-size: 22px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
 .drawer.active .drawer-title { color: var(--white); }
 .drawer.done .drawer-title { color: var(--green); }
 
@@ -117,23 +117,23 @@ html, body {
 .tog-btn:last-child { border-right: none; }
 .tog-btn.active { background: var(--blue); color: var(--white); }
 .tog-btn .t-icon { font-size: 1.1rem; }
-.tog-btn .t-main { font-size: 15px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
-.tog-btn .t-sub { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; opacity: 1; }
+.tog-btn .t-main { font-size: 16px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+.tog-btn .t-sub { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: rgba(255,255,255,0.9); }
 
 /* ── PANELS ── */
 .panel { display: none; }
 .panel.show { display: block; }
 
 /* ── LABELS & INPUTS ── */
-.lbl { display: block; font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; margin-bottom: 6px; }
+.lbl { display: block; font-size: 15px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff; margin-bottom: 8px; }
 .inp {
-  width: 100%; background: var(--s1); border: 2px solid #1a2535;
+  width: 100%; background: #0D1829; border: 2px solid #2B84FE;
   color: var(--white); padding: 10px 12px;
-  font-family: var(--font); font-size: 16px; font-weight: 600;
+  font-family: var(--font); font-size: 18px; font-weight: 700;
   outline: none; appearance: none; transition: border-color 0.2s;
 }
 .inp:focus { border-color: var(--blue); }
-.inp::placeholder { color: var(--muted); font-weight: 400; }
+.inp::placeholder { color: #5A7AAA; font-weight: 500; }
 .inp.filled { border-color: var(--green); color: var(--green); background: var(--s3); }
 .inp-vin { font-size: 20px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
 
@@ -204,14 +204,14 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 /* ── CONDITION BUTTONS ── */
 .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
 .cond-btn {
-  background: var(--s1); border: 2px solid #1a2535; padding: 20px 10px;
+  background: #0D1829; border: 2px solid #2B4070; border-left: 4px solid var(--blue); padding: 20px 10px;
   cursor: pointer; text-align: center; transition: all 0.2s;
   display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
 .cond-btn .c-icon { font-size: 2.2rem; }
 .cond-btn .c-main { font-size: 20px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--white); }
-.cond-btn .c-sub { font-size: 13px; color: #C8D8EE; font-weight: 600; letter-spacing: 0.5px; }
-.cond-btn.selected { border-color: var(--blue); background: rgba(43,132,254,0.1); }
+.cond-btn .c-sub { font-size: 14px; color: #ffffff; font-weight: 600; letter-spacing: 0.5px; }
+.cond-btn.selected { border-color: var(--blue); border-left: 4px solid var(--blue); background: rgba(43,132,254,0.15); }
 .cond-btn.selected .c-main { color: var(--blue); }
 .cond-btn.selected .c-sub { color: var(--white); }
 
@@ -230,20 +230,20 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 /* ── CHECK BUTTONS ── */
 .check-section { margin-bottom: 14px; }
 .check-title { font-size: 14px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #1a2535; }
-.check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.check-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
 .check-btn {
-  background: var(--s1); border: 2px solid #1a2535;
-  padding: 9px 11px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+  background: #0D1829; border: 2px solid #2B4070;
+  padding: 11px 10px; cursor: pointer; display: flex; align-items: center; gap: 8px;
   text-align: left; transition: all 0.2s;
 }
 .check-btn .chk {
-  width: 18px; height: 18px; flex-shrink: 0; border: 2px solid #1a2535;
+  width: 18px; height: 18px; flex-shrink: 0; border: 2px solid #2B4070;
   background: var(--s2); display: flex; align-items: center; justify-content: center;
   font-size: 11px; transition: all 0.2s;
 }
 .check-btn.selected { border-color: var(--green); background: var(--s3); }
 .check-btn.selected .chk { background: var(--green); border-color: var(--green); color: #020203; }
-.check-main { font-size: 15px; font-weight: 700; color: var(--white); display: block; }
+.check-main { font-size: 14px; font-weight: 800; color: #ffffff; display: block; }
 .check-warn { font-size: 12px; color: var(--gold); font-weight: 900; display: block; letter-spacing: 0.5px; }
 
 /* ── WE'RE ON IT ── */
@@ -296,23 +296,23 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 /* ── BUTTONS ── */
 .btn-primary {
   width: 100%; background: var(--blue); color: var(--white); border: none;
-  padding: 15px; font-family: var(--font); font-size: 16px; font-weight: 900;
+  padding: 16px; font-family: var(--font); font-size: 18px; font-weight: 900;
   letter-spacing: 1px; text-transform: uppercase; cursor: pointer; margin-top: 12px;
   transition: opacity 0.2s;
 }
 .btn-primary:hover { opacity: 0.88; }
 .btn-submit {
   width: 100%; background: var(--green); color: #020203; border: none;
-  padding: 20px; font-family: var(--font); font-size: 20px; font-weight: 900;
+  padding: 22px; font-family: var(--font); font-size: 22px; font-weight: 900;
   letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 12px;
   display: none; transition: opacity 0.2s;
 }
 .btn-submit:hover { opacity: 0.88; }
 
 /* ── SIGNATURE ── */
-#sig-canvas { width: 100%; height: 100px; background: var(--s1); border: 2px dashed #1a2535; cursor: crosshair; touch-action: none; display: block; }
+#sig-canvas { width: 100%; height: 110px; background: #0D1829; border: 2px dashed #2B84FE; cursor: crosshair; touch-action: none; display: block; }
 .sig-row { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
-.sig-hint { font-size: 14px; color: #C8D8EE; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+.sig-hint { font-size: 15px; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
 .btn-clear { background: none; border: 1px solid #1a2535; color: var(--muted); font-size: 11px; padding: 3px 10px; cursor: pointer; font-family: var(--font); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
 .btn-clear:hover { border-color: var(--red); color: var(--red); }
 
@@ -333,7 +333,7 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 
 /* ── FOOTER ── */
 footer { border-top: 1px solid #090E17; padding: 10px 20px; display: flex; justify-content: space-between; }
-footer span { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; font-family: var(--font); }
+footer span { font-size: 13px; color: #8899BB; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font); }
 footer b { color: var(--blue); }
 </style>
 </head>
@@ -344,7 +344,7 @@ footer b { color: var(--blue); }
 <div class="hdr">
   <div>
     <div class="hdr-title">◈ Express Vehicle Locators</div>
-    <div class="hdr-sub">Vehicle Trade-In Evaluator // Secure Access</div>
+    <div class="hdr-sub">What's Your Trade Worth? — Certified Evaluator</div>
   </div>
   <div class="hdr-right">
     <div class="secure-tag">⚡ Secure</div>
@@ -473,7 +473,7 @@ footer b { color: var(--blue); }
       <div class="mb10">
         <label class="lbl">Factory Options / Packages</label>
         <div id="ymm-opts-hint" class="opts-hint">Select Trim above to load factory options</div>
-        <div id="ymm-opts-grid" style="display:none" class="check-grid"></div>
+        <div id="ymm-opts-grid" style="display:none;grid-template-columns:1fr 1fr 1fr;gap:6px"></div>
       </div>
       <button class="btn-primary" type="button" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
     </div>
@@ -686,7 +686,7 @@ footer b { color: var(--blue); }
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v7.5</b></span>
+  <span>Entity Protocol <b>v7.7</b></span>
   <span>// EVL CERTIFIED DATA STREAM //</span>
 </footer>
 
