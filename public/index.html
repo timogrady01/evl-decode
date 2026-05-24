@@ -462,6 +462,36 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           <button class="check-btn" data-group="spare" data-val="Spare Tire & Jack" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Spare Tire & Jack</div></div></button>
         </div>
       </div>
+      <!-- FACTORY OPTIONS & PACKAGES -->
+      <div class="check-section">
+        <div class="check-title">Factory Options & Packages <span style="color:var(--gold);font-size:0.72rem;margin-left:8px">INCREASES YOUR OFFER</span></div>
+        <div class="check-grid">
+          <button class="check-btn" data-group="pkg" data-val="Convenience Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Convenience Package</div><span class="warn">Smart Key / HomeLink / Auto-dim Mirror</span></div></button>
+          <button class="check-btn" data-group="pkg" data-val="Audio Upgrade Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Audio Upgrade Package</div><span class="warn">9" Screen / Wireless Charging</span></div></button>
+          <button class="check-btn" data-group="pkg" data-val="Cold Weather Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Cold Weather Package</div><span class="warn">Heated Seats / Wheel / Mirrors</span></div></button>
+          <button class="check-btn" data-group="pkg" data-val="Moonroof" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Power Moonroof / Sunroof</div><span class="warn">Factory installed</span></div></button>
+          <button class="check-btn" data-group="pkg" data-val="Blind Spot Monitor" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Blind Spot Monitor (BSM)</div><span class="warn">+ Rear Cross-Traffic Alert</span></div></button>
+          <button class="check-btn" data-group="pkg" data-val="Navigation System" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Navigation System</div><span class="warn">Factory / OEM nav</span></div></button>
+          <button class="check-btn" data-group="pkg" data-val="Premium Audio" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Premium Audio System</div><span class="warn">JBL / Bose / Mark Levinson etc.</span></div></button>
+          <button class="check-btn" data-group="pkg" data-val="Tow Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Tow Package</div><span class="warn">Factory trailer hitch / wiring</span></div></button>
+        </div>
+      </div>
+
+      <!-- APPEARANCE & UPGRADES -->
+      <div class="check-section">
+        <div class="check-title">Appearance & Upgrades</div>
+        <div class="check-grid">
+          <button class="check-btn" data-group="appearance" data-val="Nightshade / Appearance Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Nightshade / Appearance Pkg</div><span class="warn">Blacked-out trim / special wheels</span></div></button>
+          <button class="check-btn" data-group="appearance" data-val="Upgraded Wheels" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Upgraded Wheels</div><span class="warn">Beyond standard size/style</span></div></button>
+          <button class="check-btn" data-group="appearance" data-val="Leather Seats" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Leather / Leatherette Seats</div><span class="warn">Factory or aftermarket</span></div></button>
+          <button class="check-btn" data-group="appearance" data-val="Remote Start" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Remote Start</div><span class="warn">Factory or aftermarket</span></div></button>
+          <button class="check-btn" data-group="appearance" data-val="Running Boards" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Running Boards / Steps</div><span class="warn">Factory or aftermarket</span></div></button>
+          <button class="check-btn" data-group="appearance" data-val="Lift Kit" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Lift Kit</div><span class="warn">Aftermarket suspension lift</span></div></button>
+          <button class="check-btn" data-group="appearance" data-val="Bed Liner / Tonneau" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Bed Liner / Tonneau Cover</div><span class="warn">Spray-in or roll-up</span></div></button>
+          <button class="check-btn" data-group="appearance" data-val="Premium Tires" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Premium / All-Terrain Tires</div><span class="warn">Upgraded from stock</span></div></button>
+        </div>
+      </div>
+
       <div class="mb14">
         <label class="lbl">Additional Notes <span style="color:var(--muted);font-weight:400">(upgrades, modifications, etc.)</span></label>
         <textarea class="inp" id="notes-inp" placeholder="Describe any modifications, upgrades, or additional details..."></textarea>
@@ -529,7 +559,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.1</b></span>
+  <span>Entity Protocol <b>v3.2</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
