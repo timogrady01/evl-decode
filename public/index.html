@@ -1,768 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Acquisition Radar v4</title>
 <style>
-html,body,#page,#wrapper,.site,.site-content,#content,#primary,#main,.entry-content,.wp-block-post-content,footer,.site-footer,article,.post{background-color:#020203!important;background:#020203!important;color:#fff!important;margin:0!important;padding:0!important;width:100%!important;max-width:100%!important;overflow-x:hidden!important}
-header,.site-header,#masthead,.main-navigation,footer,.site-footer,.nav-menu{display:none!important}
-h1.entry-title,.entry-header{display:none!important}
-*{box-sizing:border-box!important;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif!important}
-.evl-wrap{width:100%!important;max-width:720px!important;margin:0 auto!important;padding:20px 16px 60px!important}
-.evl-header{background:#020203!important;border-bottom:3px solid #2B84FE!important;padding:18px 20px!important;display:flex!important;align-items:center!important;justify-content:space-between!important}
-.evl-header-logo{display:flex!important;align-items:center!important;gap:12px!important}
-.evl-secure{background:#00C853!important;color:#020203!important;font-weight:900!important;font-size:15px!important;padding:10px 20px!important;letter-spacing:1px!important;text-transform:uppercase!important}
-.evl-hero{background:#020203!important;padding:32px 20px 24px!important;border-bottom:2px solid #333!important}
-.evl-hero h1{font-size:42px!important;font-weight:900!important;color:#ffffff!important;margin:0 0 4px!important;text-transform:uppercase!important;line-height:1.1!important}
-.evl-hero h1 span{color:#2B84FE!important}
-.evl-hero-sub{color:#ffffff!important;font-size:17px!important;border-left:4px solid #2B84FE!important;padding-left:14px!important;margin:18px 0 26px!important;line-height:1.7!important}
-.evl-hero-sub strong{color:#ffffff!important;font-size:17px!important;font-weight:900!important}
-.evl-cta-row{display:grid!important;grid-template-columns:1fr 1fr!important;gap:14px!important;margin-bottom:26px!important}
-.evl-cta-btn{border:2px solid #2B84FE!important;background:#0A0A14!important;color:#fff!important;padding:20px!important;text-align:left!important;cursor:pointer!important}
-.evl-cta-btn .title{font-size:16px!important;font-weight:900!important;text-transform:uppercase!important;letter-spacing:1px!important;margin-bottom:6px!important;color:#ffffff!important;display:block!important}
-.evl-cta-btn .sub{font-size:14px!important;color:#2B84FE!important;text-transform:uppercase!important;letter-spacing:1px!important;display:block!important;font-weight:700!important}
-.evl-step{background:#070A12!important;border:2px solid #2a2a4e!important;margin-bottom:18px!important;overflow:hidden!important}
-.evl-step.locked{opacity:1!important;pointer-events:none!important;filter:brightness(0.6)!important}
-.evl-step.unlocked{opacity:1!important;pointer-events:all!important;filter:none!important}
-.evl-step.complete .evl-step-num{background:#00C853!important;border-color:#00C853!important;color:#020203!important}
-.evl-step-header{display:flex!important;align-items:center!important;gap:14px!important;padding:18px 20px!important;border-bottom:2px solid #222!important}
-.evl-step-num{width:40px!important;height:40px!important;border:3px solid #2B84FE!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:18px!important;color:#2B84FE!important;font-weight:900!important;flex-shrink:0!important}
-.evl-step.unlocked .evl-step-num{background:#2B84FE!important;color:#020203!important}
-.evl-step-title{font-size:16px!important;font-weight:900!important;text-transform:uppercase!important;letter-spacing:1px!important;color:#ffffff!important}
-.evl-step-body{padding:22px!important}
-.evl-lock-msg{font-size:16px!important;color:#ffffff!important;text-align:center!important;padding:28px!important;text-transform:uppercase!important;letter-spacing:2px!important;font-weight:900!important;background:#111!important;border:1px solid #333!important}
-.evl-input{width:100%!important;background:#0D0D1A!important;border:2px solid #2B84FE!important;color:#ffffff!important;padding:18px!important;font-size:20px!important;font-family:monospace!important;letter-spacing:2px!important;text-transform:uppercase!important;outline:none!important;display:block!important;font-weight:700!important}
-.evl-input::placeholder{color:#888!important;letter-spacing:1px!important}
-.evl-label{font-size:13px!important;color:#2B84FE!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important;margin-bottom:10px!important;display:block!important}
-.evl-field{margin-bottom:22px!important}
-.evl-row{display:grid!important;grid-template-columns:1fr 1fr!important;gap:16px!important}
-.evl-data-box{background:#0D0D1A!important;border:2px solid #2a2a4e!important;padding:16px 18px!important;font-size:18px!important;color:#ffffff!important;min-height:54px!important;font-family:monospace!important;font-weight:700!important;display:block!important}
-.evl-data-box.filled{color:#00C853!important;border-color:#00C853!important}
-.evl-specs{background:#0D0D1A!important;border:2px solid #2a2a4e!important;padding:18px!important;font-size:15px!important;color:#ffffff!important;font-family:monospace!important;min-height:120px!important;white-space:pre-wrap!important;line-height:2!important;font-weight:700!important;display:block!important}
-.evl-specs.filled{border-color:#2B84FE!important}
-.evl-decode-row{display:flex!important;gap:12px!important;margin-bottom:16px!important}
-.evl-decode-btn{background:#2B84FE!important;color:#ffffff!important;border:none!important;padding:18px 28px!important;font-weight:900!important;font-size:17px!important;letter-spacing:1px!important;text-transform:uppercase!important;cursor:pointer!important;white-space:nowrap!important}
-.evl-confirm-btn{background:#00C853!important;color:#020203!important;border:none!important;padding:20px!important;font-weight:900!important;font-size:17px!important;letter-spacing:1px!important;text-transform:uppercase!important;cursor:pointer!important;width:100%!important;margin-top:18px!important;display:block!important}
-.evl-submit-btn{background:#2B84FE!important;color:#ffffff!important;border:none!important;padding:24px!important;font-weight:900!important;font-size:20px!important;letter-spacing:2px!important;text-transform:uppercase!important;cursor:pointer!important;width:100%!important;margin-top:22px!important;display:block!important}
-.evl-status{font-size:15px!important;color:#ffffff!important;text-transform:uppercase!important;letter-spacing:1px!important;padding:12px 0!important;font-weight:700!important;display:block!important}
-.evl-status.ok{color:#00C853!important}
-.evl-status.err{color:#FF3333!important}
-.evl-status.scanning{color:#2B84FE!important}
-.evl-btn-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:8px!important}
-.evl-btn-grid.three{grid-template-columns:1fr 1fr 1fr!important}
-.evl-btn-grid.four{grid-template-columns:1fr 1fr 1fr 1fr!important}
-.evl-opt-btn{background:#0D0D1A!important;border:2px solid #2B84FE!important;color:#ffffff!important;padding:18px 10px!important;font-size:15px!important;font-weight:900!important;letter-spacing:1px!important;text-transform:uppercase!important;cursor:pointer!important;text-align:center!important;line-height:1.4!important;display:block!important;width:100%!important}
-.evl-opt-btn.selected{background:#2B84FE!important;color:#ffffff!important;border-color:#2B84FE!important}
-.evl-opt-btn.selected.warn{background:#FF3333!important;border-color:#FF3333!important;color:#ffffff!important}
-.evl-opt-btn.selected.ok{background:#00C853!important;border-color:#00C853!important;color:#020203!important}
-.evl-drawer{background:#070A12!important;border:2px solid #2a2a4e!important;margin-bottom:18px!important;overflow:hidden!important}
-.evl-drawer.locked{opacity:1!important;pointer-events:none!important;filter:brightness(0.5)!important}
-.evl-drawer-header{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:20px!important;cursor:pointer!important;border-bottom:2px solid #222!important}
-.evl-drawer-title{font-size:16px!important;font-weight:900!important;text-transform:uppercase!important;letter-spacing:1px!important;color:#2B84FE!important}
-.evl-drawer-arrow{color:#2B84FE!important;font-size:22px!important;transition:.3s!important}
-.evl-drawer-body{padding:22px!important;display:none!important}
-.evl-drawer.open .evl-drawer-body{display:block!important}
-.evl-drawer.open .evl-drawer-arrow{transform:rotate(180deg)!important}
-.evl-photo-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:14px!important;margin-bottom:20px!important}
-.evl-photo-slot{background:#0D0D1A!important;border:2px dashed #2B84FE!important;padding:20px!important;text-align:center!important;cursor:pointer!important;position:relative!important;min-height:110px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important}
-.evl-photo-slot.uploaded{border-color:#00C853!important;border-style:solid!important}
-.evl-photo-label{font-size:13px!important;color:#ffffff!important;text-transform:uppercase!important;letter-spacing:1px!important;font-weight:900!important;display:block!important}
-.evl-photo-slot.uploaded .evl-photo-label{color:#00C853!important}
-.evl-photo-icon{font-size:30px!important;display:block!important}
-.evl-photo-input{position:absolute!important;opacity:0!important;width:100%!important;height:100%!important;top:0!important;left:0!important;cursor:pointer!important}
-.evl-score-section{background:#0D0D1A!important;border:2px solid #2a2a4e!important;padding:20px!important;margin-bottom:18px!important}
-.evl-score-title{font-size:14px!important;color:#2B84FE!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important;margin-bottom:14px!important;display:block!important}
-.evl-score-bar-wrap{background:#1a1a2e!important;height:14px!important;border-radius:7px!important;overflow:hidden!important;margin-bottom:12px!important}
-.evl-score-bar{height:100%!important;background:linear-gradient(to right,#2B84FE,#00C853)!important;transition:.5s!important;width:0%!important}
-.evl-score-label{font-size:14px!important;color:#ffffff!important;text-transform:uppercase!important;letter-spacing:1px!important;font-weight:700!important;display:block!important}
-.evl-cert-badge{display:none!important;text-align:center!important;padding:20px!important;margin-top:14px!important;border:2px solid #2B84FE!important}
-.evl-cert-badge.show{display:block!important}
-.evl-cert-badge.verified{border-color:#00C853!important}
-.evl-cert-badge.certified{border-color:#FFD700!important;background:#0A0800!important}
-.evl-cert-icon{font-size:40px!important;display:block!important;margin-bottom:10px!important}
-.evl-cert-name{font-size:20px!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important;color:#ffffff!important;display:block!important}
-.evl-cert-badge.verified .evl-cert-name{color:#00C853!important}
-.evl-cert-badge.certified .evl-cert-name{color:#FFD700!important}
-.evl-cert-msg{font-size:14px!important;color:#ffffff!important;margin-top:8px!important;letter-spacing:1px!important;text-transform:uppercase!important;font-weight:700!important;display:block!important}
-
-/* ── TRADE SECTION ── */
-.evl-trade-section{background:#0D0D1A!important;border:2px solid #2a2a4e!important;padding:20px!important;margin-top:18px!important}
-.evl-trade-title{font-size:14px!important;color:#2B84FE!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important;margin-bottom:16px!important;display:block!important}
-.evl-value-display{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:12px!important}
-.evl-val-card{background:#070A12!important;border:2px solid #2a2a4e!important;padding:18px!important;text-align:center!important;transition:border-color .3s!important}
-.evl-val-amount{font-size:28px!important;font-weight:900!important;color:#2B84FE!important;display:block!important;font-family:monospace!important;transition:color .3s!important}
-.evl-val-label{font-size:12px!important;color:#ffffff!important;text-transform:uppercase!important;letter-spacing:1px!important;margin-top:8px!important;display:block!important;font-weight:700!important}
-.evl-val-card.rough .evl-val-amount{color:#FF3333!important}
-.evl-val-card.clean .evl-val-amount{color:#00C853!important}
-.evl-trade-note{font-size:13px!important;color:#ffffff!important;text-align:center!important;margin-top:14px!important;letter-spacing:1px!important;text-transform:uppercase!important;line-height:1.7!important;font-weight:700!important;display:block!important}
-
-/* ── CONDITION SLIDER ── */
-.evl-slider-section{background:#070A12!important;border:2px solid #2B84FE!important;padding:20px!important;margin-top:18px!important}
-.evl-slider-title{font-size:13px!important;color:#2B84FE!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important;margin-bottom:16px!important;display:block!important}
-.evl-slider-labels{display:flex!important;justify-content:space-between!important;margin-bottom:8px!important}
-.evl-slider-labels span{font-size:11px!important;color:#aaaaaa!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:1px!important}
-.evl-slider-labels span.active-label{color:#2B84FE!important}
-input[type=range].evl-slider{-webkit-appearance:none!important;appearance:none!important;width:100%!important;height:8px!important;background:linear-gradient(to right,#00C853,#2B84FE,#FFD700,#FF3333)!important;border-radius:4px!important;outline:none!important;cursor:pointer!important;margin-bottom:12px!important}
-input[type=range].evl-slider::-webkit-slider-thumb{-webkit-appearance:none!important;appearance:none!important;width:28px!important;height:28px!important;border-radius:50%!important;background:#ffffff!important;border:3px solid #2B84FE!important;cursor:pointer!important;box-shadow:0 0 8px rgba(43,132,254,0.6)!important}
-input[type=range].evl-slider::-moz-range-thumb{width:28px!important;height:28px!important;border-radius:50%!important;background:#ffffff!important;border:3px solid #2B84FE!important;cursor:pointer!important}
-.evl-slider-current{text-align:center!important;font-size:18px!important;font-weight:900!important;color:#ffffff!important;text-transform:uppercase!important;letter-spacing:2px!important;padding:10px!important;background:#0D0D1A!important;border:2px solid #2B84FE!important;margin-bottom:4px!important;display:block!important}
-
-/* ── MC BUTTONS ROW ── */
-.evl-mc-btn-row{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;margin-top:18px!important}
-.evl-mc-btn{padding:16px!important;font-size:14px!important;font-weight:900!important;letter-spacing:1px!important;text-transform:uppercase!important;border:none!important;cursor:pointer!important;text-align:center!important;text-decoration:none!important;display:block!important}
-.evl-mc-btn.sticker{background:#1a1a2e!important;color:#2B84FE!important;border:2px solid #2B84FE!important}
-.evl-mc-btn.sticker:hover{background:#2B84FE!important;color:#ffffff!important}
-.evl-mc-btn.bookval{background:#FFD700!important;color:#020203!important}
-.evl-mc-btn.bookval:hover{background:#e6c200!important}
-
-/* ── ADD-ONS CHECKLIST ── */
-.evl-addons-section{background:#0D0D1A!important;border:2px solid #2a2a4e!important;padding:20px!important;margin-top:18px!important}
-.evl-addons-title{font-size:13px!important;color:#2B84FE!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important;margin-bottom:6px!important;display:block!important}
-.evl-addons-sub{font-size:13px!important;color:#aaaaaa!important;font-weight:700!important;letter-spacing:1px!important;text-transform:uppercase!important;margin-bottom:16px!important;display:block!important}
-.evl-addon-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:16px!important}
-.evl-addon-btn{background:#070A12!important;border:2px solid #2a2a4e!important;color:#ffffff!important;padding:14px 10px!important;font-size:13px!important;font-weight:900!important;letter-spacing:1px!important;text-transform:uppercase!important;cursor:pointer!important;text-align:left!important;display:flex!important;align-items:center!important;gap:10px!important;line-height:1.3!important}
-.evl-addon-btn .addon-check{width:22px!important;height:22px!important;border:2px solid #2a2a4e!important;border-radius:3px!important;flex-shrink:0!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:14px!important;background:#0D0D1A!important}
-.evl-addon-btn.selected{border-color:#00C853!important;background:#041209!important}
-.evl-addon-btn.selected .addon-check{background:#00C853!important;border-color:#00C853!important;color:#020203!important}
-.evl-addon-value{font-size:11px!important;color:#00C853!important;font-weight:900!important;display:block!important;margin-top:3px!important;letter-spacing:1px!important}
-.evl-addon-boost{background:#041209!important;border:2px solid #00C853!important;padding:14px!important;margin-top:14px!important;text-align:center!important;display:none!important}
-.evl-addon-boost.show{display:block!important}
-.evl-addon-boost-text{font-size:16px!important;color:#00C853!important;font-weight:900!important;letter-spacing:1px!important;text-transform:uppercase!important}
-
-/* ── TIPS / FOOTER ── */
-.evl-tips{background:#0D0D1A!important;border:2px solid #2a2a4e!important;padding:20px!important;margin-bottom:18px!important}
-.evl-tips-title{font-size:13px!important;color:#2B84FE!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important;margin-bottom:14px!important;display:block!important}
-.evl-tip{font-size:15px!important;color:#ffffff!important;padding:7px 0!important;letter-spacing:.5px!important;font-weight:600!important;display:block!important}
-.evl-tip span{color:#2B84FE!important;font-weight:900!important}
-.evl-footer{display:flex!important;justify-content:space-between!important;padding:18px 20px!important;border-top:1px solid #333!important;margin-top:30px!important}
-.evl-footer span{font-size:13px!important;color:#ccc!important;letter-spacing:1px!important;text-transform:uppercase!important;font-weight:700!important}
-.evl-footer span b{color:#2B84FE!important}
-.evl-success{display:none!important;text-align:center!important;padding:40px 20px!important;background:#041209!important;border:2px solid #00C853!important;margin-top:20px!important}
-.evl-success h2{color:#00C853!important;font-size:30px!important;font-weight:900!important;text-transform:uppercase!important;letter-spacing:2px!important;margin-bottom:10px!important}
-.evl-success p{color:#ffffff!important;font-size:17px!important;line-height:1.6!important}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap');
+  html { font-size: clamp(15px, 1.6vw, 18px); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #060910; color: #fff; font-family: 'Inter', sans-serif; min-height: 100vh; }
+  header { background: #07090f; border-bottom: 3px solid #007BFF; padding: 0; }
+  .header-inner { max-width: 680px; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: #007BFF; text-transform: uppercase; letter-spacing: 2px; }
+  header p { font-size: 0.82rem; font-weight: 600; color: #c8d8e8; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+  .badge { background: #00FF41; color: #000; font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; padding: 5px 14px; text-transform: uppercase; }
+  .wrap { max-width: 680px; width: 100%; margin: 0 auto; padding: 1.8rem 1.5rem 2rem; }
+  .hero-title { font-family: 'Rajdhani', sans-serif; font-size: 3rem; font-weight: 700; line-height: 1; text-transform: uppercase; margin-bottom: 0.9rem; }
+  .hero-title span { color: #007BFF; display: block; }
+  .factual-box { border-left: 4px solid #007BFF; padding: 0.8rem 1rem; background: #0d1117; margin-bottom: 1.4rem; }
+  .factual-box p { font-size: 1rem; font-weight: 500; color: #ffffff; line-height: 1.6; }
+  .factual-box p span { color: #007BFF; font-weight: 700; }
+  .factual-box p strong { color: #fff; font-weight: 700; }
+  .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.6rem; }
+  .action-btn { background: #0d1117; border: 2px solid #007BFF; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; text-align: left; }
+  .action-btn:hover { background: #0a1830; }
+  .action-btn.dim { border-color: #1e3050; }
+  .action-btn.dim:hover { border-color: #007BFF; }
+  .action-btn h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: 700; color: #fff; text-transform: uppercase; margin-bottom: 3px; letter-spacing: 0.5px; }
+  .action-btn p { font-size: 0.85rem; font-weight: 600; color: #007BFF; letter-spacing: 1px; text-transform: uppercase; }
+  .action-btn.dim p { color: #eef4ff; }
+  .drawer { margin-bottom: 0.5rem; border: 2px solid #1a2535; overflow: hidden; transition: border-color 0.3s; }
+  .drawer.active { border-color: #007BFF; }
+  .drawer.done { border-color: #00a83a; }
+  .drawer.locked { border-color: #1a2535; opacity: 0.55; }
+  .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: #0d1117; cursor: pointer; user-select: none; }
+  .drawer.locked .drawer-header { cursor: not-allowed; }
+  .drawer.active .drawer-header { background: #0a1525; }
+  .drawer.done .drawer-header { background: #060f08; }
+  .drawer-header-left { display: flex; align-items: center; gap: 0.7rem; }
+  .drawer-step { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; color: #a0c0e0; letter-spacing: 2px; text-transform: uppercase; }
+  .drawer.active .drawer-step { color: #007BFF; }
+  .drawer.done .drawer-step { color: #00c853; }
+  .drawer-title { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+  .drawer.active .drawer-title { color: #fff; }
+  .drawer.done .drawer-title { color: #00c853; }
+  .drawer.locked .drawer-title { color: #a0b8d0; }
+  .drawer-icon { font-size: 0.9rem; color: #a0c0e0; transition: transform 0.3s; }
+  .drawer.active .drawer-icon { color: #007BFF; transform: rotate(180deg); }
+  .drawer.done .drawer-icon { color: #00c853; }
+  .drawer.locked .drawer-icon { color: #1e2a38; }
+  .drawer-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; background: #080c12; padding: 0 1rem; }
+  .drawer.active .drawer-body { max-height: 2000px; padding: 1rem; }
+  .field-label { display: block; font-size: 0.85rem; font-weight: 700; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; }
+  .field-input { width: 100%; background: #0d1117; color: #fff; border: 1px solid #1e3050; padding: 0.65rem 0.85rem; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; outline: none; transition: border-color 0.2s; appearance: none; border-radius: 0; }
+  .field-input:focus { border-color: #007BFF; box-shadow: 0 0 0 2px rgba(0,123,255,0.12); }
+  .field-input::placeholder { color: #6688aa; font-weight: 400; }
+  .field-input.ro { color: #00FF41; border-color: #00a83a; background: #060f08; font-size: 0.95rem; font-weight: 700; }
+  select.field-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23007BFF'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; background-color: #0d1117; padding-right: 2rem; cursor: pointer; color: #fff; }
+  select.field-input option { background: #0d1117; }
+  textarea.field-input { resize: none; line-height: 1.9; color: #00FF41; border-color: #00a83a; background: #060f08; font-size: 0.82rem; height: 95px; }
+  .vin-row { display: flex; gap: 0.6rem; }
+  .vin-row .field-input { flex: 1; font-size: 1.4rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
+  #decode-btn { background: #007BFF; color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 1px; border: none; padding: 0 1.4rem; cursor: pointer; text-transform: uppercase; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
+  #decode-btn:hover { background: #fff; color: #000; }
+  #decode-btn:disabled { background: #1e2a38; color: #a0b8d0; cursor: not-allowed; }
+  #scan-status { display: inline-block; font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #eef4ff; padding: 3px 10px; border: 1px solid #1e2a38; margin-top: 0.6rem; transition: all 0.3s; }
+  #scan-status.loading { color: #ffd700; border-color: #ffd700; animation: blink 0.8s step-end infinite; }
+  #scan-status.success { color: #00FF41; border-color: #00a83a; }
+  #scan-status.error { color: #ff5555; border-color: #ff5555; }
+  @keyframes blink { 50% { opacity: 0.3; } }
+  .tool-btn { padding: 1.2rem 0.5rem; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .tool-btn.sticker { background: #0d1117; color: #fff; border: 2px solid #007BFF; }
+  .tool-btn.sticker:hover { background: #007BFF; }
+  .tool-btn.estimator { background: #00FF41; color: #000; border: 2px solid #00FF41; }
+  .tool-btn.estimator:hover { background: #fff; border-color: #fff; }
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: #07090f; border: 2px solid #007BFF; width: 100%; max-width: 640px; max-height: 90vh; display: flex; flex-direction: column; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 2px solid #007BFF; background: #0a1525; }
+  .modal-header h3 { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+  .modal-close { background: none; border: 1px solid #1e3050; color: #ddeeff; font-size: 0.85rem; font-weight: 700; padding: 4px 12px; cursor: pointer; transition: all 0.2s; font-family: 'Rajdhani', sans-serif; }
+  .modal-close:hover { border-color: #ff5555; color: #ff5555; }
+  .modal-body { flex: 1; overflow: hidden; }
+  .modal-body iframe { width: 100%; height: 580px; border: none; display: block; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .field-group { display: flex; flex-direction: column; }
+  .mb { margin-bottom: 0.8rem; }
+  .confirm-btn { width: 100%; background: #007BFF; color: #fff; border: none; padding: 0.65rem; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; margin-top: 0.8rem; transition: background 0.2s; }
+  .confirm-btn:hover { background: #0056d6; }
+  #sig-canvas { width: 100%; height: 90px; background: #0d1117; border: 2px dashed #1e3050; cursor: crosshair; touch-action: none; display: block; }
+  .sig-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
+  .sig-footer span { font-size: 0.7rem; font-weight: 600; color: #ddeeff; letter-spacing: 1px; text-transform: uppercase; }
+  #clear-sig-btn { background: none; border: 1px solid #1e2a38; color: #eef4ff; font-size: 0.7rem; font-weight: 600; padding: 3px 10px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
+  #clear-sig-btn:hover { border-color: #ff5555; color: #ff5555; }
+  #submit-wrap { display: none; margin-top: 0.6rem; }
+  .submit-btn { width: 100%; background: #00FF41; color: #000; padding: 1rem; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; border: none; cursor: pointer; transition: all 0.2s; }
+  .submit-btn:hover { background: #fff; letter-spacing: 5px; }
+  #success-screen { display: none; text-align: center; padding: 3rem 1rem; }
+  #success-screen h1 { font-family: 'Rajdhani', sans-serif; font-size: 2.5rem; font-weight: 700; color: #00FF41; letter-spacing: 3px; text-transform: uppercase; }
+  #success-screen p { color: #ddeeff; font-size: 0.88rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 0.5rem; }
+  footer { border-top: 2px solid #1a2535; padding: 0; }
+  .footer-inner { max-width: 680px; margin: 0 auto; padding: 0.75rem 1.5rem; display: flex; justify-content: space-between; }
+  footer span { font-size: 0.82rem; font-weight: 600; color: #c8d8e8; letter-spacing: 1.5px; text-transform: uppercase; }
+  footer span b { color: #007BFF; }
 </style>
+</head>
+<body>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-storage.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
-  authDomain: "evl-acquisition-radar.firebaseapp.com",
-  projectId: "evl-acquisition-radar",
-  storageBucket: "evl-acquisition-radar.firebasestorage.app",
-  messagingSenderId: "84195145348",
-  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-window.evlFirebase = { db, storage, collection, addDoc, serverTimestamp, ref, uploadBytes, getDownloadURL };
-</script>
-
-<div style="background:#020203;min-height:100vh">
-<div class="evl-header">
-  <div class="evl-header-logo">
-    <svg width="26" height="26" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+<header>
+  <div class="header-inner">
     <div>
-      <span style="color:#ffffff!important;font-size:17px!important;font-weight:900!important;display:block!important;letter-spacing:1px!important">VEHICLE ACQUISITION RADAR</span>
-      <span style="color:#2B84FE!important;font-size:13px!important;font-weight:700!important;letter-spacing:2px!important;text-transform:uppercase!important;display:block!important">STATUS: ACTIVE SEARCHING</span>
+      <h1>◈ Vehicle Acquisition Radar</h1>
+      <p>Status: Active Searching</p>
+    </div>
+    <div class="badge">Secure</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero-title">We Find Your Car.<span>You Get the Deal.</span></div>
+  <div class="factual-box">
+    <p><span>Here's how it works:</span> Tell us what vehicle you're trading in — we decode it instantly and send the details straight to our team. <strong>No guessing. No back-and-forth. Just a fast, honest offer.</strong></p>
+  </div>
+
+  <div class="action-grid">
+    <div class="action-btn dim" onclick="location.href='https://expressvehiclelocators.com'">
+      <h3>Acquire This Vehicle</h3>
+      <p>Browse Our Inventory →</p>
+    </div>
+    <div class="action-btn" onclick="startAudit()">
+      <h3>Check My Trade-In Value</h3>
+      <p>Begin Vehicle Audit →</p>
     </div>
   </div>
-  <div class="evl-secure">SECURE</div>
-</div>
 
-<div class="evl-wrap">
-<div class="evl-hero">
-  <h1 style="font-size:42px!important;font-weight:900!important;color:#ffffff!important;text-transform:uppercase!important;line-height:1.1!important;margin:0 0 4px!important">WE FIND YOUR CAR.<br><span style="color:#2B84FE!important">YOU GET THE DEAL.</span></h1>
-  <p class="evl-hero-sub">Tell us what vehicle you're trading in — we decode it instantly and send the details straight to our team. <strong style="color:#ffffff!important;font-weight:900!important">No guessing. No back-and-forth. Just a fast, honest offer.</strong></p>
-  <div class="evl-cta-row">
-    <button class="evl-cta-btn"><div class="title">Acquire This Vehicle</div><div class="sub">Browse Our Inventory →</div></button>
-    <button class="evl-cta-btn" id="evl-audit-btn"><div class="title">Check My Trade-In Value</div><div class="sub">Begin Vehicle Audit →</div></button>
-  </div>
-</div>
+  <div id="audit-section" style="display:none;">
 
-<!-- STEP 1 -->
-<div class="evl-step unlocked" id="evl-step1">
-  <div class="evl-step-header"><div class="evl-step-num">1</div><div class="evl-step-title">① Decode VIN via MarketCheck Radar</div></div>
-  <div class="evl-step-body">
-    <div class="evl-decode-row">
-      <input type="text" class="evl-input" id="evl-vin" placeholder="ENTER 17-DIGIT VIN NUMBER" maxlength="17">
-      <button class="evl-decode-btn" id="evl-decode-btn">DECODE</button>
-    </div>
-    <div class="evl-status" id="evl-vin-status">READY FOR SCAN</div>
-  </div>
-</div>
-
-<!-- STEP 2 -->
-<div class="evl-step locked" id="evl-step2">
-  <div class="evl-step-header"><div class="evl-step-num">2</div><div class="evl-step-title">② Decoded Vehicle Data</div></div>
-  <div class="evl-step-body">
-    <div class="evl-lock-msg" id="evl-lock2">🔒 AWAITING VIN SCAN</div>
-    <div id="evl-data-body" style="display:none">
-      <div class="evl-row evl-field">
-        <div><label class="evl-label">Year / Make / Model</label><div class="evl-data-box" id="evl-ymm">--</div></div>
-        <div><label class="evl-label">Trim Level</label><div class="evl-data-box" id="evl-trim">--</div></div>
+    <div class="drawer locked" id="drawer1">
+      <div class="drawer-header" onclick="toggleDrawer('drawer1')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">① Step One</span>
+          <span class="drawer-title">Decode VIN</span>
+        </div>
+        <span class="drawer-icon">▼</span>
       </div>
-      <div class="evl-field"><label class="evl-label">Decoded Specifications</label><div class="evl-specs" id="evl-specs">--</div></div>
-
-      <!-- WINDOW STICKER BUTTON — appears after VIN decoded -->
-      <div id="evl-sticker-wrap" style="margin-bottom:16px!important">
-        <a id="evl-sticker-btn" href="#" target="_blank" class="evl-mc-btn sticker" style="display:block!important;text-align:center!important;text-decoration:none!important;padding:16px!important;font-size:14px!important;font-weight:900!important;letter-spacing:1px!important;text-transform:uppercase!important;border:2px solid #2B84FE!important;background:#1a1a2e!important;color:#2B84FE!important;cursor:pointer!important">
-          🪟 VIEW WINDOW STICKER — MARKETCHECK
-        </a>
+      <div class="drawer-body">
+        <div class="vin-row" style="margin-bottom:0.6rem;">
+          <input type="text" id="vin-input" class="field-input" placeholder="ENTER 17-DIGIT VIN" maxlength="17" oninput="this.value=this.value.toUpperCase()">
+          <button onclick="runDecode()" id="decode-btn">DECODE</button>
+        </div>
+        <span id="scan-status">READY FOR SCAN</span>
       </div>
-
-      <button class="evl-confirm-btn" id="evl-confirm2">✓ Confirm Vehicle — Continue to Condition Report</button>
     </div>
-  </div>
-</div>
 
-<!-- STEP 3 -->
-<div class="evl-step locked" id="evl-step3">
-  <div class="evl-step-header"><div class="evl-step-num">3</div><div class="evl-step-title">③ Mileage & Condition Report</div></div>
-  <div class="evl-step-body">
-    <div class="evl-lock-msg" id="evl-lock3">🔒 CONFIRM VEHICLE FIRST</div>
-    <div id="evl-odo-body" style="display:none">
-      <div class="evl-row evl-field">
-        <div><label class="evl-label">Current Odometer (Miles)</label><input type="number" class="evl-input" id="evl-miles" placeholder="ENTER MILEAGE"></div>
-        <div><label class="evl-label">Number of Keys</label>
-          <div class="evl-btn-grid three">
-            <button class="evl-opt-btn evl-toggle ok" data-group="keys" data-val="1">1 KEY</button>
-            <button class="evl-opt-btn evl-toggle ok" data-group="keys" data-val="2">2 KEYS</button>
-            <button class="evl-opt-btn evl-toggle ok" data-group="keys" data-val="3+">3+</button>
+    <div id="post-decode-wrap" style="display:none; margin-bottom:0.5rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+        <button class="tool-btn sticker" onclick="openWindowSticker()">🪟 View Window Sticker</button>
+        <button class="tool-btn estimator" onclick="openTradeEstimator()">💰 Get Trade-In Value</button>
+      </div>
+    </div>
+
+    <div class="drawer locked" id="drawer2">
+      <div class="drawer-header" onclick="toggleDrawer('drawer2')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">② Step Two</span>
+          <span class="drawer-title">Decoded Vehicle Data</span>
+        </div>
+        <span class="drawer-icon">🔒</span>
+      </div>
+      <div class="drawer-body">
+        <div class="two-col mb">
+          <div class="field-group">
+            <label class="field-label">Year / Make / Model</label>
+            <input type="text" id="res-yr-mk-mdl" class="field-input ro" placeholder="—" readonly>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Trim Level</label>
+            <input type="text" id="res-trm" class="field-input ro" placeholder="—" readonly>
           </div>
         </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Title Status</label>
-        <div class="evl-btn-grid four">
-          <button class="evl-opt-btn evl-toggle ok" data-group="title" data-val="clean">CLEAN</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="title" data-val="lien">LIEN / PAYOFF</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="title" data-val="salvage">SALVAGE</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="title" data-val="rebuilt">REBUILT</button>
+        <div class="field-group">
+          <label class="field-label">Decoded Specifications</label>
+          <textarea id="res-opt" class="field-input" readonly placeholder="ENGINE / TRANS / DRIVE / FUEL WILL POPULATE HERE..."></textarea>
         </div>
-        <div id="lien-msg" style="display:none;font-size:15px!important;color:#ffffff!important;margin-top:10px!important;font-weight:600!important;padding:14px!important;background:#0D0D1A!important;border-left:4px solid #2B84FE!important">No problem — we handle payoffs every day. Have your 10-day payoff amount ready from your lender.</div>
+        <button class="confirm-btn" onclick="confirmVehicle()">✓ Confirm Vehicle — Continue</button>
       </div>
-      <div class="evl-field"><label class="evl-label">Paint Condition</label>
-        <div class="evl-btn-grid four">
-          <button class="evl-opt-btn evl-toggle ok" data-group="paint" data-val="original">ORIGINAL</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="paint" data-val="repaint">REPAINTED</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="paint" data-val="fading">FADING</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="paint" data-val="damage">DAMAGE</button>
+    </div>
+
+    <div class="drawer locked" id="drawer3">
+      <div class="drawer-header" onclick="toggleDrawer('drawer3')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">③ Step Three</span>
+          <span class="drawer-title">Odometer &amp; Condition</span>
         </div>
+        <span class="drawer-icon">🔒</span>
       </div>
-      <div class="evl-field"><label class="evl-label">Hail Damage</label>
-        <div class="evl-btn-grid three">
-          <button class="evl-opt-btn evl-toggle ok" data-group="hail" data-val="none">NONE</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="hail" data-val="minor">MINOR</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="hail" data-val="major">MAJOR</button>
-        </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Body Damage</label>
-        <div class="evl-btn-grid three">
-          <button class="evl-opt-btn evl-toggle ok" data-group="body" data-val="none">NONE</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="body" data-val="minor">MINOR DENTS</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="body" data-val="major">MAJOR DAMAGE</button>
-        </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Windshield / Glass</label>
-        <div class="evl-btn-grid three">
-          <button class="evl-opt-btn evl-toggle ok" data-group="glass" data-val="clear">NO CHIPS</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="glass" data-val="chip">MINOR CHIP</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="glass" data-val="cracked">CRACKED</button>
-        </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Tires</label>
-        <div class="evl-btn-grid three">
-          <button class="evl-opt-btn evl-toggle ok" data-group="tires" data-val="good">GOOD TREAD</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="tires" data-val="worn">WORN</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="tires" data-val="replace">NEEDS REPLACEMENT</button>
-        </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Interior Condition</label>
-        <div class="evl-btn-grid three">
-          <button class="evl-opt-btn evl-toggle ok" data-group="interior" data-val="clean">CLEAN</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="interior" data-val="wear">MINOR WEAR</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="interior" data-val="damage">STAINS / TEARS</button>
-        </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Odors</label>
-        <div class="evl-btn-grid four">
-          <button class="evl-opt-btn evl-toggle ok" data-group="odor" data-val="none">NONE</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="odor" data-val="smoke">SMOKE</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="odor" data-val="pet">PET</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="odor" data-val="other">OTHER</button>
-        </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Dashboard Warning Lights</label>
-        <div class="evl-btn-grid">
-          <button class="evl-opt-btn evl-toggle ok" data-group="lights" data-val="none">✅ NO WARNING LIGHTS</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="lights" data-val="yes">⚠️ LIGHTS ARE ON</button>
-        </div>
-        <div id="lights-detail" style="display:none;margin-top:12px">
-          <label class="evl-label">Select which lights</label>
-          <div class="evl-btn-grid four">
-            <button class="evl-opt-btn evl-toggle warn" data-group="lights-detail" data-val="check-engine">CHECK ENGINE</button>
-            <button class="evl-opt-btn evl-toggle ok" data-group="lights-detail" data-val="tpms">TPMS</button>
-            <button class="evl-opt-btn evl-toggle warn" data-group="lights-detail" data-val="abs">ABS</button>
-            <button class="evl-opt-btn evl-toggle warn" data-group="lights-detail" data-val="airbag">AIRBAG</button>
-            <button class="evl-opt-btn evl-toggle warn" data-group="lights-detail" data-val="trans">TRANS</button>
-            <button class="evl-opt-btn evl-toggle warn" data-group="lights-detail" data-val="battery">BATTERY</button>
-            <button class="evl-opt-btn evl-toggle warn" data-group="lights-detail" data-val="oil">OIL</button>
-            <button class="evl-opt-btn evl-toggle warn" data-group="lights-detail" data-val="other">OTHER</button>
+      <div class="drawer-body">
+        <div class="two-col mb">
+          <div class="field-group">
+            <label class="field-label">Current Odometer (Miles)</label>
+            <input type="number" id="user-miles" class="field-input" placeholder="e.g. 42000">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Overall Condition</label>
+            <select id="user-cond" class="field-input">
+              <option value="Excellent">Excellent</option>
+              <option value="Good" selected>Good</option>
+              <option value="Fair">Fair</option>
+              <option value="Poor">Poor</option>
+            </select>
           </div>
         </div>
+        <button class="confirm-btn" onclick="confirmOdometer()">✓ Confirm — Continue to Signature</button>
       </div>
-      <div class="evl-field"><label class="evl-label">Accident History</label>
-        <div class="evl-btn-grid three">
-          <button class="evl-opt-btn evl-toggle ok" data-group="accident" data-val="none">NONE</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="accident" data-val="minor">MINOR FENDER BENDER</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="accident" data-val="major">MAJOR COLLISION</button>
+    </div>
+
+    <div class="drawer locked" id="drawer4">
+      <div class="drawer-header" onclick="toggleDrawer('drawer4')">
+        <div class="drawer-header-left">
+          <span class="drawer-step">④ Step Four</span>
+          <span class="drawer-title">Authorization Signature</span>
         </div>
+        <span class="drawer-icon">🔒</span>
       </div>
-      <div class="evl-field"><label class="evl-label">Flood or Fire Damage</label>
-        <div class="evl-btn-grid">
-          <button class="evl-opt-btn evl-toggle ok" data-group="flood" data-val="none">✅ NO FLOOD OR FIRE DAMAGE</button>
-          <button class="evl-opt-btn evl-toggle warn" data-group="flood" data-val="yes">⚠️ YES — FLOOD OR FIRE</button>
+      <div class="drawer-body">
+        <canvas id="sig-canvas"></canvas>
+        <div class="sig-footer">
+          <span>Sign above to authorize audit</span>
+          <button id="clear-sig-btn" onclick="clearSig()">✕ Clear</button>
         </div>
+        <button class="confirm-btn" onclick="confirmSignature()">✓ Confirm Signature — Review &amp; Submit</button>
       </div>
-      <div class="evl-field"><label class="evl-label">Owner's Manual</label>
-        <div class="evl-btn-grid">
-          <button class="evl-opt-btn evl-toggle ok" data-group="manual" data-val="yes">✅ PRESENT</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="manual" data-val="no">NOT PRESENT</button>
-        </div>
-      </div>
-      <div class="evl-field"><label class="evl-label">Spare Tire & Jack / Tools</label>
-        <div class="evl-btn-grid three">
-          <button class="evl-opt-btn evl-toggle ok" data-group="spare" data-val="full">✅ FULL SET</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="spare" data-val="partial">SPARE ONLY</button>
-          <button class="evl-opt-btn evl-toggle ok" data-group="spare" data-val="none">NOT PRESENT</button>
-        </div>
-      </div>
+    </div>
 
-      <!-- SCORE -->
-      <div class="evl-score-section" id="evl-score-section" style="display:none">
-        <div class="evl-score-title">⚡ APPRAISAL ACCURACY SCORE</div>
-        <div class="evl-score-bar-wrap"><div class="evl-score-bar" id="evl-score-bar"></div></div>
-        <div class="evl-score-label" id="evl-score-label">Complete all sections to strengthen your offer</div>
-        <div class="evl-cert-badge" id="evl-cert-badge">
-          <span class="evl-cert-icon" id="evl-cert-icon">📋</span>
-          <div class="evl-cert-name" id="evl-cert-name">EVL SUBMITTED</div>
-          <div class="evl-cert-msg" id="evl-cert-msg">Complete more sections to qualify for EVL Verified status</div>
-        </div>
-      </div>
+    <div id="submit-wrap">
+      <button type="button" class="submit-btn" onclick="finalizeAudit()">⬡ Finalize &amp; Send Audit</button>
+    </div>
 
-      <button class="evl-confirm-btn" id="evl-confirm3" style="background:#2B84FE!important;color:#ffffff!important">⚡ CALCULATE TRADE VALUE</button>
+    <div id="success-screen">
+      <h1>✓ Audit Sent</h1>
+      <p>Check your email for the data pack</p>
+    </div>
 
-      <!-- ══════════════════════════════════════════
-           TRADE VALUE RESULTS SECTION
-      ══════════════════════════════════════════ -->
-      <div class="evl-trade-section" id="evl-trade-section" style="display:none">
+  </div>
+</div>
 
-        <div class="evl-trade-title">📊 ESTIMATED TRADE-IN VALUE RANGE</div>
-        <div class="evl-value-display">
-          <div class="evl-val-card rough"><span class="evl-val-amount" id="evl-rough-val">--</span><span class="evl-val-label">Rough Trade</span></div>
-          <div class="evl-val-card"><span class="evl-val-amount" id="evl-avg-val">--</span><span class="evl-val-label">Average Trade</span></div>
-          <div class="evl-val-card clean"><span class="evl-val-amount" id="evl-clean-val">--</span><span class="evl-val-label">Clean Trade</span></div>
-        </div>
+<footer>
+  <div class="footer-inner">
+    <span>Entity Protocol <b>v2.0</b></span>
+    <span><b>// VERIFIED_DATA_STREAM //</b></span>
+  </div>
+</footer>
 
-        <!-- CONDITION SLIDER -->
-        <div class="evl-slider-section">
-          <div class="evl-slider-title">🎚️ ADJUST BY OVERALL CONDITION</div>
-          <div class="evl-slider-labels">
-            <span id="lbl-excellent">EXCELLENT</span>
-            <span id="lbl-good">GOOD</span>
-            <span id="lbl-average">AVERAGE</span>
-            <span id="lbl-below">BELOW AVG</span>
-          </div>
-          <input type="range" class="evl-slider" id="evl-cond-slider" min="0" max="3" step="1" value="1">
-          <div class="evl-slider-current" id="evl-slider-label">GOOD CONDITION — Standard Market Rate</div>
-          <div style="font-size:12px!important;color:#aaaaaa!important;text-align:center!important;letter-spacing:1px!important;text-transform:uppercase!important;font-weight:700!important;margin-top:6px!important">Drag slider to see how condition affects your value range</div>
-        </div>
-
-        <!-- MARKETCHECK BUTTONS -->
-        <div class="evl-mc-btn-row">
-          <a id="evl-bookval-btn" href="https://www.marketcheck.com/used-cars" target="_blank"
-             style="padding:16px!important;font-size:13px!important;font-weight:900!important;letter-spacing:1px!important;text-transform:uppercase!important;border:none!important;cursor:pointer!important;text-align:center!important;text-decoration:none!important;display:block!important;background:#FFD700!important;color:#020203!important">
-            📊 MARKETCHECK BOOK VALUE
-          </a>
-          <a id="evl-sticker-btn2" href="#" target="_blank"
-             style="padding:16px!important;font-size:13px!important;font-weight:900!important;letter-spacing:1px!important;text-transform:uppercase!important;cursor:pointer!important;text-align:center!important;text-decoration:none!important;display:block!important;background:#1a1a2e!important;color:#2B84FE!important;border:2px solid #2B84FE!important">
-            🪟 WINDOW STICKER
-          </a>
-        </div>
-
-        <div class="evl-trade-note" style="margin-top:10px!important">
-          Estimates based on vehicle age, mileage and declared condition.<br>
-          Final offer determined after physical inspection by EVL team.
-        </div>
-
-        <!-- ── ADD-ONS & UPGRADES ── -->
-        <div class="evl-addons-section">
-          <div class="evl-addons-title">🔧 UPGRADES & ADD-ONS</div>
-          <div class="evl-addons-sub">Select any aftermarket or factory upgrades — these can increase your offer</div>
-          <div class="evl-addon-grid">
-            <button class="evl-addon-btn" data-addon="leather" data-boost="400">
-              <div class="addon-check"></div>
-              <div><span>Leather Seats</span><span class="evl-addon-value">+$400</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="sunroof" data-boost="350">
-              <div class="addon-check"></div>
-              <div><span>Sunroof / Moonroof</span><span class="evl-addon-value">+$350</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="lift" data-boost="1200">
-              <div class="addon-check"></div>
-              <div><span>Lift Kit</span><span class="evl-addon-value">+$1,200</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="wheels" data-boost="600">
-              <div class="addon-check"></div>
-              <div><span>Upgraded Wheels</span><span class="evl-addon-value">+$600</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="tires" data-boost="500">
-              <div class="addon-check"></div>
-              <div><span>Premium Tires</span><span class="evl-addon-value">+$500</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="running" data-boost="250">
-              <div class="addon-check"></div>
-              <div><span>Running Boards</span><span class="evl-addon-value">+$250</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="tow" data-boost="300">
-              <div class="addon-check"></div>
-              <div><span>Tow Package</span><span class="evl-addon-value">+$300</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="remote" data-boost="150">
-              <div class="addon-check"></div>
-              <div><span>Remote Start</span><span class="evl-addon-value">+$150</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="nav" data-boost="200">
-              <div class="addon-check"></div>
-              <div><span>Navigation System</span><span class="evl-addon-value">+$200</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="camera" data-boost="150">
-              <div class="addon-check"></div>
-              <div><span>Backup Camera (aftermarket)</span><span class="evl-addon-value">+$150</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="bed" data-boost="300">
-              <div class="addon-check"></div>
-              <div><span>Bed Liner / Tonneau Cover</span><span class="evl-addon-value">+$300</span></div>
-            </button>
-            <button class="evl-addon-btn" data-addon="audio" data-boost="400">
-              <div class="addon-check"></div>
-              <div><span>Premium Audio System</span><span class="evl-addon-value">+$400</span></div>
-            </button>
-          </div>
-          <div class="evl-addon-boost" id="evl-addon-boost">
-            <div class="evl-addon-boost-text" id="evl-addon-boost-text">✅ UPGRADE BOOST: +$0</div>
-          </div>
-        </div>
-
-      </div><!-- /evl-trade-section -->
+<!-- WINDOW STICKER MODAL -->
+<div class="modal-overlay" id="sticker-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🪟 Window Sticker</h3>
+      <button class="modal-close" onclick="closeModal('sticker-modal')">✕ Close</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="sticker-frame" src="" title="Window Sticker"></iframe>
     </div>
   </div>
 </div>
 
-<!-- PHOTO BOOST DRAWER -->
-<div class="evl-drawer locked" id="evl-boost-drawer">
-  <div class="evl-drawer-header" id="evl-boost-toggle">
-    <div>
-      <div class="evl-drawer-title">📸 BOOST YOUR OFFER — ADD PHOTOS</div>
-      <div style="font-size:15px!important;color:#ffffff!important;margin-top:6px!important;font-weight:600!important">More info = stronger offer. Takes about 60 seconds.</div>
+<!-- TRADE ESTIMATOR MODAL -->
+<div class="modal-overlay" id="estimator-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>💰 Trade-In Value Estimator</h3>
+      <button class="modal-close" onclick="closeModal('estimator-modal')">✕ Close</button>
     </div>
-    <div class="evl-drawer-arrow">▼</div>
+    <div class="modal-body">
+      <iframe id="estimator-frame" src="" title="Trade-In Estimator"></iframe>
+    </div>
   </div>
-  <div class="evl-drawer-body">
-    <div class="evl-tips">
-      <div class="evl-tips-title">📱 QUICK PHOTO TIPS</div>
-      <div class="evl-tip"><span>Distance:</span> 10 feet back for exterior shots</div>
-      <div class="evl-tip"><span>Lighting:</span> Natural light outside — turn flash OFF</div>
-      <div class="evl-tip"><span>Orientation:</span> Landscape for exterior, portrait for interior</div>
-      <div class="evl-tip"><span>Odometer:</span> Engine running so it shows actual mileage</div>
-      <div class="evl-tip"><span>Door Jamb VIN:</span> Open door fully, get close, tap to focus</div>
-      <div class="evl-tip"><span>Damage:</span> Get within 3 feet so we can see clearly</div>
-    </div>
-    <label class="evl-label" style="margin-bottom:14px!important">Exterior Photos</label>
-    <div class="evl-photo-grid">
-      <div class="evl-photo-slot" id="slot-front"><input type="file" accept="image/*" class="evl-photo-input" data-slot="front"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Front 3/4 View</div></div>
-      <div class="evl-photo-slot" id="slot-rear"><input type="file" accept="image/*" class="evl-photo-input" data-slot="rear"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Rear 3/4 View</div></div>
-      <div class="evl-photo-slot" id="slot-driver"><input type="file" accept="image/*" class="evl-photo-input" data-slot="driver"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Driver Side</div></div>
-      <div class="evl-photo-slot" id="slot-passenger"><input type="file" accept="image/*" class="evl-photo-input" data-slot="passenger"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Passenger Side</div></div>
-    </div>
-    <label class="evl-label" style="margin-bottom:14px!important">Interior Photos</label>
-    <div class="evl-photo-grid">
-      <div class="evl-photo-slot" id="slot-dash"><input type="file" accept="image/*" class="evl-photo-input" data-slot="dash"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Dashboard</div></div>
-      <div class="evl-photo-slot" id="slot-front-seats"><input type="file" accept="image/*" class="evl-photo-input" data-slot="front-seats"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Front Seats</div></div>
-      <div class="evl-photo-slot" id="slot-rear-seats"><input type="file" accept="image/*" class="evl-photo-input" data-slot="rear-seats"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Rear Seats</div></div>
-      <div class="evl-photo-slot" id="slot-cargo"><input type="file" accept="image/*" class="evl-photo-input" data-slot="cargo"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Cargo / Trunk</div></div>
-    </div>
-    <label class="evl-label" style="margin-bottom:14px!important">Documentation Photos</label>
-    <div class="evl-photo-grid">
-      <div class="evl-photo-slot" id="slot-odometer"><input type="file" accept="image/*" class="evl-photo-input" data-slot="odometer"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Odometer Reading</div></div>
-      <div class="evl-photo-slot" id="slot-vin-jamb"><input type="file" accept="image/*" class="evl-photo-input" data-slot="vin-jamb"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Door Jamb VIN</div></div>
-      <div class="evl-photo-slot" id="slot-damage"><input type="file" accept="image/*" class="evl-photo-input" data-slot="damage"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Any Damage (optional)</div></div>
-      <div class="evl-photo-slot" id="slot-tires"><input type="file" accept="image/*" class="evl-photo-input" data-slot="tires"><div class="evl-photo-icon">📷</div><div class="evl-photo-label">Tires / Wheels</div></div>
-    </div>
-    <div id="evl-photo-score" style="font-size:15px!important;color:#2B84FE!important;text-align:center!important;letter-spacing:1px!important;text-transform:uppercase!important;padding:14px 0!important;font-weight:900!important">0 of 10 photos uploaded</div>
-  </div>
-</div>
-
-<button class="evl-submit-btn" id="evl-submit-btn" style="display:none">⬡ SUBMIT AUDIT TO EVL TEAM</button>
-<div class="evl-success" id="evl-success">
-  <h2>✓ Audit Submitted</h2>
-  <p id="evl-success-msg">Our team will review your vehicle and be in touch shortly.</p>
-</div>
-<div class="evl-footer">
-  <span>ENTITY PROTOCOL <b>v2.0</b></span>
-  <span>// VERIFIED_DATA_STREAM //</span>
-</div>
-</div>
 </div>
 
 <script>
-var evlVinData=null,evlCondition={},evlPhotos={},evlPhotoCount=0;
-var evlBaseRough=0,evlBaseAvg=0,evlBaseClean=0;
-var evlAddonBoost=0;
-var NETLIFY_DECODE="https://evl-decode-h0o8ntplh-express-vehicle-locators.vercel.app/api/decode";
-var AUDIT_EMAIL="togradyevl@gmail.com";
+  const DEALER_EMAIL = "togradyevl@gmail.com";
+  const API_KEY = 'krZxEXMjNJ0JxdQa';
 
-// Slider condition multipliers: index 0=Excellent, 1=Good, 2=Average, 3=Below
-var sliderMultipliers=[1.10,1.00,0.88,0.74];
-var sliderLabels=[
-  "EXCELLENT CONDITION — Above Market Rate",
-  "GOOD CONDITION — Standard Market Rate",
-  "AVERAGE CONDITION — Moderate Adjustment",
-  "BELOW AVERAGE — Significant Adjustment"
-];
-var sliderLabelIds=["lbl-excellent","lbl-good","lbl-average","lbl-below"];
-
-document.addEventListener("DOMContentLoaded",function(){
-
-  document.getElementById("evl-audit-btn").addEventListener("click",function(){
-    document.getElementById("evl-step1").scrollIntoView({behavior:"smooth"});
-  });
-
-  // DECODE
-  document.getElementById("evl-decode-btn").addEventListener("click",function(){
-    var vin=document.getElementById("evl-vin").value.trim().toUpperCase();
-    var status=document.getElementById("evl-vin-status");
-    if(vin.length!==17){status.textContent="ERROR: VIN MUST BE EXACTLY 17 CHARACTERS";status.className="evl-status err";return;}
-    status.textContent="SCANNING MARKETCHECK RADAR...";status.className="evl-status scanning";
-    fetch(NETLIFY_DECODE+"?vin="+vin).then(function(r){return r.json();}).then(function(data){
-      evlVinData=data;
-      var ymm=(data.year||"")+" "+(data.make||"")+" "+(data.model||"");
-      document.getElementById("evl-ymm").textContent=ymm.trim()||"SEE SPECS";
-      document.getElementById("evl-ymm").className="evl-data-box filled";
-      document.getElementById("evl-trim").textContent=data.trim||data.trim_level||"N/A";
-      document.getElementById("evl-trim").className="evl-data-box filled";
-      var specs="";
-      if(data.engine)specs+="ENGINE: "+data.engine+"\n";
-      if(data.transmission)specs+="TRANS: "+data.transmission+"\n";
-      if(data.drivetrain)specs+="DRIVE: "+data.drivetrain+"\n";
-      if(data.fuel_type)specs+="FUEL: "+data.fuel_type+"\n";
-      if(data.doors)specs+="DOORS: "+data.doors+"\n";
-      if(data.body_type)specs+="BODY: "+data.body_type+"\n";
-      if(data.city_mpg)specs+="CITY MPG: "+data.city_mpg+"\n";
-      if(data.highway_mpg)specs+="HWY MPG: "+data.highway_mpg+"\n";
-      if(data.std_seating)specs+="SEATING: "+data.std_seating+"\n";
-      if(data.made_in)specs+="MADE IN: "+data.made_in+"\n";
-      document.getElementById("evl-specs").textContent=specs||"SPECS DECODED";
-      document.getElementById("evl-specs").className="evl-specs filled";
-      status.textContent="✓ VIN DECODED SUCCESSFULLY";status.className="evl-status ok";
-
-      // Set window sticker links with VIN
-      var stickerUrl="https://www.marketcheck.com/window-sticker/"+vin;
-      document.getElementById("evl-sticker-btn").href=stickerUrl;
-      document.getElementById("evl-sticker-btn2").href=stickerUrl;
-      // Book value link with VIN pre-filled as search
-      document.getElementById("evl-bookval-btn").href="https://www.marketcheck.com/used-cars?vin="+vin;
-
-      evlUnlockStep(2);
-    }).catch(function(){status.textContent="SCAN ERROR — CHECK VIN AND RETRY";status.className="evl-status err";});
-  });
-
-  document.getElementById("evl-confirm2").addEventListener("click",function(){
-    document.getElementById("evl-step2").classList.add("complete");
-    evlUnlockStep(3);
-    document.getElementById("evl-score-section").style.display="block";
-  });
-
-  document.querySelectorAll(".evl-toggle").forEach(function(btn){
-    btn.addEventListener("click",function(){
-      var group=this.dataset.group,val=this.dataset.val;
-      if(group==="lights-detail"){
-        this.classList.toggle("selected");
-        var sel=[];
-        document.querySelectorAll('[data-group="lights-detail"].selected').forEach(function(b){sel.push(b.dataset.val);});
-        evlCondition["lights-detail"]=sel;updateScore();return;
-      }
-      document.querySelectorAll('[data-group="'+group+'"]').forEach(function(b){b.classList.remove("selected");});
-      this.classList.add("selected");evlCondition[group]=val;
-      if(group==="title"&&val==="lien"){document.getElementById("lien-msg").style.display="block";}
-      else if(group==="title"){document.getElementById("lien-msg").style.display="none";}
-      if(group==="lights"){document.getElementById("lights-detail").style.display=val==="yes"?"block":"none";}
-      updateScore();
+  function startAudit() {
+    ['drawer1','drawer2','drawer3','drawer4'].forEach(id => {
+      const d = document.getElementById(id);
+      d.classList.remove('active','done');
+      d.classList.add('locked');
+      d.querySelector('.drawer-icon').textContent = '🔒';
     });
-  });
+    document.getElementById('post-decode-wrap').style.display = 'none';
+    document.getElementById('submit-wrap').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'none';
+    document.getElementById('scan-status').textContent = 'READY FOR SCAN';
+    document.getElementById('scan-status').className = '';
+    document.getElementById('vin-input').value = '';
+    document.getElementById('audit-section').style.display = 'block';
+    openDrawer('drawer1');
+    setTimeout(() => document.getElementById('vin-input').focus(), 300);
+    document.getElementById('audit-section').scrollIntoView({behavior:'smooth'});
+  }
 
-  // CALCULATE TRADE VALUE
-  document.getElementById("evl-confirm3").addEventListener("click",function(){
-    var miles=parseInt(document.getElementById("evl-miles").value)||0;
-    if(!miles){alert("Please enter current mileage.");return;}
-    if(!evlCondition["title"]){alert("Please select title status.");return;}
-    var msrp=evlVinData.msrp||evlVinData.base_price||0;
-    var year=evlVinData.year||new Date().getFullYear();
-    var age=new Date().getFullYear()-year;
-    var base=msrp?msrp:28000;
-    var depFactor=Math.max(0.25,1-(age*0.11));
-    var mileFactor=Math.max(0.65,1-(miles/200000)*0.45);
-    var condFactor=0.90;
-    if(evlCondition["body"]==="none"&&evlCondition["interior"]==="clean")condFactor=1.0;
-    else if(evlCondition["body"]==="major"||evlCondition["interior"]==="damage")condFactor=0.78;
-    evlBaseAvg=Math.round(base*depFactor*mileFactor*condFactor);
-    evlBaseRough=Math.round(evlBaseAvg*0.84);
-    evlBaseClean=Math.round(evlBaseAvg*1.13);
-    updateValueDisplay();
-    document.getElementById("evl-trade-section").style.display="block";
-    document.getElementById("evl-confirm3").style.display="none";
-    document.getElementById("evl-boost-drawer").classList.remove("locked");
-    document.getElementById("evl-submit-btn").style.display="block";
-    document.getElementById("evl-trade-section").scrollIntoView({behavior:"smooth"});
-  });
+  function toggleDrawer(id) {
+    const d = document.getElementById(id);
+    if (d.classList.contains('locked')) return;
+  }
 
-  // CONDITION SLIDER
-  document.getElementById("evl-cond-slider").addEventListener("input",function(){
-    updateValueDisplay();
-  });
+  function openDrawer(id) {
+    const d = document.getElementById(id);
+    d.classList.remove('locked','done');
+    d.classList.add('active');
+    setTimeout(() => d.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
+  }
 
-  // ADD-ON BUTTONS
-  document.querySelectorAll(".evl-addon-btn").forEach(function(btn){
-    btn.addEventListener("click",function(){
-      this.classList.toggle("selected");
-      var check=this.querySelector(".addon-check");
-      if(this.classList.contains("selected")){
-        check.textContent="✓";
-      } else {
-        check.textContent="";
-      }
-      // Recalculate boost
-      evlAddonBoost=0;
-      document.querySelectorAll(".evl-addon-btn.selected").forEach(function(b){
-        evlAddonBoost+=parseInt(b.dataset.boost)||0;
-      });
-      var boostEl=document.getElementById("evl-addon-boost");
-      var boostText=document.getElementById("evl-addon-boost-text");
-      if(evlAddonBoost>0){
-        boostEl.classList.add("show");
-        boostText.textContent="✅ UPGRADE BOOST: +$"+evlAddonBoost.toLocaleString()+" — Applied to your values above";
-      } else {
-        boostEl.classList.remove("show");
-      }
-      updateValueDisplay();
-    });
-  });
+  function lockDrawer(id) {
+    const d = document.getElementById(id);
+    d.classList.remove('active');
+    d.classList.add('done');
+    d.querySelector('.drawer-icon').textContent = '✓';
+  }
 
-  document.getElementById("evl-boost-toggle").addEventListener("click",function(){
-    document.getElementById("evl-boost-drawer").classList.toggle("open");
-  });
+  const canvas = document.getElementById('sig-canvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  function resizeCanvas() {
+    const img = canvas.toDataURL();
+    canvas.width = canvas.offsetWidth;
+    canvas.height = 90;
+    const image = new Image();
+    image.onload = () => ctx.drawImage(image, 0, 0);
+    image.src = img;
+  }
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return { x:(e.touches?e.touches[0].clientX:e.clientX)-rect.left, y:(e.touches?e.touches[0].clientY:e.clientY)-rect.top };
+  }
+  canvas.addEventListener('mousedown', e=>{drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+  canvas.addEventListener('mousemove', e=>{if(!drawing)return;e.preventDefault();const p=getPos(e);ctx.strokeStyle='#00FF41';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';ctx.lineTo(p.x,p.y);ctx.stroke();});
+  canvas.addEventListener('touchstart', e=>{drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+  canvas.addEventListener('touchmove', e=>{if(!drawing)return;e.preventDefault();const p=getPos(e);ctx.strokeStyle='#00FF41';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+  window.addEventListener('mouseup', ()=>drawing=false);
+  canvas.addEventListener('touchend', ()=>drawing=false);
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height);}
 
-  document.querySelectorAll(".evl-photo-input").forEach(function(input){
-    input.addEventListener("change",function(){
-      var slot=this.dataset.slot,file=this.files[0];
-      if(!file)return;
-      evlPhotos[slot]=file;
-      var slotEl=document.getElementById("slot-"+slot);
-      slotEl.classList.add("uploaded");
-      slotEl.querySelector(".evl-photo-label").textContent="✓ UPLOADED";
-      slotEl.querySelector(".evl-photo-icon").textContent="✅";
-      evlPhotoCount=Object.keys(evlPhotos).length;
-      document.getElementById("evl-photo-score").textContent=evlPhotoCount+" of 10 photos uploaded";
-      updateScore();
-    });
-  });
+  function populateFields(data) {
+    const b = data.build || data;
+    if (!b||!b.year) throw new Error("No vehicle data returned");
+    document.getElementById('res-yr-mk-mdl').value = `${b.year||''} ${b.make||''} ${b.model||''}`.trim();
+    document.getElementById('res-trm').value = b.trim||b.trim_name||'BASE';
+    const specs=[
+      b.engine       ?`ENGINE:    ${b.engine}`      :null,
+      b.engine_size  ?`DISPLACE:  ${b.engine_size}L`:null,
+      b.transmission ?`TRANS:     ${b.transmission}`:null,
+      b.drivetrain   ?`DRIVE:     ${b.drivetrain}`  :null,
+      b.fuel_type    ?`FUEL:      ${b.fuel_type}`   :null,
+      b.body_type    ?`BODY:      ${b.body_type}`   :null,
+      b.body_subtype ?`STYLE:     ${b.body_subtype}`:null,
+      b.doors        ?`DOORS:     ${b.doors}`       :null,
+      b.cylinders    ?`CYLINDERS: ${b.cylinders}`   :null,
+      b.std_seating  ?`SEATING:   ${b.std_seating}` :null,
+      b.highway_mpg  ?`HWY MPG:   ${b.highway_mpg}` :null,
+      b.city_mpg     ?`CITY MPG:  ${b.city_mpg}`    :null,
+      b.made_in      ?`MADE IN:   ${b.made_in}`     :null,
+    ].filter(Boolean).join('\n');
+    document.getElementById('res-opt').value = specs||'Decoded — see fields above.';
+  }
 
-  document.getElementById("evl-submit-btn").addEventListener("click",function(){
-    this.textContent="SUBMITTING...";this.disabled=true;submitAudit();
-  });
-});
-
-function updateValueDisplay(){
-  var sliderVal=parseInt(document.getElementById("evl-cond-slider").value);
-  var mult=sliderMultipliers[sliderVal];
-  // Update slider label and highlight active label
-  document.getElementById("evl-slider-label").textContent=sliderLabels[sliderVal];
-  sliderLabelIds.forEach(function(id,i){
-    document.getElementById(id).style.color=i===sliderVal?"#2B84FE":"#aaaaaa";
-    document.getElementById(id).style.fontWeight=i===sliderVal?"900":"700";
-  });
-  var rough=Math.round(evlBaseRough*mult)+evlAddonBoost;
-  var avg=Math.round(evlBaseAvg*mult)+evlAddonBoost;
-  var clean=Math.round(evlBaseClean*mult)+evlAddonBoost;
-  document.getElementById("evl-rough-val").textContent="$"+rough.toLocaleString();
-  document.getElementById("evl-avg-val").textContent="$"+avg.toLocaleString();
-  document.getElementById("evl-clean-val").textContent="$"+clean.toLocaleString();
-}
-
-function updateScore(){
-  var groups=["title","paint","hail","body","glass","tires","interior","odor","lights","accident","flood","manual","spare","keys"];
-  var filled=0;
-  groups.forEach(function(g){if(evlCondition[g])filled++;});
-  var miles=document.getElementById("evl-miles").value;
-  if(miles)filled++;
-  var photoBonus=Math.min(3,Math.floor(evlPhotoCount/2));
-  var total=groups.length+1;
-  var pct=Math.round(((filled+photoBonus)/(total+3))*100);
-  pct=Math.min(100,pct);
-  document.getElementById("evl-score-bar").style.width=pct+"%";
-  var badge=document.getElementById("evl-cert-badge");
-  var icon=document.getElementById("evl-cert-icon");
-  var name=document.getElementById("evl-cert-name");
-  var msg=document.getElementById("evl-cert-msg");
-  var label=document.getElementById("evl-score-label");
-  var disqualified=evlCondition["title"]==="salvage"||evlCondition["title"]==="rebuilt"||evlCondition["flood"]==="yes";
-  if(disqualified){label.textContent=pct+"% complete — Standard submission";badge.className="evl-cert-badge show";icon.textContent="📋";name.textContent="EVL SUBMITTED";msg.textContent="Vehicle submitted for review";}
-  else if(pct>=85&&evlPhotoCount>=6&&evlCondition["lights"]!=="yes"){label.textContent=pct+"% complete — Priority 24hr response";badge.className="evl-cert-badge certified show";icon.textContent="🏆";name.textContent="EVL CERTIFIED";msg.textContent="Full documentation received — priority appraisal within 24 hours";}
-  else if(pct>=60){label.textContent=pct+"% complete — Standard 48hr response";badge.className="evl-cert-badge verified show";icon.textContent="✅";name.textContent="EVL VERIFIED";msg.textContent="Condition report complete — offer valid 7 days";}
-  else{label.textContent=pct+"% complete — Add more details to strengthen your offer";badge.className="evl-cert-badge show";icon.textContent="📋";name.textContent="EVL SUBMITTED";msg.textContent="Complete more sections to qualify for EVL Verified status";}
-}
-
-async function submitAudit(){
-  try{
-    var vin=document.getElementById("evl-vin").value.trim().toUpperCase();
-    var miles=document.getElementById("evl-miles").value;
-    var ymm=(evlVinData.year||"")+" "+(evlVinData.make||"")+" "+(evlVinData.model||"")+" "+(evlVinData.trim||"");
-    var certBadge=document.getElementById("evl-cert-name").textContent;
-    var sliderVal=parseInt(document.getElementById("evl-cond-slider").value);
-    var selectedAddons=[];
-    document.querySelectorAll(".evl-addon-btn.selected").forEach(function(b){selectedAddons.push(b.dataset.addon);});
-    var photoUrls={};
-    if(window.evlFirebase){
-      var fb=window.evlFirebase;
-      for(var slot in evlPhotos){
-        try{
-          var photoRef=fb.ref(fb.storage,"submissions/"+vin+"/"+slot+"_"+Date.now()+".jpg");
-          await fb.uploadBytes(photoRef,evlPhotos[slot]);
-          photoUrls[slot]=await fb.getDownloadURL(photoRef);
-        }catch(e){console.log("Photo error:",e);}
-      }
-      var submission={vin:vin,vehicle:ymm.trim(),year:evlVinData.year||"",make:evlVinData.make||"",model:evlVinData.model||"",trim:evlVinData.trim||"",mileage:miles,condition:evlCondition,conditionSlider:sliderLabels[sliderVal],addons:selectedAddons,addonBoost:evlAddonBoost,specs:{engine:evlVinData.engine||"",transmission:evlVinData.transmission||"",drivetrain:evlVinData.drivetrain||"",fuel:evlVinData.fuel_type||"",body:evlVinData.body_type||"",seating:evlVinData.std_seating||"",city_mpg:evlVinData.city_mpg||"",hwy_mpg:evlVinData.highway_mpg||""},values:{rough:document.getElementById("evl-rough-val").textContent,average:document.getElementById("evl-avg-val").textContent,clean:document.getElementById("evl-clean-val").textContent},certification:certBadge,photos:photoUrls,photoCount:Object.keys(photoUrls).length,status:"new",submitted_at:fb.serverTimestamp()};
-      await fb.addDoc(fb.collection(fb.db,"submissions"),submission);
+  async function runDecode() {
+    const vin = document.getElementById('vin-input').value.trim().toUpperCase();
+    const btn = document.getElementById('decode-btn');
+    if (vin.length!==17){setStatus('INVALID VIN — 17 CHARS REQUIRED','error');return;}
+    setStatus('SCANNING...','loading');
+    btn.disabled=true;
+    try {
+      const url = `https://mc-api.marketcheck.com/v2/decode/car/${vin}/specs?api_key=${API_KEY}`;
+      const res = await fetch(url, {signal:AbortSignal.timeout(10000)});
+      if (!res.ok){throw new Error(`API ${res.status}`);}
+      const data = await res.json();
+      populateFields(data);
+      setStatus('SYNC SUCCESSFUL ✓','success');
+      document.getElementById('post-decode-wrap').style.display = 'block';
+      lockDrawer('drawer1');
+      openDrawer('drawer2');
+    } catch(err) {
+      console.error(err);
+      setStatus('SYNC ERROR — CHECK VIN & RETRY','error');
+    } finally {
+      btn.disabled=false;
     }
-    var subject="EVL Trade-In Audit: "+ymm.trim()+" — "+certBadge;
-    var body="EVL VEHICLE AUDIT REPORT\n==================================\n\nCERTIFICATION: "+certBadge+"\nVIN: "+vin+"\nVEHICLE: "+ymm.trim()+"\nODOMETER: "+miles+" MILES\nTITLE: "+(evlCondition["title"]||"").toUpperCase()+"\nOVERALL CONDITION: "+sliderLabels[sliderVal]+"\n\nCONDITION DETAIL:\n";
-    for(var key in evlCondition){body+=key.toUpperCase()+": "+(Array.isArray(evlCondition[key])?evlCondition[key].join(", "):evlCondition[key]).toUpperCase()+"\n";}
-    if(selectedAddons.length>0){body+="\nUPGRADES / ADD-ONS:\n"+selectedAddons.join(", ").toUpperCase()+"\nUPGRADE BOOST: +$"+evlAddonBoost.toLocaleString()+"\n";}
-    body+="\nVALUES (with slider & upgrades applied):\nROUGH: "+document.getElementById("evl-rough-val").textContent+"\nAVERAGE: "+document.getElementById("evl-avg-val").textContent+"\nCLEAN: "+document.getElementById("evl-clean-val").textContent+"\nPHOTOS: "+Object.keys(photoUrls).length+" uploaded\n\n==================================\nSUBMITTED VIA EVL VEHICLE ACQUISITION RADAR v2.0";
-    window.location.href="mailto:"+AUDIT_EMAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-    document.getElementById("evl-submit-btn").style.display="none";
-    document.getElementById("evl-success").style.display="block";
-    var responseTime=certBadge.includes("CERTIFIED")?"24 hours":certBadge.includes("VERIFIED")?"48 hours":"72 hours";
-    document.getElementById("evl-success-msg").textContent="Your "+certBadge+" submission has been received. Our team will respond within "+responseTime+".";
-    document.getElementById("evl-success").scrollIntoView({behavior:"smooth"});
-  }catch(err){console.error("Submit error:",err);alert("Submission error — please try again.");document.getElementById("evl-submit-btn").textContent="⬡ SUBMIT AUDIT TO EVL TEAM";document.getElementById("evl-submit-btn").disabled=false;}
-}
+  }
 
-function evlUnlockStep(n){
-  var step=document.getElementById("evl-step"+n);
-  var lock=document.getElementById("evl-lock"+n);
-  var bodies={2:"evl-data-body",3:"evl-odo-body"};
-  var body=document.getElementById(bodies[n]);
-  step.classList.remove("locked");step.classList.add("unlocked");
-  if(lock)lock.style.display="none";
-  if(body)body.style.display="block";
-  step.scrollIntoView({behavior:"smooth",block:"start"});
-}
+  function setStatus(msg,type=''){
+    const el=document.getElementById('scan-status');
+    el.textContent=msg;
+    el.className=type;
+  }
+
+  function confirmVehicle() { lockDrawer('drawer2'); openDrawer('drawer3'); }
+
+  function confirmOdometer() {
+    const miles = document.getElementById('user-miles').value.trim();
+    if (!miles){alert('Please enter the current odometer reading.');return;}
+    lockDrawer('drawer3');
+    openDrawer('drawer4');
+    setTimeout(resizeCanvas, 400);
+  }
+
+  function confirmSignature() {
+    lockDrawer('drawer4');
+    document.getElementById('submit-wrap').style.display='block';
+    setTimeout(()=>document.getElementById('submit-wrap').scrollIntoView({behavior:'smooth'}),100);
+  }
+
+  function finalizeAudit() {
+    const vin     = document.getElementById('vin-input').value.trim();
+    const miles   = document.getElementById('user-miles').value.trim();
+    const cond    = document.getElementById('user-cond').value;
+    const vehicle = document.getElementById('res-yr-mk-mdl').value.trim();
+    const trim    = document.getElementById('res-trm').value.trim();
+    const specs   = document.getElementById('res-opt').value.trim();
+    if (!vin){alert('Please enter a VIN before submitting.');return;}
+    const subject = encodeURIComponent('New Forensic MatchCheck Audit Received');
+    const body = encodeURIComponent(
+      `MATCHCHECK AUDIT REPORT\n========================\n`+
+      `VEHICLE:   ${vehicle}\nTRIM:      ${trim}\nVIN:       ${vin}\n`+
+      `MILES:     ${miles||'Not provided'}\nCONDITION: ${cond}\n`+
+      `------------------------\nSPECS:\n${specs||'Not decoded'}\n`+
+      `------------------------\nSIGNATURE: Captured & Digitally Logged\n========================`
+    );
+    window.location.href=`mailto:${DEALER_EMAIL}?subject=${subject}&body=${body}`;
+    document.getElementById('submit-wrap').style.display='none';
+    document.getElementById('success-screen').style.display='block';
+    document.getElementById('success-screen').scrollIntoView({behavior:'smooth'});
+  }
+
+  function openWindowSticker() {
+    const vin = document.getElementById('vin-input').value.trim().toUpperCase();
+    navigator.clipboard.writeText(vin).catch(()=>{});
+    alert(`MarketCheck NeoVIN page is opening.\n\nYour VIN has been copied to clipboard:\n${vin}\n\nPaste it in the "VIN to decode" box, click DECODE VIN, then click WINDOW STICKER.`);
+    window.open(`https://universe.marketcheck.com/neovin-decode-vin`, '_blank');
+  }
+
+  function openTradeEstimator() {
+    const vin = document.getElementById('vin-input').value.trim().toUpperCase();
+    const url = `https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key=${API_KEY}&vin=${vin}&embed=true`;
+    document.getElementById('estimator-frame').src = url;
+    document.getElementById('estimator-modal').classList.add('open');
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    if (id === 'sticker-modal') document.getElementById('sticker-frame').src = '';
+    if (id === 'estimator-modal') document.getElementById('estimator-frame').src = '';
+  }
 </script>
+</body>
+</html>
