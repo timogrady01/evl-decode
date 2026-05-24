@@ -446,14 +446,74 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
         <label class="lbl">Additional Notes <span style="color:var(--muted);font-weight:400">(upgrades, modifications, etc.)</span></label>
         <textarea class="inp" id="notes-inp" placeholder="Describe any modifications, upgrades, or additional details..."></textarea>
       </div>
-      <div class="check-title" style="margin-bottom:10px">Vehicle Photos <span style="color:var(--gold);font-size:0.72rem;margin-left:8px">BOOSTS YOUR OFFER</span></div>
+      <!-- PHOTO TIPS -->
+      <div style="background:#0A0A14;border:1px solid var(--border);padding:16px;margin-bottom:16px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">📱 Quick Photo Tips</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="font-size:0.85rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">📏 Distance:</span> 10–15 feet back for exterior shots</div>
+          <div style="font-size:0.85rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">☀️ Lighting:</span> Outside in natural light, flash OFF</div>
+          <div style="font-size:0.85rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">📐 Angle:</span> Landscape (sideways) for exterior shots</div>
+          <div style="font-size:0.85rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">🔑 Engine ON:</span> For odometer — shows true mileage</div>
+        </div>
+      </div>
+
       <div class="photo-grid">
-        <div class="photo-slot" id="slot-front"><input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Front View</div></div>
-        <div class="photo-slot" id="slot-rear"><input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Rear View</div></div>
-        <div class="photo-slot" id="slot-driver"><input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Driver Side</div></div>
-        <div class="photo-slot" id="slot-interior"><input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Interior / Dash</div></div>
-        <div class="photo-slot" id="slot-odometer"><input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Odometer</div></div>
-        <div class="photo-slot" id="slot-damage"><input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)"><div class="photo-icon">📷</div><div class="photo-lbl">Any Damage</div></div>
+        <!-- FRONT -->
+        <div class="photo-slot" id="slot-front">
+          <input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Front View</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft in front.<br>Capture full front & both sides.</div>
+        </div>
+        <!-- REAR -->
+        <div class="photo-slot" id="slot-rear">
+          <input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Rear View</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft behind.<br>Show full rear bumper & both sides.</div>
+        </div>
+        <!-- DRIVER SIDE -->
+        <div class="photo-slot" id="slot-driver">
+          <input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Driver Side</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand beside the car.<br>Capture full side from front to rear.</div>
+        </div>
+        <!-- PASSENGER SIDE -->
+        <div class="photo-slot" id="slot-passenger">
+          <input type="file" accept="image/*" data-slot="passenger" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Passenger Side</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand on passenger side.<br>Full side profile, front to rear.</div>
+        </div>
+        <!-- INTERIOR -->
+        <div class="photo-slot" id="slot-interior">
+          <input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Interior / Dashboard</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Sit in driver seat looking forward.<br>Show dash, seats & headliner.</div>
+        </div>
+        <!-- ODOMETER -->
+        <div class="photo-slot" id="slot-odometer">
+          <input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Odometer Reading</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Engine running. Get close so<br>mileage is clearly readable.</div>
+        </div>
+        <!-- DAMAGE -->
+        <div class="photo-slot" id="slot-damage">
+          <input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Any Damage (optional)</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Get within 3 ft of any dents,<br>scratches or damage areas.</div>
+        </div>
+        <!-- TIRES -->
+        <div class="photo-slot" id="slot-tires">
+          <input type="file" accept="image/*" data-slot="tires" onchange="handlePhoto(this)">
+          <div class="photo-icon">📷</div>
+          <div class="photo-lbl">Tires & Wheels</div>
+          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Kneel down & shoot one tire.<br>Shows tread depth & wheel condition.</div>
+        </div>
       </div>
       <div class="cert-box" id="cert-box">
         <span class="cert-icon" id="cert-icon">📋</span>
@@ -513,7 +573,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v4.4</b></span>
+  <span>Entity Protocol <b>v4.5</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
