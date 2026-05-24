@@ -269,9 +269,62 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
             </select>
           </div>
           <div>
-            <label class="lbl">Trim</label>
-            <select class="inp" id="ymm-trim" disabled>
-              <option value="">Select Trim</option>
+            <label class="lbl">Body Style</label>
+            <select class="inp" id="ymm-body">
+              <option value="">Select Body Style</option>
+              <option>Sedan</option>
+              <option>SUV / Crossover</option>
+              <option>Truck / Pickup</option>
+              <option>Coupe</option>
+              <option>Hatchback</option>
+              <option>Van / Minivan</option>
+              <option>Wagon</option>
+              <option>Convertible</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="row2">
+          <div>
+            <label class="lbl">Trim Level</label>
+            <select class="inp" id="ymm-trim">
+              <option value="">Select Trim (optional)</option>
+              <optgroup label="── Common Trims ──">
+                <option>Base / Standard</option>
+                <option>S</option><option>SE</option><option>SEL</option>
+                <option>SL</option><option>SR</option><option>SR5</option>
+                <option>LE</option><option>XLE</option><option>XSE</option>
+                <option>Limited</option><option>Platinum</option><option>Titanium</option>
+                <option>Sport</option><option>Premium</option><option>Luxury</option>
+                <option>EX</option><option>EX-L</option><option>Touring</option>
+                <option>LX</option><option>LT</option><option>LTZ</option>
+                <option>LS</option><option>RS</option><option>SS</option>
+                <option>GT</option><option>GT500</option>
+              </optgroup>
+              <optgroup label="── Truck / Off-Road ──">
+                <option>XL</option><option>XLT</option><option>Lariat</option>
+                <option>King Ranch</option><option>Raptor</option>
+                <option>TRD Off-Road</option><option>TRD Pro</option>
+                <option>Trail</option><option>Overland</option>
+                <option>Rubicon</option><option>Sahara</option>
+                <option>Z71</option><option>AT4</option><option>Denali</option>
+              </optgroup>
+              <optgroup label="── Electric / Hybrid ──">
+                <option>EV</option><option>Hybrid</option><option>Plug-in Hybrid</option>
+                <option>Prime</option><option>Blue</option><option>Long Range</option>
+                <option>Performance</option>
+              </optgroup>
+            </select>
+          </div>
+          <div>
+            <label class="lbl">Drivetrain</label>
+            <select class="inp" id="ymm-drive">
+              <option value="">Select Drivetrain</option>
+              <option>FWD — Front Wheel Drive</option>
+              <option>RWD — Rear Wheel Drive</option>
+              <option>AWD — All Wheel Drive</option>
+              <option>4WD — Four Wheel Drive</option>
+              <option>4x4</option>
             </select>
           </div>
         </div>
@@ -297,6 +350,16 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           <div>
             <label class="lbl">Current Mileage</label>
             <input type="number" class="inp" id="ymm-miles" placeholder="e.g. 45000">
+          </div>
+        </div>
+        <div class="row2">
+          <div>
+            <label class="lbl">Zip Code</label>
+            <input type="text" class="inp" id="ymm-zip" placeholder="e.g. 75024" maxlength="5">
+          </div>
+          <div>
+            <label class="lbl">Engine / Options <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <input type="text" class="inp" id="ymm-engine" placeholder="e.g. 3.5L V6, Sunroof, Leather">
           </div>
         </div>
         <div class="mb14">
@@ -466,7 +529,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.0</b></span>
+  <span>Entity Protocol <b>v3.1</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -600,13 +663,17 @@ function confirmYMM(){
   const year=document.getElementById('ymm-year').value;
   const make=document.getElementById('ymm-make').value;
   const model=document.getElementById('ymm-model').value;
+  const body=document.getElementById('ymm-body').value;
   const trim=document.getElementById('ymm-trim').value;
+  const drive=document.getElementById('ymm-drive').value;
   const color=document.getElementById('ymm-color').value;
   const intColor=document.getElementById('ymm-int-color').value;
   const miles=document.getElementById('ymm-miles').value;
+  const zip=document.getElementById('ymm-zip').value;
+  const engine=document.getElementById('ymm-engine').value;
   if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}
-  ymmData={year,make,model,trim,color,intColor,miles};
-  // Set vinData-like object for value calc
+  if(!miles){alert('Please enter current mileage.');return;}
+  ymmData={year,make,model,body,trim,drive,color,intColor,miles,zip,engine};
   vinData={year:parseInt(year),make,model,trim,msrp:0,build:{year:parseInt(year),make,model,trim}};
   confirmStep(1);
 }
@@ -781,7 +848,7 @@ function submitAudit(){
     const miles=document.getElementById('miles-inp').value;
     vehicleInfo=`VIN: ${vin}\nVEHICLE: ${document.getElementById('res-ymm').value}\nTRIM: ${document.getElementById('res-trim').value}\nMILEAGE: ${miles}\nSPECS:\n${document.getElementById('res-specs').value}`;
   } else {
-    vehicleInfo=`LOOKUP METHOD: Year/Make/Model\nYEAR: ${ymmData.year}\nMAKE: ${ymmData.make}\nMODEL: ${ymmData.model}\nTRIM: ${ymmData.trim||'Not specified'}\nEXT COLOR: ${ymmData.color||'Not specified'}\nINT COLOR: ${ymmData.intColor||'Not specified'}\nMILEAGE: ${ymmData.miles||'Not entered'}`;
+    vehicleInfo=`LOOKUP METHOD: Year/Make/Model\nYEAR: ${ymmData.year}\nMAKE: ${ymmData.make}\nMODEL: ${ymmData.model}\nBODY: ${ymmData.body||'Not specified'}\nTRIM: ${ymmData.trim||'Not specified'}\nDRIVETRAIN: ${ymmData.drive||'Not specified'}\nENGINE/OPTIONS: ${ymmData.engine||'Not specified'}\nEXT COLOR: ${ymmData.color||'Not specified'}\nINT COLOR: ${ymmData.intColor||'Not specified'}\nMILEAGE: ${ymmData.miles||'Not entered'}\nZIP CODE: ${ymmData.zip||'Not entered'}`;
   }
   let checksText='';
   for(const[g,vals] of Object.entries(checks)){checksText+=`${g.toUpperCase()}: ${vals.join(', ')}\n`;}
