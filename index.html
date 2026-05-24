@@ -317,16 +317,17 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 .btn-clear:hover { border-color: var(--red); color: var(--red); }
 
 /* ── SUB-DRAWERS ── */
-.sub-drawer { border: 2px solid #2B4480; margin-bottom: 6px; background: #080E1A; }
+.sub-drawer { border: 2px solid var(--blue); margin-bottom: 8px; background: #080E1A; }
 .sub-drawer-hdr {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 13px 14px; cursor: pointer; background: #0D1829;
+  padding: 14px 16px; cursor: pointer; background: #0A1628;
+  border-left: 4px solid var(--blue);
   transition: background 0.2s;
 }
-.sub-drawer-hdr:hover { background: #111F35; }
-.sub-drawer-title { font-size: 16px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; }
-.sub-arrow { font-size: 12px; color: var(--blue); font-weight: 700; transition: transform 0.2s; }
-.sub-drawer-body { display: none; padding: 12px 12px 14px; }
+.sub-drawer-hdr:hover { background: #0F1F3A; }
+.sub-drawer-title { font-size: 17px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; }
+.sub-arrow { font-size: 13px; color: var(--blue); font-weight: 900; letter-spacing: 1px; }
+.sub-drawer-body { display: none; padding: 14px; border-top: 1px solid #1a3060; }
 .sub-drawer-body.open { display: block; }
 
 /* ── MODAL ── */
@@ -546,109 +547,136 @@ footer b { color: var(--blue); }
     <div class="on-it">
       <span class="on-it-icon">🔍</span>
       <div class="on-it-title">We're On It!</div>
-      <div class="on-it-text">Our team is preparing your <strong>Certified Appraisal</strong> based on your vehicle details and condition. We'll contact you with a personalized offer — typically within <strong style="color:var(--green)">24 hours</strong>.</div>
-      <div class="on-it-note">📸 Adding photos below can <strong style="color:var(--gold)">significantly increase your offer</strong></div>
+      <div class="on-it-text">Our team is preparing your <strong>Certified Appraisal</strong>. We'll contact you — typically within <strong style="color:var(--green)">24 hours</strong>.</div>
+      <div class="on-it-note">Tap each section below to complete your appraisal</div>
     </div>
 
-    <!-- CONDITION REPORT -->
-    <div class="check-section">
-      <div class="check-title">📋 Exterior Condition</div>
-      <div class="check-grid">
-        <button class="check-btn" data-group="paint" data-val="Original Paint" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Original Paint</span></div></button>
-        <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Repainted</span></div></button>
-        <button class="check-btn" data-group="hail" data-val="No Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">No Hail Damage</span></div></button>
-        <button class="check-btn" data-group="hail" data-val="Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Hail Damage</span><span class="check-warn">⚠ affects value</span></div></button>
-        <button class="check-btn" data-group="body" data-val="No Body Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">No Body Damage</span></div></button>
-        <button class="check-btn" data-group="body" data-val="Minor Dents/Scratches" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Minor Dents/Scratches</span></div></button>
-        <button class="check-btn" data-group="glass" data-val="Windshield Clear" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Windshield Clear</span></div></button>
-        <button class="check-btn" data-group="glass" data-val="Chip or Crack" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Chip or Crack</span><span class="check-warn">⚠ affects value</span></div></button>
+    <!-- SUB DRAWER: EXTERIOR -->
+    <div class="sub-drawer">
+      <div class="sub-drawer-hdr" onclick="toggleSub(this)">
+        <span class="sub-drawer-title">🚗 Exterior Condition</span>
+        <span class="sub-arrow">▼</span>
+      </div>
+      <div class="sub-drawer-body">
+        <div class="check-grid">
+          <button class="check-btn" data-group="paint" data-val="Original Paint" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Original Paint</span></button>
+          <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Repainted</span></button>
+          <button class="check-btn" data-group="hail" data-val="No Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Hail Damage</span></button>
+          <button class="check-btn" data-group="hail" data-val="Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Hail Damage</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="body" data-val="No Body Damage" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Body Damage</span></button>
+          <button class="check-btn" data-group="body" data-val="Minor Dents" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Minor Dents</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="glass" data-val="Windshield Clear" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Windshield Clear</span></button>
+          <button class="check-btn" data-group="glass" data-val="Chip or Crack" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Chip or Crack</span><span class="check-warn">⚠ affects value</span></div></button>
+        </div>
       </div>
     </div>
 
-    <div class="check-section">
-      <div class="check-title">⚙️ Mechanical & Safety</div>
-      <div class="check-grid">
-        <button class="check-btn" data-group="lights" data-val="No Warning Lights" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">No Warning Lights</span></div></button>
-        <button class="check-btn" data-group="lights" data-val="Warning Lights On" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Warning Lights On</span><span class="check-warn">⚠ affects value</span></div></button>
-        <button class="check-btn" data-group="tires" data-val="Good Tread" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Good Tread</span></div></button>
-        <button class="check-btn" data-group="tires" data-val="Needs Replacement" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Tires Need Replacement</span><span class="check-warn">⚠ affects value</span></div></button>
-        <button class="check-btn" data-group="accident" data-val="No Accidents" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">No Accidents</span></div></button>
-        <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Prior Accident</span><span class="check-warn">⚠ affects value</span></div></button>
-        <button class="check-btn" data-group="flood" data-val="No Flood or Fire" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">No Flood or Fire</span></div></button>
-        <button class="check-btn" data-group="flood" data-val="Flood/Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Flood/Fire Damage</span><span class="check-warn">⚠ major impact</span></div></button>
+    <!-- SUB DRAWER: INTERIOR -->
+    <div class="sub-drawer">
+      <div class="sub-drawer-hdr" onclick="toggleSub(this)">
+        <span class="sub-drawer-title">🪑 Interior Condition</span>
+        <span class="sub-arrow">▼</span>
+      </div>
+      <div class="sub-drawer-body">
+        <div class="check-grid">
+          <button class="check-btn" data-group="interior" data-val="Clean Interior" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Clean Interior</span></button>
+          <button class="check-btn" data-group="interior" data-val="Stains/Tears" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Stains / Tears</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="odor" data-val="No Odors" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Odors</span></button>
+          <button class="check-btn" data-group="odor" data-val="Smoke/Pet Odor" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Smoke/Pet Odor</span><span class="check-warn">⚠ affects value</span></div></button>
+        </div>
       </div>
     </div>
 
-    <div class="check-section">
-      <div class="check-title">🪑 Interior & Documentation</div>
-      <div class="check-grid">
-        <button class="check-btn" data-group="interior" data-val="Clean Interior" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Clean Interior</span></div></button>
-        <button class="check-btn" data-group="interior" data-val="Stains/Tears" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Stains / Tears</span><span class="check-warn">⚠ affects value</span></div></button>
-        <button class="check-btn" data-group="odor" data-val="No Odors" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">No Odors</span></div></button>
-        <button class="check-btn" data-group="odor" data-val="Smoke/Pet Odor" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Smoke / Pet Odor</span><span class="check-warn">⚠ affects value</span></div></button>
-        <button class="check-btn" data-group="title" data-val="Clean Title" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Clean Title</span></div></button>
-        <button class="check-btn" data-group="title" data-val="Lien/Payoff" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Lien / Payoff</span></div></button>
-        <button class="check-btn" data-group="spare" data-val="Spare Tire Present" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Spare Tire & Jack</span></div></button>
-        <button class="check-btn" data-group="manual" data-val="Owner Manual" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Owner's Manual</span></div></button>
+    <!-- SUB DRAWER: MECHANICAL -->
+    <div class="sub-drawer">
+      <div class="sub-drawer-hdr" onclick="toggleSub(this)">
+        <span class="sub-drawer-title">⚙️ Mechanical & Safety</span>
+        <span class="sub-arrow">▼</span>
+      </div>
+      <div class="sub-drawer-body">
+        <div class="check-grid">
+          <button class="check-btn" data-group="lights" data-val="No Warning Lights" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Warning Lights</span></button>
+          <button class="check-btn" data-group="lights" data-val="Warning Lights On" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Warning Lights On</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="tires" data-val="Good Tread" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Good Tread</span></button>
+          <button class="check-btn" data-group="tires" data-val="Needs Replacement" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Tires Worn</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="accident" data-val="No Accidents" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Accidents</span></button>
+          <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Prior Accident</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="flood" data-val="No Flood or Fire" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Flood/Fire</span></button>
+          <button class="check-btn" data-group="flood" data-val="Flood/Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Flood/Fire Damage</span><span class="check-warn">⚠ major impact</span></div></button>
+        </div>
       </div>
     </div>
 
-    <!-- FACTORY OPTIONS (dynamic) -->
-    <div class="check-section" id="factory-section" style="display:none">
-      <div class="check-title">🏭 Factory Options & Packages</div>
-      <div class="check-grid" id="factory-grid"></div>
+    <!-- SUB DRAWER: DOCUMENTATION -->
+    <div class="sub-drawer">
+      <div class="sub-drawer-hdr" onclick="toggleSub(this)">
+        <span class="sub-drawer-title">📋 Documentation & Options</span>
+        <span class="sub-arrow">▼</span>
+      </div>
+      <div class="sub-drawer-body">
+        <div class="check-grid">
+          <button class="check-btn" data-group="title" data-val="Clean Title" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Clean Title</span></button>
+          <button class="check-btn" data-group="title" data-val="Lien/Payoff" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Lien / Payoff</span></button>
+          <button class="check-btn" data-group="spare" data-val="Spare Tire Present" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Spare Tire & Jack</span></button>
+          <button class="check-btn" data-group="manual" data-val="Owner Manual" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Owner's Manual</span></button>
+        </div>
+        <div id="factory-section" style="display:none;margin-top:10px">
+          <div class="check-title" style="margin-bottom:8px;color:#fff">🏭 Factory Options</div>
+          <div class="check-grid" id="factory-grid"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- NOTES -->
-    <div class="mb10">
-      <label class="lbl">Additional Notes — Upgrades / Modifications</label>
-      <textarea class="inp" id="notes-inp" placeholder="List any aftermarket upgrades, recent work, special features..."></textarea>
+    <!-- SUB DRAWER: NOTES -->
+    <div class="sub-drawer">
+      <div class="sub-drawer-hdr" onclick="toggleSub(this)">
+        <span class="sub-drawer-title">📝 Additional Notes</span>
+        <span class="sub-arrow">▼</span>
+      </div>
+      <div class="sub-drawer-body">
+        <label class="lbl">Upgrades / Modifications / Special Features</label>
+        <textarea class="inp" id="notes-inp" placeholder="List any aftermarket upgrades, recent work, special features..."></textarea>
+      </div>
     </div>
 
-    <!-- CERT BADGE -->
-    <div class="cert-badge" id="cert-badge">
+    <!-- SUB DRAWER: PHOTOS -->
+    <div class="sub-drawer">
+      <div class="sub-drawer-hdr" onclick="toggleSub(this)" style="background:#1A0E00;border-left:4px solid var(--gold)">
+        <span class="sub-drawer-title" style="color:var(--gold)">📸 Photos — Boosts Your Offer</span>
+        <span class="sub-arrow" style="color:var(--gold)">▼ TAP TO ADD</span>
+      </div>
+      <div class="sub-drawer-body">
+        <div style="background:#0D1829;border-left:4px solid var(--gold);padding:12px 14px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">📱 Photo Guide</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">📏 Distance:</strong> 10–15 ft for exterior</div>
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">☀️ Lighting:</strong> Outdoors, flash OFF</div>
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">📐 Angle:</strong> Landscape for exterior</div>
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">🔑 Odometer:</strong> Engine running</div>
+          </div>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-slot" id="slot-front"><input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Front View</div><div class="p-hint">10 ft in front, both sides visible</div></div>
+          <div class="photo-slot" id="slot-rear"><input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Rear View</div><div class="p-hint">10 ft behind, full bumper</div></div>
+          <div class="photo-slot" id="slot-driver"><input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Driver Side</div><div class="p-hint">Full side front to rear</div></div>
+          <div class="photo-slot" id="slot-passenger"><input type="file" accept="image/*" data-slot="passenger" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Passenger Side</div><div class="p-hint">Full side profile</div></div>
+          <div class="photo-slot" id="slot-interior"><input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Interior / Dash</div><div class="p-hint">From driver seat, show dash & seats</div></div>
+          <div class="photo-slot" id="slot-odometer"><input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Odometer</div><div class="p-hint">Engine ON — shows true mileage</div></div>
+          <div class="photo-slot" id="slot-lights"><input type="file" accept="image/*" data-slot="lights" onchange="handlePhoto(this)"><div class="p-icon">⚠️</div><div class="p-title">Warning Lights</div><div class="p-hint">Engine ON — no lights? Still snap it!</div></div>
+          <div class="photo-slot" id="slot-tires"><input type="file" accept="image/*" data-slot="tires" onchange="handlePhoto(this)"><div class="p-icon">🛞</div><div class="p-title">Tires & Wheels</div><div class="p-hint">Kneel down, close-up one tire</div></div>
+          <div class="photo-slot" id="slot-spare"><input type="file" accept="image/*" data-slot="spare" onchange="handlePhoto(this)"><div class="p-icon">🔧</div><div class="p-title">Spare Tire Area</div><div class="p-hint">Open trunk — spare, jack & tools</div></div>
+          <div class="photo-slot" id="slot-keys"><input type="file" accept="image/*" data-slot="keys" onchange="handlePhoto(this)"><div class="p-icon">🔑</div><div class="p-title">Keys</div><div class="p-hint">Lay all keys flat — count & type</div></div>
+          <div class="photo-slot" id="slot-damage"><input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Any Damage</div><div class="p-hint">3 ft away — dents, scratches, chips</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-badge" id="cert-badge" style="margin-top:10px">
       <span class="cert-icon" id="cert-icon">📋</span>
       <div class="cert-name" id="cert-name">EVL Submitted</div>
       <div class="cert-msg" id="cert-msg">Complete more sections to qualify for EVL Verified</div>
     </div>
 
-    <!-- PHOTOS DRAWER -->
-    <div style="margin-top:16px;border:2px solid #1a2535;margin-bottom:8px" id="photo-drawer">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--s1);cursor:pointer" onclick="togglePhotoDrawer()">
-        <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--gold)">📸 Vehicle Photos</span>
-          <span style="font-size:13px;color:var(--green);font-weight:700">BOOSTS YOUR OFFER</span>
-        </div>
-        <span style="font-size:12px;color:var(--gold)" id="photo-arrow">▼ TAP TO ADD PHOTOS</span>
-      </div>
-      <div id="photo-body" style="display:none;padding:14px 16px">
-      <div style="margin-top:0px">
-      <div class="check-title" style="margin-bottom:10px;display:none">📸 Vehicle Photos — Boosts Your Offer</div>
-      <div class="photo-tips">
-        <div class="photo-tips-title">📱 Quick Photo Guide</div>
-        <div class="photo-tips-grid">
-          <div class="photo-tip"><strong>Distance:</strong> 10–15 ft back for exterior</div>
-          <div class="photo-tip"><strong>Lighting:</strong> Outdoors, natural light, flash OFF</div>
-          <div class="photo-tip"><strong>Angle:</strong> Landscape (sideways) for exterior</div>
-          <div class="photo-tip"><strong>Odometer:</strong> Engine running — true mileage</div>
-        </div>
-      </div>
-      <div class="photo-grid">
-        <div class="photo-slot" id="slot-front"><input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Front View</div><div class="p-hint">10 ft in front, capture both sides</div></div>
-        <div class="photo-slot" id="slot-rear"><input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Rear View</div><div class="p-hint">10 ft behind, full rear bumper</div></div>
-        <div class="photo-slot" id="slot-driver"><input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Driver Side</div><div class="p-hint">Full side, front to rear</div></div>
-        <div class="photo-slot" id="slot-passenger"><input type="file" accept="image/*" data-slot="passenger" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Passenger Side</div><div class="p-hint">Full side profile</div></div>
-        <div class="photo-slot" id="slot-interior"><input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Interior / Dash</div><div class="p-hint">From driver seat, dash & seats</div></div>
-        <div class="photo-slot" id="slot-odometer"><input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Odometer</div><div class="p-hint">Engine on, get close & clear</div></div>
-        <div class="photo-slot" id="slot-lights"><input type="file" accept="image/*" data-slot="lights" onchange="handlePhoto(this)"><div class="p-icon">⚠️</div><div class="p-title">Warning Lights</div><div class="p-hint">Engine on — dash photo. No lights? Still snap it!</div></div>
-        <div class="photo-slot" id="slot-tires"><input type="file" accept="image/*" data-slot="tires" onchange="handlePhoto(this)"><div class="p-icon">🛞</div><div class="p-title">Tires & Wheels</div><div class="p-hint">Kneel down, one tire close-up</div></div>
-        <div class="photo-slot" id="slot-spare"><input type="file" accept="image/*" data-slot="spare" onchange="handlePhoto(this)"><div class="p-icon">🔧</div><div class="p-title">Spare Tire Area</div><div class="p-hint">Open trunk — spare, jack & tools</div></div>
-        <div class="photo-slot" id="slot-keys"><input type="file" accept="image/*" data-slot="keys" onchange="handlePhoto(this)"><div class="p-icon">🔑</div><div class="p-title">Keys</div><div class="p-hint">Lay all keys flat — count & type</div></div>
-        <div class="photo-slot" id="slot-damage"><input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Any Damage</div><div class="p-hint">3 ft away — dents, scratches, chips</div></div>
-      </div>
-    </div>
-
-      </div></div></div><!-- /photo drawer -->
     <button class="btn-primary" onclick="confirmStep(3)">✓ Continue to Authorization</button>
   </div>
 </div>
@@ -699,7 +727,7 @@ footer b { color: var(--blue); }
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v7.8</b></span>
+  <span>Entity Protocol <b>v7.9</b></span>
   <span>// EVL CERTIFIED DATA STREAM //</span>
 </footer>
 
@@ -775,9 +803,9 @@ function openSticker(){var vin=document.getElementById('vin-inp').value.trim();n
 function closeModal(id){document.getElementById(id).classList.remove('open');if(id==='estimator-modal')document.getElementById('estimator-frame').src='';}
 
 function submitAudit(){var fname=document.getElementById('fname').value.trim(),lname=document.getElementById('lname').value.trim();if(!fname||!lname){alert('Please enter your name.');return;}var phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim(),notes=document.getElementById('notes-inp').value,valueRange=document.getElementById('value-num').textContent,certName=document.getElementById('cert-name').textContent,vehicleInfo='';if(lookupMode==='vin'){vehicleInfo='VIN: '+document.getElementById('vin-inp').value+'\nVEHICLE: '+document.getElementById('res-ymm').textContent+'\nTRIM: '+document.getElementById('res-trim').textContent+'\nMILEAGE: '+document.getElementById('miles-inp').value+'\nSPECS:\n'+document.getElementById('res-specs').textContent;}else{vehicleInfo='LOOKUP: YMM\nYEAR: '+ymmData.year+'\nMAKE: '+ymmData.make+'\nMODEL: '+ymmData.model+'\nBODY: '+(ymmData.body||'—')+'\nTRIM: '+(ymmData.trim||'—')+'\nDRIVETRAIN: '+(ymmData.drive||'—')+'\nEXT COLOR: '+(ymmData.color||'—')+'\nINT COLOR: '+(ymmData.intColor||'—')+'\nMILEAGE: '+ymmData.miles+'\nZIP: '+(ymmData.zip||'—')+'\nKEYS: '+(ymmData.keys||'—')+'\nFACTORY OPTIONS: '+(ymmData.options||'None');}var checksText='';for(var key in checks){checksText+=key.toUpperCase()+': '+checks[key].join(', ')+'\n';}var subject=encodeURIComponent('EVL Certified Appraisal — '+certName),body=encodeURIComponent('EVL CERTIFIED APPRAISAL\n========================\nCERTIFICATION: '+certName+'\nCUSTOMER: '+fname+' '+lname+'\nPHONE: '+phone+'\nEMAIL: '+email+'\n------------------------\n'+vehicleInfo+'\n------------------------\nCONDITION: '+condLabel+'\nESTIMATED RANGE: '+valueRange+'\n------------------------\nCHECKLIST:\n'+checksText+'\nNOTES: '+(notes||'None')+'\nPHOTOS: '+Object.keys(photos).length+' uploaded\nSIGNATURE: Captured\n========================\nEVL v7.0');window.location.href='mailto:'+DEALER_EMAIL+'?subject='+subject+'&body='+body;document.getElementById('submit-btn').style.display='none';document.getElementById('success').style.display='block';document.getElementById('success').scrollIntoView({behavior:'smooth'});}
-function toggleSub(id){
-  var body=document.getElementById('sb-'+id.replace('sd-',''));
-  var arrow=document.getElementById('sa-'+id.replace('sd-',''));
+function toggleSub(hdr){
+  var body=hdr.nextElementSibling;
+  var arrow=hdr.querySelector('.sub-arrow');
   var open=body.classList.contains('open');
   body.classList.toggle('open',!open);
   arrow.style.transform=open?'':'rotate(180deg)';
