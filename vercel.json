@@ -1,17 +1,1 @@
-{
-  "routes": [
-    {
-      "src": "/api/decode",
-      "dest": "/api/decode"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/index.html",
-      "headers": {
-        "X-Frame-Options": "ALLOWALL",
-        "Content-Security-Policy": "frame-ancestors *",
-        "Access-Control-Allow-Origin": "*"
-      }
-    }
-  ]
-}
+{"rewrites":[{"source":"/api/decode","destination":"/api/decode"},{"source":"/(.*)","destination":"/public/index.html"}]}
