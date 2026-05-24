@@ -2,668 +2,888 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Value My Trade — Express Vehicle Locators</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --blue:#007BFF;--green:#00C853;--red:#FF3D00;--gold:#FFB300;
-  --bg:#05070D;--surface:#0A0E18;--surface2:#0F1420;--border:#1A2235;
-  --text:#F0F4FF;--muted:#8899BB;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800;900&display=swap');
+
+:root {
+  --blue:    #0A84FF;
+  --green:   #30D158;
+  --gold:    #FFD60A;
+  --red:     #FF453A;
+  --bg:      #000000;
+  --s1:      #0D0D0D;
+  --s2:      #1A1A1A;
+  --s3:      #242424;
+  --border:  #2C2C2E;
+  --text:    #FFFFFF;
+  --text2:   #EBEBF5CC;
+  --text3:   #EBEBF599;
+  --font:    'Inter', -apple-system, sans-serif;
+  --display: 'Barlow Condensed', sans-serif;
+  --radius:  10px;
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
 }
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
-.hdr{background:var(--surface);border-bottom:2px solid var(--blue);padding:8px 16px;display:flex;justify-content:space-between;align-items:center}
-.hdr-brand{font-family:'Barlow Condensed',sans-serif;font-size:1.339rem;font-weight:800;color:var(--blue);letter-spacing:2px;text-transform:uppercase}
-.hdr-sub{font-size:0.772rem;color:#C8D8EE;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
-.secure-badge{background:var(--green);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.824rem;letter-spacing:2px;padding:5px 14px;text-transform:uppercase}
-.hero{padding:8px 20px 6px;max-width:700px;margin:0 auto}
-.hero-hed{font-family:'Barlow Condensed',sans-serif;font-size:3.09rem;font-weight:800;line-height:0.95;text-transform:uppercase;margin-bottom:14px}
-.hero-hed em{color:var(--blue);font-style:normal}
-.hero-desc{background:var(--surface);border-left:3px solid var(--blue);padding:16px 18px;font-size:1.082rem;line-height:1.8;color:#ffffff;margin-bottom:20px}
-.progress-bar{display:flex;gap:4px;margin-bottom:8px;max-width:700px;margin-left:auto;margin-right:auto;padding:0 20px}
-.prog-step{flex:1;height:4px;background:var(--border);transition:background 0.4s}
-.prog-step.done{background:var(--green)}
-.prog-step.active{background:var(--blue)}
-.wrap{max-width:700px;margin:0 auto;padding:4px 16px 40px}
-.card{background:var(--surface);border:2px solid var(--border);margin-bottom:8px;overflow:hidden;transition:border-color 0.3s}
-.card.active{border-color:var(--blue)}
-.card.done{border-color:var(--green)}
-.card.locked{opacity:0.5;pointer-events:none}
-.card-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--surface2)}
-.card.active .card-hdr{background:#0A1525}
-.card.done .card-hdr{background:#060F08}
-.card-hdr-left{display:flex;align-items:center;gap:12px}
-.step-num{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.03rem;color:#C8D8EE;flex-shrink:0}
-.card.active .step-num{border-color:var(--blue);color:var(--blue);background:#0A1830}
-.card.done .step-num{border-color:var(--green);color:#000;background:var(--green)}
-.step-title{font-family:'Barlow Condensed',sans-serif;font-size:1.339rem;font-weight:800;letter-spacing:1px;text-transform:uppercase}
-.card.active .step-title{color:#fff}
-.card.done .step-title{color:var(--green)}
-.card.locked .step-title{color:#C8D8EE}
-.card-body{padding:14px 16px;display:none}
-.card.active .card-body{display:block}
 
-/* VIN / YMM TOGGLE */
-.lookup-toggle{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px;border:2px solid var(--border)}
-.lt-btn{padding:14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.03rem;letter-spacing:1px;text-transform:uppercase;border:none;background:var(--surface2);color:#C8D8EE;cursor:pointer;transition:all 0.2s;border-right:1px solid var(--border)}
-.lt-btn:last-child{border-right:none}
-.lt-btn.active{background:var(--blue);color:#fff}
-.lt-btn .lt-icon{font-size:1.236rem;display:block;margin-bottom:4px}
-.lt-btn .lt-sub{font-size:0.875rem;color:#ffffff;letter-spacing:0.5px;text-transform:none;font-weight:600}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; overflow-x: hidden; }
 
-/* VIN PANEL */
-.vin-panel,.ymm-panel{display:none}
-.vin-panel.show,.ymm-panel.show{display:block}
+/* ── HEADER ── */
+.hdr {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.hdr-left { display: flex; align-items: center; gap: 10px; }
+.hdr-logo {
+  font-family: var(--display);
+  font-size: 1.05rem; font-weight: 800;
+  color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase;
+}
+.hdr-tag {
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--text3); letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 8px; border: 1px solid var(--border); border-radius: 4px;
+}
+.hdr-secure {
+  background: var(--green); color: #000;
+  font-family: var(--display); font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px;
+}
 
-/* INPUTS */
-.lbl{display:block;font-size:0.803rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8D8EE;margin-bottom:6px}
-.inp{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:#fff;padding:10px 12px;font-family:'Barlow',sans-serif;font-size:1.082rem;font-weight:600;outline:none;border-radius:0;appearance:none;transition:border-color 0.2s}
-.inp:focus{border-color:var(--blue)}
-.inp.filled{border-color:var(--green);color:var(--green)}
-.inp:disabled{opacity:0.4;cursor:not-allowed}
-.inp-vin{font-size:1.442rem;letter-spacing:4px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
-select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23007BFF'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
-select.inp option{background:#0F1420;color:#fff;font-size:1.03rem}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
-.mb14{margin-bottom:10px}
-.decode-row{display:flex;gap:8px;margin-bottom:10px}
-.decode-row .inp{flex:1}
+/* ── PROGRESS ── */
+.progress {
+  display: flex; gap: 4px;
+  padding: 8px 16px 4px;
+  max-width: 680px; margin: 0 auto;
+}
+.prog { flex: 1; height: 3px; background: var(--s3); border-radius: 2px; transition: background var(--transition); }
+.prog.active { background: var(--blue); }
+.prog.done { background: var(--green); }
 
-/* YMM LOADING */
-.ymm-loading{font-size:0.803rem;color:var(--gold);letter-spacing:1px;text-transform:uppercase;padding:6px 0;display:none;font-family:'Barlow Condensed',sans-serif;font-weight:700}
-.ymm-loading.show{display:block}
+/* ── WRAP ── */
+.wrap { max-width: 680px; margin: 0 auto; padding: 8px 12px 60px; }
 
-/* BTNS */
-.btn-decode{background:var(--blue);color:#fff;border:none;padding:0 22px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.03rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.2s;flex-shrink:0}
-.btn-decode:hover{background:#0056D6}
-.btn-decode:disabled{background:var(--border);color:#C8D8EE;cursor:not-allowed}
-.status{font-family:'Barlow Condensed',sans-serif;font-size:0.845rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);display:inline-block;margin-bottom:12px}
-.status.ok{color:var(--green);border-color:var(--green)}
-.status.err{color:var(--red);border-color:var(--red)}
-.status.loading{color:var(--gold);border-color:var(--gold);animation:blink 0.7s step-end infinite}
-@keyframes blink{50%{opacity:0.3}}
-.btn-confirm{width:100%;background:var(--blue);color:#fff;border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:1.133rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:background 0.2s}
-.btn-confirm:hover{background:#0056D6}
-.btn-submit{width:100%;background:var(--green);color:#000;border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:1.339rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:20px;transition:all 0.2s;display:none}
-.btn-submit:hover{background:#fff;letter-spacing:5px}
+/* ── DRAWER ── */
+.drawer {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+.drawer.active { border-color: var(--blue); }
+.drawer.done { border-color: var(--green); }
+.drawer.locked { opacity: 0.45; pointer-events: none; }
 
-/* TOOLS ROW */
-.tools-row{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.tools-row.show{display:grid}
-.tool-btn{padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:1.082rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:2px solid var(--blue);background:var(--surface2);color:#fff;cursor:pointer;text-align:center;transition:all 0.2s}
-.tool-btn:hover{background:var(--blue)}
-.tool-btn.gold{border-color:var(--gold);color:var(--gold)}
-.tool-btn.gold:hover{background:var(--gold);color:#000}
+.drawer-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.drawer-hdr-left { display: flex; align-items: center; gap: 12px; }
 
-/* CONDITION */
-.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.cond-btn{background:var(--surface2);border:2px solid var(--border);padding:22px 10px;cursor:pointer;text-align:center;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px}
-.cond-btn .icon{font-size:2.266rem}
-.cond-btn .label{font-family:'Barlow Condensed',sans-serif;font-size:1.339rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
-.cond-btn .desc{font-size:0.927rem;color:#C8D8EE}
-.cond-btn.selected{border-color:var(--blue);background:#0A1525}
-.cond-btn.selected .label{color:var(--blue)}
-.value-reveal{display:none;background:linear-gradient(135deg,#0A1525,#0A0E18);border:2px solid var(--blue);padding:20px;margin:14px 0;text-align:center}
-.value-reveal.show{display:block}
-.value-label{font-size:0.803rem;letter-spacing:3px;text-transform:uppercase;color:#C8D8EE;margin-bottom:6px}
-.value-range{font-family:'Barlow Condensed',sans-serif;font-size:3.502rem;font-weight:800;color:var(--blue);letter-spacing:2px}
-.value-note{font-size:0.772rem;color:#C8D8EE;margin-top:6px;letter-spacing:1px}
+.step-badge {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 0.95rem; font-weight: 800;
+  border: 2px solid var(--border); color: var(--text3);
+  flex-shrink: 0; transition: all var(--transition);
+}
+.drawer.active .step-badge { border-color: var(--blue); color: var(--blue); background: rgba(10,132,255,0.12); }
+.drawer.done .step-badge { border-color: var(--green); color: #000; background: var(--green); }
 
-/* CHECKS */
-.check-section{margin-bottom:18px}
-.check-title{font-family:'Barlow Condensed',sans-serif;font-size:0.824rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C8D8EE;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.check-btn{background:var(--surface2);border:1.5px solid var(--border);padding:10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;text-align:left}
-.check-btn .chk{width:18px;height:18px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11.33px;background:var(--surface)}
-.check-btn.selected{border-color:var(--green);background:#060F08}
-.check-btn.selected .chk{background:var(--green);border-color:var(--green);color:#000}
-.check-btn .txt{font-size:0.948rem;font-weight:700;color:#ffffff}
-.check-btn .warn{font-size:0.845rem;color:var(--gold);display:block;font-weight:600}
+.drawer-title {
+  font-family: var(--display);
+  font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  color: var(--text3);
+}
+.drawer.active .drawer-title { color: var(--text); }
+.drawer.done .drawer-title { color: var(--green); }
 
-/* PHOTOS */
-.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.photo-slot{background:var(--surface2);border:2px dashed var(--border);padding:18px;text-align:center;cursor:pointer;position:relative;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:border-color 0.2s}
-.photo-slot:hover{border-color:var(--blue)}
-.photo-slot.uploaded{border-color:var(--green);border-style:solid}
-.photo-slot input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0}
-.photo-icon{font-size:1.442rem}
-.photo-lbl{font-size:0.742rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#C8D8EE}
-.photo-slot.uploaded .photo-lbl{color:var(--green)}
-.cert-box{background:var(--surface2);border:2px solid var(--border);padding:16px;text-align:center;margin:14px 0;display:none}
-.cert-box.show{display:block}
-.cert-box.verified{border-color:var(--green)}
-.cert-icon{font-size:2.06rem;display:block;margin-bottom:6px}
-.cert-name{font-family:'Barlow Condensed',sans-serif;font-size:1.339rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
-.cert-box.verified .cert-name{color:var(--green)}
-.cert-msg{font-size:0.772rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase;margin-top:5px}
+.drawer-arrow {
+  font-size: 0.75rem; color: var(--text3);
+  transition: transform var(--transition);
+}
+.drawer.active .drawer-arrow { transform: rotate(180deg); color: var(--blue); }
+.drawer.done .drawer-arrow { color: var(--green); }
 
-/* SIG */
-#sig-canvas{width:100%;height:80px;background:var(--surface2);border:2px dashed var(--border);cursor:crosshair;touch-action:none;display:block}
-.sig-row{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
-.sig-row span{font-size:0.742rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase}
-.btn-clear{background:none;border:1px solid var(--border);color:#C8D8EE;font-size:0.742rem;padding:3px 10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
-.btn-clear:hover{border-color:var(--red);color:var(--red)}
+.drawer-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  padding: 0 16px;
+}
+.drawer.active .drawer-body { max-height: 3000px; padding: 0 16px 16px; }
 
-/* MODAL */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;padding:16px}
-.modal.open{display:flex}
-.modal-box{background:var(--surface);border:2px solid var(--blue);width:100%;max-width:680px;max-height:90vh;display:flex;flex-direction:column}
-.modal-hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:2px solid var(--blue);background:#0A1525}
-.modal-hdr h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.03rem;letter-spacing:1px;text-transform:uppercase}
-.modal-close{background:none;border:1px solid var(--border);color:#fff;padding:4px 12px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.modal-close:hover{border-color:var(--red);color:var(--red)}
-.modal-body iframe{width:100%;height:560px;border:none;display:block}
+/* ── LOOKUP TOGGLE ── */
+.lookup-toggle {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden; margin-bottom: 14px;
+}
+.lt-btn {
+  padding: 12px; text-align: center; cursor: pointer;
+  border: none; background: var(--s2); color: var(--text3);
+  transition: all var(--transition);
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.lt-btn:first-child { border-right: 1px solid var(--border); }
+.lt-btn.active { background: var(--blue); color: #fff; }
+.lt-btn .lt-icon { font-size: 1.2rem; }
+.lt-btn .lt-main { font-family: var(--display); font-size: 0.95rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+.lt-btn .lt-sub { font-size: 0.72rem; opacity: 0.8; }
+.lt-btn.active .lt-sub { opacity: 1; }
 
-/* SUCCESS */
-.success{display:none;text-align:center;padding:40px 20px;background:var(--surface);border:2px solid var(--green);margin:20px 0}
-.success h2{font-family:'Barlow Condensed',sans-serif;font-size:2.575rem;font-weight:800;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
-.success p{color:#C8D8EE;font-size:0.978rem;letter-spacing:1px;line-height:1.8}
-footer{border-top:1px solid var(--border);padding:14px 20px;display:flex;justify-content:space-between;max-width:700px;margin:0 auto}
-footer span{font-size:0.742rem;color:#C8D8EE;letter-spacing:1.5px;text-transform:uppercase}
-footer b{color:var(--blue)}
-textarea.inp{resize:none;height:75px;line-height:1.6}
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.show { display: block; }
+
+/* ── INPUTS ── */
+.field { margin-bottom: 10px; }
+.lbl {
+  display: block; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 5px;
+}
+.inp {
+  width: 100%; background: var(--s2);
+  border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); padding: 11px 13px;
+  font-family: var(--font); font-size: 0.97rem; font-weight: 500;
+  outline: none; appearance: none;
+  transition: border-color var(--transition);
+}
+.inp:focus { border-color: var(--blue); background: var(--s3); }
+.inp::placeholder { color: var(--text3); font-weight: 400; }
+.inp.filled { border-color: var(--green); color: var(--green); background: rgba(48,209,88,0.06); }
+.inp-vin { font-size: 1.3rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; font-family: var(--display); }
+
+select.inp {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%230A84FF'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+  padding-right: 32px; cursor: pointer;
+}
+select.inp option { background: #1A1A1A; color: #fff; }
+select.inp:disabled { opacity: 0.4; cursor: not-allowed; }
+
+textarea.inp { resize: none; height: 70px; line-height: 1.5; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+
+/* ── DECODE ROW ── */
+.decode-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.decode-row .inp { flex: 1; }
+.btn-decode {
+  background: var(--blue); color: #fff; border: none; border-radius: 8px;
+  padding: 0 20px; font-family: var(--display); font-weight: 800;
+  font-size: 0.95rem; letter-spacing: 1px; text-transform: uppercase;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: opacity var(--transition);
+}
+.btn-decode:hover { opacity: 0.85; }
+.btn-decode:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ── STATUS ── */
+.status-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border);
+  color: var(--text3); margin-bottom: 10px; transition: all var(--transition);
+}
+.status-tag.ok { color: var(--green); border-color: var(--green); background: rgba(48,209,88,0.08); }
+.status-tag.err { color: var(--red); border-color: var(--red); background: rgba(255,69,58,0.08); }
+.status-tag.loading { color: var(--gold); border-color: var(--gold); background: rgba(255,214,10,0.08); animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ── DECODED FIELDS ── */
+.decoded-field {
+  background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.3);
+  border-radius: 8px; padding: 10px 13px;
+  font-family: var(--display); font-size: 0.95rem; font-weight: 700;
+  color: var(--green); letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.decoded-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(48,209,88,0.7); display: block; margin-bottom: 3px; }
+.specs-box {
+  background: var(--s2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 13px; font-family: 'SF Mono','Fira Code',monospace;
+  font-size: 0.78rem; color: var(--text2); line-height: 1.9;
+  white-space: pre; overflow-x: auto; margin-bottom: 10px;
+}
+
+/* ── TOOLS ROW ── */
+.tools-row { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.tools-row.show { display: grid; }
+.tool-btn {
+  padding: 10px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--s2); color: var(--text2); cursor: pointer;
+  font-family: var(--display); font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.5px; text-transform: uppercase; text-align: center;
+  transition: all var(--transition);
+}
+.tool-btn:hover { border-color: var(--blue); color: var(--blue); }
+.tool-btn.gold:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── CONDITION GRID ── */
+.cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.cond-btn {
+  background: var(--s2); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 16px 10px; cursor: pointer; text-align: center;
+  transition: all var(--transition);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.cond-btn .icon { font-size: 1.8rem; }
+.cond-btn .lbl-main { font-family: var(--display); font-size: 1.1rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text); }
+.cond-btn .lbl-sub { font-size: 0.78rem; color: var(--text3); font-weight: 500; }
+.cond-btn.selected { border-color: var(--blue); background: rgba(10,132,255,0.1); }
+.cond-btn.selected .lbl-main { color: var(--blue); }
+.cond-btn.selected .lbl-sub { color: var(--text2); }
+
+/* ── VALUE CARD ── */
+.value-card {
+  background: linear-gradient(135deg, rgba(10,132,255,0.12), rgba(10,132,255,0.04));
+  border: 1.5px solid rgba(10,132,255,0.4);
+  border-radius: 12px; padding: 20px; text-align: center;
+  margin-bottom: 10px; display: none;
+}
+.value-card.show { display: block; }
+.value-caption { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.value-num { font-family: var(--display); font-size: 2.6rem; font-weight: 900; color: var(--blue); letter-spacing: 1px; line-height: 1; }
+.value-footnote { font-size: 0.75rem; color: var(--text3); margin-top: 8px; }
+.value-boost { font-size: 0.82rem; color: var(--green); margin-top: 6px; font-weight: 600; display: none; }
+.value-boost.show { display: block; }
+
+/* ── CHECK BUTTONS ── */
+.check-section { margin-bottom: 14px; }
+.check-section-title {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 8px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.check-btn {
+  background: var(--s2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 11px; cursor: pointer; display: flex; align-items: center; gap: 9px;
+  text-align: left; transition: all var(--transition);
+}
+.check-btn .chk {
+  width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0;
+  border: 1.5px solid var(--border); background: var(--s3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; transition: all var(--transition);
+}
+.check-btn.selected { border-color: var(--green); background: rgba(48,209,88,0.08); }
+.check-btn.selected .chk { background: var(--green); border-color: var(--green); color: #000; }
+.check-txt { display: flex; flex-direction: column; gap: 1px; }
+.check-txt .main { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+.check-txt .sub { font-size: 0.7rem; color: var(--gold); font-weight: 500; }
+
+/* ── WE'RE ON IT BOX ── */
+.on-it-box {
+  background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.3);
+  border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 14px;
+}
+.on-it-icon { font-size: 2rem; margin-bottom: 8px; }
+.on-it-title { font-family: var(--display); font-size: 1.4rem; font-weight: 900; color: var(--green); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.on-it-text { font-size: 0.9rem; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
+.on-it-note { font-size: 0.78rem; color: var(--text3); background: var(--s2); border-radius: 8px; padding: 10px; }
+
+/* ── PHOTO TIPS ── */
+.photo-tips {
+  background: var(--s2); border-radius: 8px; padding: 12px;
+  margin-bottom: 12px;
+}
+.photo-tips-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.photo-tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.photo-tip { font-size: 0.78rem; color: var(--text2); line-height: 1.4; }
+.photo-tip strong { color: var(--blue); }
+
+/* ── PHOTO GRID ── */
+.photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.photo-slot {
+  background: var(--s2); border: 1.5px dashed var(--border); border-radius: 10px;
+  padding: 14px 8px; text-align: center; cursor: pointer; position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: border-color var(--transition); min-height: 90px; justify-content: center;
+}
+.photo-slot:hover { border-color: var(--blue); }
+.photo-slot.done { border-color: var(--green); border-style: solid; background: rgba(48,209,88,0.06); }
+.photo-slot input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.photo-slot .p-icon { font-size: 1.4rem; }
+.photo-slot .p-title { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text); }
+.photo-slot .p-hint { font-size: 0.68rem; color: var(--text3); line-height: 1.4; text-align: center; }
+.photo-slot.done .p-title { color: var(--green); }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  width: 100%; background: var(--blue); color: #fff; border: none; border-radius: 10px;
+  padding: 14px; font-family: var(--display); font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 1px; text-transform: uppercase; cursor: pointer; margin-top: 12px;
+  transition: opacity var(--transition);
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-submit {
+  width: 100%; background: var(--green); color: #000; border: none; border-radius: 10px;
+  padding: 16px; font-family: var(--display); font-size: 1.1rem; font-weight: 900;
+  letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 12px;
+  display: none; transition: all var(--transition);
+}
+.btn-submit:hover { opacity: 0.88; }
+
+/* ── SIGNATURE ── */
+#sig-canvas {
+  width: 100%; height: 80px; background: var(--s2); border: 1.5px dashed var(--border);
+  border-radius: 8px; cursor: crosshair; touch-action: none; display: block;
+}
+.sig-row { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
+.sig-hint { font-size: 0.72rem; color: var(--text3); letter-spacing: 0.5px; }
+.btn-clear { background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--text3); font-size: 0.72rem; padding: 3px 10px; cursor: pointer; transition: all var(--transition); }
+.btn-clear:hover { border-color: var(--red); color: var(--red); }
+
+/* ── CERT BADGE ── */
+.cert-badge { border-radius: 10px; padding: 14px; text-align: center; margin-top: 10px; display: none; border: 1px solid var(--border); }
+.cert-badge.show { display: block; }
+.cert-badge.verified { border-color: var(--green); background: rgba(48,209,88,0.06); }
+.cert-badge.certified { border-color: var(--gold); background: rgba(255,214,10,0.06); }
+.cert-icon { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+.cert-name { font-family: var(--display); font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+.cert-badge.verified .cert-name { color: var(--green); }
+.cert-badge.certified .cert-name { color: var(--gold); }
+.cert-msg { font-size: 0.75rem; color: var(--text3); margin-top: 4px; }
+
+/* ── MODAL ── */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 1000; align-items: center; justify-content: center; padding: 16px; }
+.modal.open { display: flex; }
+.modal-box { background: var(--s1); border: 1px solid var(--border); border-radius: 14px; width: 100%; max-width: 680px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+.modal-hdr { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.modal-hdr h3 { font-family: var(--display); font-weight: 800; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
+.modal-close { background: var(--s2); border: none; color: var(--text2); font-size: 0.85rem; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: var(--display); font-weight: 700; }
+.modal-body iframe { width: 100%; height: 560px; border: none; display: block; }
+
+/* ── SUCCESS ── */
+.success { display: none; text-align: center; padding: 40px 20px; background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.3); border-radius: 12px; margin: 12px 0; }
+.success h2 { font-family: var(--display); font-size: 2rem; font-weight: 900; color: var(--green); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.success p { color: var(--text2); font-size: 0.95rem; line-height: 1.7; }
+
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 12px 16px; display: flex; justify-content: space-between; max-width: 680px; margin: 0 auto; }
+footer span { font-size: 0.72rem; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+footer b { color: var(--blue); }
+
+/* ── OPTIONS GRID ── */
+.options-hint { font-size: 0.82rem; color: var(--text3); padding: 10px; background: var(--s2); border-radius: 8px; text-align: center; }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="hdr">
-  <div style="display:flex;align-items:center;gap:16px">
-    <div class="hdr-brand">◈ Express Vehicle Locators</div>
-    <div style="color:#2B84FE;font-size:0.9rem;font-weight:700;letter-spacing:1px">— What's Your Trade Worth?</div>
+  <div class="hdr-left">
+    <div class="hdr-logo">◈ Express Vehicle Locators</div>
+    <div class="hdr-tag">Trade-In Evaluator</div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="progress-bar" style="margin:0;padding:0;width:120px">
-      <div class="prog-step active" id="p1"></div>
-      <div class="prog-step" id="p2"></div>
-      <div class="prog-step" id="p3"></div>
-      <div class="prog-step" id="p4"></div>
-    </div>
-    <div class="secure-badge">Secure</div>
-  </div>
+  <div class="hdr-secure">Secure</div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress">
+  <div class="prog active" id="p1"></div>
+  <div class="prog" id="p2"></div>
+  <div class="prog" id="p3"></div>
+  <div class="prog" id="p4"></div>
 </div>
 
 <div class="wrap">
 
-  <!-- STEP 1: VEHICLE ID -->
-  <div class="card active" id="card1">
-    <div class="card-hdr">
-      <div class="card-hdr-left">
-        <div class="step-num" id="sn1">1</div>
-        <div class="step-title">Identify Your Vehicle</div>
-      </div>
+<!-- ── DRAWER 1: IDENTIFY ── -->
+<div class="drawer active" id="d1">
+  <div class="drawer-hdr">
+    <div class="drawer-hdr-left">
+      <div class="step-badge" id="sb1">1</div>
+      <div class="drawer-title">Identify Your Vehicle</div>
     </div>
-    <div class="card-body">
+    <div class="drawer-arrow">▼</div>
+  </div>
+  <div class="drawer-body">
 
-      <!-- TOGGLE -->
-      <div class="lookup-toggle">
-        <button class="lt-btn active" id="toggle-vin" onclick="switchLookup('vin')">
-          <span class="lt-icon">🔍</span>
-          I HAVE MY VIN
-          <span class="lt-sub">Fastest & most accurate</span>
-        </button>
-        <button class="lt-btn" id="toggle-ymm" onclick="switchLookup('ymm')">
-          <span class="lt-icon">📋</span>
-          I DON'T HAVE MY VIN
-          <span class="lt-sub">Use Year / Make / Model</span>
-        </button>
-      </div>
+    <div class="lookup-toggle">
+      <button class="lt-btn active" id="toggle-vin" onclick="switchLookup('vin')">
+        <span class="lt-icon">🔍</span>
+        <span class="lt-main">I Have My VIN</span>
+        <span class="lt-sub">Fastest & most accurate</span>
+      </button>
+      <button class="lt-btn" id="toggle-ymm" onclick="switchLookup('ymm')">
+        <span class="lt-icon">📋</span>
+        <span class="lt-main">No VIN?</span>
+        <span class="lt-sub">Use Year / Make / Model</span>
+      </button>
+    </div>
 
-      <!-- VIN PANEL -->
-      <div class="vin-panel show" id="vin-panel">
-        <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:14px;font-size:0.906rem;color:#C8D8EE;line-height:1.6">
-          <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 1 OF 4 — IDENTIFY YOUR VEHICLE</strong>
-          Enter your 17-digit VIN (found on your dashboard, door jamb, or registration) and click <strong style="color:#fff">DECODE</strong>. Your vehicle info will populate automatically.
-        </div>
-        <label class="lbl">Vehicle Identification Number (VIN)</label>
+    <!-- VIN PANEL -->
+    <div class="panel show" id="vin-panel">
+      <div class="field">
+        <label class="lbl">Vehicle Identification Number</label>
         <div class="decode-row">
           <input type="text" class="inp inp-vin" id="vin-inp" placeholder="17-DIGIT VIN" maxlength="17" oninput="this.value=this.value.toUpperCase()">
           <button class="btn-decode" id="decode-btn" onclick="runDecode()">DECODE</button>
         </div>
-        <span class="status" id="vin-status">READY FOR SCAN</span>
-        <div class="tools-row" id="tools-row">
-          <button class="tool-btn" onclick="openEstimator()">💰 Get Trade Value</button>
-          <button class="tool-btn gold" onclick="openSticker()">🪟 Window Sticker</button>
-        </div>
-        <div id="decoded-wrap" style="display:none">
-          <div class="row2">
-            <div>
-              <label class="lbl">Year / Make / Model</label>
-              <input type="text" class="inp filled" id="res-ymm" readonly>
-            </div>
-            <div>
-              <label class="lbl">Trim Level</label>
-              <input type="text" class="inp filled" id="res-trim" readonly>
-            </div>
-          </div>
-          <div class="mb14">
-            <label class="lbl">Decoded Specs</label>
-            <textarea class="inp filled" id="res-specs" readonly style="height:85px;color:var(--green);border-color:var(--green);background:#060F08;font-size:0.824rem;line-height:2"></textarea>
-          </div>
-          <button class="btn-confirm" onclick="confirmStep(1)">✓ Confirm Vehicle — Continue</button>
-        </div>
+        <div class="status-tag" id="vin-status">Ready for scan</div>
       </div>
-
-      <!-- YMM PANEL -->
-      <div class="ymm-panel" id="ymm-panel">
-        <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:14px;font-size:0.906rem;color:#C8D8EE;line-height:1.6">
-          <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 1 OF 4 — SELECT YOUR VEHICLE</strong>
-          Choose your Year → Make → Model → Trim in order. Each selection unlocks the next dropdown. Then fill in mileage, color, and check any factory options your vehicle has.
-        </div>
-        <div class="row2">
-          <div>
-            <label class="lbl">Year</label>
-            <select class="inp" id="ymm-year" onchange="loadMakes()">
-              <option value="">Select Year</option>
-            </select>
-          </div>
-          <div>
-            <label class="lbl">Make</label>
-            <select class="inp" id="ymm-make" disabled onchange="loadModels()">
-              <option value="">Select Make</option>
-            </select>
-          </div>
-        </div>
-        <div class="row2">
-          <div>
-            <label class="lbl">Model</label>
-            <select class="inp" id="ymm-model" disabled onchange="loadTrims()">
-              <option value="">Select Model</option>
-            </select>
-          </div>
-          <div>
-            <label class="lbl">Body Style</label>
-            <select class="inp" id="ymm-body">
-              <option value="">Select Body Style</option>
-              <option>Sedan</option>
-              <option>SUV / Crossover</option>
-              <option>Truck / Pickup</option>
-              <option>Coupe</option>
-              <option>Hatchback</option>
-              <option>Van / Minivan</option>
-              <option>Wagon</option>
-              <option>Convertible</option>
-              <option>Other</option>
-            </select>
-          </div>
-        </div>
-        <div class="row2">
-          <div>
-            <label class="lbl">Trim Level</label>
-            <select class="inp" id="ymm-trim" disabled onchange="loadOptions()">
-              <option value="">Select Model First</option>
-            </select>
-          </div>
-          <div>
-            <label class="lbl">Drivetrain</label>
-            <select class="inp" id="ymm-drive">
-              <option value="">Select Drivetrain</option>
-              <option>FWD — Front Wheel Drive</option>
-              <option>RWD — Rear Wheel Drive</option>
-              <option>AWD — All Wheel Drive</option>
-              <option>4WD — Four Wheel Drive</option>
-              <option>4x4</option>
-            </select>
-          </div>
-        </div>
-        <div class="row3">
-          <div>
-            <label class="lbl">Exterior Color</label>
-            <select class="inp" id="ymm-color">
-              <option value="">Select Color</option>
-              <option>Black</option><option>White</option><option>Silver</option>
-              <option>Gray</option><option>Red</option><option>Blue</option>
-              <option>Brown/Tan</option><option>Green</option><option>Gold</option>
-              <option>Orange</option><option>Yellow</option><option>Purple</option><option>Other</option>
-            </select>
-          </div>
-          <div>
-            <label class="lbl">Interior Color</label>
-            <select class="inp" id="ymm-int-color">
-              <option value="">Select Color</option>
-              <option>Black</option><option>Gray</option><option>Tan/Beige</option>
-              <option>Brown</option><option>White/Cream</option><option>Red</option><option>Other</option>
-            </select>
-          </div>
-          <div>
-            <label class="lbl">Current Mileage</label>
-            <input type="number" class="inp" id="ymm-miles" placeholder="e.g. 45000">
-          </div>
-        </div>
-        <div class="row2">
-          <div>
-            <label class="lbl">Zip Code</label>
-            <input type="text" class="inp" id="ymm-zip" placeholder="e.g. 75024" maxlength="5">
-          </div>
-          <div>
-            <label class="lbl">Factory Options / Packages</label>
-            <div id="ymm-options-wrap" style="background:var(--surface2);border:1.5px solid var(--border);padding:10px;min-height:44px">
-              <div style="font-size:0.803rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase" id="ymm-options-hint">Select Trim First</div>
-              <div id="ymm-options-grid" style="display:none;grid-template-columns:1fr;gap:6px"></div>
-            </div>
-          </div>
-        </div>
-        <div class="mb14">
-          <label class="lbl">Number of Keys</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-            <button class="check-btn" data-group="ymm-keys" data-val="1 Key" onclick="toggleCheck(this)" style="justify-content:center"><div class="chk"></div><div class="txt">1 Key</div></button>
-            <button class="check-btn" data-group="ymm-keys" data-val="2 Keys" onclick="toggleCheck(this)" style="justify-content:center"><div class="chk"></div><div class="txt">2 Keys</div></button>
-            <button class="check-btn" data-group="ymm-keys" data-val="3+ Keys" onclick="toggleCheck(this)" style="justify-content:center"><div class="chk"></div><div class="txt">3+ Keys</div></button>
-          </div>
-        </div>
-        <div class="ymm-loading" id="ymm-loading">Loading vehicle data...</div>
-        <button type="button" class="btn-confirm" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
+      <div id="tools-row" class="tools-row">
+        <button class="tool-btn" onclick="openEstimator()">💰 Get Trade Value</button>
+        <button class="tool-btn gold" onclick="openSticker()">🪟 Window Sticker</button>
       </div>
-
+      <div id="decoded-wrap" style="display:none">
+        <div class="grid2">
+          <div>
+            <div class="decoded-label">Year / Make / Model</div>
+            <div class="decoded-field" id="res-ymm">—</div>
+          </div>
+          <div>
+            <div class="decoded-label">Trim Level</div>
+            <div class="decoded-field" id="res-trim">—</div>
+          </div>
+        </div>
+        <div class="decoded-label">Decoded Specifications</div>
+        <div class="specs-box" id="res-specs">—</div>
+        <button class="btn-primary" onclick="confirmStep(1)">✓ Confirm Vehicle — Continue</button>
+      </div>
     </div>
+
+    <!-- YMM PANEL -->
+    <div class="panel" id="ymm-panel">
+      <div class="grid2">
+        <div class="field">
+          <label class="lbl">Year</label>
+          <select class="inp" id="ymm-year" onchange="loadMakes()">
+            <option value="">Select Year</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Make</label>
+          <select class="inp" id="ymm-make" disabled onchange="loadModels()">
+            <option value="">Select Make</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label class="lbl">Model</label>
+          <select class="inp" id="ymm-model" disabled onchange="loadTrims()">
+            <option value="">Select Model</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Body Style</label>
+          <select class="inp" id="ymm-body">
+            <option value="">Select Body Style</option>
+            <option>Sedan</option><option>SUV / Crossover</option>
+            <option>Truck / Pickup</option><option>Coupe</option>
+            <option>Hatchback</option><option>Van / Minivan</option>
+            <option>Wagon</option><option>Convertible</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label class="lbl">Trim Level</label>
+          <select class="inp" id="ymm-trim" disabled onchange="loadOptions()">
+            <option value="">Select Model First</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Drivetrain</label>
+          <select class="inp" id="ymm-drive">
+            <option value="">Select Drivetrain</option>
+            <option>FWD — Front Wheel Drive</option>
+            <option>RWD — Rear Wheel Drive</option>
+            <option>AWD — All Wheel Drive</option>
+            <option>4WD — Four Wheel Drive</option>
+            <option>4x4</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="field">
+          <label class="lbl">Ext. Color</label>
+          <select class="inp" id="ymm-color">
+            <option value="">Color</option>
+            <option>Black</option><option>White</option><option>Silver</option>
+            <option>Gray</option><option>Red</option><option>Blue</option>
+            <option>Brown/Tan</option><option>Green</option><option>Gold</option>
+            <option>Orange</option><option>Yellow</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Int. Color</label>
+          <select class="inp" id="ymm-int-color">
+            <option value="">Color</option>
+            <option>Black</option><option>Gray</option><option>Tan/Beige</option>
+            <option>Brown</option><option>White/Cream</option><option>Red</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Mileage</label>
+          <input type="number" class="inp" id="ymm-miles" placeholder="e.g. 45000">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label class="lbl">Zip Code</label>
+          <input type="text" class="inp" id="ymm-zip" placeholder="e.g. 75024" maxlength="5">
+        </div>
+        <div class="field">
+          <label class="lbl">Keys</label>
+          <select class="inp" id="ymm-keys">
+            <option value=""># of Keys</option>
+            <option>1 Key</option><option>2 Keys</option><option>3+ Keys</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl">Factory Options / Packages</label>
+        <div id="ymm-options-wrap">
+          <div class="options-hint" id="ymm-options-hint">Select Trim to load factory options</div>
+          <div id="ymm-options-grid" style="display:none;display:grid;grid-template-columns:1fr 1fr;gap:6px"></div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
+    </div>
+
   </div>
-
-  <!-- STEP 2: CONDITION & VALUE -->
-  <div class="card locked" id="card2">
-    <div class="card-hdr">
-      <div class="card-hdr-left">
-        <div class="step-num" id="sn2">2</div>
-        <div class="step-title">Condition & Instant Value</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:16px;font-size:0.906rem;color:#C8D8EE;line-height:1.6">
-        <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 2 OF 4 — SELECT YOUR VEHICLE CONDITION</strong>
-        Click the button below that best describes your vehicle's overall condition. This gives you an instant estimated value range.
-      </div>
-      <label class="lbl" style="margin-bottom:12px">How would you rate the overall condition?</label>
-      <div class="cond-grid">
-        <button class="cond-btn" data-cond="Excellent" data-mult="1.12" onclick="selectCond(this)">
-          <span class="icon">⭐</span><span class="label">Excellent</span><span class="desc">Showroom quality</span>
-        </button>
-        <button class="cond-btn" data-cond="Good" data-mult="1.0" onclick="selectCond(this)">
-          <span class="icon">✅</span><span class="label">Good</span><span class="desc">Minor wear only</span>
-        </button>
-        <button class="cond-btn" data-cond="Fair" data-mult="0.85" onclick="selectCond(this)">
-          <span class="icon">⚠️</span><span class="label">Fair</span><span class="desc">Noticeable wear</span>
-        </button>
-        <button class="cond-btn" data-cond="Poor" data-mult="0.68" onclick="selectCond(this)">
-          <span class="icon">🔧</span><span class="label">Poor</span><span class="desc">Significant issues</span>
-        </button>
-      </div>
-      <div class="value-reveal" id="value-reveal">
-        <div class="value-label">Your Estimated Trade-In Range</div>
-        <div class="value-range" id="value-range">—</div>
-        <div class="value-note">Based on current market data · Final offer after certified appraisal</div>
-        <div style="font-size:0.845rem;color:var(--green);margin-top:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700">
-          ✓ Value estimated — now click "Continue to Certified Appraisal" below to boost your offer
-        </div>
-      </div>
-      <div class="mb14" style="margin-top:14px" id="miles-wrap-2" style="display:none">
-        <label class="lbl">Current Mileage <span style="color:#C8D8EE;font-weight:400">(if not entered above)</span></label>
-        <input type="number" class="inp" id="miles-inp" placeholder="e.g. 42,000">
-      </div>
-      <button class="btn-confirm" onclick="confirmStep(2)">✓ Continue to Certified Appraisal</button>
-    </div>
-  </div>
-
-  <!-- STEP 3: CERTIFIED APPRAISAL -->
-  <div class="card locked" id="card3">
-    <div class="card-hdr">
-      <div class="card-hdr-left">
-        <div class="step-num" id="sn3">3</div>
-        <div class="step-title">Certified Appraisal Report</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div style="background:#041209;border:2px solid var(--green);padding:24px;margin-bottom:20px;text-align:center">
-        <div style="font-size:2.575rem;margin-bottom:12px">🔍</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.648rem;font-weight:800;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">We're On It!</div>
-        <div style="font-size:1.03rem;color:#C8D8EE;line-height:1.8;margin-bottom:16px">
-          Our team is preparing your <strong style="color:#fff">Certified Appraisal</strong> based on your vehicle details and condition report.<br><br>
-          We'll be in touch shortly with your personalized offer — typically within <strong style="color:var(--green)">24 hours</strong>.
-        </div>
-        <div style="background:#0A1525;border:1px solid var(--border);padding:14px;font-size:0.906rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase">
-          In the meantime — adding photos below can <strong style="color:var(--gold)">significantly increase your offer</strong>
-        </div>
-      </div>
-      <div style="background:#0A1525;border-left:3px solid var(--gold);padding:12px 14px;margin-bottom:16px;font-size:0.906rem;color:#C8D8EE;line-height:1.6">
-        <strong style="color:var(--gold);display:block;margin-bottom:4px">📋 TELL US ABOUT YOUR VEHICLE — REFINES YOUR OFFER</strong>
-        Check all that apply. This helps our team verify your value and speeds up your certified offer.
-      </div>
-
-      <!-- CONDITION CHECKBOXES -->
-      <div class="check-section">
-        <div class="check-title">Exterior Condition</div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="paint" data-val="Original Paint" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Original Paint</div></div></button>
-          <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Repainted</div></div></button>
-          <button class="check-btn" data-group="hail" data-val="No Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Hail Damage</div></div></button>
-          <button class="check-btn" data-group="hail" data-val="Hail Damage Present" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Hail Damage</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="body" data-val="No Body Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Body Damage</div></div></button>
-          <button class="check-btn" data-group="body" data-val="Minor Dents/Scratches" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Minor Dents/Scratches</div></div></button>
-          <button class="check-btn" data-group="glass" data-val="Windshield Clear" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Windshield Clear</div></div></button>
-          <button class="check-btn" data-group="glass" data-val="Chip or Crack" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Chip or Crack</div><span class="warn">⚠ affects value</span></div></button>
-        </div>
-      </div>
-      <div class="check-section">
-        <div class="check-title">Mechanical & Safety</div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="lights" data-val="No Warning Lights" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Warning Lights</div></div></button>
-          <button class="check-btn" data-group="lights" data-val="Warning Lights On" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Warning Lights On</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="tires" data-val="Good Tread" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Good Tread</div></div></button>
-          <button class="check-btn" data-group="tires" data-val="Needs Replacement" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Tires Need Replacement</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="accident" data-val="No Accidents" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Accidents</div></div></button>
-          <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Prior Accident</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="flood" data-val="No Flood or Fire" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Flood or Fire</div></div></button>
-          <button class="check-btn" data-group="flood" data-val="Flood/Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Flood / Fire Damage</div><span class="warn">⚠ major impact</span></div></button>
-        </div>
-      </div>
-      <div class="check-section">
-        <div class="check-title">Interior & Documentation</div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="interior" data-val="Clean Interior" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Clean Interior</div></div></button>
-          <button class="check-btn" data-group="interior" data-val="Stains/Tears" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Stains / Tears</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="title" data-val="Clean Title" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Clean Title</div></div></button>
-          <button class="check-btn" data-group="title" data-val="Lien/Payoff" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Lien / Payoff</div></div></button>
-          <button class="check-btn" data-group="keys" data-val="2 Keys" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">2 Keys</div></div></button>
-          <button class="check-btn" data-group="keys" data-val="1 Key Only" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">1 Key Only</div></div></button>
-          <button class="check-btn" data-group="odor" data-val="No Odors" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">No Odors</div></div></button>
-          <button class="check-btn" data-group="odor" data-val="Smoke/Pet Odor" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Smoke / Pet Odor</div><span class="warn">⚠ affects value</span></div></button>
-          <button class="check-btn" data-group="spare" data-val="Spare Tire Present" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Spare Tire & Jack</div></div></button>
-          <button class="check-btn" data-group="manual" data-val="Owner Manual Present" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Owner's Manual</div></div></button>
-        </div>
-      </div>
-
-      <div style="background:#0A1525;border-left:3px solid var(--gold);padding:12px 14px;margin-bottom:16px;margin-top:8px;font-size:0.906rem;color:#C8D8EE;line-height:1.6">
-        <strong style="color:var(--gold);display:block;margin-bottom:4px">📸 OPTIONAL — ADD PHOTOS TO BOOST YOUR OFFER</strong>
-        Photos help our team provide the most accurate value. Each photo you add strengthens your certified appraisal.
-      </div>
-      <!-- Condition checklist hidden from customer - handled by EVL team -->
-      <!-- DYNAMIC FACTORY OPTIONS - populated after vehicle ID -->
-      <div id="options-wrapper">
-        <div class="check-section" style="opacity:0.5">
-          <div class="check-title" style="color:var(--gold)">Factory Options & Packages</div>
-          <div style="font-size:0.845rem;color:#C8D8EE;padding:12px;background:var(--surface2);border:1px solid var(--border)">
-            Options load automatically based on your vehicle — complete Step 1 first.
-          </div>
-        </div>
-      </div>
-
-      <div class="mb14">
-        <label class="lbl">Additional Notes <span style="color:#C8D8EE;font-weight:400">(upgrades, modifications, etc.)</span></label>
-        <textarea class="inp" id="notes-inp" placeholder="Describe any modifications, upgrades, or additional details..."></textarea>
-      </div>
-      <!-- PHOTO TIPS -->
-      <div style="background:#0A0A14;border:1px solid var(--border);padding:16px;margin-bottom:16px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.03rem;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">📱 Quick Photo Tips</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div style="font-size:0.875rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">📏 Distance:</span> 10–15 feet back for exterior shots</div>
-          <div style="font-size:0.875rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">☀️ Lighting:</span> Outside in natural light, flash OFF</div>
-          <div style="font-size:0.875rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">📐 Angle:</span> Landscape (sideways) for exterior shots</div>
-          <div style="font-size:0.875rem;color:#C8D8EE;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:700">🔑 Engine ON:</span> For odometer — shows true mileage</div>
-        </div>
-      </div>
-
-      <div class="photo-grid">
-        <!-- FRONT -->
-        <div class="photo-slot" id="slot-front">
-          <input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Front View</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft in front.<br>Capture full front & both sides.</div>
-        </div>
-        <!-- REAR -->
-        <div class="photo-slot" id="slot-rear">
-          <input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Rear View</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft behind.<br>Show full rear bumper & both sides.</div>
-        </div>
-        <!-- DRIVER SIDE -->
-        <div class="photo-slot" id="slot-driver">
-          <input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Driver Side</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand beside the car.<br>Capture full side from front to rear.</div>
-        </div>
-        <!-- PASSENGER SIDE -->
-        <div class="photo-slot" id="slot-passenger">
-          <input type="file" accept="image/*" data-slot="passenger" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Passenger Side</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand on passenger side.<br>Full side profile, front to rear.</div>
-        </div>
-        <!-- INTERIOR -->
-        <div class="photo-slot" id="slot-interior">
-          <input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Interior / Dashboard</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Sit in driver seat looking forward.<br>Show dash, seats & headliner.</div>
-        </div>
-        <!-- ODOMETER -->
-        <div class="photo-slot" id="slot-odometer">
-          <input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Odometer Reading</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Engine running. Get close so<br>mileage is clearly readable.</div>
-        </div>
-        <!-- DAMAGE -->
-        <div class="photo-slot" id="slot-damage">
-          <input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Any Damage (optional)</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Get within 3 ft of any dents,<br>scratches or damage areas.</div>
-        </div>
-        <!-- TIRES -->
-        <div class="photo-slot" id="slot-tires">
-          <input type="file" accept="image/*" data-slot="tires" onchange="handlePhoto(this)">
-          <div class="photo-icon">📷</div>
-          <div class="photo-lbl">Tires & Wheels</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Kneel down & shoot one tire.<br>Shows tread depth & wheel condition.</div>
-        </div>
-        <!-- WARNING LIGHTS -->
-        <div class="photo-slot" id="slot-warninglights">
-          <input type="file" accept="image/*" data-slot="warninglights" onchange="handlePhoto(this)">
-          <div class="photo-icon">⚠️</div>
-          <div class="photo-lbl">Warning Lights</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Engine ON. Photo of dashboard<br>showing any warning lights.<br><span style="color:var(--green)">No lights? Still take the photo!</span></div>
-        </div>
-        <!-- SPARE TIRE -->
-        <div class="photo-slot" id="slot-spare">
-          <input type="file" accept="image/*" data-slot="spare" onchange="handlePhoto(this)">
-          <div class="photo-icon">🔧</div>
-          <div class="photo-lbl">Spare Tire Area</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Open trunk/cargo area.<br>Show spare tire, jack & tools.<br>No spare? Photo of empty area.</div>
-        </div>
-        <!-- KEYS -->
-        <div class="photo-slot" id="slot-keys">
-          <input type="file" accept="image/*" data-slot="keys" onchange="handlePhoto(this)">
-          <div class="photo-icon">🔑</div>
-          <div class="photo-lbl">Keys</div>
-          <div style="font-size:0.721rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Lay all keys flat on a surface.<br>Photo shows how many keys<br>& type (smart key, regular, fob).</div>
-        </div>
-      </div>
-      <div class="cert-box" id="cert-box">
-        <span class="cert-icon" id="cert-icon">📋</span>
-        <div class="cert-name" id="cert-name">EVL SUBMITTED</div>
-        <div class="cert-msg" id="cert-msg">Complete more items to qualify for EVL Verified status</div>
-      </div>
-      <button class="btn-confirm" onclick="confirmStep(3)">✓ Continue to Authorization</button>
-    </div>
-  </div>
-
-  <!-- STEP 4: SUBMIT -->
-  <div class="card locked" id="card4">
-    <div class="card-hdr">
-      <div class="card-hdr-left">
-        <div class="step-num" id="sn4">4</div>
-        <div class="step-title">Authorization & Submit</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div style="background:#0A1525;border-left:3px solid var(--blue);padding:12px 14px;margin-bottom:16px;font-size:0.906rem;color:#C8D8EE;line-height:1.6">
-        <strong style="color:var(--blue);display:block;margin-bottom:4px">👆 STEP 4 OF 4 — AUTHORIZE & SUBMIT</strong>
-        Enter your contact info, sign below, and hit Submit. Our team will review your certified appraisal and contact you with a real offer — typically within 24 hours.
-      </div>
-      <div class="row2 mb14">
-        <div><label class="lbl">First Name</label><input type="text" class="inp" id="fname"></div>
-        <div><label class="lbl">Last Name</label><input type="text" class="inp" id="lname"></div>
-      </div>
-      <div class="row2 mb14">
-        <div><label class="lbl">Phone</label><input type="tel" class="inp" id="phone"></div>
-        <div><label class="lbl">Email</label><input type="email" class="inp" id="email"></div>
-      </div>
-      <div class="mb14">
-        <label class="lbl">Authorization Signature</label>
-        <canvas id="sig-canvas"></canvas>
-        <div class="sig-row">
-          <span>Sign above to authorize appraisal</span>
-          <button class="btn-clear" onclick="clearSig()">✕ Clear</button>
-        </div>
-      </div>
-      <button class="btn-submit" id="submit-btn" onclick="submitAudit()">⬡ Submit Certified Appraisal</button>
-    </div>
-  </div>
-
-  <div class="success" id="success">
-    <h2>✓ Appraisal Submitted</h2>
-    <p id="success-msg">Our team will review your certified appraisal<br>and contact you within 24 hours with your offer.</p>
-  </div>
-
 </div>
 
-<!-- MODALS -->
+<!-- ── DRAWER 2: CONDITION ── -->
+<div class="drawer locked" id="d2">
+  <div class="drawer-hdr">
+    <div class="drawer-hdr-left">
+      <div class="step-badge" id="sb2">2</div>
+      <div class="drawer-title">Condition & Instant Value</div>
+    </div>
+    <div class="drawer-arrow">▼</div>
+  </div>
+  <div class="drawer-body">
+    <div class="cond-grid">
+      <button class="cond-btn" data-cond="Excellent" data-mult="1.08" onclick="selectCond(this)">
+        <span class="icon">⭐</span>
+        <span class="lbl-main">Excellent</span>
+        <span class="lbl-sub">Showroom quality</span>
+      </button>
+      <button class="cond-btn" data-cond="Good" data-mult="1.0" onclick="selectCond(this)">
+        <span class="icon">✅</span>
+        <span class="lbl-main">Good</span>
+        <span class="lbl-sub">Minor wear only</span>
+      </button>
+      <button class="cond-btn" data-cond="Fair" data-mult="0.87" onclick="selectCond(this)">
+        <span class="icon">⚠️</span>
+        <span class="lbl-main">Fair</span>
+        <span class="lbl-sub">Noticeable wear</span>
+      </button>
+      <button class="cond-btn" data-cond="Poor" data-mult="0.72" onclick="selectCond(this)">
+        <span class="icon">🔧</span>
+        <span class="lbl-main">Poor</span>
+        <span class="lbl-sub">Significant issues</span>
+      </button>
+    </div>
+
+    <div class="value-card" id="value-card">
+      <div class="value-caption">Your Estimated Trade-In Range</div>
+      <div class="value-num" id="value-num">—</div>
+      <div class="value-footnote">Based on live market data · Final offer after certified appraisal</div>
+      <div class="value-boost" id="value-boost">✓ Value estimated — continue below to strengthen your offer</div>
+    </div>
+
+    <div class="field" id="miles-wrap2" style="display:none">
+      <label class="lbl">Current Mileage (if not entered above)</label>
+      <input type="number" class="inp" id="miles-inp" placeholder="e.g. 42,000">
+    </div>
+
+    <button class="btn-primary" onclick="confirmStep(2)">✓ Continue to Certified Appraisal</button>
+  </div>
+</div>
+
+<!-- ── DRAWER 3: APPRAISAL ── -->
+<div class="drawer locked" id="d3">
+  <div class="drawer-hdr">
+    <div class="drawer-hdr-left">
+      <div class="step-badge" id="sb3">3</div>
+      <div class="drawer-title">Certified Appraisal Report</div>
+    </div>
+    <div class="drawer-arrow">▼</div>
+  </div>
+  <div class="drawer-body">
+
+    <div class="on-it-box">
+      <div class="on-it-icon">🔍</div>
+      <div class="on-it-title">We're On It!</div>
+      <div class="on-it-text">
+        Our team is preparing your <strong>Certified Appraisal</strong> based on your vehicle and condition report.
+        We'll contact you with a personalized offer — typically within <strong style="color:var(--green)">24 hours</strong>.
+      </div>
+      <div class="on-it-note">Adding photos below can <strong style="color:var(--gold)">significantly increase your offer</strong></div>
+    </div>
+
+    <!-- CONDITION REPORT -->
+    <div class="check-section">
+      <div class="check-section-title">📋 Tell Us More — Exterior</div>
+      <div class="check-grid">
+        <button class="check-btn" data-group="paint" data-val="Original Paint" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Original Paint</span></div></button>
+        <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Repainted</span></div></button>
+        <button class="check-btn" data-group="hail" data-val="No Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">No Hail Damage</span></div></button>
+        <button class="check-btn" data-group="hail" data-val="Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Hail Damage</span><span class="sub">⚠ affects value</span></div></button>
+        <button class="check-btn" data-group="body" data-val="No Body Damage" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">No Body Damage</span></div></button>
+        <button class="check-btn" data-group="body" data-val="Minor Dents/Scratches" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Minor Dents/Scratches</span></div></button>
+        <button class="check-btn" data-group="glass" data-val="Windshield Clear" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Windshield Clear</span></div></button>
+        <button class="check-btn" data-group="glass" data-val="Chip or Crack" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Chip or Crack</span><span class="sub">⚠ affects value</span></div></button>
+      </div>
+    </div>
+
+    <div class="check-section">
+      <div class="check-section-title">⚙️ Mechanical & Safety</div>
+      <div class="check-grid">
+        <button class="check-btn" data-group="lights" data-val="No Warning Lights" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">No Warning Lights</span></div></button>
+        <button class="check-btn" data-group="lights" data-val="Warning Lights On" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Warning Lights On</span><span class="sub">⚠ affects value</span></div></button>
+        <button class="check-btn" data-group="tires" data-val="Good Tread" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Good Tread</span></div></button>
+        <button class="check-btn" data-group="tires" data-val="Needs Replacement" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Needs Replacement</span><span class="sub">⚠ affects value</span></div></button>
+        <button class="check-btn" data-group="accident" data-val="No Accidents" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">No Accidents</span></div></button>
+        <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Prior Accident</span><span class="sub">⚠ affects value</span></div></button>
+        <button class="check-btn" data-group="flood" data-val="No Flood or Fire" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">No Flood or Fire</span></div></button>
+        <button class="check-btn" data-group="flood" data-val="Flood/Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Flood/Fire Damage</span><span class="sub">⚠ major impact</span></div></button>
+      </div>
+    </div>
+
+    <div class="check-section">
+      <div class="check-section-title">🪑 Interior & Documentation</div>
+      <div class="check-grid">
+        <button class="check-btn" data-group="interior" data-val="Clean Interior" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Clean Interior</span></div></button>
+        <button class="check-btn" data-group="interior" data-val="Stains/Tears" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Stains / Tears</span><span class="sub">⚠ affects value</span></div></button>
+        <button class="check-btn" data-group="odor" data-val="No Odors" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">No Odors</span></div></button>
+        <button class="check-btn" data-group="odor" data-val="Smoke/Pet Odor" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Smoke / Pet Odor</span><span class="sub">⚠ affects value</span></div></button>
+        <button class="check-btn" data-group="title" data-val="Clean Title" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Clean Title</span></div></button>
+        <button class="check-btn" data-group="title" data-val="Lien/Payoff" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Lien / Payoff</span></div></button>
+        <button class="check-btn" data-group="spare" data-val="Spare Tire Present" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Spare Tire & Jack</span></div></button>
+        <button class="check-btn" data-group="manual" data-val="Owner Manual" onclick="toggleCheck(this)"><div class="chk"></div><div class="check-txt"><span class="main">Owner's Manual</span></div></button>
+      </div>
+    </div>
+
+    <!-- FACTORY OPTIONS (dynamic) -->
+    <div class="check-section" id="factory-section" style="display:none">
+      <div class="check-section-title">🏭 Factory Options & Packages</div>
+      <div class="check-grid" id="factory-grid"></div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="field">
+      <label class="lbl">Additional Notes — Upgrades, Modifications</label>
+      <textarea class="inp" id="notes-inp" placeholder="List any aftermarket upgrades, recent work done, special features..."></textarea>
+    </div>
+
+    <!-- CERT BADGE -->
+    <div class="cert-badge" id="cert-badge">
+      <span class="cert-icon" id="cert-icon">📋</span>
+      <div class="cert-name" id="cert-name">EVL Submitted</div>
+      <div class="cert-msg" id="cert-msg">Complete more sections to qualify for EVL Verified</div>
+    </div>
+
+    <!-- PHOTOS -->
+    <div style="margin-top:14px">
+      <div class="check-section-title" style="margin-bottom:10px">📸 Photos — Boosts Your Offer</div>
+      <div class="photo-tips">
+        <div class="photo-tips-title">Quick Photo Guide</div>
+        <div class="photo-tips-grid">
+          <div class="photo-tip"><strong>Distance:</strong> 10–15 ft back for exterior shots</div>
+          <div class="photo-tip"><strong>Lighting:</strong> Outdoors, natural light, flash OFF</div>
+          <div class="photo-tip"><strong>Angle:</strong> Landscape (sideways phone) for exterior</div>
+          <div class="photo-tip"><strong>Odometer:</strong> Engine running — shows true mileage</div>
+        </div>
+      </div>
+      <div class="photo-grid">
+        <div class="photo-slot" id="slot-front"><input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Front View</div><div class="p-hint">10 ft in front, capture both sides</div></div>
+        <div class="photo-slot" id="slot-rear"><input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Rear View</div><div class="p-hint">10 ft behind, full rear bumper</div></div>
+        <div class="photo-slot" id="slot-driver"><input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Driver Side</div><div class="p-hint">Full side, front to rear</div></div>
+        <div class="photo-slot" id="slot-passenger"><input type="file" accept="image/*" data-slot="passenger" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Passenger Side</div><div class="p-hint">Full side profile</div></div>
+        <div class="photo-slot" id="slot-interior"><input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Interior / Dash</div><div class="p-hint">From driver seat, show dash & seats</div></div>
+        <div class="photo-slot" id="slot-odometer"><input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Odometer</div><div class="p-hint">Engine on, get close & clear</div></div>
+        <div class="photo-slot" id="slot-lights"><input type="file" accept="image/*" data-slot="lights" onchange="handlePhoto(this)"><div class="p-icon">⚠️</div><div class="p-title">Warning Lights</div><div class="p-hint">Engine on — show dash. No lights? Still snap it!</div></div>
+        <div class="photo-slot" id="slot-tires"><input type="file" accept="image/*" data-slot="tires" onchange="handlePhoto(this)"><div class="p-icon">🛞</div><div class="p-title">Tires & Wheels</div><div class="p-hint">Kneel down, one tire close-up</div></div>
+        <div class="photo-slot" id="slot-spare"><input type="file" accept="image/*" data-slot="spare" onchange="handlePhoto(this)"><div class="p-icon">🔧</div><div class="p-title">Spare Tire Area</div><div class="p-hint">Open trunk — show spare, jack & tools</div></div>
+        <div class="photo-slot" id="slot-keys"><input type="file" accept="image/*" data-slot="keys" onchange="handlePhoto(this)"><div class="p-icon">🔑</div><div class="p-title">Keys</div><div class="p-hint">Lay all keys flat — shows count & type</div></div>
+        <div class="photo-slot" id="slot-damage"><input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Any Damage</div><div class="p-hint">3 ft away — dents, scratches, chips</div></div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="confirmStep(3)">✓ Continue to Authorization</button>
+  </div>
+</div>
+
+<!-- ── DRAWER 4: SUBMIT ── -->
+<div class="drawer locked" id="d4">
+  <div class="drawer-hdr">
+    <div class="drawer-hdr-left">
+      <div class="step-badge" id="sb4">4</div>
+      <div class="drawer-title">Authorization & Submit</div>
+    </div>
+    <div class="drawer-arrow">▼</div>
+  </div>
+  <div class="drawer-body">
+    <div class="grid2">
+      <div class="field"><label class="lbl">First Name</label><input type="text" class="inp" id="fname" placeholder="First"></div>
+      <div class="field"><label class="lbl">Last Name</label><input type="text" class="inp" id="lname" placeholder="Last"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label class="lbl">Phone</label><input type="tel" class="inp" id="phone" placeholder="(555) 555-5555"></div>
+      <div class="field"><label class="lbl">Email</label><input type="email" class="inp" id="email" placeholder="you@email.com"></div>
+    </div>
+    <div class="field">
+      <label class="lbl">Authorization Signature</label>
+      <canvas id="sig-canvas"></canvas>
+      <div class="sig-row">
+        <span class="sig-hint">Sign above to authorize your appraisal submission</span>
+        <button class="btn-clear" onclick="clearSig()">✕ Clear</button>
+      </div>
+    </div>
+    <button class="btn-submit" id="submit-btn" onclick="submitAudit()">⬡ Submit Certified Appraisal</button>
+  </div>
+</div>
+
+<div class="success" id="success">
+  <h2>✓ Submitted!</h2>
+  <p id="success-msg">Our team will review your certified appraisal and contact you with your offer — typically within 24 hours.</p>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- MODAL -->
 <div class="modal" id="estimator-modal">
   <div class="modal-box">
-    <div class="modal-hdr"><h3>💰 Trade-In Value Estimator</h3><button class="modal-close" onclick="closeModal('estimator-modal')">✕ Close</button></div>
+    <div class="modal-hdr"><h3>💰 Trade-In Estimator</h3><button class="modal-close" onclick="closeModal('estimator-modal')">✕ Close</button></div>
     <div class="modal-body"><iframe id="estimator-frame" src="" title="Trade Estimator"></iframe></div>
   </div>
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v5.2</b></span>
-  <span><b>// CERTIFIED DATA STREAM //</b></span>
+  <span>Entity Protocol <b>v6.0</b></span>
+  <span><b>// EVL CERTIFIED //</b></span>
 </footer>
 
 <script>
 const API_KEY = 'FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU';
 const DEALER_EMAIL = 'togradyevl@gmail.com';
-let vinData=null, condMult=1.0, condLabel='', photos={}, checks={};
-let lookupMode = 'vin'; // 'vin' or 'ymm'
-let ymmData = {}; // stores selected YMM values
+var vinData=null, condMult=1.0, condLabel='', photos={}, checks={}, ymmData={}, lookupMode='vin';
 
 // ── CANVAS ──
-const canvas=document.getElementById('sig-canvas');
-const ctx=canvas.getContext('2d');
-let drawing=false;
+var canvas=document.getElementById('sig-canvas');
+var ctx=canvas.getContext('2d');
+var drawing=false;
 function resizeCanvas(){canvas.width=canvas.offsetWidth;canvas.height=80;}
-function getPos(e){const r=canvas.getBoundingClientRect();return{x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,y:(e.touches?e.touches[0].clientY:e.clientY)-r.top};}
-canvas.addEventListener('mousedown',e=>{drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
-canvas.addEventListener('mousemove',e=>{if(!drawing)return;const p=getPos(e);ctx.strokeStyle='#007BFF';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineTo(p.x,p.y);ctx.stroke();});
-canvas.addEventListener('touchstart',e=>{drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
-canvas.addEventListener('touchmove',e=>{if(!drawing)return;e.preventDefault();const p=getPos(e);ctx.strokeStyle='#007BFF';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
-window.addEventListener('mouseup',()=>drawing=false);
-canvas.addEventListener('touchend',()=>drawing=false);
+function getPos(e){var r=canvas.getBoundingClientRect();return{x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,y:(e.touches?e.touches[0].clientY:e.clientY)-r.top};}
+canvas.addEventListener('mousedown',function(e){drawing=true;var p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+canvas.addEventListener('mousemove',function(e){if(!drawing)return;var p=getPos(e);ctx.strokeStyle='#0A84FF';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineTo(p.x,p.y);ctx.stroke();});
+canvas.addEventListener('touchstart',function(e){drawing=true;var p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+canvas.addEventListener('touchmove',function(e){if(!drawing)return;e.preventDefault();var p=getPos(e);ctx.strokeStyle='#0A84FF';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+window.addEventListener('mouseup',function(){drawing=false;});
+canvas.addEventListener('touchend',function(){drawing=false;});
 window.addEventListener('resize',resizeCanvas);
 resizeCanvas();
 function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height);}
+
+// ── VEHICLE DATABASE ──
+var VEHICLE_DB={
+  'Acura':['ILX','MDX','RDX','TLX','Integra','ZDX'],
+  'Audi':['A3','A4','A5','A6','A7','A8','Q3','Q5','Q7','Q8','e-tron','TT','R8'],
+  'BMW':['2 Series','3 Series','4 Series','5 Series','7 Series','X1','X2','X3','X4','X5','X6','X7','iX','i4','M3','M4','M5'],
+  'Buick':['Enclave','Encore','Encore GX','Envision'],
+  'Cadillac':['CT4','CT5','Escalade','Escalade ESV','Lyriq','XT4','XT5','XT6'],
+  'Chevrolet':['Blazer','Bolt EV','Camaro','Colorado','Corvette','Equinox','Malibu','Silverado 1500','Silverado 2500HD','Suburban','Tahoe','Trailblazer','Traverse','Trax'],
+  'Chrysler':['300','Pacifica','Voyager'],
+  'Dodge':['Challenger','Charger','Durango','Hornet'],
+  'Ford':['Bronco','Bronco Sport','Edge','Escape','Expedition','Explorer','F-150','F-250','F-350','Maverick','Mustang','Mustang Mach-E','Ranger'],
+  'Genesis':['G70','G80','G90','GV70','GV80','GV60'],
+  'GMC':['Acadia','Canyon','Sierra 1500','Sierra 2500HD','Sierra 3500HD','Terrain','Yukon','Yukon XL'],
+  'Honda':['Accord','Civic','CR-V','HR-V','Odyssey','Passport','Pilot','Ridgeline'],
+  'Hyundai':['Elantra','Ioniq 5','Ioniq 6','Kona','Palisade','Santa Cruz','Santa Fe','Sonata','Tucson'],
+  'Infiniti':['Q50','Q60','QX50','QX55','QX60','QX80'],
+  'Jeep':['Cherokee','Compass','Gladiator','Grand Cherokee','Grand Cherokee L','Wrangler'],
+  'Kia':['Carnival','EV6','EV9','Forte','K5','Niro','Seltos','Sorento','Sportage','Telluride'],
+  'Land Rover':['Defender','Discovery','Range Rover','Range Rover Sport','Range Rover Evoque'],
+  'Lexus':['ES','GX','IS','LC','LS','LX','NX','RX','UX'],
+  'Lincoln':['Aviator','Corsair','Nautilus','Navigator'],
+  'Mazda':['CX-30','CX-5','CX-50','CX-90','Mazda3','Mazda6','MX-5 Miata'],
+  'Mercedes-Benz':['A-Class','C-Class','CLA','E-Class','G-Class','GLA','GLB','GLC','GLE','GLS','S-Class','EQB','EQS'],
+  'Mitsubishi':['Eclipse Cross','Outlander','Outlander PHEV','Outlander Sport'],
+  'Nissan':['Altima','Armada','Frontier','Kicks','Leaf','Murano','Pathfinder','Rogue','Sentra','Titan','Versa','Z'],
+  'Ram':['1500','2500','3500'],
+  'Subaru':['Ascent','BRZ','Crosstrek','Forester','Impreza','Legacy','Outback','WRX'],
+  'Tesla':['Model 3','Model S','Model X','Model Y','Cybertruck'],
+  'Toyota':['4Runner','Camry','Corolla','Corolla Cross','Crown','GR86','Highlander','Land Cruiser','Prius','RAV4','Sequoia','Sienna','Supra','Tacoma','Tundra','Venza'],
+  'Volkswagen':['Atlas','Golf','GTI','ID.4','Jetta','Taos','Tiguan'],
+  'Volvo':['C40','S60','S90','XC40','XC60','XC90'],
+};
+
+var TRIM_DB={
+  'toyota|camry':['LE','LE Hybrid','SE','SE Hybrid','SE Nightshade','SE Hybrid Nightshade','XLE','XLE Hybrid','XSE','XSE Nightshade','TRD'],
+  'toyota|corolla':['L','LE','SE','XLE','XSE','Hybrid LE','Hybrid SE','GR Corolla'],
+  'toyota|rav4':['LE','XLE','XLE Premium','TRD Off-Road','Adventure','Limited','Prime SE','Prime XSE'],
+  'toyota|tacoma':['SR','SR5','TRD Sport','TRD Off-Road','Limited','TRD Pro'],
+  'toyota|tundra':['SR','SR5','Limited','Platinum','1794 Edition','TRD Pro','Capstone'],
+  'toyota|4runner':['SR5','TRD Off-Road','TRD Off-Road Premium','Limited','TRD Pro'],
+  'toyota|highlander':['L','LE','XLE','Limited','Platinum','Hybrid LE','Hybrid XLE','Hybrid Limited','Hybrid Platinum'],
+  'toyota|sienna':['LE','XLE','XSE','Limited','Platinum'],
+  'ford|f-150':['XL','XLT','Lariat','King Ranch','Platinum','Limited','Raptor','Tremor'],
+  'ford|bronco':['Base','Big Bend','Black Diamond','Outer Banks','Badlands','Wildtrak','Raptor'],
+  'ford|explorer':['Base','XLT','ST-Line','Limited','King Ranch','Platinum','ST'],
+  'ford|escape':['S','SE','SE Sport','SEL','Titanium'],
+  'ford|mustang':['EcoBoost','EcoBoost Premium','GT','GT Premium','Mach 1','Shelby GT500'],
+  'chevrolet|silverado 1500':['Work Truck','Custom','LT','RST','LTZ','High Country','ZR2'],
+  'chevrolet|tahoe':['LS','LT','RST','Z71','Premier','High Country'],
+  'chevrolet|equinox':['LS','LT','RS','Premier'],
+  'chevrolet|colorado':['Work Truck','LT','Z71','Trail Boss','ZR2'],
+  'gmc|sierra 1500':['Pro','SLE','Elevation','SLT','AT4','Denali','AT4X'],
+  'gmc|yukon':['SLE','SLT','AT4','Denali'],
+  'honda|accord':['LX','Sport','Sport-L','EX-L','Touring','Hybrid Sport','Hybrid Touring'],
+  'honda|cr-v':['LX','EX','EX-L','Sport','Touring','Hybrid Sport','Hybrid Touring'],
+  'honda|civic':['LX','Sport','EX','Sport Touring','Si','Type R'],
+  'honda|pilot':['Sport','EX-L','TrailSport','Touring','Elite'],
+  'ram|1500':['Tradesman','Big Horn','Laramie','Sport','Rebel','Limited','TRX'],
+  'jeep|wrangler':['Sport','Sport S','Sahara','Rubicon','4xe'],
+  'jeep|grand cherokee':['Laredo','Limited','Overland','Summit','Trailhawk'],
+  'hyundai|tucson':['SE','SEL','N Line','XRT','Limited'],
+  'hyundai|santa fe':['SE','SEL','XRT','Limited','Calligraphy'],
+  'kia|telluride':['LX','S','EX','SX','SX Prestige','X-Line','X-Pro'],
+  'kia|sportage':['LX','S','EX','SX','SX Prestige','X-Line'],
+};
+
+var OPTIONS_DB={
+  'toyota|camry|se':['Convenience Package (Smart Key/HomeLink)','Audio Upgrade (9" Screen/Wireless Charging)','Cold Weather Package (Heated Seats/Wheel)','Power Moonroof','Blind Spot Monitor + RCTA','SE Nightshade Edition'],
+  'toyota|camry|le':['Convenience Package','Power Moonroof','Blind Spot Monitor + RCTA'],
+  'toyota|camry|xle':['Premium JBL Audio','Power Moonroof','Blind Spot Monitor','Ventilated Seats'],
+  'toyota|camry|xse':['Power Moonroof','Blind Spot Monitor','XSE Nightshade Edition'],
+  'toyota|tacoma|sr5':['Convenience Package','Tow Package','Spray-In Bedliner','TRD Sport Package'],
+  'toyota|tacoma|trd pro':['TRD Pro Package (Standard)','FOX Shocks','Skid Plates'],
+  'toyota|rav4|xle':['Power Moonroof','Blind Spot Monitor','All Weather Package'],
+  'toyota|highlander|limited':['Premium JBL Audio','Power Moonroof','Digital Rearview Mirror'],
+  'ford|f-150|xlt':['302A Equipment Group','Sport Appearance','Trailer Tow Package','FX4 Off-Road','Spray-In Bedliner'],
+  'ford|f-150|lariat':['Lariat Sport','Max Trailer Tow','FX4 Off-Road','Moonroof','Power Running Boards'],
+  'chevrolet|silverado 1500|lt':['Trail Boss Package','Convenience Package II','Trailering Package','Z71 Off-Road'],
+  'gmc|sierra 1500|sle':['Convenience Package','Trailering Package','All Terrain Package'],
+  'honda|cr-v|ex':['Moonroof (Standard)','Remote Start','Honda Sensing (Standard)'],
+  'honda|accord|sport':['Honda Sensing (Standard)','Power Moonroof'],
+  'ram|1500|big horn':['Sport Appearance','Tow Package','Bed Liner','Off-Road Package'],
+  'jeep|wrangler|sahara':['Sky One-Touch Roof','Trailer Tow','Safety Group'],
+};
+
+var GENERIC_OPTIONS=['Power Moonroof / Sunroof','Panoramic Sunroof','Blind Spot Monitor','Navigation System','Premium Audio (JBL/Bose/Harman)','Remote Start','Heated Front Seats','Ventilated/Cooled Seats','Heated Steering Wheel','Third Row Seating','Tow / Trailer Package','Power Running Boards','Bed Liner / Tonneau Cover','All Weather Package','Cold Weather Package','Sport Appearance Package'];
 
 // ── LOOKUP TOGGLE ──
 function switchLookup(mode){
@@ -672,404 +892,183 @@ function switchLookup(mode){
   document.getElementById('toggle-ymm').classList.toggle('active',mode==='ymm');
   document.getElementById('vin-panel').classList.toggle('show',mode==='vin');
   document.getElementById('ymm-panel').classList.toggle('show',mode==='ymm');
-  if(mode==='ymm' && document.getElementById('ymm-year').options.length<=1) populateYears();
+  if(mode==='ymm'&&document.getElementById('ymm-year').options.length<=1) populateYears();
 }
 
-// ── YEAR/MAKE/MODEL CASCADING ──
-// ── FULL LOCAL VEHICLE DATABASE ──
-const VEHICLE_DB = {
-  'Acura':['ILX','MDX','RDX','RLX','TLX','NSX','Integra','ZDX'],
-  'Audi':['A3','A4','A5','A6','A7','A8','Q3','Q5','Q7','Q8','e-tron','e-tron GT','TT','R8'],
-  'BMW':['2 Series','3 Series','4 Series','5 Series','7 Series','8 Series','X1','X2','X3','X4','X5','X6','X7','iX','i4','i5','Z4','M3','M4','M5'],
-  'Buick':['Enclave','Encore','Encore GX','Envision','LaCrosse','Regal'],
-  'Cadillac':['CT4','CT5','Escalade','Escalade ESV','Lyriq','XT4','XT5','XT6'],
-  'Chevrolet':['Blazer','Bolt EV','Bolt EUV','Camaro','Colorado','Corvette','Equinox','Express','Malibu','Silverado 1500','Silverado 2500HD','Silverado 3500HD','Suburban','Tahoe','Trailblazer','Traverse','Trax'],
-  'Chrysler':['300','Pacifica','Voyager'],
-  'Dodge':['Challenger','Charger','Durango','Grand Caravan','Hornet'],
-  'Ford':['Bronco','Bronco Sport','Edge','Escape','Expedition','Explorer','F-150','F-250','F-350','Maverick','Mustang','Mustang Mach-E','Ranger','Transit','Transit Connect'],
-  'Genesis':['G70','G80','G90','GV70','GV80','GV60'],
-  'GMC':['Acadia','Canyon','Envoy','Sierra 1500','Sierra 2500HD','Sierra 3500HD','Terrain','Yukon','Yukon XL'],
-  'Honda':['Accord','Civic','CR-V','HR-V','Insight','Odyssey','Passport','Pilot','Prologue','Ridgeline'],
-  'Hyundai':['Elantra','Ioniq 5','Ioniq 6','Kona','Palisade','Santa Cruz','Santa Fe','Sonata','Tucson','Venue'],
-  'Infiniti':['Q50','Q60','QX50','QX55','QX60','QX80'],
-  'Jeep':['Cherokee','Compass','Gladiator','Grand Cherokee','Grand Cherokee L','Grand Wagoneer','Renegade','Wagoneer','Wrangler'],
-  'Kia':['Carnival','EV6','EV9','Forte','K5','Niro','Seltos','Sorento','Soul','Sportage','Stinger','Telluride'],
-  'Land Rover':['Defender','Discovery','Discovery Sport','Range Rover','Range Rover Evoque','Range Rover Sport','Range Rover Velar'],
-  'Lexus':['ES','GX','IS','LC','LS','LX','NX','RC','RX','RX L','UX'],
-  'Lincoln':['Aviator','Corsair','MKZ','Nautilus','Navigator','Navigator L'],
-  'Mazda':['CX-30','CX-5','CX-50','CX-70','CX-90','Mazda3','Mazda6','MX-5 Miata','MX-30'],
-  'Mercedes-Benz':['A-Class','C-Class','CLA','CLS','E-Class','G-Class','GLA','GLB','GLC','GLE','GLS','S-Class','AMG GT','EQB','EQC','EQE','EQS'],
-  'Mitsubishi':['Eclipse Cross','Mirage','Outlander','Outlander PHEV','Outlander Sport'],
-  'Nissan':['Altima','Armada','Frontier','GT-R','Kicks','Leaf','Maxima','Murano','Pathfinder','Rogue','Rogue Sport','Sentra','Titan','Versa','Z'],
-  'Ram':['1500','2500','3500','ProMaster','ProMaster City'],
-  'Subaru':['Ascent','BRZ','Crosstrek','Forester','Impreza','Legacy','Outback','Solterra','WRX'],
-  'Tesla':['Model 3','Model S','Model X','Model Y','Cybertruck'],
-  'Toyota':['4Runner','Avalon','BZ4X','Camry','Corolla','Corolla Cross','Crown','GR86','Highlander','Land Cruiser','Mirai','Prius','RAV4','Sequoia','Sienna','Supra','Tacoma','Tundra','Venza'],
-  'Volkswagen':['Atlas','Atlas Cross Sport','Golf','GTI','ID.4','Jetta','Passat','Taos','Tiguan'],
-  'Volvo':['C40','S60','S90','V60','V90','XC40','XC60','XC90'],
-};
-
 function populateYears(){
-  const sel=document.getElementById('ymm-year');
-  const cur=new Date().getFullYear();
-  for(let y=cur;y>=2000;y--){
-    const o=document.createElement('option');
-    o.value=y;o.textContent=y;
-    sel.appendChild(o);
-  }
+  var sel=document.getElementById('ymm-year');
+  var cur=new Date().getFullYear();
+  for(var y=cur;y>=2000;y--){var o=document.createElement('option');o.value=y;o.textContent=y;sel.appendChild(o);}
 }
 
 function loadMakes(){
-  var year=document.getElementById('ymm-year').value;
-  if(!year) return;
   var makeEl=document.getElementById('ymm-make');
   var modelEl=document.getElementById('ymm-model');
   var trimEl=document.getElementById('ymm-trim');
-  // Populate makes
   makeEl.innerHTML='<option value="">Select Make</option>';
   var makes=Object.keys(VEHICLE_DB).sort();
-  for(var i=0;i<makes.length;i++){
-    var o=document.createElement('option');
-    o.value=makes[i];o.textContent=makes[i];
-    makeEl.appendChild(o);
-  }
+  for(var i=0;i<makes.length;i++){var o=document.createElement('option');o.value=makes[i];o.textContent=makes[i];makeEl.appendChild(o);}
   makeEl.disabled=false;
   modelEl.innerHTML='<option value="">Select Model</option>';
   modelEl.disabled=true;
-  trimEl.innerHTML='<option value="">Select Trim</option>';
+  trimEl.innerHTML='<option value="">Select Model First</option>';
   trimEl.disabled=true;
 }
 
 function loadModels(){
   var make=document.getElementById('ymm-make').value;
-  if(!make) return;
-  ymmData.make=make;
+  if(!make)return;
   var modelEl=document.getElementById('ymm-model');
   var trimEl=document.getElementById('ymm-trim');
   var models=VEHICLE_DB[make]||[];
   modelEl.innerHTML='<option value="">Select Model</option>';
-  for(var i=0;i<models.length;i++){
-    var o=document.createElement('option');
-    o.value=models[i];o.textContent=models[i];
-    modelEl.appendChild(o);
-  }
+  for(var i=0;i<models.length;i++){var o=document.createElement('option');o.value=models[i];o.textContent=models[i];modelEl.appendChild(o);}
   modelEl.disabled=false;
-  trimEl.innerHTML='<option value="">Select Trim</option>';
+  trimEl.innerHTML='<option value="">Select Model First</option>';
   trimEl.disabled=true;
 }
 
-// Trim database keyed by make|model
-const TRIM_DB = {
-  'toyota|camry': ['LE','LE Hybrid','SE','SE Hybrid','SE Nightshade','SE Hybrid Nightshade','XLE','XLE Hybrid','XSE','TRD','XSE Nightshade'],
-  'toyota|corolla': ['L','LE','SE','XLE','XSE','Hybrid LE','Hybrid SE','GR Corolla'],
-  'toyota|rav4': ['LE','XLE','XLE Premium','TRD Off-Road','Adventure','Limited','Prime SE','Prime XSE'],
-  'toyota|highlander': ['L','LE','XLE','Limited','Platinum','Bronze Edition','Hybrid LE','Hybrid XLE','Hybrid Limited','Hybrid Platinum'],
-  'toyota|tacoma': ['SR','SR5','TRD Sport','TRD Off-Road','Limited','TRD Pro','Trail Edition'],
-  'toyota|tundra': ['SR','SR5','Limited','Platinum','1794 Edition','TRD Pro','Capstone'],
-  'toyota|4runner': ['SR5','TRD Off-Road','TRD Off-Road Premium','Limited','TRD Pro','40th Anniversary'],
-  'toyota|sienna': ['LE','XLE','XSE','Limited','Platinum'],
-  'toyota|venza': ['LE','XLE','Limited'],
-  'ford|f-150': ['XL','XLT','Lariat','King Ranch','Platinum','Limited','Raptor','Tremor'],
-  'ford|escape': ['S','SE','SE Sport','SEL','Titanium','Plug-In Hybrid SE','Plug-In Hybrid SEL','Plug-In Hybrid Titanium'],
-  'ford|explorer': ['Base','XLT','ST-Line','Limited','King Ranch','Platinum','ST','Timberline'],
-  'ford|mustang': ['EcoBoost','EcoBoost Premium','GT','GT Premium','Mach 1','Shelby GT500'],
-  'ford|bronco': ['Base','Big Bend','Black Diamond','Outer Banks','Badlands','Wildtrak','Everglades','Raptor'],
-  'chevrolet|silverado 1500': ['Work Truck','Custom','Custom Trail Boss','LT','LT Trail Boss','RST','LTZ','High Country','ZR2'],
-  'chevrolet|equinox': ['LS','LT','RS','Premier','EV 1LT','EV 2LT','EV 3LT'],
-  'chevrolet|tahoe': ['LS','LT','RST','Z71','Premier','High Country'],
-  'chevrolet|suburban': ['LS','LT','RST','Z71','Premier','High Country'],
-  'chevrolet|colorado': ['Work Truck','LT','Z71','Trail Boss','ZR2'],
-  'gmc|sierra 1500': ['Pro','SLE','Elevation','SLT','AT4','Denali','AT4X','Denali Ultimate'],
-  'gmc|terrain': ['SLE','SLT','AT4','Denali'],
-  'gmc|yukon': ['SLE','SLT','AT4','Denali','Denali Ultimate'],
-  'honda|accord': ['LX','Sport','Sport-L','EX-L','Touring','Hybrid Sport','Hybrid EX-L','Hybrid Touring'],
-  'honda|cr-v': ['LX','EX','EX-L','Sport','Touring','Hybrid Sport','Hybrid EX-L','Hybrid Touring'],
-  'honda|civic': ['LX','Sport','EX','Sport Touring','Si','Type R'],
-  'honda|pilot': ['Sport','EX-L','TrailSport','Touring','Elite','Black Edition'],
-  'honda|odyssey': ['LX','EX','EX-L','Touring','Elite'],
-  'nissan|altima': ['S','SV','SR','SL','Platinum'],
-  'nissan|rogue': ['S','SV','SL','Platinum','Rock Creek'],
-  'nissan|pathfinder': ['S','SV','SL','Platinum','Rock Creek'],
-  'ram|1500': ['Tradesman','Big Horn','Lone Star','Laramie','Sport','Rebel','Power Wagon','Laramie Longhorn','Limited','TRX'],
-  'jeep|wrangler': ['Sport','Sport S','Willys','Sahara','Sahara Altitude','Rubicon','Rubicon 392','4xe'],
-  'jeep|grand cherokee': ['Laredo','Altitude','Limited','Overland','Summit','Trailhawk','Trackhawk','4xe'],
-  'hyundai|tucson': ['SE','SEL','N Line','XRT','Limited'],
-  'hyundai|santa fe': ['SE','SEL','XRT','Limited','Calligraphy'],
-  'hyundai|sonata': ['SE','SEL','SEL Plus','N Line','Limited'],
-  'kia|telluride': ['LX','S','EX','SX','SX Prestige','X-Line','X-Pro'],
-  'kia|sportage': ['LX','S','EX','SX','SX Prestige','X-Line'],
-  'kia|sorento': ['LX','S','EX','SX','SX Prestige','X-Line'],
-  'subaru|outback': ['Base','Premium','Onyx Edition','Limited','Touring','Wilderness'],
-  'subaru|forester': ['Base','Premium','Sport','Limited','Touring','Wilderness'],
-  'subaru|crosstrek': ['Base','Premium','Sport','Limited','Wilderness'],
-  'bmw|3 series': ['330i','330i xDrive','M340i','M340i xDrive','330e','M3','M3 Competition'],
-  'bmw|5 series': ['530i','530i xDrive','540i','540i xDrive','550e','M5'],
-  'mercedes-benz|c-class': ['C 300','C 300 4MATIC','AMG C 43','AMG C 63'],
-  'mercedes-benz|gle': ['GLE 350','GLE 450','AMG GLE 53','AMG GLE 63'],
-};
-
 function loadTrims(){
-  const make=document.getElementById('ymm-make').value;
-  const model=document.getElementById('ymm-model').value;
-  if(!model) return;
-  ymmData.model=model;
-  const trimEl=document.getElementById('ymm-trim');
-  trimEl.disabled=false;
-  const key=`${make}|${model}`.toLowerCase();
-  
-  let trims = null;
-  for(const [k,v] of Object.entries(TRIM_DB)){
-    if(key===k || key.includes(k) || k.includes(make.toLowerCase()+'|'+model.toLowerCase())){
-      trims=v; break;
-    }
-  }
-  
+  var make=document.getElementById('ymm-make').value;
+  var model=document.getElementById('ymm-model').value;
+  if(!model)return;
+  var trimEl=document.getElementById('ymm-trim');
+  var key=(make+'|'+model).toLowerCase();
+  var trims=TRIM_DB[key]||['Base/Standard','S','SE','SEL','LE','XLE','LT','LTZ','EX','EX-L','Limited','Sport','Premium','Touring','Platinum'];
   trimEl.innerHTML='<option value="">Select Trim</option>';
-  if(trims){
-    trims.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;trimEl.appendChild(o);});
-  } else {
-    // Fallback generic trims
-    ['Base/Standard','S','SE','SEL','LE','XLE','LT','LTZ','EX','EX-L','Limited','Sport','Premium','Touring','Platinum'].forEach(t=>{
-      const o=document.createElement('option');o.value=t;o.textContent=t;trimEl.appendChild(o);
-    });
-  }
+  for(var i=0;i<trims.length;i++){var o=document.createElement('option');o.value=trims[i];o.textContent=trims[i];trimEl.appendChild(o);}
   trimEl.disabled=false;
 }
-
-// Options by make|model|trim
-var OPTIONS_DB = {
-  'toyota|camry|se': ['Convenience Package (Smart Key/HomeLink)','Audio Upgrade Package (9" Screen/Wireless Charging)','Cold Weather Package (Heated Seats/Wheel)','Power Moonroof','Blind Spot Monitor + RCTA','SE Nightshade Edition'],
-  'toyota|camry|se hybrid': ['Convenience Package','Audio Upgrade Package','Cold Weather Package','Power Moonroof','Blind Spot Monitor + RCTA','SE Hybrid Nightshade Edition'],
-  'toyota|camry|le': ['Convenience Package','Power Moonroof','Blind Spot Monitor + RCTA'],
-  'toyota|camry|xle': ['Premium JBL Audio','Power Moonroof (Standard)','Blind Spot Monitor (Standard)','Ventilated Front Seats','Digital Rearview Mirror'],
-  'toyota|camry|xse': ['Power Moonroof','Blind Spot Monitor + RCTA','XSE Nightshade Edition'],
-  'toyota|camry|trd': ['TRD Performance Exhaust','TRD Suspension','TRD Wheels'],
-  'toyota|rav4|le': ['All Weather Package','Blind Spot Monitor + RCTA'],
-  'toyota|rav4|xle': ['Power Moonroof','Blind Spot Monitor + RCTA','All Weather Package','XLE Premium Package'],
-  'toyota|rav4|limited': ['Power Moonroof (Standard)','Premium JBL Audio','Digital Rearview Mirror','Panoramic Moonroof'],
-  'toyota|rav4|trd off-road': ['TRD Off-Road Package (Standard)','All Weather Package'],
-  'toyota|tacoma|sr5': ['SR5 Convenience Package','Tow Package','Bed Liner','TRD Sport Package','TRD Off-Road Package'],
-  'toyota|tacoma|trd sport': ['TRD Sport (Standard)','Tow Package','Bed Liner','Access Cab / Double Cab'],
-  'toyota|tacoma|trd off-road': ['TRD Off-Road (Standard)','Tow Package','Bed Liner','Locking Rear Differential'],
-  'toyota|tacoma|trd pro': ['TRD Pro Package (Standard)','Fox Shocks','Skid Plates','Lunar Rock Color'],
-  'toyota|tundra|sr5': ['SR5 Convenience Package','Tow Package','Spray-In Bedliner','TRD Off-Road Package'],
-  'toyota|tundra|limited': ['Power Running Boards','Tow Package','Premium Audio','Panoramic Moonroof'],
-  'toyota|tundra|trd pro': ['TRD Pro Package (Standard)','FOX Shocks','Skid Plates'],
-  'toyota|4runner|sr5': ['SR5 Premium Package','Third Row Seating','TRD Off-Road Package'],
-  'toyota|4runner|trd off-road': ['TRD Off-Road (Standard)','TRD Pro Upgrade','Crawl Control'],
-  'toyota|highlander|le': ['Blind Spot Monitor','All Weather Package'],
-  'toyota|highlander|xle': ['Power Moonroof','Premium Audio','Blind Spot Monitor'],
-  'toyota|highlander|limited': ['Premium JBL Audio','Power Moonroof','Digital Rearview Mirror'],
-  'ford|f-150|xlt': ['302A Equipment Group','Sport Appearance Package','Trailer Tow Package','FX4 Off-Road Package','Spray-In Bedliner','Power Sliding Rear Window'],
-  'ford|f-150|lariat': ['Lariat Sport Appearance','Max Trailer Tow Package','FX4 Off-Road Package','Panoramic Moonroof','Power Running Boards'],
-  'ford|f-150|king ranch': ['King Ranch Ultimate Package','Max Trailer Tow Package','FX4 Off-Road Package','Power Running Boards'],
-  'ford|f-150|platinum': ['Platinum Ultimate Package','Max Trailer Tow Package','Panoramic Moonroof','Power Running Boards'],
-  'ford|f-150|raptor': ['Raptor Package (Standard)','37" Performance Package','Recaro Seats'],
-  'ford|escape|se': ['SE Sport Appearance Package','Cold Weather Package','Panoramic Moonroof'],
-  'ford|explorer|xlt': ['XLT Sport Appearance Package','Trailer Tow Package','Third Row Seating'],
-  'chevrolet|silverado 1500|lt': ['LT Trail Boss Package','Convenience Package II','Trailering Package','Z71 Off-Road Package','Durabed Spray-On Liner'],
-  'chevrolet|silverado 1500|ltz': ['LTZ Premium Package','Duramax Diesel Option','Max Trailering Package','Z71 Off-Road Package'],
-  'chevrolet|tahoe|lt': ['LT Premium Package','Z71 Off-Road Package','Max Trailering Package','Power Running Boards'],
-  'gmc|sierra 1500|sle': ['SLE Convenience Package','Trailering Package','All Terrain Package','X31 Off-Road Package'],
-  'gmc|sierra 1500|slt': ['SLT Premium Package','Max Trailering Package','All Terrain Package','Duramax Diesel Option'],
-  'gmc|sierra 1500|denali': ['Denali Ultimate Package (Standard)','Max Trailering','Duramax Diesel Option','Power Running Boards'],
-  'honda|cr-v|ex': ['Power Moonroof (Standard)','Remote Start','Honda Sensing (Standard)'],
-  'honda|cr-v|ex-l': ['Power Moonroof (Standard)','Heated Seats (Standard)','Navigation System'],
-  'honda|accord|sport': ['Sport Special Edition','Honda Sensing (Standard)','Power Moonroof'],
-  'honda|accord|ex-l': ['Power Moonroof','Honda Sensing','Navigation System','Heated Seats'],
-  'honda|pilot|ex-l': ['Power Moonroof','Navigation','Heated Seats','Trailer Hitch'],
-  'ram|1500|big horn': ['Big Horn Sport Appearance','Tow Package','Bed Liner','Off-Road Package'],
-  'ram|1500|laramie': ['Laramie Sport Package','Night Edition','Max Tow Package','Bed Liner','Power Running Boards'],
-  'ram|1500|rebel': ['Rebel Package (Standard)','Off-Road Package','Night Edition','Bed Liner'],
-  'jeep|wrangler|sport': ['Sport S Package','Safety & Security Group','Trailer Tow Package'],
-  'jeep|wrangler|sahara': ['Sahara Altitude Package','Safety Group','Sky One-Touch Roof','Trailer Tow Package'],
-  'jeep|wrangler|rubicon': ['Rubicon Package (Standard)','Sky One-Touch Roof','Trailer Tow Package'],
-  'jeep|grand cherokee|laredo': ['Laredo X Package','Sun & Sound Group','Tow Package'],
-  'jeep|grand cherokee|limited': ['Limited X Package','Safety Tech Group','Panoramic Moonroof','Tow Package'],
-};
-
-// Generic options for vehicles not in DB
-var GENERIC_OPTIONS = ['Power Moonroof / Sunroof','Panoramic Sunroof','Blind Spot Monitor','Navigation System','Premium Audio (JBL/Bose/Harman)','Remote Start','Heated Front Seats','Ventilated/Cooled Seats','Heated Steering Wheel','Third Row Seating','Tow / Trailer Package','Power Running Boards','Bed Liner / Tonneau Cover','All Weather Package','Cold Weather Package'];
 
 function loadOptions(){
   var make=document.getElementById('ymm-make').value;
   var model=document.getElementById('ymm-model').value;
   var trim=document.getElementById('ymm-trim').value;
-  if(!trim) return;
-  
+  if(!trim)return;
   var key=(make+'|'+model+'|'+trim).toLowerCase();
-  var opts=null;
-  
-  // Exact match first
-  if(OPTIONS_DB[key]) opts=OPTIONS_DB[key];
-  else {
-    // Partial match
-    for(var k in OPTIONS_DB){
-      if(key.indexOf(k)>=0||k.indexOf(make.toLowerCase()+'|'+model.toLowerCase())>=0){
-        opts=OPTIONS_DB[k]; break;
-      }
-    }
-  }
-  if(!opts) opts=GENERIC_OPTIONS;
-  
+  var opts=OPTIONS_DB[key]||GENERIC_OPTIONS;
   var hint=document.getElementById('ymm-options-hint');
   var grid=document.getElementById('ymm-options-grid');
   hint.style.display='none';
   grid.style.display='grid';
   grid.innerHTML='';
-  
   for(var i=0;i<opts.length;i++){
     var btn=document.createElement('button');
     btn.className='check-btn';
     btn.setAttribute('data-group','factory-opt');
     btn.setAttribute('data-val',opts[i]);
-    (function(b){
-      b.innerHTML='<div class="chk"></div><div class="txt">'+opts[i]+'</div>';
-      b.addEventListener('click',function(e){
-        e.preventDefault();
-        b.classList.toggle('selected');
-        b.querySelector('.chk').textContent=b.classList.contains('selected')?'✓':'';
-        var g=b.getAttribute('data-group'),v=b.getAttribute('data-val');
-        if(!checks[g])checks[g]=[];
-        if(b.classList.contains('selected')){if(checks[g].indexOf(v)<0)checks[g].push(v);}
-        else{checks[g]=checks[g].filter(function(x){return x!==v;});}
-      });
-    })(btn);
+    btn.innerHTML='<div class="chk"></div><div class="check-txt"><span class="main">'+opts[i]+'</span></div>';
+    (function(b){b.addEventListener('click',function(e){e.preventDefault();b.classList.toggle('selected');b.querySelector('.chk').textContent=b.classList.contains('selected')?'✓':'';var g=b.getAttribute('data-group'),v=b.getAttribute('data-val');if(!checks[g])checks[g]=[];if(b.classList.contains('selected')){if(checks[g].indexOf(v)<0)checks[g].push(v);}else{checks[g]=checks[g].filter(function(x){return x!==v;});}});})(btn);
     grid.appendChild(btn);
   }
 }
 
-function showYmmLoading(show){
-  document.getElementById('ymm-loading').classList.toggle('show',show);
-}
-
-function confirmYMM(){
-  var year=document.getElementById('ymm-year').value;
-  var make=document.getElementById('ymm-make').value;
-  var model=document.getElementById('ymm-model').value;
-  var body=document.getElementById('ymm-body').value;
-  var trim=document.getElementById('ymm-trim').value;
-  var drive=document.getElementById('ymm-drive').value;
-  var color=document.getElementById('ymm-color').value;
-  var intColor=document.getElementById('ymm-int-color').value;
-  var miles=document.getElementById('ymm-miles').value;
-  var zip=document.getElementById('ymm-zip').value;
-  var selectedOpts=[];
-  var optBtns=document.querySelectorAll('#ymm-options-grid .check-btn.selected');
-  for(var i=0;i<optBtns.length;i++){selectedOpts.push(optBtns[i].getAttribute('data-val'));}
-  var engine=selectedOpts.join(', ');
-  if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}
-  if(!miles){alert('Please enter current mileage.');return;}
-  ymmData={year:year,make:make,model:model,body:body,trim:trim,drive:drive,color:color,intColor:intColor,miles:miles,zip:zip,engine:engine};
-  vinData={year:parseInt(year),make,model,trim,msrp:0,build:{year:parseInt(year),make,model,trim}};
-  confirmStep(1);
-}
-
 // ── VIN DECODE ──
 async function runDecode(){
-  const vin=document.getElementById('vin-inp').value.trim().toUpperCase();
-  const btn=document.getElementById('decode-btn');
-  if(vin.length!==17){setStatus('INVALID — 17 CHARS REQUIRED','err');return;}
-  setStatus('SCANNING RADAR...','loading');
+  var vin=document.getElementById('vin-inp').value.trim().toUpperCase();
+  var btn=document.getElementById('decode-btn');
+  if(vin.length!==17){setStatus('Invalid — 17 characters required','err');return;}
+  setStatus('Scanning MarketCheck Radar...','loading');
   btn.disabled=true;
   try{
-    const r=await fetch(`/api/decode?vin=${vin}`,{signal:AbortSignal.timeout(10000)});
-    const d=await r.json();
-    if(d.error) throw new Error(d.error);
+    var r=await fetch('/api/decode?vin='+vin,{signal:AbortSignal.timeout(10000)});
+    var d=await r.json();
+    if(d.error)throw new Error(d.error);
     vinData=d;
-    const b=d.build||d;
-    document.getElementById('res-ymm').value=`${b.year||''} ${b.make||''} ${b.model||''}`.trim();
-    document.getElementById('res-trim').value=b.trim||b.trim_name||'BASE';
-    const specs=[
-      b.engine?`ENGINE:    ${b.engine}`:null,
-      b.engine_size?`DISPLACE:  ${b.engine_size}L`:null,
-      b.transmission?`TRANS:     ${b.transmission}`:null,
-      b.drivetrain?`DRIVE:     ${b.drivetrain}`:null,
-      b.fuel_type?`FUEL:      ${b.fuel_type}`:null,
-      b.body_type?`BODY:      ${b.body_type}`:null,
-      b.doors?`DOORS:     ${b.doors}`:null,
-      b.highway_mpg?`HWY MPG:   ${b.highway_mpg}`:null,
-      b.city_mpg?`CITY MPG:  ${b.city_mpg}`:null,
-    ].filter(Boolean).join('\n');
-    document.getElementById('res-specs').value=specs||'Decoded — see fields above.';
-    setStatus('SYNC SUCCESSFUL ✓','ok');
+    var b=d.build||d;
+    document.getElementById('res-ymm').textContent=(b.year||'')+' '+(b.make||'')+' '+(b.model||'');
+    document.getElementById('res-trim').textContent=b.trim||b.trim_name||'BASE';
+    var specs=[b.engine?'ENGINE:    '+b.engine:null,b.engine_size?'DISPLACE:  '+b.engine_size+'L':null,b.transmission?'TRANS:     '+b.transmission:null,b.drivetrain?'DRIVE:     '+b.drivetrain:null,b.fuel_type?'FUEL:      '+b.fuel_type:null,b.body_type?'BODY:      '+b.body_type:null,b.doors?'DOORS:     '+b.doors:null,b.highway_mpg?'HWY MPG:   '+b.highway_mpg:null,b.city_mpg?'CITY MPG:  '+b.city_mpg:null].filter(Boolean).join('\n');
+    document.getElementById('res-specs').textContent=specs||'Decoded — see fields above.';
+    setStatus('✓ Sync successful','ok');
     document.getElementById('decoded-wrap').style.display='block';
     document.getElementById('tools-row').classList.add('show');
-  }catch(err){
-    setStatus('SYNC ERROR — CHECK VIN & RETRY','err');
-  }finally{btn.disabled=false;}
+    injectFactoryOptions(b.year,b.make,b.model,b.trim);
+  }catch(err){setStatus('Sync error — check VIN & retry','err');}
+  finally{btn.disabled=false;}
 }
 
 function setStatus(msg,type){
-  const el=document.getElementById('vin-status');
-  el.textContent=msg;el.className='status '+(type||'');
+  var el=document.getElementById('vin-status');
+  el.textContent=msg;el.className='status-tag '+(type||'');
 }
 
 // ── CONDITION ──
 function selectCond(btn){
-  document.querySelectorAll('.cond-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.cond-btn').forEach(function(b){b.classList.remove('selected');});
   btn.classList.add('selected');
   condMult=parseFloat(btn.dataset.mult);
   condLabel=btn.dataset.cond;
   updateValue();
-  document.getElementById('value-reveal').classList.add('show');
+  var card=document.getElementById('value-card');
+  card.classList.add('show');
+  document.getElementById('value-boost').classList.add('show');
+  if(lookupMode==='ymm') document.getElementById('miles-wrap2').style.display='block';
 }
 
 function updateValue(){
-  if(!vinData) return;
-  const b=vinData.build||vinData;
-  const msrp=b.msrp||b.base_price||0;
-  const year=b.year||new Date().getFullYear();
-  const age=new Date().getFullYear()-year;
-  const base=msrp||28000;
-  const dep=Math.max(0.25,1-(age*0.11));
-  const avg=Math.round(base*dep*condMult);
-  const lo=Math.round(avg*0.95);
-  const hi=Math.round(avg*1.05);
-  document.getElementById('value-range').textContent=`$${lo.toLocaleString()} — $${hi.toLocaleString()}`;
+  if(!vinData)return;
+  var b=vinData.build||vinData;
+  var msrp=b.msrp||b.base_price||0;
+  var year=b.year||new Date().getFullYear();
+  var age=new Date().getFullYear()-year;
+  var base=msrp||28000;
+  var dep=Math.max(0.25,1-(age*0.11));
+  var avg=Math.round(base*dep*condMult);
+  var lo=Math.round(avg*0.95);
+  var hi=Math.round(avg*1.05);
+  document.getElementById('value-num').textContent='$'+lo.toLocaleString()+' — $'+hi.toLocaleString();
 }
 
 // ── CHECKS ──
 function toggleCheck(btn){
   btn.classList.toggle('selected');
   btn.querySelector('.chk').textContent=btn.classList.contains('selected')?'✓':'';
-  const g=btn.dataset.group,v=btn.dataset.val;
-  if(!checks[g]) checks[g]=[];
-  if(btn.classList.contains('selected')){if(!checks[g].includes(v))checks[g].push(v);}
-  else{checks[g]=checks[g].filter(x=>x!==v);}
+  var g=btn.dataset.group,v=btn.dataset.val;
+  if(!checks[g])checks[g]=[];
+  if(btn.classList.contains('selected')){if(checks[g].indexOf(v)<0)checks[g].push(v);}
+  else{checks[g]=checks[g].filter(function(x){return x!==v;});}
   updateCert();
 }
 
 function updateCert(){
-  const total=Object.keys(checks).length;
-  const pc=Object.keys(photos).length;
-  const box=document.getElementById('cert-box');
+  var total=Object.keys(checks).length;
+  var pc=Object.keys(photos).length;
+  var box=document.getElementById('cert-badge');
   box.classList.add('show');
-  if(total>=8&&pc>=4){
-    box.classList.add('verified');
-    document.getElementById('cert-icon').textContent='🏆';
-    document.getElementById('cert-name').textContent='EVL CERTIFIED';
-    document.getElementById('cert-msg').textContent='Full documentation — priority 24hr appraisal';
-  } else if(total>=4){
-    document.getElementById('cert-icon').textContent='✅';
-    document.getElementById('cert-name').textContent='EVL VERIFIED';
-    document.getElementById('cert-msg').textContent='Standard 48hr appraisal';
-  } else {
-    document.getElementById('cert-icon').textContent='📋';
-    document.getElementById('cert-name').textContent='EVL SUBMITTED';
-    document.getElementById('cert-msg').textContent='Add more details to qualify for Verified status';
+  if(total>=8&&pc>=4){box.className='cert-badge certified show';document.getElementById('cert-icon').textContent='🏆';document.getElementById('cert-name').textContent='EVL CERTIFIED';document.getElementById('cert-msg').textContent='Full documentation — priority 24hr appraisal';}
+  else if(total>=4){box.className='cert-badge verified show';document.getElementById('cert-icon').textContent='✅';document.getElementById('cert-name').textContent='EVL VERIFIED';document.getElementById('cert-msg').textContent='Standard 48hr appraisal';}
+  else{box.className='cert-badge show';document.getElementById('cert-icon').textContent='📋';document.getElementById('cert-name').textContent='EVL SUBMITTED';document.getElementById('cert-msg').textContent='Add more details to qualify for EVL Verified';}
+}
+
+// ── FACTORY OPTIONS ──
+function injectFactoryOptions(year,make,model,trim){
+  var key=((make||'')+'|'+(model||'')+'|'+(trim||'')).toLowerCase();
+  var opts=OPTIONS_DB[key]||null;
+  if(!opts){for(var k in OPTIONS_DB){if(key.indexOf(k.split('|').slice(0,2).join('|'))>=0){opts=OPTIONS_DB[k];break;}}}
+  if(!opts)return;
+  var section=document.getElementById('factory-section');
+  var grid=document.getElementById('factory-grid');
+  grid.innerHTML='';
+  section.style.display='block';
+  for(var i=0;i<opts.length;i++){
+    var btn=document.createElement('button');
+    btn.className='check-btn';btn.setAttribute('data-group','pkg');btn.setAttribute('data-val',opts[i]);
+    btn.innerHTML='<div class="chk"></div><div class="check-txt"><span class="main">'+opts[i]+'</span></div>';
+    btn.addEventListener('click',function(){toggleCheck(this);});
+    grid.appendChild(btn);
   }
 }
 
 // ── PHOTOS ──
 function handlePhoto(input){
-  const slot=input.dataset.slot,file=input.files[0];
-  if(!file) return;
+  var slot=input.dataset.slot,file=input.files[0];
+  if(!file)return;
   photos[slot]=file;
-  const el=document.getElementById('slot-'+slot);
-  el.classList.add('uploaded');
-  el.querySelector('.photo-icon').textContent='✅';
-  el.querySelector('.photo-lbl').textContent='✓ Uploaded';
+  var el=document.getElementById('slot-'+slot);
+  el.classList.add('done');
+  el.querySelector('.p-icon').textContent='✅';
+  el.querySelector('.p-title').textContent='✓ Uploaded';
   updateCert();
 }
 
@@ -1078,289 +1077,93 @@ function confirmStep(n){
   if(n===1&&lookupMode==='vin'&&!vinData){alert('Please decode a VIN first.');return;}
   if(n===2){
     if(!condLabel){alert('Please select a condition rating.');return;}
-    const miles=document.getElementById('miles-inp').value;
-    const ymmMiles=document.getElementById('ymm-miles').value;
-    if(!miles&&!ymmMiles){alert('Please enter current mileage.');return;}
+    var m1=document.getElementById('miles-inp').value;
+    var m2=document.getElementById('ymm-miles')?document.getElementById('ymm-miles').value:'';
+    if(!m1&&!m2){alert('Please enter current mileage.');return;}
   }
   if(n===3){
     document.getElementById('submit-btn').style.display='block';
     setTimeout(resizeCanvas,400);
   }
-  document.getElementById('card'+n).classList.remove('active');
-  document.getElementById('card'+n).classList.add('done');
-  document.getElementById('sn'+n).textContent='✓';
+  // Done
+  var d=document.getElementById('d'+n);
+  d.classList.remove('active');d.classList.add('done');
+  document.getElementById('sb'+n).textContent='✓';
   document.getElementById('p'+n).classList.remove('active');
   document.getElementById('p'+n).classList.add('done');
-  const next=n+1;
+  // Inject factory options for VIN path when reaching step 3
+  if(n===2&&vinData){var b=vinData.build||vinData;injectFactoryOptions(b.year,b.make,b.model,b.trim);}
+  // Unlock next
+  var next=n+1;
   if(next<=4){
-    document.getElementById('card'+next).classList.remove('locked');
-    document.getElementById('card'+next).classList.add('active');
+    var nd=document.getElementById('d'+next);
+    nd.classList.remove('locked');nd.classList.add('active');
     document.getElementById('p'+next).classList.add('active');
-    setTimeout(()=>document.getElementById('card'+next).scrollIntoView({behavior:'smooth',block:'start'}),100);
+    setTimeout(function(){nd.scrollIntoView({behavior:'smooth',block:'start'});},150);
   }
+}
+
+function confirmYMM(){
+  var year=document.getElementById('ymm-year').value;
+  var make=document.getElementById('ymm-make').value;
+  var model=document.getElementById('ymm-model').value;
+  var miles=document.getElementById('ymm-miles').value;
+  if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}
+  if(!miles){alert('Please enter current mileage.');return;}
+  var body=document.getElementById('ymm-body').value;
+  var trim=document.getElementById('ymm-trim').value;
+  var drive=document.getElementById('ymm-drive').value;
+  var color=document.getElementById('ymm-color').value;
+  var intColor=document.getElementById('ymm-int-color').value;
+  var zip=document.getElementById('ymm-zip').value;
+  var keys=document.getElementById('ymm-keys').value;
+  var selOpts=[];
+  var optBtns=document.querySelectorAll('#ymm-options-grid .check-btn.selected');
+  for(var i=0;i<optBtns.length;i++){selOpts.push(optBtns[i].getAttribute('data-val'));}
+  ymmData={year:year,make:make,model:model,body:body,trim:trim,drive:drive,color:color,intColor:intColor,miles:miles,zip:zip,keys:keys,options:selOpts.join(', ')};
+  vinData={year:parseInt(year),make:make,model:model,trim:trim,msrp:0,build:{year:parseInt(year),make:make,model:model,trim:trim}};
+  confirmStep(1);
 }
 
 // ── MODALS ──
 function openEstimator(){
-  const vin=document.getElementById('vin-inp').value.trim();
-  const url=`https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key=${API_KEY}&vin=${vin}&embed=true`;
-  document.getElementById('estimator-frame').src=url;
+  var vin=document.getElementById('vin-inp').value.trim();
+  document.getElementById('estimator-frame').src='https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key='+API_KEY+'&vin='+vin+'&embed=true';
   document.getElementById('estimator-modal').classList.add('open');
 }
 function openSticker(){
-  const vin=document.getElementById('vin-inp').value.trim();
-  navigator.clipboard.writeText(vin).catch(()=>{});
-  alert(`MarketCheck NeoVIN is opening.\n\nVIN copied: ${vin}\nPaste it, click DECODE VIN, then WINDOW STICKER.`);
+  var vin=document.getElementById('vin-inp').value.trim();
+  navigator.clipboard.writeText(vin).catch(function(){});
+  alert('MarketCheck NeoVIN opening.\n\nVIN copied: '+vin+'\nPaste it, click DECODE VIN, then WINDOW STICKER.');
   window.open('https://universe.marketcheck.com/neovin-decode-vin','_blank');
 }
 function closeModal(id){
   document.getElementById(id).classList.remove('open');
-  if(id==='estimator-modal') document.getElementById('estimator-frame').src='';
-}
-
-// ── FACTORY OPTIONS CASCADE ──
-const FACTORY_OPTIONS = {
-  // TOYOTA
-  'toyota|camry|se': {
-    trims: ['SE','SE Hybrid','SE Nightshade','SE Hybrid Nightshade'],
-    drivetrain: ['FWD','AWD (Gas only)'],
-    packages: [
-      {val:'Convenience Package', desc:'Smart Key / HomeLink / Auto-dim Mirror'},
-      {val:'Audio Upgrade Package', desc:'9" Screen / Wireless Charging'},
-      {val:'Cold Weather Package', desc:'Heated Seats / Wheel / Mirrors'},
-      {val:'Power Moonroof', desc:'Factory tilt/slide moonroof'},
-      {val:'Blind Spot Monitor + RCTA', desc:'BSM with Rear Cross-Traffic Alert'},
-    ]
-  },
-  'toyota|camry|le': {
-    trims: ['LE','LE Hybrid'],
-    drivetrain: ['FWD','AWD'],
-    packages: [
-      {val:'Convenience Package', desc:'Smart Key / Wireless Charging'},
-      {val:'Power Moonroof', desc:'Factory tilt/slide moonroof'},
-      {val:'Blind Spot Monitor + RCTA', desc:'BSM with Rear Cross-Traffic Alert'},
-    ]
-  },
-  'toyota|camry|xle': {
-    trims: ['XLE','XLE Hybrid'],
-    drivetrain: ['FWD','AWD'],
-    packages: [
-      {val:'Premium Audio (JBL)', desc:'9-speaker JBL premium sound'},
-      {val:'Power Moonroof', desc:'Standard on XLE'},
-      {val:'Blind Spot Monitor + RCTA', desc:'Standard on XLE'},
-      {val:'Ventilated Front Seats', desc:'Factory ventilated seats'},
-    ]
-  },
-  'toyota|rav4|le': {
-    trims: ['LE','LE Hybrid'],
-    drivetrain: ['FWD','AWD'],
-    packages: [
-      {val:'All Weather Package', desc:'All-weather floor liners & cargo mat'},
-      {val:'Blind Spot Monitor + RCTA', desc:'BSM add-on'},
-    ]
-  },
-  'toyota|rav4|xle': {
-    trims: ['XLE','XLE Premium','XLE Hybrid'],
-    drivetrain: ['FWD','AWD'],
-    packages: [
-      {val:'Power Moonroof', desc:'Factory moonroof'},
-      {val:'Blind Spot Monitor + RCTA', desc:'Standard or add-on'},
-      {val:'All Weather Package', desc:'Floor liners & cargo mat'},
-    ]
-  },
-  'toyota|tacoma|sr5': {
-    trims: ['SR5','SR5 Access Cab','SR5 Double Cab'],
-    drivetrain: ['RWD','4WD'],
-    packages: [
-      {val:'TRD Sport Package', desc:'Fox shocks / TRD wheels'},
-      {val:'SR5 Convenience Package', desc:'Remote Start / auto-dimming mirror'},
-      {val:'Tow Package', desc:'Factory trailer hitch & wiring'},
-      {val:'Bed Liner', desc:'Factory spray-in bed liner'},
-    ]
-  },
-  // FORD
-  'ford|f-150|xlt': {
-    trims: ['XLT Regular','XLT SuperCab','XLT SuperCrew'],
-    drivetrain: ['RWD','4WD'],
-    packages: [
-      {val:'302A Equipment Group', desc:'SYNC 4 / 8" screen / power tailgate'},
-      {val:'Sport Appearance Package', desc:'Black grille / wheels / accents'},
-      {val:'Trailer Tow Package', desc:'Max trailer tow / Pro Trailer Backup'},
-      {val:'Spray-In Bedliner', desc:'Factory spray-in liner'},
-      {val:'FX4 Off-Road Package', desc:'Off-road tires / skid plates / locking rear diff'},
-    ]
-  },
-  'ford|f-150|lariat': {
-    trims: ['Lariat SuperCab','Lariat SuperCrew'],
-    drivetrain: ['RWD','4WD'],
-    packages: [
-      {val:'Lariat Sport Appearance', desc:'Black accents / 20" wheels'},
-      {val:'Trailer Tow Max Package', desc:'36,000 GVWR / Pro Trailer Backup'},
-      {val:'FX4 Off-Road Package', desc:'Off-road capability upgrade'},
-      {val:'Moonroof', desc:'Factory panoramic moonroof'},
-    ]
-  },
-  // CHEVROLET
-  'chevrolet|silverado 1500|lt': {
-    trims: ['LT Regular','LT Double Cab','LT Crew Cab'],
-    drivetrain: ['RWD','4WD'],
-    packages: [
-      {val:'LT Trail Boss Package', desc:'Lifted / skid plates / off-road shocks'},
-      {val:'Convenience Package II', desc:'Remote Start / heated seats'},
-      {val:'Trailering Package', desc:'Max trailering / integrated brake controller'},
-      {val:'Z71 Off-Road Package', desc:'Rancho shocks / all-terrain tires'},
-    ]
-  },
-  // GMC
-  'gmc|sierra 1500|sle': {
-    trims: ['SLE Regular','SLE Double Cab','SLE Crew Cab'],
-    drivetrain: ['RWD','4WD'],
-    packages: [
-      {val:'SLE Convenience Package', desc:'Remote Start / heated front seats'},
-      {val:'Trailering Package', desc:'Factory tow mirrors / integrated brake'},
-      {val:'All Terrain Package', desc:'Off-road suspension / skid plates'},
-    ]
-  },
-  // HONDA
-  'honda|cr-v|ex': {
-    trims: ['EX','EX Hybrid'],
-    drivetrain: ['FWD','AWD'],
-    packages: [
-      {val:'Moonroof', desc:'Standard on EX'},
-      {val:'Remote Start', desc:'Factory remote start'},
-      {val:'Honda Sensing Suite', desc:'Collision mitigation / adaptive cruise'},
-    ]
-  },
-  'honda|accord|sport': {
-    trims: ['Sport','Sport Hybrid'],
-    drivetrain: ['FWD'],
-    packages: [
-      {val:'Sport Special Edition', desc:'18" wheels / sport pedals'},
-      {val:'Honda Sensing Suite', desc:'Standard on Sport'},
-    ]
-  },
-};
-
-// Generic packages that apply to any vehicle
-const GENERIC_PACKAGES = [
-  {val:'Power Moonroof / Sunroof', desc:'Factory tilt/slide glass panel'},
-  {val:'Blind Spot Monitor', desc:'Factory BSM system'},
-  {val:'Navigation System', desc:'Factory / OEM navigation'},
-  {val:'Premium Audio', desc:'JBL / Bose / Harman Kardon etc.'},
-  {val:'Remote Start', desc:'Factory or dealer-installed'},
-  {val:'Tow / Trailer Package', desc:'Factory hitch & wiring'},
-  {val:'Heated Front Seats', desc:'Factory heated seats'},
-  {val:'Ventilated / Cooled Seats', desc:'Factory ventilated seats'},
-  {val:'Heated Steering Wheel', desc:'Factory heated wheel'},
-  {val:'Panoramic Sunroof', desc:'Extended glass roof panel'},
-  {val:'Third Row Seating', desc:'Factory 3rd row'},
-  {val:'Power Running Boards', desc:'Auto-extending side steps'},
-];
-
-const APPEARANCE_OPTIONS = [
-  {val:'Nightshade / Appearance Package', desc:'Blacked-out trim / special wheels'},
-  {val:'Upgraded Wheels', desc:'Beyond standard size/style'},
-  {val:'Leather / Leatherette Seats', desc:'Factory or aftermarket'},
-  {val:'Lift Kit', desc:'Aftermarket suspension lift'},
-  {val:'Bed Liner / Tonneau Cover', desc:'Spray-in or roll-up cover'},
-  {val:'Premium / All-Terrain Tires', desc:'Upgraded from stock'},
-  {val:'Running Boards / Steps', desc:'Factory or aftermarket'},
-];
-
-function buildOptionsSection(year, make, model, trim) {
-  const key = `${make}|${model}|${(trim||'').toLowerCase().split(' ')[0]}`.toLowerCase();
-  const keyNoTrim = `${make}|${model}`.toLowerCase();
-  
-  // Find matching factory options
-  let factoryData = null;
-  for(const [k, v] of Object.entries(FACTORY_OPTIONS)) {
-    if(key.includes(k) || k.includes(keyNoTrim)) {
-      factoryData = v;
-      break;
-    }
-  }
-  
-  const packages = factoryData ? factoryData.packages : GENERIC_PACKAGES;
-  const vehicleLabel = `${year} ${make} ${model}${trim?' '+trim:''}`.trim();
-  
-  let html = `
-    <div class="check-section" id="factory-options-section">
-      <div class="check-title" style="color:var(--gold)">
-        Factory Options — ${vehicleLabel}
-        <span style="color:#C8D8EE;font-size:0.721rem;margin-left:8px;font-weight:400">Check all that apply</span>
-      </div>
-      <div class="check-grid">`;
-  
-  packages.forEach(pkg => {
-    html += `
-        <button class="check-btn" data-group="pkg" data-val="${pkg.val}" onclick="toggleCheck(this)">
-          <div class="chk"></div>
-          <div><div class="txt">${pkg.val}</div><span class="warn">${pkg.desc}</span></div>
-        </button>`;
-  });
-  
-  html += `
-      </div>
-    </div>
-    <div class="check-section">
-      <div class="check-title">Appearance & Aftermarket Upgrades</div>
-      <div class="check-grid">`;
-  
-  APPEARANCE_OPTIONS.forEach(opt => {
-    html += `
-        <button class="check-btn" data-group="appearance" data-val="${opt.val}" onclick="toggleCheck(this)">
-          <div class="chk"></div>
-          <div><div class="txt">${opt.val}</div><span class="warn">${opt.desc}</span></div>
-        </button>`;
-  });
-  
-  html += `
-      </div>
-    </div>`;
-  
-  return html;
-}
-
-function injectOptionsSection(year, make, model, trim) {
-  const container = document.getElementById('factory-options-section');
-  const wrapper = document.getElementById('options-wrapper');
-  if(wrapper) {
-    wrapper.innerHTML = buildOptionsSection(year, make, model, trim);
-  }
+  if(id==='estimator-modal')document.getElementById('estimator-frame').src='';
 }
 
 // ── SUBMIT ──
 function submitAudit(){
-  const fname=document.getElementById('fname').value.trim();
-  const lname=document.getElementById('lname').value.trim();
+  var fname=document.getElementById('fname').value.trim();
+  var lname=document.getElementById('lname').value.trim();
   if(!fname||!lname){alert('Please enter your name.');return;}
-  const phone=document.getElementById('phone').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const notes=document.getElementById('notes-inp').value;
-  const valueRange=document.getElementById('value-range').textContent;
-  const certName=document.getElementById('cert-name').textContent;
-  let vehicleInfo='';
+  var phone=document.getElementById('phone').value.trim();
+  var email=document.getElementById('email').value.trim();
+  var notes=document.getElementById('notes-inp').value;
+  var valueRange=document.getElementById('value-num').textContent;
+  var certName=document.getElementById('cert-name').textContent;
+  var vehicleInfo='';
   if(lookupMode==='vin'){
-    const b=vinData.build||vinData;
-    const vin=document.getElementById('vin-inp').value.trim();
-    const miles=document.getElementById('miles-inp').value;
-    vehicleInfo=`VIN: ${vin}\nVEHICLE: ${document.getElementById('res-ymm').value}\nTRIM: ${document.getElementById('res-trim').value}\nMILEAGE: ${miles}\nSPECS:\n${document.getElementById('res-specs').value}`;
+    var b=vinData.build||vinData;
+    vehicleInfo='VIN: '+document.getElementById('vin-inp').value+'\nVEHICLE: '+document.getElementById('res-ymm').textContent+'\nTRIM: '+document.getElementById('res-trim').textContent+'\nMILEAGE: '+document.getElementById('miles-inp').value+'\nSPECS:\n'+document.getElementById('res-specs').textContent;
   } else {
-    vehicleInfo=`LOOKUP METHOD: Year/Make/Model\nYEAR: ${ymmData.year}\nMAKE: ${ymmData.make}\nMODEL: ${ymmData.model}\nBODY: ${ymmData.body||'Not specified'}\nTRIM: ${ymmData.trim||'Not specified'}\nDRIVETRAIN: ${ymmData.drive||'Not specified'}\nENGINE/OPTIONS: ${ymmData.engine||'Not specified'}\nEXT COLOR: ${ymmData.color||'Not specified'}\nINT COLOR: ${ymmData.intColor||'Not specified'}\nMILEAGE: ${ymmData.miles||'Not entered'}\nZIP CODE: ${ymmData.zip||'Not entered'}`;
+    vehicleInfo='LOOKUP: Year/Make/Model\nYEAR: '+ymmData.year+'\nMAKE: '+ymmData.make+'\nMODEL: '+ymmData.model+'\nBODY: '+(ymmData.body||'—')+'\nTRIM: '+(ymmData.trim||'—')+'\nDRIVETRAIN: '+(ymmData.drive||'—')+'\nEXT COLOR: '+(ymmData.color||'—')+'\nINT COLOR: '+(ymmData.intColor||'—')+'\nMILEAGE: '+ymmData.miles+'\nZIP: '+(ymmData.zip||'—')+'\nKEYS: '+(ymmData.keys||'—')+'\nFACTORY OPTIONS: '+(ymmData.options||'None selected');
   }
-  let checksText='';
-  for(const[g,vals] of Object.entries(checks)){checksText+=`${g.toUpperCase()}: ${vals.join(', ')}\n`;}
-  const subject=encodeURIComponent(`EVL Certified Appraisal: ${lookupMode==='vin'?document.getElementById('res-ymm').value:`${ymmData.year} ${ymmData.make} ${ymmData.model}`} — ${certName}`);
-  const body=encodeURIComponent(
-    `EVL CERTIFIED APPRAISAL REPORT\n================================\n`+
-    `CERTIFICATION: ${certName}\nCUSTOMER: ${fname} ${lname}\nPHONE: ${phone}\nEMAIL: ${email}\n`+
-    `--------------------------------\n${vehicleInfo}\n`+
-    `--------------------------------\nCONDITION: ${condLabel}\nESTIMATED RANGE: ${valueRange}\n`+
-    `--------------------------------\nAPPRAISAL CHECKLIST:\n${checksText}`+
-    `NOTES: ${notes||'None'}\nPHOTOS: ${Object.keys(photos).length} uploaded\nSIGNATURE: Captured\n================================\n`+
-    `EVL Vehicle Acquisition Radar v3.0`
-  );
-  window.location.href=`mailto:${DEALER_EMAIL}?subject=${subject}&body=${body}`;
+  var checksText='';
+  for(var key in checks){checksText+=key.toUpperCase()+': '+checks[key].join(', ')+'\n';}
+  var subject=encodeURIComponent('EVL Certified Appraisal — '+certName);
+  var body=encodeURIComponent('EVL CERTIFIED APPRAISAL\n========================\nCERTIFICATION: '+certName+'\nCUSTOMER: '+fname+' '+lname+'\nPHONE: '+phone+'\nEMAIL: '+email+'\n------------------------\n'+vehicleInfo+'\n------------------------\nCONDITION: '+condLabel+'\nESTIMATED RANGE: '+valueRange+'\n------------------------\nAPPRAISAL CHECKLIST:\n'+checksText+'\nNOTES: '+(notes||'None')+'\nPHOTOS: '+Object.keys(photos).length+' uploaded\nSIGNATURE: Captured\n========================\nEVL Vehicle Acquisition Radar v6.0');
+  window.location.href='mailto:'+DEALER_EMAIL+'?subject='+subject+'&body='+body;
   document.getElementById('submit-btn').style.display='none';
   document.getElementById('success').style.display='block';
   document.getElementById('success').scrollIntoView({behavior:'smooth'});
