@@ -15,12 +15,12 @@
 body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
 .hdr{background:var(--surface);border-bottom:2px solid var(--blue);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
 .hdr-brand{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--blue);letter-spacing:2px;text-transform:uppercase}
-.hdr-sub{font-size:0.75rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.hdr-sub{font-size:0.75rem;color:#C8D8EE;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
 .secure-badge{background:var(--green);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:2px;padding:5px 14px;text-transform:uppercase}
 .hero{padding:28px 20px 20px;max-width:700px;margin:0 auto}
 .hero-hed{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:800;line-height:0.95;text-transform:uppercase;margin-bottom:14px}
 .hero-hed em{color:var(--blue);font-style:normal;display:block}
-.hero-desc{background:var(--surface);border-left:3px solid var(--blue);padding:12px 16px;font-size:0.95rem;line-height:1.7;color:#C8D8EE;margin-bottom:20px}
+.hero-desc{background:var(--surface);border-left:3px solid var(--blue);padding:16px 18px;font-size:1.05rem;line-height:1.8;color:#ffffff;margin-bottom:20px}
 .progress-bar{display:flex;gap:4px;margin-bottom:24px;max-width:700px;margin-left:auto;margin-right:auto;padding:0 20px}
 .prog-step{flex:1;height:4px;background:var(--border);transition:background 0.4s}
 .prog-step.done{background:var(--green)}
@@ -34,37 +34,37 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .card.active .card-hdr{background:#0A1525}
 .card.done .card-hdr{background:#060F08}
 .card-hdr-left{display:flex;align-items:center;gap:12px}
-.step-num{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--muted);flex-shrink:0}
+.step-num{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:#C8D8EE;flex-shrink:0}
 .card.active .step-num{border-color:var(--blue);color:var(--blue);background:#0A1830}
 .card.done .step-num{border-color:var(--green);color:#000;background:var(--green)}
-.step-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.step-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:1px;text-transform:uppercase}
 .card.active .step-title{color:#fff}
 .card.done .step-title{color:var(--green)}
-.card.locked .step-title{color:var(--muted)}
+.card.locked .step-title{color:#C8D8EE}
 .card-body{padding:20px;display:none}
 .card.active .card-body{display:block}
 
 /* VIN / YMM TOGGLE */
 .lookup-toggle{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px;border:2px solid var(--border)}
-.lt-btn{padding:14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;border:none;background:var(--surface2);color:var(--muted);cursor:pointer;transition:all 0.2s;border-right:1px solid var(--border)}
+.lt-btn{padding:14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;border:none;background:var(--surface2);color:#C8D8EE;cursor:pointer;transition:all 0.2s;border-right:1px solid var(--border)}
 .lt-btn:last-child{border-right:none}
 .lt-btn.active{background:var(--blue);color:#fff}
 .lt-btn .lt-icon{font-size:1.2rem;display:block;margin-bottom:4px}
-.lt-btn .lt-sub{font-size:0.72rem;color:inherit;opacity:0.8;letter-spacing:0.5px;text-transform:none;font-weight:400}
+.lt-btn .lt-sub{font-size:0.85rem;color:#ffffff;letter-spacing:0.5px;text-transform:none;font-weight:600}
 
 /* VIN PANEL */
 .vin-panel,.ymm-panel{display:none}
 .vin-panel.show,.ymm-panel.show{display:block}
 
 /* INPUTS */
-.lbl{display:block;font-size:0.78rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.inp{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:#fff;padding:11px 14px;font-family:'Barlow',sans-serif;font-size:1rem;font-weight:600;outline:none;border-radius:0;appearance:none;transition:border-color 0.2s}
+.lbl{display:block;font-size:0.78rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8D8EE;margin-bottom:6px}
+.inp{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:#fff;padding:13px 16px;font-family:'Barlow',sans-serif;font-size:1.05rem;font-weight:600;outline:none;border-radius:0;appearance:none;transition:border-color 0.2s}
 .inp:focus{border-color:var(--blue)}
 .inp.filled{border-color:var(--green);color:var(--green)}
 .inp:disabled{opacity:0.4;cursor:not-allowed}
 .inp-vin{font-size:1.4rem;letter-spacing:4px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
 select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23007BFF'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
-select.inp option{background:#0F1420;color:#fff}
+select.inp option{background:#0F1420;color:#fff;font-size:1rem}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
 .mb14{margin-bottom:14px}
@@ -78,7 +78,7 @@ select.inp option{background:#0F1420;color:#fff}
 /* BTNS */
 .btn-decode{background:var(--blue);color:#fff;border:none;padding:0 22px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.2s;flex-shrink:0}
 .btn-decode:hover{background:#0056D6}
-.btn-decode:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
+.btn-decode:disabled{background:var(--border);color:#C8D8EE;cursor:not-allowed}
 .status{font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);display:inline-block;margin-bottom:12px}
 .status.ok{color:var(--green);border-color:var(--green)}
 .status.err{color:var(--red);border-color:var(--red)}
@@ -92,35 +92,35 @@ select.inp option{background:#0F1420;color:#fff}
 /* TOOLS ROW */
 .tools-row{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .tools-row.show{display:grid}
-.tool-btn{padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:2px solid var(--blue);background:var(--surface2);color:#fff;cursor:pointer;text-align:center;transition:all 0.2s}
+.tool-btn{padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:2px solid var(--blue);background:var(--surface2);color:#fff;cursor:pointer;text-align:center;transition:all 0.2s}
 .tool-btn:hover{background:var(--blue)}
 .tool-btn.gold{border-color:var(--gold);color:var(--gold)}
 .tool-btn.gold:hover{background:var(--gold);color:#000}
 
 /* CONDITION */
 .cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.cond-btn{background:var(--surface2);border:2px solid var(--border);padding:16px 10px;cursor:pointer;text-align:center;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:4px}
-.cond-btn .icon{font-size:1.6rem}
+.cond-btn{background:var(--surface2);border:2px solid var(--border);padding:22px 10px;cursor:pointer;text-align:center;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px}
+.cond-btn .icon{font-size:2.2rem}
 .cond-btn .label{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
-.cond-btn .desc{font-size:0.9rem;color:var(--muted)}
+.cond-btn .desc{font-size:0.9rem;color:#C8D8EE}
 .cond-btn.selected{border-color:var(--blue);background:#0A1525}
 .cond-btn.selected .label{color:var(--blue)}
 .value-reveal{display:none;background:linear-gradient(135deg,#0A1525,#0A0E18);border:2px solid var(--blue);padding:20px;margin:14px 0;text-align:center}
 .value-reveal.show{display:block}
-.value-label{font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.value-label{font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:#C8D8EE;margin-bottom:6px}
 .value-range{font-family:'Barlow Condensed',sans-serif;font-size:3.4rem;font-weight:800;color:var(--blue);letter-spacing:2px}
-.value-note{font-size:0.75rem;color:var(--muted);margin-top:6px;letter-spacing:1px}
+.value-note{font-size:0.75rem;color:#C8D8EE;margin-top:6px;letter-spacing:1px}
 
 /* CHECKS */
 .check-section{margin-bottom:18px}
-.check-title{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.check-title{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C8D8EE;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
 .check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .check-btn{background:var(--surface2);border:1.5px solid var(--border);padding:10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;text-align:left}
 .check-btn .chk{width:18px;height:18px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;background:var(--surface)}
 .check-btn.selected{border-color:var(--green);background:#060F08}
 .check-btn.selected .chk{background:var(--green);border-color:var(--green);color:#000}
-.check-btn .txt{font-size:0.82rem;font-weight:600;color:#C8D8EE}
-.check-btn .warn{font-size:0.7rem;color:var(--gold);display:block}
+.check-btn .txt{font-size:0.92rem;font-weight:700;color:#ffffff}
+.check-btn .warn{font-size:0.82rem;color:var(--gold);display:block;font-weight:600}
 
 /* PHOTOS */
 .photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
@@ -129,7 +129,7 @@ select.inp option{background:#0F1420;color:#fff}
 .photo-slot.uploaded{border-color:var(--green);border-style:solid}
 .photo-slot input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0}
 .photo-icon{font-size:1.4rem}
-.photo-lbl{font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.photo-lbl{font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#C8D8EE}
 .photo-slot.uploaded .photo-lbl{color:var(--green)}
 .cert-box{background:var(--surface2);border:2px solid var(--border);padding:16px;text-align:center;margin:14px 0;display:none}
 .cert-box.show{display:block}
@@ -137,13 +137,13 @@ select.inp option{background:#0F1420;color:#fff}
 .cert-icon{font-size:2rem;display:block;margin-bottom:6px}
 .cert-name{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}
 .cert-box.verified .cert-name{color:var(--green)}
-.cert-msg{font-size:0.75rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:5px}
+.cert-msg{font-size:0.75rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase;margin-top:5px}
 
 /* SIG */
 #sig-canvas{width:100%;height:80px;background:var(--surface2);border:2px dashed var(--border);cursor:crosshair;touch-action:none;display:block}
 .sig-row{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
-.sig-row span{font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-.btn-clear{background:none;border:1px solid var(--border);color:var(--muted);font-size:0.72rem;padding:3px 10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.sig-row span{font-size:0.72rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase}
+.btn-clear{background:none;border:1px solid var(--border);color:#C8D8EE;font-size:0.72rem;padding:3px 10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700}
 .btn-clear:hover{border-color:var(--red);color:var(--red)}
 
 /* MODAL */
@@ -159,9 +159,9 @@ select.inp option{background:#0F1420;color:#fff}
 /* SUCCESS */
 .success{display:none;text-align:center;padding:40px 20px;background:var(--surface);border:2px solid var(--green);margin:20px 0}
 .success h2{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:800;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
-.success p{color:var(--muted);font-size:0.95rem;letter-spacing:1px;line-height:1.8}
+.success p{color:#C8D8EE;font-size:0.95rem;letter-spacing:1px;line-height:1.8}
 footer{border-top:1px solid var(--border);padding:14px 20px;display:flex;justify-content:space-between;max-width:700px;margin:0 auto}
-footer span{font-size:0.72rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+footer span{font-size:0.72rem;color:#C8D8EE;letter-spacing:1.5px;text-transform:uppercase}
 footer b{color:var(--blue)}
 textarea.inp{resize:none;height:75px;line-height:1.6}
 </style>
@@ -343,7 +343,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           <div>
             <label class="lbl">Factory Options / Packages</label>
             <div id="ymm-options-wrap" style="background:var(--surface2);border:1.5px solid var(--border);padding:10px;min-height:44px">
-              <div style="font-size:0.78rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase" id="ymm-options-hint">Select Trim First</div>
+              <div style="font-size:0.78rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase" id="ymm-options-hint">Select Trim First</div>
               <div id="ymm-options-grid" style="display:none;grid-template-columns:1fr;gap:6px"></div>
             </div>
           </div>
@@ -400,7 +400,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
         </div>
       </div>
       <div class="mb14" style="margin-top:14px" id="miles-wrap-2" style="display:none">
-        <label class="lbl">Current Mileage <span style="color:var(--muted);font-weight:400">(if not entered above)</span></label>
+        <label class="lbl">Current Mileage <span style="color:#C8D8EE;font-weight:400">(if not entered above)</span></label>
         <input type="number" class="inp" id="miles-inp" placeholder="e.g. 42,000">
       </div>
       <button class="btn-confirm" onclick="confirmStep(2)">✓ Continue to Certified Appraisal</button>
@@ -423,7 +423,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           Our team is preparing your <strong style="color:#fff">Certified Appraisal</strong> based on your vehicle details and condition report.<br><br>
           We'll be in touch shortly with your personalized offer — typically within <strong style="color:var(--green)">24 hours</strong>.
         </div>
-        <div style="background:#0A1525;border:1px solid var(--border);padding:14px;font-size:0.88rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase">
+        <div style="background:#0A1525;border:1px solid var(--border);padding:14px;font-size:0.88rem;color:#C8D8EE;letter-spacing:1px;text-transform:uppercase">
           In the meantime — adding photos below can <strong style="color:var(--gold)">significantly increase your offer</strong>
         </div>
       </div>
@@ -484,14 +484,14 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
       <div id="options-wrapper">
         <div class="check-section" style="opacity:0.5">
           <div class="check-title" style="color:var(--gold)">Factory Options & Packages</div>
-          <div style="font-size:0.82rem;color:var(--muted);padding:12px;background:var(--surface2);border:1px solid var(--border)">
+          <div style="font-size:0.82rem;color:#C8D8EE;padding:12px;background:var(--surface2);border:1px solid var(--border)">
             Options load automatically based on your vehicle — complete Step 1 first.
           </div>
         </div>
       </div>
 
       <div class="mb14">
-        <label class="lbl">Additional Notes <span style="color:var(--muted);font-weight:400">(upgrades, modifications, etc.)</span></label>
+        <label class="lbl">Additional Notes <span style="color:#C8D8EE;font-weight:400">(upgrades, modifications, etc.)</span></label>
         <textarea class="inp" id="notes-inp" placeholder="Describe any modifications, upgrades, or additional details..."></textarea>
       </div>
       <!-- PHOTO TIPS -->
@@ -511,77 +511,77 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           <input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Front View</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft in front.<br>Capture full front & both sides.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft in front.<br>Capture full front & both sides.</div>
         </div>
         <!-- REAR -->
         <div class="photo-slot" id="slot-rear">
           <input type="file" accept="image/*" data-slot="rear" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Rear View</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft behind.<br>Show full rear bumper & both sides.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand 10 ft behind.<br>Show full rear bumper & both sides.</div>
         </div>
         <!-- DRIVER SIDE -->
         <div class="photo-slot" id="slot-driver">
           <input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Driver Side</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand beside the car.<br>Capture full side from front to rear.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand beside the car.<br>Capture full side from front to rear.</div>
         </div>
         <!-- PASSENGER SIDE -->
         <div class="photo-slot" id="slot-passenger">
           <input type="file" accept="image/*" data-slot="passenger" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Passenger Side</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Stand on passenger side.<br>Full side profile, front to rear.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Stand on passenger side.<br>Full side profile, front to rear.</div>
         </div>
         <!-- INTERIOR -->
         <div class="photo-slot" id="slot-interior">
           <input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Interior / Dashboard</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Sit in driver seat looking forward.<br>Show dash, seats & headliner.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Sit in driver seat looking forward.<br>Show dash, seats & headliner.</div>
         </div>
         <!-- ODOMETER -->
         <div class="photo-slot" id="slot-odometer">
           <input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Odometer Reading</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Engine running. Get close so<br>mileage is clearly readable.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Engine running. Get close so<br>mileage is clearly readable.</div>
         </div>
         <!-- DAMAGE -->
         <div class="photo-slot" id="slot-damage">
           <input type="file" accept="image/*" data-slot="damage" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Any Damage (optional)</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Get within 3 ft of any dents,<br>scratches or damage areas.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Get within 3 ft of any dents,<br>scratches or damage areas.</div>
         </div>
         <!-- TIRES -->
         <div class="photo-slot" id="slot-tires">
           <input type="file" accept="image/*" data-slot="tires" onchange="handlePhoto(this)">
           <div class="photo-icon">📷</div>
           <div class="photo-lbl">Tires & Wheels</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Kneel down & shoot one tire.<br>Shows tread depth & wheel condition.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Kneel down & shoot one tire.<br>Shows tread depth & wheel condition.</div>
         </div>
         <!-- WARNING LIGHTS -->
         <div class="photo-slot" id="slot-warninglights">
           <input type="file" accept="image/*" data-slot="warninglights" onchange="handlePhoto(this)">
           <div class="photo-icon">⚠️</div>
           <div class="photo-lbl">Warning Lights</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Engine ON. Photo of dashboard<br>showing any warning lights.<br><span style="color:var(--green)">No lights? Still take the photo!</span></div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Engine ON. Photo of dashboard<br>showing any warning lights.<br><span style="color:var(--green)">No lights? Still take the photo!</span></div>
         </div>
         <!-- SPARE TIRE -->
         <div class="photo-slot" id="slot-spare">
           <input type="file" accept="image/*" data-slot="spare" onchange="handlePhoto(this)">
           <div class="photo-icon">🔧</div>
           <div class="photo-lbl">Spare Tire Area</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Open trunk/cargo area.<br>Show spare tire, jack & tools.<br>No spare? Photo of empty area.</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Open trunk/cargo area.<br>Show spare tire, jack & tools.<br>No spare? Photo of empty area.</div>
         </div>
         <!-- KEYS -->
         <div class="photo-slot" id="slot-keys">
           <input type="file" accept="image/*" data-slot="keys" onchange="handlePhoto(this)">
           <div class="photo-icon">🔑</div>
           <div class="photo-lbl">Keys</div>
-          <div style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.4">Lay all keys flat on a surface.<br>Photo shows how many keys<br>& type (smart key, regular, fob).</div>
+          <div style="font-size:0.7rem;color:#C8D8EE;text-align:center;margin-top:4px;line-height:1.4">Lay all keys flat on a surface.<br>Photo shows how many keys<br>& type (smart key, regular, fob).</div>
         </div>
       </div>
       <div class="cert-box" id="cert-box">
@@ -642,7 +642,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v4.7</b></span>
+  <span>Entity Protocol <b>v4.8</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -1291,7 +1291,7 @@ function buildOptionsSection(year, make, model, trim) {
     <div class="check-section" id="factory-options-section">
       <div class="check-title" style="color:var(--gold)">
         Factory Options — ${vehicleLabel}
-        <span style="color:var(--muted);font-size:0.7rem;margin-left:8px;font-weight:400">Check all that apply</span>
+        <span style="color:#C8D8EE;font-size:0.7rem;margin-left:8px;font-weight:400">Check all that apply</span>
       </div>
       <div class="check-grid">`;
   
