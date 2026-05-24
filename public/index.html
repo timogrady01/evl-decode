@@ -462,33 +462,13 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
           <button class="check-btn" data-group="spare" data-val="Spare Tire & Jack" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Spare Tire & Jack</div></div></button>
         </div>
       </div>
-      <!-- FACTORY OPTIONS & PACKAGES -->
-      <div class="check-section">
-        <div class="check-title">Factory Options & Packages <span style="color:var(--gold);font-size:0.72rem;margin-left:8px">INCREASES YOUR OFFER</span></div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="pkg" data-val="Convenience Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Convenience Package</div><span class="warn">Smart Key / HomeLink / Auto-dim Mirror</span></div></button>
-          <button class="check-btn" data-group="pkg" data-val="Audio Upgrade Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Audio Upgrade Package</div><span class="warn">9" Screen / Wireless Charging</span></div></button>
-          <button class="check-btn" data-group="pkg" data-val="Cold Weather Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Cold Weather Package</div><span class="warn">Heated Seats / Wheel / Mirrors</span></div></button>
-          <button class="check-btn" data-group="pkg" data-val="Moonroof" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Power Moonroof / Sunroof</div><span class="warn">Factory installed</span></div></button>
-          <button class="check-btn" data-group="pkg" data-val="Blind Spot Monitor" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Blind Spot Monitor (BSM)</div><span class="warn">+ Rear Cross-Traffic Alert</span></div></button>
-          <button class="check-btn" data-group="pkg" data-val="Navigation System" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Navigation System</div><span class="warn">Factory / OEM nav</span></div></button>
-          <button class="check-btn" data-group="pkg" data-val="Premium Audio" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Premium Audio System</div><span class="warn">JBL / Bose / Mark Levinson etc.</span></div></button>
-          <button class="check-btn" data-group="pkg" data-val="Tow Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Tow Package</div><span class="warn">Factory trailer hitch / wiring</span></div></button>
-        </div>
-      </div>
-
-      <!-- APPEARANCE & UPGRADES -->
-      <div class="check-section">
-        <div class="check-title">Appearance & Upgrades</div>
-        <div class="check-grid">
-          <button class="check-btn" data-group="appearance" data-val="Nightshade / Appearance Package" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Nightshade / Appearance Pkg</div><span class="warn">Blacked-out trim / special wheels</span></div></button>
-          <button class="check-btn" data-group="appearance" data-val="Upgraded Wheels" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Upgraded Wheels</div><span class="warn">Beyond standard size/style</span></div></button>
-          <button class="check-btn" data-group="appearance" data-val="Leather Seats" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Leather / Leatherette Seats</div><span class="warn">Factory or aftermarket</span></div></button>
-          <button class="check-btn" data-group="appearance" data-val="Remote Start" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Remote Start</div><span class="warn">Factory or aftermarket</span></div></button>
-          <button class="check-btn" data-group="appearance" data-val="Running Boards" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Running Boards / Steps</div><span class="warn">Factory or aftermarket</span></div></button>
-          <button class="check-btn" data-group="appearance" data-val="Lift Kit" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Lift Kit</div><span class="warn">Aftermarket suspension lift</span></div></button>
-          <button class="check-btn" data-group="appearance" data-val="Bed Liner / Tonneau" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Bed Liner / Tonneau Cover</div><span class="warn">Spray-in or roll-up</span></div></button>
-          <button class="check-btn" data-group="appearance" data-val="Premium Tires" onclick="toggleCheck(this)"><div class="chk"></div><div><div class="txt">Premium / All-Terrain Tires</div><span class="warn">Upgraded from stock</span></div></button>
+      <!-- DYNAMIC FACTORY OPTIONS - populated after vehicle ID -->
+      <div id="options-wrapper">
+        <div class="check-section" style="opacity:0.5">
+          <div class="check-title" style="color:var(--gold)">Factory Options & Packages</div>
+          <div style="font-size:0.82rem;color:var(--muted);padding:12px;background:var(--surface2);border:1px solid var(--border)">
+            Options load automatically based on your vehicle — complete Step 1 first.
+          </div>
         </div>
       </div>
 
@@ -559,7 +539,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.2</b></span>
+  <span>Entity Protocol <b>v3.3</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -859,6 +839,217 @@ function openSticker(){
 function closeModal(id){
   document.getElementById(id).classList.remove('open');
   if(id==='estimator-modal') document.getElementById('estimator-frame').src='';
+}
+
+// ── FACTORY OPTIONS CASCADE ──
+const FACTORY_OPTIONS = {
+  // TOYOTA
+  'toyota|camry|se': {
+    trims: ['SE','SE Hybrid','SE Nightshade','SE Hybrid Nightshade'],
+    drivetrain: ['FWD','AWD (Gas only)'],
+    packages: [
+      {val:'Convenience Package', desc:'Smart Key / HomeLink / Auto-dim Mirror'},
+      {val:'Audio Upgrade Package', desc:'9" Screen / Wireless Charging'},
+      {val:'Cold Weather Package', desc:'Heated Seats / Wheel / Mirrors'},
+      {val:'Power Moonroof', desc:'Factory tilt/slide moonroof'},
+      {val:'Blind Spot Monitor + RCTA', desc:'BSM with Rear Cross-Traffic Alert'},
+    ]
+  },
+  'toyota|camry|le': {
+    trims: ['LE','LE Hybrid'],
+    drivetrain: ['FWD','AWD'],
+    packages: [
+      {val:'Convenience Package', desc:'Smart Key / Wireless Charging'},
+      {val:'Power Moonroof', desc:'Factory tilt/slide moonroof'},
+      {val:'Blind Spot Monitor + RCTA', desc:'BSM with Rear Cross-Traffic Alert'},
+    ]
+  },
+  'toyota|camry|xle': {
+    trims: ['XLE','XLE Hybrid'],
+    drivetrain: ['FWD','AWD'],
+    packages: [
+      {val:'Premium Audio (JBL)', desc:'9-speaker JBL premium sound'},
+      {val:'Power Moonroof', desc:'Standard on XLE'},
+      {val:'Blind Spot Monitor + RCTA', desc:'Standard on XLE'},
+      {val:'Ventilated Front Seats', desc:'Factory ventilated seats'},
+    ]
+  },
+  'toyota|rav4|le': {
+    trims: ['LE','LE Hybrid'],
+    drivetrain: ['FWD','AWD'],
+    packages: [
+      {val:'All Weather Package', desc:'All-weather floor liners & cargo mat'},
+      {val:'Blind Spot Monitor + RCTA', desc:'BSM add-on'},
+    ]
+  },
+  'toyota|rav4|xle': {
+    trims: ['XLE','XLE Premium','XLE Hybrid'],
+    drivetrain: ['FWD','AWD'],
+    packages: [
+      {val:'Power Moonroof', desc:'Factory moonroof'},
+      {val:'Blind Spot Monitor + RCTA', desc:'Standard or add-on'},
+      {val:'All Weather Package', desc:'Floor liners & cargo mat'},
+    ]
+  },
+  'toyota|tacoma|sr5': {
+    trims: ['SR5','SR5 Access Cab','SR5 Double Cab'],
+    drivetrain: ['RWD','4WD'],
+    packages: [
+      {val:'TRD Sport Package', desc:'Fox shocks / TRD wheels'},
+      {val:'SR5 Convenience Package', desc:'Remote Start / auto-dimming mirror'},
+      {val:'Tow Package', desc:'Factory trailer hitch & wiring'},
+      {val:'Bed Liner', desc:'Factory spray-in bed liner'},
+    ]
+  },
+  // FORD
+  'ford|f-150|xlt': {
+    trims: ['XLT Regular','XLT SuperCab','XLT SuperCrew'],
+    drivetrain: ['RWD','4WD'],
+    packages: [
+      {val:'302A Equipment Group', desc:'SYNC 4 / 8" screen / power tailgate'},
+      {val:'Sport Appearance Package', desc:'Black grille / wheels / accents'},
+      {val:'Trailer Tow Package', desc:'Max trailer tow / Pro Trailer Backup'},
+      {val:'Spray-In Bedliner', desc:'Factory spray-in liner'},
+      {val:'FX4 Off-Road Package', desc:'Off-road tires / skid plates / locking rear diff'},
+    ]
+  },
+  'ford|f-150|lariat': {
+    trims: ['Lariat SuperCab','Lariat SuperCrew'],
+    drivetrain: ['RWD','4WD'],
+    packages: [
+      {val:'Lariat Sport Appearance', desc:'Black accents / 20" wheels'},
+      {val:'Trailer Tow Max Package', desc:'36,000 GVWR / Pro Trailer Backup'},
+      {val:'FX4 Off-Road Package', desc:'Off-road capability upgrade'},
+      {val:'Moonroof', desc:'Factory panoramic moonroof'},
+    ]
+  },
+  // CHEVROLET
+  'chevrolet|silverado 1500|lt': {
+    trims: ['LT Regular','LT Double Cab','LT Crew Cab'],
+    drivetrain: ['RWD','4WD'],
+    packages: [
+      {val:'LT Trail Boss Package', desc:'Lifted / skid plates / off-road shocks'},
+      {val:'Convenience Package II', desc:'Remote Start / heated seats'},
+      {val:'Trailering Package', desc:'Max trailering / integrated brake controller'},
+      {val:'Z71 Off-Road Package', desc:'Rancho shocks / all-terrain tires'},
+    ]
+  },
+  // GMC
+  'gmc|sierra 1500|sle': {
+    trims: ['SLE Regular','SLE Double Cab','SLE Crew Cab'],
+    drivetrain: ['RWD','4WD'],
+    packages: [
+      {val:'SLE Convenience Package', desc:'Remote Start / heated front seats'},
+      {val:'Trailering Package', desc:'Factory tow mirrors / integrated brake'},
+      {val:'All Terrain Package', desc:'Off-road suspension / skid plates'},
+    ]
+  },
+  // HONDA
+  'honda|cr-v|ex': {
+    trims: ['EX','EX Hybrid'],
+    drivetrain: ['FWD','AWD'],
+    packages: [
+      {val:'Moonroof', desc:'Standard on EX'},
+      {val:'Remote Start', desc:'Factory remote start'},
+      {val:'Honda Sensing Suite', desc:'Collision mitigation / adaptive cruise'},
+    ]
+  },
+  'honda|accord|sport': {
+    trims: ['Sport','Sport Hybrid'],
+    drivetrain: ['FWD'],
+    packages: [
+      {val:'Sport Special Edition', desc:'18" wheels / sport pedals'},
+      {val:'Honda Sensing Suite', desc:'Standard on Sport'},
+    ]
+  },
+};
+
+// Generic packages that apply to any vehicle
+const GENERIC_PACKAGES = [
+  {val:'Power Moonroof / Sunroof', desc:'Factory tilt/slide glass panel'},
+  {val:'Blind Spot Monitor', desc:'Factory BSM system'},
+  {val:'Navigation System', desc:'Factory / OEM navigation'},
+  {val:'Premium Audio', desc:'JBL / Bose / Harman Kardon etc.'},
+  {val:'Remote Start', desc:'Factory or dealer-installed'},
+  {val:'Tow / Trailer Package', desc:'Factory hitch & wiring'},
+  {val:'Heated Front Seats', desc:'Factory heated seats'},
+  {val:'Ventilated / Cooled Seats', desc:'Factory ventilated seats'},
+  {val:'Heated Steering Wheel', desc:'Factory heated wheel'},
+  {val:'Panoramic Sunroof', desc:'Extended glass roof panel'},
+  {val:'Third Row Seating', desc:'Factory 3rd row'},
+  {val:'Power Running Boards', desc:'Auto-extending side steps'},
+];
+
+const APPEARANCE_OPTIONS = [
+  {val:'Nightshade / Appearance Package', desc:'Blacked-out trim / special wheels'},
+  {val:'Upgraded Wheels', desc:'Beyond standard size/style'},
+  {val:'Leather / Leatherette Seats', desc:'Factory or aftermarket'},
+  {val:'Lift Kit', desc:'Aftermarket suspension lift'},
+  {val:'Bed Liner / Tonneau Cover', desc:'Spray-in or roll-up cover'},
+  {val:'Premium / All-Terrain Tires', desc:'Upgraded from stock'},
+  {val:'Running Boards / Steps', desc:'Factory or aftermarket'},
+];
+
+function buildOptionsSection(year, make, model, trim) {
+  const key = `${make}|${model}|${(trim||'').toLowerCase().split(' ')[0]}`.toLowerCase();
+  const keyNoTrim = `${make}|${model}`.toLowerCase();
+  
+  // Find matching factory options
+  let factoryData = null;
+  for(const [k, v] of Object.entries(FACTORY_OPTIONS)) {
+    if(key.includes(k) || k.includes(keyNoTrim)) {
+      factoryData = v;
+      break;
+    }
+  }
+  
+  const packages = factoryData ? factoryData.packages : GENERIC_PACKAGES;
+  const vehicleLabel = `${year} ${make} ${model}${trim?' '+trim:''}`.trim();
+  
+  let html = `
+    <div class="check-section" id="factory-options-section">
+      <div class="check-title" style="color:var(--gold)">
+        Factory Options — ${vehicleLabel}
+        <span style="color:var(--muted);font-size:0.7rem;margin-left:8px;font-weight:400">Check all that apply</span>
+      </div>
+      <div class="check-grid">`;
+  
+  packages.forEach(pkg => {
+    html += `
+        <button class="check-btn" data-group="pkg" data-val="${pkg.val}" onclick="toggleCheck(this)">
+          <div class="chk"></div>
+          <div><div class="txt">${pkg.val}</div><span class="warn">${pkg.desc}</span></div>
+        </button>`;
+  });
+  
+  html += `
+      </div>
+    </div>
+    <div class="check-section">
+      <div class="check-title">Appearance & Aftermarket Upgrades</div>
+      <div class="check-grid">`;
+  
+  APPEARANCE_OPTIONS.forEach(opt => {
+    html += `
+        <button class="check-btn" data-group="appearance" data-val="${opt.val}" onclick="toggleCheck(this)">
+          <div class="chk"></div>
+          <div><div class="txt">${opt.val}</div><span class="warn">${opt.desc}</span></div>
+        </button>`;
+  });
+  
+  html += `
+      </div>
+    </div>`;
+  
+  return html;
+}
+
+function injectOptionsSection(year, make, model, trim) {
+  const container = document.getElementById('factory-options-section');
+  const wrapper = document.getElementById('options-wrapper');
+  if(wrapper) {
+    wrapper.innerHTML = buildOptionsSection(year, make, model, trim);
+  }
 }
 
 // ── SUBMIT ──
