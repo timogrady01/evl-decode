@@ -514,7 +514,7 @@ textarea.inp{resize:none;height:75px;line-height:1.6}
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v3.7</b></span>
+  <span>Entity Protocol <b>v3.8</b></span>
   <span><b>// CERTIFIED DATA STREAM //</b></span>
 </footer>
 
@@ -596,15 +596,19 @@ function populateYears(){
 }
 
 function loadMakes(){
-  const year=document.getElementById('ymm-year').value;
+  var year=document.getElementById('ymm-year').value;
   if(!year) return;
-  const makeEl=document.getElementById('ymm-make');
-  const modelEl=document.getElementById('ymm-model');
-  const trimEl=document.getElementById('ymm-trim');
+  var makeEl=document.getElementById('ymm-make');
+  var modelEl=document.getElementById('ymm-model');
+  var trimEl=document.getElementById('ymm-trim');
+  // Populate makes
   makeEl.innerHTML='<option value="">Select Make</option>';
-  Object.keys(VEHICLE_DB).sort().forEach(m=>{
-    const o=document.createElement('option');o.value=m;o.textContent=m;makeEl.appendChild(o);
-  });
+  var makes=Object.keys(VEHICLE_DB).sort();
+  for(var i=0;i<makes.length;i++){
+    var o=document.createElement('option');
+    o.value=makes[i];o.textContent=makes[i];
+    makeEl.appendChild(o);
+  }
   makeEl.disabled=false;
   modelEl.innerHTML='<option value="">Select Model</option>';
   modelEl.disabled=true;
@@ -613,14 +617,18 @@ function loadMakes(){
 }
 
 function loadModels(){
-  const make=document.getElementById('ymm-make').value;
+  var make=document.getElementById('ymm-make').value;
   if(!make) return;
   ymmData.make=make;
-  const modelEl=document.getElementById('ymm-model');
-  const trimEl=document.getElementById('ymm-trim');
-  const models=VEHICLE_DB[make]||[];
+  var modelEl=document.getElementById('ymm-model');
+  var trimEl=document.getElementById('ymm-trim');
+  var models=VEHICLE_DB[make]||[];
   modelEl.innerHTML='<option value="">Select Model</option>';
-  models.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;modelEl.appendChild(o);});
+  for(var i=0;i<models.length;i++){
+    var o=document.createElement('option');
+    o.value=models[i];o.textContent=models[i];
+    modelEl.appendChild(o);
+  }
   modelEl.disabled=false;
   trimEl.innerHTML='<option value="">Select Trim</option>';
   trimEl.disabled=true;
