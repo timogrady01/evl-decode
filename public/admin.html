@@ -441,7 +441,7 @@ function generateOffer(){
 }
 
 function openKBB(){
-  var vin=document.getElementById('admin-vin').value.trim().toUpperCase();
+  var vin=document.getElementById('adm-vin').value.trim().toUpperCase();
   var url='https://www.kbb.com/whats-my-car-worth/?intent=trade-in&vin='+vin;
   window.open(url,'_blank');
 }
@@ -449,7 +449,10 @@ function openNADA(){
   var year=admVinData&&admVinData.year?admVinData.year:'';
   var make=admVinData&&admVinData.make?admVinData.make:'';
   var model=admVinData&&admVinData.model?admVinData.model:'';
-  var url='https://www.nada.com/b2c/CarValues?year='+year+'&make='+encodeURIComponent(make)+'&model='+encodeURIComponent(model);
+  if(!year){alert('Decode a VIN first.');return;}
+  var url='https://www.nada.com/b2c/CarValues?vehicle='+encodeURIComponent(year+' '+make+' '+model);
+  window.open(url,'_blank');
+}='+encodeURIComponent(model);
   window.open(url,'_blank');
 }
 function clearAll(){
