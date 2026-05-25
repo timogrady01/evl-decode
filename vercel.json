@@ -1,7 +1,7 @@
 {
-  "routes": [
-    { "src": "/admin.html", "dest": "/admin.html" },
-    { "src": "/api/decode", "dest": "/api/decode.js" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/api/decode", "destination": "/api/decode.js" },
+    { "source": "/admin.html", "destination": "/public/admin.html" },
+    { "source": "/(.*)", "destination": "/public/index.html" }
   ]
 }
