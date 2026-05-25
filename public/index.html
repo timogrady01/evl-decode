@@ -31,7 +31,7 @@ html, body {
   overflow-x: hidden;
 }
 .page-center {
-  max-width: 600px;
+  max-width: 680px;
   margin: 0 auto;
   background: var(--bg);
   min-height: 100vh;
@@ -58,7 +58,7 @@ html, body {
 .prog.active { background: var(--blue); }
 .prog.done { background: var(--green); }
 .prog-labels { display: flex; padding: 2px 20px 4px; gap: 4px; }
-.prog-lbl { flex: 1; font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-align: center; transition: color 0.3s; }
+.prog-lbl { flex: 1; font-size: 14px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-align: center; transition: color 0.3s; }
 .prog-lbl.active { color: var(--blue); }
 .prog-lbl.done { color: var(--green); }
 
@@ -202,15 +202,15 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 .tool-btn.gold-btn:hover { background: var(--gold); color: #020203; }
 
 /* ── CONDITION BUTTONS ── */
-.cond-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-bottom: 10px; }
+.cond-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; margin-bottom: 10px; }
 .cond-btn {
   background: #0D1829; border: 2px solid #2B4070; border-left: 4px solid var(--blue); padding: 10px 4px;
   cursor: pointer; text-align: center; transition: all 0.2s;
   display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
-.cond-btn .c-icon { font-size: 1.4rem; }
-.cond-btn .c-main { font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--white); }
-.cond-btn .c-sub { font-size: 10px; color: #C8D8EE; font-weight: 600; letter-spacing: 0.5px; }
+.cond-btn .c-icon { font-size: 1.8rem; }
+.cond-btn .c-main { font-size: 16px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--white); }
+.cond-btn .c-sub { font-size: 13px; color: #ffffff; font-weight:700; font-weight: 600; letter-spacing: 0.5px; }
 .cond-btn.selected { border-color: var(--blue); border-left: 4px solid var(--blue); background: rgba(43,132,254,0.15); }
 .cond-btn.selected .c-main { color: var(--blue); }
 .cond-btn.selected .c-sub { color: var(--white); }
@@ -489,6 +489,10 @@ footer b { color: var(--blue); }
         <div id="ymm-opts-hint" class="opts-hint">Select Trim above to load factory options</div>
         <div id="ymm-opts-grid" style="display:none;grid-template-columns:1fr 1fr 1fr;gap:5px"></div>
       </div>
+      <div style="margin-bottom:6px">
+        <label class="lbl">Additional Equipment / Special Packages</label>
+        <input type="text" class="inp" id="ymm-addl" placeholder="e.g. M Sport, Premium Sound, Executive Pkg, Panoramic Roof...">
+      </div>
       <button class="btn-primary" type="button" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
     </div>
   </div>
@@ -504,7 +508,7 @@ footer b { color: var(--blue); }
     <div class="drawer-arrow">▼</div>
   </div>
   <div class="drawer-body">
-    <label class="lbl" style="margin-bottom:10px">Select Overall Condition — Tap to see your instant value</label>
+    <label class="lbl" style="margin-bottom:10px;font-size:15px;color:#ffffff">Select Overall Condition — Tap to see your instant value range</label>
     <div class="cond-grid">
       <button class="cond-btn" data-cond="Excellent" data-mult="1.08" onclick="selectCond(this)">
         <span class="c-icon">⭐</span><span class="c-main">Excellent</span><span class="c-sub">Showroom quality</span>
@@ -729,7 +733,7 @@ footer b { color: var(--blue); }
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v8.1</b></span>
+  <span>Entity Protocol <b>v8.2</b></span>
   <span>// EVL CERTIFIED DATA STREAM //</span>
 </footer>
 
