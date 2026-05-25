@@ -409,7 +409,7 @@ function openNeoVIN(){
 
 function openAdmEstimator(){
   const vin=document.getElementById('adm-vin').value.trim();
-  window.open(`https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key=${API_KEY}&vin=${vin}&embed=true`,'_blank');
+  var ts=new Date().getTime(); window.open(`https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key=${API_KEY}&vin=${vin}&embed=true&t=${ts}`,'_blank');
 }
 
 function setAdmStatus(msg,type){
