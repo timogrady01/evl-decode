@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Admin — Appraisal Dashboard</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&family=Share+Tech+Mono&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#007BFF;--green:#00C853;--red:#FF3D00;--gold:#FFB300;--purple:#7C3AED;
+  --bg:#03050A;--surface:#080C14;--surface2:#0C1020;--border:#1A2235;
+  --text:#E8F0FF;--muted:#6A7A9A;
+}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-box{background:var(--surface);border:2px solid var(--blue);padding:40px;max-width:400px;width:100%;text-align:center}
+.login-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:800;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:4px}
+.login-sub{font-size:0.8rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+.login-inp{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:#fff;padding:14px;font-family:'Share Tech Mono',monospace;font-size:1rem;outline:none;text-align:center;letter-spacing:4px;margin-bottom:12px}
+.login-inp:focus{border-color:var(--blue)}
+.login-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
+.login-btn:hover{background:#0056D6}
+.login-err{color:var(--red);font-size:0.85rem;margin-top:10px;letter-spacing:1px;display:none}
+
+/* ADMIN APP */
+#admin-app{display:none}
+.adm-hdr{background:var(--surface);border-bottom:2px solid var(--purple);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.adm-brand{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;color:var(--purple);letter-spacing:2px;text-transform:uppercase}
+.adm-badge{background:var(--purple);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:2px;padding:4px 12px;text-transform:uppercase}
+.adm-wrap{max-width:900px;margin:0 auto;padding:24px 20px}
+
+/* VIN LOOKUP */
+.lookup-panel{background:var(--surface);border:2px solid var(--purple);padding:20px;margin-bottom:20px}
+.panel-title{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
+.lookup-row{display:flex;gap:8px}
+.adm-inp{flex:1;background:var(--surface2);border:1.5px solid var(--border);color:#fff;padding:12px 14px;font-family:'Share Tech Mono',monospace;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;outline:none}
+.adm-inp:focus{border-color:var(--purple)}
+.adm-btn{background:var(--purple);color:#fff;border:none;padding:0 24px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background 0.2s}
+.adm-btn:hover{background:#6D28D9}
+.adm-btn:disabled{background:var(--border);cursor:not-allowed}
+.adm-btn.gold{background:var(--gold);color:#000}
+.adm-btn.gold:hover{background:#E6A800}
+.adm-btn.green{background:var(--green);color:#000}
+.adm-btn.green:hover{background:#00A844}
+.status-bar{font-family:'Share Tech Mono',monospace;font-size:0.8rem;letter-spacing:1px;padding:6px 0;margin-top:8px;color:var(--muted)}
+.status-bar.ok{color:var(--green)}
+.status-bar.err{color:var(--red)}
+.status-bar.loading{color:var(--gold);animation:blink 0.7s step-end infinite}
+@keyframes blink{50%{opacity:0.3}}
+
+/* DATA PANELS */
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.data-panel{background:var(--surface);border:2px solid var(--border);padding:18px}
+.data-panel.full{grid-column:1/-1}
+.dp-title{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.dp-title.blue{color:var(--blue)}
+.dp-title.green{color:var(--green)}
+.dp-title.gold{color:var(--gold)}
+.dp-title.purple{color:var(--purple)}
+.data-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #0F1420}
+.data-key{font-size:0.78rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.data-val{font-family:'Share Tech Mono',monospace;font-size:0.88rem;color:#fff;text-align:right;max-width:60%}
+.data-val.green{color:var(--green)}
+.data-val.gold{color:var(--gold)}
+.data-val.red{color:var(--red)}
+
+/* VALUE CALC */
+.value-panel{background:linear-gradient(135deg,#0A0A1F,#08080F);border:2px solid var(--purple);padding:24px;text-align:center;margin-bottom:14px}
+.val-main{font-family:'Barlow Condensed',sans-serif;font-size:3.5rem;font-weight:800;color:var(--purple);letter-spacing:2px;margin:8px 0}
+.val-sub{font-size:0.8rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.val-range{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px}
+.val-card{background:var(--surface2);border:1px solid var(--border);padding:14px;text-align:center}
+.val-card .amt{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:700;display:block}
+.val-card .lbl{font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.val-card.rough .amt{color:var(--red)}
+.val-card.avg .amt{color:var(--purple)}
+.val-card.clean .amt{color:var(--green)}
+
+/* EQUIPMENT LIST */
+.equip-list{font-family:'Share Tech Mono',monospace;font-size:0.78rem;color:#8899CC;line-height:2;max-height:200px;overflow-y:auto;background:var(--surface2);padding:12px;border:1px solid var(--border)}
+.equip-list::-webkit-scrollbar{width:4px}
+.equip-list::-webkit-scrollbar-track{background:var(--surface)}
+.equip-list::-webkit-scrollbar-thumb{background:var(--purple)}
+
+/* ACTION ROW */
+.action-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+
+/* TABS */
+.tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--border)}
+.tab{padding:10px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple)}
+.tab-content{display:none;padding-top:16px}
+.tab-content.active{display:block}
+
+/* STICKER IFRAME */
+.sticker-frame-wrap{background:var(--surface);border:2px solid var(--gold);padding:0;overflow:hidden;margin-bottom:14px;display:none}
+.sticker-frame-wrap.show{display:block}
+.sticker-frame-wrap iframe{width:100%;height:600px;border:none;display:block}
+
+textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:var(--green);padding:12px;font-family:'Share Tech Mono',monospace;font-size:0.78rem;line-height:1.8;resize:none;height:120px;outline:none}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">◈ EVL Admin</div>
+    <div class="login-sub">Appraisal Intelligence Dashboard</div>
+    <input type="password" class="login-inp" id="pw-inp" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">ACCESS DASHBOARD</button>
+    <div class="login-err" id="login-err">⚠ Invalid access code</div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <div class="adm-hdr">
+    <div>
+      <div class="adm-brand">◈ EVL Appraisal Intelligence</div>
+      <div style="font-size:0.72rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px">Admin Dashboard — Restricted Access</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="font-size:0.75rem;color:var(--muted);letter-spacing:1px" id="adm-time"></span>
+      <div class="adm-badge">ADMIN</div>
+    </div>
+  </div>
+
+  <div class="adm-wrap">
+
+    <!-- VIN LOOKUP -->
+    <div class="lookup-panel">
+      <div class="panel-title">◈ VIN Intelligence Lookup</div>
+      <div class="lookup-row">
+        <input type="text" class="adm-inp" id="adm-vin" placeholder="ENTER 17-DIGIT VIN" maxlength="17" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')admDecode()">
+        <button class="adm-btn" id="adm-decode-btn" onclick="admDecode()">PULL FULL REPORT</button>
+      </div>
+      <div class="status-bar" id="adm-status">AWAITING VIN INPUT</div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('vehicle')">Vehicle Data</button>
+      <button class="tab" onclick="showTab('market')">Market Value</button>
+      <button class="tab" onclick="showTab('equipment')">Full Equipment</button>
+      <button class="tab" onclick="showTab('sticker')">Window Sticker</button>
+    </div>
+
+    <!-- TAB: VEHICLE DATA -->
+    <div class="tab-content active" id="tab-vehicle">
+      <div class="data-grid">
+        <div class="data-panel">
+          <div class="dp-title blue">◈ Vehicle Identity</div>
+          <div class="data-row"><span class="data-key">Year</span><span class="data-val green" id="d-year">—</span></div>
+          <div class="data-row"><span class="data-key">Make</span><span class="data-val" id="d-make">—</span></div>
+          <div class="data-row"><span class="data-key">Model</span><span class="data-val" id="d-model">—</span></div>
+          <div class="data-row"><span class="data-key">Trim</span><span class="data-val gold" id="d-trim">—</span></div>
+          <div class="data-row"><span class="data-key">Body Type</span><span class="data-val" id="d-body">—</span></div>
+          <div class="data-row"><span class="data-key">Doors</span><span class="data-val" id="d-doors">—</span></div>
+          <div class="data-row"><span class="data-key">Seating</span><span class="data-val" id="d-seats">—</span></div>
+          <div class="data-row"><span class="data-key">Made In</span><span class="data-val" id="d-made">—</span></div>
+        </div>
+        <div class="data-panel">
+          <div class="dp-title green">◈ Powertrain</div>
+          <div class="data-row"><span class="data-key">Engine</span><span class="data-val green" id="d-engine">—</span></div>
+          <div class="data-row"><span class="data-key">Displacement</span><span class="data-val" id="d-displace">—</span></div>
+          <div class="data-row"><span class="data-key">Cylinders</span><span class="data-val" id="d-cyl">—</span></div>
+          <div class="data-row"><span class="data-key">Transmission</span><span class="data-val" id="d-trans">—</span></div>
+          <div class="data-row"><span class="data-key">Drivetrain</span><span class="data-val" id="d-drive">—</span></div>
+          <div class="data-row"><span class="data-key">Fuel Type</span><span class="data-val" id="d-fuel">—</span></div>
+          <div class="data-row"><span class="data-key">City MPG</span><span class="data-val" id="d-city">—</span></div>
+          <div class="data-row"><span class="data-key">Hwy MPG</span><span class="data-val" id="d-hwy">—</span></div>
+        </div>
+        <div class="data-panel full">
+          <div class="dp-title purple">◈ MSRP & Pricing Intel</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div style="text-align:center;padding:14px;background:var(--surface2);border:1px solid var(--border)">
+              <div style="font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Base MSRP</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:700;color:var(--purple)" id="d-msrp">—</div>
+            </div>
+            <div style="text-align:center;padding:14px;background:var(--surface2);border:1px solid var(--border)">
+              <div style="font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Options MSRP</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:700;color:var(--gold)" id="d-opt-msrp">—</div>
+            </div>
+            <div style="text-align:center;padding:14px;background:var(--surface2);border:1px solid var(--border)">
+              <div style="font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Total MSRP</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:700;color:var(--green)" id="d-total-msrp">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN CONDITION OVERRIDE -->
+      <div class="data-panel" style="margin-bottom:14px">
+        <div class="dp-title gold">◈ Admin Condition Override</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+          <button class="adm-btn" style="padding:12px;background:#041209;border:2px solid var(--green);color:var(--green)" onclick="setAdmCond('Excellent',1.12,this)">EXCELLENT</button>
+          <button class="adm-btn" style="padding:12px;background:#0A1525;border:2px solid var(--blue);color:var(--blue)" onclick="setAdmCond('Good',1.0,this)">GOOD</button>
+          <button class="adm-btn" style="padding:12px;background:#1A0E00;border:2px solid var(--gold);color:var(--gold)" onclick="setAdmCond('Fair',0.85,this)">FAIR</button>
+          <button class="adm-btn" style="padding:12px;background:#1A0500;border:2px solid var(--red);color:var(--red)" onclick="setAdmCond('Poor',0.68,this)">POOR</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <label style="font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Odometer Override</label>
+            <input type="number" class="adm-inp" id="adm-miles" placeholder="e.g. 45000" style="font-size:0.9rem;padding:10px" oninput="calcAdmValue()">
+          </div>
+          <div>
+            <label style="font-size:0.72rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Condition</label>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--gold);padding:10px;border:1.5px solid var(--border);background:var(--surface2)" id="adm-cond-label">Select above</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: MARKET VALUE -->
+    <div class="tab-content" id="tab-market">
+      <div class="value-panel">
+        <div class="val-sub">EVL Internal Floor Value</div>
+        <div class="val-main" id="adm-floor-val">$—</div>
+        <div class="val-sub" id="adm-cond-display">Set condition above</div>
+        <div class="val-range">
+          <div class="val-card rough"><span class="amt" id="adm-rough">$—</span><span class="lbl">Rough Floor</span></div>
+          <div class="val-card avg"><span class="amt" id="adm-avg">$—</span><span class="lbl">Average</span></div>
+          <div class="val-card clean"><span class="amt" id="adm-clean">$—</span><span class="lbl">Clean</span></div>
+        </div>
+      </div>
+      <div class="data-panel">
+        <div class="dp-title purple">◈ Appraisal Notes</div>
+        <textarea class="adm-ta" id="adm-notes" placeholder="Internal appraisal notes — not visible to customer..."></textarea>
+      </div>
+    </div>
+
+    <!-- TAB: FULL EQUIPMENT -->
+    <div class="tab-content" id="tab-equipment">
+      <div class="data-panel">
+        <div class="dp-title gold">◈ Factory Installed Equipment (NeoVIN)</div>
+        <div class="equip-list" id="equip-list">Run VIN lookup to populate equipment list...</div>
+      </div>
+      <div class="data-panel" style="margin-top:14px">
+        <div class="dp-title blue">◈ Standard Equipment</div>
+        <div class="equip-list" id="std-equip-list">Run VIN lookup to populate...</div>
+      </div>
+    </div>
+
+    <!-- TAB: WINDOW STICKER -->
+    <div class="tab-content" id="tab-sticker">
+      <div style="background:var(--surface);border:2px solid var(--gold);padding:16px;margin-bottom:14px">
+        <div class="dp-title gold" style="margin-bottom:10px">◈ Manufacturer Window Sticker</div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;line-height:1.6">Access the official manufacturer window sticker via MarketCheck NeoVIN. Shows all factory-installed options, MSRP breakdown, fuel economy, and safety ratings.</p>
+        <div style="display:flex;gap:10px">
+          <button class="adm-btn gold" id="open-sticker-btn" onclick="openAdmSticker()">🪟 Open Window Sticker</button>
+          <button class="adm-btn" onclick="openNeoVIN()">◈ Open NeoVIN Full Report</button>
+        </div>
+      </div>
+      <div class="sticker-frame-wrap" id="sticker-wrap">
+        <iframe id="adm-sticker-frame" src="" title="Window Sticker"></iframe>
+      </div>
+    </div>
+
+    <!-- ACTION ROW -->
+    <div class="action-row" style="margin-top:20px">
+      <button class="adm-btn green" onclick="generateOffer()">📋 Generate Offer Sheet</button>
+      <button class="adm-btn gold" onclick="openAdmEstimator()">💰 MC Trade Estimator</button>
+      <button class="adm-btn" onclick="clearAll()">✕ Clear / New VIN</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const ADMIN_PW = 'EVL2024admin';
+const API_KEY = 'FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU';
+let admVinData = null, admCondMult = 1.0, admCondLabel = '';
+
+// CLOCK
+function updateClock(){document.getElementById('adm-time').textContent=new Date().toLocaleTimeString('en-US',{hour12:false});}
+setInterval(updateClock,1000);updateClock();
+
+// LOGIN
+function doLogin(){
+  const pw=document.getElementById('pw-inp').value;
+  if(pw===ADMIN_PW){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-app').style.display='block';
+  } else {
+    document.getElementById('login-err').style.display='block';
+    document.getElementById('pw-inp').value='';
+  }
+}
+
+// TABS
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// DECODE
+async function admDecode(){
+  const vin=document.getElementById('adm-vin').value.trim().toUpperCase();
+  const btn=document.getElementById('adm-decode-btn');
+  if(vin.length!==17){setAdmStatus('INVALID VIN — 17 CHARS REQUIRED','err');return;}
+  setAdmStatus('PULLING FULL INTELLIGENCE REPORT...','loading');
+  btn.disabled=true;
+  try{
+    const r=await fetch(`/api/decode?vin=${vin}`,{signal:AbortSignal.timeout(12000)});
+    const d=await r.json();
+    if(d.error) throw new Error(d.error);
+    admVinData=d;
+    populateAdmFields(d);
+    // Try NeoVIN for equipment
+    try{
+      const nr=await fetch(`https://api.marketcheck.com/v2/decode/car/neovin/${vin}/specs?api_key=${API_KEY}`,{signal:AbortSignal.timeout(10000)});
+      if(nr.ok){const nd=await nr.json();populateEquipment(nd);}
+    }catch(e){document.getElementById('equip-list').textContent='NeoVIN data not available for this VIN';}
+    setAdmStatus(`✓ FULL REPORT LOADED — ${new Date().toLocaleTimeString()}`,'ok');
+  }catch(err){
+    setAdmStatus(`ERROR: ${err.message}`,'err');
+  }finally{btn.disabled=false;}
+}
+
+function populateAdmFields(d){
+  const b=d.build||d;
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val||'—';};
+  set('d-year',b.year);set('d-make',b.make);set('d-model',b.model);set('d-trim',b.trim||b.trim_name);
+  set('d-body',b.body_type);set('d-doors',b.doors);set('d-seats',b.std_seating);set('d-made',b.made_in);
+  set('d-engine',b.engine);
+  set('d-displace',b.engine_size?b.engine_size+'L':null);
+  set('d-cyl',b.cylinders);set('d-trans',b.transmission);set('d-drive',b.drivetrain);
+  set('d-fuel',b.fuel_type);set('d-city',b.city_mpg?b.city_mpg+' mpg':null);set('d-hwy',b.highway_mpg?b.highway_mpg+' mpg':null);
+  const msrp=b.msrp||b.base_price||0;
+  const optMsrp=b.destination_charges||0;
+  set('d-msrp',msrp?'$'+msrp.toLocaleString():null);
+  set('d-opt-msrp',optMsrp?'$'+optMsrp.toLocaleString():'N/A');
+  set('d-total-msrp',(msrp+optMsrp)?'$'+(msrp+optMsrp).toLocaleString():null);
+}
+
+function populateEquipment(data){
+  const list=document.getElementById('equip-list');
+  const std=document.getElementById('std-equip-list');
+  const items=[];
+  if(data.options) data.options.forEach(o=>{if(o.option_name)items.push('▸ '+o.option_name);});
+  if(data.installed_options) data.installed_options.forEach(o=>{if(o.option_name)items.push('▸ '+o.option_name);});
+  if(data.packages) data.packages.forEach(p=>{if(p.package_name)items.push('◈ PKG: '+p.package_name);});
+  list.textContent=items.length?items.join('\n'):'No option data available';
+  const stdItems=[];
+  if(data.standard_equipment) data.standard_equipment.forEach(s=>{if(s.name||s.equipment_name)stdItems.push('— '+(s.name||s.equipment_name));});
+  std.textContent=stdItems.length?stdItems.join('\n'):'No standard equipment data available';
+}
+
+function setAdmCond(label,mult,btn){
+  admCondMult=mult; admCondLabel=label;
+  document.getElementById('adm-cond-label').textContent=label;
+  document.getElementById('adm-cond-display').textContent='Condition: '+label;
+  calcAdmValue();
+}
+
+function calcAdmValue(){
+  if(!admVinData||!admCondLabel) return;
+  const b=admVinData.build||admVinData;
+  const msrp=b.msrp||b.base_price||0;
+  const year=b.year||new Date().getFullYear();
+  const age=new Date().getFullYear()-year;
+  const miles=parseInt(document.getElementById('adm-miles').value)||50000;
+  const base=msrp||28000;
+  const dep=Math.max(0.25,1-(age*0.11));
+  const mileFactor=Math.max(0.65,1-(miles/200000)*0.45);
+  const avg=Math.round(base*dep*mileFactor*admCondMult);
+  const rough=Math.round(avg*0.82);
+  const clean=Math.round(avg*1.15);
+  document.getElementById('adm-floor-val').textContent='$'+avg.toLocaleString();
+  document.getElementById('adm-rough').textContent='$'+rough.toLocaleString();
+  document.getElementById('adm-avg').textContent='$'+avg.toLocaleString();
+  document.getElementById('adm-clean').textContent='$'+clean.toLocaleString();
+}
+
+function openAdmSticker(){
+  const vin=document.getElementById('adm-vin').value.trim();
+  if(!vin){alert('Enter a VIN first.');return;}
+  navigator.clipboard.writeText(vin).catch(()=>{});
+  alert(`Opening MarketCheck NeoVIN for Window Sticker.\n\nVIN copied: ${vin}\nPaste it, click DECODE VIN, then WINDOW STICKER.`);
+  window.open('https://universe.marketcheck.com/neovin-decode-vin','_blank');
+}
+
+function openNeoVIN(){
+  window.open('https://universe.marketcheck.com/neovin-decode-vin','_blank');
+}
+
+function openAdmEstimator(){
+  const vin=document.getElementById('adm-vin').value.trim();
+  window.open(`https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key=${API_KEY}&vin=${vin}&embed=true`,'_blank');
+}
+
+function setAdmStatus(msg,type){
+  const el=document.getElementById('adm-status');
+  el.textContent=msg;el.className='status-bar '+(type||'');
+}
+
+function generateOffer(){
+  if(!admVinData){alert('Pull a VIN report first.');return;}
+  const b=admVinData.build||admVinData;
+  const vin=document.getElementById('adm-vin').value.trim();
+  const miles=document.getElementById('adm-miles').value||'Not entered';
+  const notes=document.getElementById('adm-notes').value;
+  const floor=document.getElementById('adm-floor-val').textContent;
+  const rough=document.getElementById('adm-rough').textContent;
+  const clean=document.getElementById('adm-clean').textContent;
+  const ymm=`${b.year||''} ${b.make||''} ${b.model||''}`.trim();
+  const subject=encodeURIComponent(`EVL Internal Offer Sheet: ${ymm}`);
+  const body=encodeURIComponent(
+    `EVL INTERNAL APPRAISAL OFFER SHEET\n====================================\n`+
+    `DATE: ${new Date().toLocaleDateString()}\n`+
+    `VEHICLE: ${ymm}\nTRIM: ${b.trim||'—'}\nVIN: ${vin}\nODOMETER: ${miles}\n`+
+    `CONDITION: ${admCondLabel||'Not set'}\n`+
+    `------------------------------------\nINTERNAL VALUES:\n`+
+    `ROUGH FLOOR: ${rough}\nAVERAGE: ${floor}\nCLEAN: ${clean}\n`+
+    `------------------------------------\nNOTES:\n${notes||'None'}\n====================================`
+  );
+  window.location.href=`mailto:togradyevl@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function clearAll(){
+  document.getElementById('adm-vin').value='';
+  admVinData=null;admCondMult=1.0;admCondLabel='';
+  ['d-year','d-make','d-model','d-trim','d-body','d-doors','d-seats','d-made',
+   'd-engine','d-displace','d-cyl','d-trans','d-drive','d-fuel','d-city','d-hwy',
+   'd-msrp','d-opt-msrp','d-total-msrp'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});
+  ['adm-floor-val','adm-rough','adm-avg','adm-clean'].forEach(id=>{document.getElementById(id).textContent='$—';});
+  document.getElementById('equip-list').textContent='Run VIN lookup to populate equipment list...';
+  document.getElementById('std-equip-list').textContent='Run VIN lookup to populate...';
+  document.getElementById('adm-cond-label').textContent='Select above';
+  document.getElementById('adm-notes').value='';
+  setAdmStatus('AWAITING VIN INPUT','');
+}
+</script>
+</body>
+</html>
