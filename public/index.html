@@ -75,7 +75,7 @@ html, body {
 }
 .drawer.active { border-color: var(--blue); }
 .drawer.done { border-color: var(--green); }
-.drawer.locked { opacity: 0.45; pointer-events: none; }
+.drawer.locked { opacity: 0.6; pointer-events: none; }
 
 .drawer-hdr {
   display: flex; align-items: center; justify-content: space-between;
@@ -89,13 +89,13 @@ html, body {
 .step-num {
   width: 36px; height: 36px; border: 2px solid #2B84FE;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 900; color: var(--muted);
+  font-size: 16px; font-weight: 900; color: #ffffff;
   flex-shrink: 0; transition: all 0.3s;
 }
 .drawer.active .step-num { border-color: var(--blue); color: var(--blue); background: rgba(43,132,254,0.1); }
 .drawer.done .step-num { border-color: var(--green); color: #020203; background: var(--green); }
 
-.drawer-title { font-size: 22px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.drawer-title { font-size: 19px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; }
 .drawer.active .drawer-title { color: var(--white); }
 .drawer.done .drawer-title { color: var(--green); }
 
@@ -117,8 +117,8 @@ html, body {
 .tog-btn:last-child { border-right: none; }
 .tog-btn.active { background: var(--blue); color: var(--white); }
 .tog-btn .t-icon { font-size: 1.1rem; }
-.tog-btn .t-main { font-size: 16px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
-.tog-btn .t-sub { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: rgba(255,255,255,0.9); }
+.tog-btn .t-main { font-size: 14px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+.tog-btn .t-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: rgba(255,255,255,0.9); }
 
 /* ── PANELS ── */
 .panel { display: none; }
@@ -487,11 +487,7 @@ footer b { color: var(--blue); }
       <div class="mb10">
         <label class="lbl">Factory Options / Packages</label>
         <div id="ymm-opts-hint" class="opts-hint">Select Trim above to load factory options</div>
-        <div id="ymm-opts-grid" style="display:none;display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"></div>
-      </div>
-      <div class="mb10">
-        <label class="lbl">Additional Equipment / Special Features</label>
-        <textarea class="inp" id="ymm-addl" style="height:60px" placeholder="e.g. BMW M Sport Package, Premium Sound, Executive Package, Carbon Fiber Trim..."></textarea>
+        <div id="ymm-opts-grid" style="display:none;grid-template-columns:1fr 1fr 1fr;gap:5px"></div>
       </div>
       <button class="btn-primary" type="button" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
     </div>
@@ -638,8 +634,10 @@ footer b { color: var(--blue); }
         <span class="sub-arrow">▼</span>
       </div>
       <div class="sub-drawer-body">
-        <label class="lbl">Upgrades / Modifications / Special Features</label>
-        <textarea class="inp" id="notes-inp" placeholder="List any aftermarket upgrades, recent work, special features..."></textarea>
+        <label class="lbl">Additional Equipment & Special Packages</label>
+        <textarea class="inp" id="notes-addl" style="height:55px;margin-bottom:6px" placeholder="e.g. BMW M Sport, Premium Sound, Executive Package, Carbon Fiber Trim, Sport Exhaust..."></textarea>
+        <label class="lbl" style="margin-top:4px">Upgrades / Modifications / Recent Work</label>
+        <textarea class="inp" id="notes-inp" style="height:55px" placeholder="Aftermarket upgrades, recent repairs, new tires, new battery..."></textarea>
       </div>
     </div>
 
@@ -731,7 +729,7 @@ footer b { color: var(--blue); }
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v8.0</b></span>
+  <span>Entity Protocol <b>v8.1</b></span>
   <span>// EVL CERTIFIED DATA STREAM //</span>
 </footer>
 
