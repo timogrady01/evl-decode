@@ -441,19 +441,15 @@ function generateOffer(){
 }
 
 function openKBB(){
-  var year=admVinData&&admVinData.year?admVinData.year:'';
-  var make=admVinData&&admVinData.make?admVinData.make:'';
-  var model=admVinData&&admVinData.model?admVinData.model:'';
-  var url='https://www.kbb.com/whats-my-car-worth/?intent=trade-in';
-  if(year&&make&&model) url+='&year='+year+'&make='+encodeURIComponent(make)+'&model='+encodeURIComponent(model);
+  var vin=document.getElementById('admin-vin').value.trim().toUpperCase();
+  var url='https://www.kbb.com/whats-my-car-worth/?intent=trade-in&vin='+vin;
   window.open(url,'_blank');
 }
 function openNADA(){
   var year=admVinData&&admVinData.year?admVinData.year:'';
   var make=admVinData&&admVinData.make?admVinData.make:'';
   var model=admVinData&&admVinData.model?admVinData.model:'';
-  var url='https://www.nadaguides.com/Cars';
-  if(year&&make&&model) url+='/'+year+'/'+encodeURIComponent(make)+'/'+encodeURIComponent(model);
+  var url='https://www.nada.com/b2c/CarValues?year='+year+'&make='+encodeURIComponent(make)+'&model='+encodeURIComponent(model);
   window.open(url,'_blank');
 }
 function clearAll(){
