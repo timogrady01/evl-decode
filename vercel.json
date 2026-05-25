@@ -2,7 +2,7 @@
   "version": 2,
   "routes": [
     { "src": "/api/decode", "dest": "/api/decode.js" },
-    { "src": "/admin.html", "dest": "/admin.html" },
+    { "src": "/admin.html", "dest": "/public/admin.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
