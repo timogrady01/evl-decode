@@ -316,6 +316,16 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 .btn-clear { background: none; border: 1px solid #1a2535; color: var(--muted); font-size: 11px; padding: 3px 10px; cursor: pointer; font-family: var(--font); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; }
 .btn-clear:hover { border-color: var(--red); color: var(--red); }
 
+/* ── EDIT TAG ── */
+.edit-tag {
+  font-size: 12px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--gold); border: 1px solid var(--gold); padding: 3px 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.edit-tag:hover { background: var(--gold); color: #000; }
+.drawer.done .drawer-hdr { cursor: pointer; }
+.drawer.done .drawer-hdr:hover { background: #0A1A0A; }
+
 /* ── SUB-DRAWERS ── */
 .sub-drawer { border: 2px solid var(--blue); margin-bottom: 5px; background: #080E1A; }
 .sub-drawer-hdr {
@@ -383,12 +393,15 @@ footer b { color: var(--blue); }
 
 <!-- ── DRAWER 1 ── -->
 <div class="drawer active" id="d1">
-  <div class="drawer-hdr">
+  <div class="drawer-hdr" onclick="document.getElementById('d1').classList.contains('done')&&reopenStep(1)">
     <div class="drawer-hdr-left">
       <div class="step-num" id="sn1">1</div>
       <div class="drawer-title">① Identify Your Vehicle</div>
     </div>
-    <div class="drawer-arrow">▼</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="edit-tag" id="edit1" style="display:none">✎ EDIT</span>
+      <div class="drawer-arrow">▼</div>
+    </div>
   </div>
   <div class="drawer-body">
     <div class="toggle-row">
@@ -500,12 +513,15 @@ footer b { color: var(--blue); }
 
 <!-- ── DRAWER 2 ── -->
 <div class="drawer locked" id="d2">
-  <div class="drawer-hdr">
+  <div class="drawer-hdr" onclick="document.getElementById('d2').classList.contains('done')&&reopenStep(2)">
     <div class="drawer-hdr-left">
       <div class="step-num" id="sn2">2</div>
       <div class="drawer-title">② Condition & Instant Value</div>
     </div>
-    <div class="drawer-arrow">▼</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="edit-tag" id="edit2" style="display:none">✎ EDIT</span>
+      <div class="drawer-arrow">▼</div>
+    </div>
   </div>
   <div class="drawer-body">
     <label class="lbl" style="margin-bottom:10px;font-size:15px;color:#ffffff">Select Overall Condition — Tap to see your instant value range</label>
@@ -539,12 +555,15 @@ footer b { color: var(--blue); }
 
 <!-- ── DRAWER 3 ── -->
 <div class="drawer locked" id="d3">
-  <div class="drawer-hdr">
+  <div class="drawer-hdr" onclick="document.getElementById('d3').classList.contains('done')&&reopenStep(3)">
     <div class="drawer-hdr-left">
       <div class="step-num" id="sn3">3</div>
       <div class="drawer-title">③ Certified Appraisal Report</div>
     </div>
-    <div class="drawer-arrow">▼</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="edit-tag" id="edit3" style="display:none">✎ EDIT</span>
+      <div class="drawer-arrow">▼</div>
+    </div>
   </div>
   <div class="drawer-body">
 
@@ -733,7 +752,7 @@ footer b { color: var(--blue); }
 </div>
 
 <footer>
-  <span>Entity Protocol <b>v8.4</b></span>
+  <span>Entity Protocol <b>v8.5</b></span>
   <span>// EVL CERTIFIED DATA STREAM //</span>
 </footer>
 
@@ -800,7 +819,28 @@ function injectFactoryOpts(year,make,model,trim){var key=((make||'')+'|'+(model|
 
 function handlePhoto(input){var slot=input.dataset.slot,file=input.files[0];if(!file)return;photos[slot]=file;var el=document.getElementById('slot-'+slot);el.classList.add('done');el.querySelector('.p-icon').textContent='✅';el.querySelector('.p-title').textContent='✓ Uploaded';updateCert();}
 
-function confirmStep(n){if(n===1&&lookupMode==='vin'&&!vinData){alert('Please decode a VIN first.');return;}if(n===2){if(!condLabel){alert('Please select a condition rating.');return;}var m1=document.getElementById('miles-inp').value,m2=(document.getElementById('ymm-miles')?document.getElementById('ymm-miles').value:'');if(!m1&&!m2){alert('Please enter current mileage.');return;}}if(n===3){document.getElementById('submit-btn').style.display='block';setTimeout(resizeCanvas,400);}var d=document.getElementById('d'+n);d.classList.remove('active');d.classList.add('done');document.getElementById('sn'+n).textContent='✓';document.getElementById('p'+n).classList.remove('active');document.getElementById('p'+n).classList.add('done');document.getElementById('pl'+n).classList.remove('active');document.getElementById('pl'+n).classList.add('done');if(n===2&&vinData){var b=vinData.build||vinData;injectFactoryOpts(b.year,b.make,b.model,b.trim);}var next=n+1;if(next<=4){var nd=document.getElementById('d'+next);nd.classList.remove('locked');nd.classList.add('active');document.getElementById('p'+next).classList.add('active');document.getElementById('pl'+next).classList.add('active');setTimeout(function(){nd.scrollIntoView({behavior:'smooth',block:'start'});},150);}}
+function confirmStep(n){if(n===1&&lookupMode==='vin'&&!vinData){alert('Please decode a VIN first.');return;}if(n===2){if(!condLabel){alert('Please select a condition rating.');return;}var m1=document.getElementById('miles-inp').value,m2=(document.getElementById('ymm-miles')?document.getElementById('ymm-miles').value:'');if(!m1&&!m2){alert('Please enter current mileage.');return;}}if(n===3){document.getElementById('submit-btn').style.display='block';setTimeout(resizeCanvas,400);}var d=document.getElementById('d'+n);d.classList.remove('active');d.classList.add('done');document.getElementById('sn'+n).textContent='✓';var et=document.getElementById('edit'+n);if(et)et.style.display='inline';document.getElementById('p'+n).classList.remove('active');document.getElementById('p'+n).classList.add('done');document.getElementById('pl'+n).classList.remove('active');document.getElementById('pl'+n).classList.add('done');if(n===2&&vinData){var b=vinData.build||vinData;injectFactoryOpts(b.year,b.make,b.model,b.trim);}var next=n+1;if(next<=4){var nd=document.getElementById('d'+next);nd.classList.remove('locked');nd.classList.add('active');document.getElementById('p'+next).classList.add('active');document.getElementById('pl'+next).classList.add('active');setTimeout(function(){nd.scrollIntoView({behavior:'smooth',block:'start'});},150);}}
+
+function reopenStep(n){
+  // Close all active drawers
+  for(var i=1;i<=4;i++){
+    var d=document.getElementById('d'+i);
+    if(d.classList.contains('active')){
+      d.classList.remove('active');
+      // Don't lock it, just close it
+    }
+  }
+  // Reopen clicked drawer
+  var target=document.getElementById('d'+n);
+  target.classList.remove('done');
+  target.classList.add('active');
+  document.getElementById('sn'+n).textContent=n;
+  document.getElementById('p'+n).classList.remove('done');
+  document.getElementById('p'+n).classList.add('active');
+  document.getElementById('pl'+n).classList.remove('done');
+  document.getElementById('pl'+n).classList.add('active');
+  setTimeout(function(){target.scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
 
 function confirmYMM(){var year=document.getElementById('ymm-year').value,make=document.getElementById('ymm-make').value,model=document.getElementById('ymm-model').value,miles=document.getElementById('ymm-miles').value;if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}if(!miles){alert('Please enter current mileage.');return;}var body=document.getElementById('ymm-body').value,trim=document.getElementById('ymm-trim').value,drive=document.getElementById('ymm-drive').value,color=document.getElementById('ymm-color').value,intColor=document.getElementById('ymm-int-color').value,zip=document.getElementById('ymm-zip').value,keys=document.getElementById('ymm-keys').value;var selOpts=[];document.querySelectorAll('#ymm-opts-grid .check-btn.selected').forEach(function(b){selOpts.push(b.getAttribute('data-val'));});ymmData={year:year,make:make,model:model,body:body,trim:trim,drive:drive,color:color,intColor:intColor,miles:miles,zip:zip,keys:keys,options:selOpts.join(', ')};vinData={year:parseInt(year),make:make,model:model,trim:trim,msrp:0,build:{year:parseInt(year),make:make,model:model,trim:trim}};confirmStep(1);}
 
