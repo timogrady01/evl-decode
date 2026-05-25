@@ -9,14 +9,26 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Invalid VIN" });
   }
 
-  const API_KEY = "krZxEXMjNJ0JxdQa";
-  const url = `https://api.marketcheck.com/v2/decode/car/${vin}/specs?api_key=${API_KEY}`;
+  const API_KEY = "FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU";
+  
+  // Try NeoVIN first (richer data), fall back to basic specs
+  const urls = [
+    `https://api.marketcheck.com/v2/decode/car/neovin/${vin}/specs?api_key=${API_KEY}`,
+    `https://api.marketcheck.com/v2/decode/car/${vin}/specs?api_key=${API_KEY}`
+  ];
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return res.status(200).json(data);
-  } catch (err) {
-    return res.status(500).json({ error: "Fetch failed", detail: err.message });
+  for (const url of urls) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) continue;
+      const data = await response.json();
+      if (data && !data.error) {
+        return res.status(200).json(data);
+      }
+    } catch (err) {
+      continue;
+    }
   }
+  
+  return res.status(500).json({ error: "Decode failed — check VIN and try again" });
 }
