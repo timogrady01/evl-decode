@@ -280,7 +280,7 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
       <button class="adm-btn green" onclick="generateOffer()">📋 Generate Offer Sheet</button>
       <button class="adm-btn gold" onclick="openAdmEstimator()">💰 MC TRADE ESTIMATOR</button>
       <button class="adm-btn" style="background:#1a3a6b;border-color:#2B84FE;" onclick="openKBB()">📘 KBB VALUE</button>
-      <button class="adm-btn" style="background:#1a3d1a;border-color:#00C853;" onclick="openNADA()">📗 CARGURUS VALUE</button>
+      <button class="adm-btn" style="background:#1a3d1a;border-color:#00C853;" onclick="openNADA()">📗 NADA GUIDES</button>
       <button class="adm-btn" onclick="clearAll()">✕ Clear / New VIN</button>
     </div>
 
@@ -453,8 +453,10 @@ function openNADA(){
   var year=admVinData&&admVinData.year?admVinData.year:'';
   var make=admVinData&&admVinData.make?admVinData.make:'';
   var model=admVinData&&admVinData.model?admVinData.model:'';
-  var vin=document.getElementById('adm-vin').value.trim();
-  // NADA via CarGurus which uses NADA data and supports VIN lookup
+  if(!year){alert('Decode a VIN first.');return;}
+  var url='https://www.nadaguides.com/Cars/'+year+'/'+encodeURIComponent(make)+'/'+encodeURIComponent(model);
+  window.open(url,'_blank');
+}ata and supports VIN lookup
   window.open('https://www.cargurus.com/Cars/instant-market-value-calculator-d'+vin,'_blank');
 }
   var url='https://www.nada.com/b2c/CarValues?vehicle='+encodeURIComponent(year+' '+make+' '+model);
