@@ -278,7 +278,9 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
     <!-- ACTION ROW -->
     <div class="action-row" style="margin-top:20px">
       <button class="adm-btn green" onclick="generateOffer()">📋 Generate Offer Sheet</button>
-      <button class="adm-btn gold" onclick="openAdmEstimator()">💰 MC Trade Estimator</button>
+      <button class="adm-btn gold" onclick="openAdmEstimator()">💰 MC TRADE ESTIMATOR</button>
+      <button class="adm-btn" style="background:#1a3a6b;border-color:#2B84FE;" onclick="openKBB()">📘 KBB VALUE</button>
+      <button class="adm-btn" style="background:#1a3d1a;border-color:#00C853;" onclick="openNADA()">📗 NADA VALUE</button>
       <button class="adm-btn" onclick="clearAll()">✕ Clear / New VIN</button>
     </div>
 
@@ -438,6 +440,22 @@ function generateOffer(){
   window.location.href=`mailto:togradyevl@gmail.com?subject=${subject}&body=${body}`;
 }
 
+function openKBB(){
+  var year=admVinData&&admVinData.year?admVinData.year:'';
+  var make=admVinData&&admVinData.make?admVinData.make:'';
+  var model=admVinData&&admVinData.model?admVinData.model:'';
+  var url='https://www.kbb.com/whats-my-car-worth/?intent=trade-in';
+  if(year&&make&&model) url+='&year='+year+'&make='+encodeURIComponent(make)+'&model='+encodeURIComponent(model);
+  window.open(url,'_blank');
+}
+function openNADA(){
+  var year=admVinData&&admVinData.year?admVinData.year:'';
+  var make=admVinData&&admVinData.make?admVinData.make:'';
+  var model=admVinData&&admVinData.model?admVinData.model:'';
+  var url='https://www.nadaguides.com/Cars';
+  if(year&&make&&model) url+='/'+year+'/'+encodeURIComponent(make)+'/'+encodeURIComponent(model);
+  window.open(url,'_blank');
+}
 function clearAll(){
   document.getElementById('adm-vin').value='';
   admVinData=null;admCondMult=1.0;admCondLabel='';
