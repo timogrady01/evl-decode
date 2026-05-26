@@ -2,10 +2,12 @@
   "rewrites": [
     { "source": "/api/decode", "destination": "/api/decode.js" },
     { "source": "/api/find", "destination": "/api/find.js" },
-    { "source": "/admin", "destination": "/api/admin.js" },
+    { "source": "/api/home", "destination": "/api/home.js" },
+    { "source": "/admin", "destination": "/public/admin.html" },
     { "source": "/admin.html", "destination": "/public/admin.html" },
     { "source": "/find", "destination": "/api/find.js" },
     { "source": "/find.html", "destination": "/api/find.js" },
+    { "source": "/home", "destination": "/api/home.js" },
     { "source": "/(.*)", "destination": "/public/index.html" }
   ]
 }
