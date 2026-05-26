@@ -919,6 +919,27 @@ footer {
   .trust-badge { width:110px !important; height:110px !important; font-size:50px !important; }
   .cta-sub { font-size:26px !important; color:#ffffff !important; font-weight:600 !important; }
   .btn-hero-primary, .btn-hero-secondary { font-size:26px !important; padding:28px 60px !important; font-weight:900 !important; }
+
+  /* COMPETITOR COLUMNS VISIBLE */
+  .vs-table td.comp-col { color: #FF4444 !important; font-size: 26px !important; font-weight: 900 !important; opacity: 1 !important; }
+  .vs-table td.evl-col { color: var(--green) !important; font-size: 26px !important; font-weight: 900 !important; }
+  .vs-table td.feature-col { color: #ffffff !important; font-size: 20px !important; font-weight: 700 !important; }
+  .vs-table th.comp-col { color: #ffffff !important; font-size: 18px !important; font-weight: 900 !important; }
+  /* ACCORDION */
+  .accordion { margin-top: 48px; }
+  .accordion-item { border-bottom: 1px solid rgba(43,132,254,0.2); overflow: hidden; }
+  .accordion-header { display:flex; justify-content:space-between; align-items:center; padding:28px 32px; cursor:pointer; background:var(--s1); transition:background 0.2s; user-select:none; }
+  .accordion-header:hover { background: rgba(43,132,254,0.08); }
+  .accordion-title { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; letter-spacing:1px; text-transform:uppercase; color:#ffffff; display:flex; align-items:center; gap:16px; }
+  .accordion-icon-left { font-size:32px; }
+  .accordion-arrow { font-size:24px; color:var(--blue); transition:transform 0.3s; font-weight:900; }
+  .accordion-item.open .accordion-arrow { transform:rotate(180deg); }
+  .accordion-body { max-height:0; overflow:hidden; transition:max-height 0.4s ease; background:var(--s2); }
+  .accordion-item.open .accordion-body { max-height:600px; }
+  .accordion-content { padding:32px; font-size:20px; color:#ffffff; font-weight:600; line-height:1.9; }
+  .accordion-content ul { list-style:none; padding:0; margin:0; }
+  .accordion-content ul li { padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:flex-start; gap:14px; font-size:19px; }
+  .accordion-content ul li::before { content:"✓"; color:var(--green); font-weight:900; font-size:20px; flex-shrink:0; margin-top:2px; }
 </style>
 </head>
 <body>
@@ -1267,5 +1288,13 @@ const observer = new IntersectionObserver((entries) => {
 reveals.forEach(el => observer.observe(el));
 </script>
 
-</body>
+
+<script>
+function toggleAccordion(header) {
+  var item = header.parentElement;
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.accordion-item').forEach(function(i) { i.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+</script></body>
 </html>
