@@ -1,0 +1,1 @@
+const fs=require("fs"),path=require("path");module.exports=(req,res)=>{const f=path.join(__dirname,"../public/home.html");const c=fs.readFileSync(f,"utf8");res.setHeader("Content-Type","text/html");res.status(200).send(c);}
