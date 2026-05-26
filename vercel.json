@@ -2,6 +2,8 @@
   "rewrites": [
     { "source": "/api/decode", "destination": "/api/decode.js" },
     { "source": "/admin.html", "destination": "/public/admin.html" },
+    { "source": "/find", "destination": "/public/find.html" },
+    { "source": "/find.html", "destination": "/public/find.html" },
     { "source": "/(.*)", "destination": "/public/index.html" }
   ]
 }
