@@ -58,7 +58,7 @@ nav{background:rgba(10,10,12,0.97);border-bottom:1px solid var(--border);padding
 .fsh-label .dot{width:5px;height:5px;background:var(--blue);border-radius:50%;display:inline-block;}
 .fsh-active{background:rgba(43,132,254,0.18);color:var(--blue);font-size:11px;font-weight:700;padding:2px 8px;border-radius:2px;}
 .fsh-chev{color:var(--muted);font-size:16px;transition:transform 0.2s;flex-shrink:0;}
-.filter-section.open .fsh-chev{transform:rotate(180deg);}
+.filter-section.open .fsh-chev{transform:rotate(0deg);color:#fff;}.filter-section:not(.open) .fsh-chev{transform:rotate(-90deg);}
 .fb{display:none;padding:4px 22px 18px;}
 .filter-section.open .fb{display:block;}
 
@@ -322,7 +322,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section open" id="fs-condition">
         <div class="fsh" onclick="toggleFS('condition')">
           <span class="fsh-label"><span class="dot"></span>Condition</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="type-grid">
@@ -337,8 +337,8 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <!-- MAKE -->
       <div class="filter-section open" id="fs-make">
         <div class="fsh" onclick="toggleFS('make')">
-          <span class="fsh-label"><span class="dot"></span>Make</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-label"><span class="dot"></span><span style="background:var(--blue);color:#fff;font-size:10px;font-weight:900;padding:1px 6px;margin-right:4px;letter-spacing:0;">STEP 1</span>Make</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <select class="fselect" id="makeSelect" onchange="onMakeChange(this.value)">
@@ -363,8 +363,8 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <!-- MODEL -->
       <div class="filter-section open" id="fs-model">
         <div class="fsh" onclick="toggleFS('model')">
-          <span class="fsh-label"><span class="dot"></span>Model</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-label"><span class="dot"></span><span style="background:var(--s3);color:var(--muted);font-size:10px;font-weight:900;padding:1px 6px;margin-right:4px;letter-spacing:0;" id="step2badge">STEP 2</span>Model</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <select class="fselect" id="modelSelect" onchange="onModelChange(this.value)" disabled>
@@ -376,8 +376,8 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <!-- TRIM -->
       <div class="filter-section open" id="fs-trim">
         <div class="fsh" onclick="toggleFS('trim')">
-          <span class="fsh-label"><span class="dot"></span>Trim / Package</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-label"><span class="dot"></span><span style="background:var(--s3);color:var(--muted);font-size:10px;font-weight:900;padding:1px 6px;margin-right:4px;letter-spacing:0;" id="step3badge">STEP 3</span>Trim / Package</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <select class="fselect" id="trimSelect" onchange="S.trim=this.value" disabled>
@@ -394,7 +394,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section open" id="fs-year">
         <div class="fsh" onclick="toggleFS('year')">
           <span class="fsh-label"><span class="dot"></span>Year</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="range-row">
@@ -413,7 +413,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section open" id="fs-price">
         <div class="fsh" onclick="toggleFS('price')">
           <span class="fsh-label"><span class="dot"></span>Price Range</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="range-row">
@@ -435,7 +435,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-mileage">
         <div class="fsh" onclick="toggleFS('mileage')">
           <span class="fsh-label"><span class="dot"></span>Mileage</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="range-row">
@@ -454,7 +454,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-body">
         <div class="fsh" onclick="toggleFS('body')">
           <span class="fsh-label"><span class="dot"></span>Body Style</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="feat-grid">
@@ -474,7 +474,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-drive">
         <div class="fsh" onclick="toggleFS('drive')">
           <span class="fsh-label"><span class="dot"></span>Drivetrain</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="feat-grid">
@@ -490,7 +490,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-fuel">
         <div class="fsh" onclick="toggleFS('fuel')">
           <span class="fsh-label"><span class="dot"></span>Fuel Type</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="check-list">
@@ -507,7 +507,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-color">
         <div class="fsh" onclick="toggleFS('color')">
           <span class="fsh-label"><span class="dot"></span>Exterior Color</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="color-grid" id="colorGrid"></div>
@@ -518,7 +518,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-engine">
         <div class="fsh" onclick="toggleFS('engine')">
           <span class="fsh-label"><span class="dot"></span>Engine</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Cylinders</div>
@@ -540,7 +540,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section open" id="fs-lease">
         <div class="fsh" onclick="toggleFS('lease')">
           <span class="fsh-label"><span class="dot"></span>💰 Lease / Finance</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="lease-toggle" onclick="toggleLeaseMode()">
@@ -586,7 +586,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-flags">
         <div class="fsh" onclick="toggleFS('flags')">
           <span class="fsh-label"><span class="dot"></span>Special Criteria</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <div class="check-list">
@@ -601,7 +601,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
       <div class="filter-section" id="fs-location">
         <div class="fsh" onclick="toggleFS('location')">
           <span class="fsh-label"><span class="dot"></span>Location</span>
-          <span class="fsh-chev">▼</span>
+          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
         </div>
         <div class="fb">
           <input type="text" class="finput" id="zipInput" placeholder="ZIP Code" maxlength="5" style="margin-top:4px;margin-bottom:10px;" onchange="S.zip=this.value">
@@ -616,6 +616,10 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
         </div>
       </div>
 
+            <div style="background:rgba(43,132,254,0.08);border-bottom:1px solid var(--border);padding:12px 22px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Quick Start</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">① Pick <strong style="color:#fff">Make</strong> → ② Pick <strong style="color:#fff">Model</strong> → ③ Pick <strong style="color:#fff">Trim</strong> → Hit <strong style="color:var(--blue)">Search</strong></div>
+      </div>
       <div class="search-btn-wrap">
         <button class="search-btn" onclick="doSearch(0)">⚡ Search Now</button>
       </div>
@@ -879,21 +883,31 @@ function onMakeChange(make){
   S.model='';S.trim='';S.packages=[];
   var ms=document.getElementById('modelSelect');
   var ts=document.getElementById('trimSelect');
-  // Reset downstream
   ts.innerHTML='<option value="">— Select Model First —</option>';
   ts.disabled=true;
   document.getElementById('pkgArea').style.display='none';
 
+  // Reset trim
+  var step2=document.getElementById('step2badge');
+  var step3=document.getElementById('step3badge');
+
   if(!make){
     ms.innerHTML='<option value="">All Makes</option>';
-    ms.disabled=true;
+    ms.disabled=false;
+    if(step2){step2.style.background='var(--s3)';step2.style.color='var(--muted)';}
     return;
   }
-  // Populate models
+  // Populate models — ALWAYS enable regardless
   ms.disabled=false;
   ms.innerHTML='<option value="">All '+make+' Models</option>';
   var models=MODELS[make]||[];
   models.forEach(function(m){ms.appendChild(new Option(m,m));});
+  // Light up step 2
+  if(step2){step2.style.background='var(--blue)';step2.style.color='#fff';}
+  if(step3){step3.style.background='var(--s3)';step3.style.color='var(--muted)';}
+  // Open model section if closed
+  var fsModel=document.getElementById('fs-model');
+  if(fsModel&&!fsModel.classList.contains('open'))fsModel.classList.add('open');
 }
 
 function onModelChange(model){
@@ -901,21 +915,28 @@ function onModelChange(model){
   S.trim='';S.packages=[];
   var ts=document.getElementById('trimSelect');
   document.getElementById('pkgArea').style.display='none';
+  var step3=document.getElementById('step3badge');
 
-  if(!model){ts.innerHTML='<option value="">— Select Model First —</option>';ts.disabled=true;return;}
+  if(!model){
+    ts.innerHTML='<option value="">— Select Model First —</option>';
+    ts.disabled=true;
+    if(step3){step3.style.background='var(--s3)';step3.style.color='var(--muted)';}
+    return;
+  }
 
-  // Look up trims
   var key=S.make+'|'+model;
   var trims=TRIMS[key]||null;
   ts.innerHTML='<option value="">All '+model+' Trims</option>';
+  ts.disabled=false;
   if(trims&&trims.length){
-    ts.disabled=false;
     trims.forEach(function(t){ts.appendChild(new Option(t,t));});
   } else {
-    ts.disabled=false;
-    // Generic trims
-    ['Base','S','SE','LE','XLE','EX','LX','Sport','Premium','Limited','Platinum'].forEach(function(t){ts.appendChild(new Option(t,t));});
+    ['Base','S','SE','LE','XLE','EX','LX','Sport','Premium','Limited','Platinum','AWD','4WD'].forEach(function(t){ts.appendChild(new Option(t,t));});
   }
+  // Light up step 3 and open trim section
+  if(step3){step3.style.background='var(--blue)';step3.style.color='#fff';}
+  var fsTrim=document.getElementById('fs-trim');
+  if(fsTrim&&!fsTrim.classList.contains('open'))fsTrim.classList.add('open');
 }
 
 function onTrimChange(trim){
