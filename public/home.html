@@ -1640,31 +1640,84 @@ footer {
     <h2 class="section-title reveal">From Evaluation<br><span style="color:var(--blue)">To Keys.</span></h2>
     <p class="section-sub reveal">Four steps. Fully automated. No dealer visits required until you're ready to drive.</p>
 
-    <div class="steps-grid reveal">
-      <div class="step-card">
-        <span class="step-num">01</span>
-        <div class="step-title">Identify</div>
-        <p class="step-text">Enter your VIN. EVL decodes every factory spec, option, and MSRP detail in seconds. Or use Year/Make/Model if you don't have it.</p>
-        <span class="step-time">⚡ 60 Seconds</span>
+    <div class="accordion reveal" style="margin-top:48px;">
+
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left" style="color:#2B84FE;font-size:48px;font-weight:900;">01</span> Identify Your Vehicle</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Enter your VIN. EVL decodes every factory spec, option, and MSRP detail in seconds. Or use Year/Make/Model if you don't have it.
+            <ul style="margin-top:20px;">
+              <li>Enter your 17-digit VIN — takes 60 seconds</li>
+              <li>Full factory specs decoded instantly via MarketCheck</li>
+              <li>Year/Make/Model path available if no VIN</li>
+              <li>Window sticker and factory options verified</li>
+            </ul>
+            <span class="step-time" style="display:inline-flex;margin-top:24px;">⚡ 60 SECONDS</span>
+          </div>
+        </div>
       </div>
-      <div class="step-card">
-        <span class="step-num">02</span>
-        <div class="step-title">Evaluate</div>
-        <p class="step-text">Select condition. EVL cross-references MarketCheck, KBB, and real-time comps to establish your certified market value range.</p>
-        <span class="step-time">⚡ 2 Minutes</span>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left" style="color:#2B84FE;font-size:48px;font-weight:900;">02</span> Evaluate & Certify</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Select your vehicle condition. EVL cross-references MarketCheck, KBB, and real-time market comps to establish your certified value range.
+            <ul style="margin-top:20px;">
+              <li>Excellent / Good / Fair / Poor condition selection</li>
+              <li>3-book value comparison runs automatically</li>
+              <li>Real-time market comps within 100 miles</li>
+              <li>EVL VERIFIED badge issued on submission</li>
+            </ul>
+            <span class="step-time" style="display:inline-flex;margin-top:24px;">⚡ 2 MINUTES</span>
+          </div>
+        </div>
       </div>
-      <div class="step-card">
-        <span class="step-num">03</span>
-        <div class="step-title">Auction</div>
-        <p class="step-text">Your vehicle goes to a 24-hour competitive auction. Multiple dealers bid. EVL manages every detail — title, payoff, logistics.</p>
-        <span class="step-time">⚡ 24 Hours</span>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left" style="color:#2B84FE;font-size:48px;font-weight:900;">03</span> Competitive Auction</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Your vehicle goes to a 24-hour competitive auction. Multiple dealers bid. EVL manages every detail — title, payoff, logistics.
+            <ul style="margin-top:20px;">
+              <li>Issuing Dealer gets first look — 4 hour window</li>
+              <li>Open market auction if no dealer match</li>
+              <li>EVL handles all title and payoff coordination</li>
+              <li>You see every bid — full transparency</li>
+            </ul>
+            <span class="step-time" style="display:inline-flex;margin-top:24px;">⚡ 24 HOURS</span>
+          </div>
+        </div>
       </div>
-      <div class="step-card">
-        <span class="step-num">04</span>
-        <div class="step-title">Deliver</div>
-        <p class="step-text">Best offer confirmed. Equity applied. Your new vehicle delivered to your door — or your trade picked up. Deal done.</p>
-        <span class="step-time">⚡ 72 Hours</span>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left" style="color:#2B84FE;font-size:48px;font-weight:900;">04</span> Deliver & Drive</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Best offer confirmed. Equity applied to your next vehicle. Trade picked up or new vehicle delivered to your door. Deal completely done.
+            <ul style="margin-top:20px;">
+              <li>Best bid winner notified and confirmed</li>
+              <li>Trade equity applied to replacement vehicle</li>
+              <li>EVL coordinates pickup and delivery logistics</li>
+              <li>Complete documentation package delivered</li>
+            </ul>
+            <span class="step-time" style="display:inline-flex;margin-top:24px;">⚡ 72 HOURS TOTAL</span>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1675,31 +1728,126 @@ footer {
     <span class="section-label reveal">The Platform</span>
     <h2 class="section-title reveal">Everything You Need.<br><span style="color:var(--blue)">One Platform.</span></h2>
 
-    <div class="services-grid reveal">
-      <a href="https://evl-decode.vercel.app" class="service-card">
-        <span class="service-icon">🔄</span>
-        <div class="service-title">Trade-In Evaluator</div>
-        <p class="service-text">Get a certified EVL appraisal for your current vehicle. VIN decode, condition assessment, instant value range, and EVL VERIFIED badge — in minutes.</p>
-        <span class="service-tag">Start Evaluation →</span>
-      </a>
-      <a href="https://evl-decode.vercel.app/find" class="service-card">
-        <span class="service-icon">🔍</span>
-        <div class="service-title">Vehicle Acquisition</div>
-        <p class="service-text">Tell EVL what you want. Our intelligence network scans the market, identifies targets, and secures acquisition terms on your behalf — before you visit a dealer.</p>
-        <span class="service-tag">Find My Vehicle →</span>
-      </a>
-      <a href="https://evl-decode.vercel.app/find" class="service-card">
-        <span class="service-icon">⚖️</span>
-        <div class="service-title">Equity Intelligence</div>
-        <p class="service-text">Know your exact equity position before you walk into any dealership. EVL calculates payoff, market value, and your real negotiating position.</p>
-        <span class="service-tag">Calculate Equity →</span>
-      </a>
-      <a href="https://evl-decode.vercel.app/find" class="service-card">
-        <span class="service-icon">📋</span>
-        <div class="service-title">Title & Payoff Management</div>
-        <p class="service-text">Liens, payoffs, title transfers, lost titles — EVL coordinates everything with your lender so the deal never dies on a paperwork problem.</p>
-        <span class="service-tag">Learn More →</span>
-      </a>
+    <div class="accordion reveal" style="margin-top:48px;">
+
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left">🔄</span> Trade-In Evaluator</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Get a certified EVL appraisal for your current vehicle. VIN decode, condition assessment, instant value range, and EVL VERIFIED badge — in minutes.
+            <ul style="margin-top:20px;">
+              <li>VIN decoded — full factory spec verified</li>
+              <li>Condition selected — Excellent / Good / Fair / Poor</li>
+              <li>Instant value range from 3 book sources</li>
+              <li>EVL VERIFIED badge issued on submission</li>
+            </ul>
+            <a href="https://evl-decode.vercel.app" style="display:inline-block;margin-top:28px;background:#2B84FE;color:#fff;padding:18px 40px;font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;text-decoration:none;text-transform:uppercase;">START MY EVALUATION →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left">🔍</span> Vehicle Acquisition</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Tell EVL what you want. Our intelligence network scans the market, identifies targets, and secures acquisition terms on your behalf — before you visit a dealer.
+            <ul style="margin-top:20px;">
+              <li>Tell us the year, make, model and trim you want</li>
+              <li>EVL scans dealer inventory within your radius</li>
+              <li>We negotiate acquisition terms before you arrive</li>
+              <li>No dealer visit until the deal is already structured</li>
+            </ul>
+            <a href="https://evl-decode.vercel.app/find" style="display:inline-block;margin-top:28px;background:#2B84FE;color:#fff;padding:18px 40px;font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;text-decoration:none;text-transform:uppercase;">FIND MY VEHICLE →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left">⚖️</span> Equity Intelligence</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Know your exact equity position before you walk into any dealership. EVL calculates your payoff, market value, and real negotiating power.
+            <ul style="margin-top:20px;">
+              <li>10-day payoff quote pulled from your lender</li>
+              <li>Market value established via 3-book comparison</li>
+              <li>Positive or negative equity calculated instantly</li>
+              <li>Equity swing forecast — best time to trade shown</li>
+            </ul>
+            <a href="https://evl-decode.vercel.app/find" style="display:inline-block;margin-top:28px;background:#00C853;color:#000;padding:18px 40px;font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;text-decoration:none;text-transform:uppercase;">CALCULATE MY EQUITY →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left">📋</span> Title and Payoff Management</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Liens, payoffs, title transfers, lost titles — EVL coordinates everything with your lender so your deal never dies on a paperwork problem.
+            <ul style="margin-top:20px;">
+              <li>Lien payoff coordinated directly with your lender</li>
+              <li>Lost title replacement — EVL handles all DMV paperwork</li>
+              <li>Out-of-state title transfers managed end to end</li>
+              <li>Joint ownership — both parties signed digitally</li>
+            </ul>
+            <a href="https://evl-decode.vercel.app/find" style="display:inline-block;margin-top:28px;background:#2B84FE;color:#fff;padding:18px 40px;font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;text-decoration:none;text-transform:uppercase;">LEARN MORE →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left">📱</span> Digital Glovebox</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            Your EVL file follows your vehicle for life. Window sticker, service records, Carfax, and factory options — all documented, all adding value at your next trade.
+            <ul style="margin-top:20px;">
+              <li>Window sticker on file adds up to $800 at resale</li>
+              <li>Full service record adds $500-$1,200 to trade value</li>
+              <li>Clean Carfax documented adds $300-$600</li>
+              <li>Factory options verified adds $1,200+ to appraisal</li>
+            </ul>
+            <div style="margin-top:24px;padding:24px;background:rgba(0,200,83,0.1);border:2px solid #00C853;">
+              <span style="font-size:26px;font-weight:900;color:#00C853;">Total Glovebox Value: +$2,800 at next trade</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title"><span class="accordion-icon-left">📊</span> Market Timing Analytics</div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            EVL tells you the best time to sell or trade your vehicle. Sell in the wrong month and lose $1,800. EVL's analytics put you in the peak window every time.
+            <ul style="margin-top:20px;">
+              <li>Trucks peak in Spring — March through May</li>
+              <li>SUVs peak before winter — September through November</li>
+              <li>Sedans peak in tax refund season — February through April</li>
+              <li>EVL alerts you when your vehicle hits peak market value</li>
+            </ul>
+            <div style="margin-top:24px;padding:24px;background:rgba(43,132,254,0.1);border:2px solid #2B84FE;">
+              <span style="font-size:26px;font-weight:900;color:#2B84FE;">Avg Timing Gain: +$1,800 per transaction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
