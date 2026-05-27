@@ -1069,6 +1069,91 @@ footer {
   
   .footer-logo { font-size: 26px !important; }
   .footer-text { font-size: 16px !important; color: #888 !important; }
+
+  /* BUBBLES SECTION */
+  .bubbles-section { background: var(--bg); padding: 100px 40px; }
+  .bubbles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 64px; }
+  
+  .bubble-card { 
+    background: var(--s1); 
+    border: 1px solid rgba(43,132,254,0.15);
+    padding: 40px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 28px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .bubble-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(43,132,254,0.2); }
+  .total-card { 
+    grid-column: span 3; 
+    flex-direction: row; 
+    background: linear-gradient(135deg, rgba(43,132,254,0.1), rgba(0,200,83,0.1));
+    border: 2px solid var(--gold);
+  }
+  
+  .bubble-circle { 
+    width: 180px; height: 180px; 
+    border-radius: 50%; 
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex-shrink: 0;
+    animation: bubblePulse 3s ease-in-out infinite;
+  }
+  .total-card .bubble-circle { width: 240px; height: 240px; }
+  
+  @keyframes bubblePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  .bubble-circle.blue { background: radial-gradient(circle, rgba(43,132,254,0.4), rgba(43,132,254,0.1)); border: 3px solid #2B84FE; }
+  .bubble-circle.green { background: radial-gradient(circle, rgba(0,200,83,0.4), rgba(0,200,83,0.1)); border: 3px solid #00C853; }
+  .bubble-circle.gold { background: radial-gradient(circle, rgba(255,184,0,0.4), rgba(255,184,0,0.1)); border: 3px solid #FFB800; }
+  .bubble-circle.teal { background: radial-gradient(circle, rgba(0,210,255,0.4), rgba(0,210,255,0.1)); border: 3px solid #00d2ff; }
+  .bubble-circle.purple { background: radial-gradient(circle, rgba(147,51,234,0.4), rgba(147,51,234,0.1)); border: 3px solid #9333EA; }
+  .bubble-circle.total-bubble { background: radial-gradient(circle, rgba(255,184,0,0.5), rgba(255,184,0,0.15)); border: 4px solid var(--gold); animation: totalPulse 2s ease-in-out infinite; }
+  
+  @keyframes totalPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,184,0,0.4); }
+    50% { transform: scale(1.08); box-shadow: 0 0 40px 20px rgba(255,184,0,0.1); }
+  }
+  
+  .bubble-amount { 
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 36px; font-weight: 900; color: #ffffff;
+    line-height: 1;
+  }
+  .total-card .bubble-amount { font-size: 48px; }
+  .bubble-label { font-size: 13px; font-weight: 900; letter-spacing: 2px; color: rgba(255,255,255,0.7); text-transform: uppercase; margin-top: 4px; }
+  
+  .bubble-info { flex: 1; }
+  .bubble-title { font-family: "Barlow Condensed", sans-serif; font-size: 26px; font-weight: 900; color: #ffffff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+  .bubble-them { font-size: 20px; font-weight: 700; color: #FF4444; margin-bottom: 8px; }
+  .bubble-us { font-size: 20px; font-weight: 700; color: #00C853; margin-bottom: 12px; }
+  .them-label, .us-label { font-size: 13px; font-weight: 900; letter-spacing: 2px; display: inline-block; margin-right: 8px; padding: 2px 8px; }
+  .them-label { background: rgba(255,68,68,0.2); color: #FF4444; }
+  .us-label { background: rgba(0,200,83,0.2); color: #00C853; }
+  .bubble-source { font-size: 14px; color: var(--gray); font-style: italic; margin-top: 8px; }
+
+  /* VS BAR */
+  .vs-bar { margin-top: 64px; background: var(--s1); border: 2px solid rgba(43,132,254,0.2); padding: 48px; }
+  .vs-bar-title { font-family: "Barlow Condensed", sans-serif; font-size: 28px; font-weight: 900; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; text-align: center; }
+  .vs-bar-row { display: flex; align-items: center; gap: 24px; }
+  .vs-bar-label { font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; width: 160px; flex-shrink: 0; }
+  .them-bar-label { color: #FF4444; }
+  .us-bar-label { color: #00C853; }
+  .vs-bar-track { flex: 1; background: rgba(255,255,255,0.05); height: 64px; position: relative; }
+  .vs-bar-fill { height: 100%; display: flex; align-items: center; padding: 0 20px; font-size: 18px; font-weight: 700; color: #ffffff; transition: width 2s ease; }
+  .them-fill { background: linear-gradient(90deg, #FF4444, #cc0000); }
+  .us-fill { background: linear-gradient(90deg, #00C853, #009940); }
+
+  @media (max-width: 768px) {
+    .bubbles-grid { grid-template-columns: 1fr; }
+    .total-card { flex-direction: column; grid-column: span 1; }
+    .vs-bar-row { flex-direction: column; align-items: flex-start; }
+    .vs-bar-label { width: auto; }
+  }
 </style>
 </head>
 <body>
@@ -1237,6 +1322,124 @@ footer {
   </div>
 </section>
 
+
+<!-- SAVINGS BUBBLES -->
+<section class="bubbles-section" id="savings">
+  <div class="container">
+    <span class="section-label reveal">The EVL Advantage</span>
+    <h2 class="section-title reveal">The Average EVL Customer<br><span style="color:var(--green)">Saves $13,409.</span></h2>
+    <p class="section-sub reveal">Compared to walking into a dealer alone. Here is exactly where the money comes from.</p>
+
+    <div class="bubbles-grid reveal">
+
+      <div class="bubble-card" data-amount="4300">
+        <div class="bubble-circle blue">
+          <div class="bubble-amount" id="b1">$0</div>
+          <div class="bubble-label">SAVED</div>
+        </div>
+        <div class="bubble-info">
+          <div class="bubble-title">🔵 Trade Intelligence</div>
+          <div class="bubble-them"><span class="them-label">DEALER OFFERS</span> $18,500</div>
+          <div class="bubble-us"><span class="us-label">EVL AUCTION</span> $22,800</div>
+          <div class="bubble-source">Source: MarketCheck real comp data</div>
+        </div>
+      </div>
+
+      <div class="bubble-card" data-amount="2621">
+        <div class="bubble-circle green">
+          <div class="bubble-amount" id="b2">$0</div>
+          <div class="bubble-label">SAVED</div>
+        </div>
+        <div class="bubble-info">
+          <div class="bubble-title">🟢 Finance Dance</div>
+          <div class="bubble-them"><span class="them-label">DEALER RATE</span> 8.9% APR</div>
+          <div class="bubble-us"><span class="us-label">EVL RATE</span> 5.9% APR</div>
+          <div class="bubble-source">Source: CFPB — avg dealer markup $1,500-$3,000</div>
+        </div>
+      </div>
+
+      <div class="bubble-card" data-amount="1888">
+        <div class="bubble-circle gold">
+          <div class="bubble-amount" id="b3">$0</div>
+          <div class="bubble-label">SAVED</div>
+        </div>
+        <div class="bubble-info">
+          <div class="bubble-title">🟡 No Dealer Packages</div>
+          <div class="bubble-them"><span class="them-label">DPP LOADED</span> $1,888</div>
+          <div class="bubble-us"><span class="us-label">EVL DEALERS</span> $0</div>
+          <div class="bubble-source">Source: Consumer Reports, NADA data</div>
+        </div>
+      </div>
+
+      <div class="bubble-card" data-amount="2800">
+        <div class="bubble-circle teal">
+          <div class="bubble-amount" id="b4">$0</div>
+          <div class="bubble-label">AT RESALE</div>
+        </div>
+        <div class="bubble-info">
+          <div class="bubble-title">🔷 Digital Glovebox</div>
+          <div class="bubble-them"><span class="them-label">NO RECORDS</span> Base value</div>
+          <div class="bubble-us"><span class="us-label">EVL FILE</span> WS + Service + Carfax</div>
+          <div class="bubble-source">Source: iSeeCars, CarGurus resale data</div>
+        </div>
+      </div>
+
+      <div class="bubble-card" data-amount="1800">
+        <div class="bubble-circle purple">
+          <div class="bubble-amount" id="b5">$0</div>
+          <div class="bubble-label">TIMING GAIN</div>
+        </div>
+        <div class="bubble-info">
+          <div class="bubble-title">🟣 Timing Analytics</div>
+          <div class="bubble-them"><span class="them-label">WRONG MONTH</span> -$1,800 avg</div>
+          <div class="bubble-us"><span class="us-label">EVL TIMING</span> Peak market</div>
+          <div class="bubble-source">Source: iSeeCars annual depreciation study</div>
+        </div>
+      </div>
+
+      <div class="bubble-card total-card" data-amount="13409">
+        <div class="bubble-circle total-bubble">
+          <div class="bubble-amount" id="b6">$0</div>
+          <div class="bubble-label">TOTAL SAVED</div>
+        </div>
+        <div class="bubble-info">
+          <div class="bubble-title" style="color:var(--gold);font-size:32px;">💰 Total EVL Advantage</div>
+          <div style="font-size:20px;color:#ffffff;line-height:2;margin-top:12px;">
+            Trade Intelligence: <strong style="color:var(--green)">+$4,300</strong><br>
+            Finance Savings: <strong style="color:var(--green)">+$2,621</strong><br>
+            No DPP: <strong style="color:var(--green)">+$1,888</strong><br>
+            Glovebox Resale: <strong style="color:var(--green)">+$2,800</strong><br>
+            Timing Analytics: <strong style="color:var(--green)">+$1,800</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- US VS THEM BAR -->
+    <div class="vs-bar reveal">
+      <div class="vs-bar-title">💰 EVL vs. Walking In Alone — On a $35,000 Vehicle</div>
+      <div class="vs-bar-row">
+        <div class="vs-bar-label them-bar-label">DEALER DIRECT</div>
+        <div class="vs-bar-track">
+          <div class="vs-bar-fill them-fill" style="width:100%">
+            <span>$35,000 sticker + $13,409 lost</span>
+          </div>
+        </div>
+      </div>
+      <div class="vs-bar-row" style="margin-top:16px;">
+        <div class="vs-bar-label us-bar-label">WITH EVL</div>
+        <div class="vs-bar-track">
+          <div class="vs-bar-fill us-fill" style="width:67%">
+            <span>$35,000 — you keep $13,409 more</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="how-section" id="how">
   <div class="container">
@@ -1394,5 +1597,36 @@ function toggleAccordion(header) {
   document.querySelectorAll('.accordion-item').forEach(function(i) { i.classList.remove('open'); });
   if (!isOpen) item.classList.add('open');
 }
-</script></body>
+</script>
+<script>
+// Animate bubble counters when visible
+function animateCounter(el, target, duration) {
+  var start = 0;
+  var step = target / (duration / 16);
+  var timer = setInterval(function() {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = '$' + Math.floor(start).toLocaleString();
+  }, 16);
+}
+
+var bubblesAnimated = false;
+var bubbleObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting && !bubblesAnimated) {
+      bubblesAnimated = true;
+      setTimeout(function() { animateCounter(document.getElementById('b1'), 4300, 1500); }, 0);
+      setTimeout(function() { animateCounter(document.getElementById('b2'), 2621, 1500); }, 200);
+      setTimeout(function() { animateCounter(document.getElementById('b3'), 1888, 1500); }, 400);
+      setTimeout(function() { animateCounter(document.getElementById('b4'), 2800, 1500); }, 600);
+      setTimeout(function() { animateCounter(document.getElementById('b5'), 1800, 1500); }, 800);
+      setTimeout(function() { animateCounter(document.getElementById('b6'), 13409, 2000); }, 1000);
+    }
+  });
+}, { threshold: 0.2 });
+
+var bubblesGrid = document.querySelector('.bubbles-grid');
+if (bubblesGrid) bubbleObserver.observe(bubblesGrid);
+</script>
+</body>
 </html>
