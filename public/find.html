@@ -302,7 +302,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
 
   <!-- DRAWER 1: CONDITION + PURCHASE TYPE -->
   <div class="drawer open active" id="d1">
-    <div class="drawer-head" onclick="toggleDrawer(1)" aria-expanded="true" role="button">
+    <div class="drawer-head">
       <div class="drawer-left">
         <div class="drawer-num">1</div>
         <div>
@@ -313,7 +313,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
       </div>
       <div class="drawer-right">
         <span class="drawer-status" id="d1status">IN PROGRESS</span>
-        <span class="drawer-arrow">▼</span>
+        <button onclick="toggleDrawer(1)" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;">▼</button>
       </div>
     </div>
     <div class="drawer-body" style="display:block;" onclick="event.stopPropagation();">
@@ -342,7 +342,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
 
   <!-- DRAWER 2: MAKE + MODEL + TRIM -->
   <div class="drawer" id="d2">
-    <div class="drawer-head" onclick="toggleDrawer(2)" aria-expanded="false" role="button">
+    <div class="drawer-head">
       <div class="drawer-left">
         <div class="drawer-num">2</div>
         <div>
@@ -353,7 +353,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
       </div>
       <div class="drawer-right">
         <span class="drawer-status" id="d2status">PENDING</span>
-        <span class="drawer-arrow">▼</span>
+        <button onclick="toggleDrawer(2)" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;">▼</button>
       </div>
     </div>
     <div class="drawer-body" onclick="event.stopPropagation();">
@@ -413,7 +413,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
 
   <!-- DRAWER 3: BUDGET + LOCATION -->
   <div class="drawer" id="d3">
-    <div class="drawer-head" onclick="toggleDrawer(3)" aria-expanded="false" role="button">
+    <div class="drawer-head">
       <div class="drawer-left">
         <div class="drawer-num">3</div>
         <div>
@@ -424,7 +424,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
       </div>
       <div class="drawer-right">
         <span class="drawer-status" id="d3status">PENDING</span>
-        <span class="drawer-arrow">▼</span>
+        <button onclick="toggleDrawer(3)" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;">▼</button>
       </div>
     </div>
     <div class="drawer-body" onclick="event.stopPropagation();">
@@ -665,6 +665,26 @@ var PACKAGES={
   'Land Rover|Defender|110 SE':['Adventure Pack — side-mounted gear carrier, expedition roof rack, Explore Pro tires','Cold Climate Pack — heated front seats, heated steering wheel, heated windshield','Black Pack — gloss black exterior elements and badging']
 };
 
+/* ===== DRAWER INIT — wire up after DOM ready ===== */
+document.addEventListener('DOMContentLoaded', function(){
+  // Show drawer 1 body on load
+  var b1 = document.querySelector('#d1 .drawer-body');
+  if(b1) b1.style.display = 'block';
+  // Wire drawer titles to toggle
+  [1,2,3].forEach(function(n){
+    var head = document.querySelector('#d'+n+' .drawer-head');
+    if(head){
+      head.style.cursor = 'pointer';
+      head.addEventListener('click', function(e){
+        // Only toggle if clicking the head itself, not a child button/select
+        if(e.target === head || e.target.closest('.drawer-left')){
+          toggleDrawer(n);
+        }
+      });
+    }
+  });
+});
+
 /* ===== STATE ===== */
 var purchaseType='buy';
 var selectedColor='';
@@ -710,19 +730,22 @@ var COLORS=[
 /* ===== DRAWER SYSTEM ===== */
 function toggleDrawer(n){
   var d=document.getElementById('d'+n);
+  if(!d) return;
   var body=d.querySelector('.drawer-body');
+  if(!body) return;
   var isOpen=body.style.display==='block';
   body.style.display=isOpen?'none':'block';
-  d.querySelector('.drawer-head').setAttribute('aria-expanded',!isOpen);
 }
 function openD(n){
   [1,2,3].forEach(function(i){
     var d=document.getElementById('d'+i);
+    if(!d) return;
     var body=d.querySelector('.drawer-body');
+    if(!body) return;
     if(i===n){
       body.style.display='block';
+      body.style.visibility='visible';
       d.classList.add('active');
-      d.querySelector('.drawer-head').setAttribute('aria-expanded','true');
     } else {
       body.style.display='none';
     }
@@ -730,9 +753,11 @@ function openD(n){
   openDrawer=n;
   setTimeout(function(){
     var el=document.getElementById('d'+n);
-    var top=el.getBoundingClientRect().top+window.pageYOffset-90;
-    window.scrollTo({top:top,behavior:'smooth'});
-  },100);
+    if(el){
+      var top=el.getBoundingClientRect().top+window.pageYOffset-90;
+      window.scrollTo({top:top,behavior:'smooth'});
+    }
+  },150);
 }
 function nextDrawer(n){
   updateSummary(n);
