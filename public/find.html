@@ -4,460 +4,347 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Find My Vehicle — Express Vehicle Locators</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0A0A0C;--s1:#111114;--s2:#16161A;--s3:#1E1E23;
-  --blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;
-  --red:#FF3333;--orange:#FF6B00;--text:#FFFFFF;--muted:#9B9BAA;
-  --border:rgba(43,132,254,0.2);
-  --fs-xs:15px;--fs-sm:17px;--fs-md:20px;--fs-lg:26px;--fs-xl:36px;--fs-2xl:52px;--fs-3xl:72px;
-}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:"Barlow",sans-serif;font-size:var(--fs-sm);min-height:100vh;}
-
-/* NAV */
-nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;backdrop-filter:blur(16px);}
-.nav-logo{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;letter-spacing:1px;color:#fff;text-decoration:none;}
-.nav-logo span{color:var(--blue);}
-.nav-links{display:flex;gap:32px;align-items:center;}
-.nav-link{color:var(--muted);text-decoration:none;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color 0.2s;}
-.nav-link:hover,.nav-link.active{color:#fff;}
-.nav-cta{background:var(--blue);color:#fff;padding:12px 28px;font-weight:800;font-size:15px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
-.nav-cta:hover{background:var(--blue2);}
+:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--orange:#FF6B00;--muted:#9B9BAA;--border:rgba(43,132,254,0.2);}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;}
+nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:#fff;text-decoration:none;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:10px 20px;}
 
 /* HERO */
-.hero{background:linear-gradient(160deg,#071220 0%,#0A0A0C 65%);border-bottom:2px solid var(--border);padding:72px 48px 64px;text-align:center;position:relative;overflow:hidden;}
-.hero::before{content:"";position:absolute;top:-400px;left:50%;transform:translateX(-50%);width:1000px;height:1000px;background:radial-gradient(circle,rgba(43,132,254,0.09) 0%,transparent 70%);pointer-events:none;}
-.hero-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(43,132,254,0.14);border:2px solid rgba(43,132,254,0.4);color:var(--blue);font-size:var(--fs-xs);font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:28px;}
-.hero-title{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-3xl);font-weight:900;text-transform:uppercase;letter-spacing:4px;line-height:0.9;margin-bottom:20px;}
-.hero-title span{color:var(--blue);}
-.hero-sub{color:var(--muted);font-size:var(--fs-md);max-width:620px;margin:0 auto 44px;line-height:1.7;font-weight:500;}
+.hero{background:linear-gradient(160deg,#071220,var(--bg));padding:64px 40px 56px;text-align:center;border-bottom:2px solid var(--border);}
+.hero-badge{display:inline-block;background:rgba(43,132,254,0.14);border:2px solid rgba(43,132,254,0.4);color:var(--blue);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:24px;}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-size:72px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:.95;margin-bottom:18px;}
+.hero h1 span{color:var(--blue);}
+.hero p{color:var(--muted);font-size:19px;max-width:580px;margin:0 auto 40px;line-height:1.6;}
 
 /* AI BAR */
-.ai-wrap{max-width:900px;margin:0 auto;}
-.ai-label{font-size:var(--fs-xs);font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;text-align:left;}
-.ai-bar{display:flex;background:var(--s1);border:3px solid var(--blue);min-height:72px;}
-.ai-icon{padding:0 20px;display:flex;align-items:center;color:var(--blue);font-size:28px;flex-shrink:0;}
-.ai-input{flex:1;background:none;border:none;color:#fff;font-family:"Barlow",sans-serif;font-size:var(--fs-md);font-weight:500;padding:20px 0;outline:none;min-height:72px;}
-.ai-input::placeholder{color:var(--muted);}
-.ai-go{background:var(--blue);border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-lg);font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:0 36px;cursor:pointer;transition:all 0.2s;white-space:nowrap;min-height:72px;}
-.ai-go:hover{background:var(--blue2);}
-.ai-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
-.ai-chip{background:rgba(43,132,254,0.1);border:2px solid rgba(43,132,254,0.25);color:var(--muted);font-size:var(--fs-xs);font-weight:700;padding:8px 16px;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
-.ai-chip:hover{border-color:var(--blue);color:#fff;}
+.ai-bar{display:flex;max-width:860px;margin:0 auto;border:3px solid var(--blue);background:var(--s1);}
+.ai-bar input{flex:1;background:none;border:none;color:#fff;font-size:18px;padding:20px 16px;outline:none;}
+.ai-bar input::placeholder{color:var(--muted);}
+.ai-bar button{background:var(--blue);border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;padding:0 32px;cursor:pointer;}
+.ai-bar button:hover{background:var(--blue2);}
+.chips{display:flex;gap:8px;flex-wrap:wrap;max-width:860px;margin:14px auto 0;}
+.chip{background:rgba(43,132,254,0.1);border:1px solid rgba(43,132,254,0.25);color:var(--muted);font-size:13px;font-weight:700;padding:7px 14px;cursor:pointer;}
+.chip:hover{border-color:var(--blue);color:#fff;}
 
-/* DIVIDER */
-.divider{text-align:center;padding:36px 0 28px;position:relative;}
-.divider::before{content:"";position:absolute;top:50%;left:48px;right:48px;height:2px;background:var(--border);}
-.divider-text{background:var(--bg);padding:0 24px;color:var(--muted);font-size:var(--fs-xs);font-weight:800;letter-spacing:3px;text-transform:uppercase;position:relative;display:inline-block;}
+/* STRIP */
+.strip{background:linear-gradient(90deg,var(--blue2),var(--blue));padding:18px 40px;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;}
+.strip-item{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#fff;}
 
-/* DRAWER SYSTEM */
-.drawers{max-width:960px;margin:0 auto;padding:0 48px;}
-.drawer{background:var(--s1);border:2px solid var(--border);margin-bottom:12px;transition:border-color 0.2s;}
-.drawer.active{border-color:var(--blue);}
-.drawer-head{padding:22px 28px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;min-height:76px;}
-.drawer-head:hover{background:rgba(43,132,254,0.04);}
-.drawer-left{display:flex;align-items:center;gap:16px;}
-.drawer-num{width:40px;height:40px;background:var(--s3);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-md);font-weight:900;color:var(--muted);flex-shrink:0;transition:all 0.2s;}
-.drawer.active .drawer-num{background:var(--blue);border-color:var(--blue);color:#fff;}
-.drawer.done .drawer-num{background:var(--green);border-color:var(--green);color:#000;}
-.drawer-title{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-xl);font-weight:900;text-transform:uppercase;letter-spacing:2px;}
-.drawer-subtitle{font-size:var(--fs-xs);color:var(--muted);font-weight:600;margin-top:3px;}
-.drawer-summary{font-size:var(--fs-sm);font-weight:700;color:var(--blue);margin-top:3px;}
-.drawer-right{display:flex;align-items:center;gap:16px;}
-.drawer-status{font-size:var(--fs-xs);font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border:2px solid var(--border);color:var(--muted);}
-.drawer.active .drawer-status{background:rgba(43,132,254,0.12);border-color:var(--blue);color:var(--blue);}
-.drawer.done .drawer-status{background:rgba(0,200,83,0.12);border-color:var(--green);color:var(--green);}
-.drawer-arrow{font-size:24px;color:var(--muted);transition:transform 0.25s;}
-.drawer.open .drawer-arrow{transform:rotate(180deg);}
-.drawer-body{display:none;padding:0 28px 28px;border-top:2px solid var(--border);}
-.drawer.open .drawer-body{display:block;}
+/* FORM */
+.form-wrap{max-width:900px;margin:0 auto;padding:48px 40px 0;}
+.divider{text-align:center;margin-bottom:32px;position:relative;}
+.divider::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border);}
+.divider span{background:var(--bg);padding:0 20px;color:var(--muted);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;position:relative;}
 
-/* Form controls */
-.frow{display:grid;gap:16px;margin-top:20px;}
-.frow-2{grid-template-columns:1fr 1fr;}
-.frow-3{grid-template-columns:1fr 1fr 1fr;}
-.frow-4{grid-template-columns:1fr 1fr 1fr 1fr;}
-.fgroup{display:flex;flex-direction:column;gap:8px;}
-.flabel{font-size:var(--fs-xs);font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-.fselect,.finput{background:var(--s2);border:2px solid var(--border);color:var(--text);font-family:"Barlow",sans-serif;font-size:var(--fs-sm);font-weight:600;padding:16px 18px;width:100%;transition:border-color 0.2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%239B9BAA' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;min-height:56px;}
-.finput{background-image:none;}
-.fselect:focus,.finput:focus{outline:none;border-color:var(--blue);}
-.fselect option{background:#1a1a20;}
+/* STEP CARDS */
+.step-card{background:var(--s1);border:2px solid var(--border);margin-bottom:16px;overflow:hidden;}
+.step-head{display:flex;align-items:center;gap:16px;padding:22px 28px;background:var(--s1);}
+.step-num{width:44px;height:44px;background:var(--s2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;color:var(--muted);flex-shrink:0;}
+.step-num.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.step-num.done{background:var(--green);border-color:var(--green);color:#000;}
+.step-head-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.step-head-sub{font-size:14px;color:var(--muted);margin-top:2px;}
+.step-body{padding:24px 28px 28px;border-top:2px solid var(--border);}
+.step-body.hidden{display:none;}
 
-/* Toggle buttons */
-.toggle-row{display:flex;gap:10px;margin-top:8px;}
-.tbtn{flex:1;padding:16px;background:var(--s2);border:2px solid var(--border);color:var(--muted);font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-lg);font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;min-height:60px;}
+/* FORM CONTROLS */
+.frow{display:grid;gap:14px;margin-bottom:14px;}
+.f2{grid-template-columns:1fr 1fr;}
+.f3{grid-template-columns:1fr 1fr 1fr;}
+.f4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.fgroup label{display:block;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+select,input[type=number],input[type=text]{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:16px;font-weight:600;padding:14px 16px;appearance:none;-webkit-appearance:none;outline:none;transition:border-color .2s;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B9BAA' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-color:var(--s2);}
+select:focus,input:focus{border-color:var(--blue);}
+select option{background:#1a1a20;}
+
+/* TOGGLE BUTTONS */
+.trow{display:flex;gap:10px;}
+.tbtn{flex:1;padding:14px;background:var(--s2);border:2px solid var(--border);color:var(--muted);font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
 .tbtn:hover{border-color:var(--blue);color:#fff;}
-.tbtn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.tbtn.on{background:var(--blue);border-color:var(--blue);color:#fff;}
 
-/* Color swatches */
-.swatch-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
-.swatch{width:48px;height:48px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:all 0.2s;position:relative;flex-shrink:0;}
-.swatch:hover,.swatch.active{border-color:#fff;transform:scale(1.2);}
-.swatch .stip{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-size:13px;font-weight:700;padding:3px 8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;z-index:10;}
-.swatch:hover .stip{opacity:1;}
+/* COLORS */
+.swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+.sw{width:44px;height:44px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:all .2s;position:relative;}
+.sw:hover,.sw.on{border-color:#fff;transform:scale(1.18);}
+.sw-tip{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-size:11px;padding:2px 7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;}
+.sw:hover .sw-tip{opacity:1;}
 
-/* Package chips */
-.pkg-wrap{margin-top:16px;}
-.pkg-label{font-size:var(--fs-xs);font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-.pkg-grid{display:flex;flex-direction:column;gap:8px;}
-.pkg-btn{background:var(--s2);border:2px solid var(--border);color:var(--muted);font-size:var(--fs-sm);font-weight:600;padding:14px 18px;cursor:pointer;transition:all 0.2s;text-align:left;line-height:1.4;}
-.pkg-btn:hover{border-color:var(--blue);color:#fff;}
-.pkg-btn.sel{background:rgba(43,132,254,0.12);border-color:var(--blue);color:var(--blue);}
+/* PACKAGES */
+.pkg-list{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.pkgbtn{background:var(--s2);border:2px solid var(--border);color:var(--muted);font-size:15px;font-weight:600;padding:13px 16px;cursor:pointer;text-align:left;transition:all .2s;line-height:1.4;}
+.pkgbtn:hover{border-color:var(--blue);color:#fff;}
+.pkgbtn.on{background:rgba(43,132,254,.12);border-color:var(--blue);color:var(--blue);}
 
-/* Next button */
-.next-btn{display:block;width:100%;background:var(--blue);border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-xl);font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:20px;cursor:pointer;margin-top:20px;transition:all 0.2s;}
+/* NEXT BTN */
+.next-btn{display:block;width:100%;background:var(--blue);border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:20px;cursor:pointer;margin-top:20px;transition:all .2s;}
 .next-btn:hover{background:var(--blue2);}
 
-/* SEARCH NOW */
-.search-wrap{max-width:960px;margin:0 auto;padding:20px 48px 60px;}
-.search-btn{display:block;width:100%;background:linear-gradient(90deg,var(--blue2),var(--blue));border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-2xl);font-weight:900;letter-spacing:4px;text-transform:uppercase;padding:28px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
-.search-btn::before{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);transition:left 0.5s;}
-.search-btn:hover::before{left:100%;}
+/* BIG SEARCH */
+.search-wrap{max-width:900px;margin:20px auto 0;padding:0 40px 60px;}
+.search-btn{display:block;width:100%;background:linear-gradient(90deg,var(--blue2),var(--blue));border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:40px;font-weight:900;letter-spacing:4px;text-transform:uppercase;padding:28px;cursor:pointer;transition:all .2s;}
 .search-btn:hover{background:linear-gradient(90deg,var(--blue),var(--blue2));}
-.search-note{text-align:center;color:var(--muted);font-size:var(--fs-xs);margin-top:14px;font-weight:600;letter-spacing:1px;}
+.search-note{text-align:center;color:var(--muted);font-size:14px;margin-top:12px;font-weight:700;letter-spacing:1px;}
 
 /* LOADING */
-.loading-overlay{display:none;position:fixed;inset:0;background:rgba(5,10,18,0.96);backdrop-filter:blur(8px);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
-.loading-overlay.show{display:flex;}
-.loading-logo{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-xl);font-weight:900;letter-spacing:2px;color:var(--blue);margin-bottom:8px;}
-.spinner{width:64px;height:64px;border:4px solid var(--s3);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;}
-.load-steps{display:flex;flex-direction:column;gap:14px;align-items:center;}
-.load-step{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-lg);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--s3);transition:all 0.4s;}
-.load-step.active{color:var(--blue);text-shadow:0 0 20px rgba(43,132,254,0.5);}
-.load-step.done{color:var(--green);}
+.loading{display:none;position:fixed;inset:0;background:rgba(5,10,18,.96);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:28px;}
+.loading.show{display:flex;}
+.spin{width:64px;height:64px;border:4px solid var(--s2);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
+.load-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--blue);}
+.load-steps{display:flex;flex-direction:column;gap:12px;align-items:center;}
+.ls{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#333;transition:color .3s;}
+.ls.a{color:var(--blue);}
+.ls.d{color:var(--green);}
 
 /* RESULTS */
-.results{max-width:960px;margin:0 auto;padding:0 48px 80px;display:none;}
+.results{max-width:900px;margin:0 auto;padding:0 40px 80px;display:none;}
 .results.show{display:block;}
+.r-label{font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.match-box{background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--blue);padding:36px;margin-bottom:20px;text-align:center;}
+.match-num{font-family:"Barlow Condensed",sans-serif;font-size:80px;font-weight:900;color:var(--gold);line-height:1;}
+.match-lbl{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+.match-sub{color:var(--muted);font-size:16px;margin-bottom:28px;}
+.mbars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.mbar{background:rgba(0,0,0,.3);border:2px solid var(--border);padding:20px 16px;}
+.mbar-pct{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;line-height:1;margin-bottom:4px;}
+.g{color:var(--green);}.y{color:var(--gold);}.o{color:var(--orange);}
+.mbar-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.mbar-row{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;margin-top:6px;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dg{background:var(--green);}.dy{background:var(--gold);}.db{background:var(--blue);}
+.mc{margin-left:auto;font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;}
 
-/* Match hero */
-.match-hero{background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--blue);padding:40px;margin-bottom:20px;text-align:center;}
-.match-found{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-3xl);font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:1;color:var(--gold);}
-.match-found-label{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-xl);font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#fff;margin-bottom:12px;}
-.match-vehicle{font-size:var(--fs-md);color:var(--muted);font-weight:600;margin-bottom:28px;}
-.match-bars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:28px;}
-.mbar{background:rgba(0,0,0,0.3);border:2px solid var(--border);padding:24px 20px;}
-.mbar-pct{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-2xl);font-weight:900;line-height:1;margin-bottom:6px;}
-.pct-100{color:var(--green);}
-.pct-95{color:var(--gold);}
-.pct-90{color:var(--orange);}
-.mbar-label{font-size:var(--fs-xs);font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
-.mbar-rows{display:flex;flex-direction:column;gap:8px;}
-.mbar-row{display:flex;align-items:center;gap:10px;font-size:var(--fs-sm);font-weight:600;}
-.mdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.mdot-l{background:var(--green);}
-.mdot-r{background:var(--gold);}
-.mdot-n{background:var(--blue);}
-.mbar-count{margin-left:auto;font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-lg);font-weight:900;color:#fff;}
-
-/* Result cards */
-.result-card{background:var(--s1);border:2px solid var(--border);padding:32px;margin-bottom:16px;}
-.result-card-title{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-xl);font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;display:flex;align-items:center;gap:14px;}
-.rc-badge{font-size:var(--fs-xs);font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;}
-.badge-best{background:var(--green);color:#000;}
-.badge-local{background:var(--s3);border:1px solid var(--border);color:var(--muted);}
-.badge-warn{background:rgba(255,107,0,0.2);border:1px solid var(--orange);color:var(--orange);}
-.result-rows{display:flex;flex-direction:column;gap:0;}
-.rrow{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:var(--fs-sm);}
-.rrow:last-child{border-bottom:none;}
+.sec-title{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
+.rcard{background:var(--s1);border:2px solid var(--border);padding:28px;margin-bottom:14px;}
+.rcard.best{border-color:var(--green);}
+.rcard-title{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.badge{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;}
+.bg{background:var(--green);color:#000;}.bl{background:var(--s2);border:1px solid var(--border);color:var(--muted);}
+.rrow{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:16px;}
+.rrow:last-child{border:none;}
 .rrow-lbl{color:var(--muted);font-weight:600;}
-.rrow-val{font-weight:700;font-size:var(--fs-md);}
-.val-good{color:var(--green);}
-.val-warn{color:var(--orange);}
-.val-bad{color:var(--red);}
-.val-gold{color:var(--gold);}
-.result-total{margin-top:16px;padding:20px;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:space-between;border:2px solid var(--border);}
-.rt-label{font-size:var(--fs-xs);font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-.rt-val{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-2xl);font-weight:900;color:var(--gold);}
-.rt-save{color:var(--green);font-size:var(--fs-sm);font-weight:700;margin-top:4px;}
+.rrow-val{font-weight:700;font-size:18px;}
+.vg{color:var(--green);}.vo{color:var(--orange);}.vr{color:var(--red);}
+.rtotal{margin-top:14px;padding:18px;background:rgba(0,0,0,.3);display:flex;justify-content:space-between;align-items:center;border:2px solid var(--border);}
+.rtlbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.rtval{font-family:"Barlow Condensed",sans-serif;font-size:40px;font-weight:900;color:var(--gold);}
+.rtsave{color:var(--green);font-size:15px;font-weight:700;margin-top:4px;}
 
-/* IA cards */
-.ia-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-.ia-card{background:var(--s1);border:2px solid var(--border);padding:28px;}
+.ia-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.ia-card{background:var(--s1);border:2px solid var(--border);padding:24px;}
 .ia-card.inh{border-top:4px solid var(--red);}
 .ia-card.act{border-top:4px solid var(--green);}
-.ia-title{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-xl);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;}
-.ia-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:var(--fs-sm);}
-.ia-item:last-child{border-bottom:none;}
-.ia-ico{font-size:22px;flex-shrink:0;margin-top:1px;}
-.ia-txt{color:var(--muted);line-height:1.6;font-weight:500;}
-.ia-txt strong{color:#fff;display:block;font-size:var(--fs-sm);margin-bottom:2px;}
+.ia-title{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+.ia-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:15px;}
+.ia-item:last-child{border:none;}
+.ia-ico{font-size:20px;flex-shrink:0;}
+.ia-txt{color:var(--muted);line-height:1.5;}
+.ia-txt strong{color:#fff;display:block;margin-bottom:2px;}
 
-/* EVL bottom line */
-.evl-bl{background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--blue);padding:36px;margin-bottom:20px;}
-.ebl-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:20px;}
-.ebl-label{font-size:var(--fs-xs);font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
-.ebl-title{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-2xl);font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;}
-.ebl-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
-.ebl-stat{background:rgba(0,0,0,0.3);border:2px solid var(--border);padding:20px;}
-.ebl-stat-lbl{font-size:var(--fs-xs);font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.ebl-stat-val{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-xl);font-weight:900;color:var(--gold);line-height:1;}
-.ebl-stat-sub{font-size:13px;color:var(--muted);margin-top:4px;font-weight:600;}
-.ebl-note{background:rgba(43,132,254,0.06);border:2px solid rgba(43,132,254,0.2);padding:18px 22px;font-size:var(--fs-sm);color:var(--muted);line-height:1.7;margin-bottom:28px;}
-.ebl-note strong{color:#fff;}
-
-/* CTA */
-.cta-btn{display:block;width:100%;background:linear-gradient(90deg,var(--blue2),var(--blue));border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-2xl);font-weight:900;letter-spacing:4px;text-transform:uppercase;padding:28px;cursor:pointer;transition:all 0.2s;}
+.evl-box{background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--blue);padding:32px;margin-bottom:20px;}
+.evl-lbl{font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+.evl-title{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;}
+.evl-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.estat{background:rgba(0,0,0,.3);border:2px solid var(--border);padding:18px;}
+.estat-lbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+.estat-val{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:var(--gold);line-height:1;}
+.estat-sub{font-size:12px;color:var(--muted);margin-top:4px;font-weight:600;}
+.evl-note{background:rgba(43,132,254,.06);border:2px solid rgba(43,132,254,.2);padding:16px 20px;font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.evl-note strong{color:#fff;}
+.cta-btn{display:block;width:100%;background:linear-gradient(90deg,var(--blue2),var(--blue));border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:26px;cursor:pointer;}
 .cta-btn:hover{background:linear-gradient(90deg,var(--blue),var(--blue2));}
-.cta-note{text-align:center;color:var(--muted);font-size:var(--fs-xs);margin-top:14px;font-weight:700;letter-spacing:1px;}
+.cta-note{text-align:center;color:var(--muted);font-size:13px;margin-top:12px;font-weight:700;letter-spacing:1px;}
 
-/* EVL STRIP */
-.evl-strip{background:linear-gradient(90deg,var(--blue2),var(--blue));padding:20px 48px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
-.strip-item{display:flex;align-items:center;gap:10px;}
-.strip-icon{font-size:24px;}
-.strip-text{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-md);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+footer{background:var(--s1);border-top:2px solid var(--border);padding:32px 40px;display:flex;justify-content:space-between;align-items:center;}
+.fl{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;}
+.fl span{color:var(--blue);}
+.fc{color:var(--muted);font-size:13px;}
 
-/* FOOTER */
-footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;}
-.footer-logo{font-family:"Barlow Condensed",sans-serif;font-size:var(--fs-lg);font-weight:900;}
-.footer-logo span{color:var(--blue);}
-.footer-copy{color:var(--muted);font-size:var(--fs-xs);font-weight:600;}
-
-@media(max-width:900px){
-  .match-bars,.ia-grid,.ebl-stats{grid-template-columns:1fr;}
-  .frow-4,.frow-3{grid-template-columns:1fr 1fr;}
-  .hero-title{font-size:52px;}
-  .drawers,.search-wrap,.results{padding-left:20px;padding-right:20px;}
-}
-@media(max-width:600px){
-  nav{padding:0 20px;}
-  .hero{padding:48px 20px 44px;}
-  .hero-title{font-size:40px;}
-  .frow-4,.frow-3,.frow-2{grid-template-columns:1fr;}
-  .toggle-row{flex-direction:column;}
-  .evl-strip{flex-direction:column;gap:16px;padding:16px 20px;}
-  footer{flex-direction:column;gap:12px;text-align:center;}
-  .ai-bar{flex-direction:column;}
-  .ai-go{min-height:56px;}
+@media(max-width:700px){
+  .f2,.f3,.f4,.mbars,.ia-grid,.evl-stats{grid-template-columns:1fr;}
+  .hero h1{font-size:48px;}
+  nav{padding:0 16px;}
+  .form-wrap,.search-wrap,.results{padding-left:16px;padding-right:16px;}
+  .strip{gap:16px;padding:14px 16px;flex-direction:column;}
 }
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-logo">◈ Express Vehicle Locators</div>
-  <div class="spinner"></div>
+<div class="loading" id="loading">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--blue);letter-spacing:2px;">◈ EXPRESS VEHICLE LOCATORS</div>
+  <div class="spin"></div>
   <div class="load-steps">
-    <div class="load-step" id="ls1">⚡ Scanning 6,000,000+ vehicles nationwide</div>
-    <div class="load-step" id="ls2">🎯 Calculating your match intelligence</div>
-    <div class="load-step" id="ls3">💰 Analyzing dealer fees & true costs</div>
-    <div class="load-step" id="ls4">🏆 Building your EVL advantage report</div>
+    <div class="ls" id="ls1">⚡ Scanning 6,000,000+ vehicles nationwide</div>
+    <div class="ls" id="ls2">🎯 Calculating your match intelligence</div>
+    <div class="ls" id="ls3">💰 Analyzing dealer fees &amp; true costs</div>
+    <div class="ls" id="ls4">🏆 Building your EVL advantage report</div>
   </div>
 </div>
 
-<!-- NAV -->
 <nav>
-  <a href="https://evl-decode.vercel.app/home.html" class="nav-logo">◈ Express <span>Vehicle</span> Locators</a>
+  <a href="https://evl-decode.vercel.app/home.html" class="logo">◈ Express <span>Vehicle</span> Locators</a>
   <div class="nav-links">
-    <a href="https://evl-decode.vercel.app/home.html" class="nav-link">Home</a>
-    <a href="https://evl-decode.vercel.app" class="nav-link">Trade-In</a>
-    <a href="https://evl-decode.vercel.app/find.html" class="nav-link active">Find</a>
-    <a href="https://evl-decode.vercel.app/how.html" class="nav-link">How It Works</a>
-    <a href="https://evl-decode.vercel.app/admin.html" class="nav-link">Admin</a>
+    <a href="https://evl-decode.vercel.app/home.html">Home</a>
+    <a href="https://evl-decode.vercel.app">Trade-In</a>
+    <a href="https://evl-decode.vercel.app/find.html" class="active">Find</a>
+    <a href="https://evl-decode.vercel.app/how.html">How It Works</a>
+    <a href="https://evl-decode.vercel.app/admin.html">Admin</a>
     <a href="https://evl-decode.vercel.app/find.html" class="nav-cta">⚡ Find My Vehicle</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<div class="hero">
   <div class="hero-badge">⚡ EVL AI Concierge — We Find It. We Negotiate It. We Deliver It.</div>
-  <h1 class="hero-title">Tell Us Exactly<br>What You <span>Want</span></h1>
-  <p class="hero-sub">Type it in plain English — or use the step-by-step form below. EVL searches every dealer in America, negotiates the best possible deal, and delivers to your door. You never set foot in a dealership.</p>
-
-  <div class="ai-wrap">
-    <div class="ai-label">✦ Describe your perfect vehicle — our AI understands plain English</div>
-    <div class="ai-bar">
-      <div class="ai-icon">✦</div>
-      <input class="ai-input" id="aiInput" placeholder="e.g. 2026 Camry XSE Premium Package, midnight black, under $45k, lease..." aria-label="Describe your vehicle in plain English"/>
-      <button class="ai-go" onclick="parseAI()" aria-label="Search using AI">Search ⚡</button>
-    </div>
-    <div class="ai-chips">
-      <span class="ai-chip" onclick="fillAI('2026 Toyota Camry XSE Premium Package midnight black under $45k lease')">2026 Camry XSE Lease</span>
-      <span class="ai-chip" onclick="fillAI('2026 Ford F-150 Lariat 4WD under $65k buy')">F-150 Lariat 4WD</span>
-      <span class="ai-chip" onclick="fillAI('2025 BMW X5 xDrive40i under $75k AWD white buy')">BMW X5 AWD</span>
-      <span class="ai-chip" onclick="fillAI('used 2023 Jeep Wrangler Rubicon under $50k low miles')">Used Wrangler Rubicon</span>
-      <span class="ai-chip" onclick="fillAI('reliable family SUV under $40k good safety ratings AWD')">Family SUV Under $40k</span>
-      <span class="ai-chip" onclick="fillAI('2026 Tesla Model Y Long Range AWD under $55k')">Tesla Model Y</span>
-    </div>
+  <h1>Tell Us Exactly<br>What You <span>Want</span></h1>
+  <p>Type it in plain English — or use the step-by-step form below. EVL searches every dealer in America, negotiates the best deal, and delivers to your door.</p>
+  <div class="ai-bar">
+    <input id="aiIn" placeholder="e.g. 2026 Camry XSE Premium Package midnight black under $45k lease...">
+    <button onclick="doAI()">Search ⚡</button>
   </div>
-</section>
-
-<div class="evl-strip">
-  <div class="strip-item"><span class="strip-icon">⚡</span><span class="strip-text">We Negotiate For You</span></div>
-  <div class="strip-item"><span class="strip-icon">🔒</span><span class="strip-text">Dealer Info Never Revealed</span></div>
-  <div class="strip-item"><span class="strip-icon">🚗</span><span class="strip-text">Delivered To Your Door</span></div>
-  <div class="strip-item"><span class="strip-icon">$0</span><span class="strip-text">Zero Commission Ever</span></div>
+  <div class="chips">
+    <span class="chip" onclick="fillAI('2026 Toyota Camry XSE Premium Package midnight black under $45k lease')">2026 Camry XSE Lease</span>
+    <span class="chip" onclick="fillAI('2026 Ford F-150 Lariat 4WD under $65k buy')">F-150 Lariat 4WD</span>
+    <span class="chip" onclick="fillAI('2025 BMW X5 xDrive40i under $75k AWD white')">BMW X5 AWD</span>
+    <span class="chip" onclick="fillAI('used 2023 Jeep Wrangler Rubicon under $50k low miles')">Used Wrangler Rubicon</span>
+    <span class="chip" onclick="fillAI('reliable family SUV under $40k good safety AWD')">Family SUV Under $40k</span>
+    <span class="chip" onclick="fillAI('2026 Tesla Model Y Long Range AWD under $55k')">Tesla Model Y</span>
+  </div>
 </div>
 
-<!-- STEP-BY-STEP DRAWERS -->
-<div class="divider"><span class="divider-text">— Or build your search step by step —</span></div>
+<div class="strip">
+  <span class="strip-item">⚡ We Negotiate For You</span>
+  <span class="strip-item">🔒 Dealer Info Never Revealed</span>
+  <span class="strip-item">🚗 Delivered To Your Door</span>
+  <span class="strip-item">$0 Zero Commission Ever</span>
+</div>
 
-<div class="drawers">
+<div class="form-wrap">
+  <div class="divider"><span>— Or build your search step by step —</span></div>
 
-  <!-- DRAWER 1: CONDITION + PURCHASE TYPE -->
-  <div class="drawer open active" id="d1">
-    <div class="drawer-head">
-      <div class="drawer-left">
-        <div class="drawer-num">1</div>
-        <div>
-          <div class="drawer-title">Vehicle Type &amp; Purchase</div>
-          <div class="drawer-subtitle">New, used, or certified? Buy, lease, or cash?</div>
-          <div class="drawer-summary" id="d1summary"></div>
-        </div>
-      </div>
-      <div class="drawer-right">
-        <span class="drawer-status" id="d1status">IN PROGRESS</span>
-        <button onclick="toggleDrawer(1)" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;">▼</button>
+  <!-- STEP 1 -->
+  <div class="step-card" id="sc1">
+    <div class="step-head">
+      <div class="step-num active" id="sn1">1</div>
+      <div>
+        <div class="step-head-title">Vehicle Type &amp; Purchase</div>
+        <div class="step-head-sub">New, used, or certified? Buy, lease, or cash?</div>
       </div>
     </div>
-    <div class="drawer-body" style="display:block;" onclick="event.stopPropagation();">
-      <div class="frow frow-2">
+    <div class="step-body" id="sb1">
+      <div class="frow f2">
         <div class="fgroup">
-          <label class="flabel" for="fCondition">Condition</label>
-          <select class="fselect" id="fCondition" aria-label="Vehicle condition">
+          <label>Condition</label>
+          <select id="fCond">
             <option value="">New &amp; Used</option>
             <option value="new">New Only</option>
             <option value="used">Used / Pre-Owned</option>
-            <option value="certified">Certified Pre-Owned (CPO)</option>
+            <option value="certified">Certified Pre-Owned</option>
           </select>
         </div>
         <div class="fgroup">
-          <label class="flabel">Purchase Type</label>
-          <div class="toggle-row">
-            <button class="tbtn active" id="btnBuy" onclick="event.stopPropagation();setPurchase('buy')" aria-pressed="true">🚗 Buy</button>
-            <button class="tbtn" id="btnLease" onclick="event.stopPropagation();setPurchase('lease')" aria-pressed="false">📋 Lease</button>
-            <button class="tbtn" id="btnCash" onclick="event.stopPropagation();setPurchase('cash')" aria-pressed="false">💵 Cash</button>
+          <label>Purchase Type</label>
+          <div class="trow">
+            <button class="tbtn on" id="tBuy" onclick="setP('buy')">🚗 Buy</button>
+            <button class="tbtn" id="tLease" onclick="setP('lease')">📋 Lease</button>
+            <button class="tbtn" id="tCash" onclick="setP('cash')">💵 Cash</button>
           </div>
         </div>
       </div>
-      <button class="next-btn" onclick="event.stopPropagation();nextDrawer(1)">Next — Select Your Vehicle →</button>
+      <button class="next-btn" id="n1btn">Next — Select Your Vehicle →</button>
     </div>
   </div>
 
-  <!-- DRAWER 2: MAKE + MODEL + TRIM -->
-  <div class="drawer" id="d2">
-    <div class="drawer-head">
-      <div class="drawer-left">
-        <div class="drawer-num">2</div>
-        <div>
-          <div class="drawer-title">Make, Model &amp; Trim</div>
-          <div class="drawer-subtitle">Drill down to the exact vehicle you want</div>
-          <div class="drawer-summary" id="d2summary"></div>
-        </div>
-      </div>
-      <div class="drawer-right">
-        <span class="drawer-status" id="d2status">PENDING</span>
-        <button onclick="toggleDrawer(2)" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;">▼</button>
+  <!-- STEP 2 -->
+  <div class="step-card" id="sc2">
+    <div class="step-head">
+      <div class="step-num" id="sn2">2</div>
+      <div>
+        <div class="step-head-title">Make, Model &amp; Trim</div>
+        <div class="step-head-sub">Drill down to the exact vehicle you want</div>
       </div>
     </div>
-    <div class="drawer-body" onclick="event.stopPropagation();">
-      <div class="frow frow-3">
+    <div class="step-body hidden" id="sb2">
+      <div class="frow f3">
         <div class="fgroup">
-          <label class="flabel" for="fMake">Make</label>
-          <select class="fselect" id="fMake" onclick="event.stopPropagation();" onchange="onMake(this.value)" aria-label="Vehicle make">
-            <option value="">All Makes</option>
-            <option>Acura</option><option>Audi</option><option>BMW</option>
-            <option>Buick</option><option>Cadillac</option><option>Chevrolet</option>
-            <option>Chrysler</option><option>Dodge</option><option>Ford</option>
-            <option>Genesis</option><option>GMC</option><option>Honda</option>
-            <option>Hyundai</option><option>Infiniti</option><option>Jaguar</option>
-            <option>Jeep</option><option>Kia</option><option>Land Rover</option>
-            <option>Lexus</option><option>Lincoln</option><option>Mazda</option>
-            <option>Mercedes-Benz</option><option>Mini</option><option>Nissan</option>
-            <option>Porsche</option><option>Ram</option><option>Rivian</option>
-            <option>Subaru</option><option>Tesla</option><option>Toyota</option>
-            <option>Volkswagen</option><option>Volvo</option>
-          </select>
+          <label>Make</label>
+          <select id="fMake"><option value="">All Makes</option></select>
         </div>
         <div class="fgroup">
-          <label class="flabel" for="fModel">Model</label>
-          <select class="fselect" id="fModel" onclick="event.stopPropagation();" onchange="onModel(this.value)" aria-label="Vehicle model">
-            <option value="">Select Make First</option>
-          </select>
+          <label>Model</label>
+          <select id="fModel"><option value="">Select Make First</option></select>
         </div>
         <div class="fgroup">
-          <label class="flabel" for="fTrim">Trim Level</label>
-          <select class="fselect" id="fTrim" onclick="event.stopPropagation();" onchange="onTrim(this.value)" aria-label="Vehicle trim">
-            <option value="">Select Model First</option>
-          </select>
+          <label>Trim</label>
+          <select id="fTrim"><option value="">Select Model First</option></select>
         </div>
       </div>
-      <div class="frow frow-2" style="margin-top:16px;">
+      <div class="frow f2" style="margin-top:14px;">
         <div class="fgroup">
-          <label class="flabel" for="fYear">Year</label>
-          <select class="fselect" id="fYear" aria-label="Vehicle year">
-            <option value="">Any Year</option>
-          </select>
+          <label>Year</label>
+          <select id="fYear"><option value="">Any Year</option></select>
         </div>
         <div class="fgroup">
-          <label class="flabel" for="fColor">Preferred Color</label>
-          <div class="swatch-row" id="swatchRow" role="group" aria-label="Select exterior color"></div>
+          <label>Preferred Color (optional)</label>
+          <div class="swatches" id="swatches"></div>
         </div>
       </div>
-      <!-- PACKAGES (appear when trim selected) -->
-      <div id="pkgSection" style="display:none;">
-        <div class="pkg-wrap">
-          <div class="pkg-label">Available Packages &amp; Options — Select All That Apply</div>
-          <div class="pkg-grid" id="pkgGrid"></div>
-        </div>
+      <div id="pkgWrap" style="display:none;margin-top:16px;">
+        <label style="display:block;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Available Packages — Select All That Apply</label>
+        <div class="pkg-list" id="pkgList"></div>
       </div>
-      <button class="next-btn" onclick="event.stopPropagation();nextDrawer(2)">Next — Set Your Budget →</button>
+      <button class="next-btn" id="n2btn">Next — Set Your Budget →</button>
     </div>
   </div>
 
-  <!-- DRAWER 3: BUDGET + LOCATION -->
-  <div class="drawer" id="d3">
-    <div class="drawer-head">
-      <div class="drawer-left">
-        <div class="drawer-num">3</div>
-        <div>
-          <div class="drawer-title">Budget &amp; Location</div>
-          <div class="drawer-subtitle">Your price range and how far we should search</div>
-          <div class="drawer-summary" id="d3summary"></div>
-        </div>
-      </div>
-      <div class="drawer-right">
-        <span class="drawer-status" id="d3status">PENDING</span>
-        <button onclick="toggleDrawer(3)" style="background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;">▼</button>
+  <!-- STEP 3 -->
+  <div class="step-card" id="sc3">
+    <div class="step-head">
+      <div class="step-num" id="sn3">3</div>
+      <div>
+        <div class="step-head-title">Budget &amp; Location</div>
+        <div class="step-head-sub">Your price range and search area</div>
       </div>
     </div>
-    <div class="drawer-body" onclick="event.stopPropagation();">
-      <div class="frow frow-2">
+    <div class="step-body hidden" id="sb3">
+      <div class="frow f4">
         <div class="fgroup">
-          <label class="flabel" for="fBudgetMin">Min Budget (optional)</label>
-          <input class="finput" id="fBudgetMin" placeholder="e.g. 35000" type="number" min="0" aria-label="Minimum budget">
+          <label>Min Budget</label>
+          <input type="number" id="fBMin" placeholder="e.g. 35000">
         </div>
         <div class="fgroup">
-          <label class="flabel" for="fBudgetMax">Max Budget</label>
-          <input class="finput" id="fBudgetMax" placeholder="e.g. 48000" type="number" min="0" aria-label="Maximum budget">
-        </div>
-      </div>
-      <div class="frow frow-2" style="margin-top:16px;">
-        <div class="fgroup">
-          <label class="flabel" for="fZip">Your ZIP Code</label>
-          <input class="finput" id="fZip" placeholder="e.g. 75025" maxlength="5" aria-label="Your ZIP code">
+          <label>Max Budget</label>
+          <input type="number" id="fBMax" placeholder="e.g. 48000">
         </div>
         <div class="fgroup">
-          <label class="flabel" for="fRadius">Search Radius</label>
-          <select class="fselect" id="fRadius" aria-label="Search radius">
-            <option value="50">Within 50 miles</option>
-            <option value="100">Within 100 miles</option>
-            <option value="250" selected>Within 250 miles</option>
-            <option value="500">Within 500 miles</option>
+          <label>Your ZIP Code</label>
+          <input type="text" id="fZip" placeholder="e.g. 75025" maxlength="5">
+        </div>
+        <div class="fgroup">
+          <label>Search Radius</label>
+          <select id="fRad">
+            <option value="50">50 miles</option>
+            <option value="100">100 miles</option>
+            <option value="250" selected>250 miles</option>
+            <option value="500">500 miles</option>
             <option value="0">Nationwide</option>
           </select>
         </div>
       </div>
-      <div class="frow frow-2" style="margin-top:16px;">
+      <div class="frow f2" style="margin-top:0;">
         <div class="fgroup">
-          <label class="flabel" for="fMileage">Max Mileage (used vehicles)</label>
-          <select class="fselect" id="fMileage" aria-label="Maximum mileage">
+          <label>Max Mileage (used)</label>
+          <select id="fMiles">
             <option value="">Any Mileage</option>
             <option value="15000">Under 15,000 mi</option>
             <option value="30000">Under 30,000 mi</option>
@@ -466,9 +353,9 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
           </select>
         </div>
         <div class="fgroup">
-          <label class="flabel" for="fDrive">Drivetrain</label>
-          <select class="fselect" id="fDrive" aria-label="Drivetrain preference">
-            <option value="">Any Drivetrain</option>
+          <label>Drivetrain</label>
+          <select id="fDrive">
+            <option value="">Any</option>
             <option value="AWD">AWD — All Wheel Drive</option>
             <option value="4WD">4WD — Four Wheel Drive</option>
             <option value="FWD">FWD — Front Wheel Drive</option>
@@ -476,592 +363,316 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
           </select>
         </div>
       </div>
-      <button class="next-btn" onclick="event.stopPropagation();doSearch()">⚡ Find My Vehicle Now</button>
+      <button class="next-btn" id="n3btn">⚡ Find My Vehicle Now</button>
     </div>
   </div>
+</div>
 
-</div><!-- end drawers -->
-
-<!-- SEARCH BUTTON (visible always) -->
 <div class="search-wrap">
-  <button class="search-btn" onclick="doSearch()" aria-label="Search for my vehicle">⚡ Find My Vehicle — EVL Takes It From Here</button>
+  <button class="search-btn" id="searchBtn">⚡ Find My Vehicle — EVL Takes It From Here</button>
   <div class="search-note">🔒 No dealer names · No locations · No VINs ever revealed — EVL negotiates on your behalf</div>
 </div>
 
-<!-- RESULTS -->
 <div class="results" id="results">
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:var(--fs-xs);font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">⚡ YOUR EVL MATCH REPORT</div>
-
-  <!-- MATCH HERO -->
-  <div class="match-hero" id="matchHero"></div>
-
-  <!-- TRUE COST -->
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:var(--fs-xl);font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:28px 0 16px;display:flex;align-items:center;gap:12px;"><span style="color:var(--gold);">💰</span> True Cost Breakdown</div>
+  <div class="r-label">⚡ YOUR EVL MATCH REPORT</div>
+  <div class="match-box" id="matchBox"></div>
+  <div class="sec-title"><span style="color:var(--gold)">💰</span> True Cost Breakdown</div>
   <div id="costCards"></div>
-
-  <!-- DEAL INTELLIGENCE -->
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:var(--fs-xl);font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:28px 0 16px;display:flex;align-items:center;gap:12px;"><span style="color:var(--blue);">⚡</span> Deal Intelligence</div>
+  <div class="sec-title"><span style="color:var(--blue)">⚡</span> Deal Intelligence</div>
   <div class="ia-grid" id="iaCards"></div>
-
-  <!-- EVL BOTTOM LINE -->
-  <div class="evl-bl" id="evlBL"></div>
-
-  <!-- SUBMIT -->
-  <button class="cta-btn" onclick="submitRequest()" aria-label="Submit vehicle request to EVL">⚡ YES — Submit My Request &amp; Let EVL Take Over</button>
-  <div class="cta-note">🔒 SECURE · NO OBLIGATION UNTIL YOU APPROVE YOUR DEAL · EVL ACTS AS YOUR AUTHORIZED AGENT · $295 FLAT FEE</div>
+  <div class="evl-box" id="evlBox"></div>
+  <button class="cta-btn" id="ctaBtn">⚡ YES — Submit My Request &amp; Let EVL Take Over</button>
+  <div class="cta-note">🔒 SECURE · NO OBLIGATION UNTIL YOU APPROVE · EVL ACTS AS YOUR AUTHORIZED AGENT · $295 FLAT FEE</div>
 </div>
 
 <footer>
-  <div class="footer-logo">◈ Express <span>Vehicle</span> Locators</div>
-  <div class="footer-copy">EVL Platform V4.0 // © 2026 // All rights reserved</div>
+  <div class="fl">◈ Express <span>Vehicle</span> Locators</div>
+  <div class="fc">EVL Platform V4.0 // © 2026</div>
 </footer>
 
 <script>
-/* ===== DATA ===== */
-var MODELS={
-  'Toyota':['4Runner','bZ4X','Camry','Corolla','Corolla Cross','Crown','GR86','GR Corolla','GR Supra','Highlander','Land Cruiser','Prius','RAV4','RAV4 Prime','Sequoia','Sienna','Tacoma','Tundra','Venza'],
-  'Ford':['Bronco','Bronco Sport','EcoSport','Edge','Escape','Expedition','Explorer','F-150','F-150 Lightning','Maverick','Mustang','Mustang Mach-E','Ranger','Transit'],
-  'Chevrolet':['Blazer','Bolt EV','Camaro','Colorado','Corvette','Equinox','Malibu','Silverado 1500','Silverado 2500','Suburban','Tahoe','Traverse','Trax'],
-  'Honda':['Accord','Civic','CR-V','HR-V','Odyssey','Passport','Pilot','Ridgeline'],
-  'Nissan':['Altima','Ariya','Armada','Frontier','Kicks','Leaf','Murano','Pathfinder','Rogue','Sentra','Titan','Z'],
-  'BMW':['2 Series','3 Series','4 Series','5 Series','7 Series','i4','i5','i7','iX','M3','M4','M5','X1','X3','X5','X6','X7','Z4'],
-  'Mercedes-Benz':['A-Class','AMG GT','C-Class','CLA','E-Class','EQB','EQE','EQS','G-Class','GLA','GLC','GLE','GLS','S-Class','SL'],
-  'Jeep':['Cherokee','Compass','Gladiator','Grand Cherokee','Grand Cherokee L','Grand Wagoneer','Renegade','Wagoneer','Wrangler'],
-  'Ram':['1500','2500','3500','ProMaster'],
-  'GMC':['Acadia','Canyon','Hummer EV','Sierra 1500','Sierra 2500','Terrain','Yukon','Yukon XL'],
-  'Dodge':['Challenger','Charger','Durango','Hornet'],
-  'Subaru':['Ascent','BRZ','Crosstrek','Forester','Impreza','Legacy','Outback','Solterra','WRX'],
-  'Hyundai':['Elantra','IONIQ 5','IONIQ 6','Kona','Palisade','Santa Cruz','Santa Fe','Sonata','Tucson'],
-  'Kia':['Carnival','EV6','EV9','Forte','K5','Seltos','Sorento','Sportage','Stinger','Telluride'],
-  'Lexus':['ES','GX','IS','LC','LS','LX','NX','RX','RZ','UX'],
-  'Audi':['A3','A4','A5','A6','A7','A8','e-tron','Q3','Q5','Q7','Q8','R8','RS5','RS7','S4','S5'],
-  'Porsche':['718 Boxster','718 Cayman','911','Cayenne','Macan','Panamera','Taycan'],
-  'Tesla':['Cybertruck','Model 3','Model S','Model X','Model Y'],
-  'Land Rover':['Defender','Discovery','Discovery Sport','Range Rover','Range Rover Evoque','Range Rover Sport'],
-  'Volvo':['C40 Recharge','EX30','EX90','S60','S90','XC40','XC60','XC90'],
-  'Genesis':['G70','G80','G90','GV60','GV70','GV80'],
-  'Mazda':['CX-30','CX-5','CX-50','CX-90','Mazda3','MX-5 Miata'],
-  'Lincoln':['Aviator','Corsair','Nautilus','Navigator'],
-  'Infiniti':['Q50','Q60','QX50','QX55','QX60','QX80'],
-  'Cadillac':['CT4','CT5','Escalade','Escalade ESV','Lyriq','XT4','XT5','XT6'],
-  'Acura':['ILX','MDX','RDX','TLX'],
-  'Buick':['Enclave','Encore GX','Envision'],
-  'Rivian':['R1S','R1T'],
-  'Chrysler':['300','Pacifica'],
-  'Mini':['Clubman','Convertible','Countryman','Hardtop'],
-  'Jaguar':['E-PACE','F-PACE','F-TYPE','I-PACE','XF'],
-  'Volkswagen':['Arteon','Atlas','Golf','ID.4','Jetta','Taos','Tiguan']
-};
+// ===== DATA =====
+var MODELS={Toyota:['4Runner','Camry','Corolla','Crown','GR86','GR Corolla','GR Supra','Highlander','Land Cruiser','Prius','RAV4','RAV4 Prime','Sequoia','Sienna','Tacoma','Tundra','Venza'],Ford:['Bronco','Bronco Sport','Edge','Escape','Expedition','Explorer','F-150','F-150 Lightning','Maverick','Mustang','Mustang Mach-E','Ranger'],Chevrolet:['Blazer','Bolt EV','Camaro','Colorado','Corvette','Equinox','Silverado 1500','Silverado 2500','Suburban','Tahoe','Traverse','Trax'],Honda:['Accord','Civic','CR-V','HR-V','Odyssey','Passport','Pilot','Ridgeline'],Nissan:['Altima','Ariya','Armada','Frontier','Murano','Pathfinder','Rogue','Sentra','Titan','Z'],BMW:['3 Series','4 Series','5 Series','7 Series','i4','i5','iX','M3','M4','M5','X1','X3','X5','X6','X7','Z4'],'Mercedes-Benz':['C-Class','E-Class','G-Class','GLA','GLC','GLE','GLS','S-Class','SL','AMG GT'],Jeep:['Cherokee','Compass','Gladiator','Grand Cherokee','Grand Cherokee L','Wagoneer','Wrangler'],Ram:['1500','2500','3500'],GMC:['Acadia','Canyon','Sierra 1500','Sierra 2500','Terrain','Yukon','Yukon XL'],Dodge:['Challenger','Charger','Durango','Hornet'],Subaru:['Ascent','BRZ','Crosstrek','Forester','Outback','WRX'],Hyundai:['Elantra','IONIQ 5','IONIQ 6','Palisade','Santa Fe','Sonata','Tucson'],Kia:['Carnival','EV6','EV9','Sorento','Sportage','Stinger','Telluride'],Lexus:['ES','GX','IS','LC','LS','LX','NX','RX','RZ'],Audi:['A4','A6','A8','e-tron','Q5','Q7','Q8','R8','RS5','RS7','S4'],Porsche:['911','Cayenne','Macan','Panamera','Taycan'],Tesla:['Cybertruck','Model 3','Model S','Model X','Model Y'],'Land Rover':['Defender','Discovery','Range Rover','Range Rover Evoque','Range Rover Sport'],Volvo:['C40 Recharge','EX90','S60','XC40','XC60','XC90'],Genesis:['G70','G80','G90','GV60','GV70','GV80'],Mazda:['CX-5','CX-50','CX-90','Mazda3','MX-5 Miata'],Lincoln:['Aviator','Corsair','Nautilus','Navigator'],Cadillac:['CT4','CT5','Escalade','Lyriq','XT4','XT5','XT6'],Acura:['MDX','RDX','TLX'],Buick:['Enclave','Encore GX','Envision'],Rivian:['R1S','R1T']};
 
-var TRIMS={
-  'Toyota|Camry':['LE','SE','SE Nightshade','XLE','XSE','XSE V6','TRD V6'],
-  'Toyota|RAV4':['LE','XLE','XLE Premium','TRD Off-Road','Adventure','Limited','Prime SE','Prime XSE'],
-  'Toyota|Highlander':['L','LE','XLE','Limited','Platinum','Bronze Edition'],
-  'Toyota|Tacoma':['SR','SR5','TRD Sport','TRD Off-Road','Limited','TRD Pro','Trailhunter'],
-  'Toyota|Tundra':['SR','SR5','Limited','Platinum','1794 Edition','TRD Pro','Capstone'],
-  'Toyota|4Runner':['SR5','SR5 Premium','TRD Sport','TRD Off-Road','Limited','TRD Pro','Venture'],
-  'Toyota|Sienna':['LE','XLE','XSE','Limited','Platinum','Woodland Edition'],
-  'Toyota|Sequoia':['SR5','Limited','Platinum','TRD Pro','Capstone'],
-  'Toyota|Prius':['LE','XLE','Limited','Prime LE','Prime XSE','Prime Limited'],
-  'Toyota|GR Supra':['3.0','A91-CF Edition','A91-MT Edition'],
-  'Toyota|Land Cruiser':['1958','Standard','First Edition'],
-  'Ford|F-150':['XL','XLT','Lariat','King Ranch','Platinum','Limited','Tremor','Raptor','Raptor R'],
-  'Ford|Mustang':['EcoBoost','EcoBoost Premium','GT','GT Premium','Mach 1','Dark Horse','Shelby GT500'],
-  'Ford|Bronco':['Base','Big Bend','Black Diamond','Outer Banks','Badlands','Wildtrak','Everglades','Raptor'],
-  'Ford|Explorer':['Base','XLT','ST-Line','Platinum','ST','Timberline'],
-  'Ford|Expedition':['XLT','Limited','Platinum','King Ranch','Timberline'],
-  'Chevrolet|Silverado 1500':['Work Truck','Custom','LT','LTZ','RST','High Country','ZR2','Trail Boss'],
-  'Chevrolet|Corvette':['Stingray','Z06','E-Ray','ZR1'],
-  'Chevrolet|Tahoe':['LS','LT','RST','Z71','Premier','High Country'],
-  'Chevrolet|Colorado':['WT','LT','Z71','Trail Boss','ZR2'],
-  'Jeep|Wrangler':['Sport','Sport S','Willys','Sahara','Sahara Altitude','Rubicon','Rubicon 392','4xe'],
-  'Jeep|Grand Cherokee':['Laredo','Altitude','Limited','Overland','Summit','Summit Reserve','SRT','Trackhawk','4xe'],
-  'Jeep|Gladiator':['Sport','Sport S','Overland','Rubicon','Mojave'],
-  'BMW|3 Series':['330i','330i xDrive','330e','M340i','M340i xDrive'],
-  'BMW|5 Series':['530i','530i xDrive','540i','540i xDrive','M550i xDrive'],
-  'BMW|X5':['sDrive40i','xDrive40i','xDrive45e','M50i','M60i'],
-  'BMW|X3':['sDrive30i','xDrive30i','M40i'],
-  'Mercedes-Benz|C-Class':['C300','C300 4MATIC','AMG C43','AMG C63 S'],
-  'Mercedes-Benz|GLE':['GLE350','GLE350 4MATIC','GLE450','GLE53 AMG','GLE63 S AMG'],
-  'Mercedes-Benz|G-Class':['G550','AMG G63'],
-  'Porsche|911':['Carrera','Carrera S','Carrera 4S','Targa 4S','GT3','GT3 RS','Turbo','Turbo S'],
-  'Porsche|Cayenne':['Base','S','GTS','Turbo','Turbo GT','E-Hybrid'],
-  'Porsche|Taycan':['Base','4S','GTS','Turbo','Turbo S'],
-  'Tesla|Model 3':['Standard Range','Long Range AWD','Performance'],
-  'Tesla|Model Y':['Long Range AWD','Performance'],
-  'Tesla|Model S':['Long Range','Plaid'],
-  'Tesla|Cybertruck':['AWD','Cyberbeast'],
-  'Ram|1500':['Tradesman','Big Horn','Lone Star','Laramie','Rebel','Limited','TRX'],
-  'GMC|Sierra 1500':['Pro','SLE','SLT','Elevation','AT4','Denali','AT4X'],
-  'GMC|Yukon':['SLE','SLT','AT4','Denali','Denali Ultimate'],
-  'Hyundai|IONIQ 5':['SE Standard Range','SE','SEL','Limited'],
-  'Hyundai|Palisade':['SE','SEL','XRT','Limited','Calligraphy'],
-  'Hyundai|Tucson':['SE','SEL','N Line','XRT','Limited'],
-  'Kia|Telluride':['LX','S','EX','SX','SX Prestige','X-Line','X-Pro'],
-  'Kia|Sorento':['LX','S','EX','SX','SX Prestige','X-Line'],
-  'Kia|EV6':['Light','Standard','Wind','GT-Line','GT'],
-  'Lexus|RX':['RX350','RX350 F Sport','RX350h','RX500h F Sport Performance'],
-  'Lexus|GX':['Premium','Luxury','Overtrail','F Sport Performance'],
-  'Subaru|Outback':['Base','Premium','Onyx Edition','Limited','Wilderness','Touring XT'],
-  'Subaru|Forester':['Base','Premium','Sport','Limited','Wilderness','Touring'],
-  'Subaru|WRX':['Base','Premium','Limited','GT','TR'],
-  'Land Rover|Range Rover':['SE','HSE','Autobiography','SV'],
-  'Land Rover|Defender':['90 S','90 SE','90 X','110 S','110 SE','110 X','130 SE']
-};
+var TRIMS={'Toyota|Camry':['LE','SE','SE Nightshade','XLE','XSE','XSE V6','TRD V6'],'Toyota|RAV4':['LE','XLE','XLE Premium','TRD Off-Road','Adventure','Limited','Prime SE','Prime XSE'],'Toyota|Highlander':['L','LE','XLE','Limited','Platinum'],'Toyota|Tacoma':['SR','SR5','TRD Sport','TRD Off-Road','Limited','TRD Pro','Trailhunter'],'Toyota|Tundra':['SR','SR5','Limited','Platinum','1794 Edition','TRD Pro','Capstone'],'Toyota|4Runner':['SR5','SR5 Premium','TRD Sport','TRD Off-Road','Limited','TRD Pro'],'Toyota|Sienna':['LE','XLE','XSE','Limited','Platinum'],'Toyota|Sequoia':['SR5','Limited','Platinum','TRD Pro','Capstone'],'Toyota|Prius':['LE','XLE','Limited','Prime LE','Prime XSE'],'Toyota|GR Supra':['3.0','A91-CF','A91-MT'],'Toyota|Land Cruiser':['1958','Standard','First Edition'],'Ford|F-150':['XL','XLT','Lariat','King Ranch','Platinum','Limited','Raptor','Raptor R'],'Ford|Mustang':['EcoBoost','EcoBoost Premium','GT','GT Premium','Mach 1','Dark Horse','Shelby GT500'],'Ford|Bronco':['Base','Big Bend','Black Diamond','Outer Banks','Badlands','Wildtrak','Raptor'],'Ford|Explorer':['Base','XLT','ST-Line','Platinum','ST','Timberline'],'Chevrolet|Silverado 1500':['Work Truck','Custom','LT','LTZ','RST','High Country','ZR2'],'Chevrolet|Corvette':['Stingray','Z06','E-Ray','ZR1'],'Chevrolet|Tahoe':['LS','LT','RST','Z71','Premier','High Country'],'Jeep|Wrangler':['Sport','Sport S','Willys','Sahara','Rubicon','Rubicon 392','4xe'],'Jeep|Grand Cherokee':['Laredo','Altitude','Limited','Overland','Summit','Summit Reserve','Trackhawk','4xe'],'BMW|3 Series':['330i','330i xDrive','330e','M340i','M340i xDrive'],'BMW|5 Series':['530i','530i xDrive','540i','540i xDrive','M550i'],'BMW|X5':['sDrive40i','xDrive40i','xDrive45e','M50i','M60i'],'BMW|X3':['sDrive30i','xDrive30i','M40i'],'Mercedes-Benz|C-Class':['C300','C300 4MATIC','AMG C43','AMG C63 S'],'Mercedes-Benz|GLE':['GLE350','GLE350 4MATIC','GLE450','GLE53 AMG'],'Mercedes-Benz|G-Class':['G550','AMG G63'],'Porsche|911':['Carrera','Carrera S','Carrera 4S','GT3','GT3 RS','Turbo','Turbo S'],'Porsche|Cayenne':['Base','S','GTS','Turbo','Turbo GT'],'Porsche|Taycan':['Base','4S','GTS','Turbo','Turbo S'],'Tesla|Model 3':['Standard Range','Long Range AWD','Performance'],'Tesla|Model Y':['Long Range AWD','Performance'],'Tesla|Model S':['Long Range','Plaid'],'Tesla|Cybertruck':['AWD','Cyberbeast'],'Ram|1500':['Tradesman','Big Horn','Laramie','Rebel','Limited','TRX'],'GMC|Sierra 1500':['Pro','SLE','SLT','AT4','Denali','AT4X'],'GMC|Yukon':['SLE','SLT','AT4','Denali'],'Kia|Telluride':['LX','S','EX','SX','SX Prestige','X-Line'],'Kia|Sorento':['LX','S','EX','SX','SX Prestige'],'Hyundai|Palisade':['SE','SEL','XRT','Limited','Calligraphy'],'Lexus|RX':['RX350','RX350 F Sport','RX350h','RX500h'],'Subaru|Outback':['Base','Premium','Limited','Wilderness','Touring XT'],'Land Rover|Range Rover':['SE','HSE','Autobiography','SV'],'Land Rover|Defender':['90 S','90 SE','110 S','110 SE','110 X']};
 
-var PACKAGES={
-  'Toyota|Camry|LE':['Convenience Package — HomeLink mirror, Smart Key, power driver seat','Cold Weather Package — heated steering wheel, heated front seats'],
-  'Toyota|Camry|SE':['Convenience Package — HomeLink mirror, Smart Key','Cold Weather Package — heated steering wheel, paddle shifters, heated seats','Premium Package — panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers, seat memory'],
-  'Toyota|Camry|SE Nightshade':['Cold Weather Package — heated steering wheel, paddle shifters, heated seats'],
-  'Toyota|Camry|XLE':['Convenience Package — HomeLink mirror, Smart Key, power seat','Cold Weather Package — heated steering wheel, heated seats','Premium Package — panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers, seat memory','Premium Plus Package — all of Premium PLUS Traffic Jam Assist, FCTA, Lane Change Assist, Panoramic View Monitor, Parking Assist, Driver Monitor Camera','Multimedia Upgrade Package — 12.3-in. Toyota touchscreen'],
-  'Toyota|Camry|XSE':['Convenience Package — HomeLink mirror, Smart Key, power driver seat','Cold Weather Package — heated steering wheel, paddle shifters, heated seats','Premium Package — panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers, seat memory','Premium Plus Package — all of Premium PLUS Traffic Jam Assist, FCTA, Lane Change Assist, Panoramic View Monitor, Parking Assist, Driver Monitor Camera','Multimedia Upgrade Package — 12.3-in. Toyota touchscreen'],
-  'Toyota|Camry|XSE V6':['Cold Weather Package — heated steering wheel, heated seats','Premium Package — panoramic roof, JBL audio, ventilated seats, HUD','Premium Plus Package — Premium PLUS advanced safety suite'],
-  'Toyota|Camry|TRD V6':['Cold Weather Package — heated steering wheel, heated seats'],
-  'Toyota|RAV4|XLE Premium':['Cold Weather Package — heated rear seats, heated steering wheel','Premium Package — JBL audio, panoramic moonroof'],
-  'Toyota|RAV4|Limited':['Premium Audio Package','Cold Weather Package','Advanced Technology Package — panoramic view monitor, front/rear parking assist'],
-  'Toyota|Tacoma|TRD Sport':['TRD Sport Package — sport graphics, bedliner','All Weather Package — rubber floor mats, bed mat'],
-  'Toyota|Tacoma|TRD Off-Road':['TRD Off-Road Package — locking rear diff, skid plates','All Weather Package'],
-  'Toyota|Tacoma|TRD Pro':['TRD Pro Package — FOX shocks, TRD skid plate, GR-Sport suspension','Bass Pro Shops Package — limited edition content'],
-  'Toyota|Highlander|XLE':['All Weather Package — rubber floor mats, cargo mat','Power Moonroof Package'],
-  'Toyota|Highlander|Limited':['Premium Audio Package — JBL 11-speaker','Cold Weather Package — heated second row, heated steering wheel'],
-  'Toyota|Highlander|Platinum':['Panoramic Moonroof Package'],
-  'Ford|F-150|XLT':['XLT Sport Package — sport grille, running boards, 20-in. wheels','302A Equipment Group — heated front seats, remote start, LED box lighting','Chrome Package — chrome grille, bumpers, step bars'],
-  'Ford|F-150|Lariat':['Lariat Sport Package — sport grille, 20-in. wheels, black accents','502A Equipment Group — 360-degree camera, BLIS, power tailgate','FX4 Off-Road Package — skid plates, off-road tires, hill descent','Chrome Package — chrome grille and exterior trim'],
-  'Ford|F-150|Platinum':['701A Equipment Group — massaging seats, panoramic roof, B&O audio','FX4 Off-Road Package — skid plates, hill descent control'],
-  'Ford|F-150|Raptor':['37 Performance Package — 37-in. tires, upgraded suspension, bead-lock capable wheels','Raptor R Package — supercharged V8 upgrade content'],
-  'Ford|Mustang|GT':['GT Performance Package — Brembo brakes, sport-tuned suspension, larger sway bars','GT Performance Package Level 2 — MagneRide dampers, Torsen diff, Michelin Pilot Sport tires','Active Valve Performance Exhaust — quad-tip exhaust with driver-selectable modes'],
-  'Ford|Bronco|Big Bend':['Sasquatch Package — 35-in. tires, locking front/rear axles, high-clearance suspension, fender flares'],
-  'Ford|Bronco|Badlands':['Sasquatch Package — 35-in. tires, locking axles, Bilstein shocks, high-clearance suspension'],
-  'Ford|Bronco|Raptor':['37 Performance Package — 37-in. tires, extended fenders, Recaro seats, Torsen diff'],
-  'Jeep|Wrangler|Sport':['Cold Weather Group — heated front seats, heated steering wheel','Safety & Security Group — blind spot monitor, rear cross-traffic alert','Convenience Group — remote start, auto-dim mirror, universal garage opener'],
-  'Jeep|Wrangler|Sahara':['Sky One-Touch Power Top — power-retractable soft top','Cold Weather Group — heated seats and steering wheel','Leather Interior Group — leather-trimmed seats, upgraded trim'],
-  'Jeep|Wrangler|Rubicon':['Sky One-Touch Power Top','Rubicon Recon Package — 35-in. tires, steel bumpers, rock rails','Off-Road Plus Group — locking rear diff, sway bar disconnect'],
-  'Jeep|Grand Cherokee|Overland':['Overland Premium Package — panoramic sunroof, harman/kardon audio, advanced safety','Advanced Safety Group — adaptive cruise, lane keep assist, drowsy driver detection'],
-  'Jeep|Grand Cherokee|Summit':['Summit Reserve Package — McIntosh audio, Nappa leather, 19-speaker audio','Luxury Tech Group — night vision, head-up display, 360-degree surround view'],
-  'BMW|3 Series|330i':['Premium Package — heated front seats, SiriusXM, wireless charging','M Sport Package — M aerodynamics, sport steering, 19-in M wheels','Executive Package — driving assistant, parking assistant, ambient lighting','Driving Assistance Package — lane change warning, speed limit info'],
-  'BMW|3 Series|M340i':['Premium Package — heated seats, SiriusXM, wireless charging','M Sport Package — M Shadow Line, sport exhaust, 19-in M wheels','Executive Package — driving assistant plus, gesture control, ambient lighting'],
-  'BMW|X5|xDrive40i':['Premium Package — heated/ventilated front seats, 4-zone climate, SiriusXM','M Sport Package — M aerodynamics, 21-in M wheels, sport exhaust','Technology Package — gesture control, head-up display, park assist plus','Driving Assistance Professional Package — active driving assistant pro, traffic jam assist','Sky Lounge Panoramic Sunroof — full-length glass roof'],
-  'BMW|X3|xDrive30i':['Premium Package — heated front seats, SiriusXM, auto-dimming mirrors','M Sport Package — M aerodynamics, 20-in M wheels, sport steering'],
-  'Mercedes-Benz|C-Class|C300':['Premium Package — panorama sunroof, ambient lighting, wireless charging, heated front seats','AMG Line Package — AMG body styling, sport seats, 19-in AMG wheels','Driver Assistance Package — active brake assist, blind spot, lane keeping assist'],
-  'Mercedes-Benz|C-Class|C300 4MATIC':['Premium Package — panorama sunroof, 64-color ambient lighting, wireless charging','AMG Line Package — AMG exterior, sport steering wheel, sport seats','Driver Assistance Package — active distance assist, lane keeping package'],
-  'Mercedes-Benz|GLE|GLE350':['Premium Package — panorama sunroof, heated front seats, 64-color ambient lighting','Driver Assistance Package — active distance assist distronic, active steering assist','Parking Package — 360-degree camera, active parking assist'],
-  'Mercedes-Benz|GLE|GLE450':['Premium Package — panorama sunroof, heated/ventilated front seats, Burmester surround sound','AMG Line Package — AMG exterior package, 21-in AMG wheels','Driver Assistance Package — active distance assist, active steering, traffic sign assist'],
-  'Chevrolet|Silverado 1500|LTZ':['LTZ Plus Package — heated/ventilated front seats, wireless charging, power running boards','Z71 Off-Road Package — skid plates, all-terrain tires, off-road suspension','Duramax Diesel Option — 3.0L inline-6 diesel, 460 lb-ft torque'],
-  'Chevrolet|Silverado 1500|High Country':['High Country Package — 22-in chrome wheels, leather heated/cooled seats, chrome accessories','Duramax Diesel — 3.0L diesel, best-in-class towing'],
-  'Ram|1500|Laramie':['Laramie Night Package — black exterior accents, 20-in gloss black wheels','Laramie Level 1 Group — 12-in Uconnect, 360-degree surround view camera','Sport Package — sport hood, heated steering wheel, sport exhaust'],
-  'Ram|1500|Rebel':['Rebel Night Edition — all-black exterior, Rebel Red interior stitching','Level 1 Equipment Group — 12-in Uconnect, ventilated seats, blind spot'],
-  'Ram|1500|TRX':['Launch Edition Package — TRX launch edition content, unique interior','Carbon Fiber Package — carbon fiber hood, mirror caps, interior trim'],
-  'GMC|Sierra 1500|Denali':['Denali Ultimate Package — super cruise, ventilated massage seats, MultiPro power steps','Duramax Diesel — 3.0L diesel option'],
-  'Porsche|911|Carrera':['Sport Chrono Package — dynamic engine mounts, sport response button, lap timer','Premium Package Plus — BOSE sound, sport exhaust, extended leather interior','Carbon Ceramic Brake Package — PCCB, yellow calipers'],
-  'Porsche|Cayenne|Base':['Premium Package — 14-way power seats, BOSE surround, panoramic roof, 4-zone climate','Sport Design Package — sport exhaust, sport steering wheel, SportDesign exterior'],
-  'Porsche|Taycan|4S':['Performance Battery Plus — extended range, 93.4 kWh battery','Sport Chrono Package — launch control, track precision app, sport response button'],
-  'Tesla|Model Y|Long Range AWD':['Full Self-Driving Capability (FSD) — Navigate on autopilot, auto lane change, autopark, summon','Enhanced Autopilot — auto lane change, navigate on autopilot, autopark','Premium Connectivity — satellite view maps, live traffic visualization, music streaming'],
-  'Tesla|Model 3|Long Range AWD':['Full Self-Driving Capability (FSD) — complete self-driving suite','Enhanced Autopilot — auto lane change, navigate on autopilot, autopark','Premium Connectivity — live traffic, satellite maps, streaming'],
-  'Kia|Telluride|SX':['SX Prestige Package — nappa leather, head-up display, surround view monitor, 12-speaker Harman/Kardon','X-Line Package — raised suspension, dark chrome accents, roof rails'],
-  'Kia|Sorento|SX':['SX Prestige Package — Harman/Kardon, nappa leather, panoramic sunroof, ventilated front seats'],
-  'Subaru|Outback|Limited':['Subaru Navigation Package','All Weather Package — heated rear seats, heated steering wheel, windshield wiper de-icer'],
-  'Lexus|RX|RX350':['Premium Package — panoramic moonroof, 21-speaker Mark Levinson audio','Luxury Package — ventilated front seats, heated rear seats, bird's eye view monitor','Technology Package — head-up display, 360-degree panoramic view monitor'],
-  'Land Rover|Range Rover|SE':['Dynamic Pack — 23-in wheels, sport exhaust, configurable ambient lighting','Cold Climate Pack — heated windshield, heated rear seats, heated rear steering column','Black Pack — gloss black exterior accents, black roof rails, black badges'],
-  'Land Rover|Defender|110 SE':['Adventure Pack — side-mounted gear carrier, expedition roof rack, Explore Pro tires','Cold Climate Pack — heated front seats, heated steering wheel, heated windshield','Black Pack — gloss black exterior elements and badging']
-};
+var PKGS={'Toyota|Camry|LE':['Convenience Package — HomeLink mirror, Smart Key, power driver seat','Cold Weather Package — heated steering wheel, heated front seats'],'Toyota|Camry|SE':['Convenience Package — HomeLink mirror, Smart Key','Cold Weather Package — heated steering wheel, paddle shifters, heated seats','Premium Package — panoramic roof, JBL audio, ventilated seats, HUD, Digital Key'],'Toyota|Camry|SE Nightshade':['Cold Weather Package — heated steering wheel, paddle shifters, heated seats'],'Toyota|Camry|XLE':['Convenience Package — HomeLink mirror, Smart Key, power seat','Cold Weather Package — heated steering wheel, heated seats','Premium Package — panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers','Premium Plus Package — Premium + Traffic Jam Assist, FCTA, Lane Change Assist, PVM, Parking Assist, Driver Monitor','Multimedia Upgrade — 12.3-in. Toyota touchscreen'],'Toyota|Camry|XSE':['Convenience Package — HomeLink mirror, Smart Key, power driver seat','Cold Weather Package — heated steering wheel, paddle shifters, heated seats','Premium Package — panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers, seat memory','Premium Plus Package — Premium + Traffic Jam Assist, FCTA, Lane Change Assist, PVM, Parking Assist, Driver Monitor Camera','Multimedia Upgrade Package — 12.3-in. Toyota touchscreen'],'Toyota|Camry|TRD V6':['Cold Weather Package — heated steering wheel, heated seats'],'Toyota|RAV4|XLE Premium':['Cold Weather Package — heated rear seats, heated steering wheel','Premium Package — JBL audio, panoramic moonroof'],'Toyota|RAV4|Limited':['Premium Audio Package','Cold Weather Package','Advanced Technology Package — panoramic view monitor, parking assist'],'Toyota|Tacoma|TRD Pro':['TRD Pro Package — FOX shocks, TRD skid plate','Bass Pro Shops Package'],'Toyota|Tundra|TRD Pro':['TRD Pro Package — BBS wheels, TRD Pro skid plate'],'Ford|F-150|Lariat':['502A Equipment Group — 360 camera, BLIS, power tailgate','FX4 Off-Road Package — skid plates, off-road tires','Lariat Sport Package — sport grille, 20-in. wheels'],'Ford|F-150|Raptor':['37 Performance Package — 37-in. tires, bead-lock capable wheels'],'Ford|Mustang|GT':['GT Performance Package — Brembo brakes, sport-tuned suspension','Active Valve Performance Exhaust — quad-tip exhaust'],'Ford|Bronco|Badlands':['Sasquatch Package — 35-in. tires, locking axles, Bilstein shocks'],'Ford|Bronco|Rubicon':['Sky One-Touch Power Top','Rubicon Recon Package'],'Jeep|Wrangler|Sahara':['Sky One-Touch Power Top — power-retractable soft top','Cold Weather Group — heated seats and steering wheel'],'Jeep|Wrangler|Rubicon':['Sky One-Touch Power Top','Rubicon Recon Package — 35-in. tires, steel bumpers','Off-Road Plus Group'],'Jeep|Grand Cherokee|Overland':['Overland Premium Package — panoramic sunroof, harman/kardon audio','Advanced Safety Group'],'Jeep|Grand Cherokee|Summit':['Summit Reserve Package — McIntosh audio, Nappa leather','Luxury Tech Group — night vision, HUD'],'BMW|3 Series|330i':['Premium Package — heated seats, SiriusXM, wireless charging','M Sport Package — M aerodynamics, 19-in M wheels','Executive Package — driving assistant, ambient lighting'],'BMW|3 Series|M340i':['Premium Package — heated seats, SiriusXM','M Sport Package — M Shadow Line, sport exhaust, 19-in M wheels'],'BMW|X5|xDrive40i':['Premium Package — heated/ventilated seats, 4-zone climate','M Sport Package — M aerodynamics, 21-in M wheels','Technology Package — gesture control, HUD, park assist','Driving Assistance Professional Package — active driving assistant pro'],'Mercedes-Benz|C-Class|C300':['Premium Package — panorama sunroof, ambient lighting, wireless charging, heated seats','AMG Line Package — AMG body styling, sport seats, 19-in AMG wheels','Driver Assistance Package — active brake assist, blind spot'],'Mercedes-Benz|GLE|GLE350':['Premium Package — panorama sunroof, heated seats, ambient lighting','Driver Assistance Package — active distance assist, lane keeping','Parking Package — 360 camera, active parking assist'],'Mercedes-Benz|GLE|GLE450':['Premium Package — panorama sunroof, heated/ventilated seats, Burmester sound','AMG Line Package — AMG exterior, 21-in AMG wheels','Driver Assistance Package'],'Chevrolet|Silverado 1500|LTZ':['LTZ Plus Package — heated/ventilated seats, wireless charging, running boards','Z71 Off-Road Package — skid plates, all-terrain tires'],'Ram|1500|Laramie':['Night Package — black exterior accents, 20-in gloss black wheels','Level 1 Group — 12-in Uconnect, 360 surround view'],'Ram|1500|TRX':['Launch Edition Package','Carbon Fiber Package — carbon fiber hood, mirror caps'],'Porsche|911|Carrera':['Sport Chrono Package — dynamic engine mounts, sport response button','Premium Package Plus — BOSE sound, sport exhaust','Carbon Ceramic Brake Package'],'Porsche|Cayenne|Base':['Premium Package — 14-way seats, BOSE, panoramic roof','Sport Design Package — sport exhaust, sport steering wheel'],'Tesla|Model Y|Long Range AWD':['Full Self-Driving Capability (FSD)','Enhanced Autopilot — auto lane change, navigate on autopilot','Premium Connectivity — satellite maps, streaming'],'Kia|Telluride|SX':['SX Prestige Package — nappa leather, HUD, Harman/Kardon, surround view','X-Line Package — raised suspension, dark chrome accents'],'Land Rover|Range Rover|SE':['Dynamic Pack — 23-in wheels, sport exhaust, configurable ambient lighting','Cold Climate Pack — heated windshield, heated rear seats','Black Pack — gloss black exterior accents']};
 
-/* ===== DRAWER INIT — wire up after DOM ready ===== */
-document.addEventListener('DOMContentLoaded', function(){
-  // Show drawer 1 body on load
-  var b1 = document.querySelector('#d1 .drawer-body');
-  if(b1) b1.style.display = 'block';
-  // Wire drawer titles to toggle
-  [1,2,3].forEach(function(n){
-    var head = document.querySelector('#d'+n+' .drawer-head');
-    if(head){
-      head.style.cursor = 'pointer';
-      head.addEventListener('click', function(e){
-        // Only toggle if clicking the head itself, not a child button/select
-        if(e.target === head || e.target.closest('.drawer-left')){
-          toggleDrawer(n);
-        }
-      });
-    }
-  });
-});
+var pType='buy', selColor='', selPkgs=[];
 
-/* ===== STATE ===== */
-var purchaseType='buy';
-var selectedColor='';
-var selectedPkgs=[];
-var openDrawer=1;
+// BUILD MAKES
+(function(){
+  var s=document.getElementById('fMake');
+  Object.keys(MODELS).sort().forEach(function(m){s.appendChild(new Option(m,m));});
+})();
 
-/* ===== BUILD YEAR DROPDOWN ===== */
+// BUILD YEARS
 (function(){
   var s=document.getElementById('fYear');
   var cy=new Date().getFullYear();
   for(var y=cy+1;y>=2010;y--) s.appendChild(new Option(y,y));
 })();
 
-/* ===== BUILD COLOR SWATCHES ===== */
-var COLORS=[
-  {n:'Black',h:'#111'},{n:'White',h:'#f0f0f0',b:true},{n:'Silver',h:'#C0C0C0'},
-  {n:'Gray',h:'#707070'},{n:'Red',h:'#CC0000'},{n:'Blue',h:'#003087'},
-  {n:'Dark Blue',h:'#001a4d'},{n:'Midnight Black',h:'#0a0a0a'},{n:'Pearl White',h:'#f8f6f0',b:true},
-  {n:'Green',h:'#1a5c1a'},{n:'Brown',h:'#5D4037'},{n:'Gold',h:'#B8860B'},
-  {n:'Orange',h:'#E65100'},{n:'Maroon',h:'#7a0000'}
-];
+// BUILD COLORS
 (function(){
-  var r=document.getElementById('swatchRow');
-  COLORS.forEach(function(c){
+  var COLS=[{n:'Black',h:'#111'},{n:'White',h:'#f0f0f0',b:1},{n:'Silver',h:'#C0C0C0'},{n:'Gray',h:'#707070'},{n:'Red',h:'#CC0000'},{n:'Blue',h:'#003087'},{n:'Midnight Black',h:'#0a0a0a'},{n:'Pearl White',h:'#f8f6f0',b:1},{n:'Green',h:'#1a5c1a'},{n:'Brown',h:'#5D4037'},{n:'Gold',h:'#B8860B'},{n:'Orange',h:'#E65100'},{n:'Maroon',h:'#7a0000'}];
+  var r=document.getElementById('swatches');
+  COLS.forEach(function(c){
     var d=document.createElement('div');
-    d.className='swatch';
+    d.className='sw';
     d.style.background=c.h;
     if(c.b)d.style.border='3px solid #555';
-    d.setAttribute('data-color',c.n);
-    d.setAttribute('title',c.n);
-    d.setAttribute('role','button');
-    d.setAttribute('aria-label','Color: '+c.n);
-    d.innerHTML='<span class="stip">'+c.n+'</span>';
+    d.title=c.n;
+    d.innerHTML='<span class="sw-tip">'+c.n+'</span>';
     d.onclick=function(){
-      document.querySelectorAll('.swatch').forEach(function(x){x.classList.remove('active');});
-      this.classList.add('active');
-      selectedColor=this.getAttribute('data-color');
+      document.querySelectorAll('.sw').forEach(function(x){x.classList.remove('on');});
+      this.classList.add('on');
+      selColor=c.n;
     };
     r.appendChild(d);
   });
 })();
 
-/* ===== DRAWER SYSTEM ===== */
-function toggleDrawer(n){
-  var d=document.getElementById('d'+n);
-  if(!d) return;
-  var body=d.querySelector('.drawer-body');
-  if(!body) return;
-  var isOpen=body.style.display==='block';
-  body.style.display=isOpen?'none':'block';
-}
-function openD(n){
-  [1,2,3].forEach(function(i){
-    var d=document.getElementById('d'+i);
-    if(!d) return;
-    var body=d.querySelector('.drawer-body');
-    if(!body) return;
-    if(i===n){
-      body.style.display='block';
-      body.style.visibility='visible';
-      d.classList.add('active');
-    } else {
-      body.style.display='none';
-    }
-  });
-  openDrawer=n;
-  setTimeout(function(){
-    var el=document.getElementById('d'+n);
-    if(el){
-      var top=el.getBoundingClientRect().top+window.pageYOffset-90;
-      window.scrollTo({top:top,behavior:'smooth'});
-    }
-  },150);
-}
-function nextDrawer(n){
-  updateSummary(n);
-  markDone(n);
-  if(n<3){openD(n+1);}
-  else{doSearch();}
-}
-function markDone(n){
-  var d=document.getElementById('d'+n);
-  d.classList.add('done');
-  var st=document.getElementById('d'+n+'status');
-  if(st)st.textContent='✓ DONE';
-}
-function updateSummary(n){
-  if(n===1){
-    var cond=document.getElementById('fCondition');
-    var condTxt=cond.options[cond.selectedIndex].text;
-    document.getElementById('d1summary').textContent=condTxt+' · '+purchaseType.toUpperCase();
-  }
-  if(n===2){
-    var mk=document.getElementById('fMake').value;
-    var mo=document.getElementById('fModel').value;
-    var tr=document.getElementById('fTrim').value;
-    var yr=document.getElementById('fYear').value;
-    var parts=[yr,mk,mo,tr].filter(Boolean);
-    document.getElementById('d2summary').textContent=parts.join(' ')||(selectedColor?selectedColor:'');
-  }
-  if(n===3){
-    var mn=document.getElementById('fBudgetMin').value;
-    var mx=document.getElementById('fBudgetMax').value;
-    var zp=document.getElementById('fZip').value;
-    var r=document.getElementById('fRadius');
-    var rad=r.options[r.selectedIndex].text;
-    var parts=[];
-    if(mn||mx)parts.push('$'+(mn?Number(mn).toLocaleString():'0')+' – '+(mx?'$'+Number(mx).toLocaleString():'Any'));
-    if(zp)parts.push(zp+' · '+rad);
-    document.getElementById('d3summary').textContent=parts.join(' · ');
-  }
-}
-
-/* ===== CASCADE ===== */
-function setPurchase(t){
-  purchaseType=t;
+// PURCHASE TYPE
+function setP(t){
+  pType=t;
   ['Buy','Lease','Cash'].forEach(function(x){
-    var b=document.getElementById('btn'+x);
-    var active=x.toLowerCase()===t;
-    b.classList.toggle('active',active);
-    b.setAttribute('aria-pressed',active);
+    document.getElementById('t'+x).classList.toggle('on',x.toLowerCase()===t);
   });
 }
 
-function onMake(make){
+// CASCADE
+document.getElementById('fMake').onchange=function(){
+  var mk=this.value;
   var ms=document.getElementById('fModel');
   var ts=document.getElementById('fTrim');
-  ms.innerHTML='<option value="">All '+make+' Models</option>';
+  ms.innerHTML='<option value="">All '+mk+' Models</option>';
   ts.innerHTML='<option value="">Select Model First</option>';
-  document.getElementById('pkgSection').style.display='none';
-  selectedPkgs=[];
-  if(!make){ms.innerHTML='<option value="">Select Make First</option>';return;}
-  (MODELS[make]||[]).forEach(function(m){ms.appendChild(new Option(m,m));});
-}
+  document.getElementById('pkgWrap').style.display='none';
+  selPkgs=[];
+  if(!mk){ms.innerHTML='<option value="">Select Make First</option>';return;}
+  (MODELS[mk]||[]).forEach(function(m){ms.appendChild(new Option(m,m));});
+};
 
-function onModel(model){
-  var make=document.getElementById('fMake').value;
+document.getElementById('fModel').onchange=function(){
+  var mk=document.getElementById('fMake').value;
+  var mo=this.value;
   var ts=document.getElementById('fTrim');
-  ts.innerHTML='<option value="">All '+model+' Trims</option>';
-  document.getElementById('pkgSection').style.display='none';
-  selectedPkgs=[];
-  if(!model)return;
-  var trims=TRIMS[make+'|'+model]||['Base','LE','SE','XLE','XSE','EX','LX','Sport','Premium','Limited','Platinum','AWD'];
+  ts.innerHTML='<option value="">All '+mo+' Trims</option>';
+  document.getElementById('pkgWrap').style.display='none';
+  selPkgs=[];
+  if(!mo)return;
+  var trims=TRIMS[mk+'|'+mo]||['Base','LE','SE','XLE','XSE','EX','LX','Sport','Premium','Limited','Platinum'];
   trims.forEach(function(t){ts.appendChild(new Option(t,t));});
-}
+};
 
-function onTrim(trim){
-  var make=document.getElementById('fMake').value;
-  var model=document.getElementById('fModel').value;
-  var sec=document.getElementById('pkgSection');
-  var grid=document.getElementById('pkgGrid');
-  grid.innerHTML='';
-  selectedPkgs=[];
-  if(!trim||!make||!model){sec.style.display='none';return;}
-  var pkgs=PACKAGES[make+'|'+model+'|'+trim]||[];
-  if(!pkgs.length){sec.style.display='none';return;}
-  sec.style.display='block';
+document.getElementById('fTrim').onchange=function(){
+  var mk=document.getElementById('fMake').value;
+  var mo=document.getElementById('fModel').value;
+  var tr=this.value;
+  var wrap=document.getElementById('pkgWrap');
+  var list=document.getElementById('pkgList');
+  list.innerHTML='';selPkgs=[];
+  if(!tr||!mk||!mo){wrap.style.display='none';return;}
+  var pkgs=PKGS[mk+'|'+mo+'|'+tr]||[];
+  if(!pkgs.length){wrap.style.display='none';return;}
+  wrap.style.display='block';
   pkgs.forEach(function(p){
     var b=document.createElement('button');
-    b.className='pkg-btn';
+    b.className='pkgbtn';
     b.textContent=p;
-    b.setAttribute('aria-pressed','false');
     b.onclick=function(){
-      var on=this.classList.toggle('sel');
-      this.setAttribute('aria-pressed',on);
-      if(on){if(selectedPkgs.indexOf(p)<0)selectedPkgs.push(p);}
-      else{var i=selectedPkgs.indexOf(p);if(i>-1)selectedPkgs.splice(i,1);}
+      this.classList.toggle('on');
+      var i=selPkgs.indexOf(p);
+      if(this.classList.contains('on')){if(i<0)selPkgs.push(p);}
+      else{if(i>-1)selPkgs.splice(i,1);}
     };
-    grid.appendChild(b);
+    list.appendChild(b);
   });
+};
+
+// STEP NAVIGATION — simple show/hide
+function showStep(n){
+  [1,2,3].forEach(function(i){
+    document.getElementById('sb'+i).classList.toggle('hidden', i!==n);
+    var sn=document.getElementById('sn'+i);
+    if(i<n){sn.className='step-num done';}
+    else if(i===n){sn.className='step-num active';}
+    else{sn.className='step-num';}
+  });
+  var el=document.getElementById('sc'+n);
+  setTimeout(function(){
+    window.scrollTo({top:el.offsetTop-80,behavior:'smooth'});
+  },50);
 }
 
-/* ===== AI PARSE ===== */
-function fillAI(txt){document.getElementById('aiInput').value=txt;}
-function parseAI(){
-  var txt=document.getElementById('aiInput').value.toLowerCase();
-  var yearM=txt.match(/20\d\d/);
-  if(yearM)document.getElementById('fYear').value=yearM[0];
-  if(txt.includes('used')||txt.includes('pre-owned'))document.getElementById('fCondition').value='used';
-  else if(txt.includes('certified')||txt.includes('cpo'))document.getElementById('fCondition').value='certified';
-  else document.getElementById('fCondition').value='new';
-  if(txt.includes('lease'))setPurchase('lease');
-  else if(txt.includes('cash'))setPurchase('cash');
-  else setPurchase('buy');
-  var budM=txt.match(/under\s*\$?([\d,]+)\s*k?/);
-  if(budM){var n=parseInt(budM[1].replace(',',''));document.getElementById('fBudgetMax').value=txt.includes('k')?n*1000:n;}
-  COLORS.forEach(function(c){
-    if(txt.includes(c.n.toLowerCase())){
-      document.querySelectorAll('.swatch').forEach(function(d){
-        if(d.getAttribute('data-color').toLowerCase()===c.n.toLowerCase())d.click();
-      });
-    }
-  });
+document.getElementById('n1btn').onclick=function(){showStep(2);};
+document.getElementById('n2btn').onclick=function(){showStep(3);};
+document.getElementById('n3btn').onclick=function(){doSearch();};
+document.getElementById('searchBtn').onclick=function(){doSearch();};
+
+// AI
+function fillAI(txt){document.getElementById('aiIn').value=txt;}
+function doAI(){
+  var txt=document.getElementById('aiIn').value.toLowerCase();
+  var ym=txt.match(/20\d\d/);if(ym)document.getElementById('fYear').value=ym[0];
+  if(txt.includes('used')||txt.includes('pre-owned'))document.getElementById('fCond').value='used';
+  else if(txt.includes('certified'))document.getElementById('fCond').value='certified';
+  if(txt.includes('lease'))setP('lease');
+  else if(txt.includes('cash'))setP('cash');
+  var bm=txt.match(/under\s*\$?([\d,]+)\s*k?/);
+  if(bm){var n=parseInt(bm[1].replace(',',''));document.getElementById('fBMax').value=txt.includes('k')?n*1000:n;}
   Object.keys(MODELS).forEach(function(mk){
     if(txt.includes(mk.toLowerCase())){
-      document.getElementById('fMake').value=mk;
-      onMake(mk);
-      MODELS[mk].forEach(function(mo){
-        if(txt.includes(mo.toLowerCase())){
-          document.getElementById('fModel').value=mo;
-          onModel(mo);
-        }
-      });
+      var ms=document.getElementById('fMake');
+      ms.value=mk;ms.dispatchEvent(new Event('change'));
+      setTimeout(function(){
+        MODELS[mk].forEach(function(mo){
+          if(txt.includes(mo.toLowerCase())){
+            var ms2=document.getElementById('fModel');
+            ms2.value=mo;ms2.dispatchEvent(new Event('change'));
+          }
+        });
+      },100);
     }
   });
-  setTimeout(doSearch,400);
+  setTimeout(function(){showStep(1);doSearch();},400);
 }
 
-/* ===== SEARCH ===== */
+// SEARCH
 function doSearch(){
-  // Update summaries for any unsaved drawers
-  [1,2,3].forEach(function(n){updateSummary(n);markDone(n);});
-  showLoading();
-}
-
-function showLoading(){
-  var ol=document.getElementById('loadingOverlay');
-  ol.classList.add('show');
-  var steps=['ls1','ls2','ls3','ls4'];
-  var i=0;
-  steps.forEach(function(s){document.getElementById(s).className='load-step';});
-  function next(){
-    if(i>0)document.getElementById(steps[i-1]).className='load-step done';
-    if(i<steps.length){document.getElementById(steps[i]).className='load-step active';i++;setTimeout(next,950);}
-    else{setTimeout(function(){ol.classList.remove('show');buildResults();},500);}
-  }
-  next();
-}
-
-function buildResults(){
   var make=document.getElementById('fMake').value||'Any Make';
   var model=document.getElementById('fModel').value;
   var trim=document.getElementById('fTrim').value;
   var year=document.getElementById('fYear').value;
-  var budMax=parseInt(document.getElementById('fBudgetMax').value)||42000;
-  var budMin=parseInt(document.getElementById('fBudgetMin').value)||Math.round(budMax*0.82);
+  var bmax=parseInt(document.getElementById('fBMax').value)||42000;
+  var bmin=parseInt(document.getElementById('fBMin').value)||Math.round(bmax*.83);
   var zip=document.getElementById('fZip').value||'75025';
-  var radius=document.getElementById('fRadius').value||'250';
-  var cond=document.getElementById('fCondition').value;
-  var drive=document.getElementById('fDrive').value;
-  var isLease=purchaseType==='lease';
+  var rad=document.getElementById('fRad').value||'250';
+  var isLease=pType==='lease';
   var vName=[year,make,model,trim].filter(Boolean).join(' ');
 
-  /* Match numbers */
-  var total=Math.floor(Math.random()*900)+150;
+  // Show loading
+  var ld=document.getElementById('loading');
+  ld.classList.add('show');
+  var steps=['ls1','ls2','ls3','ls4'];
+  var idx=0;
+  steps.forEach(function(s){document.getElementById(s).className='ls';});
+  function nextStep(){
+    if(idx>0)document.getElementById(steps[idx-1]).className='ls d';
+    if(idx<steps.length){document.getElementById(steps[idx]).className='ls a';idx++;setTimeout(nextStep,900);}
+    else{setTimeout(function(){ld.classList.remove('show');buildResults(vName,bmin,bmax,zip,rad,isLease,make,model,trim);},400);}
+  }
+  nextStep();
+}
+
+function buildResults(vName,bmin,bmax,zip,rad,isLease,make,model,trim){
+  var total=Math.floor(Math.random()*900)+200;
   var p100=Math.floor(Math.random()*6)+2;
   var p95=Math.floor(Math.random()*18)+8;
   var p90=total-p100-p95;
-  var l100=Math.min(Math.floor(p100*0.45),2);
-  var r100=Math.min(Math.floor(p100*0.35),2);
-  var n100=p100-l100-r100;
-  var avgPrice=Math.round((budMin+budMax)/2);
-  var moEst=Math.round(avgPrice/68);
+  var l=Math.min(Math.floor(p100*.45),2);
+  var r=Math.min(Math.floor(p100*.35),2);
+  var n=p100-l-r;
+  var avg=Math.round((bmin+bmax)/2);
+  var mo=Math.round(avg/68);
 
-  /* MATCH HERO */
-  document.getElementById('matchHero').innerHTML=
-    '<div class="match-found">'+total.toLocaleString()+'</div>'+
-    '<div class="match-found-label">Vehicles Found Matching Your Criteria</div>'+
-    '<div class="match-vehicle">'+vName+(selectedColor?' · '+selectedColor:'')+(drive?' · '+drive:'')+(isLease?' · Lease':' · '+(purchaseType==='cash'?'Cash':'Purchase'))+'</div>'+
-    '<div class="match-bars">'+
-      mkBar('100%','pct-100','Perfect Match',l100,'Local',r100,'Regional',n100,'National')+
-      mkBar('95%','pct-95','Near Match',Math.floor(p95*0.3),'Local',Math.floor(p95*0.35),'Regional',Math.floor(p95*0.35),'National')+
-      mkBar('90%','pct-90','Good Match',Math.floor(p90*0.15),'Local',Math.floor(p90*0.3),'Regional',Math.floor(p90*0.55),'National')+
+  // Match box
+  document.getElementById('matchBox').innerHTML=
+    '<div class="match-num">'+total.toLocaleString()+'</div>'+
+    '<div class="match-lbl">Vehicles Found</div>'+
+    '<div class="match-sub">Matching: '+vName+(selColor?' · '+selColor:'')+(isLease?' · Lease':' · Purchase')+' · Within '+rad+' miles of '+zip+'</div>'+
+    '<div class="mbars">'+
+      mb('100%','g','Perfect Match',l,'Local',r,'Regional',n,'National')+
+      mb('95%','y','Near Match',Math.floor(p95*.3),'Local',Math.floor(p95*.4),'Regional',Math.floor(p95*.3),'National')+
+      mb('90%','o','Good Match',Math.floor(p90*.15),'Local',Math.floor(p90*.3),'Regional',Math.floor(p90*.55),'National')+
     '</div>';
 
-  /* COST CARDS */
-  var lBase=avgPrice+Math.floor(Math.random()*2000)+500;
+  // Cost cards
+  var lBase=avg+Math.floor(Math.random()*2000)+500;
   var lFees=Math.floor(Math.random()*600)+400;
-  var lAddon=Math.floor(Math.random()*1800)+800;
-  var lTotal=lBase+lFees+lAddon;
-  var eBase=avgPrice-Math.floor(Math.random()*3500)-800;
+  var lAdd=Math.floor(Math.random()*1800)+800;
+  var lTotal=lBase+lFees+lAdd;
+  var eBase=avg-Math.floor(Math.random()*3500)-800;
   var eFees=Math.floor(Math.random()*150)+85;
-  var eTransport=Math.floor(Math.random()*400)+695;
-  var eTotal=eBase+eFees+eTransport;
-  var eSave=lTotal-eTotal;
-  var eMoEst=Math.round(eBase/68);
-  var lMoEst=Math.round(lBase/68);
+  var eTrans=Math.floor(Math.random()*400)+695;
+  var eTotal=eBase+eFees+eTrans;
+  var save=lTotal-eTotal;
+  var eMo=Math.round(eBase/68);
+  var lMo=Math.round(lBase/68);
 
   document.getElementById('costCards').innerHTML=
-    mkCostCard('📍 Local Market Price','badge-local','NEARBY',
-      [['Vehicle Base Price','$'+lBase.toLocaleString(),''],
-       ['Transport Cost','$0 ✅','val-good'],
-       ['Doc & Title Fees','$'+lFees.toLocaleString()+' ⚠️','val-warn'],
-       ['Dealer Add-Ons','$'+lAddon.toLocaleString()+' 🚨','val-bad'],
-       (isLease?['Est. Monthly Payment','~$'+lMoEst+'/mo','val-warn']:[])
-      ].filter(function(r){return r.length;}),
+    cc('📍 Local Market','bl','NEARBY',
+      [['Vehicle Base Price','$'+lBase.toLocaleString(),''],['Transport','$0 ✅','vg'],['Doc & Title Fees','$'+lFees.toLocaleString()+' ⚠️','vo'],['Dealer Add-Ons','$'+lAdd.toLocaleString()+' 🚨','vr'],isLease?['Est. Monthly','~$'+lMo+'/mo','vo']:null].filter(Boolean),
       lTotal,'')+
-    mkCostCard('🏆 EVL Best Deal Found','badge-best','BEST DEAL',
-      [['Vehicle Base Price','$'+eBase.toLocaleString()+' 💰','val-good'],
-       ['Transport Cost','$'+eTransport.toLocaleString(),''],
-       ['Doc & Title Fees','$'+eFees.toLocaleString()+' ✅','val-good'],
-       ['Dealer Add-Ons','$0 ✅ Eliminated','val-good'],
-       (isLease?['Est. Monthly Payment','~$'+eMoEst+'/mo ✅','val-good']:[])
-      ].filter(function(r){return r.length;}),
-      eTotal,'▼ You save $'+eSave.toLocaleString()+' vs local market');
+    cc('🏆 EVL Best Deal','bg','BEST DEAL',
+      [['Vehicle Base Price','$'+eBase.toLocaleString()+' 💰','vg'],['Transport','$'+eTrans.toLocaleString(),''],['Doc & Title Fees','$'+eFees.toLocaleString()+' ✅','vg'],['Dealer Add-Ons','$0 ✅ Eliminated','vg'],isLease?['Est. Monthly','~$'+eMo+'/mo ✅','vg']:null].filter(Boolean),
+      eTotal,'▼ You save $'+save.toLocaleString()+' vs local');
 
-  /* IA CARDS */
+  // IA
   document.getElementById('iaCards').innerHTML=
-    '<div class="ia-card inh">'+
-      '<div class="ia-title">⚠️ Inhibitors</div>'+
-      '<div class="ia-item"><span class="ia-ico">🚨</span><div class="ia-txt"><strong>Market Adjustment Fees</strong>Some dealers adding $1,500–$3,000 above MSRP. EVL removes this entirely from your deal.</div></div>'+
-      '<div class="ia-item"><span class="ia-ico">⚠️</span><div class="ia-txt"><strong>Dealer Add-On Packages</strong>Paint protection, fabric guard, nitrogen tires — pure profit for the dealer. EVL eliminates these.</div></div>'+
-      '<div class="ia-item"><span class="ia-ico">⚠️</span><div class="ia-txt"><strong>Inflated Documentation Fees</strong>Regional average is $150–$250. Some dealers charge $895+. EVL negotiates this down.</div></div>'+
-      '<div class="ia-item"><span class="ia-ico">🚨</span><div class="ia-txt"><strong>F&I Office Upsells</strong>Extended warranties and GAP coverage at 300% markup. EVL sources these independently at fair prices.</div></div>'+
+    '<div class="ia-card inh"><div class="ia-title">⚠️ Inhibitors</div>'+
+    '<div class="ia-item"><span class="ia-ico">🚨</span><div class="ia-txt"><strong>Market Adjustment Fees</strong>Some dealers add $1,500–$3,000 above MSRP. EVL removes this.</div></div>'+
+    '<div class="ia-item"><span class="ia-ico">⚠️</span><div class="ia-txt"><strong>Dealer Add-On Packages</strong>Paint protection, fabric guard, nitrogen tires — EVL eliminates these.</div></div>'+
+    '<div class="ia-item"><span class="ia-ico">⚠️</span><div class="ia-txt"><strong>Inflated Doc Fees</strong>Average is $150–$250. Some charge $895+. EVL negotiates this down.</div></div>'+
+    '<div class="ia-item"><span class="ia-ico">🚨</span><div class="ia-txt"><strong>F&amp;I Office Upsells</strong>Warranties &amp; GAP at 300% markup. EVL sources independently.</div></div>'+
     '</div>'+
-    '<div class="ia-card act">'+
-      '<div class="ia-title">✅ Actuators</div>'+
-      '<div class="ia-item"><span class="ia-ico">💰</span><div class="ia-txt"><strong>Current OEM Incentives</strong>Active manufacturer rebates and loyalty discounts available on this vehicle right now.</div></div>'+
-      '<div class="ia-item"><span class="ia-ico">✅</span><div class="ia-txt"><strong>Aged Inventory Leverage</strong>EVL identifies vehicles sitting 45+ days. Motivated dealers move these at significant discounts.</div></div>'+
-      '<div class="ia-item"><span class="ia-ico">✅</span><div class="ia-txt"><strong>Regional Price Arbitrage</strong>The same vehicle can be $2,000–$5,000 cheaper in another market. EVL finds it and delivers it.</div></div>'+
-      '<div class="ia-item"><span class="ia-ico">💰</span><div class="ia-txt"><strong>Competing Dealer Pressure</strong>EVL plays competing dealers against each other. This is our most powerful negotiating tool.</div></div>'+
+    '<div class="ia-card act"><div class="ia-title">✅ Actuators</div>'+
+    '<div class="ia-item"><span class="ia-ico">💰</span><div class="ia-txt"><strong>OEM Incentives Available</strong>Current manufacturer rebates and loyalty discounts apply now.</div></div>'+
+    '<div class="ia-item"><span class="ia-ico">✅</span><div class="ia-txt"><strong>Aged Inventory Leverage</strong>Vehicles 45+ days on lot = motivated dealers = bigger discounts.</div></div>'+
+    '<div class="ia-item"><span class="ia-ico">✅</span><div class="ia-txt"><strong>Regional Price Arbitrage</strong>Same vehicle can be $2,000–$5,000 cheaper in another market. EVL finds it.</div></div>'+
+    '<div class="ia-item"><span class="ia-ico">💰</span><div class="ia-txt"><strong>Competing Dealer Pressure</strong>EVL plays dealers against each other. Our most powerful tool.</div></div>'+
     '</div>';
 
-  /* EVL BOTTOM LINE */
-  var evlRange='$'+eTotal.toLocaleString()+' – $'+(eTotal+1200).toLocaleString();
-  var saveRange='$'+eSave.toLocaleString()+' – $'+(eSave+2000).toLocaleString();
-  document.getElementById('evlBL').innerHTML=
-    '<div class="ebl-label">⚡ EVL ADVANTAGE REPORT</div>'+
-    '<div class="ebl-title">Your EVL Bottom Line</div>'+
-    '<div class="ebl-stats" style="margin-top:20px;">'+
-      mkStat('EVL Deal Range',evlRange,isLease?'Or ~$'+eMoEst+'/mo lease':'')+
-      mkStat('Your Total Savings',saveRange,'vs. local market price')+
-      mkStat('Perfect Matches',p100+' vehicles',l100+' local · '+r100+' regional · '+n100+' national')+
-      mkStat('EVL Service Fee','$295','Flat. No commission. No % cut. Ever.')+
+  // EVL bottom line
+  var saveR='$'+save.toLocaleString()+' – $'+(save+2000).toLocaleString();
+  document.getElementById('evlBox').innerHTML=
+    '<div class="evl-lbl">⚡ EVL ADVANTAGE REPORT</div>'+
+    '<div class="evl-title">Your EVL Bottom Line</div>'+
+    '<div class="evl-stats">'+
+      es('EVL Deal Range','$'+eTotal.toLocaleString()+' – $'+(eTotal+1200).toLocaleString(),isLease?'Or ~$'+eMo+'/mo':'')+
+      es('Your Savings',saveR,'vs. local market')+
+      es('Perfect Matches',p100+' vehicles',l+' local · '+r+' regional · '+n+' national')+
+      es('EVL Service Fee','$295','Flat. No commission. Ever.')+
     '</div>'+
-    '<div class="ebl-note">🔒 <strong>EVL Protection Guarantee:</strong> No dealer names, locations, or vehicle identification numbers are ever disclosed to you directly. EVL acts as your fully authorized concierge agent — we negotiate everything, you simply approve your deal. Dealer details are only revealed at the moment of final signed agreement.</div>';
+    '<div class="evl-note">🔒 <strong>EVL Protection:</strong> No dealer names, locations, or VINs are ever disclosed to you directly. EVL acts as your fully authorized concierge — we negotiate everything, you simply approve your deal.</div>';
 
-  /* SHOW RESULTS */
+  // CTA
+  document.getElementById('ctaBtn').onclick=function(){submitReq(vName);};
+
+  // Show results
   var res=document.getElementById('results');
   res.style.display='block';
   res.classList.add('show');
   setTimeout(function(){window.scrollTo({top:res.offsetTop-80,behavior:'smooth'});},150);
 }
 
-function mkBar(pct,cls,label,l,lLbl,r,rLbl,n,nLbl){
-  return '<div class="mbar">'+
-    '<div class="mbar-pct '+cls+'">'+pct+'</div>'+
-    '<div class="mbar-label">'+label+'</div>'+
-    '<div class="mbar-rows">'+
-      '<div class="mbar-row"><span class="mdot mdot-l"></span>'+lLbl+'<span class="mbar-count">'+l+'</span></div>'+
-      '<div class="mbar-row"><span class="mdot mdot-r"></span>'+rLbl+'<span class="mbar-count">'+r+'</span></div>'+
-      '<div class="mbar-row"><span class="mdot mdot-n"></span>'+nLbl+'<span class="mbar-count">'+n+'</span></div>'+
-    '</div>'+
+function mb(pct,cls,lbl,lc,ll,rc,rl,nc,nl){
+  return '<div class="mbar"><div class="mbar-pct '+cls+'">'+pct+'</div><div class="mbar-lbl">'+lbl+'</div>'+
+    '<div class="mbar-row"><span class="dot dg"></span>'+ll+'<span class="mc">'+lc+'</span></div>'+
+    '<div class="mbar-row"><span class="dot dy"></span>'+rl+'<span class="mc">'+rc+'</span></div>'+
+    '<div class="mbar-row"><span class="dot db"></span>'+nl+'<span class="mc">'+nc+'</span></div></div>';
+}
+
+function cc(title,badge,badgeTxt,rows,total,save){
+  return '<div class="rcard'+(badge==='bg'?' best':'')+'">'+
+    '<div class="rcard-title">'+title+'<span class="badge '+badge+'">'+badgeTxt+'</span></div>'+
+    rows.map(function(r){return'<div class="rrow"><span class="rrow-lbl">'+r[0]+'</span><span class="rrow-val '+(r[2]||'')+'">'+r[1]+'</span></div>';}).join('')+
+    '<div class="rtotal"><div><span class="rtlbl">True Cost</span>'+(save?'<div class="rtsave">'+save+'</div>':'')+'</div><span class="rtval">$'+total.toLocaleString()+'</span></div>'+
   '</div>';
 }
 
-function mkCostCard(title,badge,badgeTxt,rows,total,save){
-  var rowsHtml=rows.map(function(r){return'<div class="rrow"><span class="rrow-lbl">'+r[0]+'</span><span class="rrow-val '+(r[2]||'')+'">'+r[1]+'</span></div>';}).join('');
-  return'<div class="result-card" style="margin-bottom:16px;">'+
-    '<div class="result-card-title">'+title+'<span class="rc-badge '+badge+'">'+badgeTxt+'</span></div>'+
-    '<div class="result-rows">'+rowsHtml+'</div>'+
-    '<div class="result-total"><div><span class="rt-label">True Cost to You</span>'+(save?'<div class="rt-save">'+save+'</div>':'')+'</div><span class="rt-val">$'+total.toLocaleString()+'</span></div>'+
-  '</div>';
+function es(lbl,val,sub){
+  return'<div class="estat"><div class="estat-lbl">'+lbl+'</div><div class="estat-val">'+val+'</div>'+(sub?'<div class="estat-sub">'+sub+'</div>':'')+'</div>';
 }
 
-function mkStat(label,val,sub){
-  return'<div class="ebl-stat"><div class="ebl-stat-lbl">'+label+'</div><div class="ebl-stat-val">'+val+'</div>'+(sub?'<div class="ebl-stat-sub">'+sub+'</div>':'')+'</div>';
-}
-
-function submitRequest(){
-  var make=document.getElementById('fMake').value;
-  var model=document.getElementById('fModel').value;
-  var trim=document.getElementById('fTrim').value;
-  var year=document.getElementById('fYear').value;
-  var budMax=document.getElementById('fBudgetMax').value;
-  var zip=document.getElementById('fZip').value;
-  var veh=[year,make,model,trim].filter(Boolean).join(' ');
-  var body='EVL VEHICLE REQUEST\n\n'+
-    'Vehicle: '+veh+'\n'+
-    'Condition: '+document.getElementById('fCondition').value+'\n'+
-    'Color: '+(selectedColor||'Open')+'\n'+
-    'Purchase Type: '+purchaseType.toUpperCase()+'\n'+
-    (budMax?'Max Budget: $'+Number(budMax).toLocaleString()+'\n':'')+
-    'ZIP: '+(zip||'Not provided')+'\n'+
-    (selectedPkgs.length?'\nDesired Packages:\n'+selectedPkgs.map(function(p){return'• '+p;}).join('\n'):'')+
-    '\n\nI authorize EVL to act as my authorized agent to locate, negotiate, and arrange delivery of the above vehicle on my behalf.';
-  window.location.href='mailto:info@expressvehiclelocators.com?subject='+encodeURIComponent('EVL Request — '+veh)+'&body='+encodeURIComponent(body);
+function submitReq(vName){
+  var body='EVL VEHICLE REQUEST\n\nVehicle: '+vName+'\nColor: '+(selColor||'Open')+'\nPurchase: '+pType.toUpperCase()+
+    (document.getElementById('fBMax').value?'\nMax Budget: $'+Number(document.getElementById('fBMax').value).toLocaleString():'')+
+    '\nZIP: '+(document.getElementById('fZip').value||'Not provided')+
+    (selPkgs.length?'\n\nDesired Packages:\n'+selPkgs.map(function(p){return'• '+p;}).join('\n'):'')+
+    '\n\nI authorize EVL to act as my agent to locate, negotiate and arrange delivery on my behalf.';
+  window.location.href='mailto:info@expressvehiclelocators.com?subject='+encodeURIComponent('EVL Request — '+vName)+'&body='+encodeURIComponent(body);
 }
 </script>
 </body>
