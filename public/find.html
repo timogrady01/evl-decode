@@ -80,7 +80,7 @@ nav{background:rgba(10,10,12,0.97);border-bottom:1px solid var(--border);padding
 
 /* RESULTS SECTION */
 .results-section{max-width:1100px;margin:0 auto;padding:0 48px 80px;display:none;}
-.results-section.show{display:block;}
+.results-section.show{display:block !important;}
 
 /* MATCH INTELLIGENCE */
 .match-header{background:linear-gradient(135deg,#0D1828,var(--s1));border:1px solid var(--border);border-left:4px solid var(--blue);padding:28px 32px;margin-bottom:24px;}
@@ -715,7 +715,7 @@ function doSearch(){
   var year=document.getElementById('fYear').value;
   var budget=document.getElementById('fBudget').value;
   var zip=document.getElementById('fZip').value||'75025';
-  if(!make&&!model){alert('Please select at least a Make to search.');return;}
+  // No hard block — allow search with any inputs
   showLoading(make,model,trim,year,budget,zip);
 }
 
@@ -733,7 +733,10 @@ function showLoading(make,model,trim,year,budget,zip){
 }
 
 function showResults(make,model,trim,year,budget,zip){
-  // Generate intelligent mock data based on inputs
+  // Use friendly defaults if nothing selected
+  make=make||'Any Make';
+  model=model||'';
+  trim=trim||'';
   var vehicleName=(year?year+' ':'')+make+(model?' '+model:'')+(trim?' '+trim:'');
   var basePriceMin=budget?Math.round(budget*0.82):32000;
   var basePriceMax=budget?Math.round(budget*0.97):44000;
@@ -871,8 +874,8 @@ function showResults(make,model,trim,year,budget,zip){
     '</div>'+
     '<div class="ebl-disclaimer">🔒 <strong>EVL Protection:</strong> No dealer names, locations, or VINs are ever disclosed to you directly. EVL acts as your fully authorized agent — we negotiate, you approve, you save. Dealer info revealed only at final deal approval.</div>';
 
-  document.getElementById('resultsSection').classList.add('show');
-  setTimeout(function(){document.getElementById('resultsSection').scrollIntoView({behavior:'smooth',block:'start'});},100);
+  var rs=document.getElementById('resultsSection');rs.classList.add('show');rs.style.display='block';
+  setTimeout(function(){window.scrollTo({top:document.getElementById('resultsSection').offsetTop-80,behavior:'smooth'});},100);
 }
 
 function submitRequest(){
