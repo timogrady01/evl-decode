@@ -1,40 +1,44 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/decode",
-      "destination": "/api/decode.js"
+      "src": "/api/decode",
+      "dest": "/api/decode.js"
     },
     {
-      "source": "/home",
-      "destination": "/public/home.html"
+      "src": "/home",
+      "dest": "/public/home.html"
     },
     {
-      "source": "/find",
-      "destination": "/public/find.html"
+      "src": "/find",
+      "dest": "/public/find.html"
     },
     {
-      "source": "/find.html",
-      "destination": "/public/find.html"
+      "src": "/find.html",
+      "dest": "/public/find.html"
     },
     {
-      "source": "/how",
-      "destination": "/public/how.html"
+      "src": "/how",
+      "dest": "/public/how.html"
     },
     {
-      "source": "/how.html",
-      "destination": "/public/how.html"
+      "src": "/how.html",
+      "dest": "/public/how.html"
     },
     {
-      "source": "/admin",
-      "destination": "/public/admin.html"
+      "src": "/admin",
+      "dest": "/public/admin.html"
     },
     {
-      "source": "/admin.html",
-      "destination": "/public/admin.html"
+      "src": "/admin.html",
+      "dest": "/public/admin.html"
     },
     {
-      "source": "/(.*)",
-      "destination": "/public/index.html"
+      "src": "/savings",
+      "dest": "/public/savings.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.html"
     }
   ]
 }
