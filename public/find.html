@@ -316,7 +316,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
         <span class="drawer-arrow">▼</span>
       </div>
     </div>
-    <div class="drawer-body">
+    <div class="drawer-body" style="display:block;">
       <div class="frow frow-2">
         <div class="fgroup">
           <label class="flabel" for="fCondition">Condition</label>
@@ -710,28 +710,41 @@ var COLORS=[
 /* ===== DRAWER SYSTEM ===== */
 function toggleDrawer(n){
   var d=document.getElementById('d'+n);
-  d.classList.toggle('open');
-  d.querySelector('.drawer-head').setAttribute('aria-expanded',d.classList.contains('open'));
+  var body=d.querySelector('.drawer-body');
+  var isOpen=body.style.display==='block';
+  body.style.display=isOpen?'none':'block';
+  d.querySelector('.drawer-head').setAttribute('aria-expanded',!isOpen);
 }
 function openD(n){
   [1,2,3].forEach(function(i){
     var d=document.getElementById('d'+i);
-    d.classList.remove('open');
-    if(i===n){d.classList.add('open','active');d.querySelector('.drawer-head').setAttribute('aria-expanded','true');}
+    var body=d.querySelector('.drawer-body');
+    if(i===n){
+      body.style.display='block';
+      d.classList.add('active');
+      d.querySelector('.drawer-head').setAttribute('aria-expanded','true');
+    } else {
+      body.style.display='none';
+    }
   });
   openDrawer=n;
-  document.getElementById('d'+n).scrollIntoView({behavior:'smooth',block:'nearest'});
+  setTimeout(function(){
+    var el=document.getElementById('d'+n);
+    var top=el.getBoundingClientRect().top+window.pageYOffset-90;
+    window.scrollTo({top:top,behavior:'smooth'});
+  },100);
 }
 function nextDrawer(n){
   updateSummary(n);
   markDone(n);
-  if(n<3)openD(n+1);
-  else doSearch();
+  if(n<3){openD(n+1);}
+  else{doSearch();}
 }
 function markDone(n){
   var d=document.getElementById('d'+n);
   d.classList.add('done');
-  document.getElementById('d'+n+'status').textContent='✓ DONE';
+  var st=document.getElementById('d'+n+'status');
+  if(st)st.textContent='✓ DONE';
 }
 function updateSummary(n){
   if(n===1){
