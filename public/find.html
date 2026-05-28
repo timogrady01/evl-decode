@@ -316,7 +316,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
         <span class="drawer-arrow">▼</span>
       </div>
     </div>
-    <div class="drawer-body" style="display:block;">
+    <div class="drawer-body" style="display:block;" onclick="event.stopPropagation();">
       <div class="frow frow-2">
         <div class="fgroup">
           <label class="flabel" for="fCondition">Condition</label>
@@ -330,13 +330,13 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
         <div class="fgroup">
           <label class="flabel">Purchase Type</label>
           <div class="toggle-row">
-            <button class="tbtn active" id="btnBuy" onclick="setPurchase('buy')" aria-pressed="true">🚗 Buy</button>
-            <button class="tbtn" id="btnLease" onclick="setPurchase('lease')" aria-pressed="false">📋 Lease</button>
-            <button class="tbtn" id="btnCash" onclick="setPurchase('cash')" aria-pressed="false">💵 Cash</button>
+            <button class="tbtn active" id="btnBuy" onclick="event.stopPropagation();setPurchase('buy')" aria-pressed="true">🚗 Buy</button>
+            <button class="tbtn" id="btnLease" onclick="event.stopPropagation();setPurchase('lease')" aria-pressed="false">📋 Lease</button>
+            <button class="tbtn" id="btnCash" onclick="event.stopPropagation();setPurchase('cash')" aria-pressed="false">💵 Cash</button>
           </div>
         </div>
       </div>
-      <button class="next-btn" onclick="nextDrawer(1)">Next — Select Your Vehicle →</button>
+      <button class="next-btn" onclick="event.stopPropagation();nextDrawer(1)">Next — Select Your Vehicle →</button>
     </div>
   </div>
 
@@ -356,11 +356,11 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
         <span class="drawer-arrow">▼</span>
       </div>
     </div>
-    <div class="drawer-body">
+    <div class="drawer-body" onclick="event.stopPropagation();">
       <div class="frow frow-3">
         <div class="fgroup">
           <label class="flabel" for="fMake">Make</label>
-          <select class="fselect" id="fMake" onchange="onMake(this.value)" aria-label="Vehicle make">
+          <select class="fselect" id="fMake" onclick="event.stopPropagation();" onchange="onMake(this.value)" aria-label="Vehicle make">
             <option value="">All Makes</option>
             <option>Acura</option><option>Audi</option><option>BMW</option>
             <option>Buick</option><option>Cadillac</option><option>Chevrolet</option>
@@ -377,13 +377,13 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
         </div>
         <div class="fgroup">
           <label class="flabel" for="fModel">Model</label>
-          <select class="fselect" id="fModel" onchange="onModel(this.value)" aria-label="Vehicle model">
+          <select class="fselect" id="fModel" onclick="event.stopPropagation();" onchange="onModel(this.value)" aria-label="Vehicle model">
             <option value="">Select Make First</option>
           </select>
         </div>
         <div class="fgroup">
           <label class="flabel" for="fTrim">Trim Level</label>
-          <select class="fselect" id="fTrim" onchange="onTrim(this.value)" aria-label="Vehicle trim">
+          <select class="fselect" id="fTrim" onclick="event.stopPropagation();" onchange="onTrim(this.value)" aria-label="Vehicle trim">
             <option value="">Select Model First</option>
           </select>
         </div>
@@ -407,7 +407,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
           <div class="pkg-grid" id="pkgGrid"></div>
         </div>
       </div>
-      <button class="next-btn" onclick="nextDrawer(2)">Next — Set Your Budget →</button>
+      <button class="next-btn" onclick="event.stopPropagation();nextDrawer(2)">Next — Set Your Budget →</button>
     </div>
   </div>
 
@@ -427,7 +427,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
         <span class="drawer-arrow">▼</span>
       </div>
     </div>
-    <div class="drawer-body">
+    <div class="drawer-body" onclick="event.stopPropagation();">
       <div class="frow frow-2">
         <div class="fgroup">
           <label class="flabel" for="fBudgetMin">Min Budget (optional)</label>
@@ -476,7 +476,7 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:36px 48px
           </select>
         </div>
       </div>
-      <button class="next-btn" onclick="doSearch()">⚡ Find My Vehicle Now</button>
+      <button class="next-btn" onclick="event.stopPropagation();doSearch()">⚡ Find My Vehicle Now</button>
     </div>
   </div>
 
