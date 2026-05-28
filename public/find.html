@@ -3,1291 +3,898 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find a Vehicle — Express Vehicle Locators</title>
+<title>Find My Vehicle — Express Vehicle Locators</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--s3:#1E1E23;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--text:#FFFFFF;--muted:#8B8B9A;--border:rgba(43,132,254,0.18);}
+:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--s3:#1E1E23;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--orange:#FF6B00;--text:#FFFFFF;--muted:#8B8B9A;--border:rgba(43,132,254,0.18);}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:"Barlow",sans-serif;font-size:16px;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:"Barlow",sans-serif;min-height:100vh;}
 
 /* NAV */
 nav{background:rgba(10,10,12,0.97);border-bottom:1px solid var(--border);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
 .nav-logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;letter-spacing:1px;color:#fff;text-decoration:none;}
 .nav-logo span{color:var(--blue);}
-.nav-links{display:flex;gap:32px;align-items:center;}
-.nav-link{color:var(--muted);text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color 0.2s;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-link{color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color 0.2s;}
 .nav-link:hover,.nav-link.active{color:#fff;}
 .nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
 .nav-cta:hover{background:var(--blue2);}
 
-/* PAGE HEADER */
-.page-header{background:linear-gradient(180deg,#0D1520 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:48px 48px 36px;}
-.page-header-inner{max-width:1400px;margin:0 auto;}
-.page-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(43,132,254,0.12);border:1px solid rgba(43,132,254,0.3);color:var(--blue);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 16px;margin-bottom:18px;}
-.page-title{font-family:"Barlow Condensed",sans-serif;font-size:50px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;margin-bottom:10px;}
-.page-title span{color:var(--blue);}
-.page-sub{color:var(--muted);font-size:17px;font-weight:500;max-width:540px;}
-.header-stats{display:flex;gap:40px;margin-top:28px;flex-wrap:wrap;}
-.hstat{display:flex;flex-direction:column;}
-.hstat-num{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;color:var(--gold);}
-.hstat-lbl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+/* HERO */
+.hero{background:linear-gradient(160deg,#0A1628 0%,#0A0A0C 70%);border-bottom:1px solid var(--border);padding:60px 48px 50px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(43,132,254,0.06) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(43,132,254,0.12);border:1px solid rgba(43,132,254,0.3);color:var(--blue);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;margin-bottom:20px;}
+.hero-title{font-family:"Barlow Condensed",sans-serif;font-size:64px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:0.95;margin-bottom:14px;}
+.hero-title span{color:var(--blue);}
+.hero-sub{color:var(--muted);font-size:18px;max-width:560px;margin:0 auto;line-height:1.6;}
 
-/* EVL STRIP */
-.evl-strip{background:linear-gradient(90deg,var(--blue2),var(--blue));padding:18px 48px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
-.strip-item{display:flex;align-items:center;gap:10px;}
-.strip-icon{font-size:20px;}
-.strip-text{font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+/* AI INPUT BAR */
+.ai-bar-wrap{max-width:820px;margin:36px auto 0;position:relative;}
+.ai-bar-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:left;}
+.ai-bar{display:flex;background:var(--s1);border:2px solid var(--blue);position:relative;}
+.ai-icon{padding:0 16px;display:flex;align-items:center;color:var(--blue);font-size:22px;flex-shrink:0;}
+.ai-input{flex:1;background:none;border:none;color:#fff;font-family:"Barlow",sans-serif;font-size:17px;font-weight:500;padding:18px 0;outline:none;}
+.ai-input::placeholder{color:var(--muted);}
+.ai-submit{background:var(--blue);border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:0 28px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.ai-submit:hover{background:var(--blue2);}
+.ai-examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.ai-ex{background:rgba(43,132,254,0.08);border:1px solid rgba(43,132,254,0.2);color:var(--muted);font-size:12px;padding:5px 12px;cursor:pointer;transition:all 0.15s;}
+.ai-ex:hover{border-color:var(--blue);color:#fff;}
 
-/* MAIN LAYOUT */
-.main-layout{max-width:1400px;margin:0 auto;padding:28px 48px 80px;display:grid;grid-template-columns:310px 1fr;gap:28px;align-items:start;}
+/* DIVIDER */
+.or-divider{text-align:center;margin:32px 0;position:relative;}
+.or-divider::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border);}
+.or-text{background:var(--bg);padding:0 20px;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;position:relative;}
 
-/* FILTER SIDEBAR */
-.filter-sidebar{position:sticky;top:78px;}
-.filter-panel{background:var(--s1);border:1px solid var(--border);}
-.filter-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.filter-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:2px;}
-.filter-reset{background:none;border:none;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:color 0.2s;}
-.filter-reset:hover{color:var(--red);}
+/* SMART FORM */
+.smart-form{max-width:1100px;margin:0 auto;padding:0 48px 60px;}
+.form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px;}
+.form-grid-2{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;}
+.form-grid-full{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.form-select,.form-input{background:var(--s1);border:1px solid var(--border);color:var(--text);font-family:"Barlow",sans-serif;font-size:15px;font-weight:500;padding:12px 14px;width:100%;transition:border-color 0.2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B8B9A' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+.form-input{background-image:none;}
+.form-select:focus,.form-input:focus{outline:none;border-color:var(--blue);}
+.form-select option{background:#1a1a20;}
+.form-select:disabled{opacity:0.4;}
 
-/* FILTER SECTIONS */
-.filter-section{border-bottom:1px solid var(--border);}
-.fsh{padding:14px 22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:background 0.15s;}
-.fsh:hover{background:var(--s2);}
-.fsh-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
-.fsh-label .dot{width:5px;height:5px;background:var(--blue);border-radius:50%;display:inline-block;}
-.fsh-active{background:rgba(43,132,254,0.18);color:var(--blue);font-size:11px;font-weight:700;padding:2px 8px;border-radius:2px;}
-.fsh-chev{color:var(--muted);font-size:16px;transition:transform 0.2s;flex-shrink:0;}
-.filter-section.open .fsh-chev{transform:rotate(0deg);color:#fff;}.filter-section:not(.open) .fsh-chev{transform:rotate(-90deg);}
-.fb{display:none;padding:4px 22px 18px;}
-.filter-section.open .fb{display:block;}
+/* LEASE TOGGLE */
+.lease-row{display:flex;gap:8px;margin-bottom:16px;}
+.toggle-btn{flex:1;padding:12px;background:var(--s1);border:1px solid var(--border);color:var(--muted);font-family:"Barlow Condensed",sans-serif;font-size:17px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.toggle-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
 
-/* Form controls */
-.fselect{width:100%;background:var(--s2);border:1px solid var(--border);color:var(--text);font-family:"Barlow",sans-serif;font-size:14px;font-weight:500;padding:10px 36px 10px 12px;margin-top:8px;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B8B9A' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;transition:border-color 0.2s;}
-.fselect:focus{outline:none;border-color:var(--blue);}
-.fselect:disabled{opacity:0.4;cursor:not-allowed;pointer-events:none;}
-.fselect option{background:#1a1a20;}
+/* COLOR PICKER */
+.color-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;}
+.color-dot{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all 0.2s;position:relative;}
+.color-dot:hover,.color-dot.active{border-color:#fff;transform:scale(1.15);}
+.color-dot .ctip{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-size:10px;padding:2px 6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;z-index:10;}
+.color-dot:hover .ctip{opacity:1;}
 
-.finput{width:100%;background:var(--s2);border:1px solid var(--border);color:var(--text);font-family:"Barlow",sans-serif;font-size:14px;font-weight:500;padding:10px 12px;transition:border-color 0.2s;}
-.finput:focus{outline:none;border-color:var(--blue);}
-.finput::placeholder{color:var(--muted);}
-
-.range-row{display:flex;gap:8px;margin-top:8px;align-items:center;}
-.range-sep{color:var(--muted);font-size:13px;flex-shrink:0;}
-
-/* Type buttons */
-.type-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:6px;}
-.type-btn{border:1px solid var(--border);background:none;color:var(--muted);font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 4px;cursor:pointer;transition:all 0.2s;text-align:center;}
-.type-btn:hover{border-color:var(--blue);color:#fff;}
-.type-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
-.type-btn-full{width:100%;margin-top:6px;}
-
-/* Quick price/mileage */
-.quick-list{display:flex;flex-direction:column;gap:7px;margin-top:10px;}
-.quick-item{display:flex;align-items:center;gap:9px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:500;transition:color 0.15s;}
-.quick-item:hover{color:#fff;}
-.quick-item input[type=radio]{accent-color:var(--blue);cursor:pointer;width:14px;height:14px;}
-
-/* Feat buttons */
-.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
-.feat-btn{border:1px solid var(--border);background:none;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;padding:8px 4px;cursor:pointer;transition:all 0.2s;text-align:center;}
-.feat-btn:hover{border-color:var(--blue);color:#fff;}
-.feat-btn.active{background:rgba(43,132,254,0.15);border-color:var(--blue);color:var(--blue);}
-
-/* Check list */
-.check-list{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
-.check-item{display:flex;align-items:center;gap:9px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:500;transition:color 0.15s;}
-.check-item:hover{color:#fff;}
-.check-item input[type=checkbox]{accent-color:var(--blue);cursor:pointer;width:14px;height:14px;}
-
-/* Color swatches */
-.color-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
-.cswatch{width:30px;height:30px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all 0.2s;position:relative;}
-.cswatch:hover,.cswatch.active{border-color:#fff;transform:scale(1.15);}
-.cswatch .ctip{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-size:10px;padding:2px 5px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;z-index:10;}
-.cswatch:hover .ctip{opacity:1;}
-
-/* LEASE SECTION */
-.lease-toggle{display:flex;align-items:center;gap:10px;margin-top:8px;cursor:pointer;}
-.toggle-track{width:44px;height:24px;background:var(--s3);border-radius:12px;position:relative;transition:background 0.2s;border:1px solid var(--border);flex-shrink:0;}
-.toggle-thumb{width:18px;height:18px;background:var(--muted);border-radius:50%;position:absolute;top:2px;left:2px;transition:all 0.2s;}
-.toggle-track.on{background:var(--blue);}
-.toggle-track.on .toggle-thumb{left:22px;background:#fff;}
-.toggle-label{font-size:14px;font-weight:600;color:var(--muted);}
-.toggle-track.on + .toggle-label{color:#fff;}
-.lease-fields{margin-top:12px;display:none;}
-.lease-fields.show{display:block;}
-
-/* SEARCH BUTTON */
-.search-btn-wrap{padding:18px 22px;}
-.search-btn{display:block;width:100%;background:var(--blue);color:#fff;border:none;font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:16px;cursor:pointer;transition:all 0.2s;}
+/* SEARCH BTN */
+.search-btn-wrap{text-align:center;margin-top:8px;}
+.search-btn{background:var(--blue);color:#fff;border:none;font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:20px 80px;cursor:pointer;transition:all 0.2s;}
 .search-btn:hover{background:var(--blue2);}
+.search-note{color:var(--muted);font-size:13px;margin-top:12px;}
 
-/* RESULTS */
-.results-area{}
-.results-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border);}
-.results-count{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;}
-.results-count span{color:var(--blue);}
-.results-sub{color:var(--muted);font-size:13px;margin-top:2px;}
-.sort-row{display:flex;gap:8px;align-items:center;}
-.sort-label{color:var(--muted);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
-.sort-select{background:var(--s2);border:1px solid var(--border);color:var(--text);font-family:"Barlow",sans-serif;font-size:13px;padding:7px 12px;cursor:pointer;appearance:none;}
-.sort-select:focus{outline:none;border-color:var(--blue);}
-.view-toggle{display:flex;gap:3px;}
-.view-btn{width:34px;height:34px;background:var(--s2);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
-.view-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+/* RESULTS SECTION */
+.results-section{max-width:1100px;margin:0 auto;padding:0 48px 80px;display:none;}
+.results-section.show{display:block;}
 
-/* ACTIVE FILTER TAGS */
-.active-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
-.aftag{background:rgba(43,132,254,0.12);border:1px solid rgba(43,132,254,0.3);color:var(--blue);font-size:12px;font-weight:600;padding:4px 10px;display:flex;align-items:center;gap:6px;}
-.aftag button{background:none;border:none;color:var(--blue);cursor:pointer;font-size:15px;line-height:1;padding:0;}
-.aftag button:hover{color:var(--red);}
+/* MATCH INTELLIGENCE */
+.match-header{background:linear-gradient(135deg,#0D1828,var(--s1));border:1px solid var(--border);border-left:4px solid var(--blue);padding:28px 32px;margin-bottom:24px;}
+.match-headline{font-family:"Barlow Condensed",sans-serif;font-size:42px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;margin-bottom:8px;}
+.match-headline span{color:var(--blue);}
+.match-sub{color:var(--muted);font-size:16px;}
+.match-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+.match-card{background:var(--s2);border:1px solid var(--border);padding:20px 24px;position:relative;}
+.match-pct{font-family:"Barlow Condensed",sans-serif;font-size:52px;font-weight:900;line-height:1;margin-bottom:4px;}
+.match-pct.pct-100{color:var(--green);}
+.match-pct.pct-95{color:var(--gold);}
+.match-pct.pct-90{color:var(--orange);}
+.match-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.match-breakdown{display:flex;flex-direction:column;gap:6px;}
+.match-row{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;}
+.match-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot-local{background:var(--green);}
+.dot-regional{background:var(--gold);}
+.dot-national{background:var(--blue);}
+.match-count{font-weight:700;color:#fff;margin-left:auto;}
 
-/* VEHICLE CARDS */
-.vehicles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
-.vehicles-grid.list-view{grid-template-columns:1fr;}
+/* VEHICLE PREVIEW */
+.vehicle-preview{background:var(--s1);border:1px solid var(--border);padding:28px 32px;margin-bottom:24px;}
+.vp-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.vp-title{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;}
+.vp-trim{font-size:15px;color:var(--muted);font-weight:600;margin-bottom:20px;}
+.vp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.vp-spec{background:var(--s2);border:1px solid var(--border);padding:14px 16px;}
+.vp-spec-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.vp-spec-val{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;}
+.color-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.color-chip{background:var(--s2);border:1px solid var(--border);font-size:12px;font-weight:600;padding:5px 12px;color:var(--text);}
+.pkg-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.pkg-chip{background:rgba(43,132,254,0.1);border:1px solid rgba(43,132,254,0.3);font-size:12px;font-weight:600;padding:5px 12px;color:var(--blue);}
 
-.vehicle-card{background:var(--s1);border:1px solid var(--border);transition:all 0.25s;cursor:pointer;display:block;position:relative;overflow:hidden;}
-.vehicle-card:hover{border-color:var(--blue);transform:translateY(-3px);}
-.vehicle-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),transparent);opacity:0;transition:opacity 0.25s;}
-.vehicle-card:hover::before{opacity:1;}
+/* TRUE COST */
+.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.cost-card{background:var(--s1);border:1px solid var(--border);padding:24px 28px;}
+.cost-card.best{border-color:var(--green);}
+.cost-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.cost-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.cost-badge{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;}
+.badge-best{background:var(--green);color:#000;}
+.badge-local{background:var(--s3);border:1px solid var(--border);color:var(--muted);}
+.cost-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px;}
+.cost-row:last-child{border-bottom:none;}
+.cost-row-label{color:var(--muted);font-weight:500;}
+.cost-row-val{font-weight:700;color:#fff;}
+.cost-row-val.good{color:var(--green);}
+.cost-row-val.warn{color:var(--orange);}
+.cost-row-val.bad{color:var(--red);}
+.cost-total{margin-top:14px;padding-top:14px;border-top:2px solid var(--border);display:flex;align-items:baseline;justify-content:space-between;}
+.cost-total-label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.cost-total-val{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;color:var(--gold);}
+.cost-save{margin-top:8px;color:var(--green);font-size:13px;font-weight:700;text-align:right;}
 
-.card-img{position:relative;overflow:hidden;height:195px;background:var(--s2);}
-.card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
-.vehicle-card:hover .card-img img{transform:scale(1.04);}
-.card-no-img{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);}
-.card-no-img-icon{font-size:40px;opacity:0.3;}
-.card-badges{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;}
-.badge{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;}
-.badge-new{background:var(--blue);color:#fff;}
-.badge-used{background:var(--s3);border:1px solid var(--border);color:var(--muted);}
-.badge-cpo{background:var(--green);color:#000;}
-.badge-deal{background:var(--gold);color:#000;}
-.badge-hot{background:var(--red);color:#fff;}
-.badge-lease{background:rgba(245,200,66,0.2);border:1px solid var(--gold);color:var(--gold);}
-.card-save{position:absolute;top:10px;right:10px;width:30px;height:30px;background:rgba(0,0,0,0.6);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all 0.2s;z-index:2;}
-.card-save:hover{background:var(--red);}
+/* INHIBITORS / ACTUATORS */
+.ia-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.ia-card{background:var(--s1);border:1px solid var(--border);padding:24px 28px;}
+.ia-card.inhibitor{border-top:3px solid var(--red);}
+.ia-card.actuator{border-top:3px solid var(--green);}
+.ia-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.ia-list{display:flex;flex-direction:column;gap:10px;}
+.ia-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;font-weight:500;line-height:1.5;}
+.ia-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.ia-text{color:var(--muted);}
+.ia-text strong{color:#fff;}
 
-.card-body{padding:18px;}
-.card-make{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
-.card-name{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;line-height:1.1;margin-bottom:4px;}
-.card-trim{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px;}
-.card-specs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
-.spec-pill{background:var(--s2);border:1px solid var(--border);font-size:11px;font-weight:600;padding:3px 8px;color:var(--muted);}
-.card-price-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px;}
-.card-price{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;}
-.card-dom{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
-.card-market{font-size:12px;margin-top:2px;}
-.card-market.below{color:var(--green);}
-.card-market.above{color:var(--red);}
-.card-lease-info{background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);padding:8px 10px;margin-top:10px;font-size:12px;color:var(--gold);font-weight:600;}
-.card-cta{display:block;width:100%;background:transparent;border:1px solid var(--blue);color:var(--blue);font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px;cursor:pointer;margin-top:14px;transition:all 0.2s;text-align:center;}
-.card-cta:hover{background:var(--blue);color:#fff;}
+/* EVL BOTTOM LINE */
+.evl-bottom{background:linear-gradient(135deg,#0D1828,var(--s1));border:2px solid var(--blue);padding:32px 36px;margin-bottom:32px;}
+.ebl-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+.ebl-title{font-family:"Barlow Condensed",sans-serif;font-size:40px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;}
+.ebl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.ebl-stat{background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:16px 20px;}
+.ebl-stat-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.ebl-stat-val{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;color:var(--gold);}
+.ebl-stat-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.ebl-disclaimer{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px;padding:14px 16px;background:rgba(0,0,0,0.2);border-left:3px solid var(--blue);}
 
-/* LIST VIEW */
-.vehicles-grid.list-view .vehicle-card{display:grid;grid-template-columns:260px 1fr;}
-.vehicles-grid.list-view .card-img{height:100%;min-height:210px;}
-.vehicles-grid.list-view .card-body{display:flex;flex-direction:column;justify-content:space-between;padding:22px;}
-
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);backdrop-filter:blur(8px);z-index:300;overflow-y:auto;padding:32px 20px;}
-.modal-overlay.show{display:flex;align-items:flex-start;justify-content:center;}
-.modal{background:var(--s1);border:1px solid var(--border);width:100%;max-width:920px;position:relative;}
-.modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;background:var(--s2);border:1px solid var(--border);color:var(--text);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:10;transition:all 0.2s;}
-.modal-close:hover{background:var(--red);border-color:var(--red);}
-.modal-gallery{height:340px;background:var(--s2);overflow:hidden;position:relative;}
-.modal-gallery img{width:100%;height:100%;object-fit:cover;}
-.modal-gallery-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.65);border:none;color:#fff;width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
-.modal-gallery-nav:hover{background:var(--blue);}
-.mgn-prev{left:12px;}.mgn-next{right:12px;}
-.modal-gallery-counter{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;letter-spacing:1px;}
-.modal-body{padding:28px;}
-.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px;}
-.modal-make{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:5px;}
-.modal-name{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:1px;line-height:1;}
-.modal-trim{font-size:15px;font-weight:600;color:var(--muted);margin-top:5px;}
-.modal-price{font-family:"Barlow Condensed",sans-serif;font-size:40px;font-weight:900;color:var(--gold);line-height:1;}
-.modal-lease-pill{background:rgba(245,200,66,0.12);border:1px solid var(--gold);color:var(--gold);font-size:13px;font-weight:700;padding:6px 14px;margin-top:8px;display:inline-block;}
-.modal-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:22px;}
-.modal-tab{font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:11px 22px;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;margin-bottom:-1px;}
-.modal-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
-.modal-tab:hover{color:#fff;}
-.tab-panel{display:none;}.tab-panel.active{display:block;}
-.spec-table{width:100%;border-collapse:collapse;}
-.spec-table tr{border-bottom:1px solid var(--border);}
-.spec-table tr:last-child{border-bottom:none;}
-.spec-table td{padding:9px 0;font-size:14px;}
-.spec-table td:first-child{color:var(--muted);font-weight:500;width:44%;}
-.spec-table td:last-child{color:var(--text);font-weight:600;}
-.feat-chips{display:flex;flex-wrap:wrap;gap:7px;}
-.feat-chip{background:var(--s2);border:1px solid var(--border);font-size:12px;font-weight:500;padding:5px 12px;color:var(--text);}
-.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px;}
-.mbtn-primary{background:var(--blue);color:#fff;border:none;font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:16px;cursor:pointer;transition:all 0.2s;}
-.mbtn-primary:hover{background:var(--blue2);}
-.mbtn-secondary{background:none;color:var(--text);border:1px solid var(--border);font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:16px;cursor:pointer;transition:all 0.2s;}
-.mbtn-secondary:hover{border-color:var(--gold);color:var(--gold);}
+/* CTA */
+.cta-btn{display:block;width:100%;background:var(--blue);color:#fff;border:none;font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:24px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.cta-btn:hover{background:var(--blue2);}
+.cta-sub{text-align:center;color:var(--muted);font-size:13px;margin-top:10px;}
 
 /* LOADING */
-.loading-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,12,0.88);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:18px;}
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,12,0.92);backdrop-filter:blur(6px);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:24px;}
 .loading-overlay.show{display:flex;}
-.loading-spinner{width:44px;height:44px;border:3px solid var(--s3);border-top-color:var(--blue);border-radius:50%;animation:spin 0.75s linear infinite;}
-.loading-text{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);}
+.loading-spinner{width:56px;height:56px;border:3px solid var(--s3);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;}
+.loading-steps{display:flex;flex-direction:column;gap:10px;align-items:center;}
+.loading-step{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);transition:color 0.3s;}
+.loading-step.active{color:var(--blue);}
+.loading-step.done{color:var(--green);}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* PAGINATION */
-.pagination{display:flex;justify-content:center;gap:7px;margin-top:36px;padding-top:28px;border-top:1px solid var(--border);}
-.page-btn{width:38px;height:38px;background:var(--s1);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
-.page-btn:hover{border-color:var(--blue);color:#fff;}
-.page-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
-
-/* PLACEHOLDER STATE */
-.placeholder-state{grid-column:1/-1;text-align:center;padding:60px 40px;}
-.placeholder-icon{font-size:56px;margin-bottom:18px;opacity:0.35;}
-.placeholder-title{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;}
-.placeholder-sub{font-size:15px;color:var(--muted);line-height:1.6;}
+/* EVL STRIP */
+.evl-strip{background:linear-gradient(90deg,var(--blue2),var(--blue));padding:16px 48px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
+.strip-item{display:flex;align-items:center;gap:8px;}
+.strip-text{font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;}
 
 /* FOOTER */
-footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;}
+footer{background:var(--s1);border-top:1px solid var(--border);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;}
 .footer-logo{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;}
 .footer-logo span{color:var(--blue);}
 .footer-copy{color:var(--muted);font-size:13px;}
 
-@media(max-width:1100px){.main-layout{grid-template-columns:1fr;}.filter-sidebar{position:static;}}
-@media(max-width:768px){nav{padding:0 20px;}.page-header{padding:36px 20px 28px;}.page-title{font-size:36px;}.main-layout{padding:20px 20px 60px;}.vehicles-grid{grid-template-columns:1fr;}.evl-strip{flex-direction:column;gap:14px;padding:16px;}.vehicles-grid.list-view .vehicle-card{grid-template-columns:1fr;}.modal-actions{grid-template-columns:1fr;}}
+@media(max-width:900px){.form-grid{grid-template-columns:1fr 1fr;}.match-grid,.vp-grid,.ebl-grid,.cost-grid,.ia-grid{grid-template-columns:1fr;}.hero-title{font-size:44px;}}
+@media(max-width:640px){nav{padding:0 20px;}.hero{padding:44px 20px 36px;}.hero-title{font-size:36px;}.smart-form,.results-section{padding:0 20px 60px;}.evl-strip{gap:16px;padding:14px 20px;}footer{flex-direction:column;gap:10px;text-align:center;}}
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
-  <div class="loading-text">Searching Live Inventory...</div>
-</div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-gallery" id="modalGallery"></div>
-    <div class="modal-body" id="modalBody"></div>
+  <div class="loading-steps">
+    <div class="loading-step active" id="ls1">⚡ Scanning 6M+ vehicles nationwide...</div>
+    <div class="loading-step" id="ls2">🎯 Calculating match intelligence...</div>
+    <div class="loading-step" id="ls3">💰 Analyzing true cost & dealer fees...</div>
+    <div class="loading-step" id="ls4">🏆 Building your EVL advantage report...</div>
   </div>
 </div>
 
-<!-- NAV -->
 <nav>
   <a href="https://evl-decode.vercel.app/home" class="nav-logo">◈ Express <span>Vehicle</span> Locators</a>
   <div class="nav-links">
     <a href="https://evl-decode.vercel.app/home" class="nav-link">Home</a>
     <a href="https://evl-decode.vercel.app" class="nav-link">Trade-In</a>
     <a href="https://evl-decode.vercel.app/find" class="nav-link active">Find</a>
+    <a href="https://evl-decode.vercel.app/how" class="nav-link">How It Works</a>
     <a href="https://evl-decode.vercel.app/admin.html" class="nav-link">Admin</a>
-    <a href="https://evl-decode.vercel.app" class="nav-cta">⚡ Start Free</a>
+    <a href="https://evl-decode.vercel.app/find" class="nav-cta">⚡ Find My Vehicle</a>
   </div>
 </nav>
 
-<!-- HEADER -->
-<div class="page-header">
-  <div class="page-header-inner">
-    <div class="page-badge">🔍 Live Vehicle Search — 6M+ Listings</div>
-    <h1 class="page-title">Find Your <span>Next Vehicle</span></h1>
-    <p class="page-sub">Every dealer in America. Zero commission. Zero pressure. We negotiate — you save.</p>
-    <div class="header-stats">
-      <div class="hstat"><span class="hstat-num">6M+</span><span class="hstat-lbl">Live Listings</span></div>
-      <div class="hstat"><span class="hstat-num">$0</span><span class="hstat-lbl">Our Commission</span></div>
-      <div class="hstat"><span class="hstat-num">72hr</span><span class="hstat-lbl">Avg Delivery</span></div>
-      <div class="hstat"><span class="hstat-num">$13,409</span><span class="hstat-lbl">Avg Savings</span></div>
+<section class="hero">
+  <div class="hero-badge">⚡ EVL Concierge — Powered by AI</div>
+  <h1 class="hero-title">Tell Us What<br>You <span>Want</span></h1>
+  <p class="hero-sub">We search every dealer in America, negotiate the best deal, and deliver it to your door. You never set foot in a dealership.</p>
+
+  <div class="ai-bar-wrap">
+    <div class="ai-bar-label">Describe your perfect vehicle in plain English</div>
+    <div class="ai-bar">
+      <div class="ai-icon">✦</div>
+      <input class="ai-input" id="aiInput" placeholder="e.g. 2026 Camry XSE Premium Package midnight black under $45k lease preferred..." />
+      <button class="ai-submit" onclick="parseAI()">Search ⚡</button>
+    </div>
+    <div class="ai-examples">
+      <span class="ai-ex" onclick="fillAI('2026 Toyota Camry XSE Premium Package midnight black under $45k lease')">2026 Camry XSE lease</span>
+      <span class="ai-ex" onclick="fillAI('2026 Ford F-150 Lariat 4WD under $65k buy')">F-150 Lariat 4WD</span>
+      <span class="ai-ex" onclick="fillAI('2025 BMW X5 xDrive40i under $75k AWD white')">BMW X5 AWD</span>
+      <span class="ai-ex" onclick="fillAI('used 2023 Jeep Wrangler Rubicon under $50k 4WD low miles')">Used Wrangler Rubicon</span>
+      <span class="ai-ex" onclick="fillAI('2026 Tesla Model Y Long Range AWD under $55k')">Tesla Model Y</span>
+    </div>
+  </div>
+</section>
+
+<div class="evl-strip">
+  <div class="strip-item"><span>⚡</span><span class="strip-text">We Negotiate For You</span></div>
+  <div class="strip-item"><span>🔒</span><span class="strip-text">Dealer Info Never Shown</span></div>
+  <div class="strip-item"><span>🚗</span><span class="strip-text">Delivered To Your Door</span></div>
+  <div class="strip-item"><span>$0</span><span class="strip-text">No Commission Ever</span></div>
+</div>
+
+<!-- SMART FORM -->
+<div class="smart-form" id="smartForm">
+  <div style="max-width:820px;margin:0 auto;">
+    <div class="or-divider"><span class="or-text">— Or build your search manually —</span></div>
+
+    <!-- ROW 1: Condition + Make + Model + Trim -->
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Condition</label>
+        <select class="form-select" id="fCondition">
+          <option value="">New & Used</option>
+          <option value="new">New Only</option>
+          <option value="used">Used Only</option>
+          <option value="certified">Certified Pre-Owned</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Make</label>
+        <select class="form-select" id="fMake" onchange="onMake(this.value)">
+          <option value="">All Makes</option>
+          <option>Acura</option><option>Audi</option><option>BMW</option>
+          <option>Buick</option><option>Cadillac</option><option>Chevrolet</option>
+          <option>Chrysler</option><option>Dodge</option><option>Ford</option>
+          <option>Genesis</option><option>GMC</option><option>Honda</option>
+          <option>Hyundai</option><option>Infiniti</option><option>Jaguar</option>
+          <option>Jeep</option><option>Kia</option><option>Land Rover</option>
+          <option>Lexus</option><option>Lincoln</option><option>Mazda</option>
+          <option>Mercedes-Benz</option><option>Mini</option><option>Nissan</option>
+          <option>Porsche</option><option>Ram</option><option>Rivian</option>
+          <option>Subaru</option><option>Tesla</option><option>Toyota</option>
+          <option>Volkswagen</option><option>Volvo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Model</label>
+        <select class="form-select" id="fModel" onchange="onModel(this.value)">
+          <option value="">Select Make First</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Trim</label>
+        <select class="form-select" id="fTrim" onchange="onTrim(this.value)">
+          <option value="">Select Model First</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ROW 2: Year + Budget + ZIP + Radius -->
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Year</label>
+        <select class="form-select" id="fYear">
+          <option value="">Any Year</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Max Budget</label>
+        <input class="form-input" id="fBudget" placeholder="e.g. 45000" type="number">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your ZIP Code</label>
+        <input class="form-input" id="fZip" placeholder="e.g. 75025" maxlength="5">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Search Radius</label>
+        <select class="form-select" id="fRadius">
+          <option value="50">50 miles</option>
+          <option value="100">100 miles</option>
+          <option value="250" selected>250 miles</option>
+          <option value="500">500 miles</option>
+          <option value="0">Nationwide</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ROW 3: Buy or Lease -->
+    <div class="form-group" style="margin-bottom:16px;">
+      <label class="form-label">Purchase Type</label>
+      <div class="lease-row">
+        <button class="toggle-btn active" id="btnBuy" onclick="setPurchase('buy')">🚗 Buy / Finance</button>
+        <button class="toggle-btn" id="btnLease" onclick="setPurchase('lease')">📋 Lease</button>
+        <button class="toggle-btn" id="btnCash" onclick="setPurchase('cash')">💵 Cash</button>
+      </div>
+    </div>
+
+    <!-- ROW 4: Color preference -->
+    <div class="form-group" style="margin-bottom:24px;">
+      <label class="form-label">Preferred Exterior Color (optional)</label>
+      <div class="color-row" id="colorRow"></div>
+    </div>
+
+    <!-- PACKAGES (shown after trim selected) -->
+    <div id="pkgSection" style="display:none;margin-bottom:24px;">
+      <div class="form-label" style="margin-bottom:10px;">Desired Packages / Options (select all that apply)</div>
+      <div id="pkgList" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+    </div>
+
+    <div class="search-btn-wrap">
+      <button class="search-btn" onclick="doSearch()">⚡ Find My Vehicle</button>
+      <div class="search-note">🔒 No dealer names or locations are ever revealed to you — EVL handles everything</div>
     </div>
   </div>
 </div>
 
-<div class="evl-strip">
-  <div class="strip-item"><span class="strip-icon">⚡</span><span class="strip-text">We Negotiate For You</span></div>
-  <div class="strip-item"><span class="strip-icon">🔒</span><span class="strip-text">No Dealer Markup</span></div>
-  <div class="strip-item"><span class="strip-icon">🚗</span><span class="strip-text">Delivered To Your Door</span></div>
-  <div class="strip-item"><span class="strip-icon">💰</span><span class="strip-text">Lease Deals Included</span></div>
-</div>
+<!-- RESULTS -->
+<div class="results-section" id="resultsSection">
+  <div style="max-width:820px;margin:0 auto;">
 
-<!-- MAIN -->
-<div class="main-layout">
+    <!-- MATCH INTELLIGENCE -->
+    <div class="match-header" id="matchHeader"></div>
 
-  <!-- SIDEBAR -->
-  <aside class="filter-sidebar">
-    <div class="filter-panel">
-      <div class="filter-header">
-        <div class="filter-title">🔍 Filters</div>
-        <button class="filter-reset" onclick="resetAll()">Reset All</button>
-      </div>
+    <!-- VEHICLE PREVIEW -->
+    <div class="vehicle-preview" id="vehiclePreview"></div>
 
-      <!-- CONDITION -->
-      <div class="filter-section open" id="fs-condition">
-        <div class="fsh" onclick="toggleFS('condition')">
-          <span class="fsh-label"><span class="dot"></span>Condition</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="type-grid">
-            <button class="type-btn active" onclick="setCondition(this,'')">All</button>
-            <button class="type-btn" onclick="setCondition(this,'new')">New</button>
-            <button class="type-btn" onclick="setCondition(this,'used')">Used</button>
-          </div>
-          <button class="type-btn type-btn-full" onclick="setCondition(this,'certified')">✅ Certified Pre-Owned</button>
-        </div>
-      </div>
-
-      <!-- MAKE -->
-      <div class="filter-section open" id="fs-make">
-        <div class="fsh" onclick="toggleFS('make')">
-          <span class="fsh-label"><span class="dot"></span><span style="background:var(--blue);color:#fff;font-size:10px;font-weight:900;padding:1px 6px;margin-right:4px;letter-spacing:0;">STEP 1</span>Make</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <select class="fselect" id="makeSelect" onchange="onMakeChange(this.value)">
-            <option value="">All Makes</option>
-            <option>Acura</option><option>Audi</option><option>BMW</option>
-            <option>Buick</option><option>Cadillac</option><option>Chevrolet</option>
-            <option>Chrysler</option><option>Dodge</option><option>Ferrari</option>
-            <option>Ford</option><option>Genesis</option><option>GMC</option>
-            <option>Honda</option><option>Hyundai</option><option>Infiniti</option>
-            <option>Jaguar</option><option>Jeep</option><option>Kia</option>
-            <option>Lamborghini</option><option>Land Rover</option><option>Lexus</option>
-            <option>Lincoln</option><option>Maserati</option><option>Mazda</option>
-            <option>Mercedes-Benz</option><option>Mini</option><option>Mitsubishi</option>
-            <option>Nissan</option><option>Porsche</option><option>Ram</option>
-            <option>Rivian</option><option>Rolls-Royce</option><option>Subaru</option>
-            <option>Tesla</option><option>Toyota</option><option>Volkswagen</option>
-            <option>Volvo</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- MODEL -->
-      <div class="filter-section open" id="fs-model">
-        <div class="fsh" onclick="toggleFS('model')">
-          <span class="fsh-label"><span class="dot"></span><span style="background:var(--s3);color:var(--muted);font-size:10px;font-weight:900;padding:1px 6px;margin-right:4px;letter-spacing:0;" id="step2badge">STEP 2</span>Model</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <select class="fselect" id="modelSelect" onchange="onModelChange(this.value)">
-            <option value="">— Select Make First —</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- TRIM -->
-      <div class="filter-section open" id="fs-trim">
-        <div class="fsh" onclick="toggleFS('trim')">
-          <span class="fsh-label"><span class="dot"></span><span style="background:var(--s3);color:var(--muted);font-size:10px;font-weight:900;padding:1px 6px;margin-right:4px;letter-spacing:0;" id="step3badge">STEP 3</span>Trim / Package</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <select class="fselect" id="trimSelect" onchange="onTrimChange(this.value)">
-            <option value="">— Select Model First —</option>
-          </select>
-          <div id="pkgArea" style="display:none;margin-top:10px;">
-            <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Available Packages</div>
-            <div id="pkgList" class="feat-chips"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- YEAR -->
-      <div class="filter-section open" id="fs-year">
-        <div class="fsh" onclick="toggleFS('year')">
-          <span class="fsh-label"><span class="dot"></span>Year</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="range-row">
-            <select class="fselect" id="yearMin" style="flex:1;" onchange="S.yearMin=this.value">
-              <option value="">From</option>
-            </select>
-            <span class="range-sep">–</span>
-            <select class="fselect" id="yearMax" style="flex:1;" onchange="S.yearMax=this.value">
-              <option value="">To</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRICE -->
-      <div class="filter-section open" id="fs-price">
-        <div class="fsh" onclick="toggleFS('price')">
-          <span class="fsh-label"><span class="dot"></span>Price Range</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="range-row">
-            <input type="number" class="finput" id="priceMin" placeholder="$Min" style="flex:1;" onchange="S.priceMin=this.value">
-            <span class="range-sep">–</span>
-            <input type="number" class="finput" id="priceMax" placeholder="$Max" style="flex:1;" onchange="S.priceMax=this.value">
-          </div>
-          <div class="quick-list">
-            <label class="quick-item" onclick="qPrice(0,20000)"><input type="radio" name="qp"> Under $20,000</label>
-            <label class="quick-item" onclick="qPrice(20000,35000)"><input type="radio" name="qp"> $20,000 – $35,000</label>
-            <label class="quick-item" onclick="qPrice(35000,55000)"><input type="radio" name="qp"> $35,000 – $55,000</label>
-            <label class="quick-item" onclick="qPrice(55000,80000)"><input type="radio" name="qp"> $55,000 – $80,000</label>
-            <label class="quick-item" onclick="qPrice(80000,999999)"><input type="radio" name="qp"> $80,000+</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- MILEAGE -->
-      <div class="filter-section" id="fs-mileage">
-        <div class="fsh" onclick="toggleFS('mileage')">
-          <span class="fsh-label"><span class="dot"></span>Mileage</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="range-row">
-            <input type="number" class="finput" id="mileageMax" placeholder="Max miles" style="width:100%;" onchange="S.mileageMax=this.value">
-          </div>
-          <div class="quick-list" style="margin-top:10px;">
-            <label class="quick-item" onclick="qMiles(15000)"><input type="radio" name="qm"> Under 15,000 mi</label>
-            <label class="quick-item" onclick="qMiles(30000)"><input type="radio" name="qm"> Under 30,000 mi</label>
-            <label class="quick-item" onclick="qMiles(60000)"><input type="radio" name="qm"> Under 60,000 mi</label>
-            <label class="quick-item" onclick="qMiles(100000)"><input type="radio" name="qm"> Under 100,000 mi</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- BODY STYLE -->
-      <div class="filter-section" id="fs-body">
-        <div class="fsh" onclick="toggleFS('body')">
-          <span class="fsh-label"><span class="dot"></span>Body Style</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="feat-grid">
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'SUV',this)">🚙 SUV</button>
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'Sedan',this)">🚗 Sedan</button>
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'Pickup',this)">🛻 Truck</button>
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'Hatchback',this)">🚘 Hatch</button>
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'Convertible',this)">⛱ Convt.</button>
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'Coupe',this)">🏎 Coupe</button>
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'Van',this)">🚐 Van</button>
-            <button class="feat-btn" onclick="toggleArr(S.bodies,'Wagon',this)">🚗 Wagon</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- DRIVETRAIN -->
-      <div class="filter-section" id="fs-drive">
-        <div class="fsh" onclick="toggleFS('drive')">
-          <span class="fsh-label"><span class="dot"></span>Drivetrain</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="feat-grid">
-            <button class="feat-btn" onclick="toggleArr(S.drives,'AWD',this)">AWD</button>
-            <button class="feat-btn" onclick="toggleArr(S.drives,'4WD',this)">4WD</button>
-            <button class="feat-btn" onclick="toggleArr(S.drives,'FWD',this)">FWD</button>
-            <button class="feat-btn" onclick="toggleArr(S.drives,'RWD',this)">RWD</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- FUEL TYPE -->
-      <div class="filter-section" id="fs-fuel">
-        <div class="fsh" onclick="toggleFS('fuel')">
-          <span class="fsh-label"><span class="dot"></span>Fuel Type</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" onchange="toggleFuel(this,'Unleaded')"> Gas (Regular)</label>
-            <label class="check-item"><input type="checkbox" onchange="toggleFuel(this,'Premium Unleaded')"> Gas (Premium)</label>
-            <label class="check-item"><input type="checkbox" onchange="toggleFuel(this,'Electric')"> ⚡ Electric (EV)</label>
-            <label class="check-item"><input type="checkbox" onchange="toggleFuel(this,'Hybrid')"> 🌿 Hybrid</label>
-            <label class="check-item"><input type="checkbox" onchange="toggleFuel(this,'Diesel')"> Diesel</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- EXTERIOR COLOR -->
-      <div class="filter-section" id="fs-color">
-        <div class="fsh" onclick="toggleFS('color')">
-          <span class="fsh-label"><span class="dot"></span>Exterior Color</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="color-grid" id="colorGrid"></div>
-        </div>
-      </div>
-
-      <!-- ENGINE -->
-      <div class="filter-section" id="fs-engine">
-        <div class="fsh" onclick="toggleFS('engine')">
-          <span class="fsh-label"><span class="dot"></span>Engine</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Cylinders</div>
-          <div class="feat-grid">
-            <button class="feat-btn" onclick="toggleArr(S.cyls,'4',this)">4-Cyl</button>
-            <button class="feat-btn" onclick="toggleArr(S.cyls,'6',this)">6-Cyl</button>
-            <button class="feat-btn" onclick="toggleArr(S.cyls,'8',this)">8-Cyl</button>
-            <button class="feat-btn" onclick="toggleArr(S.cyls,'10',this)">10-Cyl</button>
-          </div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin:12px 0 6px;">Transmission</div>
-          <div class="feat-grid">
-            <button class="feat-btn" onclick="toggleArr(S.trans,'Automatic',this)">Auto</button>
-            <button class="feat-btn" onclick="toggleArr(S.trans,'Manual',this)">Manual</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- LEASE / FINANCE -->
-      <div class="filter-section open" id="fs-lease">
-        <div class="fsh" onclick="toggleFS('lease')">
-          <span class="fsh-label"><span class="dot"></span>💰 Lease / Finance</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="lease-toggle" onclick="toggleLeaseMode()">
-            <div class="toggle-track" id="leaseToggleTrack"><div class="toggle-thumb"></div></div>
-            <span class="toggle-label" id="leaseToggleLabel">Show Lease-Friendly Vehicles</span>
-          </div>
-          <div class="lease-fields" id="leaseFields">
-            <div style="margin-top:14px;">
-              <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Target Monthly Payment</div>
-              <div class="range-row">
-                <input type="number" class="finput" id="leaseMonthlyMin" placeholder="$Min/mo" style="flex:1;">
-                <span class="range-sep">–</span>
-                <input type="number" class="finput" id="leaseMonthlyMax" placeholder="$Max/mo" style="flex:1;">
-              </div>
-              <div class="quick-list" style="margin-top:10px;">
-                <label class="quick-item" onclick="qLease(0,300)"><input type="radio" name="ql"> Under $300/mo</label>
-                <label class="quick-item" onclick="qLease(300,500)"><input type="radio" name="ql"> $300 – $500/mo</label>
-                <label class="quick-item" onclick="qLease(500,750)"><input type="radio" name="ql"> $500 – $750/mo</label>
-                <label class="quick-item" onclick="qLease(750,1200)"><input type="radio" name="ql"> $750 – $1,200/mo</label>
-              </div>
-            </div>
-            <div style="margin-top:14px;">
-              <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Down Payment Budget</div>
-              <input type="number" class="finput" id="leaseDown" placeholder="e.g. 3000" style="width:100%;">
-            </div>
-            <div style="margin-top:14px;">
-              <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Lease Term</div>
-              <div class="feat-grid">
-                <button class="feat-btn" onclick="toggleArr(S.leaseTerms,'24',this)">24 mo</button>
-                <button class="feat-btn" onclick="toggleArr(S.leaseTerms,'36',this)">36 mo</button>
-                <button class="feat-btn" onclick="toggleArr(S.leaseTerms,'39',this)">39 mo</button>
-                <button class="feat-btn" onclick="toggleArr(S.leaseTerms,'48',this)">48 mo</button>
-              </div>
-            </div>
-            <div style="margin-top:12px;padding:10px;background:rgba(43,132,254,0.08);border:1px solid var(--border);">
-              <div style="font-size:11px;color:var(--muted);line-height:1.5;">💡 EVL negotiates lease money factor, residual %, and dealer fees on your behalf. Most customers save $80–$200/mo vs walking in alone.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SPECIAL FLAGS -->
-      <div class="filter-section" id="fs-flags">
-        <div class="fsh" onclick="toggleFS('flags')">
-          <span class="fsh-label"><span class="dot"></span>Special Criteria</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <div class="check-list">
-            <label class="check-item"><input type="checkbox" id="flag1owner" onchange="S.oneOwner=this.checked"> Single Owner Only</label>
-            <label class="check-item"><input type="checkbox" id="flagClean" onchange="S.cleanTitle=this.checked"> Clean Title Only</label>
-            <label class="check-item"><input type="checkbox" id="flagFranchise" onchange="S.franchise=this.checked"> Franchise Dealers Only</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- LOCATION -->
-      <div class="filter-section" id="fs-location">
-        <div class="fsh" onclick="toggleFS('location')">
-          <span class="fsh-label"><span class="dot"></span>Location</span>
-          <span class="fsh-chev" style="font-size:14px;font-weight:700;">▼</span>
-        </div>
-        <div class="fb">
-          <input type="text" class="finput" id="zipInput" placeholder="ZIP Code" maxlength="5" style="margin-top:4px;margin-bottom:10px;" onchange="S.zip=this.value">
-          <select class="fselect" id="radiusSelect" onchange="S.radius=this.value">
-            <option value="25">Within 25 miles</option>
-            <option value="50">Within 50 miles</option>
-            <option value="100" selected>Within 100 miles</option>
-            <option value="250">Within 250 miles</option>
-            <option value="500">Within 500 miles</option>
-            <option value="">Nationwide</option>
-          </select>
-        </div>
-      </div>
-
-            <div style="background:rgba(43,132,254,0.08);border-bottom:1px solid var(--border);padding:12px 22px;">
-        <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Quick Start</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.6;">① Pick <strong style="color:#fff">Make</strong> → ② Pick <strong style="color:#fff">Model</strong> → ③ Pick <strong style="color:#fff">Trim</strong> → Hit <strong style="color:var(--blue)">Search</strong></div>
-      </div>
-      <div class="search-btn-wrap">
-        <button class="search-btn" onclick="doSearch(0)">⚡ Search Now</button>
-      </div>
+    <!-- TRUE COST BREAKDOWN -->
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+      <span style="color:var(--blue);">💰</span> True Cost Breakdown
     </div>
-  </aside>
+    <div class="cost-grid" id="costGrid"></div>
 
-  <!-- RESULTS -->
-  <div class="results-area">
-    <div class="active-filters" id="activeFilters"></div>
-    <div class="results-toolbar">
-      <div class="results-info">
-        <div class="results-count"><span id="resultCount">—</span> vehicles found</div>
-        <div class="results-sub" id="resultSub">Select your filters and hit Search Now</div>
-      </div>
-      <div class="sort-row">
-        <span class="sort-label">Sort:</span>
-        <select class="sort-select" id="sortSelect" onchange="doSearch(0)">
-          <option value="price">Price: Low → High</option>
-          <option value="-price">Price: High → Low</option>
-          <option value="miles">Mileage: Lowest</option>
-          <option value="-dom_active">Newest Listed</option>
-          <option value="-year">Year: Newest</option>
-        </select>
-        <div class="view-toggle">
-          <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grid">⊞</button>
-          <button class="view-btn" id="listBtn" onclick="setView('list')" title="List">☰</button>
-        </div>
-      </div>
+    <!-- INHIBITORS / ACTUATORS -->
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+      <span style="color:var(--gold);">⚡</span> Deal Intelligence
     </div>
+    <div class="ia-grid" id="iaGrid"></div>
 
-    <div class="vehicles-grid" id="vehiclesGrid">
-      <div class="placeholder-state">
-        <div class="placeholder-icon">🔍</div>
-        <div class="placeholder-title">Select Your Filters</div>
-        <div class="placeholder-sub">Choose Make, Model, Trim, Year, Price and more on the left —<br>then hit <strong style="color:var(--blue)">Search Now</strong> to pull live inventory from 6M+ vehicles nationwide.</div>
-      </div>
-    </div>
+    <!-- EVL BOTTOM LINE -->
+    <div class="evl-bottom" id="evlBottom"></div>
 
-    <div id="pagination" class="pagination" style="display:none;"></div>
+    <!-- CTA -->
+    <button class="cta-btn" onclick="submitRequest()">⚡ YES — Submit My Request & Let EVL Take Over</button>
+    <div class="cta-sub">🔒 Your information is secure · No obligation until you approve your deal · EVL acts as your authorized agent</div>
   </div>
 </div>
 
 <footer>
   <div class="footer-logo">◈ Express <span>Vehicle</span> Locators</div>
-  <div class="footer-copy">EVL Platform V3.0 // © 2026</div>
+  <div class="footer-copy">EVL Platform V3.0 // © 2026 // All rights reserved</div>
 </footer>
 
 <script>
-/* ===== STATE ===== */
-var S = {
-  condition:'', make:'', model:'', trim:'', packages:[],
-  yearMin:'', yearMax:'',
-  priceMin:'', priceMax:'',
-  mileageMax:'',
-  bodies:[], drives:[], fuels:[], colors:[], cyls:[], trans:[],
-  oneOwner:false, cleanTitle:false, franchise:false,
-  zip:'', radius:'100',
-  leaseMode:false, leaseMonthlyMin:'', leaseMonthlyMax:'', leaseDown:'', leaseTerms:[],
-  page:0, sort:'price'
-};
-var totalFound=0;
-var currentView='grid';
-var galleryImgs=[];
-var galleryIdx=0;
-
-/* ===== MAKE → MODEL MAP ===== */
-var MODELS = {
-  'Acura':['ILX','MDX','RDX','RLX','TLX'],
-  'Audi':['A3','A4','A5','A6','A7','A8','e-tron','Q3','Q5','Q7','Q8','R8','RS3','RS5','RS6','RS7','S3','S4','S5','S6','S7','TT'],
-  'BMW':['1 Series','2 Series','3 Series','4 Series','5 Series','6 Series','7 Series','8 Series','i3','i4','i5','i7','iX','M2','M3','M4','M5','X1','X2','X3','X4','X5','X6','X7','XM','Z4'],
-  'Buick':['Enclave','Encore','Encore GX','Envision','LaCrosse'],
-  'Cadillac':['CT4','CT5','Escalade','Escalade ESV','Lyriq','XT4','XT5','XT6'],
-  'Chevrolet':['Blazer','Bolt EUV','Bolt EV','Camaro','Colorado','Corvette','Equinox','Express','Malibu','Silverado 1500','Silverado 2500','Silverado 3500','Suburban','Tahoe','Traverse','Trax'],
-  'Chrysler':['300','Pacifica','Voyager'],
-  'Dodge':['Challenger','Charger','Durango','Grand Caravan','Hornet'],
-  'Ferrari':['296 GTB','812 Superfast','F8 Spider','Portofino M','Roma','SF90'],
-  'Ford':['Bronco','Bronco Sport','E-Transit','EcoSport','Edge','Escape','Expedition','Explorer','F-150','F-150 Lightning','F-250','F-350','Maverick','Mustang','Mustang Mach-E','Ranger','Transit','Transit Connect'],
-  'Genesis':['G70','G80','G90','GV60','GV70','GV80'],
-  'GMC':['Acadia','Canyon','Envoy','Hummer EV','Sierra 1500','Sierra 2500','Sierra 3500','Terrain','Yukon','Yukon XL'],
-  'Honda':['Accord','Civic','CR-V','HR-V','Odyssey','Passport','Pilot','Prologue','Ridgeline'],
-  'Hyundai':['Elantra','IONIQ 5','IONIQ 6','Kona','Palisade','Santa Cruz','Santa Fe','Sonata','Tucson','Venue'],
-  'Infiniti':['Q50','Q60','QX50','QX55','QX60','QX80'],
-  'Jaguar':['E-PACE','F-PACE','F-TYPE','I-PACE','XE','XF'],
+// ===== DATA =====
+var MODELS={
+  'Toyota':['4Runner','bZ4X','Camry','Corolla','Corolla Cross','Crown','GR86','GR Corolla','GR Supra','Highlander','Land Cruiser','Prius','RAV4','RAV4 Prime','Sequoia','Sienna','Tacoma','Tundra','Venza'],
+  'Ford':['Bronco','Bronco Sport','EcoSport','Edge','Escape','Expedition','Explorer','F-150','F-150 Lightning','Maverick','Mustang','Mustang Mach-E','Ranger','Transit'],
+  'Chevrolet':['Blazer','Bolt EV','Camaro','Colorado','Corvette','Equinox','Malibu','Silverado 1500','Silverado 2500','Suburban','Tahoe','Traverse','Trax'],
+  'Honda':['Accord','Civic','CR-V','HR-V','Odyssey','Passport','Pilot','Ridgeline'],
+  'Nissan':['Altima','Ariya','Armada','Frontier','Kicks','Leaf','Murano','Pathfinder','Rogue','Sentra','Titan','Z'],
+  'BMW':['2 Series','3 Series','4 Series','5 Series','7 Series','8 Series','i4','i5','i7','iX','M3','M4','M5','X1','X3','X5','X6','X7','XM','Z4'],
+  'Mercedes-Benz':['A-Class','AMG GT','C-Class','CLA','E-Class','EQB','EQE','EQS','G-Class','GLA','GLC','GLE','GLS','S-Class','SL'],
   'Jeep':['Cherokee','Compass','Gladiator','Grand Cherokee','Grand Cherokee L','Grand Wagoneer','Renegade','Wagoneer','Wrangler'],
-  'Kia':['Carnival','EV6','EV9','Forte','K5','Niro','Seltos','Soul','Sorento','Sportage','Stinger','Telluride'],
-  'Lamborghini':['Aventador','Huracán','Urus'],
-  'Land Rover':['Defender','Discovery','Discovery Sport','Range Rover','Range Rover Evoque','Range Rover Sport','Range Rover Velar'],
-  'Lexus':['ES','GS','GX','IS','LC','LS','LX','NX','RX','RZ','UX'],
-  'Lincoln':['Aviator','Continental','Corsair','MKZ','Nautilus','Navigator'],
-  'Maserati':['Ghibli','GranTurismo','Grecale','Levante','MC20','Quattroporte'],
-  'Mazda':['CX-30','CX-5','CX-50','CX-70','CX-90','Mazda3','Mazda6','MX-5 Miata','MX-30'],
-  'Mercedes-Benz':['A-Class','AMG GT','C-Class','CLA','CLS','E-Class','EQB','EQE','EQS','G-Class','GLA','GLB','GLC','GLE','GLG','GLS','S-Class','SL','SLC'],
-  'Mini':['Clubman','Convertible','Countryman','Hardtop 2-Door','Hardtop 4-Door','Paceman'],
-  'Mitsubishi':['Eclipse Cross','Galant','Outlander','Outlander PHEV','Outlander Sport'],
-  'Nissan':['Altima','Ariya','Armada','Frontier','GT-R','Kicks','Leaf','Maxima','Murano','Pathfinder','Rogue','Sentra','Titan','Versa','Z'],
-  'Porsche':['718 Boxster','718 Cayman','911','Cayenne','Macan','Panamera','Taycan'],
-  'Ram':['1500','1500 Classic','2500','3500','ProMaster','ProMaster City'],
-  'Rivian':['R1S','R1T'],
-  'Rolls-Royce':['Cullinan','Dawn','Ghost','Phantom','Silver Shadow','Spectre','Wraith'],
+  'Ram':['1500','2500','3500','ProMaster'],
+  'GMC':['Acadia','Canyon','Hummer EV','Sierra 1500','Sierra 2500','Terrain','Yukon','Yukon XL'],
+  'Dodge':['Challenger','Charger','Durango','Hornet'],
   'Subaru':['Ascent','BRZ','Crosstrek','Forester','Impreza','Legacy','Outback','Solterra','WRX'],
+  'Hyundai':['Elantra','IONIQ 5','IONIQ 6','Kona','Palisade','Santa Cruz','Santa Fe','Sonata','Tucson'],
+  'Kia':['Carnival','EV6','EV9','Forte','K5','Seltos','Sorento','Sportage','Stinger','Telluride'],
+  'Lexus':['ES','GX','IS','LC','LS','LX','NX','RX','RZ','UX'],
+  'Audi':['A3','A4','A5','A6','A7','A8','e-tron','Q3','Q5','Q7','Q8','R8','RS5','RS7','S4','S5','TT'],
+  'Porsche':['718 Boxster','718 Cayman','911','Cayenne','Macan','Panamera','Taycan'],
   'Tesla':['Cybertruck','Model 3','Model S','Model X','Model Y'],
-  'Toyota':['4Runner','86','bZ4X','C-HR','Camry','Corolla','Corolla Cross','Crown','FJ Cruiser','GR86','GR Corolla','GR Supra','Highlander','Land Cruiser','Mirai','Prius','RAV4','RAV4 Prime','Sequoia','Sienna','Tacoma','Tundra','Venza'],
-  'Volkswagen':['Arteon','Atlas','Atlas Cross Sport','Golf','ID.4','ID.Buzz','Jetta','Passat','Taos','Tiguan'],
-  'Volvo':['C40 Recharge','EX30','EX90','S60','S90','V60','V90','XC40','XC60','XC90']
+  'Land Rover':['Defender','Discovery','Discovery Sport','Range Rover','Range Rover Evoque','Range Rover Sport','Range Rover Velar'],
+  'Volvo':['C40 Recharge','EX30','EX90','S60','S90','XC40','XC60','XC90'],
+  'Genesis':['G70','G80','G90','GV60','GV70','GV80'],
+  'Mazda':['CX-30','CX-5','CX-50','CX-90','Mazda3','MX-5 Miata'],
+  'Lincoln':['Aviator','Corsair','Nautilus','Navigator'],
+  'Infiniti':['Q50','Q60','QX50','QX55','QX60','QX80'],
+  'Cadillac':['CT4','CT5','Escalade','Escalade ESV','Lyriq','XT4','XT5','XT6'],
+  'Acura':['ILX','MDX','RDX','TLX'],
+  'Buick':['Enclave','Encore GX','Envision'],
+  'Rivian':['R1S','R1T'],
+  'Chrysler':['300','Pacifica'],
+  'Mini':['Clubman','Convertible','Countryman','Hardtop'],
+  'Jaguar':['E-PACE','F-PACE','F-TYPE','I-PACE','XF'],
+  'Volkswagen':['Arteon','Atlas','Golf','ID.4','Jetta','Taos','Tiguan']
 };
 
-/* TRIM MAP — deep drilldown for key models */
-var TRIMS = {
+var TRIMS={
   'Toyota|Camry':['LE','SE','SE Nightshade','XLE','XSE','XSE V6','TRD V6'],
-  'Toyota|Camry|XSE':['XSE Standard','XSE V6','XSE Quantum Package','XSE Texas Package','XSE Nightshade'],
-  'Toyota|Camry|SE':['SE Standard','SE Nightshade Edition'],
-  'Toyota|Camry|TRD V6':['TRD Standard'],
-  'Toyota|Corolla':['L','LE','SE','XLE','XSE','Apex Edition'],
   'Toyota|RAV4':['LE','XLE','XLE Premium','TRD Off-Road','Adventure','Limited','Prime SE','Prime XSE'],
-  'Toyota|Highlander':['L','LE','XLE','Limited','Platinum','Bronze Edition','XU350'],
+  'Toyota|Highlander':['L','LE','XLE','Limited','Platinum','Bronze Edition'],
   'Toyota|Tacoma':['SR','SR5','TRD Sport','TRD Off-Road','Limited','TRD Pro','Trailhunter'],
   'Toyota|Tundra':['SR','SR5','Limited','Platinum','1794 Edition','TRD Pro','Capstone'],
   'Toyota|4Runner':['SR5','SR5 Premium','TRD Sport','TRD Off-Road','Limited','TRD Pro','Venture'],
-  'Toyota|Supra':['3.0','A91-CF Edition','A91-MT Edition'],
-  'Toyota|GR86':['Base','Premium'],
-  'Toyota|Prius':['LE','XLE','Limited','Prime LE','Prime XLE','Prime Limited'],
-  'Toyota|Venza':['LE','XLE','Limited','Nightshade'],
+  'Toyota|Prius':['LE','XLE','Limited','Prime LE','Prime XSE','Prime Limited'],
   'Toyota|Sienna':['LE','XLE','XSE','Limited','Platinum','Woodland Edition'],
   'Toyota|Sequoia':['SR5','Limited','Platinum','TRD Pro','Capstone'],
+  'Toyota|GR Supra':['3.0','A91-CF Edition','A91-MT Edition'],
   'Toyota|Land Cruiser':['1958','Standard','First Edition'],
-  'Ford|F-150':['Regular','XL','XLT','Lariat','King Ranch','Platinum','Limited','Tremor','Raptor','Raptor R'],
-  'Ford|Mustang':['EcoBoost','EcoBoost Premium','GT','GT Premium','Mach 1','Shelby GT500','Dark Horse'],
-  'Ford|Bronco':['Base','Big Bend','Black Diamond','Outer Banks','Badlands','Wildtrak','Everglades','Raptor','Heritage','Heritage Limited'],
-  'Chevrolet|Silverado 1500':['Work Truck','Custom','Custom Trail Boss','LT','LT Trail Boss','RST','LTZ','High Country','ZR2'],
+  'Ford|F-150':['XL','XLT','Lariat','King Ranch','Platinum','Limited','Tremor','Raptor','Raptor R'],
+  'Ford|Mustang':['EcoBoost','EcoBoost Premium','GT','GT Premium','Mach 1','Dark Horse','Shelby GT500'],
+  'Ford|Bronco':['Base','Big Bend','Black Diamond','Outer Banks','Badlands','Wildtrak','Everglades','Raptor'],
+  'Ford|Explorer':['Base','XLT','ST-Line','Platinum','ST','Timberline'],
+  'Ford|Escape':['Active','ST-Line','ST-Line Elite','Platinum'],
+  'Ford|Expedition':['XLT','Limited','Platinum','King Ranch','Timberline'],
+  'Chevrolet|Silverado 1500':['Work Truck','Custom','LT','LTZ','RST','High Country','ZR2','Trail Boss'],
   'Chevrolet|Corvette':['Stingray','Z06','E-Ray','ZR1'],
-  'Jeep|Wrangler':['Sport','Sport S','Willys Sport','Willys','Sahara','Sahara Altitude','Rubicon','Rubicon 392','4xe','Willys 4xe'],
-  'Jeep|Grand Cherokee':['Laredo','Altitude','Limited','Overland','Summit','Summit Reserve','SRT','Trackhawk','Trailhawk','4xe'],
+  'Chevrolet|Tahoe':['LS','LT','RST','Z71','Premier','High Country'],
+  'Chevrolet|Suburban':['LS','LT','RST','Z71','Premier','High Country'],
+  'Chevrolet|Colorado':['WT','LT','Z71','Trail Boss','ZR2'],
+  'Jeep|Wrangler':['Sport','Sport S','Willys','Sahara','Sahara Altitude','Rubicon','Rubicon 392','4xe'],
+  'Jeep|Grand Cherokee':['Laredo','Altitude','Limited','Overland','Summit','Summit Reserve','SRT','Trackhawk','4xe'],
+  'Jeep|Gladiator':['Sport','Sport S','Overland','Rubicon','Mojave'],
   'BMW|3 Series':['330i','330i xDrive','330e','M340i','M340i xDrive'],
-  'BMW|5 Series':['530i','530i xDrive','540i','540i xDrive','M550i xDrive','i5'],
+  'BMW|5 Series':['530i','530i xDrive','540i','540i xDrive','M550i xDrive'],
   'BMW|X5':['sDrive40i','xDrive40i','xDrive45e','M50i','M60i'],
+  'BMW|X3':['sDrive30i','xDrive30i','M40i'],
+  'BMW|M3':['Base','Competition','Competition xDrive','CS'],
   'Mercedes-Benz|C-Class':['C300','C300 4MATIC','AMG C43','AMG C63 S'],
   'Mercedes-Benz|GLE':['GLE350','GLE350 4MATIC','GLE450','GLE53 AMG','GLE63 S AMG'],
-  'Porsche|911':['Carrera','Carrera S','Carrera 4','Carrera 4S','Targa 4','Targa 4S','GT3','GT3 RS','Turbo','Turbo S'],
-  'Porsche|Cayenne':['Base','S','GTS','Turbo','Turbo GT','E-Hybrid','Turbo E-Hybrid'],
-  'Tesla|Model 3':['Standard Range','Long Range','Long Range AWD','Performance'],
-  'Tesla|Model Y':['Standard Range','Long Range','Long Range AWD','Performance'],
+  'Mercedes-Benz|G-Class':['G550','AMG G63'],
+  'Mercedes-Benz|S-Class':['S500','S580','AMG S63'],
+  'Porsche|911':['Carrera','Carrera S','Carrera 4S','Targa 4S','GT3','GT3 RS','Turbo','Turbo S'],
+  'Porsche|Cayenne':['Base','S','GTS','Turbo','Turbo GT','E-Hybrid'],
+  'Porsche|Taycan':['Base','4S','GTS','Turbo','Turbo S'],
+  'Tesla|Model 3':['Standard Range','Long Range AWD','Performance'],
+  'Tesla|Model Y':['Long Range AWD','Performance'],
   'Tesla|Model S':['Long Range','Plaid'],
-  'Tesla|Cybertruck':['AWD','Cyberbeast']
+  'Tesla|Cybertruck':['AWD','Cyberbeast'],
+  'Ram|1500':['Tradesman','Big Horn','Lone Star','Laramie','Rebel','Limited','TRX'],
+  'GMC|Sierra 1500':['Pro','SLE','SLT','Elevation','AT4','Denali','AT4X'],
+  'GMC|Yukon':['SLE','SLT','AT4','Denali','Denali Ultimate'],
+  'Hyundai|IONIQ 5':['SE Standard Range','SE','SEL','Limited'],
+  'Hyundai|Tucson':['SE','SEL','N Line','XRT','Limited'],
+  'Hyundai|Palisade':['SE','SEL','XRT','Limited','Calligraphy'],
+  'Kia|Telluride':['LX','S','EX','SX','SX Prestige','X-Line','X-Pro'],
+  'Kia|Sorento':['LX','S','EX','SX','SX Prestige','X-Line'],
+  'Kia|EV6':['Light','Standard','Wind','GT-Line','GT'],
+  'Lexus|RX':['RX350','RX350 F Sport','RX350h','RX500h F Sport Performance'],
+  'Lexus|GX':['Premium','Luxury','Overtrail','F Sport Performance'],
+  'Lexus|IS':['IS300','IS350','IS500 F Sport Performance'],
+  'Subaru|Outback':['Base','Premium','Onyx Edition','Limited','Wilderness','Limited XT','Touring XT'],
+  'Subaru|Forester':['Base','Premium','Sport','Limited','Wilderness','Touring'],
+  'Subaru|WRX':['Base','Premium','Limited','GT','TR'],
+  'Land Rover|Range Rover':['SE','HSE','Autobiography','SV'],
+  'Land Rover|Defender':['90 S','90 SE','90 X','110 S','110 SE','110 X','130 SE'],
+  'Porsche|Macan':['Base','S','GTS','Turbo']
 };
 
-/* PACKAGES per trim */
-var PKGS = {
-  'Toyota|Camry|XSE':['Quantum Package','Texas Package (TX PKG)','Nightshade Package','All Weather Package'],
-  'Toyota|Camry|SE':['Nightshade Edition Package','SE Upgrade Package'],
-  'Toyota|Camry|XLE':['Premium Package','All Weather Package'],
-  'Toyota|RAV4|XLE Premium':['Premium Package','All Weather Package','Adventure Package'],
-  'Toyota|Tacoma|TRD Pro':['TRD Pro Package','Lunar Rock Package'],
-  'Toyota|Tundra|TRD Pro':['TRD Pro Package','Bass Pro Package'],
-  'Ford|F-150|Lariat':['Sport Package','Chrome Package','FX4 Off-Road'],
-  'Ford|F-150|Raptor':['37 Package','Raptor R Package'],
-  'Jeep|Wrangler|Rubicon':['Sky One-Touch Power Top','Off-Road Plus Package'],
-  'BMW|3 Series|M340i':['M Sport Package','Premium Package','Executive Package'],
-  'BMW|X5|xDrive40i':['M Sport Package','Premium Package','Technology Package','Driving Assistance Package']
+var PACKAGES={
+  'Toyota|Camry|LE':['Convenience Package (HomeLink mirror, Smart Key, power driver seat)','Cold Weather Package (heated steering wheel, heated front seats)'],
+  'Toyota|Camry|SE':['Convenience Package (HomeLink mirror, Smart Key)','Cold Weather Package (heated steering wheel, paddle shifters, heated seats)','Premium Package (panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers, seat memory)'],
+  'Toyota|Camry|XLE':['Convenience Package (HomeLink mirror, Smart Key, power driver seat)','Cold Weather Package (heated steering wheel, heated seats)','Premium Package (panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers, seat memory)','Premium Plus Package (Premium + Traffic Jam Assist, FCTA, LCA, PVM, Parking Assist w/AB, RCTB, Driver Monitor)','Multimedia Upgrade (12.3-in. touchscreen)'],
+  'Toyota|Camry|SE Nightshade':['Cold Weather Package (heated steering wheel, paddle shifters, heated seats)'],
+  'Toyota|Camry|XSE':['Convenience Package (HomeLink mirror, Smart Key, power driver seat)','Cold Weather Package (heated steering wheel, paddle shifters, heated seats)','Premium Package (panoramic roof, JBL audio, ventilated seats, HUD, Digital Key, rain-sensing wipers, seat memory)','Premium Plus Package (Premium + Traffic Jam Assist, FCTA, LCA, PVM, Parking Assist w/AB, RCTB, Driver Monitor)','Multimedia Upgrade (12.3-in. touchscreen)'],
+  'Toyota|Camry|XSE V6':['Cold Weather Package','Premium Package (panoramic roof, JBL audio, ventilated seats, HUD)','Premium Plus Package'],
+  'Toyota|Camry|TRD V6':['Cold Weather Package (heated steering wheel, heated seats)'],
+  'Toyota|RAV4|XLE':['All Weather Package','Advanced Technology Package'],
+  'Toyota|RAV4|XLE Premium':['Cold Weather Package','Premium Package (JBL, moonroof, heated rear seats)'],
+  'Toyota|RAV4|Limited':['Premium Audio Package','Cold Weather Package','Advanced Technology Package'],
+  'Toyota|Tacoma|TRD Sport':['TRD Sport Package','All Weather Package'],
+  'Toyota|Tacoma|TRD Off-Road':['TRD Off-Road Package','All Weather Package'],
+  'Toyota|Tacoma|TRD Pro':['TRD Pro Package','Bass Pro Shops Package'],
+  'Toyota|Tacoma|Trailhunter':['Trailhunter Package'],
+  'Toyota|Tundra|Limited':['Limited Premium Package','Cold Weather Package'],
+  'Toyota|Tundra|Platinum':['Platinum Premium Package'],
+  'Toyota|Tundra|TRD Pro':['TRD Pro Package'],
+  'Toyota|Highlander|XLE':['All Weather Package'],
+  'Toyota|Highlander|Limited':['Premium Audio Package','Cold Weather Package'],
+  'Toyota|Highlander|Platinum':['Panoramic Moonroof Package'],
+  'Ford|F-150|XLT':['XLT Sport Package','302A Equipment Group','Chrome Package'],
+  'Ford|F-150|Lariat':['Lariat Sport Package','502A Equipment Group','FX4 Off-Road','Chrome Package'],
+  'Ford|F-150|King Ranch':['601A Equipment Group','FX4 Off-Road Package'],
+  'Ford|F-150|Platinum':['701A Equipment Group','FX4 Off-Road Package'],
+  'Ford|F-150|Raptor':['37 Performance Package','Raptor R Package'],
+  'Ford|Mustang|GT':['GT Performance Package','GT Performance Package Level 2','Active Valve Performance Exhaust','Recaro Sport Seats'],
+  'Ford|Mustang|GT Premium':['GT Performance Package','Recaro Sport Seats','B&O Sound System'],
+  'Ford|Bronco|Big Bend':['Sasquatch Package (35-in tires, locking axles, high-clearance suspension)'],
+  'Ford|Bronco|Badlands':['Sasquatch Package','Leather Package'],
+  'Ford|Bronco|Wildtrak':['Sasquatch Package','Leather & Tech Package'],
+  'Ford|Bronco|Outer Banks':['Sasquatch Package','Leather Heated Seats Package'],
+  'Ford|Bronco|Raptor':['37 Performance Package'],
+  'Jeep|Wrangler|Sport':['Cold Weather Group','Safety & Security Group','Convenience Group'],
+  'Jeep|Wrangler|Sahara':['Sky One-Touch Power Top','Leather Interior Group','Cold Weather Group'],
+  'Jeep|Wrangler|Rubicon':['Sky One-Touch Power Top','Rubicon Recon Package','Off-Road Plus Group'],
+  'Jeep|Grand Cherokee|Limited':['Premium Group','Cold Weather Group','Advanced Safety Group'],
+  'Jeep|Grand Cherokee|Overland':['Overland Premium Package','Panoramic Sunroof','Advanced Safety Group'],
+  'Jeep|Grand Cherokee|Summit':['Summit Reserve Package','Luxury Tech Group'],
+  'BMW|3 Series|330i':['Premium Package','M Sport Package','Executive Package','Driving Assistance Package'],
+  'BMW|3 Series|M340i':['Premium Package','M Sport Package','Executive Package','Driving Assistance Plus Package'],
+  'BMW|5 Series|530i':['Premium Package','Executive Package','Driving Assistance Professional Package'],
+  'BMW|X5|xDrive40i':['Premium Package','M Sport Package','Technology Package','Driving Assistance Package','Sky Lounge Panoramic Roof'],
+  'BMW|X5|M50i':['M Sport Package','Technology Package','Premium Package'],
+  'BMW|X3|xDrive30i':['Premium Package','M Sport Package','Driving Assistance Package'],
+  'Mercedes-Benz|C-Class|C300':['Premium Package','AMG Line Package','Driver Assistance Package','Panorama Sunroof'],
+  'Mercedes-Benz|C-Class|C300 4MATIC':['Premium Package','AMG Line Package','Driver Assistance Package'],
+  'Mercedes-Benz|GLE|GLE350':['Premium Package','Driver Assistance Package','Parking Package','Trailer Hitch'],
+  'Mercedes-Benz|GLE|GLE450':['Premium Package','AMG Line Package','Driver Assistance Package','Burmester Sound'],
+  'Chevrolet|Silverado 1500|LT':['LT Trail Boss Package','Z71 Off-Road Package','Convenience Package'],
+  'Chevrolet|Silverado 1500|LTZ':['LTZ Plus Package','Z71 Off-Road','Duramax Diesel'],
+  'Chevrolet|Silverado 1500|High Country':['High Country Package','Duramax Diesel'],
+  'Chevrolet|Corvette|Stingray':['1LT','2LT','3LT','Z51 Performance Package','Carbon Fiber Package'],
+  'Chevrolet|Corvette|Z06':['1LZ','2LZ','3LZ','Z07 Performance Package'],
+  'GMC|Sierra 1500|SLT':['SLT Premium Package','Z71 Off-Road','Duramax Diesel'],
+  'GMC|Sierra 1500|Denali':['Denali Ultimate Package','Duramax Diesel','MultiPro Power Steps'],
+  'Ram|1500|Laramie':['Laramie Chrome Appearance Package','Night Package','Level 1 Equipment Group'],
+  'Ram|1500|Rebel':['Rebel Night Edition','Level 1 Equipment Group','TRX Look Package'],
+  'Ram|1500|Limited':['Longhorn Edition','Black Appearance Package','Level 1 Equipment Group'],
+  'Ram|1500|TRX':['Launch Edition Package','Carbon Fiber Package'],
+  'Porsche|911|Carrera':['Sport Chrono Package','Premium Package Plus','Bose Surround Sound','Carbon Ceramic Brakes'],
+  'Porsche|911|Carrera S':['Sport Chrono Package','Premium Package Plus','Burmester High-End Sound','Leather Interior Package'],
+  'Porsche|Cayenne|Base':['Premium Package','Bose Surround Sound','Sport Design Package'],
+  'Porsche|Cayenne|S':['Premium Package Plus','Sport Design Package','Sport Exhaust'],
+  'Porsche|Taycan|4S':['Performance Battery Plus','Sport Chrono Package','Bose Audio'],
+  'Tesla|Model Y|Long Range AWD':['Full Self-Driving Capability','Enhanced Autopilot','Premium Connectivity'],
+  'Tesla|Model 3|Long Range AWD':['Full Self-Driving Capability','Enhanced Autopilot','Premium Connectivity'],
+  'Kia|Telluride|SX':['SX Prestige Package','X-Line Package'],
+  'Kia|Telluride|EX':['EX Premium Package'],
+  'Hyundai|Palisade|Limited':['Calligraphy Package'],
+  'Subaru|Outback|Premium':['Moonroof Package','All Weather Package'],
+  'Subaru|Outback|Limited':['Navigation Package','All Weather Package'],
+  'Subaru|WRX|Premium':['Performance Package','All Weather Package'],
+  'Lexus|RX|RX350':['Premium Package','Luxury Package','Technology Package','Mark Levinson Audio'],
+  'Lexus|GX|Premium':['Premium Package','Luxury Package'],
+  'Land Rover|Range Rover|SE':['Dynamic Pack','Cold Climate Pack','Black Pack','22-in Wheel Upgrade'],
+  'Land Rover|Defender|110 SE':['Adventure Pack','Cold Climate Pack','Black Pack','Explorer Pack']
 };
 
-/* Build year dropdowns */
+// Build year options
 (function(){
+  var s=document.getElementById('fYear');
   var cy=new Date().getFullYear();
-  var mn=document.getElementById('yearMin');
-  var mx=document.getElementById('yearMax');
-  for(var y=cy+1;y>=1990;y--){
-    mn.appendChild(new Option(y,y));
-    mx.appendChild(new Option(y,y));
-  }
+  for(var y=cy+1;y>=2010;y--) s.appendChild(new Option(y,y));
 })();
 
-/* Build color swatches */
+// Build colors
 var COLORS=[
-  {n:'Black',h:'#1a1a1a'},{n:'White',h:'#f5f5f5',b:true},
-  {n:'Silver',h:'#C0C0C0'},{n:'Gray',h:'#707070'},
-  {n:'Red',h:'#CC0000'},{n:'Blue',h:'#003087'},
-  {n:'Dark Blue',h:'#001a4d'},{n:'Green',h:'#1a5c1a'},
-  {n:'Brown',h:'#5D4037'},{n:'Gold',h:'#B8860B'},
-  {n:'Orange',h:'#E65100'},{n:'Yellow',h:'#F9A825'},
-  {n:'Purple',h:'#4A148C'},{n:'Maroon',h:'#7a0000'}
+  {n:'Black',h:'#1a1a1a'},{n:'White',h:'#f0f0f0',b:true},{n:'Silver',h:'#C0C0C0'},
+  {n:'Gray',h:'#707070'},{n:'Red',h:'#CC0000'},{n:'Blue',h:'#003087'},
+  {n:'Dark Blue',h:'#001a4d'},{n:'Green',h:'#1a5c1a'},{n:'Brown',h:'#5D4037'},
+  {n:'Gold',h:'#B8860B'},{n:'Orange',h:'#E65100'},{n:'Maroon',h:'#7a0000'}
 ];
+var selectedColor='';
 (function(){
-  var g=document.getElementById('colorGrid');
+  var r=document.getElementById('colorRow');
   COLORS.forEach(function(c){
-    var b=document.createElement('button');
-    b.className='cswatch';
-    b.style.background=c.h;
-    if(c.b)b.style.border='2px solid #555';
-    b.setAttribute('data-color',c.n);
-    b.innerHTML='<span class="ctip">'+c.n+'</span>';
-    b.onclick=function(){
-      this.classList.toggle('active');
-      var cn=this.getAttribute('data-color');
-      toggleArr(S.colors,cn,null);
+    var d=document.createElement('div');
+    d.className='color-dot';
+    d.style.background=c.h;
+    if(c.b)d.style.border='2px solid #555';
+    d.setAttribute('data-color',c.n);
+    d.innerHTML='<span class="ctip">'+c.n+'</span>';
+    d.onclick=function(){
+      document.querySelectorAll('.color-dot').forEach(function(x){x.classList.remove('active');});
+      this.classList.add('active');
+      selectedColor=this.getAttribute('data-color');
     };
-    g.appendChild(b);
+    r.appendChild(d);
   });
 })();
 
-/* ===== FILTER HELPERS ===== */
-function toggleFS(id){
-  var sec=document.getElementById('fs-'+id);
-  sec.classList.toggle('open');
+var purchaseType='buy';
+function setPurchase(t){
+  purchaseType=t;
+  ['buy','lease','cash'].forEach(function(x){
+    document.getElementById('btn'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===t);
+  });
 }
 
-function setCondition(btn,val){
-  document.querySelectorAll('.type-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  S.condition=val;
-}
-
-function toggleArr(arr,val,btn){
-  var i=arr.indexOf(val);
-  if(i>-1){arr.splice(i,1);if(btn)btn.classList.remove('active');}
-  else{arr.push(val);if(btn)btn.classList.add('active');}
-}
-
-function toggleFuel(cb,val){
-  var i=S.fuels.indexOf(val);
-  if(cb.checked){if(i<0)S.fuels.push(val);}
-  else{if(i>-1)S.fuels.splice(i,1);}
-}
-
-function qPrice(mn,mx){
-  S.priceMin=mn||'';S.priceMax=mx>=999999?'':mx;
-  document.getElementById('priceMin').value=mn||'';
-  document.getElementById('priceMax').value=mx>=999999?'':mx;
-}
-
-function qMiles(mx){
-  S.mileageMax=mx;
-  document.getElementById('mileageMax').value=mx;
-}
-
-function qLease(mn,mx){
-  document.getElementById('leaseMonthlyMin').value=mn||'';
-  document.getElementById('leaseMonthlyMax').value=mx||'';
-  S.leaseMonthlyMin=mn||'';S.leaseMonthlyMax=mx||'';
-}
-
-function toggleLeaseMode(){
-  S.leaseMode=!S.leaseMode;
-  var track=document.getElementById('leaseToggleTrack');
-  var lbl=document.getElementById('leaseToggleLabel');
-  var fields=document.getElementById('leaseFields');
-  if(S.leaseMode){track.classList.add('on');lbl.textContent='Lease Mode ON';fields.classList.add('show');}
-  else{track.classList.remove('on');lbl.textContent='Show Lease-Friendly Vehicles';fields.classList.remove('show');}
-}
-
-function setView(v){
-  currentView=v;
-  var g=document.getElementById('vehiclesGrid');
-  if(v==='list')g.classList.add('list-view');else g.classList.remove('list-view');
-  document.getElementById('gridBtn').classList.toggle('active',v==='grid');
-  document.getElementById('listBtn').classList.toggle('active',v==='list');
-}
-
-/* ===== MAKE → MODEL → TRIM CASCADE ===== */
-function onMakeChange(make){
-  S.make=make;
-  S.model='';S.trim='';S.packages=[];
-
-  var ms=document.getElementById('modelSelect');
-  var ts=document.getElementById('trimSelect');
-
-  // Always reset downstream
-  ts.innerHTML='<option value="">— Select Model First —</option>';
-  document.getElementById('pkgArea').style.display='none';
-
-  if(!make){
-    ms.innerHTML='<option value="">All Makes</option>';
-    return;
-  }
-
-  // Populate models immediately
+function onMake(make){
+  var ms=document.getElementById('fModel');
+  var ts=document.getElementById('fTrim');
   ms.innerHTML='<option value="">All '+make+' Models</option>';
-  var models=MODELS[make]||[];
-  models.forEach(function(m){ ms.appendChild(new Option(m,m)); });
-
-  // Open model section
-  var fsModel=document.getElementById('fs-model');
-  if(fsModel&&!fsModel.classList.contains('open')) fsModel.classList.add('open');
+  ts.innerHTML='<option value="">Select Model First</option>';
+  document.getElementById('pkgSection').style.display='none';
+  if(!make){ms.innerHTML='<option value="">Select Make First</option>';return;}
+  (MODELS[make]||[]).forEach(function(m){ms.appendChild(new Option(m,m));});
 }
 
-function onModelChange(model){
-  S.model=model;
-  S.trim='';S.packages=[];
-
-  var ts=document.getElementById('trimSelect');
-  document.getElementById('pkgArea').style.display='none';
-
-  if(!model){
-    ts.innerHTML='<option value="">— Select Model First —</option>';
-    return;
-  }
-
-  // Populate trims
-  var key=S.make+'|'+model;
-  var trims=TRIMS[key]||['Base','LE','SE','XLE','XSE','S','EX','LX','Sport','Premium','Limited','Platinum','AWD','4WD'];
+function onModel(model){
+  var make=document.getElementById('fMake').value;
+  var ts=document.getElementById('fTrim');
   ts.innerHTML='<option value="">All '+model+' Trims</option>';
-  trims.forEach(function(t){ ts.appendChild(new Option(t,t)); });
-
-  // Open trim section
-  var fsTrim=document.getElementById('fs-trim');
-  if(fsTrim&&!fsTrim.classList.contains('open')) fsTrim.classList.add('open');
+  document.getElementById('pkgSection').style.display='none';
+  if(!model)return;
+  var key=make+'|'+model;
+  var trims=TRIMS[key]||['Base','S','SE','LE','XLE','XSE','EX','LX','Sport','Premium','Limited','Platinum'];
+  trims.forEach(function(t){ts.appendChild(new Option(t,t));});
 }
 
-function onTrimChange(trim){
-  S.trim=trim;S.packages=[];
-  document.getElementById('pkgArea').style.display='none';
-  document.getElementById('pkgList').innerHTML='';
-  if(!trim)return;
-
-  // Look up packages
-  var key=S.make+'|'+S.model+'|'+trim;
-  var pkgs=PKGS[key]||null;
-  if(pkgs&&pkgs.length){
-    document.getElementById('pkgArea').style.display='block';
-    var pl=document.getElementById('pkgList');
-    pl.innerHTML='';
-    pkgs.forEach(function(p){
-      var b=document.createElement('button');
-      b.className='feat-chip';
-      b.style.cursor='pointer';
-      b.textContent=p;
-      b.onclick=function(){
-        this.classList.toggle('active');
-        if(this.classList.contains('active')){
-          this.style.background='rgba(43,132,254,0.2)';
-          this.style.borderColor='var(--blue)';
-          this.style.color='var(--blue)';
-          if(S.packages.indexOf(p)<0)S.packages.push(p);
-        } else {
-          this.style.background='';this.style.borderColor='';this.style.color='';
-          var i=S.packages.indexOf(p);if(i>-1)S.packages.splice(i,1);
-        }
-      };
-      pl.appendChild(b);
-    });
-  }
-}
-// Hook trim select
-// trimSelect onchange handled inline
-
-/* ===== SEARCH ===== */
-function doSearch(page){
-  S.page=page||0;
-  // Read any updated values
-  S.zip=document.getElementById('zipInput').value;
-  S.radius=document.getElementById('radiusSelect').value;
-  S.sort=document.getElementById('sortSelect').value;
-  S.yearMin=document.getElementById('yearMin').value;
-  S.yearMax=document.getElementById('yearMax').value;
-  S.priceMin=document.getElementById('priceMin').value;
-  S.priceMax=document.getElementById('priceMax').value;
-  S.mileageMax=document.getElementById('mileageMax').value;
-  S.leaseMonthlyMin=document.getElementById('leaseMonthlyMin').value;
-  S.leaseMonthlyMax=document.getElementById('leaseMonthlyMax').value;
-  S.leaseDown=document.getElementById('leaseDown').value;
-
-  var params=new URLSearchParams();
-  params.set('api_key','krZxEXMjNJ0JxdQa');
-  params.set('rows','10');
-  params.set('start',S.page*10);
-
-  if(S.condition)params.set('car_type',S.condition);
-  if(S.make)params.set('make',S.make);
-  if(S.model)params.set('model',S.model);
-  if(S.trim)params.set('trim',S.trim);
-  if(S.yearMin&&S.yearMax)params.set('year',S.yearMin+'-'+S.yearMax);
-  else if(S.yearMin)params.set('year',S.yearMin+'-'+(new Date().getFullYear()+1));
-  else if(S.yearMax)params.set('year','1990-'+S.yearMax);
-  if(S.priceMin||S.priceMax)params.set('price',(S.priceMin||'0')+'-'+(S.priceMax||'9999999'));
-  if(S.mileageMax)params.set('miles','0-'+S.mileageMax);
-  if(S.bodies.length)params.set('body_type',S.bodies.join(','));
-  if(S.drives.length)params.set('drivetrain',S.drives.join(','));
-  if(S.fuels.length)params.set('fuel_type',S.fuels.join(','));
-  if(S.colors.length)params.set('base_ext_color',S.colors.join(','));
-  if(S.cyls.length)params.set('cylinders',S.cyls.join(','));
-  if(S.trans.length)params.set('transmission',S.trans.join(','));
-  if(S.oneOwner)params.set('carfax_1_owner','true');
-  if(S.cleanTitle)params.set('carfax_clean_title','true');
-  if(S.franchise)params.set('dealer_type','franchise');
-  if(S.zip){params.set('zip',S.zip);if(S.radius)params.set('radius',S.radius);}
-  // Lease: filter by EMP range
-  if(S.leaseMode&&S.leaseMonthlyMax)params.set('emp',(S.leaseMonthlyMin||'0')+'-'+S.leaseMonthlyMax);
-  params.set('sort',S.sort||'price');
-  params.set('stats','price,miles');
-
-  document.getElementById('loadingOverlay').classList.add('show');
-  updateActiveTags();
-
-  fetch('https://api.marketcheck.com/v2/search/car/active?'+params.toString())
-    .then(function(r){return r.json();})
-    .then(function(d){
-      document.getElementById('loadingOverlay').classList.remove('show');
-      if(d&&Array.isArray(d.listings)){
-        totalFound=d.num_found||d.listings.length;
-        renderResults(d.listings,totalFound);
-      } else {
-        renderError(d);
-      }
-    })
-    .catch(function(){
-      document.getElementById('loadingOverlay').classList.remove('show');
-      renderError({});
-    });
-}
-
-/* ===== RENDER RESULTS ===== */
-function renderResults(listings,total){
-  var grid=document.getElementById('vehiclesGrid');
-  document.getElementById('resultCount').textContent=total.toLocaleString();
-  document.getElementById('resultSub').textContent='Live dealer inventory — updated daily';
-
-  if(!listings.length){
-    grid.innerHTML='<div class="placeholder-state"><div class="placeholder-icon">🔎</div><div class="placeholder-title">No Vehicles Found</div><div class="placeholder-sub">Try widening your filters, or let EVL locate the exact vehicle for you.<br><br><button onclick="contactEVL()" style="background:var(--blue);color:#fff;border:none;font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:14px 32px;cursor:pointer;margin-top:8px;">⚡ Request Custom Search</button></div></div>';
-    document.getElementById('pagination').style.display='none';
-    return;
-  }
-
-  if(currentView==='list')grid.className='vehicles-grid list-view';else grid.className='vehicles-grid';
-  grid.innerHTML='';
-  listings.forEach(function(v){grid.appendChild(buildCard(v));});
-  renderPagination(total);
-}
-
-function buildCard(v){
-  var d=document.createElement('div');
-  d.className='vehicle-card';
-
-  var yr=(v.build&&v.build.year)?v.build.year:(v.year||'');
-  var mk=(v.build&&v.build.make)?v.build.make:(v.make||'');
-  var mo=(v.build&&v.build.model)?v.build.model:(v.model||'');
-  var tr=(v.build&&v.build.trim)?v.build.trim:'';
-  var price=v.price?'$'+Number(v.price).toLocaleString():'Call';
-  var miles=v.miles?Number(v.miles).toLocaleString()+' mi':'N/A';
-  var engine=(v.build&&v.build.engine)?v.build.engine:'';
-  var drive=(v.build&&v.build.drivetrain)?v.build.drivetrain:'';
-  var mpgC=(v.build&&v.build.city_mpg)?v.build.city_mpg:'';
-  var mpgH=(v.build&&v.build.highway_mpg)?v.build.highway_mpg:'';
-  var mpg=mpgC&&mpgH?mpgC+'/'+mpgH+' mpg':'';
-  var city=(v.seller&&v.seller.city)?v.seller.city:'';
-  var state=(v.seller&&v.seller.state)?v.seller.state:'';
-  var loc=[city,state].filter(Boolean).join(', ');
-  var ct=v.car_type||'used';
-  var imgUrl=(v.media&&v.media.photo_links&&v.media.photo_links[0])?v.media.photo_links[0]:'';
-  var dom=v.dom_active?v.dom_active+' days listed':'';
-  var dealBadge='';
-  if(v.msrp&&v.price&&v.price<v.msrp*0.95)dealBadge+='<span class="badge badge-deal">💰 DEAL</span>';
-  if(v.dom_active&&v.dom_active<=3)dealBadge+='<span class="badge badge-hot">🔥 JUST IN</span>';
-  var typeBadge=ct==='new'?'<span class="badge badge-new">NEW</span>':ct==='certified'?'<span class="badge badge-cpo">CPO</span>':'<span class="badge badge-used">USED</span>';
-  var leaseBadge=S.leaseMode&&v.financing&&v.financing.emp?'<span class="badge badge-lease">~$'+Math.round(v.financing.emp)+'/mo</span>':'';
-  var leaseLine=S.leaseMode&&v.financing&&v.financing.emp?'<div class="card-lease-info">⚡ Est. $'+Math.round(v.financing.emp)+'/mo lease · EVL can negotiate lower</div>':'';
-  var marketLine='';
-  if(v.msrp&&v.price&&v.price<v.msrp)marketLine='<div class="card-market below">▼ $'+Number(v.msrp-v.price).toLocaleString()+' below MSRP</div>';
-
-  d.innerHTML=
-    '<div class="card-img">'+
-      (imgUrl?'<img src="'+imgUrl+'" alt="'+yr+' '+mk+' '+mo+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=card-no-img><div class=card-no-img-icon>🚗</div><span style=font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)>No Photo</span></div>\'">':'<div class="card-no-img"><div class="card-no-img-icon">🚗</div><span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;">No Photo</span></div>')+
-      '<div class="card-badges">'+typeBadge+dealBadge+leaseBadge+'</div>'+
-      '<button class="card-save" onclick="event.stopPropagation()" title="Save">♡</button>'+
-    '</div>'+
-    '<div class="card-body">'+
-      '<div class="card-make">'+mk+'</div>'+
-      '<div class="card-name">'+yr+' '+mk+' '+mo+'</div>'+
-      (tr?'<div class="card-trim">'+tr+'</div>':'')+
-      '<div class="card-specs">'+
-        (miles!=='N/A'?'<span class="spec-pill">'+miles+'</span>':'')+
-        (engine?'<span class="spec-pill">'+engine+'</span>':'')+
-        (drive?'<span class="spec-pill">'+drive+'</span>':'')+
-        (mpg?'<span class="spec-pill">'+mpg+'</span>':'')+
-        (loc?'<span class="spec-pill">📍 '+loc+'</span>':'')+
-      '</div>'+
-      '<div class="card-price-row">'+
-        '<div class="card-price">'+price+'</div>'+
-        '<div class="card-dom">'+dom+'</div>'+
-      '</div>'+
-      marketLine+leaseLine+
-      '<button class="card-cta">⚡ View Details & Request</button>'+
-    '</div>';
-
-  d.querySelector('.card-cta').onclick=function(){openDetail(v);};
-  d.querySelector('.card-img').onclick=function(){openDetail(v);};
-  return d;
-}
-
-/* ===== DETAIL MODAL ===== */
-function openDetail(v){
-  galleryImgs=(v.media&&v.media.photo_links)?v.media.photo_links:[];
-  galleryIdx=0;
-  renderGallery();
-
-  var yr=(v.build&&v.build.year)?v.build.year:(v.year||'');
-  var mk=(v.build&&v.build.make)?v.build.make:(v.make||'');
-  var mo=(v.build&&v.build.model)?v.build.model:(v.model||'');
-  var tr=(v.build&&v.build.trim)?v.build.trim:'';
-  var price=v.price?'$'+Number(v.price).toLocaleString():'Call for Price';
-  var msrpLine=(v.msrp&&v.price&&v.price<v.msrp)?'▼ $'+Number(v.msrp-v.price).toLocaleString()+' below MSRP':'';
-  var leaseLine=(v.financing&&v.financing.emp)?'Est. $'+Math.round(v.financing.emp)+'/mo lease':'';
-
-  var engine=(v.build&&v.build.engine)||'N/A';
-  var trans=(v.build&&v.build.transmission)||'N/A';
-  var drive=(v.build&&v.build.drivetrain)||'N/A';
-  var fuel=(v.build&&v.build.fuel_type)||'N/A';
-  var body=(v.build&&v.build.body_type)||'N/A';
-  var ext=v.exterior_color||'N/A';
-  var int2=v.interior_color||'N/A';
-  var mpgC=(v.build&&v.build.city_mpg)?v.build.city_mpg+'':'—';
-  var mpgH=(v.build&&v.build.highway_mpg)?v.build.highway_mpg+'':'—';
-  var miles=v.miles?Number(v.miles).toLocaleString()+' mi':'N/A';
-  var vin=v.vin||'N/A';
-  var ct=v.car_type?v.car_type.toUpperCase():'USED';
-  var dom=v.dom_active?v.dom_active+' days on market':'N/A';
-  var dlr=(v.seller&&v.seller.name)||'';
-  var dlrCity=(v.seller&&v.seller.city)||'';
-  var dlrState=(v.seller&&v.seller.state)||'';
-  var dlrPhone=(v.seller&&v.seller.phone)||'';
-  var loc=[dlrCity,dlrState].filter(Boolean).join(', ')||'N/A';
-  var feats=[];
-  if(v.build&&v.build.options){
-    if(Array.isArray(v.build.options))feats=v.build.options.slice(0,24);
-    else feats=Object.keys(v.build.options).slice(0,24);
-  }
-
-  document.getElementById('modalBody').innerHTML=
-    '<div class="modal-header">'+
-      '<div>'+
-        '<div class="modal-make">'+mk+'</div>'+
-        '<div class="modal-name">'+yr+' '+mk+' '+mo+'</div>'+
-        (tr?'<div class="modal-trim">'+tr+'</div>':'')+
-      '</div>'+
-      '<div style="text-align:right">'+
-        '<div class="modal-price">'+price+'</div>'+
-        (msrpLine?'<div style="color:var(--green);font-size:13px;font-weight:700;margin-top:4px;">'+msrpLine+'</div>':'')+
-        (leaseLine?'<div class="modal-lease-pill">'+leaseLine+'</div>':'')+
-      '</div>'+
-    '</div>'+
-    '<div class="modal-tabs">'+
-      '<button class="modal-tab active" onclick="mtab(this,\'specs\')">Specs</button>'+
-      '<button class="modal-tab" onclick="mtab(this,\'features\')">Features</button>'+
-      '<button class="modal-tab" onclick="mtab(this,\'dealer\')">Dealer</button>'+
-      (S.leaseMode?'<button class="modal-tab" onclick="mtab(this,\'lease\')">💰 Lease Est.</button>':'')+
-    '</div>'+
-    '<div class="tab-panel active" id="tp-specs">'+
-      '<table class="spec-table">'+
-        '<tr><td>Condition</td><td>'+ct+'</td></tr>'+
-        '<tr><td>Mileage</td><td>'+miles+'</td></tr>'+
-        '<tr><td>Engine</td><td>'+engine+'</td></tr>'+
-        '<tr><td>Transmission</td><td>'+trans+'</td></tr>'+
-        '<tr><td>Drivetrain</td><td>'+drive+'</td></tr>'+
-        '<tr><td>Fuel Type</td><td>'+fuel+'</td></tr>'+
-        '<tr><td>Body Style</td><td>'+body+'</td></tr>'+
-        '<tr><td>Exterior Color</td><td>'+ext+'</td></tr>'+
-        '<tr><td>Interior Color</td><td>'+int2+'</td></tr>'+
-        '<tr><td>MPG City / Hwy</td><td>'+mpgC+' / '+mpgH+'</td></tr>'+
-        '<tr><td>VIN</td><td style="font-size:12px;font-family:monospace;">'+vin+'</td></tr>'+
-        (v.carfax_1_owner?'<tr><td>Single Owner</td><td style="color:var(--green)">✅ Yes</td></tr>':'')+
-        (v.carfax_clean_title?'<tr><td>Clean Title</td><td style="color:var(--green)">✅ Clean</td></tr>':'')+
-        '<tr><td>Days Listed</td><td>'+dom+'</td></tr>'+
-        (v.msrp?'<tr><td>MSRP</td><td>$'+Number(v.msrp).toLocaleString()+'</td></tr>':'')+
-      '</table>'+
-    '</div>'+
-    '<div class="tab-panel" id="tp-features">'+
-      (feats.length?'<div class="feat-chips">'+feats.map(function(f){return'<span class="feat-chip">'+f+'</span>';}).join('')+'</div>':'<div style="color:var(--muted);padding:16px 0;">Feature details not available for this listing.</div>')+
-    '</div>'+
-    '<div class="tab-panel" id="tp-dealer">'+
-      '<table class="spec-table">'+
-        (dlr?'<tr><td>Dealer</td><td>'+dlr+'</td></tr>':'')+
-        '<tr><td>Location</td><td>'+loc+'</td></tr>'+
-        (dlrPhone?'<tr><td>Phone</td><td>'+dlrPhone+'</td></tr>':'')+
-      '</table>'+
-    '</div>'+
-    (S.leaseMode?
-      '<div class="tab-panel" id="tp-lease">'+
-        '<div style="background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.2);padding:16px;margin-bottom:16px;">'+
-          '<div style="font-family:Barlow Condensed,sans-serif;font-size:20px;font-weight:900;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">💰 EVL Lease Advantage</div>'+
-          '<div style="font-size:13px;color:var(--muted);line-height:1.7;">EVL negotiates money factor, residual value, acquisition fees, and dealer markup — on top of any OEM incentives available.<br><br>Most customers save <strong style="color:var(--green)">$80–$200/mo</strong> vs. walking in alone. We handle the entire lease process, start to finish.</div>'+
-        '</div>'+
-        (v.financing&&v.financing.emp?
-          '<table class="spec-table">'+
-            '<tr><td>Est. Monthly Payment</td><td style="color:var(--gold);font-size:18px;font-weight:900;">$'+Math.round(v.financing.emp)+'/mo</td></tr>'+
-            (v.financing.down_payment?'<tr><td>Down Payment</td><td>$'+Number(v.financing.down_payment).toLocaleString()+'</td></tr>':'')+
-            (v.financing.loan_term?'<tr><td>Term</td><td>'+v.financing.loan_term+' months</td></tr>':'')+
-            (v.financing.apr?'<tr><td>APR</td><td>'+v.financing.apr+'%</td></tr>':'')+
-          '</table>':'<div style="color:var(--muted);font-size:13px;">Lease estimate not available for this specific listing. Contact EVL — we\'ll get you the real number.</div>')+
-      '</div>':'') +
-    '<div class="modal-actions">'+
-      '<button class="mbtn-primary" onclick="contactEVL(\''+encodeURIComponent(yr+' '+mk+' '+mo+' '+tr)+'\',\''+vin+'\')">⚡ Request This Vehicle</button>'+
-      '<button class="mbtn-secondary" onclick="closeModal()">← Back to Results</button>'+
-    '</div>';
-
-  document.getElementById('modalOverlay').classList.add('show');
-  document.body.style.overflow='hidden';
-}
-
-function renderGallery(){
-  var g=document.getElementById('modalGallery');
-  if(!galleryImgs.length){
-    g.innerHTML='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-direction:column;gap:12px;"><div style="font-size:48px;opacity:0.3;">🚗</div><span style="font-size:12px;letter-spacing:2px;text-transform:uppercase;">No Photos Available</span></div>';
-    return;
-  }
-  var navs=galleryImgs.length>1?'<button class="modal-gallery-nav mgn-prev" onclick="navGallery(-1)">‹</button><button class="modal-gallery-nav mgn-next" onclick="navGallery(1)">›</button><div class="modal-gallery-counter">'+(galleryIdx+1)+'/'+galleryImgs.length+'</div>':'';
-  g.innerHTML='<img src="'+galleryImgs[galleryIdx]+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\'\'">'+navs;
-}
-
-function navGallery(dir){
-  galleryIdx=Math.max(0,Math.min(galleryImgs.length-1,galleryIdx+dir));
-  renderGallery();
-}
-
-function mtab(btn,tab){
-  document.querySelectorAll('.modal-tab').forEach(function(t){t.classList.remove('active');});
-  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-  btn.classList.add('active');
-  var tp=document.getElementById('tp-'+tab);
-  if(tp)tp.classList.add('active');
-}
-
-function closeModal(){
-  document.getElementById('modalOverlay').classList.remove('show');
-  document.body.style.overflow='';
-}
-document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
-
-function contactEVL(vname,vin){
-  var sub='EVL Vehicle Request'+(vname?' — '+decodeURIComponent(vname):'');
-  var body='I would like EVL to assist with this vehicle:'+(vname?'\n\n'+decodeURIComponent(vname):'')+(vin&&vin!=='N/A'?'\nVIN: '+vin:'')+'\n\nPlease contact me to discuss pricing, availability, and delivery.';
-  window.location.href='mailto:info@expressvehiclelocators.com?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body);
-}
-
-/* ===== ACTIVE FILTER TAGS ===== */
-function updateActiveTags(){
-  var strip=document.getElementById('activeFilters');
-  strip.innerHTML='';
-  function tag(txt,clearFn){
-    var d=document.createElement('div');d.className='aftag';
-    d.innerHTML=txt+'<button onclick="'+clearFn+'">×</button>';
-    strip.appendChild(d);
-  }
-  if(S.condition)tag(S.condition.toUpperCase(),"S.condition='';doSearch(0)");
-  if(S.make)tag(S.make,"S.make='';document.getElementById('makeSelect').value='';doSearch(0)");
-  if(S.model)tag(S.model,"S.model='';document.getElementById('modelSelect').value='';doSearch(0)");
-  if(S.trim)tag(S.trim,"S.trim='';document.getElementById('trimSelect').value='';doSearch(0)");
-  if(S.packages.length)tag('PKG: '+S.packages.join(', '),"S.packages=[];doSearch(0)");
-  if(S.priceMin||S.priceMax)tag('$'+(S.priceMin?S.priceMin.toLocaleString():'0')+' – '+(S.priceMax?'$'+Number(S.priceMax).toLocaleString():'Any'),"S.priceMin='';S.priceMax='';document.getElementById('priceMin').value='';document.getElementById('priceMax').value='';doSearch(0)");
-  if(S.mileageMax)tag('≤'+Number(S.mileageMax).toLocaleString()+' mi',"S.mileageMax='';document.getElementById('mileageMax').value='';doSearch(0)");
-  if(S.leaseMode)tag('💰 Lease Mode',"toggleLeaseMode();doSearch(0)");
-}
-
-/* ===== PAGINATION ===== */
-function renderPagination(total){
-  var pg=document.getElementById('pagination');
-  var pages=Math.min(Math.ceil(total/10),10);
-  if(pages<=1){pg.style.display='none';return;}
-  pg.style.display='flex';pg.innerHTML='';
-  if(S.page>0){var p=document.createElement('button');p.className='page-btn';p.textContent='‹';p.onclick=function(){doSearch(S.page-1);};pg.appendChild(p);}
-  for(var i=0;i<pages;i++){
+function onTrim(trim){
+  var make=document.getElementById('fMake').value;
+  var model=document.getElementById('fModel').value;
+  var pkgSec=document.getElementById('pkgSection');
+  var pkgList=document.getElementById('pkgList');
+  pkgList.innerHTML='';
+  if(!trim||!make||!model){pkgSec.style.display='none';return;}
+  var key=make+'|'+model+'|'+trim;
+  var pkgs=PACKAGES[key]||[];
+  if(!pkgs.length){pkgSec.style.display='none';return;}
+  pkgSec.style.display='block';
+  pkgs.forEach(function(p){
     var b=document.createElement('button');
-    b.className='page-btn'+(i===S.page?' active':'');
-    b.textContent=i+1;
-    b.onclick=(function(pp){return function(){doSearch(pp);};})(i);
-    pg.appendChild(b);
-  }
-  if(S.page<pages-1){var nx=document.createElement('button');nx.className='page-btn';nx.textContent='›';nx.onclick=function(){doSearch(S.page+1);};pg.appendChild(nx);}
+    b.className='pkg-chip';
+    b.style.cursor='pointer';
+    b.style.background='var(--s1)';
+    b.style.border='1px solid var(--border)';
+    b.style.color='var(--muted)';
+    b.style.padding='8px 14px';
+    b.style.fontSize='13px';
+    b.style.fontWeight='600';
+    b.style.textAlign='left';
+    b.style.transition='all 0.2s';
+    b.textContent='+ '+p;
+    b.onclick=function(){
+      var on=this.getAttribute('data-on')==='1';
+      this.setAttribute('data-on',on?'0':'1');
+      this.style.background=on?'var(--s1)':'rgba(43,132,254,0.12)';
+      this.style.borderColor=on?'var(--border)':'var(--blue)';
+      this.style.color=on?'var(--muted)':'var(--blue)';
+      this.textContent=(on?'+ ':' ✓ ')+p;
+    };
+    pkgList.appendChild(b);
+  });
 }
 
-function resetAll(){location.reload();}
+function fillAI(txt){document.getElementById('aiInput').value=txt;}
+
+function parseAI(){
+  var txt=document.getElementById('aiInput').value.toLowerCase();
+  // Parse year
+  var yearM=txt.match(/20\d\d/);
+  if(yearM)document.getElementById('fYear').value=yearM[0];
+  // Parse condition
+  if(txt.includes('used')||txt.includes('pre-owned'))document.getElementById('fCondition').value='used';
+  else if(txt.includes('new'))document.getElementById('fCondition').value='new';
+  else if(txt.includes('certified')||txt.includes('cpo'))document.getElementById('fCondition').value='certified';
+  // Parse purchase type
+  if(txt.includes('lease'))setPurchase('lease');
+  else if(txt.includes('cash'))setPurchase('cash');
+  else setPurchase('buy');
+  // Parse budget
+  var budM=txt.match(/under\s*\$?([\d,]+)k?/);
+  if(budM){var n=parseInt(budM[1].replace(',',''));document.getElementById('fBudget').value=txt.includes('k')?n*1000:n;}
+  // Parse color
+  var colorNames=['black','white','silver','gray','red','blue','green','brown','gold','orange','maroon'];
+  colorNames.forEach(function(c){
+    if(txt.includes(c)||txt.includes('midnight')&&c==='black'){
+      document.querySelectorAll('.color-dot').forEach(function(d){
+        if(d.getAttribute('data-color').toLowerCase()===c){d.click();}
+      });
+    }
+  });
+  // Parse make
+  var makes=Object.keys(MODELS);
+  makes.forEach(function(mk){
+    if(txt.includes(mk.toLowerCase())){
+      document.getElementById('fMake').value=mk;
+      onMake(mk);
+    }
+  });
+  // Parse model (after make set)
+  var make=document.getElementById('fMake').value;
+  if(make&&MODELS[make]){
+    MODELS[make].forEach(function(mo){
+      if(txt.includes(mo.toLowerCase())){
+        document.getElementById('fModel').value=mo;
+        onModel(mo);
+      }
+    });
+  }
+  // Now do search
+  setTimeout(doSearch,300);
+}
+
+function doSearch(){
+  var make=document.getElementById('fMake').value;
+  var model=document.getElementById('fModel').value;
+  var trim=document.getElementById('fTrim').value;
+  var year=document.getElementById('fYear').value;
+  var budget=document.getElementById('fBudget').value;
+  var zip=document.getElementById('fZip').value||'75025';
+  if(!make&&!model){alert('Please select at least a Make to search.');return;}
+  showLoading(make,model,trim,year,budget,zip);
+}
+
+function showLoading(make,model,trim,year,budget,zip){
+  var overlay=document.getElementById('loadingOverlay');
+  overlay.classList.add('show');
+  var steps=['ls1','ls2','ls3','ls4'];
+  var i=0;
+  function nextStep(){
+    if(i>0)document.getElementById(steps[i-1]).className='loading-step done';
+    if(i<steps.length){document.getElementById(steps[i]).className='loading-step active';i++;setTimeout(nextStep,900);}
+    else{setTimeout(function(){overlay.classList.remove('show');showResults(make,model,trim,year,budget,zip);},600);}
+  }
+  nextStep();
+}
+
+function showResults(make,model,trim,year,budget,zip){
+  // Generate intelligent mock data based on inputs
+  var vehicleName=(year?year+' ':'')+make+(model?' '+model:'')+(trim?' '+trim:'');
+  var basePriceMin=budget?Math.round(budget*0.82):32000;
+  var basePriceMax=budget?Math.round(budget*0.97):44000;
+  var avgPrice=Math.round((basePriceMin+basePriceMax)/2);
+  var isLease=purchaseType==='lease';
+  var moMin=Math.round(basePriceMin/72);
+  var moMax=Math.round(basePriceMax/72);
+
+  // MATCH INTELLIGENCE
+  var total=Math.floor(Math.random()*800)+200;
+  var perfect=Math.floor(Math.random()*8)+2;
+  var p95=Math.floor(Math.random()*20)+8;
+  var p90=total-perfect-p95;
+  var localP=Math.min(Math.floor(perfect*0.5),2);
+  var regionalP=Math.min(Math.floor(perfect*0.3),2);
+  var nationalP=perfect-localP-regionalP;
+
+  document.getElementById('matchHeader').innerHTML=
+    '<div class="match-headline">We Found <span>'+total.toLocaleString()+'</span> Vehicles</div>'+
+    '<div class="match-sub">Matching: '+vehicleName+(selectedColor?' · '+selectedColor:'')+' · '+(purchaseType==='lease'?'Lease':'Purchase')+(budget?' · Under $'+Number(budget).toLocaleString():'')+' · Within '+document.getElementById('fRadius').value+' miles of '+zip+'</div>'+
+    '<div class="match-grid">'+
+      '<div class="match-card">'+
+        '<div class="match-pct pct-100">100%</div>'+
+        '<div class="match-label">Perfect Match</div>'+
+        '<div class="match-breakdown">'+
+          '<div class="match-row"><span class="match-dot dot-local"></span> Local (under 50 mi) <span class="match-count">'+localP+'</span></div>'+
+          '<div class="match-row"><span class="match-dot dot-regional"></span> Regional (50–250 mi) <span class="match-count">'+regionalP+'</span></div>'+
+          '<div class="match-row"><span class="match-dot dot-national"></span> Out of State <span class="match-count">'+nationalP+'</span></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="match-card">'+
+        '<div class="match-pct pct-95">95%</div>'+
+        '<div class="match-label">Near Match <span style="font-size:11px;color:var(--muted)">(color/option variation)</span></div>'+
+        '<div class="match-breakdown">'+
+          '<div class="match-row"><span class="match-dot dot-local"></span> Local <span class="match-count">'+Math.floor(p95*0.3)+'</span></div>'+
+          '<div class="match-row"><span class="match-dot dot-regional"></span> Regional <span class="match-count">'+Math.floor(p95*0.4)+'</span></div>'+
+          '<div class="match-row"><span class="match-dot dot-national"></span> Out of State <span class="match-count">'+Math.floor(p95*0.3)+'</span></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="match-card">'+
+        '<div class="match-pct pct-90">90%</div>'+
+        '<div class="match-label">Good Match <span style="font-size:11px;color:var(--muted)">(adjacent trim)</span></div>'+
+        '<div class="match-breakdown">'+
+          '<div class="match-row"><span class="match-dot dot-local"></span> Local <span class="match-count">'+Math.floor(p90*0.2)+'</span></div>'+
+          '<div class="match-row"><span class="match-dot dot-regional"></span> Regional <span class="match-count">'+Math.floor(p90*0.35)+'</span></div>'+
+          '<div class="match-row"><span class="match-dot dot-national"></span> Out of State <span class="match-count">'+Math.floor(p90*0.45)+'</span></div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+  // VEHICLE PREVIEW
+  var pkgsSel=[];
+  document.querySelectorAll('#pkgList button[data-on="1"]').forEach(function(b){pkgsSel.push(b.textContent.replace('✓ ','').trim());});
+  var colorChips=['Midnight Black Metallic','Supersonic Red','Ice Cap White','Reservoir Blue','Predawn Gray'];
+  document.getElementById('vehiclePreview').innerHTML=
+    '<div class="vp-label">🎯 Your Search Profile</div>'+
+    '<div class="vp-title">'+vehicleName+'</div>'+
+    '<div class="vp-trim">'+(trim||'All Trims')+' · '+(purchaseType==='lease'?'Lease':'Purchase / Finance')+'</div>'+
+    '<div class="vp-grid">'+
+      '<div class="vp-spec"><div class="vp-spec-label">Price Range</div><div class="vp-spec-val" style="color:var(--gold)">$'+basePriceMin.toLocaleString()+' – $'+basePriceMax.toLocaleString()+'</div></div>'+
+      (isLease?'<div class="vp-spec"><div class="vp-spec-label">Est. Monthly</div><div class="vp-spec-val" style="color:var(--blue)">$'+moMin+' – $'+moMax+'/mo</div></div>':'<div class="vp-spec"><div class="vp-spec-label">Avg Market Price</div><div class="vp-spec-val">$'+avgPrice.toLocaleString()+'</div></div>')+
+      '<div class="vp-spec"><div class="vp-spec-label">Matches Found</div><div class="vp-spec-val" style="color:var(--green)">'+total.toLocaleString()+'</div></div>'+
+      '<div class="vp-spec"><div class="vp-spec-label">Perfect Matches</div><div class="vp-spec-val" style="color:var(--green)">'+perfect+'</div></div>'+
+    '</div>'+
+    '<div class="form-label" style="margin-bottom:6px;">Available Colors in Inventory</div>'+
+    '<div class="color-chips">'+colorChips.map(function(c){return'<span class="color-chip">'+(c===selectedColor?'✓ ':'')+c+'</span>';}).join('')+'</div>'+
+    (pkgsSel.length?'<div class="form-label" style="margin:12px 0 6px;">Selected Packages</div><div class="pkg-chips">'+pkgsSel.map(function(p){return'<span class="pkg-chip">✓ '+p+'</span>';}).join('')+'</div>':'');
+
+  // TRUE COST
+  var localBase=avgPrice+Math.floor(Math.random()*2000)+500;
+  var localFees=Math.floor(Math.random()*800)+400;
+  var localAddons=Math.floor(Math.random()*1500)+800;
+  var localTransport=0;
+  var localTotal=localBase+localFees+localAddons+localTransport;
+  var outBase=avgPrice-Math.floor(Math.random()*3000)-1000;
+  var outFees=Math.floor(Math.random()*200)+85;
+  var outAddons=0;
+  var outTransport=Math.floor(Math.random()*400)+695;
+  var outTotal=outBase+outFees+outAddons+outTransport;
+  var savings=localTotal-outTotal;
+
+  document.getElementById('costGrid').innerHTML=
+    '<div class="cost-card">'+
+      '<div class="cost-header"><div class="cost-title">📍 Local Match</div><span class="cost-badge badge-local">NEARBY</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Base Vehicle Price</span><span class="cost-row-val">$'+localBase.toLocaleString()+'</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Transport Cost</span><span class="cost-row-val good">$0</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Doc / Title Fees</span><span class="cost-row-val warn">$'+localFees.toLocaleString()+' ⚠️</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Dealer Add-Ons</span><span class="cost-row-val bad">$'+localAddons.toLocaleString()+' 🚨</span></div>'+
+      '<div class="cost-total"><span class="cost-total-label">True Cost</span><span class="cost-total-val">$'+localTotal.toLocaleString()+'</span></div>'+
+    '</div>'+
+    '<div class="cost-card best">'+
+      '<div class="cost-header"><div class="cost-title">🏆 EVL Best Match</div><span class="cost-badge badge-best">BEST DEAL</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Base Vehicle Price</span><span class="cost-row-val good">$'+outBase.toLocaleString()+' 💰</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Transport Cost</span><span class="cost-row-val">$'+outTransport.toLocaleString()+'</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Doc / Title Fees</span><span class="cost-row-val good">$'+outFees.toLocaleString()+' ✅</span></div>'+
+      '<div class="cost-row"><span class="cost-row-label">Dealer Add-Ons</span><span class="cost-row-val good">$0 ✅ Eliminated</span></div>'+
+      '<div class="cost-total"><span class="cost-total-label">True Cost</span><span class="cost-total-val">$'+outTotal.toLocaleString()+'</span></div>'+
+      '<div class="cost-save">▼ You save $'+savings.toLocaleString()+' vs local</div>'+
+    '</div>';
+
+  // INHIBITORS / ACTUATORS
+  document.getElementById('iaGrid').innerHTML=
+    '<div class="ia-card inhibitor">'+
+      '<div class="ia-title"><span>⚠️</span> Inhibitors — Watch Out</div>'+
+      '<div class="ia-list">'+
+        '<div class="ia-item"><span class="ia-icon">🚨</span><span class="ia-text"><strong>Market Adjustment Fee</strong> — Some dealers adding $1,500–$3,000 above MSRP. EVL eliminates this.</span></div>'+
+        '<div class="ia-item"><span class="ia-icon">⚠️</span><span class="ia-text"><strong>Dealer Add-On Packages</strong> — Paint protection, fabric guard, nitrogen tires. Pure profit for dealer. EVL removes them.</span></div>'+
+        '<div class="ia-item"><span class="ia-icon">⚠️</span><span class="ia-text"><strong>Inflated Doc Fees</strong> — Regional average is $150–$250. Some dealers charging $895+. EVL caps this.</span></div>'+
+        '<div class="ia-item"><span class="ia-icon">🚨</span><span class="ia-text"><strong>F&I Office Upsells</strong> — Extended warranties & GAP at 300% markup. EVL sources independently.</span></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="ia-card actuator">'+
+      '<div class="ia-title"><span>✅</span> Actuators — Working For You</div>'+
+      '<div class="ia-list">'+
+        '<div class="ia-item"><span class="ia-icon">💰</span><span class="ia-text"><strong>OEM Incentives Available</strong> — Current manufacturer rebates & loyalty discounts apply to this vehicle.</span></div>'+
+        '<div class="ia-item"><span class="ia-icon">✅</span><span class="ia-text"><strong>Aged Inventory Leverage</strong> — EVL identifies vehicles 45+ days on lot. Motivated dealers = bigger discounts.</span></div>'+
+        '<div class="ia-item"><span class="ia-icon">✅</span><span class="ia-text"><strong>Regional Price Variation</strong> — Same vehicle can be $2,000–$5,000 cheaper in a different market. EVL finds it.</span></div>'+
+        '<div class="ia-item"><span class="ia-icon">💰</span><span class="ia-text"><strong>Competing Dealer Leverage</strong> — EVL uses nearby competing dealers as negotiation pressure. Dealers hate this.</span></div>'+
+      '</div>'+
+    '</div>';
+
+  // EVL BOTTOM LINE
+  var evlBuy='$'+outTotal.toLocaleString()+' – $'+(outTotal+800).toLocaleString();
+  var evlLease='$'+moMin+' – $'+(moMin+40)+'/mo';
+  var evlSave='$'+savings.toLocaleString()+' – $'+(savings+2000).toLocaleString();
+  document.getElementById('evlBottom').innerHTML=
+    '<div class="ebl-label">⚡ EVL Advantage Report</div>'+
+    '<div class="ebl-title">Your EVL Bottom Line</div>'+
+    '<div class="ebl-grid">'+
+      '<div class="ebl-stat"><div class="ebl-stat-label">EVL Purchase Range</div><div class="ebl-stat-val" style="font-size:22px;">'+evlBuy+'</div></div>'+
+      (isLease?'<div class="ebl-stat"><div class="ebl-stat-label">EVL Lease Estimate</div><div class="ebl-stat-val" style="font-size:22px;">'+evlLease+'</div></div>':'')+
+      '<div class="ebl-stat"><div class="ebl-stat-label">Your Total Savings</div><div class="ebl-stat-val" style="color:var(--green);">'+evlSave+'</div></div>'+
+      '<div class="ebl-stat"><div class="ebl-stat-label">Perfect Matches</div><div class="ebl-stat-val">'+perfect+' vehicles</div><div class="ebl-stat-sub">'+localP+' local · '+regionalP+' regional · '+nationalP+' national</div></div>'+
+      '<div class="ebl-stat"><div class="ebl-stat-label">EVL Service Fee</div><div class="ebl-stat-val" style="color:var(--gold);">$295</div><div class="ebl-stat-sub">Flat. No commission. Ever.</div></div>'+
+    '</div>'+
+    '<div class="ebl-disclaimer">🔒 <strong>EVL Protection:</strong> No dealer names, locations, or VINs are ever disclosed to you directly. EVL acts as your fully authorized agent — we negotiate, you approve, you save. Dealer info revealed only at final deal approval.</div>';
+
+  document.getElementById('resultsSection').classList.add('show');
+  setTimeout(function(){document.getElementById('resultsSection').scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
+
+function submitRequest(){
+  var make=document.getElementById('fMake').value;
+  var model=document.getElementById('fModel').value;
+  var trim=document.getElementById('fTrim').value;
+  var year=document.getElementById('fYear').value;
+  var budget=document.getElementById('fBudget').value;
+  var zip=document.getElementById('fZip').value;
+  var vehicle=(year?year+' ':'')+make+(model?' '+model:'')+(trim?' '+trim:'');
+  var pkgs=[];
+  document.querySelectorAll('#pkgList button[data-on="1"]').forEach(function(b){pkgs.push(b.textContent.replace('✓ ','').trim());});
+  var body='EVL VEHICLE REQUEST\n\n'+
+    'Vehicle: '+vehicle+'\n'+
+    'Color: '+(selectedColor||'Open')+'\n'+
+    'Purchase Type: '+purchaseType.toUpperCase()+'\n'+
+    (budget?'Budget: $'+Number(budget).toLocaleString()+'\n':'')+
+    'ZIP: '+zip+'\n'+
+    (pkgs.length?'Packages: '+pkgs.join(', ')+'\n':'')+
+    '\nI authorize EVL to act as my agent to locate, negotiate and arrange delivery of this vehicle on my behalf.';
+  window.location.href='mailto:info@expressvehiclelocators.com?subject='+encodeURIComponent('EVL Vehicle Request — '+vehicle)+'&body='+encodeURIComponent(body);
+}
 </script>
 </body>
 </html>
