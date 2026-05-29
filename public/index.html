@@ -179,6 +179,63 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:28px 48px
   .strip{gap:16px;padding:14px 16px;flex-direction:column;}
   footer{flex-direction:column;gap:10px;text-align:center;}
 }
+
+/* ===== ACCESSIBILITY OVERRIDES — FORCE LARGER TEXT ===== */
+.lbl {
+  font-size:15px !important;
+  font-weight:800 !important;
+  letter-spacing:2px !important;
+  text-transform:uppercase !important;
+  color:#C8C8D8 !important;
+  margin-bottom:9px !important;
+  display:block !important;
+}
+.t-main { font-size:17px !important; font-weight:700 !important; }
+.t-sub { font-size:14px !important; color:#C8C8D8 !important; }
+.drawer-subtitle, .drawer-sub { font-size:16px !important; color:#C8C8D8 !important; }
+.sec-lbl, .section-label { font-size:14px !important; font-weight:800 !important; letter-spacing:2px !important; color:var(--blue) !important; }
+.inp, .sel, select, input[type=text], input[type=email], input[type=tel], input[type=number], textarea {
+  font-size:18px !important;
+  padding:15px 16px !important;
+  min-height:54px !important;
+  color:#fff !important;
+}
+.inp-vin, input.inp-vin {
+  font-size:22px !important;
+  letter-spacing:4px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+}
+.btn-decode {
+  font-size:18px !important;
+  padding:15px 20px !important;
+  min-height:54px !important;
+}
+.cond-btn {
+  font-size:18px !important;
+  padding:18px 10px !important;
+  min-height:60px !important;
+}
+.tog-btn { min-height:52px !important; }
+.t-icon { font-size:20px !important; }
+.check-item, .opt-item { font-size:17px !important; padding:13px 16px !important; min-height:52px !important; }
+.cert-name, .value-num { font-size:60px !important; }
+.cert-id { font-size:15px !important; color:#C8C8D8 !important; }
+.note, .hint, .sub-note { font-size:16px !important; color:#C8C8D8 !important; line-height:1.7 !important; }
+.spec-row { font-size:16px !important; }
+.spec-lbl { font-size:15px !important; color:#C8C8D8 !important; }
+.spec-val { font-size:16px !important; font-weight:700 !important; }
+.sig-label { font-size:14px !important; }
+.photo-drop-text { font-size:17px !important; }
+small, .small { font-size:15px !important; }
+p { font-size:18px !important; line-height:1.75 !important; }
+/* Lookup tabs */
+.tog-btn .t-main { font-size:16px !important; }
+/* Step summary text */
+.drawer-done-summary { font-size:16px !important; color:#C8C8D8 !important; }
+/* Any remaining tiny text */
+* { min-font-size: 14px; }
+
 </style>
 </head>
 <body>
