@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Finance Shopping — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--orange:#FF6B00;--muted:#C8C8D8;--border:rgba(43,132,254,0.2);}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;line-height:1.75;}
+nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 48px;height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:#fff;text-decoration:none;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{color:#B8B8C8;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:10px 22px;}
+
+.hero{background:linear-gradient(160deg,#071220,var(--bg));padding:64px 48px 56px;text-align:center;border-bottom:2px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(43,132,254,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-block;background:rgba(43,132,254,0.12);border:2px solid rgba(43,132,254,0.35);color:var(--blue);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:24px;}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-size:68px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:.95;margin-bottom:18px;}
+.hero h1 span{color:var(--blue);}
+.hero p{color:var(--muted);font-size:19px;max-width:600px;margin:0 auto 40px;line-height:1.75;}
+
+.strip{background:linear-gradient(90deg,var(--blue2),var(--blue));padding:18px 48px;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;}
+.strip-item{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+
+.section{padding:64px 48px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-badge{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.section-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;margin-bottom:16px;}
+.section-title span{color:var(--blue);}
+.section-sub{color:var(--muted);font-size:18px;max-width:600px;line-height:1.75;margin-bottom:48px;}
+
+/* RATE COMPARISON */
+.rate-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;}
+.rate-card{background:var(--s1);border:2px solid var(--border);padding:32px;}
+.rate-card.evl{border-color:var(--green);background:linear-gradient(135deg,#071828,var(--s1));}
+.rate-badge{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;margin-bottom:16px;display:inline-block;}
+.rate-badge.dealer{background:rgba(255,51,51,.1);border:2px solid rgba(255,51,51,.25);color:var(--red);}
+.rate-badge.evl{background:rgba(0,200,83,.1);border:2px solid rgba(0,200,83,.25);color:var(--green);}
+.rate-title{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;}
+.rate-num{font-family:"Barlow Condensed",sans-serif;font-size:64px;font-weight:900;line-height:1;margin-bottom:6px;}
+.rate-num.bad{color:var(--red);}
+.rate-num.good{color:var(--green);}
+.rate-sub{font-size:15px;color:var(--muted);margin-bottom:20px;}
+.rate-rows{display:flex;flex-direction:column;gap:8px;}
+.rr{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:16px;}
+.rr:last-child{border:none;}
+.rr-lbl{color:var(--muted);}
+.rr-val{font-weight:700;}
+.rr-val.bad{color:var(--red);}
+.rr-val.good{color:var(--green);}
+.savings-bar{background:rgba(0,200,83,.06);border:2px solid rgba(0,200,83,.2);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:20px;}
+.sb-text{font-size:17px;color:var(--muted);}
+.sb-text strong{color:#fff;display:block;font-size:18px;margin-bottom:2px;}
+.sb-num{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;color:var(--green);}
+
+/* LENDER GRID */
+.lender-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;}
+.lender{background:var(--s1);border:2px solid var(--border);padding:20px;text-align:center;transition:all .25s;}
+.lender:hover{border-color:var(--blue);transform:translateY(-3px);}
+.lender-icon{font-size:32px;margin-bottom:10px;}
+.lender-name{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.lender-type{font-size:13px;color:var(--muted);font-weight:600;}
+
+/* HOW IT WORKS STEPS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.step{background:var(--s1);border:2px solid var(--border);padding:28px;position:relative;}
+.step-num{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;color:var(--blue);line-height:1;margin-bottom:14px;opacity:.3;}
+.step-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.step-desc{font-size:16px;color:var(--muted);line-height:1.7;}
+
+/* CALCULATOR */
+.calc-box{background:var(--s1);border:2px solid var(--border);padding:36px;}
+.calc-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:28px;}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px;}
+.calc-input-wrap label{display:block;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.calc-input{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;font-weight:600;padding:14px 16px;outline:none;transition:border-color .2s;}
+.calc-input:focus{border-color:var(--blue);}
+.calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;}
+.cr{background:var(--s2);border:2px solid var(--border);padding:20px;text-align:center;}
+.cr-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.cr-val{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;line-height:1;}
+.cr-sub{font-size:13px;color:var(--muted);margin-top:6px;}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,#071828,var(--bg));border-top:2px solid var(--border);padding:80px 48px;text-align:center;}
+.cta-title{font-family:"Barlow Condensed",sans-serif;font-size:56px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:1;margin-bottom:16px;}
+.cta-title span{color:var(--blue);}
+.cta-sub{color:var(--muted);font-size:19px;max-width:540px;margin:0 auto 40px;line-height:1.75;}
+.btn-primary{background:var(--blue);color:#fff;padding:20px 48px;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all .2s;border:none;cursor:pointer;}
+.btn-primary:hover{background:var(--blue2);}
+
+footer{background:var(--s1);border-top:2px solid var(--border);padding:28px 48px;}
+
+@media(max-width:900px){.rate-compare,.lender-grid,.steps,.calc-grid,.calc-results{grid-template-columns:1fr 1fr;}.hero h1{font-size:48px;}}
+@media(max-width:600px){nav{padding:0 16px;}.hero{padding:48px 20px 44px;}.section{padding:48px 20px;}.strip{gap:16px;padding:14px 16px;flex-direction:column;}.rate-compare,.lender-grid,.steps,.calc-grid,.calc-results{grid-template-columns:1fr;}footer{padding:24px 20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="https://www.expressvehiclelocators.com/home.html" class="logo">◈ Express <span>Vehicle</span> Locators</a>
+  <div class="nav-links">
+    <a href="https://www.expressvehiclelocators.com/find.html">Find</a>
+    <a href="https://www.expressvehiclelocators.com/tradein.html">Trade-In</a>
+    <a href="https://www.expressvehiclelocators.com/how.html">How It Works</a>
+    <a href="https://www.expressvehiclelocators.com/savings.html">Savings</a>
+    <a href="https://www.expressvehiclelocators.com/financing.html" class="active">Financing</a>
+    <a href="https://www.expressvehiclelocators.com/contact.html">Contact</a>
+    <a href="https://www.expressvehiclelocators.com/find.html" class="nav-cta">⚡ Find My Vehicle</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">💳 EVL Finance Shopping — $195 Flat Fee</div>
+  <h1>Get The Best <span>Rate</span><br>Not The Dealer's Rate</h1>
+  <p>Dealers markup your interest rate and keep the profit. EVL shops your deal to 12+ lenders simultaneously and gets you the lowest rate available — saving you thousands over the life of your loan.</p>
+</section>
+
+<div class="strip">
+  <span class="strip-item">💳 12+ Lenders</span>
+  <span class="strip-item">⚡ Same-Day Results</span>
+  <span class="strip-item">💰 Avg $1,847 Saved</span>
+  <span class="strip-item">$195 Flat Fee</span>
+</div>
+
+<!-- RATE COMPARISON -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-badge">The Real Cost of Dealer Financing</div>
+    <h2 class="section-title">Dealer Rate vs <span>EVL Rate</span></h2>
+    <p class="section-sub">This is the single most overlooked cost in a car purchase. Dealers are allowed to markup your interest rate — and they always do.</p>
+
+    <div class="rate-compare">
+      <div class="rate-card">
+        <span class="rate-badge dealer">❌ Dealer Finance</span>
+        <div class="rate-title">What Dealers Offer</div>
+        <div class="rate-num bad">6.75%</div>
+        <div class="rate-sub">APR — typical dealer-marked-up rate on $42,000 loan</div>
+        <div class="rate-rows">
+          <div class="rr"><span class="rr-lbl">Lender Base Rate</span><span class="rr-val">5.25% APR</span></div>
+          <div class="rr"><span class="rr-lbl">Dealer Markup</span><span class="rr-val bad">+1.50% (hidden profit)</span></div>
+          <div class="rr"><span class="rr-lbl">Monthly Payment (60mo)</span><span class="rr-val bad">$826/mo</span></div>
+          <div class="rr"><span class="rr-lbl">Total Interest Paid</span><span class="rr-val bad">$7,560</span></div>
+          <div class="rr"><span class="rr-lbl">Lenders Shopped</span><span class="rr-val bad">1 (captive finance)</span></div>
+        </div>
+      </div>
+      <div class="rate-card evl">
+        <span class="rate-badge evl">✅ EVL Finance Shopping</span>
+        <div class="rate-title">What EVL Gets You</div>
+        <div class="rate-num good">4.25%</div>
+        <div class="rate-sub">APR — best rate from 12+ competing lenders on same loan</div>
+        <div class="rate-rows">
+          <div class="rr"><span class="rr-lbl">Best Lender Rate</span><span class="rr-val good">4.25% APR ✓</span></div>
+          <div class="rr"><span class="rr-lbl">Dealer Markup</span><span class="rr-val good">$0 — Eliminated ✓</span></div>
+          <div class="rr"><span class="rr-lbl">Monthly Payment (60mo)</span><span class="rr-val good">$777/mo</span></div>
+          <div class="rr"><span class="rr-lbl">Total Interest Paid</span><span class="rr-val good">$4,620</span></div>
+          <div class="rr"><span class="rr-lbl">Lenders Shopped</span><span class="rr-val good">12+ credit unions & banks</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="savings-bar">
+      <div>
+        <div class="sb-text"><strong>Your Total Finance Savings on a $42,000 / 60-Month Loan</strong></div>
+        <div class="sb-text">$49/mo savings × 60 months = $2,940 · After $195 EVL fee = <strong style="color:var(--green);">$2,745 net savings</strong></div>
+      </div>
+      <div class="sb-num">$2,940</div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section" style="background:var(--s1);border-top:2px solid var(--border);border-bottom:2px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-badge">See Your Savings</div>
+    <h2 class="section-title">Finance <span>Calculator</span></h2>
+    <p class="section-sub">Enter your loan details to see exactly how much EVL Finance Shopping saves you.</p>
+    <div class="calc-box">
+      <div class="calc-title">⚡ Your Finance Savings</div>
+      <div class="calc-grid">
+        <div class="calc-input-wrap">
+          <label>Loan Amount</label>
+          <input class="calc-input" id="cLoan" type="number" value="42000" oninput="calcFinance()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>Loan Term (months)</label>
+          <input class="calc-input" id="cTerm" type="number" value="60" oninput="calcFinance()">
+        </div>
+        <div class="calc-input-wrap">
+          <label>Dealer Rate (%)</label>
+          <input class="calc-input" id="cDRate" type="number" value="6.75" step="0.25" oninput="calcFinance()">
+        </div>
+      </div>
+      <div class="calc-results">
+        <div class="cr">
+          <div class="cr-lbl">Dealer Monthly Payment</div>
+          <div class="cr-val" id="rDMo" style="color:var(--red);">$826</div>
+          <div class="cr-sub">at dealer rate</div>
+        </div>
+        <div class="cr">
+          <div class="cr-lbl">EVL Monthly Payment</div>
+          <div class="cr-val" id="rEMo" style="color:var(--green);">$777</div>
+          <div class="cr-sub">at best available rate</div>
+        </div>
+        <div class="cr" style="border-color:var(--green);background:rgba(0,200,83,.05);">
+          <div class="cr-lbl">Total Interest Savings</div>
+          <div class="cr-val" id="rSave" style="color:var(--green);">$2,940</div>
+          <div class="cr-sub">over loan term</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LENDERS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-badge">Our Lender Network</div>
+    <h2 class="section-title">12+ <span>Competing Lenders</span></h2>
+    <p class="section-sub">EVL submits your deal to our full lender network simultaneously. They compete for your business — you get the lowest rate.</p>
+    <div class="lender-grid">
+      <div class="lender"><div class="lender-icon">🏦</div><div class="lender-name">Credit Unions</div><div class="lender-type">Best rates for qualified buyers</div></div>
+      <div class="lender"><div class="lender-icon">🏛️</div><div class="lender-name">Regional Banks</div><div class="lender-type">Competitive local rates</div></div>
+      <div class="lender"><div class="lender-icon">💳</div><div class="lender-name">National Banks</div><div class="lender-type">High approval rates</div></div>
+      <div class="lender"><div class="lender-icon">⚡</div><div class="lender-name">Online Lenders</div><div class="lender-type">Fast approval & funding</div></div>
+      <div class="lender"><div class="lender-icon">🔒</div><div class="lender-name">Captive Finance</div><div class="lender-type">OEM incentive rates when available</div></div>
+      <div class="lender"><div class="lender-icon">📊</div><div class="lender-name">Specialty Lenders</div><div class="lender-type">For unique credit profiles</div></div>
+      <div class="lender"><div class="lender-icon">🤝</div><div class="lender-name">Community Banks</div><div class="lender-type">Relationship-based lending</div></div>
+      <div class="lender"><div class="lender-icon">🌐</div><div class="lender-name">+5 More Partners</div><div class="lender-type">Expanded network for best rates</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background:var(--s1);border-top:2px solid var(--border);border-bottom:2px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-badge">The Process</div>
+    <h2 class="section-title">How EVL Finance <span>Shopping Works</span></h2>
+    <p class="section-sub">Four simple steps. Same-day results. You pick the best offer.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">You Share Your Info</div>
+        <div class="step-desc">Loan amount, term, and basic credit profile. Takes 5 minutes on our contact form.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">EVL Shops 12+ Lenders</div>
+        <div class="step-desc">We submit your deal simultaneously to our full lender network. They compete for your business.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">You See All Offers</div>
+        <div class="step-desc">EVL presents every offer with full transparency — rate, term, monthly payment, total cost.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">You Choose & Save</div>
+        <div class="step-desc">Pick the best offer. EVL coordinates with the dealer. Average savings: $1,847.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="hero-badge" style="margin-bottom:20px;">$195 Flat Fee · No Commission · No Hidden Costs</div>
+  <h2 class="cta-title">Stop Overpaying on <span>Interest</span></h2>
+  <p class="cta-sub">One flat fee. 12+ lenders. Best rate guaranteed. Average savings $1,847 — that's a 9x return on your $195.</p>
+  <a href="https://www.expressvehiclelocators.com/contact.html" class="btn-primary">⚡ Start Finance Shopping — $195</a>
+</section>
+
+<footer style="background:var(--s1);border-top:2px solid var(--border);padding:28px 48px;">
+  <div style="max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;">◈ Express <span style="color:var(--blue);">Vehicle</span> Locators</div>
+    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+      <a href="https://www.expressvehiclelocators.com/privacy.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Privacy Policy</a>
+      <a href="https://www.expressvehiclelocators.com/terms.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Terms of Service</a>
+      <a href="https://www.expressvehiclelocators.com/service-agreement.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Service Agreement</a>
+      <a href="https://www.expressvehiclelocators.com/contact.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Contact</a>
+    </div>
+    <div style="color:#C8C8D8;font-size:14px;">© 2026 Express Vehicle Locators · Texas, USA</div>
+  </div>
+</footer>
+
+<script>
+function calcFinance(){
+  var loan=parseFloat(document.getElementById('cLoan').value)||42000;
+  var term=parseFloat(document.getElementById('cTerm').value)||60;
+  var dr=parseFloat(document.getElementById('cDRate').value)||6.75;
+  var er=Math.max(dr-2.5,1.99);
+  function mo(p,r,n){var mr=r/1200;return Math.round(p*mr*Math.pow(1+mr,n)/(Math.pow(1+mr,n)-1));}
+  var dmo=mo(loan,dr,term);
+  var emo=mo(loan,er,term);
+  var save=(dmo-emo)*term;
+  document.getElementById('rDMo').textContent='$'+dmo.toLocaleString();
+  document.getElementById('rEMo').textContent='$'+emo.toLocaleString();
+  document.getElementById('rSave').textContent='$'+save.toLocaleString();
+}
+calcFinance();
+</script>
+</body>
+</html>
