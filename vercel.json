@@ -61,6 +61,22 @@
       "destination": "/public/admin.html"
     },
     {
+      "source": "/privacy",
+      "destination": "/public/privacy.html"
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/public/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/public/terms.html"
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/public/terms.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/index.html"
     }
