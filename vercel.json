@@ -9,6 +9,10 @@
       "destination": "/public/home.html"
     },
     {
+      "source": "/home.html",
+      "destination": "/public/home.html"
+    },
+    {
       "source": "/find",
       "destination": "/public/find.html"
     },
@@ -39,6 +43,14 @@
     {
       "source": "/contact.html",
       "destination": "/public/contact.html"
+    },
+    {
+      "source": "/tradein",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/tradein.html",
+      "destination": "/public/index.html"
     },
     {
       "source": "/admin",
