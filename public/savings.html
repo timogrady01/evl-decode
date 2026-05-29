@@ -3,18 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
 <title>Your Savings — Express Vehicle Locators</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--s3:#1E1E23;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--orange:#FF6B00;--muted:#9B9BAA;--border:rgba(43,132,254,0.2);}
-body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:16px;-webkit-font-smoothing:antialiased;}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 
 nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 48px;height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
 .logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:#fff;text-decoration:none;}
 .logo span{color:var(--blue);}
 .nav-links{display:flex;gap:28px;align-items:center;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a{color:#B0B0C0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
 .nav-links a:hover,.nav-links a.active{color:#fff;}
 .nav-cta{background:var(--blue)!important;color:#fff!important;padding:10px 22px;}
 
@@ -24,7 +25,7 @@ nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding
 .hero-badge{display:inline-block;background:rgba(0,200,83,0.12);border:2px solid rgba(0,200,83,0.35);color:var(--green);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:24px;}
 .hero h1{font-family:"Barlow Condensed",sans-serif;font-size:72px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:.95;margin-bottom:20px;}
 .hero h1 span{color:var(--green);}
-.hero p{color:var(--muted);font-size:19px;max-width:600px;margin:0 auto 48px;line-height:1.6;}
+.hero p{color:#C8C8D8;font-size:19px;max-width:620px;margin:0 auto 48px;line-height:1.7;}
 
 /* BIG SAVINGS NUMBER */
 .big-save{display:inline-block;background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--green);padding:36px 60px;margin-bottom:48px;}
@@ -35,15 +36,15 @@ nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding
 .stat-strip{background:var(--s1);border-top:2px solid var(--border);border-bottom:2px solid var(--border);padding:32px 48px;display:flex;justify-content:center;gap:64px;flex-wrap:wrap;}
 .stat{text-align:center;}
 .stat-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;color:var(--gold);line-height:1;}
-.stat-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.stat-lbl{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C8C8D8;margin-top:6px;}
 
 /* SECTION */
 .section{padding:72px 48px;}
 .section-inner{max-width:1100px;margin:0 auto;}
-.section-badge{font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+.section-badge{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
 .section-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;margin-bottom:16px;}
 .section-title span{color:var(--blue);}
-.section-sub{color:var(--muted);font-size:17px;max-width:560px;line-height:1.6;margin-bottom:48px;}
+.section-sub{color:#C8C8D8;font-size:18px;max-width:600px;line-height:1.7;margin-bottom:48px;}
 
 /* SAVINGS CALCULATOR */
 .calc-wrap{background:var(--s1);border:2px solid var(--border);padding:40px;margin-bottom:16px;}
@@ -51,9 +52,9 @@ nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding
 .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;}
 .calc-col{}
 .calc-col-title{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-.calc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:15px;}
+.calc-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:17px;}
 .calc-row:last-child{border:none;}
-.calc-lbl{color:var(--muted);font-weight:500;}
+.calc-lbl{color:#C8C8D8;font-weight:600;font-size:16px;}
 .calc-val{font-weight:700;font-size:16px;}
 .calc-val.bad{color:var(--red);}
 .calc-val.good{color:var(--green);}
@@ -82,12 +83,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .story-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),transparent);}
 .story-save{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;color:var(--green);line-height:1;margin-bottom:4px;}
 .story-vehicle{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
-.story-breakdown{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-.sb-row{display:flex;justify-content:space-between;font-size:14px;}
-.sb-row-lbl{color:var(--muted);}
+.story-breakdown{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.sb-row{display:flex;justify-content:space-between;font-size:16px;}
+.sb-row-lbl{color:#C8C8D8;font-size:15px;}
 .sb-row-val{font-weight:700;}
 .sb-row-val.g{color:var(--green);}
-.story-quote{font-size:14px;color:var(--muted);line-height:1.6;font-style:italic;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.story-quote{font-size:16px;color:#C8C8D8;line-height:1.7;font-style:italic;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
 .story-author{font-size:13px;font-weight:700;color:#fff;margin-top:8px;}
 .story-detail{font-size:12px;color:var(--muted);}
 
@@ -96,11 +97,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .bucket{background:var(--s1);border:2px solid var(--border);padding:28px;transition:all .25s;}
 .bucket:hover{border-color:var(--blue);transform:translateY(-3px);}
 .bucket-icon{font-size:36px;margin-bottom:14px;}
-.bucket-title{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
-.bucket-save{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;color:var(--green);margin-bottom:12px;}
-.bucket-save span{font-size:16px;color:var(--muted);font-weight:600;}
+.bucket-title{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.bucket-save{font-family:"Barlow Condensed",sans-serif;font-size:34px;font-weight:900;color:var(--green);margin-bottom:14px;}
+.bucket-save span{font-size:17px;color:#C8C8D8;font-weight:600;}
 .bucket-items{display:flex;flex-direction:column;gap:6px;}
-.bi{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--muted);line-height:1.5;}
+.bi{display:flex;align-items:flex-start;gap:12px;font-size:17px;color:#C8C8D8;line-height:1.6;}
 .bi::before{content:"✓";color:var(--green);font-weight:900;flex-shrink:0;}
 
 /* COMPARISON TABLE */
@@ -108,8 +109,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .comp-table th{padding:16px 20px;font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;text-align:center;border-bottom:2px solid var(--border);}
 .comp-table th:first-child{text-align:left;color:var(--muted);}
 .comp-table th.evl{color:var(--blue);background:rgba(43,132,254,.06);}
-.comp-table td{padding:13px 20px;font-size:15px;font-weight:500;border-bottom:1px solid var(--border);text-align:center;}
-.comp-table td:first-child{text-align:left;color:var(--muted);}
+.comp-table td{padding:15px 20px;font-size:16px;font-weight:600;border-bottom:1px solid var(--border);text-align:center;}
+.comp-table td:first-child{text-align:left;color:#C8C8D8;}
 .comp-table td.evl{background:rgba(43,132,254,.04);}
 .comp-table tr:last-child td{border:none;}
 .yes{color:var(--green);font-size:18px;font-weight:900;}
@@ -125,13 +126,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .lb-stat-lbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .lb-stat-val{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;color:var(--gold);}
 .lb-stat-sub{font-size:12px;color:var(--muted);margin-top:4px;font-weight:600;}
-.lb-note{font-size:14px;color:var(--muted);line-height:1.7;background:rgba(0,0,0,.2);padding:14px 18px;}
+.lb-note{font-size:17px;color:#C8C8D8;line-height:1.7;background:rgba(0,0,0,.2);padding:16px 20px;}
 
 /* CTA SECTION */
 .cta-section{background:linear-gradient(135deg,#071828,var(--bg));border-top:2px solid var(--border);padding:80px 48px;text-align:center;}
 .cta-title{font-family:"Barlow Condensed",sans-serif;font-size:60px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:1;margin-bottom:16px;}
 .cta-title span{color:var(--green);}
-.cta-sub{color:var(--muted);font-size:18px;max-width:540px;margin:0 auto 40px;line-height:1.6;}
+.cta-sub{color:#C8C8D8;font-size:19px;max-width:560px;margin:0 auto 40px;line-height:1.7;}
 .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
 .btn-primary{background:var(--blue);color:#fff;padding:20px 48px;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .2s;display:inline-block;border:none;cursor:pointer;}
 .btn-primary:hover{background:var(--blue2);}
