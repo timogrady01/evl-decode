@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Service Agreement — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--muted:#C8C8D8;--border:rgba(43,132,254,0.2);}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;line-height:1.75;}
+nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 48px;height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:#fff;text-decoration:none;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{color:#B8B8C8;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:10px 22px;}
+.hero{background:linear-gradient(160deg,#071220,var(--bg));padding:56px 48px 48px;text-align:center;border-bottom:2px solid var(--border);}
+.hero-badge{display:inline-block;background:rgba(43,132,254,0.12);border:2px solid rgba(43,132,254,0.35);color:var(--blue);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:20px;}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-size:56px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:1;margin-bottom:14px;}
+.hero-meta{color:var(--muted);font-size:16px;}
+.doc-wrap{max-width:860px;margin:0 auto;padding:48px 48px 80px;}
+
+/* AGREEMENT FORM */
+.agreement-form{background:var(--s1);border:2px solid var(--border);padding:36px;margin-bottom:24px;}
+.form-section{margin-bottom:32px;padding-bottom:32px;border-bottom:2px solid var(--border);}
+.form-section:last-child{border:none;margin-bottom:0;padding-bottom:0;}
+.form-section-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--blue);margin-bottom:20px;}
+.frow{display:grid;gap:14px;margin-bottom:14px;}
+.f2{grid-template-columns:1fr 1fr;}
+.f3{grid-template-columns:1fr 1fr 1fr;}
+.fgroup label{display:block;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.finput,.fselect{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;font-weight:500;padding:14px 16px;outline:none;transition:border-color .2s;}
+.finput:focus,.fselect:focus{border-color:var(--blue);}
+.finput::placeholder{color:#555;}
+.fselect{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8C8D8' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-color:var(--s2);}
+.fselect option{background:#1a1a20;}
+
+/* SERVICE CHECKBOXES */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.svc-item{background:var(--s2);border:2px solid var(--border);padding:16px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:12px;}
+.svc-item:hover{border-color:var(--blue);}
+.svc-item.on{background:rgba(43,132,254,.1);border-color:var(--blue);}
+.svc-check{width:22px;height:22px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all .2s;}
+.svc-item.on .svc-check{background:var(--blue);border-color:var(--blue);color:#fff;font-size:14px;}
+.svc-name{font-family:"Barlow Condensed",sans-serif;font-size:19px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.svc-price{font-size:14px;color:var(--gold);font-weight:700;margin-top:2px;}
+.svc-desc{font-size:14px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.svc-item.on .svc-name{color:var(--blue);}
+
+/* FEE SUMMARY */
+.fee-summary{background:var(--s2);border:2px solid var(--border);padding:20px 24px;margin-top:16px;}
+.fee-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:16px;}
+.fee-row:last-child{border:none;padding-top:14px;margin-top:4px;}
+.fee-lbl{color:var(--muted);}
+.fee-val{font-weight:700;}
+.fee-total{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;color:var(--gold);}
+
+/* LEGAL TEXT */
+.legal-text{background:var(--s2);border:2px solid var(--border);border-left:4px solid var(--blue);padding:24px;margin:20px 0;font-size:16px;color:var(--muted);line-height:1.8;max-height:320px;overflow-y:auto;}
+.legal-text h4{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:18px 0 8px;}
+.legal-text h4:first-child{margin-top:0;}
+.legal-text p{margin-bottom:12px;}
+.legal-text p:last-child{margin-bottom:0;}
+.legal-text ul{padding-left:20px;margin-bottom:12px;}
+.legal-text li{margin-bottom:6px;}
+.legal-text strong{color:#fff;}
+
+/* SIGNATURE */
+.sig-area{margin-top:20px;}
+.sig-canvas-wrap{background:var(--s2);border:2px solid var(--border);padding:0;position:relative;margin-top:10px;}
+.sig-label-bar{background:var(--s2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+canvas#sigPad{display:block;width:100%;height:160px;cursor:crosshair;touch-action:none;}
+.sig-clear{background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.sig-clear:hover{border-color:var(--red);color:var(--red);}
+
+/* TYPED SIG */
+.typed-sig{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:700;color:var(--blue);min-height:50px;padding:10px 16px;background:var(--s2);border:2px solid var(--border);margin-top:10px;letter-spacing:2px;}
+
+/* CHECKBOXES */
+.auth-check{display:flex;align-items:flex-start;gap:14px;margin:16px 0;padding:16px 18px;background:var(--s2);border:2px solid var(--border);}
+.auth-check input[type=checkbox]{width:22px;height:22px;accent-color:var(--blue);flex-shrink:0;margin-top:3px;cursor:pointer;}
+.auth-check label{font-size:16px;color:var(--muted);line-height:1.6;cursor:pointer;}
+.auth-check label strong{color:#fff;}
+
+/* SUBMIT */
+.submit-btn{display:block;width:100%;background:linear-gradient(90deg,var(--blue2),var(--blue));border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:22px;cursor:pointer;margin-top:20px;transition:all .2s;}
+.submit-btn:hover{background:linear-gradient(90deg,var(--blue),var(--blue2));}
+.submit-note{text-align:center;color:var(--muted);font-size:14px;margin-top:12px;font-weight:700;letter-spacing:1px;}
+
+/* SUCCESS */
+.success-box{display:none;background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--green);padding:48px;text-align:center;margin-bottom:24px;}
+.success-box.show{display:block;}
+.success-icon{font-size:64px;margin-bottom:16px;}
+.success-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--green);margin-bottom:12px;}
+.success-sub{color:var(--muted);font-size:18px;line-height:1.75;max-width:500px;margin:0 auto 24px;}
+.success-ref{background:var(--s2);border:2px solid var(--border);padding:16px 24px;display:inline-block;margin-top:8px;}
+.success-ref-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.success-ref-num{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;color:var(--gold);}
+
+/* HIGHLIGHT */
+.highlight-box{background:var(--s1);border:2px solid var(--border);border-left:4px solid var(--gold);padding:20px 24px;margin:20px 0;color:var(--muted);font-size:16px;line-height:1.75;}
+.highlight-box strong{color:var(--gold);}
+
+/* TOC */
+.toc{background:var(--s1);border:2px solid var(--border);padding:24px;margin-bottom:32px;}
+.toc-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;color:var(--blue);}
+.toc a{display:block;color:var(--muted);text-decoration:none;font-size:16px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.toc a:last-child{border:none;}
+.toc a:hover{color:#fff;}
+.toc-num{color:var(--blue);font-weight:700;margin-right:8px;}
+
+footer{background:var(--s1);border-top:2px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;}
+.fl{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;}
+.fl span{color:var(--blue);}
+.fc{color:var(--muted);font-size:14px;}
+@media(max-width:700px){nav{padding:0 16px;}.hero{padding:44px 20px 40px;}.hero h1{font-size:40px;}.doc-wrap{padding:32px 16px 60px;}.f2,.f3,.svc-grid{grid-template-columns:1fr;}footer{flex-direction:column;gap:10px;text-align:center;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/home.html" class="logo">◈ Express <span>Vehicle</span> Locators</a>
+  <div class="nav-links">
+    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/find.html">Find</a>
+    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/tradein.html">Trade-In</a>
+    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/how.html">How It Works</a>
+    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/savings.html">Savings</a>
+    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/contact.html">Contact</a>
+    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/find.html" class="nav-cta">⚡ Find My Vehicle</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">📋 Legal Document</div>
+  <h1>EVL Service Agreement</h1>
+  <div class="hero-meta">Express Vehicle Locators · Limited Power of Attorney & Service Authorization · Timestamped & Binding</div>
+</div>
+
+<div class="doc-wrap">
+
+  <div class="highlight-box">
+    <strong>⚡ What This Is:</strong> This is the document that authorizes EVL to act as your agent. Once signed, EVL can negotiate, locate, and arrange delivery of your vehicle on your behalf. You remain in control — no deal is finalized without your explicit approval. This document is timestamped, stored securely, and legally binding under Texas law.
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-box" id="successBox">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Agreement Signed!</div>
+    <div class="success-sub">Your EVL Service Agreement has been executed and transmitted. EVL will begin working on your behalf immediately. You will receive a confirmation copy by email within 15 minutes.</div>
+    <div class="success-ref">
+      <div class="success-ref-lbl">Your Agreement Reference Number</div>
+      <div class="success-ref-num" id="refNum">EVL-2026-000000</div>
+    </div>
+    <div style="margin-top:24px;font-size:16px;color:var(--muted);line-height:1.75;">
+      <strong style="color:#fff;">What happens next:</strong><br>
+      1. EVL reviews your request and confirms scope<br>
+      2. Active search/negotiation begins within 2 business hours<br>
+      3. EVL updates you at every milestone<br>
+      4. You approve the final deal before anything is executed
+    </div>
+  </div>
+
+  <div id="agreementForm">
+
+  <!-- CUSTOMER INFO -->
+  <div class="agreement-form">
+    <div class="form-section">
+      <div class="form-section-title">① Customer Information</div>
+      <div class="frow f2">
+        <div class="fgroup"><label>First Name *</label><input class="finput" id="aFirst" placeholder="First name" type="text"></div>
+        <div class="fgroup"><label>Last Name *</label><input class="finput" id="aLast" placeholder="Last name" type="text"></div>
+      </div>
+      <div class="frow f2">
+        <div class="fgroup"><label>Email Address *</label><input class="finput" id="aEmail" placeholder="your@email.com" type="email"></div>
+        <div class="fgroup"><label>Phone Number *</label><input class="finput" id="aPhone" placeholder="(555) 555-5555" type="tel"></div>
+      </div>
+      <div class="frow f3">
+        <div class="fgroup"><label>City</label><input class="finput" id="aCity" placeholder="City" type="text"></div>
+        <div class="fgroup"><label>State</label>
+          <select class="fselect" id="aState">
+            <option value="">Select State</option>
+            <option>TX</option><option>CA</option><option>FL</option><option>NY</option>
+            <option>IL</option><option>PA</option><option>OH</option><option>GA</option>
+            <option>NC</option><option>MI</option><option>NJ</option><option>VA</option>
+            <option>WA</option><option>AZ</option><option>MA</option><option>TN</option>
+            <option>IN</option><option>MO</option><option>MD</option><option>WI</option>
+            <option>CO</option><option>MN</option><option>SC</option><option>AL</option>
+            <option>LA</option><option>KY</option><option>OR</option><option>OK</option>
+            <option>CT</option><option>UT</option><option>Other</option>
+          </select>
+        </div>
+        <div class="fgroup"><label>ZIP Code</label><input class="finput" id="aZip" placeholder="75025" maxlength="5"></div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="form-section">
+      <div class="form-section-title">② Services Authorized</div>
+      <div class="svc-grid">
+        <div class="svc-item" id="s_find" onclick="toggleSvc('find',this)">
+          <div class="svc-check" id="sc_find"></div>
+          <div>
+            <div class="svc-name">🔍 Find My Vehicle</div>
+            <div class="svc-price">$295 flat fee</div>
+            <div class="svc-desc">Nationwide search, negotiation & delivery coordination</div>
+          </div>
+        </div>
+        <div class="svc-item" id="s_trade" onclick="toggleSvc('trade',this)">
+          <div class="svc-check" id="sc_trade"></div>
+          <div>
+            <div class="svc-name">🚗 Trade-In Service</div>
+            <div class="svc-price">$195 flat fee</div>
+            <div class="svc-desc">VIN appraisal & multi-buyer offer solicitation</div>
+          </div>
+        </div>
+        <div class="svc-item" id="s_finance" onclick="toggleSvc('finance',this)">
+          <div class="svc-check" id="sc_finance"></div>
+          <div>
+            <div class="svc-name">💳 Finance Shopping</div>
+            <div class="svc-price">$195 flat fee</div>
+            <div class="svc-desc">Shop 12+ lenders for best rate vs dealer finance</div>
+          </div>
+        </div>
+        <div class="svc-item" id="s_negotiate" onclick="toggleSvc('negotiate',this)">
+          <div class="svc-check" id="sc_negotiate"></div>
+          <div>
+            <div class="svc-name">⚡ Full Negotiation</div>
+            <div class="svc-price">$295 flat fee</div>
+            <div class="svc-desc">Price, fees, add-ons & deal term negotiation</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:12px 16px;background:rgba(245,200,66,.08);border:2px solid rgba(245,200,66,.2);font-size:15px;color:var(--muted);">
+        ⭐ <strong style="color:var(--gold);">EVL Complete Package — $795</strong> · Select all 4 services and save $185 vs à la carte ($980)
+        <button onclick="selectAll()" style="margin-left:12px;background:var(--gold);border:none;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;cursor:pointer;">Select All — $795</button>
+      </div>
+      <div class="fee-summary" id="feeSummary">
+        <div class="fee-row"><span class="fee-lbl">Services Selected</span><span class="fee-val" id="svcCount">None selected</span></div>
+        <div class="fee-row"><span class="fee-lbl">À La Carte Total</span><span class="fee-val" id="alacarte">$0</span></div>
+        <div class="fee-row"><span class="fee-lbl" style="color:#fff;font-weight:700;">Total Due to EVL</span><span class="fee-total" id="feeTotal">$0</span></div>
+      </div>
+    </div>
+
+    <!-- VEHICLE INFO -->
+    <div class="form-section">
+      <div class="form-section-title">③ Vehicle Request Details</div>
+      <div class="frow f3">
+        <div class="fgroup"><label>Year</label>
+          <select class="fselect" id="aYear"><option value="">Any Year</option></select>
+        </div>
+        <div class="fgroup"><label>Make</label>
+          <select class="fselect" id="aMake">
+            <option value="">Select Make</option>
+            <option>Acura</option><option>Audi</option><option>BMW</option>
+            <option>Cadillac</option><option>Chevrolet</option><option>Dodge</option>
+            <option>Ford</option><option>Genesis</option><option>GMC</option>
+            <option>Honda</option><option>Hyundai</option><option>Jeep</option>
+            <option>Kia</option><option>Land Rover</option><option>Lexus</option>
+            <option>Lincoln</option><option>Mazda</option><option>Mercedes-Benz</option>
+            <option>Nissan</option><option>Porsche</option><option>Ram</option>
+            <option>Rivian</option><option>Subaru</option><option>Tesla</option>
+            <option>Toyota</option><option>Volkswagen</option><option>Volvo</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fgroup"><label>Model</label><input class="finput" id="aModel" placeholder="e.g. Camry XSE"></div>
+      </div>
+      <div class="frow f3">
+        <div class="fgroup"><label>Preferred Color</label><input class="finput" id="aColor" placeholder="e.g. Midnight Black"></div>
+        <div class="fgroup"><label>Max Budget</label><input class="finput" id="aBudget" placeholder="e.g. $45,000"></div>
+        <div class="fgroup"><label>Purchase Type</label>
+          <select class="fselect" id="aPurchType">
+            <option value="buy">Purchase / Finance</option>
+            <option value="lease">Lease</option>
+            <option value="cash">Cash</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEGAL AGREEMENT -->
+    <div class="form-section">
+      <div class="form-section-title">④ Service Agreement & Limited Power of Attorney</div>
+      <p style="color:var(--muted);font-size:16px;margin-bottom:14px;">Please read the agreement below carefully before signing.</p>
+      <div class="legal-text">
+        <h4>EVL Vehicle Concierge Service Agreement</h4>
+        <p>This Service Agreement ("Agreement") is entered into between <strong>Express Vehicle Locators</strong> ("EVL," "Agent") and the Customer identified above ("Customer," "Principal"), effective upon the date of electronic execution below.</p>
+
+        <h4>1. Scope of Services</h4>
+        <p>EVL agrees to perform the services selected above on behalf of Customer. All services are provided on a flat-fee basis. EVL earns no commission, referral fee, or compensation from any dealer, lender, or buyer.</p>
+
+        <h4>2. Limited Power of Attorney</h4>
+        <p>Customer hereby appoints EVL as Customer's limited attorney-in-fact, with authority to: (a) contact dealers, wholesalers, lenders, and trade-in buyers on Customer's behalf; (b) negotiate vehicle price, fees, financing rates, lease terms, and trade-in values; (c) receive and present offers to Customer for approval; and (d) disclose Customer's vehicle preferences and budget to relevant parties.</p>
+        <p>This Limited Power of Attorney is <strong>specific to the transaction described herein</strong>, is non-durable, and terminates automatically upon: (i) Customer's written revocation; (ii) completion of the transaction; or (iii) 90 days from execution, whichever occurs first.</p>
+
+        <h4>3. Customer Retains Final Authority</h4>
+        <p>EVL may NOT, under any circumstances: (a) execute any purchase, lease, or financing agreement without Customer's explicit written approval; (b) transfer funds on Customer's behalf; (c) accept delivery of any vehicle without Customer's consent; or (d) make representations about Customer's creditworthiness beyond what Customer has disclosed.</p>
+        <p><strong>No deal is final until Customer provides explicit written approval.</strong></p>
+
+        <h4>4. Dealer Confidentiality</h4>
+        <p>EVL will not reveal Customer's identity, contact information, or location to any dealer, lender, or buyer during the search and negotiation phase. Customer's information is disclosed only at Customer's direction upon deal approval.</p>
+
+        <h4>5. Service Fees</h4>
+        <p>Customer agrees to pay EVL the fees listed above upon execution of this Agreement. If all four services are selected, the EVL Complete Package rate of $795 applies. Fees are earned upon commencement of service and are non-refundable except as provided in EVL's Refund Policy.</p>
+
+        <h4>6. No Guarantee of Outcome</h4>
+        <p>EVL makes commercially reasonable efforts to fulfill the services requested. EVL does not guarantee any specific vehicle availability, price, rate, trade-in value, or delivery timeline. Market conditions are outside EVL's control.</p>
+
+        <h4>7. Limitation of Liability</h4>
+        <p>EVL's total liability under this Agreement shall not exceed the total service fees paid by Customer. EVL is not liable for the acts or omissions of any dealer, lender, or buyer.</p>
+
+        <h4>8. Governing Law</h4>
+        <p>This Agreement is governed by the laws of the State of Texas. Any disputes shall be resolved by binding arbitration in Texas under AAA rules.</p>
+
+        <h4>9. Electronic Signature</h4>
+        <p>Customer agrees that an electronic signature, whether typed or drawn, constitutes a legally binding signature under the Electronic Signatures in Global and National Commerce Act (ESIGN) and the Uniform Electronic Transactions Act (UETA), with the same force and effect as a handwritten signature.</p>
+
+        <h4>10. Entire Agreement</h4>
+        <p>This Agreement, together with EVL's Terms of Service and Privacy Policy, constitutes the entire agreement between the parties and supersedes all prior discussions, negotiations, and understandings.</p>
+      </div>
+
+      <!-- AUTHORIZATION CHECKBOXES -->
+      <div class="auth-check">
+        <input type="checkbox" id="chk1">
+        <label for="chk1">I have read and understand the EVL Service Agreement and Limited Power of Attorney above. I authorize EVL to act as my agent for the transaction described in this Agreement.</label>
+      </div>
+      <div class="auth-check">
+        <input type="checkbox" id="chk2">
+        <label for="chk2">I understand that <strong>no deal will be finalized without my explicit approval</strong>, and I may revoke this authorization at any time in writing before deal execution.</label>
+      </div>
+      <div class="auth-check">
+        <input type="checkbox" id="chk3">
+        <label for="chk3">I agree to EVL's <strong><a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/terms.html" style="color:var(--blue);">Terms of Service</a></strong> and <strong><a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/privacy.html" style="color:var(--blue);">Privacy Policy</a></strong>. I confirm I am at least 18 years of age.</label>
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="form-section">
+      <div class="form-section-title">⑤ Electronic Signature</div>
+      <p style="color:var(--muted);font-size:16px;margin-bottom:16px;">Sign below using your mouse or touchscreen — or type your full name as your legal signature.</p>
+
+      <div style="display:flex;gap:10px;margin-bottom:14px;">
+        <button onclick="setSigMode('draw')" id="mDraw" style="flex:1;padding:12px;background:var(--blue);border:2px solid var(--blue);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">✍️ Draw Signature</button>
+        <button onclick="setSigMode('type')" id="mType" style="flex:1;padding:12px;background:var(--s2);border:2px solid var(--border);color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">⌨️ Type Signature</button>
+      </div>
+
+      <div id="drawMode">
+        <div class="sig-canvas-wrap">
+          <div class="sig-label-bar">
+            <span>Sign in the box below</span>
+            <button class="sig-clear" onclick="clearSig()">Clear</button>
+          </div>
+          <canvas id="sigPad" width="800" height="160"></canvas>
+        </div>
+      </div>
+
+      <div id="typeMode" style="display:none;">
+        <label style="display:block;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Type Your Full Legal Name</label>
+        <input class="finput" id="typedSig" placeholder="Your full name as signature" type="text" oninput="updateTypedSig()" style="font-size:20px;letter-spacing:1px;">
+        <div class="typed-sig" id="typedDisplay" style="display:none;margin-top:10px;"></div>
+      </div>
+
+      <div style="margin-top:16px;padding:14px 18px;background:rgba(0,200,83,.06);border:2px solid rgba(0,200,83,.2);font-size:15px;color:var(--muted);line-height:1.6;">
+        🔒 <strong style="color:#fff;">Legal notice:</strong> By signing below and clicking Submit, you are executing a legally binding agreement under the ESIGN Act and UETA. This signature has the same legal force as a handwritten signature. A timestamped copy will be emailed to you and retained by EVL for 7 years.
+      </div>
+    </div>
+
+  </div><!-- end agreement-form -->
+
+  <button class="submit-btn" onclick="submitAgreement()">⚡ Execute Agreement — Authorize EVL</button>
+  <div class="submit-note">🔒 SECURE · TIMESTAMPED · LEGALLY BINDING · EVL ACTS AS YOUR AGENT IMMEDIATELY UPON EXECUTION</div>
+
+  </div><!-- end agreementForm -->
+</div>
+
+<footer>
+  <div class="fl">◈ Express <span>Vehicle</span> Locators</div>
+  <div class="fc">© 2026 Express Vehicle Locators · All rights reserved · Texas, USA</div>
+</footer>
+
+<script>
+// YEARS
+(function(){
+  var s=document.getElementById('aYear');
+  var cy=new Date().getFullYear();
+  for(var y=cy+1;y>=2010;y--) s.appendChild(new Option(y,y));
+})();
+
+// SERVICES
+var selSvcs={};
+var prices={find:295,trade:195,finance:195,negotiate:295};
+var svcNames={find:'Find My Vehicle',trade:'Trade-In Service',finance:'Finance Shopping',negotiate:'Full Negotiation'};
+
+function toggleSvc(k,el){
+  selSvcs[k]=!selSvcs[k];
+  el.classList.toggle('on',selSvcs[k]);
+  var chk=document.getElementById('sc_'+k);
+  chk.textContent=selSvcs[k]?'✓':'';
+  updateFee();
+}
+
+function selectAll(){
+  ['find','trade','finance','negotiate'].forEach(function(k){
+    selSvcs[k]=true;
+    document.getElementById('s_'+k).classList.add('on');
+    document.getElementById('sc_'+k).textContent='✓';
+  });
+  updateFee();
+}
+
+function updateFee(){
+  var selected=Object.keys(selSvcs).filter(function(k){return selSvcs[k];});
+  var allFour=selected.length===4;
+  var alacarte=selected.reduce(function(s,k){return s+prices[k];},0);
+  var total=allFour?795:alacarte;
+  document.getElementById('svcCount').textContent=selected.length?selected.map(function(k){return svcNames[k];}).join(', '):'None selected';
+  document.getElementById('alacarte').textContent='$'+alacarte.toLocaleString();
+  document.getElementById('feeTotal').textContent='$'+total.toLocaleString()+(allFour?' (Complete Package)':'');
+}
+
+// SIGNATURE
+var sigMode='draw';
+var canvas=document.getElementById('sigPad');
+var ctx=canvas.getContext('2d');
+var drawing=false;
+ctx.strokeStyle='#2B84FE';
+ctx.lineWidth=2.5;
+ctx.lineCap='round';
+ctx.lineJoin='round';
+
+function getPos(e,canvas){
+  var r=canvas.getBoundingClientRect();
+  var scaleX=canvas.width/r.width;
+  var scaleY=canvas.height/r.height;
+  if(e.touches){
+    return{x:(e.touches[0].clientX-r.left)*scaleX,y:(e.touches[0].clientY-r.top)*scaleY};
+  }
+  return{x:(e.clientX-r.left)*scaleX,y:(e.clientY-r.top)*scaleY};
+}
+
+canvas.addEventListener('mousedown',function(e){drawing=true;var p=getPos(e,canvas);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+canvas.addEventListener('mousemove',function(e){if(!drawing)return;var p=getPos(e,canvas);ctx.lineTo(p.x,p.y);ctx.stroke();});
+canvas.addEventListener('mouseup',function(){drawing=false;});
+canvas.addEventListener('mouseleave',function(){drawing=false;});
+canvas.addEventListener('touchstart',function(e){e.preventDefault();drawing=true;var p=getPos(e,canvas);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+canvas.addEventListener('touchmove',function(e){e.preventDefault();if(!drawing)return;var p=getPos(e,canvas);ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+canvas.addEventListener('touchend',function(){drawing=false;});
+
+function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height);}
+
+function setSigMode(m){
+  sigMode=m;
+  document.getElementById('drawMode').style.display=m==='draw'?'block':'none';
+  document.getElementById('typeMode').style.display=m==='type'?'block':'none';
+  document.getElementById('mDraw').style.background=m==='draw'?'var(--blue)':'var(--s2)';
+  document.getElementById('mDraw').style.borderColor=m==='draw'?'var(--blue)':'var(--border)';
+  document.getElementById('mDraw').style.color=m==='draw'?'#fff':'var(--muted)';
+  document.getElementById('mType').style.background=m==='type'?'var(--blue)':'var(--s2)';
+  document.getElementById('mType').style.borderColor=m==='type'?'var(--blue)':'var(--border)';
+  document.getElementById('mType').style.color=m==='type'?'#fff':'var(--muted)';
+}
+
+function updateTypedSig(){
+  var v=document.getElementById('typedSig').value;
+  var d=document.getElementById('typedDisplay');
+  d.style.display=v?'block':'none';
+  d.textContent=v;
+}
+
+function hasSig(){
+  if(sigMode==='draw'){
+    var data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    for(var i=0;i<data.length;i+=4){if(data[i+3]>0)return true;}
+    return false;
+  }
+  return document.getElementById('typedSig').value.trim().length>2;
+}
+
+// SUBMIT
+function submitAgreement(){
+  var first=document.getElementById('aFirst').value.trim();
+  var last=document.getElementById('aLast').value.trim();
+  var email=document.getElementById('aEmail').value.trim();
+  var phone=document.getElementById('aPhone').value.trim();
+
+  if(!first||!last||!email||!phone){
+    alert('Please complete all required customer information fields.');return;
+  }
+  var selected=Object.keys(selSvcs).filter(function(k){return selSvcs[k];});
+  if(!selected.length){
+    alert('Please select at least one service.');return;
+  }
+  if(!document.getElementById('chk1').checked||!document.getElementById('chk2').checked||!document.getElementById('chk3').checked){
+    alert('Please check all three authorization boxes to continue.');return;
+  }
+  if(!hasSig()){
+    alert('Please provide your signature to execute the agreement.');return;
+  }
+
+  var allFour=selected.length===4;
+  var alacarte=selected.reduce(function(s,k){return s+prices[k];},0);
+  var total=allFour?795:alacarte;
+  var make=document.getElementById('aMake').value;
+  var model=document.getElementById('aModel').value;
+  var year=document.getElementById('aYear').value;
+  var color=document.getElementById('aColor').value;
+  var budget=document.getElementById('aBudget').value;
+  var ptype=document.getElementById('aPurchType').value;
+  var city=document.getElementById('aCity').value;
+  var state=document.getElementById('aState').value;
+  var zip=document.getElementById('aZip').value;
+  var sig=sigMode==='type'?document.getElementById('typedSig').value:'[Electronic Drawn Signature]';
+  var ts=new Date().toISOString();
+  var ref='EVL-'+new Date().getFullYear()+'-'+Math.floor(100000+Math.random()*900000);
+
+  var body=
+    'EVL SERVICE AGREEMENT — EXECUTED\n'+
+    '=====================================\n\n'+
+    'REFERENCE: '+ref+'\n'+
+    'TIMESTAMP: '+ts+'\n\n'+
+    'CUSTOMER\n'+
+    'Name: '+first+' '+last+'\n'+
+    'Email: '+email+'\n'+
+    'Phone: '+phone+'\n'+
+    (city?'Location: '+city+', '+(state||'')+(zip?' '+zip:'')+'\n':'')+'\n'+
+    'AUTHORIZED SERVICES\n'+
+    selected.map(function(k){return'• '+svcNames[k]+' ($'+prices[k]+')'}).join('\n')+'\n'+
+    'Total Fee: $'+total+(allFour?' (Complete Package — $185 saved)':'')+'\n\n'+
+    'VEHICLE REQUEST\n'+
+    'Vehicle: '+[year,make,model].filter(Boolean).join(' ')+'\n'+
+    (color?'Color: '+color+'\n':'')+
+    (budget?'Budget: '+budget+'\n':'')+
+    'Purchase Type: '+ptype.toUpperCase()+'\n\n'+
+    'SIGNATURE\n'+
+    'Method: '+(sigMode==='type'?'Typed':'Drawn')+'\n'+
+    'Signature: '+sig+'\n\n'+
+    'AUTHORIZATIONS CONFIRMED:\n'+
+    '✓ Agreement read and understood\n'+
+    '✓ No deal final without explicit approval\n'+
+    '✓ Terms of Service and Privacy Policy agreed\n\n'+
+    'This agreement is legally binding under ESIGN and UETA.';
+
+  var subject='EVL Service Agreement — '+first+' '+last+' — '+ref;
+  window.location.href='mailto:info@expressvehiclelocators.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+
+  document.getElementById('refNum').textContent=ref;
+  document.getElementById('agreementForm').style.display='none';
+  document.getElementById('successBox').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
