@@ -93,6 +93,14 @@
       "destination": "/public/financing.html"
     },
     {
+      "source": "/protection",
+      "destination": "/public/protection.html"
+    },
+    {
+      "source": "/protection.html",
+      "destination": "/public/protection.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/index.html"
     }
