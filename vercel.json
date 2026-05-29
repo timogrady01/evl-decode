@@ -85,6 +85,14 @@
       "destination": "/public/service-agreement.html"
     },
     {
+      "source": "/financing",
+      "destination": "/public/financing.html"
+    },
+    {
+      "source": "/financing.html",
+      "destination": "/public/financing.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/index.html"
     }
