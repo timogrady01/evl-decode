@@ -77,6 +77,14 @@
       "destination": "/public/terms.html"
     },
     {
+      "source": "/service-agreement",
+      "destination": "/public/service-agreement.html"
+    },
+    {
+      "source": "/service-agreement.html",
+      "destination": "/public/service-agreement.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/index.html"
     }
