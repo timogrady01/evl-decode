@@ -8,148 +8,155 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--s3:#1E1E23;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--orange:#FF6B00;--muted:#9B9BAA;--border:rgba(43,132,254,0.2);}
-body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--s3:#1E1E23;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--orange:#FF6B00;--text:#FFFFFF;--muted:#C8C8D8;--border:rgba(43,132,254,0.2);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;}
 
 nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 48px;height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
 .logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:#fff;text-decoration:none;}
 .logo span{color:var(--blue);}
 .nav-links{display:flex;gap:28px;align-items:center;}
-.nav-links a{color:#B0B0C0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a{color:#B8B8C8;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
 .nav-links a:hover,.nav-links a.active{color:#fff;}
 .nav-cta{background:var(--blue)!important;color:#fff!important;padding:10px 22px;}
 
 /* HERO */
-.hero{background:linear-gradient(160deg,#071220,var(--bg));padding:72px 48px 64px;text-align:center;border-bottom:2px solid var(--border);position:relative;overflow:hidden;}
-.hero::before{content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(0,200,83,0.06) 0%,transparent 70%);pointer-events:none;}
+.hero{background:linear-gradient(160deg,#071220,var(--bg));padding:64px 48px 56px;text-align:center;border-bottom:2px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(0,200,83,0.07) 0%,transparent 70%);pointer-events:none;}
 .hero-badge{display:inline-block;background:rgba(0,200,83,0.12);border:2px solid rgba(0,200,83,0.35);color:var(--green);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:24px;}
-.hero h1{font-family:"Barlow Condensed",sans-serif;font-size:72px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:.95;margin-bottom:20px;}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-size:68px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:.95;margin-bottom:18px;}
 .hero h1 span{color:var(--green);}
-.hero p{color:#C8C8D8;font-size:19px;max-width:620px;margin:0 auto 48px;line-height:1.7;}
+.hero p{color:var(--muted);font-size:19px;max-width:600px;margin:0 auto 44px;line-height:1.75;}
 
-/* BIG SAVINGS NUMBER */
-.big-save{display:inline-block;background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--green);padding:36px 60px;margin-bottom:48px;}
-.bs-num{font-family:"Barlow Condensed",sans-serif;font-size:96px;font-weight:900;color:var(--green);line-height:1;letter-spacing:-2px;}
-.bs-label{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--muted);margin-top:6px;}
+/* BIG NUMBER */
+.big-save{display:inline-block;background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--green);padding:32px 56px;margin-bottom:0;}
+.bs-num{font-family:"Barlow Condensed",sans-serif;font-size:88px;font-weight:900;color:var(--green);line-height:1;letter-spacing:-2px;}
+.bs-label{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--muted);margin-top:8px;}
 
 /* STAT STRIP */
-.stat-strip{background:var(--s1);border-top:2px solid var(--border);border-bottom:2px solid var(--border);padding:32px 48px;display:flex;justify-content:center;gap:64px;flex-wrap:wrap;}
+.stat-strip{background:var(--s1);border-bottom:2px solid var(--border);padding:28px 48px;display:flex;justify-content:center;gap:56px;flex-wrap:wrap;}
 .stat{text-align:center;}
-.stat-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;color:var(--gold);line-height:1;}
-.stat-lbl{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C8C8D8;margin-top:6px;}
+.stat-num{font-family:"Barlow Condensed",sans-serif;font-size:40px;font-weight:900;color:var(--gold);line-height:1;}
+.stat-lbl{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
 
-/* SECTION */
-.section{padding:72px 48px;}
-.section-inner{max-width:1100px;margin:0 auto;}
-.section-badge{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
-.section-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;margin-bottom:16px;}
-.section-title span{color:var(--blue);}
-.section-sub{color:#C8C8D8;font-size:18px;max-width:600px;line-height:1.7;margin-bottom:48px;}
+/* DRAWERS */
+.drawers{max-width:1100px;margin:0 auto;padding:32px 48px 40px;}
 
-/* SAVINGS CALCULATOR */
-.calc-wrap{background:var(--s1);border:2px solid var(--border);padding:40px;margin-bottom:16px;}
-.calc-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:28px;display:flex;align-items:center;gap:12px;}
-.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;}
-.calc-col{}
-.calc-col-title{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-.calc-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:17px;}
-.calc-row:last-child{border:none;}
-.calc-lbl{color:#C8C8D8;font-weight:600;font-size:16px;}
-.calc-val{font-weight:700;font-size:16px;}
-.calc-val.bad{color:var(--red);}
-.calc-val.good{color:var(--green);}
-.calc-val.warn{color:var(--orange);}
-.calc-total{background:rgba(0,0,0,.3);border:2px solid var(--border);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+.drawer{background:var(--s1);border:2px solid var(--border);margin-bottom:12px;}
+.drawer.active{border-color:var(--blue);}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;background:var(--s1);min-height:80px;}
+.drawer-left{display:flex;align-items:center;gap:16px;}
+.drawer-num{width:44px;height:44px;background:var(--s2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;color:var(--muted);flex-shrink:0;transition:all .2s;}
+.drawer.active .drawer-num{background:var(--green);border-color:var(--green);color:#000;}
+.drawer-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.drawer-sub{font-size:15px;color:var(--muted);margin-top:3px;}
+.drawer-right{display:flex;align-items:center;gap:14px;}
+.drawer-badge{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border:2px solid var(--border);color:var(--muted);}
+.drawer.active .drawer-badge{background:rgba(0,200,83,0.12);border-color:var(--green);color:var(--green);}
+.toggle-btn{background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;transition:color .2s;flex-shrink:0;}
+.toggle-btn:hover{color:#fff;}
+.drawer-body{padding:28px;border-top:2px solid var(--border);}
+
+/* SNAPSHOT STATS */
+.snap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.snap-stat{background:var(--s2);border:2px solid var(--border);padding:20px 16px;text-align:center;}
+.snap-num{font-family:"Barlow Condensed",sans-serif;font-size:34px;font-weight:900;color:var(--gold);line-height:1;}
+.snap-lbl{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:6px;line-height:1.4;}
+
+/* CALCULATOR */
+.calc-modes{display:flex;gap:10px;margin-bottom:24px;}
+.cmode{flex:1;padding:14px;background:var(--s2);border:2px solid var(--border);color:var(--muted);font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.cmode.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+.slider-wrap{margin-bottom:20px;}
+.sl-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.sl-name{font-size:15px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.sl-val{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;color:var(--gold);}
+input[type=range]{width:100%;height:6px;-webkit-appearance:none;background:var(--s3);border-radius:3px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;background:var(--blue);border-radius:50%;cursor:pointer;}
+.calc-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
+.calc-col-title{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.crow{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:16px;}
+.crow:last-child{border:none;}
+.crow-lbl{color:var(--muted);font-weight:600;}
+.crow-val{font-weight:700;font-size:17px;}
+.vbad{color:var(--red);}.vwarn{color:var(--orange);}.vgood{color:var(--green);}
+.calc-total{background:rgba(0,0,0,.3);border:2px solid var(--border);padding:18px 22px;display:flex;justify-content:space-between;align-items:center;margin-top:16px;}
 .ct-lbl{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-.ct-val{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;}
-.ct-val.red{color:var(--red);}
-.ct-val.green{color:var(--green);}
-.save-banner{background:linear-gradient(90deg,rgba(0,200,83,.12),rgba(0,200,83,.06));border:2px solid rgba(0,200,83,.3);padding:20px 24px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
-.sb-text{font-size:16px;font-weight:600;color:var(--muted);}
-.sb-text strong{color:#fff;}
-.sb-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;color:var(--green);}
+.ct-val{font-family:"Barlow Condensed",sans-serif;font-size:34px;font-weight:900;}
+.save-row{background:linear-gradient(90deg,rgba(0,200,83,.1),rgba(0,200,83,.05));border:2px solid rgba(0,200,83,.25);padding:20px 24px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+.save-row-txt{font-size:17px;font-weight:600;color:var(--muted);}
+.save-row-txt strong{color:#fff;display:block;font-size:18px;margin-bottom:2px;}
+.save-num{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;color:var(--green);}
 
-/* SLIDER */
-.slider-wrap{margin-bottom:24px;}
-.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.sl-name{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
-.sl-val{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;color:var(--gold);}
-input[type=range]{width:100%;height:6px;-webkit-appearance:none;appearance:none;background:var(--s3);border-radius:3px;outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:var(--blue);border-radius:50%;cursor:pointer;}
+/* STORIES */
+.stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.story{background:var(--s2);border:2px solid var(--border);padding:26px;position:relative;overflow:hidden;}
+.story::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),transparent);}
+.story-save{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;color:var(--green);line-height:1;margin-bottom:4px;}
+.story-veh{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.story-rows{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.sr{display:flex;justify-content:space-between;font-size:15px;}
+.sr-lbl{color:var(--muted);}
+.sr-val{font-weight:700;color:var(--green);}
+.story-q{font-size:15px;color:var(--muted);line-height:1.7;font-style:italic;border-top:1px solid var(--border);padding-top:14px;}
+.story-name{font-size:14px;font-weight:700;color:#fff;margin-top:8px;}
+.story-loc{font-size:13px;color:var(--muted);}
 
-/* REAL SAVINGS STORIES */
-.stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:0;}
-.story-card{background:var(--s1);border:2px solid var(--border);padding:28px;position:relative;overflow:hidden;}
-.story-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),transparent);}
-.story-save{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;color:var(--green);line-height:1;margin-bottom:4px;}
-.story-vehicle{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
-.story-breakdown{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
-.sb-row{display:flex;justify-content:space-between;font-size:16px;}
-.sb-row-lbl{color:#C8C8D8;font-size:15px;}
-.sb-row-val{font-weight:700;}
-.sb-row-val.g{color:var(--green);}
-.story-quote{font-size:16px;color:#C8C8D8;line-height:1.7;font-style:italic;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
-.story-author{font-size:13px;font-weight:700;color:#fff;margin-top:8px;}
-.story-detail{font-size:12px;color:var(--muted);}
+/* BUCKETS */
+.buckets{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.bucket{background:var(--s2);border:2px solid var(--border);padding:28px;transition:all .25s;}
+.bucket:hover{border-color:var(--blue);}
+.bkt-icon{font-size:36px;margin-bottom:14px;}
+.bkt-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.bkt-range{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;color:var(--green);margin-bottom:14px;}
+.bkt-range span{font-size:16px;color:var(--muted);font-weight:600;}
+.bkt-items{display:flex;flex-direction:column;gap:8px;}
+.bi{display:flex;align-items:flex-start;gap:12px;font-size:16px;color:var(--muted);line-height:1.6;}
+.bi::before{content:"✓";color:var(--green);font-weight:900;flex-shrink:0;margin-top:2px;}
 
-/* BUCKET SAVINGS */
-.buckets-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-.bucket{background:var(--s1);border:2px solid var(--border);padding:28px;transition:all .25s;}
-.bucket:hover{border-color:var(--blue);transform:translateY(-3px);}
-.bucket-icon{font-size:36px;margin-bottom:14px;}
-.bucket-title{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
-.bucket-save{font-family:"Barlow Condensed",sans-serif;font-size:34px;font-weight:900;color:var(--green);margin-bottom:14px;}
-.bucket-save span{font-size:17px;color:#C8C8D8;font-weight:600;}
-.bucket-items{display:flex;flex-direction:column;gap:6px;}
-.bi{display:flex;align-items:flex-start;gap:12px;font-size:17px;color:#C8C8D8;line-height:1.6;}
-.bi::before{content:"✓";color:var(--green);font-weight:900;flex-shrink:0;}
+/* LEASE */
+.lease-box{background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--gold);padding:32px;}
+.lb-title{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:6px;}
+.lb-sub{color:var(--muted);font-size:16px;margin-bottom:24px;}
+.lb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.lb-stat{background:rgba(0,0,0,.3);border:2px solid rgba(245,200,66,.2);padding:18px;}
+.lb-stat-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.lb-stat-val{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;color:var(--gold);}
+.lb-stat-sub{font-size:13px;color:var(--muted);margin-top:4px;font-weight:600;}
+.lb-note{font-size:16px;color:var(--muted);line-height:1.75;background:rgba(0,0,0,.2);padding:16px 20px;border-left:3px solid var(--gold);}
 
-/* COMPARISON TABLE */
-.comp-table{width:100%;border-collapse:collapse;margin-top:0;}
-.comp-table th{padding:16px 20px;font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;text-align:center;border-bottom:2px solid var(--border);}
-.comp-table th:first-child{text-align:left;color:var(--muted);}
-.comp-table th.evl{color:var(--blue);background:rgba(43,132,254,.06);}
-.comp-table td{padding:15px 20px;font-size:16px;font-weight:600;border-bottom:1px solid var(--border);text-align:center;}
-.comp-table td:first-child{text-align:left;color:#C8C8D8;}
-.comp-table td.evl{background:rgba(43,132,254,.04);}
-.comp-table tr:last-child td{border:none;}
-.yes{color:var(--green);font-size:18px;font-weight:900;}
-.no{color:var(--red);font-size:18px;}
-.maybe{color:var(--gold);font-size:14px;font-weight:700;}
+/* COMPARISON */
+.comp{width:100%;border-collapse:collapse;}
+.comp th{padding:16px 18px;font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;text-align:center;border-bottom:2px solid var(--border);}
+.comp th:first-child{text-align:left;color:var(--muted);}
+.comp th.evl{color:var(--blue);background:rgba(43,132,254,.06);}
+.comp td{padding:14px 18px;font-size:16px;font-weight:600;border-bottom:1px solid var(--border);text-align:center;}
+.comp td:first-child{text-align:left;color:var(--muted);}
+.comp td.evl{background:rgba(43,132,254,.04);}
+.comp tr:last-child td{border:none;}
+.yes{color:var(--green);font-size:20px;font-weight:900;}
+.no{color:var(--red);font-size:20px;}
+.maybe{color:var(--gold);font-size:15px;font-weight:700;}
 
-/* LEASE SAVINGS */
-.lease-box{background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--gold);padding:36px;margin-top:0;}
-.lb-title{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;color:var(--gold);}
-.lb-sub{color:var(--muted);font-size:16px;margin-bottom:28px;}
-.lb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
-.lb-stat{background:rgba(0,0,0,.3);border:2px solid rgba(245,200,66,.2);padding:18px 20px;}
-.lb-stat-lbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-.lb-stat-val{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:900;color:var(--gold);}
-.lb-stat-sub{font-size:12px;color:var(--muted);margin-top:4px;font-weight:600;}
-.lb-note{font-size:17px;color:#C8C8D8;line-height:1.7;background:rgba(0,0,0,.2);padding:16px 20px;}
-
-/* CTA SECTION */
-.cta-section{background:linear-gradient(135deg,#071828,var(--bg));border-top:2px solid var(--border);padding:80px 48px;text-align:center;}
-.cta-title{font-family:"Barlow Condensed",sans-serif;font-size:60px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:1;margin-bottom:16px;}
+/* CTA */
+.cta-wrap{max-width:1100px;margin:0 auto;padding:0 48px 60px;}
+.cta-box{background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--blue);padding:48px;text-align:center;}
+.cta-title{font-family:"Barlow Condensed",sans-serif;font-size:56px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:1;margin-bottom:14px;}
 .cta-title span{color:var(--green);}
-.cta-sub{color:#C8C8D8;font-size:19px;max-width:560px;margin:0 auto 40px;line-height:1.7;}
+.cta-sub{color:var(--muted);font-size:19px;max-width:540px;margin:0 auto 36px;line-height:1.75;}
 .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-.btn-primary{background:var(--blue);color:#fff;padding:20px 48px;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .2s;display:inline-block;border:none;cursor:pointer;}
-.btn-primary:hover{background:var(--blue2);}
-.btn-secondary{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.25);padding:20px 48px;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .2s;display:inline-block;}
-.btn-secondary:hover{border-color:#fff;}
+.btn-p{background:var(--blue);color:#fff;padding:20px 48px;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-block;}
+.btn-p:hover{background:var(--blue2);}
+.btn-s{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.25);padding:20px 48px;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .2s;display:inline-block;}
+.btn-s:hover{border-color:#fff;}
 
 footer{background:var(--s1);border-top:2px solid var(--border);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;}
 .fl{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;}
 .fl span{color:var(--blue);}
-.fc{color:var(--muted);font-size:13px;}
+.fc{color:var(--muted);font-size:14px;}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s;}
-.reveal.visible{opacity:1;transform:none;}
-
-@media(max-width:900px){.stories-grid,.buckets-grid,.lb-grid{grid-template-columns:1fr;}.calc-grid{grid-template-columns:1fr;}.stat-strip{gap:32px;}.hero h1{font-size:52px;}.cta-title{font-size:42px;}}
-@media(max-width:600px){nav{padding:0 16px;}.hero{padding:48px 20px 44px;}.section{padding:48px 20px;}.stat-strip{padding:24px 20px;}.cta-section{padding:56px 20px;}footer{flex-direction:column;gap:12px;text-align:center;}}
+@media(max-width:900px){.snap-grid{grid-template-columns:repeat(3,1fr);}.stories-grid,.buckets,.lb-stats,.calc-cols{grid-template-columns:1fr;}.hero h1{font-size:48px;}.drawers{padding:20px;}.cta-wrap{padding:0 20px 40px;}}
+@media(max-width:600px){nav{padding:0 16px;}.hero{padding:48px 20px 44px;}.stat-strip{gap:24px;padding:20px;}footer{flex-direction:column;gap:10px;text-align:center;}.snap-grid{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -167,320 +174,369 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:32px 48px
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-badge">💰 Real Numbers. Real Savings. Zero Commission.</div>
   <h1>See Exactly<br>How Much You <span>Save</span></h1>
-  <p>EVL customers save an average of $13,409 per transaction. See the real breakdown — purchase savings, lease savings, trade-in maximization, and finance savings — all in one place.</p>
+  <p>EVL customers save an average of $13,409 per transaction. See the real breakdown — purchase, lease, finance, and fee savings — all in one place.</p>
   <div class="big-save">
-    <div class="bs-num" id="totalSaveNum">$13,409</div>
+    <div class="bs-num">$13,409</div>
     <div class="bs-label">Average Total Savings Per EVL Customer</div>
   </div>
 </section>
 
-<!-- STAT STRIP -->
 <div class="stat-strip">
-  <div class="stat reveal"><div class="stat-num">$8,200</div><div class="stat-lbl">Avg Purchase Savings</div></div>
-  <div class="stat reveal"><div class="stat-num">$2,940</div><div class="stat-lbl">Avg Lease Savings (36mo)</div></div>
-  <div class="stat reveal"><div class="stat-num">$1,847</div><div class="stat-lbl">Avg Finance Savings</div></div>
-  <div class="stat reveal"><div class="stat-num">$422</div><div class="stat-lbl">Avg Fee Elimination</div></div>
-  <div class="stat reveal"><div class="stat-num">98%</div><div class="stat-lbl">Customer Satisfaction</div></div>
+  <div class="stat"><div class="stat-num">$8,200</div><div class="stat-lbl">Avg Purchase Savings</div></div>
+  <div class="stat"><div class="stat-num">$2,940</div><div class="stat-lbl">Avg Lease Savings (36mo)</div></div>
+  <div class="stat"><div class="stat-num">$1,847</div><div class="stat-lbl">Avg Finance Savings</div></div>
+  <div class="stat"><div class="stat-num">$422</div><div class="stat-lbl">Avg Fee Elimination</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-lbl">Customer Satisfaction</div></div>
 </div>
 
-<!-- SAVINGS CALCULATOR -->
-<section class="section" style="background:var(--s1);border-bottom:2px solid var(--border);">
-  <div class="section-inner">
-    <div class="section-badge reveal">💰 Interactive Calculator</div>
-    <h2 class="section-title reveal">Calculate Your <span>Savings</span></h2>
-    <p class="section-sub reveal">Adjust the sliders to match your vehicle and see exactly what EVL saves you.</p>
+<div class="drawers">
 
-    <div class="calc-wrap reveal">
-      <div class="calc-title">⚡ Your Personalized Savings Estimate</div>
-
-      <div style="margin-bottom:28px;">
-        <div class="slider-wrap">
-          <div class="slider-label">
-            <span class="sl-name">Vehicle Price</span>
-            <span class="sl-val" id="priceVal">$42,000</span>
-          </div>
-          <input type="range" id="priceSlider" min="15000" max="150000" value="42000" step="1000" oninput="updateCalc()">
-        </div>
-        <div class="slider-wrap" id="leaseSliderWrap">
-          <div class="slider-label">
-            <span class="sl-name">Lease Term (months)</span>
-            <span class="sl-val" id="termVal">36 months</span>
-          </div>
-          <input type="range" id="termSlider" min="24" max="48" value="36" step="12" oninput="updateCalc()">
-        </div>
-        <div style="display:flex;gap:10px;margin-top:8px;">
-          <button onclick="setMode('buy')" id="modeBuy" style="flex:1;padding:12px;background:var(--blue);border:2px solid var(--blue);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">🚗 Purchase</button>
-          <button onclick="setMode('lease')" id="modeLease" style="flex:1;padding:12px;background:var(--s2);border:2px solid var(--border);color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">📋 Lease</button>
-        </div>
-      </div>
-
-      <div class="calc-grid">
-        <div class="calc-col">
-          <div class="calc-col-title">❌ Without EVL — Dealer Direct</div>
-          <div class="calc-row"><span class="calc-lbl">MSRP / Asking Price</span><span class="calc-val" id="c_msrp">$42,000</span></div>
-          <div class="calc-row"><span class="calc-lbl">Market Adjustment Fee</span><span class="calc-val bad" id="c_adj">+$2,100</span></div>
-          <div class="calc-row"><span class="calc-lbl">Dealer Add-On Package</span><span class="calc-val bad" id="c_addon">+$1,890</span></div>
-          <div class="calc-row"><span class="calc-lbl">Doc & Title Fees</span><span class="calc-val warn" id="c_doc">+$895</span></div>
-          <div class="calc-row"><span class="calc-lbl">Finance Rate (Dealer)</span><span class="calc-val warn" id="c_rate">6.75% APR</span></div>
-          <div class="calc-row" id="c_morow"><span class="calc-lbl">Monthly Payment</span><span class="calc-val bad" id="c_mo">$742/mo</span></div>
-          <div class="calc-total">
-            <span class="ct-lbl">Total Cost</span>
-            <span class="ct-val red" id="c_total">$46,885</span>
-          </div>
-        </div>
-        <div class="calc-col">
-          <div class="calc-col-title">✅ With EVL — Negotiated Deal</div>
-          <div class="calc-row"><span class="calc-lbl">EVL Negotiated Price</span><span class="calc-val good" id="e_price">$38,640</span></div>
-          <div class="calc-row"><span class="calc-lbl">Market Adjustment</span><span class="calc-val good" id="e_adj">$0 — Eliminated ✓</span></div>
-          <div class="calc-row"><span class="calc-lbl">Dealer Add-Ons</span><span class="calc-val good" id="e_addon">$0 — Eliminated ✓</span></div>
-          <div class="calc-row"><span class="calc-lbl">Doc & Title Fees</span><span class="calc-val good" id="e_doc">$150 — Capped ✓</span></div>
-          <div class="calc-row"><span class="calc-lbl">Finance Rate (EVL)</span><span class="calc-val good" id="e_rate">4.25% APR ✓</span></div>
-          <div class="calc-row" id="e_morow"><span class="calc-lbl">Monthly Payment</span><span class="calc-val good" id="e_mo">$589/mo</span></div>
-          <div class="calc-total">
-            <span class="ct-lbl">Total Cost</span>
-            <span class="ct-val green" id="e_total">$38,790</span>
-          </div>
-        </div>
-      </div>
-      <div class="save-banner">
+  <!-- DRAWER 1: SNAPSHOT -->
+  <div class="drawer active" id="d1">
+    <div class="drawer-head">
+      <div class="drawer-left">
+        <div class="drawer-num">1</div>
         <div>
-          <div class="sb-text"><strong>Your Total EVL Savings</strong> — purchase price + fee elimination + better financing</div>
-          <div class="sb-text" style="margin-top:4px;">EVL Service Fee: <strong style="color:var(--gold);">$295 flat</strong> · Net savings after fee: <span id="netSave" style="color:var(--green);font-weight:700;">$7,800</span></div>
+          <div class="drawer-title">Your Savings Snapshot</div>
+          <div class="drawer-sub">Where every dollar of savings comes from</div>
         </div>
-        <div class="sb-num" id="totalSave">$8,095</div>
+      </div>
+      <div class="drawer-right">
+        <span class="drawer-badge">OPEN</span>
+        <button class="toggle-btn" onclick="toggleD(1)">▲</button>
+      </div>
+    </div>
+    <div class="drawer-body" id="db1">
+      <div class="snap-grid">
+        <div class="snap-stat"><div class="snap-num">$3K–$8K</div><div class="snap-lbl">Purchase Price Below Invoice</div></div>
+        <div class="snap-stat"><div class="snap-num">$1.5K–$4K</div><div class="snap-lbl">Dealer Fees Eliminated</div></div>
+        <div class="snap-stat"><div class="snap-num">$1.5K–$4.5K</div><div class="snap-lbl">Better Finance Rate</div></div>
+        <div class="snap-stat"><div class="snap-num">$80–$220<span style="font-size:18px;">/mo</span></div><div class="snap-lbl">Lease Payment Reduction</div></div>
+        <div class="snap-stat"><div class="snap-num" style="color:var(--green);">$295</div><div class="snap-lbl">EVL Flat Fee — All In</div></div>
+      </div>
+      <div style="margin-top:18px;padding:16px 20px;background:rgba(0,200,83,.06);border:2px solid rgba(0,200,83,.2);font-size:16px;color:var(--muted);line-height:1.75;">
+        💡 <strong style="color:#fff;">The math is simple:</strong> EVL charges $295 flat. The average customer saves $13,409. That's a <strong style="color:var(--green);">45x return</strong> on your investment — in a single transaction.
       </div>
     </div>
   </div>
-</section>
 
-<!-- REAL SAVINGS STORIES -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-badge reveal">Real Customers. Real Numbers.</div>
-    <h2 class="section-title reveal">EVL <span>Success Stories</span></h2>
-    <p class="section-sub reveal">These are verified savings from real EVL customers. Names abbreviated for privacy.</p>
-    <div class="stories-grid">
-
-      <div class="story-card reveal">
-        <div class="story-save">$11,240</div>
-        <div class="story-vehicle">2026 Toyota Camry XSE · Plano, TX</div>
-        <div class="story-breakdown">
-          <div class="sb-row"><span class="sb-row-lbl">Below dealer asking price</span><span class="sb-row-val g">-$4,200</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Add-ons eliminated</span><span class="sb-row-val g">-$1,890</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Doc fee reduction</span><span class="sb-row-val g">-$745</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Finance savings (60mo)</span><span class="sb-row-val g">-$4,405</span></div>
+  <!-- DRAWER 2: CALCULATOR -->
+  <div class="drawer" id="d2">
+    <div class="drawer-head">
+      <div class="drawer-left">
+        <div class="drawer-num">2</div>
+        <div>
+          <div class="drawer-title">Calculate Your Savings</div>
+          <div class="drawer-sub">Adjust sliders to match your vehicle — see your real numbers</div>
         </div>
-        <div class="story-quote">"I had already spent 3 weekends at dealerships. EVL found my exact Camry XSE with the Premium Package in midnight black, 400 miles away, and delivered it in 2 days."</div>
-        <div class="story-author">Michael R.</div>
-        <div class="story-detail">Business Owner · Plano, TX</div>
       </div>
-
-      <div class="story-card reveal">
-        <div class="story-save">$6,840</div>
-        <div class="story-vehicle">2026 Mercedes GLE450 · Lease · Dallas, TX</div>
-        <div class="story-breakdown">
-          <div class="sb-row"><span class="sb-row-lbl">Monthly savings vs dealer</span><span class="sb-row-val g">-$190/mo</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Over 36-month lease</span><span class="sb-row-val g">-$6,840</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Money factor negotiated</span><span class="sb-row-val g">✓ .00142</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Acquisition fee waived</span><span class="sb-row-val g">-$895</span></div>
-        </div>
-        <div class="story-quote">"The Mercedes dealer quoted me $890/month. EVL got me $700/month on the same vehicle with better terms. That's $6,840 I kept in my pocket."</div>
-        <div class="story-author">Sandra L.</div>
-        <div class="story-detail">Attorney · Dallas, TX</div>
+      <div class="drawer-right">
+        <span class="drawer-badge">INTERACTIVE</span>
+        <button class="toggle-btn" onclick="toggleD(2)">▼</button>
       </div>
-
-      <div class="story-card reveal">
-        <div class="story-save">$14,100</div>
-        <div class="story-vehicle">2025 Ford F-150 Raptor · McKinney, TX</div>
-        <div class="story-breakdown">
-          <div class="sb-row"><span class="sb-row-lbl">Below MSRP</span><span class="sb-row-val g">-$5,800</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Regional incentive stacked</span><span class="sb-row-val g">-$2,500</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Dealer add-ons removed</span><span class="sb-row-val g">-$2,400</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Finance savings (72mo)</span><span class="sb-row-val g">-$3,400</span></div>
-        </div>
-        <div class="story-quote">"I'm an engineer. I research everything. EVL still beat my best number by $5,800 and found a regional incentive I had no idea existed. Unreal."</div>
-        <div class="story-author">David K.</div>
-        <div class="story-detail">Engineer · McKinney, TX</div>
-      </div>
-
-      <div class="story-card reveal">
-        <div class="story-save">$9,350</div>
-        <div class="story-vehicle">2026 BMW X5 xDrive40i · Frisco, TX</div>
-        <div class="story-breakdown">
-          <div class="sb-row"><span class="sb-row-lbl">Below dealer asking</span><span class="sb-row-val g">-$3,900</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Market adjustment removed</span><span class="sb-row-val g">-$2,000</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Finance savings (60mo)</span><span class="sb-row-val g">-$2,850</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Extended warranty (EVL rate)</span><span class="sb-row-val g">-$600</span></div>
-        </div>
-        <div class="story-quote">"The BMW dealer had a $2,000 market adjustment on every X5. EVL removed it entirely and found me one with the M Sport Package I wanted at a lower price."</div>
-        <div class="story-author">Jennifer M.</div>
-        <div class="story-detail">Physician · Frisco, TX</div>
-      </div>
-
-      <div class="story-card reveal">
-        <div class="story-save">$7,920</div>
-        <div class="story-vehicle">2026 Toyota Tacoma TRD Pro · Allen, TX</div>
-        <div class="story-breakdown">
-          <div class="sb-row"><span class="sb-row-lbl">Below MSRP</span><span class="sb-row-val g">-$3,200</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">TRD Pro allocation found</span><span class="sb-row-val g">✓ In-transit</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Add-ons eliminated</span><span class="sb-row-val g">-$1,720</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Finance savings (60mo)</span><span class="sb-row-val g">-$3,000</span></div>
-        </div>
-        <div class="story-quote">"TRD Pros were impossible to find. EVL located an in-transit unit, held it for me, and I paid $3,200 below what dealers were asking. Delivered to my door."</div>
-        <div class="story-author">Chris T.</div>
-        <div class="story-detail">Contractor · Allen, TX</div>
-      </div>
-
-      <div class="story-card reveal">
-        <div class="story-save">$18,400</div>
-        <div class="story-vehicle">2025 Porsche Cayenne S · Prosper, TX</div>
-        <div class="story-breakdown">
-          <div class="sb-row"><span class="sb-row-lbl">Below MSRP</span><span class="sb-row-val g">-$8,200</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Dealer add-ons removed</span><span class="sb-row-val g">-$3,800</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Out-of-state arbitrage</span><span class="sb-row-val g">-$3,900</span></div>
-          <div class="sb-row"><span class="sb-row-lbl">Finance savings (60mo)</span><span class="sb-row-val g">-$2,500</span></div>
-        </div>
-        <div class="story-quote">"My local Porsche dealer wouldn't budge. EVL found the same Cayenne S in another state for $8,200 less with zero add-ons. Transported in 3 days."</div>
-        <div class="story-author">Robert A.</div>
-        <div class="story-detail">Real Estate Developer · Prosper, TX</div>
-      </div>
-
     </div>
-  </div>
-</section>
-
-<!-- SAVINGS BY BUCKET -->
-<section class="section" style="background:var(--s1);border-top:2px solid var(--border);border-bottom:2px solid var(--border);">
-  <div class="section-inner">
-    <div class="section-badge reveal">Where The Savings Come From</div>
-    <h2 class="section-title reveal">Every <span>Savings Bucket</span></h2>
-    <p class="section-sub reveal">EVL attacks your deal from every angle simultaneously. Here's exactly where the money comes from.</p>
-    <div class="buckets-grid reveal">
-      <div class="bucket">
-        <div class="bucket-icon">🎯</div>
-        <div class="bucket-title">Purchase Price</div>
-        <div class="bucket-save">$3,000 – $8,000 <span>avg savings</span></div>
-        <div class="bucket-items">
-          <div class="bi">We negotiate below invoice — not just below MSRP</div>
-          <div class="bi">We identify aged inventory (45+ days) where dealers are motivated</div>
-          <div class="bi">We use competing dealer leverage to drive price down</div>
-          <div class="bi">We stack all available OEM rebates and regional incentives</div>
+    <div class="drawer-body" id="db2" style="display:none;">
+      <div class="calc-modes">
+        <button class="cmode on" id="cmBuy" onclick="setCalcMode('buy')">🚗 Purchase / Finance</button>
+        <button class="cmode" id="cmLease" onclick="setCalcMode('lease')">📋 Lease</button>
+      </div>
+      <div class="slider-wrap">
+        <div class="sl-row"><span class="sl-name">Vehicle Price</span><span class="sl-val" id="slPriceVal">$42,000</span></div>
+        <input type="range" id="slPrice" min="15000" max="150000" value="42000" step="1000" oninput="updateCalc()">
+      </div>
+      <div class="slider-wrap" id="termWrap" style="display:none;">
+        <div class="sl-row"><span class="sl-name">Lease Term</span><span class="sl-val" id="slTermVal">36 months</span></div>
+        <input type="range" id="slTerm" min="24" max="48" value="36" step="12" oninput="updateCalc()">
+      </div>
+      <div class="calc-cols">
+        <div>
+          <div class="calc-col-title">❌ Without EVL — Dealer Direct</div>
+          <div class="crow"><span class="crow-lbl">Asking Price</span><span class="crow-val" id="c_ask">$42,000</span></div>
+          <div class="crow"><span class="crow-lbl">Market Adjustment</span><span class="crow-val vbad" id="c_adj">+$2,100</span></div>
+          <div class="crow"><span class="crow-lbl">Dealer Add-Ons</span><span class="crow-val vbad" id="c_add">+$1,890</span></div>
+          <div class="crow"><span class="crow-lbl">Doc & Title Fees</span><span class="crow-val vwarn" id="c_doc">+$895</span></div>
+          <div class="crow"><span class="crow-lbl">Finance / Lease Rate</span><span class="crow-val vwarn" id="c_rate">6.75% APR</span></div>
+          <div class="crow"><span class="crow-lbl">Monthly Payment</span><span class="crow-val vbad" id="c_mo">$742/mo</span></div>
+          <div class="calc-total"><span class="ct-lbl">True Cost</span><span class="ct-val" style="color:var(--red);" id="c_tot">$46,885</span></div>
+        </div>
+        <div>
+          <div class="calc-col-title">✅ With EVL — Negotiated Deal</div>
+          <div class="crow"><span class="crow-lbl">EVL Negotiated Price</span><span class="crow-val vgood" id="e_ask">$38,640</span></div>
+          <div class="crow"><span class="crow-lbl">Market Adjustment</span><span class="crow-val vgood" id="e_adj">$0 Eliminated ✓</span></div>
+          <div class="crow"><span class="crow-lbl">Dealer Add-Ons</span><span class="crow-val vgood" id="e_add">$0 Eliminated ✓</span></div>
+          <div class="crow"><span class="crow-lbl">Doc & Title Fees</span><span class="crow-val vgood" id="e_doc">$150 Capped ✓</span></div>
+          <div class="crow"><span class="crow-lbl">Finance / Lease Rate</span><span class="crow-val vgood" id="e_rate">4.25% APR ✓</span></div>
+          <div class="crow"><span class="crow-lbl">Monthly Payment</span><span class="crow-val vgood" id="e_mo">$589/mo</span></div>
+          <div class="calc-total"><span class="ct-lbl">True Cost</span><span class="ct-val" style="color:var(--green);" id="e_tot">$38,790</span></div>
         </div>
       </div>
-      <div class="bucket">
-        <div class="bucket-icon">🚫</div>
-        <div class="bucket-title">Fee Elimination</div>
-        <div class="bucket-save">$1,500 – $4,000 <span>avg savings</span></div>
-        <div class="bucket-items">
-          <div class="bi">Market adjustment fees — eliminated entirely</div>
-          <div class="bi">Dealer add-on packages — paint protection, fabric guard, nitrogen removed</div>
-          <div class="bi">Doc fees capped at regional average ($150–$250)</div>
-          <div class="bi">F&I office upsells at fair market rates vs 300% dealer markup</div>
+      <div class="save-row">
+        <div>
+          <div class="save-row-txt"><strong>Your Total EVL Savings</strong></div>
+          <div class="save-row-txt">After $295 EVL fee: <span id="netSave" style="color:var(--green);font-weight:700;">$7,800</span></div>
         </div>
-      </div>
-      <div class="bucket">
-        <div class="bucket-icon">💳</div>
-        <div class="bucket-title">Finance Rate</div>
-        <div class="bucket-save">$1,500 – $4,500 <span>avg savings</span></div>
-        <div class="bucket-items">
-          <div class="bi">We shop your deal to 12+ credit unions and banks</div>
-          <div class="bi">Average EVL rate is 2–3% lower than dealer finance</div>
-          <div class="bi">On a $45k loan at 60 months — saves $2,400–$4,500</div>
-          <div class="bi">No dealer reserve (markup) on the rate</div>
-        </div>
-      </div>
-      <div class="bucket">
-        <div class="bucket-icon">📋</div>
-        <div class="bucket-title">Lease Terms</div>
-        <div class="bucket-save">$80 – $220/mo <span>lease savings</span></div>
-        <div class="bucket-items">
-          <div class="bi">We negotiate money factor (the lease APR) to base rate</div>
-          <div class="bi">We maximize residual value to lower your payment</div>
-          <div class="bi">Acquisition fees waived or reduced</div>
-          <div class="bi">$80–$220/mo savings = $2,880–$7,920 over 36 months</div>
-        </div>
+        <div class="save-num" id="totalSave">$8,095</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- LEASE SAVINGS DEEP DIVE -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-badge reveal">Lease Intelligence</div>
-    <h2 class="section-title reveal">The Lease <span>Advantage</span></h2>
-    <p class="section-sub reveal">Most people overpay on leases by $100–$200/month because dealers markup the money factor. EVL knows the real numbers.</p>
-    <div class="lease-box reveal">
-      <div class="lb-title">💰 Lease Savings Example — 2026 Mercedes GLE450</div>
-      <div class="lb-sub">36-month lease · $5,000 down · 10,000 miles/year</div>
-      <div class="lb-grid">
-        <div class="lb-stat">
-          <div class="lb-stat-lbl">Dealer Money Factor</div>
-          <div class="lb-stat-val">.00189</div>
-          <div class="lb-stat-sub">= 4.54% APR equivalent</div>
-        </div>
-        <div class="lb-stat">
-          <div class="lb-stat-lbl">EVL Money Factor</div>
-          <div class="lb-stat-val">.00142</div>
-          <div class="lb-stat-sub">= 3.41% APR equivalent</div>
-        </div>
-        <div class="lb-stat">
-          <div class="lb-stat-lbl">Monthly Savings</div>
-          <div class="lb-stat-val" style="color:var(--green);">$190/mo</div>
-          <div class="lb-stat-sub">= $6,840 over 36 months</div>
+  <!-- DRAWER 3: STORIES -->
+  <div class="drawer" id="d3">
+    <div class="drawer-head">
+      <div class="drawer-left">
+        <div class="drawer-num">3</div>
+        <div>
+          <div class="drawer-title">Real Customer Stories</div>
+          <div class="drawer-sub">Verified savings from real EVL customers</div>
         </div>
       </div>
-      <div class="lb-note">⚡ <strong>Why this matters:</strong> Dealers are allowed to markup the money factor (lease APR) and keep the difference as profit. Most customers have no idea this is happening. EVL knows the base money factor published by the manufacturer and negotiates down to it — or below with volume leverage. This single negotiation saves most lease customers $80–$220/month.</div>
+      <div class="drawer-right">
+        <span class="drawer-badge">6 STORIES</span>
+        <button class="toggle-btn" onclick="toggleD(3)">▼</button>
+      </div>
+    </div>
+    <div class="drawer-body" id="db3" style="display:none;">
+      <div class="stories-grid">
+        <div class="story">
+          <div class="story-save">$11,240</div>
+          <div class="story-veh">2026 Toyota Camry XSE · Plano, TX</div>
+          <div class="story-rows">
+            <div class="sr"><span class="sr-lbl">Below dealer asking</span><span class="sr-val">-$4,200</span></div>
+            <div class="sr"><span class="sr-lbl">Add-ons eliminated</span><span class="sr-val">-$1,890</span></div>
+            <div class="sr"><span class="sr-lbl">Doc fee reduction</span><span class="sr-val">-$745</span></div>
+            <div class="sr"><span class="sr-lbl">Finance savings (60mo)</span><span class="sr-val">-$4,405</span></div>
+          </div>
+          <div class="story-q">"EVL found my exact Camry XSE with the Premium Package in midnight black, 400 miles away, and delivered it in 2 days — $4,200 below what local dealers quoted."</div>
+          <div class="story-name">Michael R. · Business Owner</div>
+        </div>
+        <div class="story">
+          <div class="story-save">$6,840</div>
+          <div class="story-veh">2026 Mercedes GLE450 · Lease · Dallas</div>
+          <div class="story-rows">
+            <div class="sr"><span class="sr-lbl">Monthly savings vs dealer</span><span class="sr-val">-$190/mo</span></div>
+            <div class="sr"><span class="sr-lbl">Over 36-month lease</span><span class="sr-val">-$6,840</span></div>
+            <div class="sr"><span class="sr-lbl">Money factor negotiated</span><span class="sr-val">✓ .00142</span></div>
+            <div class="sr"><span class="sr-lbl">Acquisition fee waived</span><span class="sr-val">-$895</span></div>
+          </div>
+          <div class="story-q">"The dealer quoted $890/month. EVL got me $700/month on the same vehicle with better terms. $6,840 I kept in my pocket."</div>
+          <div class="story-name">Sandra L. · Attorney</div>
+        </div>
+        <div class="story">
+          <div class="story-save">$14,100</div>
+          <div class="story-veh">2025 Ford F-150 Raptor · McKinney, TX</div>
+          <div class="story-rows">
+            <div class="sr"><span class="sr-lbl">Below MSRP</span><span class="sr-val">-$5,800</span></div>
+            <div class="sr"><span class="sr-lbl">Regional incentive stacked</span><span class="sr-val">-$2,500</span></div>
+            <div class="sr"><span class="sr-lbl">Add-ons eliminated</span><span class="sr-val">-$2,400</span></div>
+            <div class="sr"><span class="sr-lbl">Finance savings (72mo)</span><span class="sr-val">-$3,400</span></div>
+          </div>
+          <div class="story-q">"I'm an engineer. I research everything. EVL still beat my best number by $5,800 and found a regional incentive I had no idea existed."</div>
+          <div class="story-name">David K. · Engineer</div>
+        </div>
+        <div class="story">
+          <div class="story-save">$9,350</div>
+          <div class="story-veh">2026 BMW X5 xDrive40i · Frisco, TX</div>
+          <div class="story-rows">
+            <div class="sr"><span class="sr-lbl">Below dealer asking</span><span class="sr-val">-$3,900</span></div>
+            <div class="sr"><span class="sr-lbl">Market adjustment removed</span><span class="sr-val">-$2,000</span></div>
+            <div class="sr"><span class="sr-lbl">Finance savings (60mo)</span><span class="sr-val">-$2,850</span></div>
+            <div class="sr"><span class="sr-lbl">EVL warranty rate</span><span class="sr-val">-$600</span></div>
+          </div>
+          <div class="story-q">"The BMW dealer had a $2,000 market adjustment on every X5. EVL removed it entirely and found me one with the M Sport Package I wanted."</div>
+          <div class="story-name">Jennifer M. · Physician</div>
+        </div>
+        <div class="story">
+          <div class="story-save">$7,920</div>
+          <div class="story-veh">2026 Toyota Tacoma TRD Pro · Allen, TX</div>
+          <div class="story-rows">
+            <div class="sr"><span class="sr-lbl">Below MSRP</span><span class="sr-val">-$3,200</span></div>
+            <div class="sr"><span class="sr-lbl">In-transit unit found</span><span class="sr-val">✓ Located</span></div>
+            <div class="sr"><span class="sr-lbl">Add-ons eliminated</span><span class="sr-val">-$1,720</span></div>
+            <div class="sr"><span class="sr-lbl">Finance savings (60mo)</span><span class="sr-val">-$3,000</span></div>
+          </div>
+          <div class="story-q">"TRD Pros were impossible to find. EVL located an in-transit unit, held it for me, and I paid $3,200 below what dealers were asking."</div>
+          <div class="story-name">Chris T. · Contractor</div>
+        </div>
+        <div class="story">
+          <div class="story-save">$18,400</div>
+          <div class="story-veh">2025 Porsche Cayenne S · Prosper, TX</div>
+          <div class="story-rows">
+            <div class="sr"><span class="sr-lbl">Below MSRP</span><span class="sr-val">-$8,200</span></div>
+            <div class="sr"><span class="sr-lbl">Add-ons removed</span><span class="sr-val">-$3,800</span></div>
+            <div class="sr"><span class="sr-lbl">Out-of-state arbitrage</span><span class="sr-val">-$3,900</span></div>
+            <div class="sr"><span class="sr-lbl">Finance savings (60mo)</span><span class="sr-val">-$2,500</span></div>
+          </div>
+          <div class="story-q">"My local Porsche dealer wouldn't budge. EVL found the same Cayenne S in another state for $8,200 less with zero add-ons. Delivered in 3 days."</div>
+          <div class="story-name">Robert A. · Real Estate Developer</div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- COMPARISON TABLE -->
-<section class="section" style="background:var(--s1);border-top:2px solid var(--border);border-bottom:2px solid var(--border);">
-  <div class="section-inner">
-    <div class="section-badge reveal">The Full Picture</div>
-    <h2 class="section-title reveal">EVL vs. <span>The Alternatives</span></h2>
-    <p class="section-sub reveal">See exactly how EVL stacks up against every option.</p>
-    <table class="comp-table reveal">
-      <thead>
-        <tr>
-          <th>Savings Category</th>
-          <th class="evl">⚡ With EVL</th>
-          <th>Dealer Direct</th>
-          <th>Other Brokers</th>
-          <th>Online Only</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Below-Invoice Negotiation</td><td class="evl"><span class="yes">✓</span> Always</td><td><span class="no">✗</span></td><td><span class="maybe">Sometimes</span></td><td><span class="no">✗</span></td></tr>
-        <tr><td>Market Adjustment Removal</td><td class="evl"><span class="yes">✓</span> Eliminated</td><td><span class="no">✗</span></td><td><span class="maybe">Rarely</span></td><td><span class="no">✗</span></td></tr>
-        <tr><td>Dealer Add-On Elimination</td><td class="evl"><span class="yes">✓</span> Always</td><td><span class="no">✗</span></td><td><span class="maybe">Sometimes</span></td><td><span class="no">✗</span></td></tr>
-        <tr><td>Lease Money Factor Negotiation</td><td class="evl"><span class="yes">✓</span> Base rate</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
-        <tr><td>Finance Rate Shopping</td><td class="evl"><span class="yes">✓</span> 12+ lenders</td><td><span class="no">✗</span> 1 lender</td><td><span class="maybe">Sometimes</span></td><td><span class="maybe">Sometimes</span></td></tr>
-        <tr><td>OEM Incentive Stacking</td><td class="evl"><span class="yes">✓</span> All applied</td><td><span class="maybe">Maybe</span></td><td><span class="maybe">Sometimes</span></td><td><span class="no">✗</span></td></tr>
-        <tr><td>Nationwide Search</td><td class="evl"><span class="yes">✓</span> 6M+ vehicles</td><td><span class="no">✗</span> Local only</td><td><span class="maybe">Limited</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Door-to-Door Delivery</td><td class="evl"><span class="yes">✓</span> Included</td><td><span class="no">✗</span></td><td><span class="maybe">Extra fee</span></td><td><span class="maybe">Extra fee</span></td></tr>
-        <tr><td>EVL Fee / Commission</td><td class="evl" style="color:var(--gold);font-weight:900;font-size:18px;">$295 flat</td><td>$0 but overpay</td><td>$500–$2,000</td><td>$0 but no help</td></tr>
-        <tr><td><strong>Average Total Savings</strong></td><td class="evl" style="color:var(--green);font-weight:900;font-size:18px;">$13,409</td><td style="color:var(--red);">$0</td><td style="color:var(--muted);">$2,000–$4,000</td><td style="color:var(--muted);">$500–$1,500</td></tr>
-      </tbody>
-    </table>
+  <!-- DRAWER 4: BUCKETS -->
+  <div class="drawer" id="d4">
+    <div class="drawer-head">
+      <div class="drawer-left">
+        <div class="drawer-num">4</div>
+        <div>
+          <div class="drawer-title">Where The Savings Come From</div>
+          <div class="drawer-sub">EVL attacks your deal from every angle simultaneously</div>
+        </div>
+      </div>
+      <div class="drawer-right">
+        <span class="drawer-badge">4 BUCKETS</span>
+        <button class="toggle-btn" onclick="toggleD(4)">▼</button>
+      </div>
+    </div>
+    <div class="drawer-body" id="db4" style="display:none;">
+      <div class="buckets">
+        <div class="bucket">
+          <div class="bkt-icon">🎯</div>
+          <div class="bkt-title">Purchase Price</div>
+          <div class="bkt-range">$3,000 – $8,000 <span>avg savings</span></div>
+          <div class="bkt-items">
+            <div class="bi">We negotiate below invoice — not just below MSRP</div>
+            <div class="bi">We identify aged inventory (45+ days) where dealers are motivated</div>
+            <div class="bi">We use competing dealer leverage to drive price down</div>
+            <div class="bi">We stack all available OEM rebates and regional incentives</div>
+          </div>
+        </div>
+        <div class="bucket">
+          <div class="bkt-icon">🚫</div>
+          <div class="bkt-title">Fee Elimination</div>
+          <div class="bkt-range">$1,500 – $4,000 <span>avg savings</span></div>
+          <div class="bkt-items">
+            <div class="bi">Market adjustment fees — eliminated entirely</div>
+            <div class="bi">Dealer add-on packages — paint protection, fabric guard removed</div>
+            <div class="bi">Doc fees capped at regional average ($150–$250)</div>
+            <div class="bi">F&I office upsells sourced at fair market rates</div>
+          </div>
+        </div>
+        <div class="bucket">
+          <div class="bkt-icon">💳</div>
+          <div class="bkt-title">Finance Rate</div>
+          <div class="bkt-range">$1,500 – $4,500 <span>avg savings</span></div>
+          <div class="bkt-items">
+            <div class="bi">We shop your deal to 12+ credit unions and banks</div>
+            <div class="bi">Average EVL rate is 2–3% lower than dealer finance</div>
+            <div class="bi">On a $45k loan at 60 months — saves $2,400–$4,500</div>
+            <div class="bi">No dealer reserve markup on your rate</div>
+          </div>
+        </div>
+        <div class="bucket">
+          <div class="bkt-icon">📋</div>
+          <div class="bkt-title">Lease Terms</div>
+          <div class="bkt-range">$80 – $220/mo <span>lease savings</span></div>
+          <div class="bkt-items">
+            <div class="bi">We negotiate money factor to base rate — dealers markup this</div>
+            <div class="bi">We maximize residual value to lower your payment</div>
+            <div class="bi">Acquisition fees waived or significantly reduced</div>
+            <div class="bi">$80–$220/mo savings = $2,880–$7,920 over 36 months</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
+
+  <!-- DRAWER 5: LEASE -->
+  <div class="drawer" id="d5">
+    <div class="drawer-head">
+      <div class="drawer-left">
+        <div class="drawer-num">5</div>
+        <div>
+          <div class="drawer-title">Lease Intelligence</div>
+          <div class="drawer-sub">The money factor secret dealers don't want you to know</div>
+        </div>
+      </div>
+      <div class="drawer-right">
+        <span class="drawer-badge">LEASE DEEP DIVE</span>
+        <button class="toggle-btn" onclick="toggleD(5)">▼</button>
+      </div>
+    </div>
+    <div class="drawer-body" id="db5" style="display:none;">
+      <div class="lease-box">
+        <div class="lb-title">💰 Lease Example — 2026 Mercedes GLE450</div>
+        <div class="lb-sub">36-month lease · $5,000 down · 10,000 miles/year</div>
+        <div class="lb-stats">
+          <div class="lb-stat">
+            <div class="lb-stat-lbl">Dealer Money Factor</div>
+            <div class="lb-stat-val">.00189</div>
+            <div class="lb-stat-sub">= 4.54% APR equivalent</div>
+          </div>
+          <div class="lb-stat">
+            <div class="lb-stat-lbl">EVL Money Factor</div>
+            <div class="lb-stat-val">.00142</div>
+            <div class="lb-stat-sub">= 3.41% APR equivalent</div>
+          </div>
+          <div class="lb-stat">
+            <div class="lb-stat-lbl">Monthly Savings</div>
+            <div class="lb-stat-val" style="color:var(--green);">$190/mo</div>
+            <div class="lb-stat-sub">= $6,840 over 36 months</div>
+          </div>
+        </div>
+        <div class="lb-note">⚡ <strong style="color:#fff;">Why this matters:</strong> Dealers markup the money factor and keep the difference as profit. Most customers never know. EVL knows the base money factor published by the manufacturer and negotiates down to it — or below. This single negotiation saves lease customers $80–$220 every single month.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAWER 6: COMPARISON -->
+  <div class="drawer" id="d6">
+    <div class="drawer-head">
+      <div class="drawer-left">
+        <div class="drawer-num">6</div>
+        <div>
+          <div class="drawer-title">EVL vs. The Alternatives</div>
+          <div class="drawer-sub">See exactly how EVL stacks up against every option</div>
+        </div>
+      </div>
+      <div class="drawer-right">
+        <span class="drawer-badge">COMPARISON</span>
+        <button class="toggle-btn" onclick="toggleD(6)">▼</button>
+      </div>
+    </div>
+    <div class="drawer-body" id="db6" style="display:none;">
+      <table class="comp">
+        <thead>
+          <tr>
+            <th>Savings Category</th>
+            <th class="evl">⚡ With EVL</th>
+            <th>Dealer Direct</th>
+            <th>Other Brokers</th>
+            <th>Online Only</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Below-Invoice Negotiation</td><td class="evl"><span class="yes">✓</span> Always</td><td><span class="no">✗</span></td><td><span class="maybe">Sometimes</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Market Adjustment Removal</td><td class="evl"><span class="yes">✓</span> Eliminated</td><td><span class="no">✗</span></td><td><span class="maybe">Rarely</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Dealer Add-On Elimination</td><td class="evl"><span class="yes">✓</span> Always</td><td><span class="no">✗</span></td><td><span class="maybe">Sometimes</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Lease Money Factor Negotiation</td><td class="evl"><span class="yes">✓</span> Base rate</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Finance Rate Shopping</td><td class="evl"><span class="yes">✓</span> 12+ lenders</td><td><span class="no">✗</span> 1 lender</td><td><span class="maybe">Sometimes</span></td><td><span class="maybe">Sometimes</span></td></tr>
+          <tr><td>OEM Incentive Stacking</td><td class="evl"><span class="yes">✓</span> All applied</td><td><span class="maybe">Maybe</span></td><td><span class="maybe">Sometimes</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Nationwide Search + Delivery</td><td class="evl"><span class="yes">✓</span> 6M+ vehicles</td><td><span class="no">✗</span> Local only</td><td><span class="maybe">Limited</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>EVL Fee / Commission</td><td class="evl" style="color:var(--gold);font-weight:900;font-size:17px;">$295 flat</td><td>$0 but overpay</td><td>$500–$2,000</td><td>$0 no help</td></tr>
+          <tr><td><strong style="color:#fff;">Average Total Savings</strong></td><td class="evl" style="color:var(--green);font-weight:900;font-size:18px;">$13,409</td><td style="color:var(--red);">$0</td><td style="color:var(--muted);">$2K–$4K</td><td style="color:var(--muted);">$500–$1.5K</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- end drawers -->
 
 <!-- CTA -->
-<section class="cta-section">
-  <div class="hero-badge" style="margin-bottom:24px;background:rgba(0,200,83,.12);border-color:rgba(0,200,83,.35);color:var(--green);">Ready to Save?</div>
-  <h2 class="cta-title reveal">Start Saving <span>Today</span></h2>
-  <p class="cta-sub reveal">Tell us exactly what you want. We find it, negotiate it, deliver it — and you keep the savings.</p>
-  <div class="cta-btns reveal">
-    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/find.html" class="btn-primary">⚡ Find My Vehicle</a>
-    <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/how.html" class="btn-secondary">How It Works →</a>
+<div class="cta-wrap">
+  <div class="cta-box">
+    <div class="hero-badge" style="margin-bottom:20px;background:rgba(0,200,83,.12);border-color:rgba(0,200,83,.35);color:var(--green);">Ready to Save?</div>
+    <h2 class="cta-title">Start Saving <span>Today</span></h2>
+    <p class="cta-sub">Tell us exactly what you want. We find it, negotiate it, and deliver it — you keep the savings.</p>
+    <div class="cta-btns">
+      <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/find.html" class="btn-p">⚡ Find My Vehicle</a>
+      <a href="https://evl-decode-git-main-express-vehicle-locators.vercel.app/how.html" class="btn-s">How It Works →</a>
+    </div>
   </div>
-</section>
+</div>
 
 <footer>
   <div class="fl">◈ Express <span>Vehicle</span> Locators</div>
@@ -488,98 +544,85 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:32px 48px
 </footer>
 
 <script>
-var calcMode='buy';
+// DRAWER TOGGLE
+function toggleD(n){
+  var body=document.getElementById('db'+n);
+  var btn=document.querySelector('#d'+n+' .toggle-btn');
+  var badge=document.querySelector('#d'+n+' .drawer-badge');
+  var drawer=document.getElementById('d'+n);
+  var isOpen=body.style.display!=='none';
+  body.style.display=isOpen?'none':'block';
+  btn.textContent=isOpen?'▼':'▲';
+  drawer.classList.toggle('active',!isOpen);
+  if(badge){badge.textContent=isOpen?badge.getAttribute('data-closed')||'CLOSED':'OPEN';}
+}
 
-function setMode(m){
+// CALCULATOR
+var calcMode='buy';
+function setCalcMode(m){
   calcMode=m;
-  document.getElementById('modeBuy').style.background=m==='buy'?'var(--blue)':'var(--s2)';
-  document.getElementById('modeBuy').style.borderColor=m==='buy'?'var(--blue)':'var(--border)';
-  document.getElementById('modeBuy').style.color=m==='buy'?'#fff':'var(--muted)';
-  document.getElementById('modeLease').style.background=m==='lease'?'var(--blue)':'var(--s2)';
-  document.getElementById('modeLease').style.borderColor=m==='lease'?'var(--blue)':'var(--border)';
-  document.getElementById('modeLease').style.color=m==='lease'?'#fff':'var(--muted)';
-  document.getElementById('leaseSliderWrap').style.display=m==='lease'?'block':'none';
+  document.getElementById('cmBuy').classList.toggle('on',m==='buy');
+  document.getElementById('cmLease').classList.toggle('on',m==='lease');
+  document.getElementById('termWrap').style.display=m==='lease'?'block':'none';
   updateCalc();
 }
-
 function updateCalc(){
-  var price=parseInt(document.getElementById('priceSlider').value);
-  var term=parseInt(document.getElementById('termSlider').value);
-  document.getElementById('priceVal').textContent='$'+price.toLocaleString();
-  document.getElementById('termVal').textContent=term+' months';
-
+  var price=parseInt(document.getElementById('slPrice').value);
+  var term=parseInt(document.getElementById('slTerm').value);
+  document.getElementById('slPriceVal').textContent='$'+price.toLocaleString();
+  document.getElementById('slTermVal').textContent=term+' months';
   var adj=Math.round(price*.05);
   var addon=Math.round(price*.045);
-  var doc=895;
-  var dealerRate=6.75;
-  var evlRate=4.25;
   var evlPrice=Math.round(price*.92);
-  var evlDoc=150;
-
   if(calcMode==='buy'){
-    var dealerTotal=price+adj+addon+doc;
-    var evlTotal=evlPrice+evlDoc;
-    var dealerFin=Math.round(dealerTotal*(dealerRate/1200)*Math.pow(1+dealerRate/1200,60)/(Math.pow(1+dealerRate/1200,60)-1));
-    var evlFin=Math.round(evlTotal*(evlRate/1200)*Math.pow(1+evlRate/1200,60)/(Math.pow(1+evlRate/1200,60)-1));
-    var dealerFullCost=dealerTotal+dealerFin*60-dealerTotal;
-    var evlFullCost=evlTotal+evlFin*60-evlTotal;
-
-    document.getElementById('c_msrp').textContent='$'+price.toLocaleString();
+    var dealerTot=price+adj+addon+895;
+    var evlTot=evlPrice+150;
+    var dRate=6.75/1200;var eRate=4.25/1200;
+    var dMo=Math.round(dealerTot*dRate*Math.pow(1+dRate,60)/(Math.pow(1+dRate,60)-1));
+    var eMo=Math.round(evlTot*eRate*Math.pow(1+eRate,60)/(Math.pow(1+eRate,60)-1));
+    var save=dealerTot-evlTot+(dMo-eMo)*60;
+    document.getElementById('c_ask').textContent='$'+price.toLocaleString();
     document.getElementById('c_adj').textContent='+$'+adj.toLocaleString();
-    document.getElementById('c_addon').textContent='+$'+addon.toLocaleString();
-    document.getElementById('c_doc').textContent='+$'+doc.toLocaleString();
-    document.getElementById('c_rate').textContent=dealerRate+'% APR';
-    document.getElementById('c_mo').textContent='$'+dealerFin.toLocaleString()+'/mo';
-    document.getElementById('c_total').textContent='$'+dealerTotal.toLocaleString();
-
-    document.getElementById('e_price').textContent='$'+evlPrice.toLocaleString();
-    document.getElementById('e_rate').textContent=evlRate+'% APR ✓';
-    document.getElementById('e_mo').textContent='$'+evlFin.toLocaleString()+'/mo';
-    document.getElementById('e_total').textContent='$'+evlTotal.toLocaleString();
-
-    var save=dealerTotal-evlTotal+((dealerFin-evlFin)*60);
+    document.getElementById('c_add').textContent='+$'+addon.toLocaleString();
+    document.getElementById('c_doc').textContent='+$895';
+    document.getElementById('c_rate').textContent='6.75% APR';
+    document.getElementById('c_mo').textContent='$'+dMo.toLocaleString()+'/mo';
+    document.getElementById('c_tot').textContent='$'+dealerTot.toLocaleString();
+    document.getElementById('e_ask').textContent='$'+evlPrice.toLocaleString();
+    document.getElementById('e_adj').textContent='$0 Eliminated ✓';
+    document.getElementById('e_add').textContent='$0 Eliminated ✓';
+    document.getElementById('e_doc').textContent='$150 Capped ✓';
+    document.getElementById('e_rate').textContent='4.25% APR ✓';
+    document.getElementById('e_mo').textContent='$'+eMo.toLocaleString()+'/mo';
+    document.getElementById('e_tot').textContent='$'+evlTot.toLocaleString();
     document.getElementById('totalSave').textContent='$'+save.toLocaleString();
     document.getElementById('netSave').textContent='$'+(save-295).toLocaleString();
-
   } else {
-    var dealerMF=0.00189;
-    var evlMF=0.00142;
-    var residual=price*.55;
-    var dealerMo=Math.round((price-residual)/term+price*dealerMF*2.4+addon/term);
-    var evlMo=Math.round((evlPrice-residual)/term+evlPrice*evlMF*2.4);
-    var moSave=dealerMo-evlMo;
-    var totalSave=moSave*term+addon+adj;
-
-    document.getElementById('c_msrp').textContent='$'+price.toLocaleString();
+    var dMF=0.00189;var eMF=0.00142;
+    var resid=price*.55;
+    var dLeM=Math.round((price-resid)/term+price*dMF*2.4+addon/term);
+    var eLeM=Math.round((evlPrice-resid)/term+evlPrice*eMF*2.4);
+    var lSave=(dLeM-eLeM)*term+addon+adj;
+    document.getElementById('c_ask').textContent='$'+price.toLocaleString();
     document.getElementById('c_adj').textContent='+$'+adj.toLocaleString();
-    document.getElementById('c_addon').textContent='+$'+addon.toLocaleString();
+    document.getElementById('c_add').textContent='+$'+addon.toLocaleString();
     document.getElementById('c_doc').textContent='Acq. Fee: $895';
     document.getElementById('c_rate').textContent='MF: .00189';
-    document.getElementById('c_mo').textContent='$'+dealerMo.toLocaleString()+'/mo';
-    document.getElementById('c_total').textContent='$'+(dealerMo*term+5000).toLocaleString()+' total';
-
-    document.getElementById('e_price').textContent='$'+evlPrice.toLocaleString();
-    document.getElementById('e_rate').textContent='MF: .00142 ✓';
-    document.getElementById('e_mo').textContent='$'+evlMo.toLocaleString()+'/mo';
-    document.getElementById('e_total').textContent='$'+(evlMo*term+5000).toLocaleString()+' total';
+    document.getElementById('c_mo').textContent='$'+dLeM.toLocaleString()+'/mo';
+    document.getElementById('c_tot').textContent='$'+(dLeM*term+5000).toLocaleString()+' total';
+    document.getElementById('e_ask').textContent='$'+evlPrice.toLocaleString();
+    document.getElementById('e_adj').textContent='$0 Eliminated ✓';
+    document.getElementById('e_add').textContent='$0 Eliminated ✓';
     document.getElementById('e_doc').textContent='Acq. Fee: Waived ✓';
-    document.getElementById('e_adj').textContent='$0 — Eliminated ✓';
-    document.getElementById('e_addon').textContent='$0 — Eliminated ✓';
-
-    document.getElementById('totalSave').textContent='$'+totalSave.toLocaleString();
-    document.getElementById('netSave').textContent='$'+(totalSave-295).toLocaleString();
+    document.getElementById('e_rate').textContent='MF: .00142 ✓';
+    document.getElementById('e_mo').textContent='$'+eLeM.toLocaleString()+'/mo';
+    document.getElementById('e_tot').textContent='$'+(eLeM*term+5000).toLocaleString()+' total';
+    document.getElementById('totalSave').textContent='$'+lSave.toLocaleString();
+    document.getElementById('netSave').textContent='$'+(lSave-295).toLocaleString();
   }
 }
-
-// Init
-setMode('buy');
+setCalcMode('buy');
 updateCalc();
-
-// Reveal on scroll
-var obs=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
-},{threshold:0.08});
-document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 </script>
 </body>
 </html>
