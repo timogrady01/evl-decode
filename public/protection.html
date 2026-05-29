@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Vehicle Protection — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--orange:#FF6B00;--muted:#C8C8D8;--border:rgba(43,132,254,0.2);}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;line-height:1.75;}
+nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 48px;height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:#fff;text-decoration:none;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{color:#B8B8C8;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:10px 22px;}
+.hero{background:linear-gradient(160deg,#071220,var(--bg));padding:64px 48px 56px;text-align:center;border-bottom:2px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(43,132,254,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-block;background:rgba(43,132,254,0.12);border:2px solid rgba(43,132,254,0.35);color:var(--blue);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:24px;}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-size:68px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:.95;margin-bottom:18px;}
+.hero h1 span{color:var(--blue);}
+.hero p{color:var(--muted);font-size:19px;max-width:600px;margin:0 auto 40px;line-height:1.75;}
+.strip{background:linear-gradient(90deg,var(--blue2),var(--blue));padding:18px 48px;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;}
+.strip-item{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+.section{padding:64px 48px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-badge{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.section-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;margin-bottom:16px;}
+.section-title span{color:var(--blue);}
+.section-sub{color:var(--muted);font-size:18px;max-width:600px;line-height:1.75;margin-bottom:48px;}
+
+/* PROTECTION CARDS */
+.prot-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.prot-card{background:var(--s1);border:2px solid var(--border);padding:36px;position:relative;overflow:hidden;transition:all .25s;}
+.prot-card:hover{border-color:var(--blue);transform:translateY(-4px);}
+.prot-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;}
+.prot-card.pdr::before{background:linear-gradient(90deg,var(--blue),transparent);}
+.prot-card.gap::before{background:linear-gradient(90deg,var(--green),transparent);}
+.prot-card.ceramic::before{background:linear-gradient(90deg,var(--gold),transparent);}
+.prot-card.warranty::before{background:linear-gradient(90deg,var(--orange),transparent);}
+.prot-icon{font-size:48px;margin-bottom:18px;}
+.prot-title{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+.prot-subtitle{font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;}
+.prot-subtitle.blue{color:var(--blue);}
+.prot-subtitle.green{color:var(--green);}
+.prot-subtitle.gold{color:var(--gold);}
+.prot-subtitle.orange{color:var(--orange);}
+.prot-desc{color:var(--muted);font-size:17px;line-height:1.75;margin-bottom:20px;}
+.prot-features{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.pf{display:flex;align-items:flex-start;gap:12px;font-size:16px;color:var(--muted);line-height:1.6;}
+.pf::before{content:"✓";font-weight:900;flex-shrink:0;margin-top:2px;}
+.pf.blue::before{color:var(--blue);}
+.pf.green::before{color:var(--green);}
+.pf.gold::before{color:var(--gold);}
+.pf.orange::before{color:var(--orange);}
+.prot-price{background:var(--s2);border:2px solid var(--border);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;}
+.pp-lbl{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.pp-val{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;color:var(--gold);}
+.pp-dealer{font-size:13px;color:var(--muted);text-decoration:line-through;}
+
+/* DEALER vs EVL */
+.compare-box{background:var(--s1);border:2px solid var(--border);padding:36px;margin-top:0;}
+.compare-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.cg-col{padding:24px;background:var(--s2);border:2px solid var(--border);}
+.cg-col.evl{border-color:var(--green);background:rgba(0,200,83,.04);}
+.cg-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+.cg-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:16px;}
+.cg-item:last-child{border:none;}
+.cg-lbl{color:var(--muted);}
+.cg-val.bad{color:var(--red);font-weight:700;}
+.cg-val.good{color:var(--green);font-weight:700;}
+.cg-total{margin-top:14px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border:2px solid var(--border);}
+.cg-total-lbl{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.cg-total-val{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,#071828,var(--bg));border-top:2px solid var(--border);padding:80px 48px;text-align:center;}
+.cta-title{font-family:"Barlow Condensed",sans-serif;font-size:56px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:1;margin-bottom:16px;}
+.cta-title span{color:var(--blue);}
+.cta-sub{color:var(--muted);font-size:19px;max-width:540px;margin:0 auto 40px;line-height:1.75;}
+.btn-primary{background:var(--blue);color:#fff;padding:20px 48px;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all .2s;}
+.btn-primary:hover{background:var(--blue2);}
+
+footer{background:var(--s1);border-top:2px solid var(--border);padding:28px 48px;}
+@media(max-width:900px){.prot-grid,.compare-grid{grid-template-columns:1fr;}.hero h1{font-size:48px;}}
+@media(max-width:600px){nav{padding:0 16px;}.hero{padding:48px 20px 44px;}.section{padding:48px 20px;}.strip{gap:16px;padding:14px 16px;flex-direction:column;}footer{padding:24px 20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="https://www.expressvehiclelocators.com/home.html" class="logo">◈ Express <span>Vehicle</span> Locators</a>
+  <div class="nav-links">
+    <a href="https://www.expressvehiclelocators.com/find.html">Find</a>
+    <a href="https://www.expressvehiclelocators.com/tradein.html">Trade-In</a>
+    <a href="https://www.expressvehiclelocators.com/financing.html">Financing</a>
+    <a href="https://www.expressvehiclelocators.com/protection.html" class="active">Protection</a>
+    <a href="https://www.expressvehiclelocators.com/savings.html">Savings</a>
+    <a href="https://www.expressvehiclelocators.com/contact.html">Contact</a>
+    <a href="https://www.expressvehiclelocators.com/find.html" class="nav-cta">⚡ Find My Vehicle</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🛡️ EVL Protective Services</div>
+  <h1>Protect Your <span>Investment</span><br>At Fair Prices</h1>
+  <p>Dealers charge 300-500% markup on protection products. EVL sources the same coverage — PDR, GAP, ceramic coating, extended warranty — at honest prices through independent providers.</p>
+</section>
+
+<div class="strip">
+  <span class="strip-item">🛡️ PDR Protection</span>
+  <span class="strip-item">💳 GAP Coverage</span>
+  <span class="strip-item">✨ Ceramic Coating</span>
+  <span class="strip-item">🔧 Extended Warranty</span>
+</div>
+
+<!-- PROTECTION PRODUCTS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-badge">EVL Protective Service Center</div>
+    <h2 class="section-title">Four Ways to <span>Protect Your Vehicle</span></h2>
+    <p class="section-sub">Every product below is sourced independently — not from the dealer's F&I office. Same or better coverage, dramatically lower price.</p>
+
+    <div class="prot-grid">
+
+      <!-- PDR -->
+      <div class="prot-card pdr">
+        <div class="prot-icon">🔧</div>
+        <div class="prot-title">Paintless Dent Repair</div>
+        <div class="prot-subtitle blue">PDR Protection Plan</div>
+        <div class="prot-desc">Protects against door dings, hail damage, and minor dents without affecting your paint or factory warranty. Dealers charge 3-5x market rate for the same coverage.</div>
+        <div class="prot-features">
+          <div class="pf blue">Unlimited PDR repairs during coverage period</div>
+          <div class="pf blue">No deductible per repair visit</div>
+          <div class="pf blue">Transferable to new owner — adds resale value</div>
+          <div class="pf blue">Nationwide network of certified PDR technicians</div>
+          <div class="pf blue">Coverage for hail, door dings, parking lot damage</div>
+        </div>
+        <div class="prot-price">
+          <div>
+            <div class="pp-lbl">EVL Sourced Price</div>
+            <div class="pp-dealer">Dealer price: $800–$1,200</div>
+          </div>
+          <div class="pp-val">$299–$499</div>
+        </div>
+      </div>
+
+      <!-- GAP -->
+      <div class="prot-card gap">
+        <div class="prot-icon">💳</div>
+        <div class="prot-title">GAP Insurance</div>
+        <div class="prot-subtitle green">Guaranteed Asset Protection</div>
+        <div class="prot-desc">If your vehicle is totaled or stolen, your insurance pays actual cash value — which may be less than what you owe. GAP covers the difference so you're not stuck paying for a car you don't have.</div>
+        <div class="prot-features">
+          <div class="pf green">Covers the gap between insurance payout and loan balance</div>
+          <div class="pf green">Essential if you financed more than 80% of vehicle value</div>
+          <div class="pf green">EVL sources from A-rated insurance carriers</div>
+          <div class="pf green">Transferable or cancelable with pro-rated refund</div>
+          <div class="pf green">Can be financed into your loan at EVL rates</div>
+        </div>
+        <div class="prot-price">
+          <div>
+            <div class="pp-lbl">EVL Sourced Price</div>
+            <div class="pp-dealer">Dealer F&I price: $600–$900</div>
+          </div>
+          <div class="pp-val">$199–$349</div>
+        </div>
+      </div>
+
+      <!-- CERAMIC -->
+      <div class="prot-card ceramic">
+        <div class="prot-icon">✨</div>
+        <div class="prot-title">Ceramic Coating</div>
+        <div class="prot-subtitle gold">Professional Paint Protection</div>
+        <div class="prot-desc">Professional-grade ceramic coating bonds to your paint at a molecular level — protecting against UV, oxidation, bird droppings, and road contaminants. Dealers upsell this at 400% markup.</div>
+        <div class="prot-features">
+          <div class="pf gold">9H hardness rating — scratch and swirl resistant</div>
+          <div class="pf gold">Hydrophobic — water and dirt bead off effortlessly</div>
+          <div class="pf gold">UV protection prevents paint oxidation and fading</div>
+          <div class="pf gold">5-year warranty from certified detailer</div>
+          <div class="pf gold">Applied by certified installers, not dealer lot staff</div>
+        </div>
+        <div class="prot-price">
+          <div>
+            <div class="pp-lbl">EVL Sourced Price</div>
+            <div class="pp-dealer">Dealer F&I price: $1,500–$2,500</div>
+          </div>
+          <div class="pp-val">$599–$999</div>
+        </div>
+      </div>
+
+      <!-- WARRANTY -->
+      <div class="prot-card warranty">
+        <div class="prot-icon">🔒</div>
+        <div class="prot-title">Extended Warranty</div>
+        <div class="prot-subtitle orange">Vehicle Service Contract</div>
+        <div class="prot-desc">Factory warranties expire. An extended warranty (VSC) from an independent A-rated provider gives you coverage at a fraction of dealer cost — with the same or better repair network nationwide.</div>
+        <div class="prot-features">
+          <div class="pf orange">Bumper-to-bumper or powertrain coverage options</div>
+          <div class="pf orange">Honored at any ASE-certified repair facility nationwide</div>
+          <div class="pf orange">Rental car and roadside assistance included</div>
+          <div class="pf orange">Transferable — increases your vehicle resale value</div>
+          <div class="pf orange">Monthly payment options available through EVL</div>
+        </div>
+        <div class="prot-price">
+          <div>
+            <div class="pp-lbl">EVL Sourced Price</div>
+            <div class="pp-dealer">Dealer F&I price: $3,000–$5,000</div>
+          </div>
+          <div class="pp-val">$899–$1,899</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DEALER VS EVL COMPARISON -->
+<section class="section" style="background:var(--s1);border-top:2px solid var(--border);border-bottom:2px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-badge">The Real Cost Difference</div>
+    <h2 class="section-title">Dealer F&I vs <span>EVL Protection</span></h2>
+    <p class="section-sub">This is what the F&I office does. EVL eliminates every single one of these markups.</p>
+    <div class="compare-box">
+      <div class="compare-title">💰 Full Protection Package — Dealer vs EVL</div>
+      <div class="compare-grid">
+        <div class="cg-col">
+          <div class="cg-title" style="color:var(--red);">❌ Dealer F&I Office</div>
+          <div class="cg-item"><span class="cg-lbl">PDR Protection</span><span class="cg-val bad">$995</span></div>
+          <div class="cg-item"><span class="cg-lbl">GAP Insurance</span><span class="cg-val bad">$795</span></div>
+          <div class="cg-item"><span class="cg-lbl">Ceramic Coating</span><span class="cg-val bad">$1,995</span></div>
+          <div class="cg-item"><span class="cg-lbl">Extended Warranty (5yr)</span><span class="cg-val bad">$3,995</span></div>
+          <div class="cg-item"><span class="cg-lbl">Dealer Profit Margin</span><span class="cg-val bad">~$4,500 hidden</span></div>
+          <div class="cg-total">
+            <span class="cg-total-lbl">Total F&I Cost</span>
+            <span class="cg-total-val" style="color:var(--red);">$7,780</span>
+          </div>
+        </div>
+        <div class="cg-col evl">
+          <div class="cg-title" style="color:var(--green);">✅ EVL Sourced Protection</div>
+          <div class="cg-item"><span class="cg-lbl">PDR Protection</span><span class="cg-val good">$399</span></div>
+          <div class="cg-item"><span class="cg-lbl">GAP Insurance</span><span class="cg-val good">$249</span></div>
+          <div class="cg-item"><span class="cg-lbl">Ceramic Coating</span><span class="cg-val good">$799</span></div>
+          <div class="cg-item"><span class="cg-lbl">Extended Warranty (5yr)</span><span class="cg-val good">$1,299</span></div>
+          <div class="cg-item"><span class="cg-lbl">EVL Markup</span><span class="cg-val good">$0 — Zero Commission</span></div>
+          <div class="cg-total" style="border-color:var(--green);">
+            <span class="cg-total-lbl">Total EVL Cost</span>
+            <span class="cg-total-val" style="color:var(--green);">$2,746</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;background:rgba(0,200,83,.06);border:2px solid rgba(0,200,83,.2);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="font-size:18px;font-weight:700;color:#fff;">Your Protection Savings with EVL</div>
+          <div style="font-size:16px;color:var(--muted);margin-top:4px;">Same coverage · Better providers · No dealer markup</div>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:var(--green);">$5,034</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="hero-badge" style="margin-bottom:20px;">Add Protection to Any EVL Service</div>
+  <h2 class="cta-title">Protect Your Vehicle<br>at <span>Fair Prices</span></h2>
+  <p class="cta-sub">Add any protection product to your EVL service request. We source, negotiate, and coordinate everything. No dealer F&I office required.</p>
+  <a href="https://www.expressvehiclelocators.com/contact.html" class="btn-primary">⚡ Add Protection to My Request</a>
+</section>
+
+<footer>
+  <div style="max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;">◈ Express <span style="color:var(--blue);">Vehicle</span> Locators</div>
+    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+      <a href="https://www.expressvehiclelocators.com/privacy.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Privacy Policy</a>
+      <a href="https://www.expressvehiclelocators.com/terms.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Terms of Service</a>
+      <a href="https://www.expressvehiclelocators.com/service-agreement.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Service Agreement</a>
+      <a href="https://www.expressvehiclelocators.com/contact.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Contact</a>
+    </div>
+    <div style="color:#C8C8D8;font-size:14px;">© 2026 Express Vehicle Locators · Texas, USA</div>
+  </div>
+</footer>
+</body>
+</html>
