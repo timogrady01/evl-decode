@@ -33,6 +33,14 @@
       "destination": "/public/savings.html"
     },
     {
+      "source": "/contact",
+      "destination": "/public/contact.html"
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/public/contact.html"
+    },
+    {
       "source": "/admin",
       "destination": "/public/admin.html"
     },
