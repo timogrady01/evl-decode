@@ -90,7 +90,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 
 /* TABS */
 .tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--border)}
-.tab{padding:10px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:0.9rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
+.tab{padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#FFFFFF;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
 .tab.active{color:var(--purple);border-bottom-color:var(--purple)}
 .tab-content{display:none;padding-top:16px}
 .tab-content.active{display:block}
@@ -213,7 +213,7 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
         <div class="dp-title gold">◈ Admin Condition Override</div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
           <button class="adm-btn" style="padding:12px;background:#041209;border:2px solid var(--green);color:var(--green)" onclick="setAdmCond('Excellent',1.12,this)">EXCELLENT</button>
-          <button class="adm-btn" style="padding:12px;background:#0A1525;border:2px solid var(--blue);color:var(--blue)" onclick="setAdmCond('Good',1.0,this)">GOOD</button>
+          <button class="adm-btn" style="padding:12px;background:#001A3D;border:2px solid var(--blue);color:var(--blue)" onclick="setAdmCond('Good',1.0,this)">GOOD</button>
           <button class="adm-btn" style="padding:12px;background:#1A0E00;border:2px solid var(--gold);color:var(--gold)" onclick="setAdmCond('Fair',0.85,this)">FAIR</button>
           <button class="adm-btn" style="padding:12px;background:#1A0500;border:2px solid var(--red);color:var(--red)" onclick="setAdmCond('Poor',0.68,this)">POOR</button>
         </div>
