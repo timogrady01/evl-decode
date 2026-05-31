@@ -150,18 +150,18 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
 
 /* MARKET VALUE TAB */
 .mv-vehicle-bar{background:#1C2637;border:2px solid #4D9FFF;padding:16px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
-.mv-vehicle-name{font-family:"Barlow Condensed",sans-serif;font-size:2rem;font-weight:900;color:#FFFFFF;letter-spacing:2px;text-transform:uppercase}
+.mv-vehicle-name{font-family:"Barlow Condensed",sans-serif;font-size:2.8rem;font-weight:900;color:#FFFFFF;letter-spacing:2px;text-transform:uppercase}
 .mv-vin-badge{font-family:"Share Tech Mono",monospace;font-size:1rem;color:#4D9FFF;letter-spacing:2px}
-.mv-value-card{background:#141E30;border:3px solid #FFFFFF;padding:24px 28px;margin-bottom:16px}
+.mv-value-card{background:#141E30;border:3px solid #FFFFFF;padding:28px 32px;margin-bottom:20px}
 .mv-value-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.mv-value-label{font-family:"Barlow Condensed",sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#FFFFFF}
-.mv-value-sub{font-size:1rem;color:#C0CFEA;margin-top:2px}
-.mv-value-amount{font-family:"Barlow Condensed",sans-serif;font-size:2.8rem;font-weight:900;line-height:1}
+.mv-value-label{font-family:"Barlow Condensed",sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#FFFFFF}
+.mv-value-sub{font-size:1.2rem;color:#C0CFEA;margin-top:4px;font-weight:600}
+.mv-value-amount{font-family:"Barlow Condensed",sans-serif;font-size:3.8rem;font-weight:900;line-height:1}
 .mv-slider-wrap{margin:14px 0 6px 0;position:relative;height:20px}
-.mv-slider-track{height:8px;border-radius:4px;background:#2A3A55;position:absolute;top:6px;left:0;right:0}
-.mv-slider-fill{height:8px;border-radius:4px;position:absolute;top:6px;left:0}
-.mv-slider-dot{width:22px;height:22px;border-radius:50%;border:3px solid #FFFFFF;position:absolute;top:50%;transform:translate(-50%,-50%)}
-.mv-range-labels{display:flex;justify-content:space-between;font-family:"Share Tech Mono",monospace;font-size:1rem;color:#C0CFEA;margin-top:4px}
+.mv-slider-track{height:12px;border-radius:6px;background:#2A3A55;position:absolute;top:4px;left:0;right:0}
+.mv-slider-fill{height:12px;border-radius:6px;position:absolute;top:4px;left:0}
+.mv-slider-dot{width:28px;height:28px;border-radius:50%;border:3px solid #FFFFFF;position:absolute;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px rgba(255,255,255,0.5)}
+.mv-range-labels{display:flex;justify-content:space-between;font-family:"Share Tech Mono",monospace;font-size:1.2rem;color:#FFFFFF;margin-top:6px;font-weight:700}
 .mv-cond-bar{display:flex;gap:10px;margin-bottom:20px}
 .mv-cond-btn{flex:1;padding:14px;font-family:"Barlow Condensed",sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:3px solid;cursor:pointer;background:transparent;transition:all .2s;color:#FFFFFF}
 .mv-cond-btn.active-cond{color:#000!important}
@@ -170,8 +170,8 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
 .mv-notes-ta{background:#0D1525;border:2px solid #2A3A55;color:#FFFFFF;font-family:"Barlow",sans-serif;font-size:1.1rem;padding:14px;width:100%;min-height:100px;outline:none;resize:vertical}
 .mv-notes-ta:focus{border-color:#4D9FFF}
 .mv-floor-hero{background:linear-gradient(135deg,#0A1F0A,#051205);border:3px solid #00E676;padding:24px;text-align:center;margin-bottom:20px}
-.mv-floor-label{font-size:1.1rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#00E676;margin-bottom:6px}
-.mv-floor-amount{font-family:"Barlow Condensed",sans-serif;font-size:4rem;font-weight:900;color:#00E676;line-height:1}
+.mv-floor-label{font-size:1.3rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#00E676;margin-bottom:8px}
+.mv-floor-amount{font-family:"Barlow Condensed",sans-serif;font-size:5rem;font-weight:900;color:#00E676;line-height:1}
 .mv-floor-sub{font-size:1rem;color:#C0CFEA;margin-top:6px}
 
 </style>
@@ -454,7 +454,7 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
     <div class="action-row" style="margin-top:20px">
       <button class="adm-btn green" onclick="generateOffer()">📋 Generate Offer Sheet</button>
       <button class="adm-btn gold" onclick="showTab('market')">📊 VIEW MARKET VALUE</button>
-      <button class="adm-btn" style="background:#1a3a6b;border-color:#2B84FE;" onclick="openKBB()">📘 KBB VALUE</button>
+      <button class="adm-btn" style="background:#1a3a6b;border-color:#2B84FE;" onclick="showTab('market');populateMVTabFromAdmin()">📊 MARKET VALUES</button>
       
       <button class="adm-btn" onclick="clearAll()">✕ Clear / New VIN</button>
 
@@ -1042,6 +1042,18 @@ function loadVinFromJournal(vin){
   document.getElementById('adm-vin').value=vin;
   showTab('vehicle');
   admDecode();
+}
+
+
+function populateMVTabFromAdmin(){
+  if(!admVinData) return;
+  var b=admVinData.build||admVinData;
+  var msrp=(b.msrp||b.base_price)||27000;
+  var rough=Math.round(msrp*0.52*admCondMult);
+  var avg=Math.round(msrp*0.62*admCondMult);
+  var clean=Math.round(msrp*0.72*admCondMult);
+  window.admRough=rough;window.admAvg=avg;window.admClean=clean;
+  populateMVTab(b,rough,avg,clean);
 }
 
 </script>
