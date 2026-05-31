@@ -862,8 +862,10 @@ async function lookupCustomerSubmission(vin){
       // Populate customer declared features
       if(featEl){
         if(s.features && s.features.length > 0){
+          // Auto-open the MSRP accordion to show features
+          openAcc('acc-msrp');
           featEl.innerHTML = s.features.map(function(f){
-            return '<span style="display:inline-block;background:#001A3D;border:1px solid #4D9FFF;color:#4D9FFF;padding:4px 10px;margin:3px;font-size:0.9rem;font-weight:700">✓ '+f+'</span>';
+            return '<div style="display:flex;align-items:center;gap:10px;background:#001A3D;border:3px solid #4D9FFF;color:#4D9FFF;padding:14px 20px;margin:6px 0;font-family:\'Barlow Condensed\',sans-serif;font-size:1.5rem;font-weight:900;letter-spacing:1px;">✓ '+f+'</div>';
           }).join('');
           if(s.customNotes) featEl.innerHTML += '<div style="margin-top:8px;color:#C0CFEA;font-style:italic">Notes: '+s.customNotes+'</div>';
         } else {
