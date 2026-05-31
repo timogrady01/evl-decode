@@ -12,7 +12,7 @@
   --bg:#070B14;--surface:#111827;--surface2:#1C2637;--border:#4D6A9A;
   --text:#FFFFFF;--muted:#C0CFEA;
 }
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;font-size:17px}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;font-size:18px}
 
 /* LOGIN */
 #login-screen{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;padding:40px 20px 20px 20px}
@@ -34,7 +34,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 
 /* VIN LOOKUP */
 .lookup-panel{background:#1A2340;border:3px solid #FFD740;padding:20px;margin-bottom:20px}
-.panel-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
+.panel-title{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
 .lookup-row{display:flex;gap:8px}
 .adm-inp{flex:1;background:var(--surface2);border:1.5px solid var(--border);color:#ffffff;padding:12px 14px;font-family:'Share Tech Mono',monospace;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;outline:none}
 .adm-inp:focus{border-color:var(--purple)}
@@ -45,7 +45,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .adm-btn.gold:hover{background:#E6A800}
 .adm-btn.green{background:#005A2B;border:2px solid #00E676;color:#00E676}
 .adm-btn.green:hover{background:#00A844}
-.status-bar{font-family:'Share Tech Mono',monospace;font-size:1.1rem;letter-spacing:1px;padding:6px 0;margin-top:8px;color:var(--muted)}
+.status-bar{font-family:'Share Tech Mono',monospace;font-size:1.2rem;letter-spacing:1px;padding:8px 0;margin-top:8px;color:var(--muted)}
 .status-bar.ok{color:var(--green)}
 .status-bar.err{color:var(--red)}
 .status-bar.loading{color:var(--gold);animation:blink 0.7s step-end infinite}
@@ -55,14 +55,14 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .data-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .data-panel{background:#1A2340;border:3px solid #FFFFFF;padding:18px}
 .data-panel.full{grid-column:1/-1}
-.dp-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #FFFFFF}
+.dp-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #FFFFFF}
 .dp-title.blue{color:var(--blue)}
 .dp-title.green{color:var(--green)}
 .dp-title.gold{color:var(--gold)}
 .dp-title.purple{color:var(--purple)}
 .data-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border:2px solid #3A4F70;background:#0F1828;margin-bottom:6px;border-radius:0}
 .data-key{font-size:1.05rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:900}
-.data-val{font-family:'Share Tech Mono',monospace;font-size:1.2rem;color:#ffffff;text-align:right;max-width:60%}
+.data-val{font-family:'Share Tech Mono',monospace;font-size:1.3rem;color:#FFD740;text-align:right;max-width:60%}
 .data-val.green{color:var(--green)}
 .data-val.gold{color:var(--gold)}
 .data-val.red{color:var(--red)}
@@ -90,7 +90,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 
 /* TABS */
 .tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--border)}
-.tab{padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#FFFFFF;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
+.tab{padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#FFFFFF;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
 .tab.active{color:var(--purple);border-bottom-color:var(--purple)}
 .tab-content{display:none;padding-top:16px}
 .tab-content.active{display:block}
@@ -212,7 +212,7 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
       <div class="data-panel" style="margin-bottom:14px">
         <div class="dp-title gold">◈ Admin Condition Override</div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
-          <button class="adm-btn" style="padding:12px;background:#041209;border:2px solid var(--green);color:var(--green)" onclick="setAdmCond('Excellent',1.12,this)">EXCELLENT</button>
+          <button class="adm-btn" style="padding:14px;font-size:1.3rem;background:#041209;border:2px solid var(--green);color:var(--green)" onclick="setAdmCond('Excellent',1.12,this)">EXCELLENT</button>
           <button class="adm-btn" style="padding:12px;background:#001A3D;border:2px solid var(--blue);color:var(--blue)" onclick="setAdmCond('Good',1.0,this)">GOOD</button>
           <button class="adm-btn" style="padding:12px;background:#2D1800;border:2px solid #FF8C00;color:#FF8C00" onclick="setAdmCond('Fair',0.85,this)">FAIR</button>
           <button class="adm-btn" style="padding:12px;background:#1A0500;border:2px solid var(--red);color:var(--red)" onclick="setAdmCond('Poor',0.68,this)">POOR</button>
