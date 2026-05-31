@@ -564,45 +564,38 @@ function openAcc(id){
 }
 
 
-// ── VIN LIVE VALIDATION ─────────────────────────────────────────────
-var recentVins = [];
-try { recentVins = JSON.parse(localStorage.getItem('evl_recent_vins')||'[]'); } catch(e){ recentVins=[]; }
+// ── VIN LIVE VALIDATION ──
+var recentVins=[];
 
 function vinLiveValidate(inp){
-  var val = inp.value.replace(/[^A-HJ-NPR-Z0-9]/gi,'').toUpperCase();
-  inp.value = val;
-  var len = val.length;
-  var counter = document.getElementById('vin-counter');
-  var check = document.getElementById('vin-check');
-  var hint = document.getElementById('vin-hint');
-  var btn = document.getElementById('adm-decode-btn');
-  
-  counter.textContent = len+'/17';
-  
-  if(len < 17){
-    counter.style.color = len > 0 ? '#FF8C00' : '#6A7A9A';
-    check.style.display = 'none';
-    inp.style.borderColor = len > 0 ? '#FF8C00' : '#4D9FFF';
-    hint.textContent = (17-len)+' MORE CHARACTERS NEEDED';
-    hint.style.color = '#FF8C00';
-    btn.style.opacity = '0.5';
-    btn.disabled = true;
+  var val=inp.value.replace(/[^A-HJ-NPR-Z0-9]/gi,'').toUpperCase();
+  inp.value=val;
+  var len=val.length;
+  var counter=document.getElementById('vin-counter');
+  var check=document.getElementById('vin-check');
+  var hint=document.getElementById('vin-hint');
+  var btn=document.getElementById('adm-decode-btn');
+  if(!counter||!btn) return;
+  counter.textContent=len+'/17';
+  if(len<17){
+    counter.style.color=len>0?'#FF8C00':'#6A7A9A';
+    if(check) check.style.display='none';
+    inp.style.borderColor=len>0?'#FF8C00':'#4D9FFF';
+    if(hint){hint.textContent=(17-len)+' MORE CHARACTERS NEEDED';hint.style.color='#FF8C00';}
+    btn.disabled=true;btn.style.opacity='0.5';
   } else {
-    counter.style.color = '#00E676';
-    check.style.display = 'block';
-    inp.style.borderColor = '#00E676';
-    hint.textContent = '✅ VIN VALID — READY TO PULL REPORT';
-    hint.style.color = '#00E676';
-    btn.style.opacity = '1';
-    btn.disabled = false;
+    counter.style.color='#00E676';
+    if(check) check.style.display='block';
+    inp.style.borderColor='#00E676';
+    if(hint){hint.textContent='✅ VIN VALID — READY TO PULL REPORT';hint.style.color='#00E676';}
+    btn.disabled=false;btn.style.opacity='1';
   }
 }
 
 function saveRecentVin(vin){
-  recentVins = recentVins.filter(v=>v!==vin);
+  recentVins=recentVins.filter(function(v){return v!==vin;});
   recentVins.unshift(vin);
   if(recentVins.length>5) recentVins=recentVins.slice(0,5);
-  try{ localStorage.setItem('evl_recent_vins', JSON.stringify(recentVins)); }catch(e){}
   renderRecentVins();
 }
 
@@ -611,8 +604,11 @@ function renderRecentVins(){
   if(!el) return;
   if(recentVins.length===0){el.style.display='none';return;}
   el.style.display='flex';
-  el.innerHTML='<span style="color:#6A7A9A;font-size:1rem;letter-spacing:1px;margin-right:10px">RECENT:</span>'+
-    recentVins.map(v=>'<button onclick="loadRecentVin(''+v+'')" style="background:#111827;border:1px solid #2A3A55;color:#4D9FFF;font-family:'Share Tech Mono',monospace;font-size:0.95rem;padding:4px 12px;cursor:pointer;letter-spacing:1px">'+v+'</button>').join('');
+  var html='<span style="color:#6A7A9A;font-size:1rem;margin-right:10px">RECENT:</span>';
+  for(var i=0;i<recentVins.length;i++){
+    html+='<button onclick="loadRecentVin(''+recentVins[i]+'')" style="background:#111827;border:1px solid #2A3A55;color:#4D9FFF;font-family:'Share Tech Mono',monospace;font-size:0.95rem;padding:4px 12px;cursor:pointer">'+recentVins[i]+'</button>';
+  }
+  el.innerHTML=html;
 }
 
 function loadRecentVin(vin){
@@ -621,9 +617,6 @@ function loadRecentVin(vin){
   vinLiveValidate(inp);
   admDecode();
 }
-
-// Run on page load
-renderRecentVins();
 
 </script>
 </body>
