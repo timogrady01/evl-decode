@@ -660,21 +660,35 @@ footer b { color: var(--blue); }
       </div>
     </div>
 
-    <!-- SUB DRAWER: PHOTOS -->
-    <div class="sub-drawer">
-      <div class="sub-drawer-hdr" onclick="toggleSub(this)" style="background:#1A0E00;border-left:4px solid var(--gold)">
-        <span class="sub-drawer-title" style="color:var(--gold)">📸 Photos — Boosts Your Offer</span>
-        <span class="sub-arrow" style="color:var(--gold)">▼ TAP TO ADD</span>
+    <!-- SUB DRAWER: PHOTOS — MANDATORY -->
+    <div class="sub-drawer" id="photo-sub-drawer">
+      <div class="sub-drawer-hdr" onclick="toggleSub(this)" style="background:#1A0A00;border:2px solid var(--gold)">
+        <span class="sub-drawer-title" style="color:var(--gold);font-size:15px">📸 EVL CERTIFICATION PHOTOS — REQUIRED</span>
+        <span class="sub-arrow" style="color:var(--gold)">▲</span>
       </div>
-      <div class="sub-drawer-body">
-        <div style="background:#0D1829;border-left:4px solid var(--gold);padding:12px 14px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">📱 Photo Guide</div>
+      <div class="sub-drawer-body open">
+
+        <!-- MONEY BANNER -->
+        <div style="background:linear-gradient(135deg,#1A0E00,#0D1829);border:2px solid var(--gold);padding:14px 16px;margin-bottom:14px">
+          <div style="font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">💰 MILEAGE = MONEY — READ THIS FIRST</div>
+          <div style="font-size:14px;color:#ffffff;line-height:1.6;margin-bottom:10px">Your vehicle is valued on 4 things: <strong style="color:var(--gold)">Year · Make · Model · ACTUAL Mileage.</strong><br>Estimating mileage can cost you <strong style="color:var(--gold)">$2,000–$5,000.</strong></div>
+          <div style="font-size:13px;color:#C8D8EE;line-height:1.5"><strong style="color:var(--blue)">You are at your car right now.</strong> Take 5 minutes. Complete the photos below. We verify your odometer to <strong style="color:var(--green)">maximize YOUR offer.</strong></div>
+        </div>
+
+        <!-- PHOTO GUIDE -->
+        <div style="background:#0D1829;border-left:4px solid var(--blue);padding:12px 14px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:8px">📱 HOW TO TAKE EACH PHOTO</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">📏 Distance:</strong> 10–15 ft for exterior</div>
-            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">☀️ Lighting:</strong> Outdoors, flash OFF</div>
-            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">📐 Angle:</strong> Landscape for exterior</div>
-            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--blue)">🔑 Odometer:</strong> Engine running</div>
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--gold)">📏 Exterior:</strong> 10–15 ft away, landscape</div>
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--gold)">☀️ Lighting:</strong> Outdoors, flash OFF</div>
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--gold)">🔑 Odometer:</strong> Engine RUNNING, numbers clear</div>
+            <div style="font-size:13px;color:#C8D8EE"><strong style="color:var(--gold)">⚠️ Dash Lights:</strong> Engine ON, photo the full dash</div>
           </div>
+        </div>
+
+        <!-- ODOMETER WARNING (shows if they try to continue without it) -->
+        <div id="odo-warning" style="display:none;background:#1A0000;border:2px solid #FF4444;padding:10px 14px;margin-bottom:10px;font-size:13px;font-weight:900;color:#FF4444;letter-spacing:1px;text-align:center">
+          ⛔ ODOMETER PHOTO IS REQUIRED — TAP THE ODOMETER SLOT BELOW
         </div>
         <div class="photo-grid">
           <div class="photo-slot" id="slot-front"><input type="file" accept="image/*" data-slot="front" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Front View</div><div class="p-hint">10 ft in front, both sides visible</div></div>
@@ -682,7 +696,7 @@ footer b { color: var(--blue); }
           <div class="photo-slot" id="slot-driver"><input type="file" accept="image/*" data-slot="driver" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Driver Side</div><div class="p-hint">Full side front to rear</div></div>
           <div class="photo-slot" id="slot-passenger"><input type="file" accept="image/*" data-slot="passenger" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Passenger Side</div><div class="p-hint">Full side profile</div></div>
           <div class="photo-slot" id="slot-interior"><input type="file" accept="image/*" data-slot="interior" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Interior / Dash</div><div class="p-hint">From driver seat, show dash & seats</div></div>
-          <div class="photo-slot" id="slot-odometer"><input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)"><div class="p-icon">📷</div><div class="p-title">Odometer</div><div class="p-hint">Engine ON — shows true mileage</div></div>
+          <div class="photo-slot" id="slot-odometer" style="border:2px solid var(--gold);border-left:4px solid var(--gold);background:#1A0E00"><input type="file" accept="image/*" data-slot="odometer" onchange="handlePhoto(this)"><div class="p-icon">🔑</div><div class="p-title" style="color:var(--gold)">Odometer ⭐ REQUIRED</div><div class="p-hint" style="color:#FFD700">Engine RUNNING · Numbers clearly visible</div></div>
           <div class="photo-slot" id="slot-lights"><input type="file" accept="image/*" data-slot="lights" onchange="handlePhoto(this)"><div class="p-icon">⚠️</div><div class="p-title">Warning Lights</div><div class="p-hint">Engine ON — no lights? Still snap it!</div></div>
           <div class="photo-slot" id="slot-tires"><input type="file" accept="image/*" data-slot="tires" onchange="handlePhoto(this)"><div class="p-icon">🛞</div><div class="p-title">Tires & Wheels</div><div class="p-hint">Kneel down, close-up one tire</div></div>
           <div class="photo-slot" id="slot-spare"><input type="file" accept="image/*" data-slot="spare" onchange="handlePhoto(this)"><div class="p-icon">🔧</div><div class="p-title">Spare Tire Area</div><div class="p-hint">Open trunk — spare, jack & tools</div></div>
@@ -751,7 +765,7 @@ footer b { color: var(--blue); }
 <script>
 const API_KEY='FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU';
 const DEALER_EMAIL='togradyevl@gmail.com';
-var vinData=null,condMult=1.0,condLabel='',photos={},checks={},ymmData={},lookupMode='vin';
+var vinData=null,condMult=1.0,condLabel='',photos={},photoUrls={},checks={},ymmData={},lookupMode='vin';
 
 // CANVAS
 var canvas=document.getElementById('sig-canvas'),ctx=canvas.getContext('2d'),drawing=false;
@@ -809,9 +823,50 @@ function updateCert(){var total=Object.keys(checks).length,pc=Object.keys(photos
 
 function injectFactoryOpts(year,make,model,trim){var key=((make||'')+'|'+(model||'')+'|'+(trim||'')).toLowerCase(),opts=null;if(OPTIONS_DB[key])opts=OPTIONS_DB[key];if(!opts){for(var k in OPTIONS_DB){if(key.indexOf(k.split('|').slice(0,2).join('|'))>=0){opts=OPTIONS_DB[k];break;}}}if(!opts)return;var section=document.getElementById('factory-section'),grid=document.getElementById('factory-grid');grid.innerHTML='';section.style.display='block';for(var i=0;i<opts.length;i++){var btn=document.createElement('button');btn.className='check-btn';btn.setAttribute('data-group','pkg');btn.setAttribute('data-val',opts[i]);btn.innerHTML='<div class="chk"></div><div><span class="check-main">'+opts[i]+'</span></div>';btn.addEventListener('click',function(){toggleCheck(this);});grid.appendChild(btn);}}
 
-function handlePhoto(input){var slot=input.dataset.slot,file=input.files[0];if(!file)return;photos[slot]=file;var el=document.getElementById('slot-'+slot);el.classList.add('done');el.querySelector('.p-icon').textContent='✅';el.querySelector('.p-title').textContent='✓ Uploaded';updateCert();}
+function handlePhoto(input){
+  var slot=input.dataset.slot,file=input.files[0];
+  if(!file)return;
+  photos[slot]=file;
+  var el=document.getElementById('slot-'+slot);
+  // Show uploading state
+  el.style.opacity='0.6';
+  el.querySelector('.p-icon').textContent='⏳';
+  el.querySelector('.p-title').textContent='Uploading...';
+  // Upload to Cloudinary
+  var fd=new FormData();
+  fd.append('file',file);
+  fd.append('upload_preset','evl_photos');
+  fd.append('folder','evl_submissions/'+Date.now());
+  fd.append('context','slot='+slot);
+  fetch('https://api.cloudinary.com/v1_1/evl-platform/image/upload',{method:'POST',body:fd})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.secure_url){
+        photoUrls[slot]=d.secure_url;
+        el.style.opacity='1';
+        el.classList.add('done');
+        el.querySelector('.p-icon').textContent='✅';
+        el.querySelector('.p-title').textContent='✓ Uploaded';
+        if(slot==='odometer'){document.getElementById('odo-warning').style.display='none';}
+      } else {
+        // Upload failed — still mark locally
+        el.style.opacity='1';
+        el.classList.add('done');
+        el.querySelector('.p-icon').textContent='📷';
+        el.querySelector('.p-title').textContent='✓ Saved locally';
+      }
+      updateCert();
+    })
+    .catch(function(){
+      el.style.opacity='1';
+      el.classList.add('done');
+      el.querySelector('.p-icon').textContent='📷';
+      el.querySelector('.p-title').textContent='✓ Saved locally';
+      updateCert();
+    });
+}
 
-function confirmStep(n){if(n===1&&lookupMode==='vin'&&!vinData){alert('Please decode a VIN first.');return;}if(n===2){if(!condLabel){alert('Please select a condition rating.');return;}var m1=document.getElementById('miles-inp').value,m2=(document.getElementById('ymm-miles')?document.getElementById('ymm-miles').value:'');if(!m1&&!m2){alert('Please enter current mileage.');return;}}if(n===3){document.getElementById('submit-btn').style.display='block';setTimeout(resizeCanvas,400);}var d=document.getElementById('d'+n);d.classList.remove('active');d.classList.add('done');document.getElementById('sn'+n).textContent='✓';var et=document.getElementById('edit'+n);if(et)et.style.display='inline';document.getElementById('p'+n).classList.remove('active');document.getElementById('p'+n).classList.add('done');document.getElementById('pl'+n).classList.remove('active');document.getElementById('pl'+n).classList.add('done');if(n===2&&vinData){var b=vinData.build||vinData;injectFactoryOpts(b.year,b.make,b.model,b.trim);}var next=n+1;if(next<=4){var nd=document.getElementById('d'+next);nd.classList.remove('locked');nd.classList.add('active');document.getElementById('p'+next).classList.add('active');document.getElementById('pl'+next).classList.add('active');setTimeout(function(){nd.scrollIntoView({behavior:'smooth',block:'start'});},150);}}
+function confirmStep(n){if(n===1&&lookupMode==='vin'&&!vinData){alert('Please decode a VIN first.');return;}if(n===2){if(!condLabel){alert('Please select a condition rating.');return;}var m1=document.getElementById('miles-inp').value,m2=(document.getElementById('ymm-miles')?document.getElementById('ymm-miles').value:'');if(!m1&&!m2){alert('Please enter current mileage.');return;}}if(n===3){if(!photos['odometer']){document.getElementById('odo-warning').style.display='block';document.getElementById('photo-sub-drawer').scrollIntoView({behavior:'smooth',block:'start'});return;}document.getElementById('odo-warning').style.display='none';document.getElementById('submit-btn').style.display='block';setTimeout(resizeCanvas,400);}var d=document.getElementById('d'+n);d.classList.remove('active');d.classList.add('done');document.getElementById('sn'+n).textContent='✓';var et=document.getElementById('edit'+n);if(et)et.style.display='inline';document.getElementById('p'+n).classList.remove('active');document.getElementById('p'+n).classList.add('done');document.getElementById('pl'+n).classList.remove('active');document.getElementById('pl'+n).classList.add('done');if(n===2&&vinData){var b=vinData.build||vinData;injectFactoryOpts(b.year,b.make,b.model,b.trim);}var next=n+1;if(next<=4){var nd=document.getElementById('d'+next);nd.classList.remove('locked');nd.classList.add('active');document.getElementById('p'+next).classList.add('active');document.getElementById('pl'+next).classList.add('active');setTimeout(function(){nd.scrollIntoView({behavior:'smooth',block:'start'});},150);}}
 
 function reopenStep(n){
   // Close all active drawers
@@ -840,7 +895,7 @@ function confirmYMM(){var year=document.getElementById('ymm-year').value,make=do
 );alert('MarketCheck NeoVIN opening.\n\nVIN copied: '+vin+'\nPaste it, click DECODE VIN, then WINDOW STICKER.');window.open('https://universe.marketcheck.com/neovin-decode-vin','_blank');}
 function closeModal(id){document.getElementById(id).classList.remove('open');if(id==='estimator-modal')document.getElementById('estimator-frame').src='';}
 
-function submitAudit(){var fname=document.getElementById('fname').value.trim(),lname=document.getElementById('lname').value.trim();if(!fname||!lname){alert('Please enter your name.');return;}var phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim(),notes=document.getElementById('notes-inp').value,valueRange=document.getElementById('value-num').textContent,certName=document.getElementById('cert-name').textContent,vehicleInfo='';if(lookupMode==='vin'){vehicleInfo='VIN: '+document.getElementById('vin-inp').value+'\nVEHICLE: '+document.getElementById('res-ymm').textContent+'\nTRIM: '+document.getElementById('res-trim').textContent+'\nMILEAGE: '+document.getElementById('miles-inp').value+'\nSPECS:\n'+document.getElementById('res-specs').textContent;}else{vehicleInfo='LOOKUP: YMM\nYEAR: '+ymmData.year+'\nMAKE: '+ymmData.make+'\nMODEL: '+ymmData.model+'\nBODY: '+(ymmData.body||'—')+'\nTRIM: '+(ymmData.trim||'—')+'\nDRIVETRAIN: '+(ymmData.drive||'—')+'\nEXT COLOR: '+(ymmData.color||'—')+'\nINT COLOR: '+(ymmData.intColor||'—')+'\nMILEAGE: '+ymmData.miles+'\nZIP: '+(ymmData.zip||'—')+'\nKEYS: '+(ymmData.keys||'—')+'\nFACTORY OPTIONS: '+(ymmData.options||'None');}var checksText='';for(var key in checks){checksText+=key.toUpperCase()+': '+checks[key].join(', ')+'\n';}var subject=encodeURIComponent('EVL Certified Appraisal — '+certName),body=encodeURIComponent('EVL CERTIFIED APPRAISAL\n========================\nCERTIFICATION: '+certName+'\nCUSTOMER: '+fname+' '+lname+'\nPHONE: '+phone+'\nEMAIL: '+email+'\n------------------------\n'+vehicleInfo+'\n------------------------\nCONDITION: '+condLabel+'\nESTIMATED RANGE: '+valueRange+'\n------------------------\nCHECKLIST:\n'+checksText+'\nNOTES: '+(notes||'None')+'\nPHOTOS: '+Object.keys(photos).length+' uploaded\nSIGNATURE: Captured\n========================\nEVL v7.0');window.location.href='mailto:'+DEALER_EMAIL+'?subject='+subject+'&body='+body;document.getElementById('submit-btn').style.display='none';document.getElementById('success').style.display='block';document.getElementById('success').scrollIntoView({behavior:'smooth'});}
+function submitAudit(){var fname=document.getElementById('fname').value.trim(),lname=document.getElementById('lname').value.trim();if(!fname||!lname){alert('Please enter your name.');return;}var phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim(),notes=document.getElementById('notes-inp').value,valueRange=document.getElementById('value-num').textContent,certName=document.getElementById('cert-name').textContent,vehicleInfo='';if(lookupMode==='vin'){vehicleInfo='VIN: '+document.getElementById('vin-inp').value+'\nVEHICLE: '+document.getElementById('res-ymm').textContent+'\nTRIM: '+document.getElementById('res-trim').textContent+'\nMILEAGE: '+document.getElementById('miles-inp').value+'\nSPECS:\n'+document.getElementById('res-specs').textContent;}else{vehicleInfo='LOOKUP: YMM\nYEAR: '+ymmData.year+'\nMAKE: '+ymmData.make+'\nMODEL: '+ymmData.model+'\nBODY: '+(ymmData.body||'—')+'\nTRIM: '+(ymmData.trim||'—')+'\nDRIVETRAIN: '+(ymmData.drive||'—')+'\nEXT COLOR: '+(ymmData.color||'—')+'\nINT COLOR: '+(ymmData.intColor||'—')+'\nMILEAGE: '+ymmData.miles+'\nZIP: '+(ymmData.zip||'—')+'\nKEYS: '+(ymmData.keys||'—')+'\nFACTORY OPTIONS: '+(ymmData.options||'None');}var checksText='';for(var key in checks){checksText+=key.toUpperCase()+': '+checks[key].join(', ')+'\n';}var subject=encodeURIComponent('EVL Certified Appraisal — '+certName),body=encodeURIComponent('EVL CERTIFIED APPRAISAL\n========================\nCERTIFICATION: '+certName+'\nCUSTOMER: '+fname+' '+lname+'\nPHONE: '+phone+'\nEMAIL: '+email+'\n------------------------\n'+vehicleInfo+'\n------------------------\nCONDITION: '+condLabel+'\nESTIMATED RANGE: '+valueRange+'\n------------------------\nCHECKLIST:\n'+checksText+'\nNOTES: '+(notes||'None')+'\nPHOTOS: '+Object.keys(photos).length+' uploaded\n'+Object.entries(photoUrls).map(function(e){return e[0].toUpperCase()+': '+e[1];}).join('\n')\nSIGNATURE: Captured\n========================\nEVL v7.0');window.location.href='mailto:'+DEALER_EMAIL+'?subject='+subject+'&body='+body;document.getElementById('submit-btn').style.display='none';document.getElementById('success').style.display='block';document.getElementById('success').scrollIntoView({behavior:'smooth'});}
 function toggleSub(hdr){
   var body=hdr.nextElementSibling;
   var arrow=hdr.querySelector('.sub-arrow');
