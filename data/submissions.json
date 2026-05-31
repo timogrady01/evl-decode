@@ -5,22 +5,20 @@
     "make": "Toyota",
     "model": "Camry",
     "trim": "SE",
-    "mileage": "32000",
-    "condition": "Good",
-    "zip": "75024",
+    "mileage": "—",
+    "condition": "Excellent",
     "features": [
       "Convenience Package",
       "Blind Spot Monitor",
-      "Remote Start",
-      "GARAGE KEEP ALL SERVICE RECORDS ONE OWNER NO ACCIDENTS"
+      "GARAGE KEPT 1 OWNER NO ACCIDENTS"
     ],
-    "customNotes": "GARAGE KEEP ALL SERVICE RECORDS ONE OWNER NO ACCIDENTS",
+    "customNotes": "",
     "contact": {
       "name": "TIMOTHY OGRADY",
       "email": "togradyevl@gmail.com",
       "phone": "4698772165"
     },
-    "timestamp": "2026-05-31T13:57:37.075Z",
+    "timestamp": "2026-05-31T14:03:49.133Z",
     "status": "pending"
   }
 }
