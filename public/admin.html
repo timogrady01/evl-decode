@@ -276,10 +276,22 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
           </div>
           <div class="acc-body" id="body-acc-msrp">
             <div style="font-size:1rem;color:#FFD740;letter-spacing:1px;margin-bottom:14px;padding:10px 14px;background:#1A1500;border:1px solid #FFD740;">⚠ Estimated base value when new — actual purchase price may have been higher based on trim, packages, and market conditions at time of sale</div>
-            <div class="msrp-grid">
-              <div class="msrp-box"><div class="msrp-lbl">Est. Base Value</div><div class="msrp-num" style="color:#B388FF" id="d-msrp">—</div></div>
-              <div class="msrp-box"><div class="msrp-lbl">Detected Options</div><div class="msrp-num" style="color:#FFD740" id="d-opt-msrp">—</div></div>
-              <div class="msrp-box"><div class="msrp-lbl">Est. Total When New</div><div class="msrp-num" style="color:#00E676" id="d-total-msrp">—</div></div>
+            <div class="msrp-grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
+              <div class="msrp-box">
+                <div class="msrp-lbl">Est. Base Value When New</div>
+                <div class="msrp-num" style="color:#B388FF" id="d-msrp">—</div>
+                <div style="font-size:0.8rem;color:#6A7A9A;margin-top:6px;line-height:1.4">Source: MarketCheck VIN decode. Base MSRP only — excludes options, trim upgrades, and market adjustments.</div>
+              </div>
+              <div class="msrp-box">
+                <div class="msrp-lbl">Est. Total When New</div>
+                <div class="msrp-num" style="color:#00E676" id="d-total-msrp">—</div>
+                <div style="font-size:0.8rem;color:#6A7A9A;margin-top:6px;line-height:1.4">Estimated only. Actual purchase price may vary based on trim, packages, and market conditions at time of sale.</div>
+              </div>
+            </div>
+            <div style="background:#0A1525;border:2px solid #2A3A55;padding:14px 16px;margin-bottom:14px">
+              <div style="font-size:0.85rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C0CFEA;margin-bottom:8px">Customer Declared Features</div>
+              <div style="font-size:1rem;color:#FFD740;font-style:italic;line-height:1.6" id="d-customer-features">No customer declaration on file</div>
+              <div style="font-size:0.8rem;color:#6A7A9A;margin-top:8px;line-height:1.4">⚠ Customer-reported only. EVL has not verified, inspected, or assigned value to any declared features. Final values determined by KBB, NADA, Black Book, or current market — not by EVL.</div>
             </div>
           </div>
         </div>
