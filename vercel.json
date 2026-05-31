@@ -5,6 +5,54 @@
       "destination": "/api/decode.js"
     },
     {
+      "source": "/ws",
+      "destination": "/ws/index.html"
+    },
+    {
+      "source": "/ws/",
+      "destination": "/ws/index.html"
+    },
+    {
+      "source": "/ws/dashboard",
+      "destination": "/ws/dashboard.html"
+    },
+    {
+      "source": "/ws/dashboard.html",
+      "destination": "/ws/dashboard.html"
+    },
+    {
+      "source": "/ws/exchange",
+      "destination": "/ws/exchange.html"
+    },
+    {
+      "source": "/ws/exchange.html",
+      "destination": "/ws/exchange.html"
+    },
+    {
+      "source": "/ws/vault",
+      "destination": "/ws/vault.html"
+    },
+    {
+      "source": "/ws/vault.html",
+      "destination": "/ws/vault.html"
+    },
+    {
+      "source": "/ws/onboarding",
+      "destination": "/ws/onboarding.html"
+    },
+    {
+      "source": "/ws/onboarding.html",
+      "destination": "/ws/onboarding.html"
+    },
+    {
+      "source": "/ws/dealers",
+      "destination": "/ws/dealers.html"
+    },
+    {
+      "source": "/ws/dealers.html",
+      "destination": "/ws/dealers.html"
+    },
+    {
       "source": "/home",
       "destination": "/public/home.html"
     },
