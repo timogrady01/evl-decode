@@ -342,7 +342,7 @@ select.inp{cursor:pointer;}
   <div class="drawer locked" id="d3">
     <div class="drawer-hdr" style="cursor:default;background:linear-gradient(135deg,#001A00,#000D00);border-bottom:2px solid #00E676">
       <div class="drawer-hdr-left">
-        <div class="step-num" style="background:#00E676;border-color:#00E676;color:#000;font-size:1.3rem">💰</div>
+        <div class="step-num" style="background:#00E676;border-color:#00E676;color:#000;font-size:1.8rem;width:64px;height:64px;">💰</div>
         <div>
           <div class="drawer-title" style="color:#00E676">WANT MORE VALUE FOR YOUR RIDE?</div>
           <div class="drawer-sub">Vehicles with more features typically command higher offers — tell us what you have</div>
@@ -719,9 +719,13 @@ function closeDrawer(n){
 
 function advanceStep(currentStep){
   closeDrawer(currentStep);
-  openDrawer(currentStep+1);
-  if(currentStep===2){ updateCert(); }
-  if(currentStep===3){ updateCert(); }
+  // Unlock and open next drawer
+  var next=document.getElementById('d'+(currentStep+1));
+  if(next){
+    next.classList.remove('locked');
+    openDrawer(currentStep+1);
+  }
+  if(currentStep>=2){ updateCert(); }
 }
 
 function confirmStep(n){ advanceStep(n); }
