@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/journal",
+      "destination": "/api/journal.js"
+    },
+    {
       "source": "/api/submit",
       "destination": "/api/submit.js"
     },
