@@ -41,8 +41,8 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .adm-btn{background:var(--purple);color:#ffffff;border:none;padding:13px 18px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all 0.2s;text-align:center;width:100%}
 .adm-btn:hover{background:#6D28D9}
 .adm-btn:disabled{background:var(--border);cursor:not-allowed}
-.adm-btn.gold{background:#4A3000;border:2px solid #FFD740;color:#FFD740}
-.adm-btn.gold:hover{background:#E6A800}
+.adm-btn.gold{background:#001A3D;border:2px solid #4D9FFF;color:#4D9FFF}
+.adm-btn.gold:hover{background:#002A5C}
 .adm-btn.green{background:#005A2B;border:2px solid #00E676;color:#00E676}
 .adm-btn.green:hover{background:#00A844}
 .status-bar{font-family:'Share Tech Mono',monospace;font-size:1.2rem;letter-spacing:1px;padding:8px 0;margin-top:8px;color:var(--muted)}
@@ -453,7 +453,7 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
     <!-- ACTION ROW -->
     <div class="action-row" style="margin-top:20px">
       <button class="adm-btn green" onclick="generateOffer()">📋 Generate Offer Sheet</button>
-      <button class="adm-btn gold" onclick="openAdmEstimator()">💰 MC TRADE ESTIMATOR</button>
+      <button class="adm-btn gold" onclick="showTab('market')">📊 VIEW MARKET VALUE</button>
       <button class="adm-btn" style="background:#1a3a6b;border-color:#2B84FE;" onclick="openKBB()">📘 KBB VALUE</button>
       
       <button class="adm-btn" onclick="clearAll()">✕ Clear / New VIN</button>
@@ -499,6 +499,10 @@ function doLogin(){
 function showTab(id){
   // Update tab buttons
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  // Auto-populate market value tab when switched to
+  if(id==='market' && window.admRough){
+    populateMVTab(admVinData?admVinData.build||admVinData:{}, window.admRough, window.admAvg, window.admClean);
+  }
   var activeBtn=document.querySelector('.tab[onclick*="showTab(\'"+id+"\')"]');
   if(activeBtn) activeBtn.classList.add('active');
 
@@ -608,11 +612,6 @@ function openNeoVIN(){
   window.open('https://universe.marketcheck.com/neovin-decode-vin','_blank');
 }
 
-function openAdmEstimator(){
-  const vin=document.getElementById('adm-vin').value.trim();
-  var ts=new Date().getTime();
-  window.open('https://apps.marketcheck.com/apps/trade-in-estimator/dist/index.html?api_key='+API_KEY+'&vin='+vin+'&embed=true&t='+ts,'_blank');
-}
 
 function setAdmStatus(msg,type){
   const el=document.getElementById('adm-status');
