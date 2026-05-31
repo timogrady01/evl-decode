@@ -452,11 +452,10 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
 
     <!-- ACTION ROW -->
     <div class="action-row" style="margin-top:20px">
-      <button class="adm-btn green" onclick="generateOffer()">📋 Generate Offer Sheet</button>
-      <button class="adm-btn gold" onclick="showTab('market')">📊 VIEW MARKET VALUE</button>
-      <button class="adm-btn" style="background:#1a3a6b;border-color:#2B84FE;" onclick="showTab('market');populateMVTabFromAdmin()">📊 MARKET VALUES</button>
-      
-      <button class="adm-btn" onclick="clearAll()">✕ Clear / New VIN</button>
+      <button class="adm-btn green" onclick="generateOffer()">📋 GENERATE OFFER SHEET</button>
+      <button class="adm-btn gold" onclick="showTab('market');populateMVTabFromAdmin()">📊 MARKET VALUES</button>
+      <button class="adm-btn" style="background:#1a3a6b;border-color:#2B84FE;" onclick="showTab('journal');loadJournal()">📋 JOURNAL</button>
+      <button class="adm-btn" onclick="clearAll()">✕ CLEAR / NEW VIN</button>
 
     <!-- TAB: JOURNAL -->
     <div class="tab-content" id="tab-journal">
