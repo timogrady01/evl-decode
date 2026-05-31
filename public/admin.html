@@ -268,6 +268,8 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
           </div>
         </div>
 
+        <div id="customer-submission-banner" style="display:none;margin-bottom:10px"></div>
+
         <!-- DRAWER 3: MSRP & PRICING -->
         <div class="accordion" id="acc-msrp">
           <div class="acc-header" onclick="toggleAcc('acc-msrp')">
@@ -529,6 +531,8 @@ async function admDecode(){
       if(nr.ok){const nd=await nr.json();populateEquipment(nd);}
     }catch(e){document.getElementById('equip-list').textContent='NeoVIN data not available for this VIN';}
     setAdmStatus(`✓ FULL REPORT LOADED — ${new Date().toLocaleTimeString()}`,'ok');
+    // Auto-lookup customer submission for this VIN
+    lookupCustomerSubmission(vin);
   }catch(err){
     setAdmStatus(`ERROR: ${err.message}`,'err');
   }finally{btn.disabled=false;}
@@ -835,6 +839,67 @@ function setSlider(id,low,high,val){
   var dot=document.getElementById(id+'-dot');
   if(fill) fill.style.width=pct+'%';
   if(dot) dot.style.left=pct+'%';
+}
+
+
+// ── CUSTOMER SUBMISSION AUTO-LOOKUP ──────────────────────────────────
+async function lookupCustomerSubmission(vin){
+  try {
+    var res = await fetch('/api/lookup?vin='+vin);
+    var data = await res.json();
+    
+    var featEl = document.getElementById('d-customer-features');
+    var timeEl = document.getElementById('d-submission-time');
+    var contactEl = document.getElementById('d-customer-contact');
+    var bannerEl = document.getElementById('customer-submission-banner');
+    
+    if(data.found && data.submission){
+      var s = data.submission;
+      
+      // Populate customer declared features
+      if(featEl){
+        if(s.features && s.features.length > 0){
+          featEl.innerHTML = s.features.map(function(f){
+            return '<span style="display:inline-block;background:#001A3D;border:1px solid #4D9FFF;color:#4D9FFF;padding:4px 10px;margin:3px;font-size:0.9rem;font-weight:700">✓ '+f+'</span>';
+          }).join('');
+          if(s.customNotes) featEl.innerHTML += '<div style="margin-top:8px;color:#C0CFEA;font-style:italic">Notes: '+s.customNotes+'</div>';
+        } else {
+          featEl.textContent = 'No additional features declared';
+        }
+      }
+
+      // Show submission banner
+      if(bannerEl){
+        bannerEl.style.display='block';
+        bannerEl.innerHTML = '<div style="background:#001A00;border:2px solid #00E676;padding:12px 16px;margin-bottom:12px">' +
+          '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;font-weight:900;color:#00E676;letter-spacing:2px;margin-bottom:6px">⚡ CUSTOMER SUBMISSION ON FILE</div>' +
+          '<div style="font-size:1rem;color:#FFFFFF">Submitted: <strong>' + new Date(s.timestamp).toLocaleString() + '</strong></div>' +
+          '<div style="font-size:1rem;color:#FFFFFF;margin-top:4px">Condition: <strong style="color:#FFD740">' + (s.condition||'—') + '</strong> &nbsp;|&nbsp; Mileage: <strong style="color:#FFD740">' + (s.mileage ? Number(s.mileage).toLocaleString()+' mi' : '—') + '</strong></div>' +
+          (s.contact && s.contact.name ? '<div style="font-size:1rem;color:#FFFFFF;margin-top:4px">Customer: <strong>' + s.contact.name + '</strong> &nbsp;|&nbsp; ' + (s.contact.email||'') + ' &nbsp;|&nbsp; ' + (s.contact.phone||'') + '</div>' : '') +
+          '</div>';
+      }
+
+      // Update odometer display on market value tab
+      if(s.mileage){
+        var odoEl = document.getElementById('mv-odo-display');
+        if(odoEl) odoEl.textContent = Number(s.mileage).toLocaleString()+' mi';
+      }
+
+      // Update market value vehicle bar
+      if(s.year && s.make && s.model){
+        var mvName = document.getElementById('mv-vehicle-name');
+        if(mvName) mvName.textContent = (s.year+' '+s.make+' '+s.model+' '+(s.trim||'')).trim().toUpperCase();
+      }
+
+      setAdmStatus('✓ FULL REPORT LOADED — Customer submission found for this VIN','ok');
+
+    } else {
+      if(featEl) featEl.textContent = 'No customer submission on file for this VIN';
+      if(bannerEl) bannerEl.style.display='none';
+    }
+  } catch(e){
+    console.log('Lookup error:', e);
+  }
 }
 
 </script>
