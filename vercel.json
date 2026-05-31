@@ -5,24 +5,24 @@
       "destination": "/api/decode.js"
     },
     {
+      "source": "/ws-login.html",
+      "destination": "/public/ws-login.html"
+    },
+    {
+      "source": "/ws-login",
+      "destination": "/public/ws-login.html"
+    },
+    {
+      "source": "/ws-dashboard.html",
+      "destination": "/public/ws-dashboard.html"
+    },
+    {
+      "source": "/ws-dashboard",
+      "destination": "/public/ws-dashboard.html"
+    },
+    {
       "source": "/ws",
       "destination": "/public/ws-login.html"
-    },
-    {
-      "source": "/ws/",
-      "destination": "/public/ws-login.html"
-    },
-    {
-      "source": "/ws/index.html",
-      "destination": "/public/ws-login.html"
-    },
-    {
-      "source": "/ws/dashboard.html",
-      "destination": "/public/ws-dashboard.html"
-    },
-    {
-      "source": "/ws/dashboard",
-      "destination": "/public/ws-dashboard.html"
     },
     {
       "source": "/home.html",
@@ -65,20 +65,20 @@
       "destination": "/public/contact.html"
     },
     {
-      "source": "/tradein.html",
-      "destination": "/public/index.html"
-    },
-    {
-      "source": "/tradein",
-      "destination": "/public/index.html"
-    },
-    {
       "source": "/admin.html",
       "destination": "/public/admin.html"
     },
     {
       "source": "/admin",
       "destination": "/public/admin.html"
+    },
+    {
+      "source": "/tradein.html",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/tradein",
+      "destination": "/public/index.html"
     },
     {
       "source": "/privacy.html",
@@ -95,14 +95,6 @@
     {
       "source": "/terms",
       "destination": "/public/terms.html"
-    },
-    {
-      "source": "/service-agreement.html",
-      "destination": "/public/service-agreement.html"
-    },
-    {
-      "source": "/service-agreement",
-      "destination": "/public/service-agreement.html"
     },
     {
       "source": "/financing.html",
@@ -127,6 +119,14 @@
     {
       "source": "/refund",
       "destination": "/public/refund.html"
+    },
+    {
+      "source": "/service-agreement.html",
+      "destination": "/public/service-agreement.html"
+    },
+    {
+      "source": "/service-agreement",
+      "destination": "/public/service-agreement.html"
     },
     {
       "source": "/",
