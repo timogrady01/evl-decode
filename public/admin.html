@@ -606,7 +606,8 @@ function renderRecentVins(){
   el.style.display='flex';
   var html='<span style="color:#6A7A9A;font-size:1rem;margin-right:10px">RECENT:</span>';
   for(var i=0;i<recentVins.length;i++){
-    html+='<button onclick="loadRecentVin(''+recentVins[i]+'')" style="background:#111827;border:1px solid #2A3A55;color:#4D9FFF;font-family:'Share Tech Mono',monospace;font-size:0.95rem;padding:4px 12px;cursor:pointer">'+recentVins[i]+'</button>';
+    var v=recentVins[i];
+    html+='<button onclick="loadRecentVin(this.dataset.vin)" data-vin="'+v+'" style="background:#111827;border:1px solid #2A3A55;color:#4D9FFF;font-size:0.95rem;padding:4px 12px;cursor:pointer">'+v+'</button>';
   }
   el.innerHTML=html;
 }
