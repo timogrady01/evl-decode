@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0A0A08;--s1:#111110;--s2:#1A1A16;--s3:#222220;
+  --gold:#F5C842;--gold2:#D4A820;--gold3:#FFE580;
+  --green:#00C853;--red:#FF3333;--orange:#FF8C00;--blue:#2B84FE;
+  --muted:#C8C4A8;--border:rgba(245,200,66,0.2);--border2:rgba(245,200,66,0.35);
+}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;-webkit-font-smoothing:antialiased;min-height:100vh;}
+nav{background:rgba(10,10,8,0.98);border-bottom:2px solid var(--border2);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.nav-logo{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;text-decoration:none;}
+.nav-logo span{color:#fff;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;padding:6px 0;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-badge{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;text-decoration:none;}
+.page-header{background:linear-gradient(160deg,#1A1600,var(--bg));border-bottom:2px solid var(--border);padding:32px 40px;}
+.ph-dealer{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.ph-title{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;}
+.ph-sub{color:var(--muted);font-size:16px;margin-top:6px;}
+.wrap{padding:40px;}
+.sec-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:20px;}
+.card{background:var(--s1);border:1px solid var(--border);padding:28px;margin-bottom:20px;}
+.card-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--s2);color:var(--muted);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;text-align:left;border-bottom:2px solid var(--border);}
+td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:15px;color:#fff;}
+tr:hover td{background:var(--s2);}
+.badge{display:inline-block;padding:4px 10px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.badge-green{background:rgba(0,200,83,.15);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+.badge-gold{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid var(--border2);}
+.badge-blue{background:rgba(43,132,254,.15);color:var(--blue);border:1px solid rgba(43,132,254,.3);}
+.badge-red{background:rgba(255,51,51,.15);color:var(--red);border:1px solid rgba(255,51,51,.3);}
+.btn{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn:hover{background:var(--gold3);}
+.btn-outline{background:none;border:2px solid var(--border2);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;cursor:pointer;text-decoration:none;display:inline-block;}
+.inp{background:var(--s2);border:1px solid var(--border2);color:#fff;font-family:"Barlow",sans-serif;font-size:15px;padding:12px 16px;width:100%;outline:none;}
+.inp:focus{border-color:var(--gold);}
+label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.form-row{margin-bottom:18px;}
+.stat-box{background:var(--s1);border:1px solid var(--border);padding:24px 28px;}
+.stat-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.stat-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;line-height:1;color:var(--gold);}
+.divider{border:none;border-top:1px solid var(--border);margin:24px 0;}
+</style>
+</head>
+<body><nav>
+<a class="nav-logo" href="/ws-dashboard.html">⚡ WS-EVL <span>// COMMAND</span></a>
+<div class="nav-links">
+  <a href="/ws-dashboard.html">DASHBOARD</a>
+  <a href="/ws-exchange.html">EXCHANGE</a>
+  <a href="/ws-vault.html">THE VAULT</a>
+  <a href="/ws-onboarding.html">ONBOARDING</a>
+  <a href="/ws-dealers.html">DEALERS</a>
+  <a href="/" class="nav-badge" style="background:var(--s2);color:var(--gold);border:2px solid var(--border2);">← EVL CUSTOMER</a>
+</div>
+</nav>
+<div class="page-header">
+  <div class="ph-dealer">⚡ WS-EVL Wholesale</div>
+  <div class="ph-title">The Vault</div>
+  <div class="ph-sub">Secure document storage — deal files, titles, contracts</div>
+</div>
+<div class="wrap">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;">
+    <div class="sec-title">📁 Deal Files</div>
+    <button class="btn">+ UPLOAD DOCUMENT</button>
+  </div>
+  <div class="grid3" style="margin-bottom:32px;">
+    <div class="stat-box"><div class="stat-lbl">Total Files</div><div class="stat-num">84</div></div>
+    <div class="stat-box"><div class="stat-lbl">Pending Signatures</div><div class="stat-num" style="color:var(--orange);">3</div></div>
+    <div class="stat-box"><div class="stat-lbl">Completed Deals</div><div class="stat-num" style="color:var(--green);">61</div></div>
+  </div>
+  <table>
+    <thead><tr>
+      <th>Document</th><th>Deal / Vehicle</th><th>Type</th><th>Uploaded</th><th>Status</th><th>Action</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>Purchase Agreement</strong></td><td>2023 Camry SE — Johnson</td><td><span class="badge badge-blue">CONTRACT</span></td><td>May 30, 2026</td><td><span class="badge badge-green">SIGNED</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Title — Clear</strong></td><td>2022 F-150 XLT</td><td><span class="badge badge-gold">TITLE</span></td><td>May 29, 2026</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:var(--orange);border:1px solid rgba(255,140,0,.3);">PENDING</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Inspection Report</strong></td><td>2024 CR-V EX</td><td><span class="badge badge-blue">INSPECTION</span></td><td>May 28, 2026</td><td><span class="badge badge-green">COMPLETE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Carfax Report</strong></td><td>2023 BMW 330i</td><td><span class="badge badge-blue">HISTORY</span></td><td>May 27, 2026</td><td><span class="badge badge-green">CLEAN</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Window Sticker</strong></td><td>2021 Silverado LT</td><td><span class="badge badge-gold">FACTORY</span></td><td>May 26, 2026</td><td><span class="badge badge-green">ON FILE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+    </tbody>
+  </table>
+</div>
+</body></html>
