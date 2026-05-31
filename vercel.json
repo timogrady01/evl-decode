@@ -13,6 +13,10 @@
       "destination": "/ws/index.html"
     },
     {
+      "source": "/ws/index.html",
+      "destination": "/ws/index.html"
+    },
+    {
       "source": "/ws/dashboard",
       "destination": "/ws/dashboard.html"
     },
