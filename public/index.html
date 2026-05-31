@@ -489,7 +489,61 @@ function loadMakes(){var makeEl=document.getElementById('ymm-make'),modelEl=docu
 function loadModels(){var make=document.getElementById('ymm-make').value;if(!make)return;var modelEl=document.getElementById('ymm-model'),trimEl=document.getElementById('ymm-trim'),models=VEHICLE_DB[make]||[];modelEl.innerHTML='<option value="">Select Model</option>';for(var i=0;i<models.length;i++){var o=document.createElement('option');o.value=models[i];o.textContent=models[i];modelEl.appendChild(o);}modelEl.disabled=false;trimEl.innerHTML='<option value="">Select Model First</option>';trimEl.disabled=true;}
 function loadTrims(){var make=document.getElementById('ymm-make').value,model=document.getElementById('ymm-model').value;if(!model)return;var trimEl=document.getElementById('ymm-trim'),key=(make+'|'+model).toLowerCase(),trims=TRIM_DB[key]||['Base/Standard','S','SE','SEL','LE','XLE','LT','LTZ','EX','EX-L','Limited','Sport','Premium','Touring','Platinum'];trimEl.innerHTML='<option value="">Select Trim</option>';for(var i=0;i<trims.length;i++){var o=document.createElement('option');o.value=trims[i];o.textContent=trims[i];trimEl.appendChild(o);}trimEl.disabled=false;}
 function loadOptions(){var make=document.getElementById('ymm-make').value,model=document.getElementById('ymm-model').value,trim=document.getElementById('ymm-trim').value;if(!trim)return;var key=(make+'|'+model+'|'+trim).toLowerCase(),opts=OPTIONS_DB[key]||GENERIC_OPTIONS;var hint=document.getElementById('ymm-opts-hint'),grid=document.getElementById('ymm-opts-grid');hint.style.display='none';grid.style.display='grid';grid.innerHTML='';for(var i=0;i<opts.length;i++){var btn=document.createElement('button');btn.className='check-btn';btn.setAttribute('data-group','factory-opt');btn.setAttribute('data-val',opts[i]);btn.innerHTML='<div class="chk"></div><div><span class="check-main">'+opts[i]+'</span></div>';(function(b){b.addEventListener('click',function(e){e.preventDefault();b.classList.toggle('selected');b.querySelector('.chk').textContent=b.classList.contains('selected')?'✓':'';var g=b.getAttribute('data-group'),v=b.getAttribute('data-val');if(!checks[g])checks[g]=[];if(b.classList.contains('selected')){if(checks[g].indexOf(v)<0)checks[g].push(v);}else{checks[g]=checks[g].filter(function(x){return x!==v;});}});})(btn);grid.appendChild(btn);}}
-async function runDecode(){var vin=document.getElementById('vin-inp').value.trim().toUpperCase(),btn=document.getElementById('decode-btn');if(vin.length!==17){setStatus('Invalid — 17 characters required','err');return;}setStatus('Scanning MarketCheck Radar...','loading');btn.disabled=true;try{var r=await fetch('/api/decode?vin='+vin,{signal:AbortSignal.timeout(10000)});var d=await r.json();if(d.error)throw new Error(d.error);vinData=d;var b=d.build||d;document.getElementById('res-ymm').textContent=(b.year||'')+' '+(b.make||'')+' '+(b.model||'');document.getElementById('res-trim').textContent=b.trim||b.trim_name||'BASE';var specs=[b.engine?'ENGINE:    '+b.engine:null,b.engine_size?'DISPLACE:  '+b.engine_size+'L':null,b.transmission?'TRANS:     '+b.transmission:null,b.drivetrain?'DRIVE:     '+b.drivetrain:null,b.fuel_type?'FUEL:      '+b.fuel_type:null,b.body_type?'BODY:      '+b.body_type:null,b.doors?'DOORS:     '+b.doors:null,b.highway_mpg?'HWY MPG:   '+b.highway_mpg:null,b.city_mpg?'CITY MPG:  '+b.city_mpg:null].filter(Boolean).join('\n');document.getElementById('res-specs').textContent=specs||'Decoded — see fields above.';setStatus('✓ Sync successful','ok');document.getElementById('decoded-wrap').style.display='block';injectFactoryOpts(b.year,b.make,b.model,b.trim);}catch(err){setStatus('Sync error — check VIN & retry','err');}finally{btn.disabled=false;}}
+async function runDecode(){
+  var vin=document.getElementById('vin-inp').value.trim().toUpperCase();
+  var btn=document.getElementById('decode-btn');
+  if(vin.length!==17){setStatus('Invalid — 17 characters required','err');return;}
+  setStatus('Scanning MarketCheck Intelligence...','loading');
+  btn.disabled=true;
+  btn.textContent='DECODING...';
+
+  fetch('/api/decode?vin='+vin, {signal:AbortSignal.timeout(10000)})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data.error) throw new Error(data.error);
+      
+      // Store globally
+      window.vinData = data;
+      window.decodedData = data.build || data;
+      var b = window.decodedData;
+
+      // Populate new decoded card
+      var year = b.year||'';
+      var make = b.make||'';
+      var model = b.model||'';
+      var trim = b.trim||b.trim_name||'';
+      
+      var titleEl = document.getElementById('dc-title');
+      var vinEl = document.getElementById('dc-vin');
+      if(titleEl) titleEl.textContent = (year+' '+make+' '+model+' '+trim).trim();
+      if(vinEl) vinEl.textContent = 'VIN: '+vin;
+      
+      var set = function(id,val){ var el=document.getElementById(id); if(el) el.textContent=val||'—'; };
+      set('dc-body', b.body_type);
+      set('dc-engine', b.engine);
+      set('dc-drive', b.drivetrain);
+      set('dc-trans', b.transmission);
+      set('dc-fuel', b.fuel_type);
+      set('dc-mpg', (b.city_mpg&&b.highway_mpg) ? b.city_mpg+' / '+b.highway_mpg+' mpg' : '—');
+
+      // Show the decoded card
+      var card = document.getElementById('decoded-card');
+      if(card) card.style.display='block';
+
+      setStatus('✓ Vehicle identified — confirm below','ok');
+      btn.disabled=false;
+      btn.textContent='DECODE';
+
+      // Store for appraisal report
+      window.certVin = vin;
+    })
+    .catch(function(err){
+      setStatus('Error: '+err.message,'err');
+      btn.disabled=false;
+      btn.textContent='DECODE';
+    });
+}
+
 function selectCond(btn){document.querySelectorAll('.cond-btn').forEach(function(b){b.classList.remove('selected');});btn.classList.add('selected');condMult=parseFloat(btn.dataset.mult);condLabel=btn.dataset.cond;updateValue();document.getElementById('value-panel').classList.add('show');document.getElementById('value-cta').classList.add('show');if(lookupMode==='ymm')document.getElementById('miles-wrap2').style.display='block';}
 function updateValue(){if(!vinData)return;var b=vinData.build||vinData,msrp=b.msrp||b.base_price||0,year=b.year||new Date().getFullYear(),age=new Date().getFullYear()-year,base=msrp||28000,dep=Math.max(0.25,1-(age*0.11)),avg=Math.round(base*dep*condMult),lo=Math.round(avg*0.95),hi=Math.round(avg*1.05);document.getElementById('value-num').textContent='$'+lo.toLocaleString()+' — $'+hi.toLocaleString();}
 function updateCert(){var total=Object.keys(checks).length,pc=Object.keys(photos).length,box=document.getElementById('cert-badge');box.classList.add('show');if(total>=8&&pc>=4){box.className='cert-badge certified show';document.getElementById('cert-icon').textContent='🏆';document.getElementById('cert-name').textContent='EVL CERTIFIED';document.getElementById('cert-msg').textContent='Full documentation — priority 24hr appraisal';}else if(total>=4){box.className='cert-badge verified show';document.getElementById('cert-icon').textContent='✅';document.getElementById('cert-name').textContent='EVL VERIFIED';document.getElementById('cert-msg').textContent='Standard 48hr appraisal';}else{box.className='cert-badge show';document.getElementById('cert-icon').textContent='📋';document.getElementById('cert-name').textContent='EVL SUBMITTED';document.getElementById('cert-msg').textContent='Add more details to qualify for EVL Verified';}}
