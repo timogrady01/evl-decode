@@ -621,35 +621,75 @@ function confirmYMM(){
 }
 
 function submitAudit(){
-  // Auto-save to EVL database first
-  var vinVal = (document.getElementById('vin-inp') ? document.getElementById('vin-inp').value : 
-               document.getElementById('ymm-vin-hidden') ? document.getElementById('ymm-vin-hidden').value : '').trim().toUpperCase();
-  
-  var submissionData = {
-    vin: vinVal,
-    year: window.decodedData ? window.decodedData.year : '',
-    make: window.decodedData ? window.decodedData.make : '',
-    model: window.decodedData ? window.decodedData.model : '',
-    trim: window.decodedData ? window.decodedData.trim : '',
-    mileage: document.getElementById('miles-inp') ? document.getElementById('miles-inp').value : '',
-    condition: window.condLabel || '',
-    zip: document.getElementById('zip-inp') ? document.getElementById('zip-inp').value : '',
-    features: window.upgradeItems || [],
-    customNotes: document.getElementById('custom-upg-desc') ? document.getElementById('custom-upg-desc').value : '',
-    name: document.getElementById('contact-name') ? document.getElementById('contact-name').value : '',
-    email: document.getElementById('contact-email') ? document.getElementById('contact-email').value : '',
-    phone: document.getElementById('contact-phone') ? document.getElementById('contact-phone').value : '',
-    timestamp: new Date().toISOString()
-  };
+  var name=document.getElementById('contact-name').value.trim();
+  var email=document.getElementById('contact-email').value.trim();
+  var phone=document.getElementById('contact-phone').value.trim();
 
-  if(vinVal && vinVal.length === 17){
-    fetch('/api/submit', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(submissionData)
-    }).catch(function(e){ console.log('Submit API error:', e); });
+  if(!name||!email){
+    alert('Please enter your name and email address.');
+    return;
   }
-var fname=document.getElementById('fname').value.trim(),lname=document.getElementById('lname').value.trim();if(!fname||!lname){alert('Please enter your name.');return;}var phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim(),notes=document.getElementById('notes-inp').value,valueRange=document.getElementById('value-num').textContent,certName=document.getElementById('cert-name').textContent,vehicleInfo='';if(lookupMode==='vin'){vehicleInfo='VIN: '+document.getElementById('vin-inp').value+'\nVEHICLE: '+document.getElementById('res-ymm').textContent+'\nTRIM: '+document.getElementById('res-trim').textContent+'\nMILEAGE: '+document.getElementById('miles-inp').value+'\nSPECS:\n'+document.getElementById('res-specs').textContent;}else{vehicleInfo='LOOKUP: YMM\nYEAR: '+ymmData.year+'\nMAKE: '+ymmData.make+'\nMODEL: '+ymmData.model+'\nBODY: '+(ymmData.body||'—')+'\nTRIM: '+(ymmData.trim||'—')+'\nDRIVETRAIN: '+(ymmData.drive||'—')+'\nEXT COLOR: '+(ymmData.color||'—')+'\nINT COLOR: '+(ymmData.intColor||'—')+'\nMILEAGE: '+ymmData.miles+'\nZIP: '+(ymmData.zip||'—')+'\nKEYS: '+(ymmData.keys||'—')+'\nFACTORY OPTIONS: '+(ymmData.options||'None');}var checksText='';for(var key in checks){checksText+=key.toUpperCase()+': '+checks[key].join(', ')+'\n';}var subject=encodeURIComponent('EVL Certified Appraisal — '+certName),body=encodeURIComponent('EVL CERTIFIED APPRAISAL\n========================\nCERTIFICATION: '+certName+'\nCUSTOMER: '+fname+' '+lname+'\nPHONE: '+phone+'\nEMAIL: '+email+'\n------------------------\n'+vehicleInfo+'\n------------------------\nCONDITION: '+condLabel+'\nESTIMATED RANGE: '+valueRange+'\n------------------------\nCHECKLIST:\n'+checksText+'\nNOTES: '+(notes||'None')+'\nPHOTOS: '+Object.keys(photos).length+' uploaded\nSIGNATURE: Captured\n========================\nEVL v7.0');window.location.href='mailto:'+DEALER_EMAIL+'?subject='+subject+'&body='+body;document.getElementById('submit-btn').style.display='none';document.getElementById('success').style.display='block';document.getElementById('success').scrollIntoView({behavior:'smooth'});}
+
+  var b=window.decodedData||{};
+  var vin=window.certVin||document.getElementById('vin-inp').value;
+  var mileage=document.getElementById('miles-inp').value||'—';
+  var condition=window.condLabel||'—';
+  var upgrades=(window.upgradeItems&&window.upgradeItems.length>0)?window.upgradeItems.join(', '):'None declared';
+  var valueRange='$'+(window.valueLow||0).toLocaleString()+' — $'+(window.valueHigh||0).toLocaleString();
+  var certN='EVL-'+Date.now().toString(36).toUpperCase();
+
+  var subject=encodeURIComponent('EVL Trade-In Appraisal: '+(b.year||'')+' '+(b.make||'')+' '+(b.model||''));
+  var body=encodeURIComponent(
+    'EVL CERTIFIED APPRAISAL SUBMISSION'+
+    '\n================================'+
+    '\nCERT#: '+certN+
+    '\nDATE: '+new Date().toLocaleDateString()+
+    '\n\nCUSTOMER INFORMATION:'+
+    '\nName: '+name+
+    '\nEmail: '+email+
+    '\nPhone: '+(phone||'—')+
+    '\n\nVEHICLE:'+
+    '\n'+(b.year||'')+' '+(b.make||'')+' '+(b.model||'')+' '+(b.trim||'')+
+    '\nVIN: '+vin+
+    '\nMileage: '+mileage+
+    '\nCondition: '+condition+
+    '\n\nESTIMATED VALUE RANGE: '+valueRange+
+    '\n\nCUSTOMER DECLARED FEATURES:'+
+    '\n'+upgrades+
+    '\n\n================================'+
+    '\nDISCLOSURE: Values are estimates sourced from KBB, NADA, and market data. Not a guaranteed offer.'
+  );
+
+  // Save to EVL database
+  fetch('/api/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      vin:vin,year:b.year,make:b.make,model:b.model,trim:b.trim,
+      mileage:mileage,condition:condition,
+      features:window.upgradeItems||[],
+      name:name,email:email,phone:phone,
+      timestamp:new Date().toISOString()
+    })
+  }).catch(function(e){console.log('DB save error:',e);});
+
+  // Open email
+  window.location.href='mailto:togradyevl@gmail.com?subject='+subject+'&body='+body;
+
+  // Show success
+  document.querySelectorAll('.drawer').forEach(function(d){d.style.display='none';});
+  var successEl=document.getElementById('success');
+  if(successEl){
+    successEl.style.display='block';
+    successEl.innerHTML='<h2>✓ Submitted!</h2>'+
+      '<p>Thank you, <strong>'+name+'</strong>! Your EVL appraisal has been submitted.</p>'+
+      '<p style="margin-top:16px">Our team will review your <strong>'+(b.year||'')+' '+(b.make||'')+' '+(b.model||'')+'</strong> and contact you within <strong>24 hours</strong> with your best offer.</p>'+
+      '<p style="margin-top:16px;color:#00E676;font-weight:700">Cert # '+certN+'</p>'+
+      '<p style="margin-top:8px;font-size:0.9rem;color:#C0CFEA">Check your email — a copy of your appraisal has been sent.</p>';
+    successEl.scrollIntoView({behavior:'smooth'});
+  }
+}
+
 
 // ── UPGRADE FUNCTIONS ─────────────────────────────────────────────────
 function calcUpgrades(){
