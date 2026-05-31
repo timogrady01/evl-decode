@@ -565,7 +565,8 @@ function openAcc(id){
 
 
 // ── VIN LIVE VALIDATION ─────────────────────────────────────────────
-var recentVins = JSON.parse(localStorage.getItem('evl_recent_vins')||'[]');
+var recentVins = [];
+try { recentVins = JSON.parse(localStorage.getItem('evl_recent_vins')||'[]'); } catch(e){ recentVins=[]; }
 
 function vinLiveValidate(inp){
   var val = inp.value.replace(/[^A-HJ-NPR-Z0-9]/gi,'').toUpperCase();
@@ -601,7 +602,7 @@ function saveRecentVin(vin){
   recentVins = recentVins.filter(v=>v!==vin);
   recentVins.unshift(vin);
   if(recentVins.length>5) recentVins=recentVins.slice(0,5);
-  localStorage.setItem('evl_recent_vins', JSON.stringify(recentVins));
+  try{ localStorage.setItem('evl_recent_vins', JSON.stringify(recentVins)); }catch(e){}
   renderRecentVins();
 }
 
