@@ -80,7 +80,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .cond-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-top:8px}
 .cond-btn{padding:18px;font-family:"Barlow Condensed",sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;border:3px solid;cursor:pointer;transition:all .2s}
 .cond-btn:hover{opacity:.85}
-.override-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.override-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
 .override-lbl{font-size:1.1rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#C0CFEA;margin-bottom:8px}
 .override-inp{background:#111827;border:2px solid #4D9FFF;color:#FFFFFF;font-family:"Share Tech Mono",monospace;font-size:1.2rem;padding:12px 16px;width:100%;outline:none}
 .override-inp:focus{border-color:#FFD740}
@@ -313,7 +313,7 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
             </div>
             <div class="override-grid">
               <div><div class="override-lbl">Odometer Override</div><input class="override-inp" id="adm-odo" placeholder="e.g. 45000" type="number"></div>
-              <div><div class="override-lbl">Condition</div><input class="override-inp" id="adm-cond-display" placeholder="Select above" readonly></div>
+              
             </div>
           </div>
         </div>
@@ -321,16 +321,7 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
       </div>
 
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div>
-            <label style="font-size:1rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Odometer Override</label>
-            <input type="number" class="adm-inp" id="adm-miles" placeholder="e.g. 45000" style="font-size:0.9rem;padding:10px" oninput="calcAdmValue()">
-          </div>
-          <div>
-            <label style="font-size:1rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Condition</label>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;color:var(--gold);padding:10px;border:1.5px solid var(--border);background:var(--surface2)" id="adm-cond-label">Select above</div>
-          </div>
-        </div>
+        
       </div>
     </div>
 
