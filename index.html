@@ -836,8 +836,7 @@ function handlePhoto(input){
   var fd=new FormData();
   fd.append('file',file);
   fd.append('upload_preset','evl_photos');
-  fd.append('folder','evl_submissions/'+Date.now());
-  fd.append('context','slot='+slot);
+  fd.append('public_id','evl_'+slot+'_'+Date.now());
   fetch('https://api.cloudinary.com/v1_1/dv8cpebgp/image/upload',{method:'POST',body:fd})
     .then(function(r){return r.json();})
     .then(function(d){
@@ -849,7 +848,8 @@ function handlePhoto(input){
         el.querySelector('.p-title').textContent='✓ Uploaded';
         if(slot==='odometer'){document.getElementById('odo-warning').style.display='none';}
       } else {
-        // Upload failed — still mark locally
+        // Upload failed — log error and mark locally
+        console.error('Cloudinary response error:',JSON.stringify(d));
         el.style.opacity='1';
         el.classList.add('done');
         el.querySelector('.p-icon').textContent='📷';
@@ -857,7 +857,8 @@ function handlePhoto(input){
       }
       updateCert();
     })
-    .catch(function(){
+    .catch(function(err){
+      console.error('Cloudinary error:',err);
       el.style.opacity='1';
       el.classList.add('done');
       el.querySelector('.p-icon').textContent='📷';
