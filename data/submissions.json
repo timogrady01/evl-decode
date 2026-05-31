@@ -5,7 +5,7 @@
     "make": "Toyota",
     "model": "Camry",
     "trim": "SE",
-    "mileage": "45000",
+    "mileage": "—",
     "condition": "Excellent",
     "features": [
       "Convenience Package",
@@ -17,7 +17,7 @@
       "email": "togradyevl@gmail.com",
       "phone": "4698772165"
     },
-    "timestamp": "2026-05-31T17:34:39.535Z",
+    "timestamp": "2026-05-31T18:02:28.831Z",
     "status": "pending"
   },
   "4T1BF1FK4CU513303": {
