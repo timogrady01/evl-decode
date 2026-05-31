@@ -180,14 +180,12 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
     <!-- VIN LOOKUP -->
     <div class="lookup-panel">
       <div class="panel-title">◈ VIN Intelligence Lookup</div>
-      <div class="lookup-row">
-        <div style="flex:1;position:relative">
-          <input type="text" class="adm-inp" id="adm-vin" placeholder="ENTER 17-DIGIT VIN" maxlength="17"
-            oninput="vinLiveValidate(this)"
-            onkeydown="if(event.key==='Enter')admDecode()"
-            style="letter-spacing:3px;font-size:1.3rem;width:100%;padding-right:70px">
-          <div id="vin-counter" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:'Share Tech Mono',monospace;font-size:1rem;color:#6A7A9A;pointer-events:none">0/17</div>
-        </div>
+      <div class="lookup-row" style="display:flex;gap:8px;align-items:center">
+        <input type="text" class="adm-inp" id="adm-vin" placeholder="ENTER 17-DIGIT VIN" maxlength="17"
+          oninput="vinLiveValidate(this)"
+          onkeydown="if(event.key==='Enter')admDecode()"
+          style="flex:1;letter-spacing:3px;font-size:1.2rem">
+        <div id="vin-counter" style="font-family:'Share Tech Mono',monospace;font-size:1rem;color:#6A7A9A;white-space:nowrap;min-width:48px;text-align:center">0/17</div>
         <button class="adm-btn" id="adm-decode-btn" onclick="admDecode()" style="min-width:200px;flex-shrink:0">⚡ PULL FULL REPORT</button>
       </div>
       <div id="vin-hint" style="font-size:1rem;color:#6A7A9A;margin-top:6px;letter-spacing:1px">TYPE YOUR VIN — AUTO-VALIDATES AS YOU GO</div>
