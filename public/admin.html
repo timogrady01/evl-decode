@@ -621,28 +621,67 @@ function setAdmStatus(msg,type){
 
 function generateOffer(){
   if(!admVinData){alert('Pull a VIN report first.');return;}
-  const b=admVinData.build||admVinData;
-  const vin=document.getElementById('adm-vin').value.trim();
-  const miles=document.getElementById('adm-miles').value||'Not entered';
-  const notes=document.getElementById('adm-notes').value;
-  const floor=document.getElementById('adm-floor-val').textContent;
-  const rough=document.getElementById('adm-rough').textContent;
-  const clean=document.getElementById('adm-clean').textContent;
-  const ymm=`${b.year||''} ${b.make||''} ${b.model||''}`.trim();
-  const subject=encodeURIComponent(`EVL Internal Offer Sheet: ${ymm}`);
-  const body=encodeURIComponent(
-    `EVL INTERNAL APPRAISAL OFFER SHEET\n====================================\n`+
-    `DATE: ${new Date().toLocaleDateString()}\n`+
-    `VEHICLE: ${ymm}\nTRIM: ${b.trim||'—'}\nVIN: ${vin}\nODOMETER: ${miles}\n`+
-    `CONDITION: ${admCondLabel||'Not set'}\n`+
-    `------------------------------------\nINTERNAL VALUES:\n`+
-    `ROUGH FLOOR: ${rough}\nAVERAGE: ${floor}\nCLEAN: ${clean}\n`+
-    `------------------------------------\nNOTES:\n${notes||'None'}\n====================================`
+  var b=admVinData.build||admVinData;
+  var vin=document.getElementById('adm-vin').value.trim();
+  var miles=document.getElementById('adm-odo').value||'Not entered';
+  var notes=document.getElementById('adm-notes')?document.getElementById('adm-notes').value:'';
+  var condition=admCondLabel||'Not set';
+  var ymm=((b.year||'')+' '+(b.make||'')+' '+(b.model||'')).trim();
+  var trim=b.trim||b.trim_name||'';
+  var certN='EVL-INT-'+Date.now().toString(36).toUpperCase();
+
+  // Get value estimates
+  var msrp=(b.msrp||b.base_price)||27000;
+  var rough=Math.round(msrp*0.52*admCondMult);
+  var avg=Math.round(msrp*0.62*admCondMult);
+  var clean=Math.round(msrp*0.72*admCondMult);
+
+  // Get customer declared features
+  var featEl=document.getElementById('d-customer-features');
+  var features=featEl?featEl.textContent.replace(/✓/g,'•').trim():'None on file';
+
+  var subject=encodeURIComponent('EVL Internal Offer Sheet: '+ymm);
+  var body=encodeURIComponent(
+    'EVL INTERNAL APPRAISAL OFFER SHEET'+
+    '\n================================'+
+    '\nCERT#: '+certN+
+    '\nDATE: '+new Date().toLocaleDateString()+
+    '\nTIME: '+new Date().toLocaleTimeString()+
+    '\n'+
+    '\nVEHICLE: '+ymm+' '+trim+
+    '\nVIN: '+vin+
+    '\nODOMETER: '+miles+
+    '\nCONDITION (ADMIN): '+condition+
+    '\n'+
+    '\nINTERNAL VALUES (Est. — not guaranteed):'+
+    '\nROUGH FLOOR: $'+rough.toLocaleString()+
+    '\nAVERAGE:     $'+avg.toLocaleString()+
+    '\nCLEAN:       $'+clean.toLocaleString()+
+    '\n'+
+    '\nCUSTOMER DECLARED FEATURES:'+
+    '\n'+features+
+    '\n'+
+    '\nADMIN NOTES:'+
+    '\n'+(notes||'None')+
+    '\n'+
+    '\n================================'+
+    '\nDISCLOSURE: Internal EVL use only. Values are'+
+    '\nestimates based on MC VIN data and condition'+
+    '\nadjustment. Not a binding offer to customer.'+
+    '\nFinal offer subject to physical inspection.'
   );
-  window.location.href=`mailto:togradyevl@gmail.com?subject=${subject}&body=${body}`;
+
+  window.location.href='mailto:togradyevl@gmail.com?subject='+subject+'&body='+body;
 }
 
+
 function openKBB(){
+  var vin=document.getElementById('adm-vin').value.trim();
+  if(vin.length===17){
+    window.open('https://www.kbb.com/instant-cash-offer/?ico=true&vin='+vin,'_blank');
+    return;
+  }
+
   var vin=document.getElementById('adm-vin').value.trim().toUpperCase();
   var url='https://www.kbb.com/whats-my-car-worth/?intent=trade-in&vin='+vin;
   window.open(url,'_blank');
