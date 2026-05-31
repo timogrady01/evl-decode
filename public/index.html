@@ -896,9 +896,6 @@ function reopenStep(n){
 }
 
 function confirmYMM(){var year=document.getElementById('ymm-year').value,make=document.getElementById('ymm-make').value,model=document.getElementById('ymm-model').value,miles=document.getElementById('ymm-miles').value;if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}if(!miles){alert('Please enter current mileage.');return;}var body=document.getElementById('ymm-body').value,trim=document.getElementById('ymm-trim').value,drive=document.getElementById('ymm-drive').value,color=document.getElementById('ymm-color').value,intColor=document.getElementById('ymm-int-color').value,zip=document.getElementById('ymm-zip').value,keys=document.getElementById('ymm-keys').value;var selOpts=[];document.querySelectorAll('#ymm-opts-grid .check-btn.selected').forEach(function(b){selOpts.push(b.getAttribute('data-val'));});ymmData={year:year,make:make,model:model,body:body,trim:trim,drive:drive,color:color,intColor:intColor,miles:miles,zip:zip,keys:keys,options:selOpts.join(', ')};vinData={year:parseInt(year),make:make,model:model,trim:trim,msrp:0,build:{year:parseInt(year),make:make,model:model,trim:trim}};confirmStep(1);}
-
-
-);alert('MarketCheck NeoVIN opening.\n\nVIN copied: '+vin+'\nPaste it, click DECODE VIN, then WINDOW STICKER.');window.open('https://universe.marketcheck.com/neovin-decode-vin','_blank');}
 function closeModal(id){document.getElementById(id).classList.remove('open');if(id==='estimator-modal')document.getElementById('estimator-frame').src='';}
 
 function waitAndSubmit(){
