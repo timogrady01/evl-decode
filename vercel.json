@@ -17,51 +17,79 @@
       "destination": "/ws/index.html"
     },
     {
-      "source": "/ws/dashboard",
-      "destination": "/ws/dashboard.html"
-    },
-    {
       "source": "/ws/dashboard.html",
       "destination": "/ws/dashboard.html"
-    },
-    {
-      "source": "/ws/exchange",
-      "destination": "/ws/exchange.html"
     },
     {
       "source": "/ws/exchange.html",
       "destination": "/ws/exchange.html"
     },
     {
-      "source": "/ws/vault",
-      "destination": "/ws/vault.html"
-    },
-    {
       "source": "/ws/vault.html",
       "destination": "/ws/vault.html"
-    },
-    {
-      "source": "/ws/onboarding",
-      "destination": "/ws/onboarding.html"
     },
     {
       "source": "/ws/onboarding.html",
       "destination": "/ws/onboarding.html"
     },
     {
-      "source": "/ws/dealers",
-      "destination": "/ws/dealers.html"
-    },
-    {
       "source": "/ws/dealers.html",
       "destination": "/ws/dealers.html"
     },
     {
-      "source": "/home",
+      "source": "/home.html",
       "destination": "/public/home.html"
     },
     {
-      "source": "/home.html",
+      "source": "/find.html",
+      "destination": "/public/find.html"
+    },
+    {
+      "source": "/how.html",
+      "destination": "/public/how.html"
+    },
+    {
+      "source": "/savings.html",
+      "destination": "/public/savings.html"
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/public/contact.html"
+    },
+    {
+      "source": "/tradein.html",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/public/admin.html"
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/public/privacy.html"
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/public/terms.html"
+    },
+    {
+      "source": "/service-agreement.html",
+      "destination": "/public/service-agreement.html"
+    },
+    {
+      "source": "/financing.html",
+      "destination": "/public/financing.html"
+    },
+    {
+      "source": "/protection.html",
+      "destination": "/public/protection.html"
+    },
+    {
+      "source": "/refund.html",
+      "destination": "/public/refund.html"
+    },
+    {
+      "source": "/home",
       "destination": "/public/home.html"
     },
     {
@@ -69,15 +97,7 @@
       "destination": "/public/find.html"
     },
     {
-      "source": "/find.html",
-      "destination": "/public/find.html"
-    },
-    {
       "source": "/how",
-      "destination": "/public/how.html"
-    },
-    {
-      "source": "/how.html",
       "destination": "/public/how.html"
     },
     {
@@ -85,15 +105,7 @@
       "destination": "/public/savings.html"
     },
     {
-      "source": "/savings.html",
-      "destination": "/public/savings.html"
-    },
-    {
       "source": "/contact",
-      "destination": "/public/contact.html"
-    },
-    {
-      "source": "/contact.html",
       "destination": "/public/contact.html"
     },
     {
@@ -101,15 +113,7 @@
       "destination": "/public/index.html"
     },
     {
-      "source": "/tradein.html",
-      "destination": "/public/index.html"
-    },
-    {
       "source": "/admin",
-      "destination": "/public/admin.html"
-    },
-    {
-      "source": "/admin.html",
       "destination": "/public/admin.html"
     },
     {
@@ -117,15 +121,7 @@
       "destination": "/public/privacy.html"
     },
     {
-      "source": "/privacy.html",
-      "destination": "/public/privacy.html"
-    },
-    {
       "source": "/terms",
-      "destination": "/public/terms.html"
-    },
-    {
-      "source": "/terms.html",
       "destination": "/public/terms.html"
     },
     {
@@ -133,15 +129,7 @@
       "destination": "/public/service-agreement.html"
     },
     {
-      "source": "/service-agreement.html",
-      "destination": "/public/service-agreement.html"
-    },
-    {
       "source": "/financing",
-      "destination": "/public/financing.html"
-    },
-    {
-      "source": "/financing.html",
       "destination": "/public/financing.html"
     },
     {
@@ -149,15 +137,7 @@
       "destination": "/public/protection.html"
     },
     {
-      "source": "/protection.html",
-      "destination": "/public/protection.html"
-    },
-    {
       "source": "/refund",
-      "destination": "/public/refund.html"
-    },
-    {
-      "source": "/refund.html",
       "destination": "/public/refund.html"
     },
     {
