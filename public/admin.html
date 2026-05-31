@@ -33,7 +33,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .adm-wrap{max-width:900px;margin:0 auto;padding:24px 20px}
 
 /* VIN LOOKUP */
-.lookup-panel{background:#1A2340;border:3px solid #FFD740;padding:20px;margin-bottom:20px}
+.lookup-panel{background:#1A2340;border:3px solid #FFD740;padding:20px;margin-bottom:20px;position:sticky;top:68px;z-index:50}
 .panel-title{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
 .lookup-row{display:flex;gap:8px}
 .adm-inp{flex:1;background:var(--surface2);border:1.5px solid var(--border);color:#ffffff;padding:12px 14px;font-family:'Share Tech Mono',monospace;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;outline:none}
@@ -180,11 +180,18 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
     <!-- VIN LOOKUP -->
     <div class="lookup-panel">
       <div class="panel-title">◈ VIN Intelligence Lookup</div>
-      <div class="lookup-row">
-        <input type="text" class="adm-inp" id="adm-vin" placeholder="ENTER 17-DIGIT VIN" maxlength="17" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')admDecode()">
-        <button class="adm-btn" id="adm-decode-btn" onclick="admDecode()">PULL FULL REPORT</button>
+      <div class="lookup-row" style="position:relative">
+        <input type="text" class="adm-inp" id="adm-vin" placeholder="ENTER 17-DIGIT VIN" maxlength="17" 
+          oninput="vinLiveValidate(this)" 
+          onkeydown="if(event.key==='Enter')admDecode()"
+          style="letter-spacing:3px;font-size:1.3rem;padding-right:160px">
+        <div id="vin-counter" style="position:absolute;right:200px;top:50%;transform:translateY(-50%);font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:#6A7A9A;pointer-events:none">0/17</div>
+        <div id="vin-check" style="position:absolute;right:168px;top:50%;transform:translateY(-50%);font-size:1.4rem;display:none">✅</div>
+        <button class="adm-btn" id="adm-decode-btn" onclick="admDecode()" style="min-width:180px">PULL FULL REPORT</button>
       </div>
+      <div id="vin-hint" style="font-size:1rem;color:#6A7A9A;margin-top:6px;letter-spacing:1px">TYPE YOUR VIN — AUTO-VALIDATES AS YOU GO</div>
       <div class="status-bar" id="adm-status">AWAITING VIN INPUT</div>
+      <div id="recent-vins" style="display:none;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap"></div>
     </div>
 
     <!-- TABS -->
@@ -555,6 +562,67 @@ function openAcc(id){
     arr.classList.add('open');
   }
 }
+
+
+// ── VIN LIVE VALIDATION ─────────────────────────────────────────────
+var recentVins = JSON.parse(localStorage.getItem('evl_recent_vins')||'[]');
+
+function vinLiveValidate(inp){
+  var val = inp.value.replace(/[^A-HJ-NPR-Z0-9]/gi,'').toUpperCase();
+  inp.value = val;
+  var len = val.length;
+  var counter = document.getElementById('vin-counter');
+  var check = document.getElementById('vin-check');
+  var hint = document.getElementById('vin-hint');
+  var btn = document.getElementById('adm-decode-btn');
+  
+  counter.textContent = len+'/17';
+  
+  if(len < 17){
+    counter.style.color = len > 0 ? '#FF8C00' : '#6A7A9A';
+    check.style.display = 'none';
+    inp.style.borderColor = len > 0 ? '#FF8C00' : '#4D9FFF';
+    hint.textContent = (17-len)+' MORE CHARACTERS NEEDED';
+    hint.style.color = '#FF8C00';
+    btn.style.opacity = '0.5';
+    btn.disabled = true;
+  } else {
+    counter.style.color = '#00E676';
+    check.style.display = 'block';
+    inp.style.borderColor = '#00E676';
+    hint.textContent = '✅ VIN VALID — READY TO PULL REPORT';
+    hint.style.color = '#00E676';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  }
+}
+
+function saveRecentVin(vin){
+  recentVins = recentVins.filter(v=>v!==vin);
+  recentVins.unshift(vin);
+  if(recentVins.length>5) recentVins=recentVins.slice(0,5);
+  localStorage.setItem('evl_recent_vins', JSON.stringify(recentVins));
+  renderRecentVins();
+}
+
+function renderRecentVins(){
+  var el=document.getElementById('recent-vins');
+  if(!el) return;
+  if(recentVins.length===0){el.style.display='none';return;}
+  el.style.display='flex';
+  el.innerHTML='<span style="color:#6A7A9A;font-size:1rem;letter-spacing:1px;margin-right:10px">RECENT:</span>'+
+    recentVins.map(v=>'<button onclick="loadRecentVin(''+v+'')" style="background:#111827;border:1px solid #2A3A55;color:#4D9FFF;font-family:'Share Tech Mono',monospace;font-size:0.95rem;padding:4px 12px;cursor:pointer;letter-spacing:1px">'+v+'</button>').join('');
+}
+
+function loadRecentVin(vin){
+  var inp=document.getElementById('adm-vin');
+  inp.value=vin;
+  vinLiveValidate(inp);
+  admDecode();
+}
+
+// Run on page load
+renderRecentVins();
 
 </script>
 </body>
