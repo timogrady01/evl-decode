@@ -147,6 +147,33 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
   td, th { color: #ffffff !important; font-size: 15px !important; font-weight: 700 !important; }
   .status-text { color: #ffffff !important; font-size: 15px !important; }
   h1, h2, h3, h4 { color: #ffffff !important; font-weight: 900 !important; }
+
+/* MARKET VALUE TAB */
+.mv-vehicle-bar{background:#1C2637;border:2px solid #4D9FFF;padding:16px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.mv-vehicle-name{font-family:"Barlow Condensed",sans-serif;font-size:2rem;font-weight:900;color:#FFFFFF;letter-spacing:2px;text-transform:uppercase}
+.mv-vin-badge{font-family:"Share Tech Mono",monospace;font-size:1rem;color:#4D9FFF;letter-spacing:2px}
+.mv-value-card{background:#141E30;border:3px solid #FFFFFF;padding:24px 28px;margin-bottom:16px}
+.mv-value-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.mv-value-label{font-family:"Barlow Condensed",sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#FFFFFF}
+.mv-value-sub{font-size:1rem;color:#C0CFEA;margin-top:2px}
+.mv-value-amount{font-family:"Barlow Condensed",sans-serif;font-size:2.8rem;font-weight:900;line-height:1}
+.mv-slider-wrap{margin:14px 0 6px 0;position:relative;height:20px}
+.mv-slider-track{height:8px;border-radius:4px;background:#2A3A55;position:absolute;top:6px;left:0;right:0}
+.mv-slider-fill{height:8px;border-radius:4px;position:absolute;top:6px;left:0}
+.mv-slider-dot{width:22px;height:22px;border-radius:50%;border:3px solid #FFFFFF;position:absolute;top:50%;transform:translate(-50%,-50%)}
+.mv-range-labels{display:flex;justify-content:space-between;font-family:"Share Tech Mono",monospace;font-size:1rem;color:#C0CFEA;margin-top:4px}
+.mv-cond-bar{display:flex;gap:10px;margin-bottom:20px}
+.mv-cond-btn{flex:1;padding:14px;font-family:"Barlow Condensed",sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:3px solid;cursor:pointer;background:transparent;transition:all .2s;color:#FFFFFF}
+.mv-cond-btn.active-cond{color:#000!important}
+.mv-notes-wrap{background:#141E30;border:3px solid #4D9FFF;padding:20px}
+.mv-notes-label{font-family:"Barlow Condensed",sans-serif;font-size:1.2rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#4D9FFF;margin-bottom:10px}
+.mv-notes-ta{background:#0D1525;border:2px solid #2A3A55;color:#FFFFFF;font-family:"Barlow",sans-serif;font-size:1.1rem;padding:14px;width:100%;min-height:100px;outline:none;resize:vertical}
+.mv-notes-ta:focus{border-color:#4D9FFF}
+.mv-floor-hero{background:linear-gradient(135deg,#0A1F0A,#051205);border:3px solid #00E676;padding:24px;text-align:center;margin-bottom:20px}
+.mv-floor-label{font-size:1.1rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#00E676;margin-bottom:6px}
+.mv-floor-amount{font-family:"Barlow Condensed",sans-serif;font-size:4rem;font-weight:900;color:#00E676;line-height:1}
+.mv-floor-sub{font-size:1rem;color:#C0CFEA;margin-top:6px}
+
 </style>
 </head>
 <body>
@@ -299,20 +326,100 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
 
     <!-- TAB: MARKET VALUE -->
     <div class="tab-content" id="tab-market">
-      <div class="value-panel">
-        <div class="val-sub">EVL Internal Floor Value</div>
-        <div class="val-main" id="adm-floor-val">$—</div>
-        <div class="val-sub" id="adm-cond-display">Set condition above</div>
-        <div class="val-range">
-          <div class="val-card rough"><span class="amt" id="adm-rough">$—</span><span class="lbl">Rough Floor</span></div>
-          <div class="val-card avg"><span class="amt" id="adm-avg">$—</span><span class="lbl">Average</span></div>
-          <div class="val-card clean"><span class="amt" id="adm-clean">$—</span><span class="lbl">Clean</span></div>
+
+      <!-- Vehicle Identity Bar -->
+      <div class="mv-vehicle-bar">
+        <div>
+          <div class="mv-vehicle-name" id="mv-vehicle-name">— RUN VIN LOOKUP —</div>
+          <div class="mv-vin-badge" id="mv-vin-badge">VIN: —</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:1rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C0CFEA">ODOMETER</div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:1.4rem;color:#FFD740" id="mv-odo-display">—</div>
         </div>
       </div>
-      <div class="data-panel">
-        <div class="dp-title purple">◈ Appraisal Notes</div>
-        <textarea class="adm-ta" id="adm-notes" placeholder="Internal appraisal notes — not visible to customer..."></textarea>
+
+      <!-- Condition Selector -->
+      <div class="mv-cond-bar">
+        <button class="mv-cond-btn" style="border-color:#00E676" onclick="mvSetCond('Excellent',1.12,this)">EXCELLENT</button>
+        <button class="mv-cond-btn" style="border-color:#4D9FFF" onclick="mvSetCond('Good',1.0,this)">GOOD</button>
+        <button class="mv-cond-btn" style="border-color:#FF8C00" onclick="mvSetCond('Fair',0.85,this)">FAIR</button>
+        <button class="mv-cond-btn" style="border-color:#FF5252" onclick="mvSetCond('Poor',0.68,this)">POOR</button>
       </div>
+
+      <!-- EVL Floor Value Hero -->
+      <div class="mv-floor-hero">
+        <div class="mv-floor-label">⚡ EVL Internal Floor Value</div>
+        <div class="mv-floor-amount" id="mv-floor">$—</div>
+        <div class="mv-floor-sub" id="mv-floor-sub">Set condition and run VIN lookup</div>
+      </div>
+
+      <!-- Private Party Value -->
+      <div class="mv-value-card">
+        <div class="mv-value-header">
+          <div>
+            <div class="mv-value-label">Private Party Value</div>
+            <div class="mv-value-sub">What a private buyer would pay</div>
+          </div>
+          <div class="mv-value-amount" style="color:#00E676" id="mv-pp">$—</div>
+        </div>
+        <div class="mv-slider-wrap">
+          <div class="mv-slider-track"></div>
+          <div class="mv-slider-fill" id="mv-pp-fill" style="background:#00E676;width:60%"></div>
+          <div class="mv-slider-dot" id="mv-pp-dot" style="background:#00E676;left:60%"></div>
+        </div>
+        <div class="mv-range-labels">
+          <span id="mv-pp-low">$—</span>
+          <span id="mv-pp-high">$—</span>
+        </div>
+      </div>
+
+      <!-- Dealer Trade-In Value -->
+      <div class="mv-value-card">
+        <div class="mv-value-header">
+          <div>
+            <div class="mv-value-label">Dealer Trade-In Value</div>
+            <div class="mv-value-sub">What a dealer would offer on trade</div>
+          </div>
+          <div class="mv-value-amount" style="color:#4D9FFF" id="mv-trade">$—</div>
+        </div>
+        <div class="mv-slider-wrap">
+          <div class="mv-slider-track"></div>
+          <div class="mv-slider-fill" id="mv-trade-fill" style="background:#4D9FFF;width:55%"></div>
+          <div class="mv-slider-dot" id="mv-trade-dot" style="background:#4D9FFF;left:55%"></div>
+        </div>
+        <div class="mv-range-labels">
+          <span id="mv-trade-low">$—</span>
+          <span id="mv-trade-high">$—</span>
+        </div>
+      </div>
+
+      <!-- Instant Cash Offer -->
+      <div class="mv-value-card">
+        <div class="mv-value-header">
+          <div>
+            <div class="mv-value-label">Instant Cash Offer Range</div>
+            <div class="mv-value-sub">Quick-sale offers from dealers and services</div>
+          </div>
+          <div class="mv-value-amount" style="color:#FFD740" id="mv-cash">$—</div>
+        </div>
+        <div class="mv-slider-wrap">
+          <div class="mv-slider-track"></div>
+          <div class="mv-slider-fill" id="mv-cash-fill" style="background:#FFD740;width:50%"></div>
+          <div class="mv-slider-dot" id="mv-cash-dot" style="background:#FFD740;left:50%"></div>
+        </div>
+        <div class="mv-range-labels">
+          <span id="mv-cash-low">$—</span>
+          <span id="mv-cash-high">$—</span>
+        </div>
+      </div>
+
+      <!-- Appraisal Notes -->
+      <div class="mv-notes-wrap">
+        <div class="mv-notes-label">📝 Internal Appraisal Notes</div>
+        <textarea class="mv-notes-ta" id="adm-notes" placeholder="Internal appraisal notes — not visible to customer..."></textarea>
+      </div>
+
     </div>
 
     <!-- TAB: FULL EQUIPMENT -->
@@ -616,6 +723,98 @@ function loadRecentVin(vin){
   inp.value=vin;
   vinLiveValidate(inp);
   admDecode();
+}
+
+
+// ── MARKET VALUE TAB POPULATION ──────────────────────────────────────
+var mvCondMult=1.0;
+var mvCondLabel='Good';
+
+function mvSetCond(label,mult,btn){
+  mvCondMult=mult;
+  mvCondLabel=label;
+  // Reset all buttons
+  document.querySelectorAll('.mv-cond-btn').forEach(function(b){
+    b.classList.remove('active-cond');
+    b.style.background='transparent';
+    b.style.color='#FFFFFF';
+  });
+  btn.classList.add('active-cond');
+  var colors={'Excellent':'#00E676','Good':'#4D9FFF','Fair':'#FF8C00','Poor':'#FF5252'};
+  btn.style.background=colors[label]||'#4D9FFF';
+  btn.style.color='#000000';
+  // Recalculate if we have data
+  if(window.mvBaseRough) renderMVValues();
+}
+
+function populateMVTab(vinData, rough, avg, clean){
+  // Vehicle bar
+  var yr=vinData.year||'';
+  var mk=vinData.make||'';
+  var mo=vinData.model||'';
+  var tr=vinData.trim||'';
+  document.getElementById('mv-vehicle-name').textContent=(yr+' '+mk+' '+mo+' '+tr).trim()||'Unknown Vehicle';
+  document.getElementById('mv-vin-badge').textContent='VIN: '+(vinData.vin||document.getElementById('adm-vin').value);
+  var odo=document.getElementById('adm-odo')?document.getElementById('adm-odo').value:'';
+  document.getElementById('mv-odo-display').textContent=odo?Number(odo).toLocaleString()+' mi':'—';
+
+  // Store base values
+  window.mvBaseRough=rough;
+  window.mvBaseAvg=avg;
+  window.mvBaseClean=clean;
+  renderMVValues();
+}
+
+function renderMVValues(){
+  var rough=window.mvBaseRough||0;
+  var avg=window.mvBaseAvg||0;
+  var clean=window.mvBaseClean||0;
+  var mult=mvCondMult;
+
+  // Apply condition multiplier
+  var adjRough=Math.round(rough*mult);
+  var adjAvg=Math.round(avg*mult);
+  var adjClean=Math.round(clean*mult);
+
+  // EVL Floor = adjusted rough
+  document.getElementById('mv-floor').textContent='$'+adjRough.toLocaleString();
+  document.getElementById('mv-floor-sub').textContent='Based on '+mvCondLabel+' condition — internal wholesale floor';
+
+  // Private Party = avg to clean range
+  var ppVal=Math.round(adjAvg*1.15);
+  var ppLow=Math.round(adjAvg*1.08);
+  var ppHigh=Math.round(adjClean*1.18);
+  document.getElementById('mv-pp').textContent='$'+ppVal.toLocaleString();
+  document.getElementById('mv-pp-low').textContent='$'+ppLow.toLocaleString();
+  document.getElementById('mv-pp-high').textContent='$'+ppHigh.toLocaleString();
+  setSlider('mv-pp',ppLow,ppHigh,ppVal);
+
+  // Dealer Trade = rough to avg
+  var tradeVal=Math.round(adjAvg*0.92);
+  var tradeLow=Math.round(adjRough*0.95);
+  var tradeHigh=Math.round(adjAvg*0.98);
+  document.getElementById('mv-trade').textContent='$'+tradeVal.toLocaleString();
+  document.getElementById('mv-trade-low').textContent='$'+tradeLow.toLocaleString();
+  document.getElementById('mv-trade-high').textContent='$'+tradeHigh.toLocaleString();
+  setSlider('mv-trade',tradeLow,tradeHigh,tradeVal);
+
+  // Instant Cash = below rough
+  var cashVal=Math.round(adjRough*0.88);
+  var cashLow=Math.round(adjRough*0.82);
+  var cashHigh=Math.round(adjRough*0.94);
+  document.getElementById('mv-cash').textContent='$'+cashVal.toLocaleString();
+  document.getElementById('mv-cash-low').textContent='$'+cashLow.toLocaleString();
+  document.getElementById('mv-cash-high').textContent='$'+cashHigh.toLocaleString();
+  setSlider('mv-cash',cashLow,cashHigh,cashVal);
+}
+
+function setSlider(id,low,high,val){
+  var range=high-low;
+  var pct=range>0?Math.round(((val-low)/range)*80)+10:50;
+  var fill=document.getElementById(id+'-fill');
+  var dot=document.getElementById(id+'-dot');
+  if(fill) fill.style.width=pct+'%';
+  if(dot) dot.style.left=pct+'%';
 }
 
 </script>
