@@ -1,1 +1,26 @@
-{}
+{
+  "4T1T11AKXPU135100": {
+    "vin": "4T1T11AKXPU135100",
+    "year": 2023,
+    "make": "Toyota",
+    "model": "Camry",
+    "trim": "SE",
+    "mileage": "32000",
+    "condition": "Good",
+    "zip": "75024",
+    "features": [
+      "Convenience Package",
+      "Blind Spot Monitor",
+      "Remote Start",
+      "GARAGE KEEP ALL SERVICE RECORDS ONE OWNER NO ACCIDENTS"
+    ],
+    "customNotes": "GARAGE KEEP ALL SERVICE RECORDS ONE OWNER NO ACCIDENTS",
+    "contact": {
+      "name": "TIMOTHY OGRADY",
+      "email": "togradyevl@gmail.com",
+      "phone": "4698772165"
+    },
+    "timestamp": "2026-05-31T13:57:31.877Z",
+    "status": "pending"
+  }
+}
