@@ -838,7 +838,7 @@ function handlePhoto(input){
   fd.append('upload_preset','evl_photos');
   fd.append('folder','evl_submissions/'+Date.now());
   fd.append('context','slot='+slot);
-  fetch('https://api.cloudinary.com/v1_1/evl-platform/image/upload',{method:'POST',body:fd})
+  fetch('https://api.cloudinary.com/v1_1/dv8cpebgp/image/upload',{method:'POST',body:fd})
     .then(function(r){return r.json();})
     .then(function(d){
       if(d.secure_url){
