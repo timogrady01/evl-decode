@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/api/submit",
+      "destination": "/api/submit.js"
+    },
+    {
+      "source": "/api/lookup",
+      "destination": "/api/lookup.js"
+    },
+    {
       "source": "/api/decode",
       "destination": "/api/decode.js"
     },
