@@ -101,6 +101,14 @@
       "destination": "/public/protection.html"
     },
     {
+      "source": "/refund",
+      "destination": "/public/refund.html"
+    },
+    {
+      "source": "/refund.html",
+      "destination": "/public/refund.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/index.html"
     }
