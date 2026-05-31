@@ -37,6 +37,26 @@
       "destination": "/ws/dealers.html"
     },
     {
+      "source": "/ws/dashboard",
+      "destination": "/ws/dashboard.html"
+    },
+    {
+      "source": "/ws/exchange",
+      "destination": "/ws/exchange.html"
+    },
+    {
+      "source": "/ws/vault",
+      "destination": "/ws/vault.html"
+    },
+    {
+      "source": "/ws/onboarding",
+      "destination": "/ws/onboarding.html"
+    },
+    {
+      "source": "/ws/dealers",
+      "destination": "/ws/dealers.html"
+    },
+    {
       "source": "/home.html",
       "destination": "/public/home.html"
     },
@@ -141,7 +161,7 @@
       "destination": "/public/refund.html"
     },
     {
-      "source": "/(.*)",
+      "source": "/(?!ws)(.*)",
       "destination": "/public/index.html"
     }
   ]
