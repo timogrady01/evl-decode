@@ -184,9 +184,9 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
         <input type="text" class="adm-inp" id="adm-vin" placeholder="ENTER 17-DIGIT VIN" maxlength="17"
           oninput="vinLiveValidate(this)"
           onkeydown="if(event.key==='Enter')admDecode()"
-          style="flex:1;letter-spacing:3px;font-size:1.2rem">
-        <div id="vin-counter" style="font-family:'Share Tech Mono',monospace;font-size:1rem;color:#6A7A9A;white-space:nowrap;min-width:48px;text-align:center">0/17</div>
-        <button class="adm-btn" id="adm-decode-btn" onclick="admDecode()" style="min-width:200px;flex-shrink:0">⚡ PULL FULL REPORT</button>
+          style="flex:2;letter-spacing:2px;font-size:1.1rem;min-width:0">
+        <div id="vin-counter" style="font-family:'Share Tech Mono',monospace;font-size:0.95rem;color:#6A7A9A;white-space:nowrap;width:42px;text-align:center;flex-shrink:0">0/17</div>
+        <button class="adm-btn" id="adm-decode-btn" onclick="admDecode()" style="width:160px;flex-shrink:0;font-size:1rem;padding:10px 12px">⚡ PULL FULL REPORT</button>
       </div>
       <div id="vin-hint" style="font-size:1rem;color:#6A7A9A;margin-top:6px;letter-spacing:1px">TYPE YOUR VIN — AUTO-VALIDATES AS YOU GO</div>
       <div class="status-bar" id="adm-status">AWAITING VIN INPUT</div>
