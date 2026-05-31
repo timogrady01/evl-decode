@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0A0A08;--s1:#111110;--s2:#1A1A16;--s3:#222220;
+  --gold:#F5C842;--gold2:#D4A820;--gold3:#FFE580;
+  --green:#00C853;--red:#FF3333;--orange:#FF8C00;--blue:#2B84FE;
+  --muted:#C8C4A8;--border:rgba(245,200,66,0.2);--border2:rgba(245,200,66,0.35);
+}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;-webkit-font-smoothing:antialiased;min-height:100vh;}
+nav{background:rgba(10,10,8,0.98);border-bottom:2px solid var(--border2);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.nav-logo{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;text-decoration:none;}
+.nav-logo span{color:#fff;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;padding:6px 0;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-badge{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;text-decoration:none;}
+.page-header{background:linear-gradient(160deg,#1A1600,var(--bg));border-bottom:2px solid var(--border);padding:32px 40px;}
+.ph-dealer{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.ph-title{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;}
+.ph-sub{color:var(--muted);font-size:16px;margin-top:6px;}
+.wrap{padding:40px;}
+.sec-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:20px;}
+.card{background:var(--s1);border:1px solid var(--border);padding:28px;margin-bottom:20px;}
+.card-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--s2);color:var(--muted);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;text-align:left;border-bottom:2px solid var(--border);}
+td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:15px;color:#fff;}
+tr:hover td{background:var(--s2);}
+.badge{display:inline-block;padding:4px 10px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.badge-green{background:rgba(0,200,83,.15);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+.badge-gold{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid var(--border2);}
+.badge-blue{background:rgba(43,132,254,.15);color:var(--blue);border:1px solid rgba(43,132,254,.3);}
+.badge-red{background:rgba(255,51,51,.15);color:var(--red);border:1px solid rgba(255,51,51,.3);}
+.btn{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn:hover{background:var(--gold3);}
+.btn-outline{background:none;border:2px solid var(--border2);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;cursor:pointer;text-decoration:none;display:inline-block;}
+.inp{background:var(--s2);border:1px solid var(--border2);color:#fff;font-family:"Barlow",sans-serif;font-size:15px;padding:12px 16px;width:100%;outline:none;}
+.inp:focus{border-color:var(--gold);}
+label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.form-row{margin-bottom:18px;}
+.stat-box{background:var(--s1);border:1px solid var(--border);padding:24px 28px;}
+.stat-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.stat-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;line-height:1;color:var(--gold);}
+.divider{border:none;border-top:1px solid var(--border);margin:24px 0;}
+</style>
+</head>
+<body><nav>
+<a class="nav-logo" href="/ws-dashboard.html">⚡ WS-EVL <span>// COMMAND</span></a>
+<div class="nav-links">
+  <a href="/ws-dashboard.html">DASHBOARD</a>
+  <a href="/ws-exchange.html">EXCHANGE</a>
+  <a href="/ws-vault.html">THE VAULT</a>
+  <a href="/ws-onboarding.html">ONBOARDING</a>
+  <a href="/ws-dealers.html">DEALERS</a>
+  <a href="/" class="nav-badge" style="background:var(--s2);color:var(--gold);border:2px solid var(--border2);">← EVL CUSTOMER</a>
+</div>
+</nav>
+<div class="page-header">
+  <div class="ph-dealer">⚡ WS-EVL Wholesale</div>
+  <div class="ph-title">Dealer Network</div>
+  <div class="ph-sub">Authorized WS-EVL wholesale partners and operators</div>
+</div>
+<div class="wrap">
+  <div class="grid3" style="margin-bottom:32px;">
+    <div class="stat-box"><div class="stat-lbl">Active Dealers</div><div class="stat-num">34</div></div>
+    <div class="stat-box"><div class="stat-lbl">Gold Partners</div><div class="stat-num" style="color:var(--gold);">8</div></div>
+    <div class="stat-box"><div class="stat-lbl">States Covered</div><div class="stat-num" style="color:var(--green);">12</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div class="sec-title">Dealer Roster</div>
+    <input class="inp" style="width:280px;" placeholder="🔍  Search dealers...">
+  </div>
+  <table>
+    <thead><tr>
+      <th>Dealership</th><th>Contact</th><th>State</th><th>Tier</th><th>Units/Mo</th><th>Status</th><th>Action</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>Premier Auto Group</strong></td><td>James R. — james@premierauto.com</td><td>TX</td><td><span class="badge badge-gold">⭐ GOLD</span></td><td>42</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>DFW Motor Exchange</strong></td><td>Maria S. — maria@dfwmotors.com</td><td>TX</td><td><span class="badge badge-gold">⭐ GOLD</span></td><td>38</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Lone Star Wholesale</strong></td><td>Bob K. — bob@lonestarws.com</td><td>TX</td><td><span class="badge badge-blue">◈ SILVER</span></td><td>18</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Sunshine Auto LLC</strong></td><td>Carlos M. — carlos@sunshineauto.com</td><td>FL</td><td><span class="badge badge-blue">◈ SILVER</span></td><td>14</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Coastal Motors</strong></td><td>Lisa T. — lisa@coastalmotors.com</td><td>CA</td><td><span class="badge badge-gold">⭐ GOLD</span></td><td>55</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+      <tr><td><strong>Highway Auto Sales</strong></td><td>Tom W. — tom@highwayauto.com</td><td>NY</td><td><span class="badge" style="background:rgba(200,196,168,.1);color:var(--muted);border:1px solid rgba(200,196,168,.2);">◇ STANDARD</span></td><td>4</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:var(--orange);border:1px solid rgba(255,140,0,.3);">PENDING</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
+    </tbody>
+  </table>
+</div>
+</body></html>
