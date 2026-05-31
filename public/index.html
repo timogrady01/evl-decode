@@ -403,26 +403,80 @@ select.inp{cursor:pointer;}
       <div class="drawer-hdr-left">
         <div class="step-num" id="sn4">4</div>
         <div>
-          <div class="drawer-title">③ Certified Appraisal Report</div>
-          <div class="drawer-sub">Review your EVL appraisal summary</div>
+          <div class="drawer-title">CERTIFIED APPRAISAL REPORT</div>
+          <div class="drawer-sub">Review your EVL appraisal summary before submitting</div>
         </div>
       </div>
       <div class="drawer-arrow">▼</div>
     </div>
     <div class="drawer-body">
-      <div class="cert-box" id="cert-box">Complete steps above to generate your appraisal report...</div>
-      <div id="cert-msg" style="font-size:1rem;color:var(--green);font-weight:700;margin-bottom:16px;display:none"></div>
+
+      <!-- Vehicle Summary Card -->
+      <div style="background:#0D1525;border:2px solid #4D9FFF;padding:20px;margin-bottom:16px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#4D9FFF;margin-bottom:14px;">🚗 YOUR VEHICLE</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:#FFFFFF;margin-bottom:8px;" id="cert-vehicle-title">—</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="background:#111827;padding:10px 14px;">
+            <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#6A7A9A;">VIN</div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:1rem;color:#FFFFFF;margin-top:4px;" id="cert-vin-display">—</div>
+          </div>
+          <div style="background:#111827;padding:10px 14px;">
+            <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#6A7A9A;">MILEAGE</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#FFD740;margin-top:4px;" id="cert-miles-display">—</div>
+          </div>
+          <div style="background:#111827;padding:10px 14px;">
+            <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#6A7A9A;">CONDITION</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#FFD740;margin-top:4px;" id="cert-cond-display">—</div>
+          </div>
+          <div style="background:#111827;padding:10px 14px;">
+            <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#6A7A9A;">CERT #</div>
+            <div style="font-family:'Share Tech Mono',monospace;font-size:0.9rem;color:#4D9FFF;margin-top:4px;" id="cert-number">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Value Range Card -->
+      <div style="background:linear-gradient(135deg,#001A00,#000D00);border:2px solid #00E676;padding:20px;margin-bottom:16px;text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#00E676;margin-bottom:12px;">💰 ESTIMATED VALUE RANGE</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div>
+            <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#6A7A9A;">WHOLESALE LOW</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#C0CFEA;margin-top:4px;" id="cert-low">—</div>
+          </div>
+          <div style="border-left:1px solid #2A3A55;border-right:1px solid #2A3A55;">
+            <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#00E676;">MID MARKET</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;color:#00E676;margin-top:4px;" id="cert-mid">—</div>
+          </div>
+          <div>
+            <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#6A7A9A;">RETAIL HIGH</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#C0CFEA;margin-top:4px;" id="cert-high">—</div>
+          </div>
+        </div>
+        <div style="font-size:0.9rem;color:#6A7A9A;margin-top:12px;font-style:italic;">Estimated only — sourced from KBB, NADA & market data. Not a guaranteed offer.</div>
+      </div>
+
+      <!-- Declared Features -->
+      <div style="background:#0D1525;border:2px solid #2A3A55;padding:16px 20px;margin-bottom:16px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#C0CFEA;margin-bottom:10px;">✓ FEATURES YOU DECLARED</div>
+        <div id="cert-features-display" style="font-size:1rem;color:#FFFFFF;line-height:1.8;">None declared</div>
+      </div>
+
+      <!-- EVL Disclosure -->
+      <div style="background:#080810;border:3px solid #4D9FFF;padding:16px 20px;margin-bottom:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#4D9FFF;margin-bottom:8px;">📋 EVL DISCLOSURE</div>
+        <div style="font-size:1rem;font-weight:600;color:#FFFFFF;line-height:1.7;">All values are estimates sourced from KBB, NADA, Black Book, and current market data. Express Vehicle Locators does not independently appraise or guarantee any vehicle value. Final offers are subject to physical inspection and EVL review.</div>
+      </div>
+
       <button class="btn-primary" onclick="confirmStep(4)">✓ LOOKS GOOD — CONTINUE TO SUBMIT</button>
     </div>
   </div>
 
-  <!-- DRAWER 5: CONTACT & SUBMIT -->
-  <div class="drawer locked" id="d5">
+<div class="drawer locked" id="d5">
     <div class="drawer-hdr">
       <div class="drawer-hdr-left">
         <div class="step-num" id="sn5">5</div>
         <div>
-          <div class="drawer-title">④ Authorization & Submit</div>
+          <div class="drawer-title">AUTHORIZATION & SUBMIT</div>
           <div class="drawer-sub">Where should we send your offer?</div>
         </div>
       </div>
@@ -443,16 +497,13 @@ select.inp{cursor:pointer;}
           <input type="tel" class="inp" id="contact-phone" placeholder="(000) 000-0000">
         </div>
       </div>
-
-      <div class="disclosure-box">
-        <div class="disclosure-title">⚠ Important Disclosures — Express Vehicle Locators</div>
-        <div class="disclosure-text">All vehicle valuations and estimates are sourced from KBB, NADA, Black Book, and MarketCheck. EVL does not independently appraise or guarantee any vehicle value. Estimates are subject to physical inspection, vehicle history findings, and final review. Customer-declared features are reported as-is and have not been independently verified by EVL. Final trade-in offers are determined at the sole discretion of EVL or its authorized wholesale partners following physical inspection.</div>
+      <div style="background:#080810;border:3px solid #4D9FFF;padding:16px 20px;margin-bottom:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#4D9FFF;margin-bottom:8px;">⚠ IMPORTANT DISCLOSURES</div>
+        <div style="font-size:1rem;font-weight:600;color:#FFFFFF;line-height:1.7;">All vehicle valuations are sourced from KBB, NADA, Black Book, and MarketCheck. EVL does not independently appraise or guarantee any vehicle value. Customer-declared features are reported as-is and have not been verified by EVL. Final trade-in offers are determined following physical inspection.</div>
       </div>
-
       <button class="btn-primary" type="button" onclick="submitAudit()">⬡ SUBMIT CERTIFIED APPRAISAL</button>
     </div>
   </div>
-
 </div>
 
 <!-- FOOTER DISCLOSURE -->
@@ -573,33 +624,30 @@ function updateCert(){
   var b=window.decodedData||{};
   var vin=window.certVin||document.getElementById('vin-inp').value;
   var certN='EVL-'+Date.now().toString(36).toUpperCase();
-  var upgStr=(window.upgradeItems&&window.upgradeItems.length>0)?window.upgradeItems.join(', '):'None declared';
-  var report='EVL CERTIFIED APPRAISAL REPORT'+
-    '\n================================'+
-    '\nCERT#: '+certN+
-    '\nDATE:  '+new Date().toLocaleDateString()+
-    '\n'+
-    '\nVEHICLE:   '+(b.year||'')+' '+(b.make||'')+' '+(b.model||'')+
-    '\nTRIM:      '+(b.trim||b.trim_name||'—')+
-    '\nVIN:       '+vin+
-    '\nMILEAGE:   '+(document.getElementById('miles-inp').value||'—')+
-    '\nCONDITION: '+(window.condLabel||'—')+
-    '\n'+
-    '\nESTIMATED VALUE RANGE:'+
-    '\n  LOW:  $'+(window.valueLow||0).toLocaleString()+
-    '\n  MID:  $'+(window.valueBase||0).toLocaleString()+
-    '\n  HIGH: $'+(window.valueHigh||0).toLocaleString()+
-    '\n'+
-    '\nFEATURES DECLARED:'+
-    '\n  '+upgStr+
-    '\n'+
-    '\n================================'+
-    '\nDISCLOSURE: Values are estimates sourced from'+
-    '\nKBB, NADA, and market data. Not a guaranteed'+
-    '\noffer. Subject to physical inspection and'+
-    '\nfinal EVL review.';
-  var box=document.getElementById('cert-box');
-  if(box) box.textContent=report;
+  window.currentCertN=certN;
+
+  // Populate visual cert fields
+  var set=function(id,val){var el=document.getElementById(id);if(el)el.textContent=val||'—';};
+  set('cert-vehicle-title',(b.year||'')+' '+(b.make||'')+' '+(b.model||'')+' '+(b.trim||''));
+  set('cert-vin-display',vin);
+  set('cert-miles-display',document.getElementById('miles-inp').value?Number(document.getElementById('miles-inp').value).toLocaleString()+' mi':'—');
+  set('cert-cond-display',window.condLabel||'—');
+  set('cert-number',certN);
+  set('cert-low','$'+(window.valueLow||0).toLocaleString());
+  set('cert-mid','$'+(window.valueBase||0).toLocaleString());
+  set('cert-high','$'+(window.valueHigh||0).toLocaleString());
+
+  // Features
+  var featEl=document.getElementById('cert-features-display');
+  if(featEl){
+    if(window.upgradeItems&&window.upgradeItems.length>0){
+      featEl.innerHTML=window.upgradeItems.map(function(i){
+        return '<span style="display:inline-block;background:#001A3D;border:1px solid #4D9FFF;color:#4D9FFF;padding:4px 12px;margin:3px 4px;font-size:0.95rem;font-weight:700;">✓ '+i+'</span>';
+      }).join('');
+    } else {
+      featEl.textContent='No additional features declared';
+    }
+  }
 }
 
 function injectFactoryOpts(year,make,model,trim){var key=((make||'')+'|'+(model||'')+'|'+(trim||'')).toLowerCase(),opts=null;if(OPTIONS_DB[key])opts=OPTIONS_DB[key];if(!opts){for(var k in OPTIONS_DB){if(key.indexOf(k.split('|').slice(0,2).join('|'))>=0){opts=OPTIONS_DB[k];break;}}}if(!opts)return;var section=document.getElementById('factory-section'),grid=document.getElementById('factory-grid');grid.innerHTML='';section.style.display='block';for(var i=0;i<opts.length;i++){var btn=document.createElement('button');btn.className='check-btn';btn.setAttribute('data-group','pkg');btn.setAttribute('data-val',opts[i]);btn.innerHTML='<div class="chk"></div><div><span class="check-main">'+opts[i]+'</span></div>';btn.addEventListener('click',function(){toggleCheck(this);});grid.appendChild(btn);}}
