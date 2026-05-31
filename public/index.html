@@ -285,8 +285,8 @@ select.inp{cursor:pointer;}
       <div class="drawer-hdr-left">
         <div class="step-num" id="sn2">2</div>
         <div>
-          <div class="drawer-title">② Condition & Mileage</div>
-          <div class="drawer-sub">How would you describe your vehicle?</div>
+          <div class="drawer-title">CONDITION, MILEAGE & PHOTOS</div>
+          <div class="drawer-sub">Verify your vehicle — maximize your offer</div>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -295,51 +295,151 @@ select.inp{cursor:pointer;}
       </div>
     </div>
     <div class="drawer-body">
-      <div class="cond-grid">
-        <button class="cond-btn" data-cond="Excellent" data-mult="1.08" onclick="selectCond(this)">
-          <span class="c-icon">⭐</span><span class="c-main">Excellent</span><span class="c-sub">Showroom quality</span>
-        </button>
-        <button class="cond-btn" data-cond="Good" data-mult="1.0" onclick="selectCond(this)">
-          <span class="c-icon">✅</span><span class="c-main">Good</span><span class="c-sub">Minor wear only</span>
-        </button>
-        <button class="cond-btn" data-cond="Fair" data-mult="0.88" onclick="selectCond(this)">
-          <span class="c-icon">⚠️</span><span class="c-main">Fair</span><span class="c-sub">Noticeable wear</span>
-        </button>
-        <button class="cond-btn" data-cond="Poor" data-mult="0.72" onclick="selectCond(this)">
-          <span class="c-icon">🔧</span><span class="c-main">Poor</span><span class="c-sub">Significant issues</span>
-        </button>
+
+      <!-- MILEAGE MATTERS BANNER -->
+      <div style="background:linear-gradient(135deg,#1A1000,#0D0800);border:3px solid #FFD740;padding:20px 24px;margin-bottom:24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#FFD740;margin-bottom:8px;">💰 ACCURATE MILEAGE = MORE MONEY IN YOUR POCKET</div>
+        <div style="font-size:1.1rem;color:#FFFFFF;font-weight:600;line-height:1.7;">Vehicles are valued on <strong style="color:#FFD740;">Year + Make + Model + ACTUAL Mileage</strong>. A 10,000 mile difference can mean <strong style="color:#00E676;">$2,000–$5,000 more</strong> in your offer. Estimating mileage hurts YOU — not us. Take 5 minutes now while you're at your car.</div>
       </div>
 
-      <div class="form-grid">
+      <!-- CONDITION -->
+      <div class="form-row">
+        <label style="font-size:1.1rem;color:#FFFFFF;">SELECT YOUR VEHICLE CONDITION</label>
+        <div class="cond-grid">
+          <button class="cond-btn" data-cond="Excellent" data-mult="1.08" onclick="selectCond(this)">
+            <span class="c-icon">⭐</span><span class="c-main">Excellent</span><span class="c-sub">Showroom quality</span>
+          </button>
+          <button class="cond-btn" data-cond="Good" data-mult="1.0" onclick="selectCond(this)">
+            <span class="c-icon">✅</span><span class="c-main">Good</span><span class="c-sub">Minor wear only</span>
+          </button>
+          <button class="cond-btn" data-cond="Fair" data-mult="0.88" onclick="selectCond(this)">
+            <span class="c-icon">⚠️</span><span class="c-main">Fair</span><span class="c-sub">Noticeable wear</span>
+          </button>
+          <button class="cond-btn" data-cond="Poor" data-mult="0.72" onclick="selectCond(this)">
+            <span class="c-icon">🔧</span><span class="c-main">Poor</span><span class="c-sub">Significant issues</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MILEAGE & ZIP -->
+      <div class="form-grid" style="margin-bottom:24px;">
         <div class="form-row">
-          <label>Current Mileage</label>
+          <label>YOUR CURRENT MILEAGE</label>
           <input type="number" class="inp" id="miles-inp" placeholder="e.g. 45000" oninput="updateValue()">
+          <div style="font-size:0.95rem;color:#FFD740;margin-top:6px;font-weight:600;">⚠ We will verify with your odometer photo below</div>
         </div>
         <div class="form-row">
-          <label>Your ZIP Code</label>
+          <label>YOUR ZIP CODE</label>
           <input type="text" class="inp" id="zip-inp" placeholder="e.g. 75001" maxlength="5">
         </div>
       </div>
 
-      <!-- Value Display -->
+      <!-- VALUE DISPLAY -->
       <div class="value-hero" id="value-hero" style="display:none">
-        <div class="vh-label">EVL Estimated Value Range</div>
+        <div class="vh-label">EVL ESTIMATED VALUE RANGE</div>
         <div class="vh-amount" id="val-display">—</div>
         <div class="vh-range" id="val-range">—</div>
         <div class="vh-disclosure">Estimated only — sourced from KBB, NADA & market data. Not a guaranteed offer.</div>
       </div>
 
-      <div class="disclosure-box">
-        <div class="disclosure-title">📋 EVL Disclosure — Please Read</div>
+      <!-- PHOTO SECTION -->
+      <div style="background:#0A0A0C;border:3px solid #4D9FFF;padding:24px;margin-bottom:24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#4D9FFF;margin-bottom:6px;">📸 EVL CERTIFICATION PHOTOS</div>
+        <div style="font-size:1.1rem;color:#FFFFFF;font-weight:600;line-height:1.7;margin-bottom:20px;">You are at your vehicle right now — this takes 5 minutes and directly impacts your offer. Each photo verifies a key value factor. <strong style="color:#FFD740;">Missing photos = estimated values = less money.</strong></div>
+
+        <!-- Photo Grid -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+          <!-- ODO - REQUIRED -->
+          <div style="background:#111827;border:3px solid #00E676;padding:16px;" id="photo-box-odo">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#00E676;letter-spacing:1px;margin-bottom:4px;">🔑 ODOMETER <span style="font-size:1rem;background:#00E676;color:#000;padding:2px 8px;margin-left:6px;">REQUIRED</span></div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">Engine ON — shows exact mileage</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">📏 Close up • Engine running • No glare</div>
+            <label style="background:#00E676;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'odo')"></label>
+            <div id="photo-status-odo" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded</div>
+          </div>
+
+          <!-- FRONT -->
+          <div style="background:#111827;border:2px solid #2A3A55;padding:16px;" id="photo-box-front">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#4D9FFF;letter-spacing:1px;margin-bottom:4px;">🚗 FRONT VIEW</div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">Full front of vehicle</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">📏 10ft away • Both sides visible • Landscape</div>
+            <label style="background:#2A3A55;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'front')"></label>
+            <div id="photo-status-front" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded</div>
+          </div>
+
+          <!-- REAR -->
+          <div style="background:#111827;border:2px solid #2A3A55;padding:16px;" id="photo-box-rear">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#4D9FFF;letter-spacing:1px;margin-bottom:4px;">🚗 REAR VIEW</div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">Full rear of vehicle</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">📏 10ft behind • Full bumper • Landscape</div>
+            <label style="background:#2A3A55;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'rear')"></label>
+            <div id="photo-status-rear" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded</div>
+          </div>
+
+          <!-- DRIVER SIDE -->
+          <div style="background:#111827;border:2px solid #2A3A55;padding:16px;" id="photo-box-driver">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#4D9FFF;letter-spacing:1px;margin-bottom:4px;">🚗 DRIVER SIDE</div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">Full driver side profile</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">📏 Full side • Front to rear • Landscape</div>
+            <label style="background:#2A3A55;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'driver')"></label>
+            <div id="photo-status-driver" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded</div>
+          </div>
+
+          <!-- PASSENGER SIDE -->
+          <div style="background:#111827;border:2px solid #2A3A55;padding:16px;" id="photo-box-pass">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#4D9FFF;letter-spacing:1px;margin-bottom:4px;">🚗 PASSENGER SIDE</div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">Full passenger side profile</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">📏 Full side profile • Landscape</div>
+            <label style="background:#2A3A55;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'pass')"></label>
+            <div id="photo-status-pass" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded</div>
+          </div>
+
+          <!-- INTERIOR -->
+          <div style="background:#111827;border:2px solid #2A3A55;padding:16px;" id="photo-box-interior">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#4D9FFF;letter-spacing:1px;margin-bottom:4px;">💺 INTERIOR & DASH</div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">From driver seat — dash & seats</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">📏 Show full dash • Seats visible</div>
+            <label style="background:#2A3A55;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'interior')"></label>
+            <div id="photo-status-interior" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded</div>
+          </div>
+
+          <!-- WARNING LIGHTS -->
+          <div style="background:#111827;border:2px solid #2A3A55;padding:16px;" id="photo-box-lights">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#FFD740;letter-spacing:1px;margin-bottom:4px;">⚠️ WARNING LIGHTS</div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">Engine ON — show any warning lights</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">No lights = still take the photo!</div>
+            <label style="background:#2A3A55;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'lights')"></label>
+            <div id="photo-status-lights" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded</div>
+          </div>
+
+          <!-- DAMAGE -->
+          <div style="background:#111827;border:2px solid #2A3A55;padding:16px;" id="photo-box-damage">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#FF5252;letter-spacing:1px;margin-bottom:4px;">🔍 ANY DAMAGE</div>
+            <div style="font-size:1rem;color:#FFFFFF;font-weight:600;margin-bottom:4px;">Dents, scratches, chips</div>
+            <div style="font-size:0.9rem;color:#C0CFEA;margin-bottom:12px;">📏 3ft away • Clear close-up • No damage? Skip</div>
+            <label style="background:#2A3A55;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;padding:10px 16px;cursor:pointer;display:block;text-align:center;letter-spacing:1px;">📷 TAP TO ADD PHOTO<input type="file" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'damage')"></label>
+            <div id="photo-status-damage" style="font-size:1rem;color:#C0CFEA;margin-top:8px;text-align:center;">Not uploaded • Skip if no damage</div>
+          </div>
+
+        </div>
+
+        <!-- Photo Counter -->
+        <div id="photo-counter" style="text-align:center;margin-top:20px;font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:#C0CFEA;letter-spacing:2px;">0 OF 8 PHOTOS ADDED</div>
+        <div id="odo-warning" style="display:none;text-align:center;margin-top:10px;background:#1A0000;border:2px solid #FF5252;padding:12px;font-size:1.1rem;font-weight:700;color:#FF5252;">⚠ ODOMETER PHOTO IS REQUIRED — We cannot verify your mileage without it</div>
+      </div>
+
+      <!-- EVL DISCLOSURE -->
+      <div class="disclosure-box" style="margin-bottom:20px;">
+        <div class="disclosure-title">📋 EVL DISCLOSURE — PLEASE READ</div>
         <div class="disclosure-text">Estimated values are generated using third-party market data including KBB, NADA, and MarketCheck. These estimates are for informational purposes ONLY and do not constitute a guaranteed offer, appraisal, or binding agreement. Actual trade-in values are subject to physical inspection, vehicle history, local market conditions, and final EVL review.</div>
       </div>
 
-      <button class="btn-primary" id="cond-continue-btn" style="display:none" onclick="confirmStep(2)">✓ CONTINUE — ADD VEHICLE DETAILS</button>
+      <button class="btn-primary" id="cond-continue-btn" style="display:none" onclick="checkPhotosAndContinue()">✓ CONTINUE — ADD VEHICLE DETAILS</button>
     </div>
   </div>
 
-  <!-- DRAWER 3: WANT MORE VALUE? -->
-  <div class="drawer locked" id="d3">
+<div class="drawer locked" id="d3">
     <div class="drawer-hdr" style="cursor:default;background:linear-gradient(135deg,#001A00,#000D00);border-bottom:2px solid #00E676">
       <div class="drawer-hdr-left">
         <div class="step-num" style="background:#00E676;border-color:#00E676;color:#000;font-size:1.8rem;width:64px;height:64px;">💰</div>
@@ -738,6 +838,53 @@ function submitAudit(){
   }
 }
 
+
+
+// ── PHOTO HANDLING ────────────────────────────────────────────────────
+var photoData={};
+var photoCount=0;
+
+function handlePhoto(input,key){
+  var file=input.files[0];
+  if(!file) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    photoData[key]=e.target.result;
+    photoCount=Object.keys(photoData).length;
+    // Update status
+    var statusEl=document.getElementById('photo-status-'+key);
+    var boxEl=document.getElementById('photo-box-'+key);
+    if(statusEl){
+      statusEl.textContent='✅ Photo added';
+      statusEl.style.color='#00E676';
+    }
+    if(boxEl && key==='odo'){
+      boxEl.style.borderColor='#00E676';
+      boxEl.style.borderWidth='3px';
+    } else if(boxEl){
+      boxEl.style.borderColor='#00E676';
+    }
+    // Update counter
+    var counter=document.getElementById('photo-counter');
+    if(counter) counter.innerHTML='<span style="color:#00E676">'+photoCount+'</span> OF 8 PHOTOS ADDED'+(photoCount>=1?' ✅':'');
+    // Hide odo warning if odo added
+    if(key==='odo'){
+      var warn=document.getElementById('odo-warning');
+      if(warn) warn.style.display='none';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function checkPhotosAndContinue(){
+  if(!photoData['odo']){
+    var warn=document.getElementById('odo-warning');
+    if(warn) warn.style.display='block';
+    warn.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  advanceStep(2);
+}
 
 // ── UPGRADE FUNCTIONS ─────────────────────────────────────────────────
 function calcUpgrades(){
