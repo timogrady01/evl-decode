@@ -19,5 +19,23 @@
     },
     "timestamp": "2026-05-31T17:34:39.535Z",
     "status": "pending"
+  },
+  "4T1BF1FK4CU513303": {
+    "vin": "4T1BF1FK4CU513303",
+    "mileage": "35000",
+    "condition": "Excellent",
+    "features": [
+      "Convenience Package",
+      "Blind Spot Monitor",
+      "YES YES YES"
+    ],
+    "customNotes": "",
+    "contact": {
+      "name": "TIMOTHY OGRADY",
+      "email": "togradyevl@gmail.com",
+      "phone": "4698772165"
+    },
+    "timestamp": "2026-05-31T17:48:20.025Z",
+    "status": "pending"
   }
 }
