@@ -450,81 +450,73 @@ p { font-size:18px !important; line-height:1.75 !important; }
 
 <!-- ── UPGRADE VALUE SECTION ── -->
 <div class="drawer" id="d-upgrade" style="display:none">
-  <div class="drawer-hdr" style="cursor:default">
+  <div class="drawer-hdr" style="cursor:default;background:linear-gradient(135deg,#001A00,#000D00);border-bottom:2px solid #00C853">
     <div class="drawer-hdr-left">
-      <div class="step-num" style="background:#00C853;border-color:#00C853;color:#000">💰</div>
+      <div class="step-num" style="background:#00C853;border-color:#00C853;color:#000;font-size:1.2rem">💰</div>
       <div>
-        <div class="drawer-title">WANT MORE VALUE FOR YOUR RIDE?</div>
-        <div style="font-size:0.9rem;color:var(--muted);margin-top:2px">Tell us what makes your vehicle special — every upgrade counts toward your offer</div>
+        <div class="drawer-title" style="color:#00C853">HELP US FIND YOUR VEHICLE'S TRUE VALUE</div>
+        <div style="font-size:0.9rem;color:#C0CFEA;margin-top:4px;line-height:1.5">Vehicles with more features and upgrades typically command higher market values.<br>Check everything that applies — this helps our team source the most accurate offer for your specific vehicle.</div>
       </div>
     </div>
   </div>
   <div class="drawer-body" style="padding:20px 24px">
 
-    <!-- Running Total Banner -->
-    <div id="upgrade-banner" style="background:linear-gradient(135deg,#003300,#001a00);border:2px solid #00C853;padding:16px 24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <div style="font-size:0.8rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#00C853">YOUR UPGRADE VALUE</div>
-        <div style="font-size:0.9rem;color:#C0CFEA;margin-top:2px">Checked items added to your appraisal</div>
-      </div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:2.4rem;font-weight:900;color:#00C853" id="upgrade-total">+$0</div>
-    </div>
-
     <!-- Factory Packages -->
+    <div style="margin-bottom:28px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border)">⚙ Factory Packages & Options</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="factory-options">
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Convenience Package</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Premium Audio System</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Blind Spot Monitor</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Sunroof / Moonroof</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Navigation System</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Cold Weather Package</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Driver Assist Package</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Rear Camera / Sensors</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Remote Start</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Heated Seats</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Ventilated / Cooled Seats</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Heated Steering Wheel</span></label>
+      </div>
+    </div>
+
+    <!-- Aftermarket -->
+    <div style="margin-bottom:28px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#FFB300;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border)">🔧 Aftermarket & Custom Upgrades</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="aftermarket-options">
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Custom Wheels & Tires</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Lift Kit</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Running Boards / Steps</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Upgraded Sound System</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Window Tint</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Tonneau Cover</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Spray-In Bed Liner</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Trailer Hitch & Package</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Roof Rack / Cargo System</span></label>
+        <label class="upg-check"><input type="checkbox" onchange="calcUpgrades()"> <span>Performance Upgrades</span></label>
+      </div>
+    </div>
+
+    <!-- Custom text field -->
     <div style="margin-bottom:24px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border)">⚙ Factory Packages & Options</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="factory-options">
-        <label class="upg-check"><input type="checkbox" value="500" onchange="calcUpgrades()"> <span>Convenience Package</span><span class="upg-val">+$500</span></label>
-        <label class="upg-check"><input type="checkbox" value="800" onchange="calcUpgrades()"> <span>Premium Audio System</span><span class="upg-val">+$800</span></label>
-        <label class="upg-check"><input type="checkbox" value="600" onchange="calcUpgrades()"> <span>Blind Spot Monitor</span><span class="upg-val">+$600</span></label>
-        <label class="upg-check"><input type="checkbox" value="700" onchange="calcUpgrades()"> <span>Sunroof / Moonroof</span><span class="upg-val">+$700</span></label>
-        <label class="upg-check"><input type="checkbox" value="900" onchange="calcUpgrades()"> <span>Navigation System</span><span class="upg-val">+$900</span></label>
-        <label class="upg-check"><input type="checkbox" value="400" onchange="calcUpgrades()"> <span>Cold Weather Package</span><span class="upg-val">+$400</span></label>
-        <label class="upg-check"><input type="checkbox" value="600" onchange="calcUpgrades()"> <span>Driver Assist Package</span><span class="upg-val">+$600</span></label>
-        <label class="upg-check"><input type="checkbox" value="500" onchange="calcUpgrades()"> <span>Rear Camera / Sensors</span><span class="upg-val">+$500</span></label>
-        <label class="upg-check"><input type="checkbox" value="300" onchange="calcUpgrades()"> <span>Remote Start</span><span class="upg-val">+$300</span></label>
-        <label class="upg-check"><input type="checkbox" value="400" onchange="calcUpgrades()"> <span>Heated Seats</span><span class="upg-val">+$400</span></label>
-        <label class="upg-check"><input type="checkbox" value="500" onchange="calcUpgrades()"> <span>Ventilated / Cooled Seats</span><span class="upg-val">+$500</span></label>
-        <label class="upg-check"><input type="checkbox" value="350" onchange="calcUpgrades()"> <span>Heated Steering Wheel</span><span class="upg-val">+$350</span></label>
-      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">➕ Anything Else We Should Know?</div>
+      <textarea class="inp" id="custom-upg-desc" rows="3" placeholder="Describe any other upgrades, modifications, or features that add value to your vehicle..." style="width:100%;resize:vertical"></textarea>
     </div>
 
-    <!-- Aftermarket Upgrades -->
-    <div style="margin-bottom:24px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#FFB300;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border)">🔧 You Made It Yours — Aftermarket Upgrades</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="aftermarket-options">
-        <label class="upg-check"><input type="checkbox" value="1200" onchange="calcUpgrades()"> <span>Custom Wheels & Tires</span><span class="upg-val">+$1,200</span></label>
-        <label class="upg-check"><input type="checkbox" value="1500" onchange="calcUpgrades()"> <span>Lift Kit</span><span class="upg-val">+$1,500</span></label>
-        <label class="upg-check"><input type="checkbox" value="600" onchange="calcUpgrades()"> <span>Running Boards / Steps</span><span class="upg-val">+$600</span></label>
-        <label class="upg-check"><input type="checkbox" value="800" onchange="calcUpgrades()"> <span>Upgraded Sound System</span><span class="upg-val">+$800</span></label>
-        <label class="upg-check"><input type="checkbox" value="300" onchange="calcUpgrades()"> <span>Window Tint</span><span class="upg-val">+$300</span></label>
-        <label class="upg-check"><input type="checkbox" value="400" onchange="calcUpgrades()"> <span>Tonneau Cover</span><span class="upg-val">+$400</span></label>
-        <label class="upg-check"><input type="checkbox" value="500" onchange="calcUpgrades()"> <span>Bed Liner (Spray-In)</span><span class="upg-val">+$500</span></label>
-        <label class="upg-check"><input type="checkbox" value="700" onchange="calcUpgrades()"> <span>Trailer Hitch & Package</span><span class="upg-val">+$700</span></label>
-        <label class="upg-check"><input type="checkbox" value="600" onchange="calcUpgrades()"> <span>Roof Rack / Cargo System</span><span class="upg-val">+$600</span></label>
-        <label class="upg-check"><input type="checkbox" value="400" onchange="calcUpgrades()"> <span>Performance Exhaust</span><span class="upg-val">+$400</span></label>
-      </div>
+    <!-- Items selected counter -->
+    <div id="upg-counter" style="font-size:0.9rem;color:#00C853;font-weight:700;letter-spacing:1px;margin-bottom:16px;display:none">
+      ✓ <span id="upg-count">0</span> items selected — our team will factor these into your offer
     </div>
 
-    <!-- Custom Add -->
-    <div style="background:var(--surface2);border:2px solid var(--border);padding:16px;margin-bottom:24px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">➕ Something Else? Tell Us</div>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
-        <div>
-          <label style="font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px">Describe the upgrade</label>
-          <input type="text" id="custom-upg-desc" class="inp" placeholder="e.g. Aftermarket navigation, cold air intake...">
-        </div>
-        <div>
-          <label style="font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px">Value $</label>
-          <input type="number" id="custom-upg-val" class="inp" placeholder="0" style="width:120px" onchange="calcUpgrades()">
-        </div>
-      </div>
+    <!-- Disclaimer -->
+    <div style="background:var(--surface2);border:1px solid var(--border);padding:14px 16px;margin-bottom:20px;font-size:0.85rem;color:var(--muted);line-height:1.6">
+      <strong style="color:#C0CFEA">📋 How We Use This:</strong> Our team uses KBB, NADA, and current market data to determine your vehicle's true value based on trim, options, and condition. The more we know about your vehicle, the more accurate your offer will be. No values are guaranteed until a full appraisal is completed.
     </div>
 
-    <!-- CTA -->
+    <!-- CTAs -->
     <div style="display:flex;gap:12px">
-      <button class="btn-primary" onclick="applyUpgrades()" style="flex:2">✓ APPLY UPGRADES TO MY APPRAISAL</button>
-      <button class="btn-secondary" onclick="skipUpgrades()" style="flex:1">Skip — No Upgrades</button>
+      <button class="btn-primary" onclick="applyUpgrades()" style="flex:2">✓ SUBMIT MY VEHICLE DETAILS</button>
+      <button class="btn-secondary" onclick="skipUpgrades()" style="flex:1">No Additional Features</button>
     </div>
 
   </div>
@@ -841,15 +833,16 @@ function togglePhotoDrawer(){var body=document.getElementById('photo-body'),arro
 var totalUpgradeValue = 0;
 
 function calcUpgrades(){
-  var total=0;
+  var count=0;
   document.querySelectorAll('#factory-options input[type=checkbox]:checked, #aftermarket-options input[type=checkbox]:checked').forEach(function(cb){
-    total+=parseInt(cb.value)||0;
+    count++;
   });
-  var custom=parseInt(document.getElementById('custom-upg-val').value)||0;
-  total+=custom;
-  totalUpgradeValue=total;
-  document.getElementById('upgrade-total').textContent='+$'+total.toLocaleString();
-  document.getElementById('upgrade-banner').style.borderColor=total>0?'#00C853':'var(--border)';
+  var counter=document.getElementById('upg-counter');
+  var countEl=document.getElementById('upg-count');
+  if(counter && countEl){
+    countEl.textContent=count;
+    counter.style.display=count>0?'block':'none';
+  }
 }
 
 function showUpgradeSection(){
@@ -860,27 +853,18 @@ function showUpgradeSection(){
 }
 
 function applyUpgrades(){
-  // Collect selected upgrades for the appraisal report
   var items=[];
   document.querySelectorAll('#factory-options input[type=checkbox]:checked').forEach(function(cb){
-    items.push(cb.parentElement.querySelector('span').textContent);
+    items.push(cb.parentElement.querySelector('span').textContent.trim());
   });
   document.querySelectorAll('#aftermarket-options input[type=checkbox]:checked').forEach(function(cb){
-    items.push(cb.parentElement.querySelector('span').textContent);
+    items.push(cb.parentElement.querySelector('span').textContent.trim());
   });
-  var customDesc=document.getElementById('custom-upg-desc').value;
-  var customVal=parseInt(document.getElementById('custom-upg-val').value)||0;
-  if(customDesc && customVal>0) items.push(customDesc+' (+$'+customVal.toLocaleString()+')');
-
+  var customDesc=document.getElementById('custom-upg-desc').value.trim();
+  if(customDesc) items.push(customDesc);
   window.upgradeItems=items;
-  window.upgradeTotal=totalUpgradeValue;
-
-  // Visual confirmation
-  document.getElementById('upgrade-banner').style.background='linear-gradient(135deg,#003300,#001a00)';
-  document.getElementById('upgrade-total').textContent='+$'+totalUpgradeValue.toLocaleString()+' APPLIED ✓';
-
-  // Continue to next step
-  setTimeout(function(){confirmStep(2);},600);
+  window.upgradeTotal=0;
+  confirmStep(2);
 }
 
 function skipUpgrades(){
