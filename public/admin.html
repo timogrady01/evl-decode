@@ -503,6 +503,13 @@ async function admDecode(){
     if(d.error) throw new Error(d.error);
     admVinData=d;
     populateAdmFields(d);
+    // Calculate values from MSRP and populate Market Value tab
+    var msrp=((d.build||d).msrp||(d.build||d).base_price)||27000;
+    var rough=Math.round(msrp*0.52);
+    var avg=Math.round(msrp*0.62);
+    var clean=Math.round(msrp*0.72);
+    window.admRough=rough;window.admAvg=avg;window.admClean=clean;
+    populateMVTab(d.build||d, rough, avg, clean);
     // Try NeoVIN for equipment
     try{
       const nr=await fetch(`https://api.marketcheck.com/v2/decode/car/neovin/${vin}/specs?api_key=${API_KEY}`,{signal:AbortSignal.timeout(10000)});
@@ -754,7 +761,7 @@ function populateMVTab(vinData, rough, avg, clean){
   var mo=vinData.model||'';
   var tr=vinData.trim||'';
   document.getElementById('mv-vehicle-name').textContent=(yr+' '+mk+' '+mo+' '+tr).trim()||'Unknown Vehicle';
-  document.getElementById('mv-vin-badge').textContent='VIN: '+(vinData.vin||document.getElementById('adm-vin').value);
+  document.getElementById('mv-vin-badge').textContent='VIN: '+document.getElementById('adm-vin').value.trim().toUpperCase();
   var odo=document.getElementById('adm-odo')?document.getElementById('adm-odo').value:'';
   document.getElementById('mv-odo-display').textContent=odo?Number(odo).toLocaleString()+' mi':'—';
 
