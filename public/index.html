@@ -579,12 +579,12 @@ footer b { color: var(--blue); }
       <div class="sub-drawer-body">
         <div class="check-grid">
           <button class="check-btn" data-group="paint" data-val="Original Paint" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Original Paint</span></button>
-          <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Repainted</span></button>
           <button class="check-btn" data-group="hail" data-val="No Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Hail Damage</span></button>
-          <button class="check-btn" data-group="hail" data-val="Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Hail Damage</span><span class="check-warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="body" data-val="No Body Damage" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Body Damage</span></button>
-          <button class="check-btn" data-group="body" data-val="Minor Dents" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Minor Dents</span><span class="check-warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="glass" data-val="Windshield Clear" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Windshield Clear</span></button>
+          <button class="check-btn" data-group="paint" data-val="Repainted" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Repainted</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="hail" data-val="Hail Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Hail Damage</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="body" data-val="Minor Dents" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Minor Dents</span><span class="check-warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="glass" data-val="Chip or Crack" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Chip or Crack</span><span class="check-warn">⚠ affects value</span></div></button>
         </div>
       </div>
@@ -615,12 +615,13 @@ footer b { color: var(--blue); }
       <div class="sub-drawer-body">
         <div class="check-grid">
           <button class="check-btn" data-group="lights" data-val="No Warning Lights" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Warning Lights</span></button>
-          <button class="check-btn" data-group="lights" data-val="Warning Lights On" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Warning Lights On</span><span class="check-warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="tires" data-val="Good Tread" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Good Tread</span></button>
-          <button class="check-btn" data-group="tires" data-val="Needs Replacement" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Tires Worn</span><span class="check-warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="accident" data-val="No Accidents" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Accidents</span></button>
-          <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Prior Accident</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="spare" data-val="Spare Tire Present" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Spare Tire & Jack</span></button>
           <button class="check-btn" data-group="flood" data-val="No Flood or Fire" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">No Flood/Fire</span></button>
+          <button class="check-btn" data-group="lights" data-val="Warning Lights On" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Warning Lights On</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="tires" data-val="Needs Replacement" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Tires Worn</span><span class="check-warn">⚠ affects value</span></div></button>
+          <button class="check-btn" data-group="accident" data-val="Prior Accident" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Prior Accident</span><span class="check-warn">⚠ affects value</span></div></button>
           <button class="check-btn" data-group="flood" data-val="Flood/Fire Damage" onclick="toggleCheck(this)"><div class="chk"></div><div><span class="check-main">Flood/Fire Damage</span><span class="check-warn">⚠ major impact</span></div></button>
         </div>
       </div>
@@ -636,7 +637,7 @@ footer b { color: var(--blue); }
         <div class="check-grid">
           <button class="check-btn" data-group="title" data-val="Clean Title" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Clean Title</span></button>
           <button class="check-btn" data-group="title" data-val="Lien/Payoff" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Lien / Payoff</span></button>
-          <button class="check-btn" data-group="spare" data-val="Spare Tire Present" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Spare Tire & Jack</span></button>
+
           <button class="check-btn" data-group="manual" data-val="Owner Manual" onclick="toggleCheck(this)"><div class="chk"></div><span class="check-main">Owner's Manual</span></button>
         </div>
         <div id="factory-section" style="display:none;margin-top:10px">
