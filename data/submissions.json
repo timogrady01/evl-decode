@@ -5,12 +5,11 @@
     "make": "Toyota",
     "model": "Camry",
     "trim": "SE",
-    "mileage": "50000",
+    "mileage": "45000",
     "condition": "Excellent",
     "features": [
       "Convenience Package",
-      "Blind Spot Monitor",
-      "GARAGE KEEP 1 OWNER NO ACCIDENTS"
+      "Blind Spot Monitor"
     ],
     "customNotes": "",
     "contact": {
@@ -18,7 +17,7 @@
       "email": "togradyevl@gmail.com",
       "phone": "4698772165"
     },
-    "timestamp": "2026-05-31T14:27:21.325Z",
+    "timestamp": "2026-05-31T17:34:39.535Z",
     "status": "pending"
   }
 }
