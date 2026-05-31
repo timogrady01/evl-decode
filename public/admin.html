@@ -52,7 +52,38 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 @keyframes blink{50%{opacity:0.3}}
 
 /* DATA PANELS */
-.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.data-grid{display:flex;flex-direction:column;gap:0}
+.accordion{border:3px solid #4D9FFF;margin-bottom:10px;overflow:hidden}
+.acc-header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;cursor:pointer;background:#111827;user-select:none;transition:background .2s}
+.acc-header:hover{background:#1C2637}
+.acc-title{font-family:"Barlow Condensed",sans-serif;font-size:1.6rem;font-weight:900;letter-spacing:3px;text-transform:uppercase}
+.acc-title.blue{color:#4D9FFF}
+.acc-title.green{color:#00E676}
+.acc-title.gold{color:#FFD740}
+.acc-title.purple{color:#B388FF}
+.acc-title.orange{color:#FF8C00}
+.acc-arrow{font-size:1.4rem;color:#FFFFFF;transition:transform .3s}
+.acc-arrow.open{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 28px 24px 28px;background:#0D1525}
+.acc-body.open{display:block}
+.acc-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border:2px solid #2A3A55;background:#111827;margin-bottom:8px}
+.acc-row:last-child{margin-bottom:0}
+.acc-label{font-family:"Barlow Condensed",sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#C0CFEA}
+.acc-val{font-family:"Share Tech Mono",monospace;font-size:1.4rem;font-weight:700;color:#FFD740;text-align:right}
+.acc-val.green{color:#00E676}
+.acc-val.blue{color:#4D9FFF}
+.acc-val.white{color:#FFFFFF}
+.msrp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-top:8px}
+.msrp-box{text-align:center;padding:20px;background:#111827;border:2px solid #2A3A55}
+.msrp-lbl{font-size:1.1rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C0CFEA;margin-bottom:8px}
+.msrp-num{font-family:"Barlow Condensed",sans-serif;font-size:2rem;font-weight:900}
+.cond-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-top:8px}
+.cond-btn{padding:18px;font-family:"Barlow Condensed",sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;border:3px solid;cursor:pointer;transition:all .2s}
+.cond-btn:hover{opacity:.85}
+.override-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.override-lbl{font-size:1.1rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#C0CFEA;margin-bottom:8px}
+.override-inp{background:#111827;border:2px solid #4D9FFF;color:#FFFFFF;font-family:"Share Tech Mono",monospace;font-size:1.2rem;padding:12px 16px;width:100%;outline:none}
+.override-inp:focus{border-color:#FFD740}
 .data-panel{background:#1A2340;border:3px solid #FFFFFF;padding:18px}
 .data-panel.full{grid-column:1/-1}
 .dp-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #FFFFFF}
@@ -167,50 +198,80 @@ textarea.adm-ta{width:100%;background:var(--surface2);border:1.5px solid var(--b
     <!-- TAB: VEHICLE DATA -->
     <div class="tab-content active" id="tab-vehicle">
       <div class="data-grid">
-        <div class="data-panel">
-          <div class="dp-title blue">◈ Vehicle Identity</div>
-          <div class="data-row"><span class="data-key">Year</span><span class="data-val green" id="d-year">—</span></div>
-          <div class="data-row"><span class="data-key">Make</span><span class="data-val" id="d-make">—</span></div>
-          <div class="data-row"><span class="data-key">Model</span><span class="data-val" id="d-model">—</span></div>
-          <div class="data-row"><span class="data-key">Trim</span><span class="data-val gold" id="d-trim">—</span></div>
-          <div class="data-row"><span class="data-key">Body Type</span><span class="data-val" id="d-body">—</span></div>
-          <div class="data-row"><span class="data-key">Doors</span><span class="data-val" id="d-doors">—</span></div>
-          <div class="data-row"><span class="data-key">Seating</span><span class="data-val" id="d-seats">—</span></div>
-          <div class="data-row"><span class="data-key">Made In</span><span class="data-val" id="d-made">—</span></div>
+
+        <!-- DRAWER 1: VEHICLE IDENTITY -->
+        <div class="accordion" id="acc-identity">
+          <div class="acc-header" onclick="toggleAcc('acc-identity')">
+            <span class="acc-title blue">⚡ Vehicle Identity</span>
+            <span class="acc-arrow open" id="arr-acc-identity">▼</span>
+          </div>
+          <div class="acc-body open" id="body-acc-identity">
+            <div class="acc-row"><span class="acc-label">Year</span><span class="acc-val green" id="d-year">—</span></div>
+            <div class="acc-row"><span class="acc-label">Make</span><span class="acc-val white" id="d-make">—</span></div>
+            <div class="acc-row"><span class="acc-label">Model</span><span class="acc-val white" id="d-model">—</span></div>
+            <div class="acc-row"><span class="acc-label">Trim</span><span class="acc-val gold" id="d-trim">—</span></div>
+            <div class="acc-row"><span class="acc-label">Body Type</span><span class="acc-val white" id="d-body">—</span></div>
+            <div class="acc-row"><span class="acc-label">Doors</span><span class="acc-val white" id="d-doors">—</span></div>
+            <div class="acc-row"><span class="acc-label">Seating</span><span class="acc-val white" id="d-seats">—</span></div>
+            <div class="acc-row"><span class="acc-label">Made In</span><span class="acc-val white" id="d-made">—</span></div>
+          </div>
         </div>
-        <div class="data-panel">
-          <div class="dp-title green">◈ Powertrain</div>
-          <div class="data-row"><span class="data-key">Engine</span><span class="data-val green" id="d-engine">—</span></div>
-          <div class="data-row"><span class="data-key">Displacement</span><span class="data-val" id="d-displace">—</span></div>
-          <div class="data-row"><span class="data-key">Cylinders</span><span class="data-val" id="d-cyl">—</span></div>
-          <div class="data-row"><span class="data-key">Transmission</span><span class="data-val" id="d-trans">—</span></div>
-          <div class="data-row"><span class="data-key">Drivetrain</span><span class="data-val" id="d-drive">—</span></div>
-          <div class="data-row"><span class="data-key">Fuel Type</span><span class="data-val" id="d-fuel">—</span></div>
-          <div class="data-row"><span class="data-key">City MPG</span><span class="data-val" id="d-city">—</span></div>
-          <div class="data-row"><span class="data-key">Hwy MPG</span><span class="data-val" id="d-hwy">—</span></div>
+
+        <!-- DRAWER 2: POWERTRAIN -->
+        <div class="accordion" id="acc-power">
+          <div class="acc-header" onclick="toggleAcc('acc-power')">
+            <span class="acc-title green">⚙ Powertrain</span>
+            <span class="acc-arrow" id="arr-acc-power">▼</span>
+          </div>
+          <div class="acc-body" id="body-acc-power">
+            <div class="acc-row"><span class="acc-label">Engine</span><span class="acc-val green" id="d-engine">—</span></div>
+            <div class="acc-row"><span class="acc-label">Displacement</span><span class="acc-val white" id="d-displace">—</span></div>
+            <div class="acc-row"><span class="acc-label">Cylinders</span><span class="acc-val white" id="d-cyl">—</span></div>
+            <div class="acc-row"><span class="acc-label">Transmission</span><span class="acc-val white" id="d-trans">—</span></div>
+            <div class="acc-row"><span class="acc-label">Drivetrain</span><span class="acc-val blue" id="d-drive">—</span></div>
+            <div class="acc-row"><span class="acc-label">Fuel Type</span><span class="acc-val white" id="d-fuel">—</span></div>
+            <div class="acc-row"><span class="acc-label">City MPG</span><span class="acc-val green" id="d-city">—</span></div>
+            <div class="acc-row"><span class="acc-label">Hwy MPG</span><span class="acc-val green" id="d-hwy">—</span></div>
+          </div>
         </div>
-        <div class="data-panel full">
-          <div class="dp-title purple">◈ MSRP & Pricing Intel</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-            <div style="text-align:center;padding:14px;background:var(--surface2);border:1px solid var(--border)">
-              <div style="font-size:1rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Base MSRP</div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;color:var(--purple)" id="d-msrp">—</div>
-            </div>
-            <div style="text-align:center;padding:14px;background:var(--surface2);border:1px solid var(--border)">
-              <div style="font-size:1rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Options MSRP</div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;color:var(--gold)" id="d-opt-msrp">—</div>
-            </div>
-            <div style="text-align:center;padding:14px;background:var(--surface2);border:1px solid var(--border)">
-              <div style="font-size:1rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Total MSRP</div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;color:var(--green)" id="d-total-msrp">—</div>
+
+        <!-- DRAWER 3: MSRP & PRICING -->
+        <div class="accordion" id="acc-msrp">
+          <div class="acc-header" onclick="toggleAcc('acc-msrp')">
+            <span class="acc-title gold">💰 MSRP & Pricing Intel</span>
+            <span class="acc-arrow" id="arr-acc-msrp">▼</span>
+          </div>
+          <div class="acc-body" id="body-acc-msrp">
+            <div class="msrp-grid">
+              <div class="msrp-box"><div class="msrp-lbl">Base MSRP</div><div class="msrp-num" style="color:#B388FF" id="d-msrp">—</div></div>
+              <div class="msrp-box"><div class="msrp-lbl">Options MSRP</div><div class="msrp-num" style="color:#FFD740" id="d-opt-msrp">—</div></div>
+              <div class="msrp-box"><div class="msrp-lbl">Total MSRP</div><div class="msrp-num" style="color:#00E676" id="d-total-msrp">—</div></div>
             </div>
           </div>
         </div>
+
+        <!-- DRAWER 4: CONDITION OVERRIDE -->
+        <div class="accordion" id="acc-cond">
+          <div class="acc-header" onclick="toggleAcc('acc-cond')">
+            <span class="acc-title orange">🎯 Admin Condition Override</span>
+            <span class="acc-arrow" id="arr-acc-cond">▼</span>
+          </div>
+          <div class="acc-body" id="body-acc-cond">
+            <div class="cond-grid">
+              <button class="cond-btn" style="background:#041209;border-color:#00E676;color:#00E676" onclick="setAdmCond('Excellent',1.12,this)">EXCELLENT</button>
+              <button class="cond-btn" style="background:#001A3D;border-color:#4D9FFF;color:#4D9FFF" onclick="setAdmCond('Good',1.0,this)">GOOD</button>
+              <button class="cond-btn" style="background:#2D1800;border-color:#FF8C00;color:#FF8C00" onclick="setAdmCond('Fair',0.85,this)">FAIR</button>
+              <button class="cond-btn" style="background:#1A0500;border-color:#FF5252;color:#FF5252" onclick="setAdmCond('Poor',0.68,this)">POOR</button>
+            </div>
+            <div class="override-grid">
+              <div><div class="override-lbl">Odometer Override</div><input class="override-inp" id="adm-odo" placeholder="e.g. 45000" type="number"></div>
+              <div><div class="override-lbl">Condition</div><input class="override-inp" id="adm-cond-display" placeholder="Select above" readonly></div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- ADMIN CONDITION OVERRIDE -->
-      <div class="data-panel" style="margin-bottom:14px">
-        <div class="dp-title gold">◈ Admin Condition Override</div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
           <button class="adm-btn" style="padding:14px;font-size:1.3rem;background:#041209;border:2px solid var(--green);color:var(--green)" onclick="setAdmCond('Excellent',1.12,this)">EXCELLENT</button>
           <button class="adm-btn" style="padding:12px;background:#001A3D;border:2px solid var(--blue);color:var(--blue)" onclick="setAdmCond('Good',1.0,this)">GOOD</button>
@@ -474,6 +535,27 @@ function clearAll(){
   document.getElementById('adm-notes').value='';
   setAdmStatus('AWAITING VIN INPUT','');
 }
+
+function toggleAcc(id){
+  var body=document.getElementById('body-'+id);
+  var arr=document.getElementById('arr-'+id);
+  if(body.classList.contains('open')){
+    body.classList.remove('open');
+    arr.classList.remove('open');
+  } else {
+    body.classList.add('open');
+    arr.classList.add('open');
+  }
+}
+function openAcc(id){
+  var body=document.getElementById('body-'+id);
+  var arr=document.getElementById('arr-'+id);
+  if(body && !body.classList.contains('open')){
+    body.classList.add('open');
+    arr.classList.add('open');
+  }
+}
+
 </script>
 </body>
 </html>
