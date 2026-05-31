@@ -22,12 +22,11 @@
   },
   "4T1BF1FK4CU513303": {
     "vin": "4T1BF1FK4CU513303",
-    "mileage": "35000",
+    "mileage": "45000",
     "condition": "Excellent",
     "features": [
       "Convenience Package",
-      "Blind Spot Monitor",
-      "TEST"
+      "Blind Spot Monitor"
     ],
     "customNotes": "",
     "contact": {
@@ -35,7 +34,7 @@
       "email": "togradyevl@gmail.com",
       "phone": "4698772165"
     },
-    "timestamp": "2026-05-31T17:58:15.003Z",
+    "timestamp": "2026-05-31T18:09:01.290Z",
     "status": "pending"
   }
 }
