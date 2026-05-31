@@ -967,7 +967,7 @@ function loadJournal(){
       var rows=submissions.sort(function(a,b){return new Date(b.timestamp)-new Date(a.timestamp);}).map(function(s){
         var dt=s.timestamp?new Date(s.timestamp).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
         var features=s.features&&s.features.length>0?s.features.slice(0,2).join(', ')+(s.features.length>2?' +more':''):'None';
-        return '<tr onclick="loadVinFromJournal(''+s.vin+'')" style="cursor:pointer;">'+
+        return '<tr class="journal-row" data-vin="'+s.vin+'" style="cursor:pointer;">'+
           '<td><strong>'+dt+'</strong></td>'+
           '<td><strong style="color:#4D9FFF;">'+s.vin+'</strong></td>'+
           '<td>'+(s.year||'')+' '+(s.make||'')+' '+(s.model||'')+' '+(s.trim||'')+'</td>'+
@@ -991,6 +991,12 @@ function loadJournal(){
       if(tableEl) tableEl.innerHTML='<div style="text-align:center;padding:40px;color:#FF5252;">Error loading journal: '+e.message+'</div>';
     });
 }
+
+// Journal row click handler
+document.addEventListener('click',function(e){
+  var row=e.target.closest('.journal-row');
+  if(row && row.dataset.vin) loadVinFromJournal(row.dataset.vin);
+});
 
 function loadVinFromJournal(vin){
   document.getElementById('adm-vin').value=vin;
