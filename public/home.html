@@ -60,7 +60,7 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 
 .hero-badge {
   display:inline-flex; align-items:center; gap:10px;
-  background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.4);
+  background:rgba(43,132,254,0.08); border:1px solid rgba(43,132,254,0.4);
   padding:8px 20px; font-size:11px; font-weight:900; letter-spacing:2px;
   text-transform:uppercase; color:var(--blue); margin-bottom:20px;
   animation:fadeUp 0.8s ease both;
@@ -107,13 +107,16 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .stats {
   display:flex; gap:0; justify-content:center;
   animation:fadeUp 0.8s 0.4s ease both;
-  border:2px solid rgba(43,132,254,0.2); background:var(--s1);
+  border:2px solid rgba(43,132,254,0.3);
+  border-top:3px solid var(--blue);
+  background:var(--s1);
+  max-width:700px; margin:24px auto 0;
 }
-.stat { padding:16px 56px; text-align:center; border-right:1px solid rgba(43,132,254,0.2); }
+.stat { padding:18px 40px; text-align:center; border-right:1px solid rgba(43,132,254,0.2); }
 .stat:last-child { border-right:none; }
-.stat-num { font-family:"Barlow Condensed",sans-serif; font-size:38px; font-weight:900; color:#fff; display:block; line-height:1; }
-.stat-num span { color:var(--blue); }
-.stat-label { font-size:12px; font-weight:900; color:#fff; letter-spacing:3px; text-transform:uppercase; margin-top:6px; display:block; }
+.stat-num { font-family:"Barlow Condensed",sans-serif; font-size:44px; font-weight:900; color:var(--white); display:block; line-height:1; }
+.stat-num span { color:var(--blue); font-size:28px; }
+.stat-label { font-size:11px; font-weight:700; color:rgba(255,255,255,0.6); letter-spacing:2px; text-transform:uppercase; margin-top:5px; display:block; }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
@@ -124,14 +127,15 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .sec-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(52px,7vw,88px); font-weight:900; text-transform:uppercase; line-height:1; margin-bottom:12px; color:#fff; }
 .sec-sub { font-size:26px; font-weight:700; color:#fff; line-height:1.8; max-width:800px; margin-bottom:32px; }
 
-.bubbles { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:12px; }
+.bubbles { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:12px; }
 .bubble {
   background:var(--s2); border:2px solid rgba(43,132,254,0.2);
-  padding:36px; text-align:center; transition:all 0.3s;
+  border-top:2px solid var(--blue);
+  padding:20px 16px; text-align:center; transition:all 0.3s;
 }
 .bubble:hover { border-color:var(--blue); transform:translateY(-4px); }
-.bubble-num { font-family:"Barlow Condensed",sans-serif; font-size:14px; font-weight:900; color:var(--green); display:block; line-height:1; margin-bottom:8px; }
-.bubble-title { font-size:12px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+.bubble-num { font-family:"Barlow Condensed",sans-serif; font-size:42px; font-weight:900; color:var(--blue); display:block; line-height:1; margin-bottom:6px; }
+.bubble-title { font-size:13px; font-weight:700; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
 .bubble-detail { font-size:13px; font-weight:700; color:#fff; line-height:1.75; }
 .bubble-them { color:var(--red); }
 .bubble-us { color:var(--green); }
@@ -684,6 +688,19 @@ var bObserver=new IntersectionObserver(function(entries){
 
 var bubbles=document.querySelector(".bubbles");
 if(bubbles) bObserver.observe(bubbles);
+
+// animateBubbles for drawer trigger
+var bubbleAnimated = false;
+function animateBubbles() {
+  if(bubbleAnimated) return;
+  bubbleAnimated = true;
+  setTimeout(function(){animateNum(document.getElementById("b1"),4300,1500);},0);
+  setTimeout(function(){animateNum(document.getElementById("b2"),2621,1500);},200);
+  setTimeout(function(){animateNum(document.getElementById("b3"),1888,1500);},400);
+  setTimeout(function(){animateNum(document.getElementById("b4"),2800,1500);},600);
+  setTimeout(function(){animateNum(document.getElementById("b5"),1800,1500);},800);
+  setTimeout(function(){animateNum(document.getElementById("b6"),13409,2000);},1000);
+}
 
 function toggleHomeDrawer(id) {
   var body = document.getElementById(id+'-body');
