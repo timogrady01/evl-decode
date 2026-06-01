@@ -212,6 +212,136 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
   .bar-row { flex-direction:column; align-items:flex-start; }
   .bar-label { width:auto; }
 }
+
+/* ── HOME DRAWERS ── */
+.page-drawers { max-width:900px; margin:0 auto; padding:0 20px 20px; }
+
+.home-drawer {
+  background:var(--s1);
+  border:1px solid rgba(43,132,254,0.2);
+  border-left:3px solid var(--blue);
+  margin-bottom:8px;
+}
+
+.home-drawer-hdr {
+  display:flex; align-items:center;
+  justify-content:space-between;
+  padding:14px 18px; cursor:pointer;
+  transition:background 0.2s;
+}
+
+.home-drawer-hdr:hover { background:rgba(43,132,254,0.06); }
+
+.hd-left { display:flex; align-items:center; gap:14px; }
+
+.hd-icon { font-size:18px; flex-shrink:0; }
+
+.hd-title {
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:16px; font-weight:800;
+  letter-spacing:1px; text-transform:uppercase;
+  color:var(--white);
+}
+
+.hd-sub {
+  font-size:11px; font-weight:500;
+  color:var(--gray); margin-top:1px;
+  letter-spacing:0.3px;
+}
+
+.hd-arrow {
+  font-size:12px; color:var(--blue);
+  transition:transform 0.3s; flex-shrink:0;
+}
+
+.hd-arrow.open { transform:rotate(180deg); }
+
+.home-drawer-body {
+  display:none;
+  padding:16px 18px 20px;
+  border-top:1px solid rgba(43,132,254,0.15);
+}
+
+.home-drawer-body.open { display:block; }
+
+/* How It Works steps */
+.how-steps { display:flex; flex-direction:column; gap:12px; }
+
+.how-step {
+  display:flex; align-items:flex-start;
+  gap:14px; padding:12px 14px;
+  background:var(--s2);
+  border:1px solid rgba(43,132,254,0.15);
+  border-left:3px solid var(--blue);
+}
+
+.step-num-circle {
+  width:28px; height:28px;
+  border-radius:50%;
+  background:var(--blue);
+  color:#fff; font-family:"Barlow Condensed",sans-serif;
+  font-size:14px; font-weight:900;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+
+.step-title {
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:14px; font-weight:800;
+  letter-spacing:1px; text-transform:uppercase;
+  color:var(--white); margin-bottom:3px;
+}
+
+.step-desc { font-size:12px; color:var(--gray); line-height:1.5; }
+
+/* Promise grid */
+.promise-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.promise-item {
+  background:var(--s2);
+  border:1px solid rgba(43,132,254,0.15);
+  border-top:2px solid var(--blue);
+  padding:14px 14px;
+}
+
+.promise-icon { font-size:18px; margin-bottom:6px; }
+
+.promise-title {
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:13px; font-weight:800;
+  letter-spacing:1px; text-transform:uppercase;
+  color:var(--white); margin-bottom:4px;
+}
+
+.promise-desc { font-size:11px; color:var(--gray); line-height:1.5; }
+
+/* Final CTA */
+.final-cta {
+  text-align:center;
+  padding:40px 32px;
+  background:var(--s1);
+  border-top:2px solid rgba(43,132,254,0.2);
+}
+
+.final-title {
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:clamp(22px,3vw,36px);
+  font-weight:900; letter-spacing:1px;
+  text-transform:uppercase; margin-bottom:10px;
+}
+
+.final-sub {
+  font-size:14px; color:var(--gray);
+  margin-bottom:20px;
+}
+
+@media(max-width:600px){
+  .promise-grid { grid-template-columns:1fr 1fr; }
+  .nav-cards-grid { grid-template-columns:1fr 1fr; }
+}
 </style>
 </head>
 <body>
@@ -268,123 +398,244 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
   </div>
 </section>
 
-<!-- SAVINGS SECTION -->
-<section class="savings">
-  <div class="container">
-    <span class="sec-label reveal">The EVL Advantage</span>
-    <h2 class="sec-title reveal">The Average EVL Customer<br><span style="color:var(--green)">Saves $13,409.</span></h2>
-    <p class="sec-sub reveal">Compared to walking into a dealer alone. Here is exactly where the money comes from.</p>
+<!-- ══ DRAWER SECTIONS ══ -->
+<div class="page-drawers">
 
-    <div class="bubbles reveal">
-      <div class="bubble">
-        <span class="bubble-num" id="b1">$0</span>
-        <div class="bubble-title">🔵 Trade Intelligence</div>
-        <div class="bubble-detail">
-          <div class="bubble-them">Dealer offers: $18,500</div>
-          <div class="bubble-us">EVL auction: $22,800</div>
+  <!-- DRAWER 1 — HOW MUCH CAN YOU SAVE -->
+  <div class="home-drawer" id="hd1">
+    <div class="home-drawer-hdr" onclick="toggleHomeDrawer('hd1')">
+      <div class="hd-left">
+        <span class="hd-icon">💰</span>
+        <div>
+          <div class="hd-title">How Much Can You Save?</div>
+          <div class="hd-sub">The average EVL customer saves $13,409 vs going it alone</div>
         </div>
       </div>
-      <div class="bubble">
-        <span class="bubble-num" id="b2">$0</span>
-        <div class="bubble-title">🟢 Finance Savings</div>
-        <div class="bubble-detail">
-          <div class="bubble-them">Dealer rate: 8.9% APR</div>
-          <div class="bubble-us">EVL rate: 5.9% APR</div>
+      <span class="hd-arrow" id="hd1-arrow">▼</span>
+    </div>
+    <div class="home-drawer-body" id="hd1-body">
+      <div class="container">
+        <div class="bubbles">
+          <div class="bubble">
+            <span class="bubble-num" id="b1">$0</span>
+            <div class="bubble-title">🔵 Trade Intelligence</div>
+            <div class="bubble-detail">
+              <div class="bubble-them">Dealer offers: $18,500</div>
+              <div class="bubble-us">EVL auction: $22,800</div>
+            </div>
+          </div>
+          <div class="bubble">
+            <span class="bubble-num" id="b2">$0</span>
+            <div class="bubble-title">🟢 Finance Savings</div>
+            <div class="bubble-detail">
+              <div class="bubble-them">Dealer rate: 8.9% APR</div>
+              <div class="bubble-us">EVL rate: 5.9% APR</div>
+            </div>
+          </div>
+          <div class="bubble">
+            <span class="bubble-num" id="b3">$0</span>
+            <div class="bubble-title">🟡 No Dealer Packages</div>
+            <div class="bubble-detail">
+              <div class="bubble-them">DPP loaded: $1,888</div>
+              <div class="bubble-us">EVL dealers: $0</div>
+            </div>
+          </div>
+          <div class="bubble">
+            <span class="bubble-num" id="b4">$0</span>
+            <div class="bubble-title">🔷 Digital Glovebox</div>
+            <div class="bubble-detail">
+              <div class="bubble-them">No records: base value</div>
+              <div class="bubble-us">EVL file: +$2,800 at resale</div>
+            </div>
+          </div>
+          <div class="bubble">
+            <span class="bubble-num" id="b5">$0</span>
+            <div class="bubble-title">🟣 Timing Analytics</div>
+            <div class="bubble-detail">
+              <div class="bubble-them">Wrong month: -$1,800</div>
+              <div class="bubble-us">EVL timing: peak market</div>
+            </div>
+          </div>
+          <div class="bubble" style="border-color:var(--gold);background:rgba(255,184,0,0.05);">
+            <span class="bubble-num" id="b6" style="color:var(--gold)">$0</span>
+            <div class="bubble-title" style="color:var(--gold)">💰 Total Saved</div>
+            <div class="bubble-detail" style="color:#fff">Every EVL transaction<br>on average</div>
+          </div>
         </div>
-      </div>
-      <div class="bubble">
-        <span class="bubble-num" id="b3">$0</span>
-        <div class="bubble-title">🟡 No Dealer Packages</div>
-        <div class="bubble-detail">
-          <div class="bubble-them">DPP loaded: $1,888</div>
-          <div class="bubble-us">EVL dealers: $0</div>
+        <div class="vs-bar">
+          <div class="vs-title">💰 EVL vs. Walking In Alone — On a $35,000 Vehicle</div>
+          <div class="bar-row">
+            <span class="bar-label bar-them-label">DEALER DIRECT</span>
+            <div class="bar-track"><div class="bar-fill bar-them">$35,000 sticker + $13,409 left on the table</div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label bar-us-label">WITH EVL</span>
+            <div class="bar-track"><div class="bar-fill bar-us">$35,000 — you keep $13,409 more</div></div>
+          </div>
         </div>
-      </div>
-      <div class="bubble">
-        <span class="bubble-num" id="b4">$0</span>
-        <div class="bubble-title">🔷 Digital Glovebox</div>
-        <div class="bubble-detail">
-          <div class="bubble-them">No records: base value</div>
-          <div class="bubble-us">EVL file: +$2,800 at resale</div>
-        </div>
-      </div>
-      <div class="bubble">
-        <span class="bubble-num" id="b5">$0</span>
-        <div class="bubble-title">🟣 Timing Analytics</div>
-        <div class="bubble-detail">
-          <div class="bubble-them">Wrong month: -$1,800</div>
-          <div class="bubble-us">EVL timing: peak market</div>
-        </div>
-      </div>
-      <div class="bubble" style="border-color:var(--gold);background:rgba(255,184,0,0.05);">
-        <span class="bubble-num" id="b6" style="color:var(--gold);font-size:42px;">$0</span>
-        <div class="bubble-title" style="color:var(--gold);font-size:12px;">💰 Total Saved</div>
-        <div class="bubble-detail" style="color:#fff;font-size:14px;">Every EVL transaction<br>on average</div>
       </div>
     </div>
+  </div>
 
-    <!-- VS BAR -->
-    <div class="vs-bar reveal">
-      <div class="vs-title">💰 EVL vs. Walking In Alone — On a $35,000 Vehicle</div>
-      <div class="bar-row">
-        <span class="bar-label bar-them-label">DEALER DIRECT</span>
-        <div class="bar-track"><div class="bar-fill bar-them">$35,000 sticker + $13,409 left on the table</div></div>
+  <!-- DRAWER 2 — HOW IT WORKS -->
+  <div class="home-drawer" id="hd2">
+    <div class="home-drawer-hdr" onclick="toggleHomeDrawer('hd2')">
+      <div class="hd-left">
+        <span class="hd-icon">⚡</span>
+        <div>
+          <div class="hd-title">How It Works</div>
+          <div class="hd-sub">4 steps. 24 hours. Deal done. 24/7.</div>
+        </div>
       </div>
-      <div class="bar-row">
-        <span class="bar-label bar-us-label">WITH EVL</span>
-        <div class="bar-track"><div class="bar-fill bar-us">$35,000 — you keep $13,409 more</div></div>
+      <span class="hd-arrow" id="hd2-arrow">▼</span>
+    </div>
+    <div class="home-drawer-body" id="hd2-body">
+      <div class="container">
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="step-num-circle">1</div>
+            <div class="step-content">
+              <div class="step-title">Tell Us What You Want</div>
+              <div class="step-desc">Year, make, model, trim, color, options. As specific or as open as you like. We find it.</div>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num-circle">2</div>
+            <div class="step-content">
+              <div class="step-title">Evaluate Your Trade</div>
+              <div class="step-desc">EVL certified appraisal — photos, condition, mileage verified. We shop it to 10+ buyers. Highest bid wins.</div>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num-circle">3</div>
+            <div class="step-content">
+              <div class="step-title">We Structure Your Deal</div>
+              <div class="step-desc">Vehicle price + trade value + financing — all optimized. Worksheet delivered. No surprises. No hidden fees.</div>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num-circle">4</div>
+            <div class="step-content">
+              <div class="step-title">You Drive It</div>
+              <div class="step-desc">We coordinate delivery. You arrive prepared with our forensic delivery checklist. Keys in hand in 24 hours.</div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:20px">
+          <a href="https://www.expressvehiclelocators.com/how.html" style="font-size:13px;font-weight:700;letter-spacing:2px;color:var(--blue);text-decoration:none;text-transform:uppercase">Full Process Details →</a>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- QUICK NAV TO SUB-PAGES -->
-<section class="nav-cards">
-  <div class="container">
-    <span class="sec-label reveal">Explore The Platform</span>
-    <h2 class="sec-title reveal">Everything You Need.<br><span style="color:var(--blue)">One Platform.</span></h2>
-    <div class="nav-cards-grid reveal">
-      <a href="https://www.expressvehiclelocators.com" class="nav-card">
-        <span class="nav-card-icon">🔄</span>
-        <div class="nav-card-title">Trade-In Value</div>
-        <div class="nav-card-sub">Get your certified EVL appraisal in minutes</div>
-        <span class="nav-card-arrow">→</span>
-      </a>
-      <a href="https://www.expressvehiclelocators.com/find.html" class="nav-card">
-        <span class="nav-card-icon">🔍</span>
-        <div class="nav-card-title">Find a Vehicle</div>
-        <div class="nav-card-sub">We find it, negotiate it, and deliver it</div>
-        <span class="nav-card-arrow">→</span>
-      </a>
-      <a href="https://www.expressvehiclelocators.com/how.html" class="nav-card">
-        <span class="nav-card-icon">⚡</span>
-        <div class="nav-card-title">How It Works</div>
-        <div class="nav-card-sub">4 steps. 72 hours. Deal done.</div>
-        <span class="nav-card-arrow">→</span>
-      </a>
-      <a href="https://www.expressvehiclelocators.com/savings.html" class="nav-card">
-        <span class="nav-card-icon">💰</span>
-        <div class="nav-card-title">Your Savings</div>
-        <div class="nav-card-sub">See exactly where $13,409 comes from</div>
-        <span class="nav-card-arrow">→</span>
-      </a>
+  <!-- DRAWER 3 — EXPLORE THE PLATFORM -->
+  <div class="home-drawer" id="hd3">
+    <div class="home-drawer-hdr" onclick="toggleHomeDrawer('hd3')">
+      <div class="hd-left">
+        <span class="hd-icon">🔍</span>
+        <div>
+          <div class="hd-title">Explore The Platform</div>
+          <div class="hd-sub">Every tool you need — one place</div>
+        </div>
+      </div>
+      <span class="hd-arrow" id="hd3-arrow">▼</span>
+    </div>
+    <div class="home-drawer-body" id="hd3-body">
+      <div class="container">
+        <div class="nav-cards-grid">
+          <a href="https://www.expressvehiclelocators.com" class="nav-card">
+            <span class="nav-card-icon">🔄</span>
+            <div class="nav-card-title">Trade-In Value</div>
+            <div class="nav-card-sub">Get your certified EVL appraisal in minutes</div>
+            <span class="nav-card-arrow">→</span>
+          </a>
+          <a href="https://www.expressvehiclelocators.com/find.html" class="nav-card">
+            <span class="nav-card-icon">🔍</span>
+            <div class="nav-card-title">Find a Vehicle</div>
+            <div class="nav-card-sub">We find it, negotiate it, deliver it</div>
+            <span class="nav-card-arrow">→</span>
+          </a>
+          <a href="https://www.expressvehiclelocators.com/how.html" class="nav-card">
+            <span class="nav-card-icon">⚡</span>
+            <div class="nav-card-title">How It Works</div>
+            <div class="nav-card-sub">4 steps. 24 hours. Done.</div>
+            <span class="nav-card-arrow">→</span>
+          </a>
+          <a href="https://www.expressvehiclelocators.com/savings.html" class="nav-card">
+            <span class="nav-card-icon">💰</span>
+            <div class="nav-card-title">Your Savings</div>
+            <div class="nav-card-sub">See exactly where $13,409 comes from</div>
+            <span class="nav-card-arrow">→</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-</section>
+
+  <!-- DRAWER 4 — THE EVL PROMISE -->
+  <div class="home-drawer" id="hd4">
+    <div class="home-drawer-hdr" onclick="toggleHomeDrawer('hd4')">
+      <div class="hd-left">
+        <span class="hd-icon">◈</span>
+        <div>
+          <div class="hd-title">The EVL Promise</div>
+          <div class="hd-sub">What we commit to — every transaction, every time</div>
+        </div>
+      </div>
+      <span class="hd-arrow" id="hd4-arrow">▼</span>
+    </div>
+    <div class="home-drawer-body" id="hd4-body">
+      <div class="container">
+        <div class="promise-grid">
+          <div class="promise-item">
+            <div class="promise-icon">⚡</div>
+            <div class="promise-title">Express — 24/7</div>
+            <div class="promise-desc">We operate around the clock. Your deal doesn't wait for business hours.</div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-icon">🔒</div>
+            <div class="promise-title">No Credit Cards Ever</div>
+            <div class="promise-desc">Deposits via check, wire, or ACH only. Your financial information stays protected.</div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-icon">📋</div>
+            <div class="promise-title">Full Transparency</div>
+            <div class="promise-desc">Every fee disclosed upfront. Worksheet before you commit. No surprises at closing.</div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-icon">🏆</div>
+            <div class="promise-title">Competitive Bids</div>
+            <div class="promise-desc">Your trade goes to 10+ buyers simultaneously. Highest bid wins. No lowball accepted.</div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-icon">🚗</div>
+            <div class="promise-title">Vehicle First</div>
+            <div class="promise-desc">We secure your vehicle before the trade negotiation. You never lose your dream car over a trade.</div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-icon">✅</div>
+            <div class="promise-title">No Delivery Without Payment</div>
+            <div class="promise-desc">Full confirmed payment required before any vehicle is released. Clean, fraud-free, every time.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-drawers -->
 
 <!-- FINAL CTA -->
 <section class="final-cta">
   <div class="container">
-    <h2 class="final-title reveal">Ready To Stop<br><span style="color:var(--blue)">Leaving Money</span><br>On The Table?</h2>
-    <p class="final-sub reveal">Get your certified EVL evaluation in 60 seconds. It's free.</p>
-    <div class="hero-btns reveal">
-      <a href="https://www.expressvehiclelocators.com/find.html" class="btn-primary">⚡ Start My Evaluation — Free</a>
+    <h2 class="final-title">Ready To Stop Leaving<br><span style="color:var(--blue)">Money On The Table?</span></h2>
+    <p class="final-sub">Get your certified EVL evaluation. It's free to start.</p>
+    <div class="hero-btns">
+      <a href="https://www.expressvehiclelocators.com/find.html" class="btn-primary">⚡ Get Started — Free</a>
       <a href="https://www.expressvehiclelocators.com" class="btn-secondary">🔄 Trade-In Value Check</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div style="max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
     <div class="fl" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:900;">◈ Express <span style="color:var(--blue);">Vehicle</span> Locators</div>
@@ -433,6 +684,21 @@ var bObserver=new IntersectionObserver(function(entries){
 
 var bubbles=document.querySelector(".bubbles");
 if(bubbles) bObserver.observe(bubbles);
+
+function toggleHomeDrawer(id) {
+  var body = document.getElementById(id+'-body');
+  var arrow = document.getElementById(id+'-arrow');
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  arrow.classList.toggle('open', !open);
+  if(!open) {
+    setTimeout(function(){ 
+      document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'}); 
+    }, 100);
+    // Trigger bubble animation when savings drawer opens
+    if(id === 'hd1') animateBubbles();
+  }
+}
 </script>
 </body>
 </html>
