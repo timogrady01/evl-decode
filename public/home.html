@@ -30,12 +30,12 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
   padding:0 32px; height:56px;
   display:flex; align-items:center; justify-content:space-between;
 }
-.nav-logo { font-family:"Barlow Condensed",sans-serif; font-size:14px; font-weight:900; letter-spacing:3px; color:#fff; text-transform:uppercase; text-decoration:none; }
+.nav-logo { font-family:"Barlow Condensed",sans-serif; font-size:28px; font-weight:900; letter-spacing:3px; color:#fff; text-transform:uppercase; text-decoration:none; }
 .nav-logo span { color:var(--blue); }
 .nav-links { display:flex; gap:14px; align-items:center; }
-.nav-link { font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--white); text-decoration:none; transition:color 0.2s; }
+.nav-link { font-size:26px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--white); text-decoration:none; transition:color 0.2s; }
 .nav-link:hover { color:var(--blue); }
-.nav-cta { background:var(--blue); color:#fff; padding:10px 22px; font-family:"Barlow Condensed",sans-serif; font-size:13px; font-weight:900; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; transition:background 0.2s; }
+.nav-cta { background:var(--blue); color:#fff; padding:10px 22px; font-family:"Barlow Condensed",sans-serif; font-size:26px; font-weight:900; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; transition:background 0.2s; }
 .nav-cta:hover { background:#1A6CDE; }
 
 /* HERO */
@@ -61,7 +61,7 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .hero-badge {
   display:inline-flex; align-items:center; gap:10px;
   background:rgba(43,132,254,0.08); border:1px solid rgba(43,132,254,0.4);
-  padding:10px 24px; font-size:13px; font-weight:900; letter-spacing:2px;
+  padding:10px 24px; font-size:26px; font-weight:900; letter-spacing:2px;
   text-transform:uppercase; color:var(--blue); margin-bottom:20px;
   animation:fadeUp 0.8s ease both;
 }
@@ -70,7 +70,7 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 
 .hero-title {
   font-family:"Barlow Condensed",sans-serif;
-  font-size:clamp(48px,7vw,88px); font-weight:900;
+  font-size:clamp(56px,7vw,88px); font-weight:900;
   line-height:0.92; letter-spacing:-1px; text-transform:uppercase;
   margin-bottom:12px; animation:fadeUp 0.8s 0.1s ease both;
 }
@@ -90,14 +90,14 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 }
 .btn-primary {
   background:var(--blue); color:#fff; padding:28px 72px;
-  font-family:"Barlow Condensed",sans-serif; font-size:12px; font-weight:900;
+  font-family:"Barlow Condensed",sans-serif; font-size:24px; font-weight:900;
   letter-spacing:2px; text-transform:uppercase; text-decoration:none;
   border:none; cursor:pointer; transition:all 0.2s; display:inline-block;
 }
 .btn-primary:hover { background:#1A6CDE; transform:translateY(-3px); box-shadow:0 16px 48px rgba(43,132,254,0.4); }
 .btn-secondary {
   background:transparent; color:#fff; padding:28px 72px;
-  font-family:"Barlow Condensed",sans-serif; font-size:12px; font-weight:900;
+  font-family:"Barlow Condensed",sans-serif; font-size:24px; font-weight:900;
   letter-spacing:2px; text-transform:uppercase; text-decoration:none;
   border:3px solid rgba(255,255,255,0.4); cursor:pointer; transition:all 0.2s; display:inline-block;
 }
@@ -116,14 +116,14 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .stat:last-child { border-right:none; }
 .stat-num { font-family:"Barlow Condensed",sans-serif; font-size:52px; font-weight:900; color:var(--white); display:block; line-height:1; }
 .stat-num span { color:var(--blue); font-size:32px; }
-.stat-label { font-size:13px; font-weight:700; color:rgba(255,255,255,0.7); letter-spacing:2px; text-transform:uppercase; margin-top:6px; display:block; }
+.stat-label { font-size:26px; font-weight:700; color:rgba(255,255,255,0.7); letter-spacing:2px; text-transform:uppercase; margin-top:6px; display:block; }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
 /* SAVINGS SECTION */
 .savings { padding:100px 48px; background:var(--s1); border-top:2px solid rgba(43,132,254,0.15); }
 .container { max-width:1100px; margin:0 auto; }
-.sec-label { font-size:14px; font-weight:900; letter-spacing:5px; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:20px; }
+.sec-label { font-size:28px; font-weight:900; letter-spacing:5px; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:20px; }
 .sec-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(52px,7vw,88px); font-weight:900; text-transform:uppercase; line-height:1; margin-bottom:12px; color:#fff; }
 .sec-sub { font-size:26px; font-weight:700; color:#fff; line-height:1.8; max-width:800px; margin-bottom:32px; }
 
@@ -136,7 +136,7 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .bubble:hover { border-color:var(--blue); transform:translateY(-4px); }
 .bubble-num { font-family:"Barlow Condensed",sans-serif; font-size:54px; font-weight:900; color:var(--blue); display:block; line-height:1; margin-bottom:8px; }
 .bubble-title { font-size:17px; font-weight:900; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
-.bubble-detail { font-size:13px; font-weight:700; color:#fff; line-height:1.75; }
+.bubble-detail { font-size:26px; font-weight:700; color:#fff; line-height:1.75; }
 .bubble-them { color:#C8D8EE; font-size:15px; font-weight:600; margin-top:8px; }
 .bubble-us { color:var(--blue); font-size:15px; font-weight:800; margin-top:4px; }
 
@@ -148,16 +148,16 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .total-detail { flex:1; }
 .total-title { font-family:"Barlow Condensed",sans-serif; font-size:36px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:2px; margin-bottom:20px; }
 .total-items { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.total-item { font-size:14px; font-weight:700; color:#fff; }
+.total-item { font-size:28px; font-weight:700; color:#fff; }
 .total-item span { color:var(--green); font-weight:900; }
 
 /* VS BAR */
 .vs-bar { background:var(--s2); border:2px solid rgba(43,132,254,0.2); padding:48px; margin-top:0; }
-.vs-title { font-family:"Barlow Condensed",sans-serif; font-size:12px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:2px; text-align:center; margin-bottom:40px; }
+.vs-title { font-family:"Barlow Condensed",sans-serif; font-size:24px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:2px; text-align:center; margin-bottom:40px; }
 .bar-row { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
 .bar-label { font-family:"Barlow Condensed",sans-serif; font-size:17px; font-weight:900; letter-spacing:2px; text-transform:uppercase; width:180px; flex-shrink:0; }
 .bar-track { flex:1; background:rgba(255,255,255,0.05); height:68px; }
-.bar-fill { height:100%; display:flex; align-items:center; padding:0 24px; font-size:14px; font-weight:800; color:#fff; }
+.bar-fill { height:100%; display:flex; align-items:center; padding:0 24px; font-size:28px; font-weight:800; color:#fff; }
 .bar-them { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); width:100%; }
 .bar-us { background:linear-gradient(90deg,var(--blue),#1A6CDE); width:67%; }
 .bar-them-label { color:rgba(255,255,255,0.5); }
@@ -172,10 +172,10 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
   transition:all 0.3s; text-align:center;
 }
 .nav-card:hover { border-color:var(--blue); background:rgba(43,132,254,0.08); transform:translateY(-4px); }
-.nav-card-icon { font-size:14px; display:block; margin-bottom:20px; }
-.nav-card-title { font-family:"Barlow Condensed",sans-serif; font-size:12px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
-.nav-card-sub { font-size:13px; font-weight:700; color:#fff; line-height:1.75; }
-.nav-card-arrow { display:block; margin-top:20px; font-size:12px; color:var(--blue); font-weight:900; }
+.nav-card-icon { font-size:28px; display:block; margin-bottom:20px; }
+.nav-card-title { font-family:"Barlow Condensed",sans-serif; font-size:24px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+.nav-card-sub { font-size:26px; font-weight:700; color:#fff; line-height:1.75; }
+.nav-card-arrow { display:block; margin-top:20px; font-size:24px; color:var(--blue); font-weight:900; }
 
 /* FINAL CTA */
 .final-cta {
@@ -190,7 +190,7 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
   pointer-events:none;
 }
 .final-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(56px,9vw,112px); font-weight:900; text-transform:uppercase; line-height:0.925; margin-bottom:16px; color:#fff; position:relative; }
-.final-sub { font-size:12px; font-weight:700; color:#fff; margin-bottom:28px; position:relative; }
+.final-sub { font-size:24px; font-weight:700; color:#fff; margin-bottom:28px; position:relative; }
 
 /* FOOTER */
 footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
@@ -198,9 +198,9 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
 .footer-logo { font-family:"Barlow Condensed",sans-serif; font-size:26px; font-weight:900; letter-spacing:4px; color:#fff; }
 .footer-logo span { color:var(--blue); }
 .footer-links { display:flex; gap:32px; }
-.footer-link { font-size:12px; font-weight:700; color:#888; text-decoration:none; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s; }
+.footer-link { font-size:24px; font-weight:700; color:#888; text-decoration:none; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s; }
 .footer-link:hover { color:#fff; }
-.footer-copy { font-size:14px; color:#444; font-family:monospace; letter-spacing:1px; }
+.footer-copy { font-size:28px; color:#444; font-family:monospace; letter-spacing:1px; }
 
 /* REVEAL */
 .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.7s,transform 0.7s; }
@@ -248,13 +248,13 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
 }
 
 .hd-sub {
-  font-size:13px; font-weight:500;
+  font-size:26px; font-weight:500;
   color:#C8D8EE; margin-top:2px;
   letter-spacing:0.3px;
 }
 
 .hd-arrow {
-  font-size:12px; color:var(--blue);
+  font-size:24px; color:var(--blue);
   transition:transform 0.3s; flex-shrink:0;
 }
 
@@ -284,19 +284,19 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
   border-radius:50%;
   background:var(--blue);
   color:#fff; font-family:"Barlow Condensed",sans-serif;
-  font-size:14px; font-weight:900;
+  font-size:28px; font-weight:900;
   display:flex; align-items:center; justify-content:center;
   flex-shrink:0;
 }
 
 .step-title {
   font-family:"Barlow Condensed",sans-serif;
-  font-size:14px; font-weight:800;
+  font-size:28px; font-weight:800;
   letter-spacing:1px; text-transform:uppercase;
   color:var(--white); margin-bottom:3px;
 }
 
-.step-desc { font-size:12px; color:var(--gray); line-height:1.5; }
+.step-desc { font-size:24px; color:var(--gray); line-height:1.5; }
 
 /* Promise grid */
 .promise-grid {
@@ -315,12 +315,12 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
 
 .promise-title {
   font-family:"Barlow Condensed",sans-serif;
-  font-size:13px; font-weight:800;
+  font-size:26px; font-weight:800;
   letter-spacing:1px; text-transform:uppercase;
   color:var(--white); margin-bottom:4px;
 }
 
-.promise-desc { font-size:11px; color:var(--gray); line-height:1.5; }
+.promise-desc { font-size:22px; color:var(--gray); line-height:1.5; }
 
 /* Final CTA */
 .final-cta {
@@ -332,7 +332,7 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
 
 .final-title {
   font-family:"Barlow Condensed",sans-serif;
-  font-size:clamp(28px,4vw,44px);
+  font-size:clamp(52px,4vw,44px);
   font-weight:900; letter-spacing:1px;
   text-transform:uppercase; margin-bottom:10px;
 }
