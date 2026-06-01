@@ -130,15 +130,15 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .bubbles { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:12px; }
 .bubble {
   background:var(--s2); border:2px solid rgba(43,132,254,0.2);
-  border-top:2px solid var(--blue);
-  padding:24px 18px; text-align:center; transition:all 0.3s;
+  border-top:3px solid var(--blue);
+  padding:28px 20px; text-align:center; transition:all 0.3s;
 }
 .bubble:hover { border-color:var(--blue); transform:translateY(-4px); }
-.bubble-num { font-family:"Barlow Condensed",sans-serif; font-size:48px; font-weight:900; color:var(--blue); display:block; line-height:1; margin-bottom:6px; }
-.bubble-title { font-size:15px; font-weight:900; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+.bubble-num { font-family:"Barlow Condensed",sans-serif; font-size:54px; font-weight:900; color:var(--blue); display:block; line-height:1; margin-bottom:8px; }
+.bubble-title { font-size:17px; font-weight:900; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
 .bubble-detail { font-size:13px; font-weight:700; color:#fff; line-height:1.75; }
-.bubble-them { color:var(--gray); font-size:13px; font-weight:600; margin-top:6px; }
-.bubble-us { color:var(--blue); font-size:13px; font-weight:700; }
+.bubble-them { color:#C8D8EE; font-size:15px; font-weight:600; margin-top:8px; }
+.bubble-us { color:var(--blue); font-size:15px; font-weight:800; margin-top:4px; }
 
 .total-bubble {
   grid-column:span 3; background:linear-gradient(135deg,rgba(43,132,254,0.15),rgba(0,200,83,0.15));
@@ -461,8 +461,8 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
             </div>
           </div>
           <div class="bubble" style="border-color:var(--gold);background:rgba(255,184,0,0.05);">
-            <span class="bubble-num" id="b6" style="color:var(--gold);font-size:40px">$0</span>
-            <div class="bubble-title" style="color:var(--gold);font-size:40px">💰 Total Saved</div>
+            <span class="bubble-num" id="b6" style="color:var(--gold);font-size:54px;font-weight:900;display:block;line-height:1;margin-bottom:8px">$0</span>
+            <div class="bubble-title" style="color:var(--gold);font-size:54px;font-weight:900;display:block;line-height:1;margin-bottom:8px">💰 Total Saved</div>
             <div class="bubble-detail" style="color:#fff">Every EVL transaction<br>on average</div>
           </div>
         </div>
