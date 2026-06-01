@@ -134,11 +134,11 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
   padding:20px 16px; text-align:center; transition:all 0.3s;
 }
 .bubble:hover { border-color:var(--blue); transform:translateY(-4px); }
-.bubble-num { font-family:"Barlow Condensed",sans-serif; font-size:42px; font-weight:900; color:var(--blue); display:block; line-height:1; margin-bottom:6px; }
+.bubble-num { font-family:"Barlow Condensed",sans-serif; font-size:40px; font-weight:900; color:var(--blue); display:block; line-height:1; margin-bottom:4px; }
 .bubble-title { font-size:13px; font-weight:700; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
 .bubble-detail { font-size:13px; font-weight:700; color:#fff; line-height:1.75; }
-.bubble-them { color:var(--red); }
-.bubble-us { color:var(--green); }
+.bubble-them { color:var(--gray); font-size:11px; font-weight:600; }
+.bubble-us { color:var(--blue); font-size:11px; font-weight:700; }
 
 .total-bubble {
   grid-column:span 3; background:linear-gradient(135deg,rgba(43,132,254,0.15),rgba(0,200,83,0.15));
@@ -158,10 +158,10 @@ body { background:var(--bg); color:var(--white); font-family:"Barlow",sans-serif
 .bar-label { font-family:"Barlow Condensed",sans-serif; font-size:15px; font-weight:900; letter-spacing:2px; text-transform:uppercase; width:180px; flex-shrink:0; }
 .bar-track { flex:1; background:rgba(255,255,255,0.05); height:68px; }
 .bar-fill { height:100%; display:flex; align-items:center; padding:0 24px; font-size:14px; font-weight:800; color:#fff; }
-.bar-them { background:linear-gradient(90deg,#FF3333,#cc0000); width:100%; }
-.bar-us { background:linear-gradient(90deg,#00C853,#009940); width:67%; }
-.bar-them-label { color:var(--red); }
-.bar-us-label { color:var(--green); }
+.bar-them { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); width:100%; }
+.bar-us { background:linear-gradient(90deg,var(--blue),#1A6CDE); width:67%; }
+.bar-them-label { color:rgba(255,255,255,0.5); }
+.bar-us-label { color:var(--blue); font-weight:800; }
 
 /* NAV CARDS — quick links to sub pages */
 .nav-cards { padding:80px 48px; background:var(--bg); }
@@ -422,7 +422,7 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
         <div class="bubbles">
           <div class="bubble">
             <span class="bubble-num" id="b1">$0</span>
-            <div class="bubble-title">🔵 Trade Intelligence</div>
+            <div class="bubble-title">Trade Intelligence</div>
             <div class="bubble-detail">
               <div class="bubble-them">Dealer offers: $18,500</div>
               <div class="bubble-us">EVL auction: $22,800</div>
@@ -430,7 +430,7 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
           </div>
           <div class="bubble">
             <span class="bubble-num" id="b2">$0</span>
-            <div class="bubble-title">🟢 Finance Savings</div>
+            <div class="bubble-title">Finance Savings</div>
             <div class="bubble-detail">
               <div class="bubble-them">Dealer rate: 8.9% APR</div>
               <div class="bubble-us">EVL rate: 5.9% APR</div>
@@ -438,7 +438,7 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
           </div>
           <div class="bubble">
             <span class="bubble-num" id="b3">$0</span>
-            <div class="bubble-title">🟡 No Dealer Packages</div>
+            <div class="bubble-title">No Dealer Packages</div>
             <div class="bubble-detail">
               <div class="bubble-them">DPP loaded: $1,888</div>
               <div class="bubble-us">EVL dealers: $0</div>
@@ -446,7 +446,7 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
           </div>
           <div class="bubble">
             <span class="bubble-num" id="b4">$0</span>
-            <div class="bubble-title">🔷 Digital Glovebox</div>
+            <div class="bubble-title">Digital Glovebox</div>
             <div class="bubble-detail">
               <div class="bubble-them">No records: base value</div>
               <div class="bubble-us">EVL file: +$2,800 at resale</div>
@@ -454,15 +454,15 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
           </div>
           <div class="bubble">
             <span class="bubble-num" id="b5">$0</span>
-            <div class="bubble-title">🟣 Timing Analytics</div>
+            <div class="bubble-title">Timing Analytics</div>
             <div class="bubble-detail">
               <div class="bubble-them">Wrong month: -$1,800</div>
               <div class="bubble-us">EVL timing: peak market</div>
             </div>
           </div>
           <div class="bubble" style="border-color:var(--gold);background:rgba(255,184,0,0.05);">
-            <span class="bubble-num" id="b6" style="color:var(--gold)">$0</span>
-            <div class="bubble-title" style="color:var(--gold)">💰 Total Saved</div>
+            <span class="bubble-num" id="b6" style="color:var(--gold);font-size:40px">$0</span>
+            <div class="bubble-title" style="color:var(--gold);font-size:40px">💰 Total Saved</div>
             <div class="bubble-detail" style="color:#fff">Every EVL transaction<br>on average</div>
           </div>
         </div>
