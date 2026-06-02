@@ -42,55 +42,55 @@
     },
     {
       "source": "/ws-login.html",
-      "destination": "/public/ws-login.html"
+      "destination": "/ws-login.html"
     },
     {
       "source": "/ws-exchange.html",
-      "destination": "/public/ws-exchange.html"
+      "destination": "/ws-exchange.html"
     },
     {
       "source": "/ws-exchange",
-      "destination": "/public/ws-exchange.html"
+      "destination": "/ws-exchange.html"
     },
     {
       "source": "/ws-vault.html",
-      "destination": "/public/ws-vault.html"
+      "destination": "/ws-vault.html"
     },
     {
       "source": "/ws-vault",
-      "destination": "/public/ws-vault.html"
+      "destination": "/ws-vault.html"
     },
     {
       "source": "/ws-onboarding.html",
-      "destination": "/public/ws-onboarding.html"
+      "destination": "/ws-onboarding.html"
     },
     {
       "source": "/ws-onboarding",
-      "destination": "/public/ws-onboarding.html"
+      "destination": "/ws-onboarding.html"
     },
     {
       "source": "/ws-dealers.html",
-      "destination": "/public/ws-dealers.html"
+      "destination": "/ws-dealers.html"
     },
     {
       "source": "/ws-dealers",
-      "destination": "/public/ws-dealers.html"
+      "destination": "/ws-dealers.html"
     },
     {
       "source": "/ws-login",
-      "destination": "/public/ws-login.html"
+      "destination": "/ws-login.html"
     },
     {
       "source": "/ws-dashboard.html",
-      "destination": "/public/ws-dashboard.html"
+      "destination": "/ws-dashboard.html"
     },
     {
       "source": "/ws-dashboard",
-      "destination": "/public/ws-dashboard.html"
+      "destination": "/ws-dashboard.html"
     },
     {
       "source": "/ws",
-      "destination": "/public/ws-login.html"
+      "destination": "/ws-login.html"
     },
     {
       "source": "/home.html",
