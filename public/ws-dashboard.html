@@ -119,19 +119,42 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:20px 40px
 @media(max-width:1000px){.main{grid-template-columns:1fr;}.stats-row{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){nav{padding:0 16px;}.page-header{padding:24px 16px;}.main-left,.main-right{padding:20px 16px;}.stats-row{grid-template-columns:1fr 1fr;}.qa-grid{grid-template-columns:1fr;}footer{padding:16px;flex-direction:column;gap:8px;}}
 </style>
+<style id="evl-ws-nav-css">
+/* ── EVL WHOLESALE NAV ── */
+.evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid #FFD700;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
+.evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
+.evl-ws-nav-links{display:flex;align-items:center;gap:4px;}
+.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-link:hover{color:#FFD700;background:#1a1400;}
+.evl-ws-nav-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;margin-left:8px;border:1px solid #2a2a2e;}
+.evl-ws-nav-retail:hover{color:#fff;border-color:#fff;}
+.evl-ws-nav-logout{background:#1a1400;border:1px solid #FFD700;color:#FFD700;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-logout:hover{background:#FFD700;color:#000;}
+.evl-ws-hamburger{display:none;background:none;border:none;color:#FFD700;font-size:22px;cursor:pointer;padding:4px 8px;}
+@media(max-width:768px){
+  .evl-ws-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#0a0800;border-bottom:2px solid #FFD700;padding:12px 0;gap:0;}
+  .evl-ws-nav-links.open{display:flex;}
+  .evl-ws-nav-link,.evl-ws-nav-retail,.evl-ws-nav-logout{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1400;}
+  .evl-ws-hamburger{display:block;}
+}
+</style>
 </head>
 <body>
 
-<nav>
-  <a href="/ws-login.html" class="nav-logo">⚡ WS-EVL <span>// Command</span></a>
-  <div class="nav-links">
-    <a href="/ws-dashboard.html" class="active">Dashboard</a>
-    <a href="/ws-exchange.html">Exchange</a>
-    <a href="/ws-vault.html">The Vault</a>
-    <a href="/ws-onboarding.html">Onboarding</a>
-    <a href="/ws-dealers.html">Dealers</a>
-    <a href="https://www.expressvehiclelocators.com/home.html">← EVL Customer</a>
-    <a href="/ws-login.html" class="nav-badge">🔒 Logout</a>
+<nav class="evl-ws-nav">
+  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
+    <span>EVL <span style="color:#FFD700">WHOLESALE</span></span>
+  </a>
+  <button class="evl-ws-hamburger" onclick="toggleWsNav()" aria-label="Menu">&#9776;</button>
+  <div class="evl-ws-nav-links" id="evl-ws-nav-links">
+    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link">EXCHANGE</a>
+    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
+    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
+    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-ws-nav-retail">⬅ RETAIL SITE</a>
+    <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logout">🔒 LOGOUT</a>
   </div>
 </nav>
 
@@ -385,5 +408,9 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:20px 40px
   <div class="fc">Restricted Access · © 2026 Express Vehicle Locators · Authorized Personnel Only</div>
 </footer>
 
+<script id="evl-ws-nav-js">
+function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.toggle('open');}
+(function(){var path=window.location.pathname;document.querySelectorAll('.evl-ws-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){a.style.color='#FFD700';a.style.borderBottom='2px solid #FFD700';}});})();
+</script>
 </body>
 </html>
