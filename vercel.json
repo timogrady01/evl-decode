@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/admin-scripts",
+      "destination": "/admin-scripts.html"
+    },
+    {
+      "source": "/admin-scripts.html",
+      "destination": "/admin-scripts.html"
+    },
+    {
       "source": "/trade-in",
       "destination": "/trade-in.html"
     },
