@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Finder | Express Vehicle Locators</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#020203;color:#fff;font-family:'Segoe UI',Arial,sans-serif;min-height:100vh}
+
+  .evl-header{background:#0a0a0f;border-bottom:1px solid #1a1a2e;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .evl-logo{display:flex;align-items:center;gap:10px}
+  .evl-logo-text{font-size:16px;font-weight:900;letter-spacing:1px;color:#fff}
+  .evl-logo-sub{font-size:11px;font-weight:700;color:#2B84FE;letter-spacing:2px;text-transform:uppercase}
+  .evl-secure{background:#0d2a0d;border:1px solid #00C853;color:#00C853;font-size:10px;font-weight:700;padding:4px 10px;border-radius:4px;letter-spacing:1px}
+  .evl-status{font-size:10px;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+  .evl-wrap{max-width:720px;margin:0 auto;padding:30px 20px 60px}
+  .evl-hero{text-align:center;margin-bottom:30px}
+  .evl-hero h1{font-size:42px;font-weight:900;text-transform:uppercase;line-height:1.1;margin-bottom:8px}
+  .evl-hero h1 span{color:#2B84FE}
+  .evl-hero p{color:#8899aa;font-size:15px;line-height:1.6;max-width:500px;margin:0 auto}
+
+  .evl-card{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:16px}
+  .evl-card-title{font-size:11px;font-weight:700;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .evl-card-title .step{background:#2B84FE;color:#fff;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0}
+
+  .evl-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .evl-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .evl-label{font-size:11px;color:#8899aa;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
+  .evl-input{width:100%;background:#070710;border:1px solid #2a2a3e;color:#fff;padding:12px 14px;border-radius:8px;font-size:14px;outline:none;transition:border-color .2s}
+  .evl-input:focus{border-color:#2B84FE}
+  .evl-input option{background:#0a0a1a}
+
+  .evl-btn{width:100%;padding:16px;font-size:15px;font-weight:900;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;transition:all .2s;margin-top:14px}
+  .evl-btn-primary{background:#2B84FE;color:#fff}
+  .evl-btn-primary:hover{background:#1a6fd4;transform:translateY(-1px)}
+
+  /* Feature chips */
+  .evl-features{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .evl-feature{background:#070710;border:1px solid #1a1a2e;border-radius:6px;padding:7px 12px;font-size:12px;cursor:pointer;transition:all .2s;user-select:none;display:flex;align-items:center;gap:6px}
+  .evl-feature.selected{border-color:#2B84FE;background:#040e1a;color:#2B84FE}
+  .evl-feature input{display:none}
+
+  /* Budget slider */
+  .evl-budget-display{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .evl-budget-val{font-size:20px;font-weight:900;color:#2B84FE}
+  input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:linear-gradient(to right,#2B84FE 0%,#2B84FE 50%,#1a1a2e 50%,#1a1a2e 100%);outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#2B84FE;border:3px solid #fff;cursor:pointer}
+
+  /* Priority badges */
+  .evl-priority{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+  .evl-pri-box{background:#070710;border:2px solid #1a1a2e;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s}
+  .evl-pri-box.selected{border-color:#2B84FE;background:#040e1a}
+  .evl-pri-box .evl-pri-icon{font-size:24px;margin-bottom:6px}
+  .evl-pri-box .evl-pri-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8899aa}
+  .evl-pri-box.selected .evl-pri-label{color:#2B84FE}
+
+  /* Success */
+  .evl-success{display:none;background:#0d1a0d;border:2px solid #00C853;border-radius:12px;padding:30px;text-align:center;margin-top:20px}
+  .evl-success h2{color:#00C853;font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+  .evl-success p{color:#fff;font-size:15px;line-height:1.6}
+
+  /* Radar animation */
+  .evl-radar{display:flex;justify-content:center;margin:20px 0}
+  .evl-radar svg{animation:radarSpin 4s linear infinite}
+  @keyframes radarSpin{to{transform:rotate(360deg)}}
+
+  @media(max-width:520px){
+    .evl-hero h1{font-size:30px}
+    .evl-grid-2,.evl-grid-3{grid-template-columns:1fr}
+    .evl-priority{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="evl-header">
+  <div class="evl-logo">
+    <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
+      <polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/>
+      <circle cx="10" cy="10" r="3" fill="#2B84FE"/>
+    </svg>
+    <div>
+      <div class="evl-logo-text">EXPRESS VEHICLE LOCATORS</div>
+      <div class="evl-logo-sub">Acquisition Radar</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="evl-status">● ACTIVE SEARCHING</div>
+    <div class="evl-secure">🔒 SECURE</div>
+  </div>
+</div>
+
+<div class="evl-wrap">
+
+  <div class="evl-hero">
+    <h1>WE FIND YOUR CAR.<br><span>YOU GET THE DEAL.</span></h1>
+    <p>Tell us exactly what you want — we go find it. No dealership runaround, no wasted weekends.</p>
+  </div>
+
+  <!-- RADAR ANIMATION -->
+  <div class="evl-radar">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="36" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+      <circle cx="40" cy="40" r="24" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+      <circle cx="40" cy="40" r="12" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+      <line x1="40" y1="40" x2="40" y2="4" stroke="#2B84FE" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="40" cy="40" r="3" fill="#2B84FE"/>
+      <circle cx="58" cy="22" r="4" fill="#00C853" opacity="0.8"/>
+      <circle cx="25" cy="55" r="3" fill="#2B84FE" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <!-- STEP 1: VEHICLE DETAILS -->
+  <div class="evl-card">
+    <div class="evl-card-title"><span class="step">1</span> Vehicle Details</div>
+    <div class="evl-grid-3">
+      <div>
+        <label class="evl-label">Year (From)</label>
+        <select id="f-year-from" class="evl-input">
+          <option value="">Any</option>
+          <script>for(let y=2026;y>=2000;y--) document.write(`<option value="${y}">${y}</option>`)</script>
+        </select>
+      </div>
+      <div>
+        <label class="evl-label">Year (To)</label>
+        <select id="f-year-to" class="evl-input">
+          <option value="">Any</option>
+          <script>for(let y=2026;y>=2000;y--) document.write(`<option value="${y}">${y}</option>`)</script>
+        </select>
+      </div>
+      <div>
+        <label class="evl-label">Max Mileage</label>
+        <select id="f-miles" class="evl-input">
+          <option value="any">Any</option>
+          <option value="15000">Under 15k</option>
+          <option value="30000">Under 30k</option>
+          <option value="50000" selected>Under 50k</option>
+          <option value="75000">Under 75k</option>
+          <option value="100000">Under 100k</option>
+          <option value="150000">Under 150k</option>
+        </select>
+      </div>
+    </div>
+    <div class="evl-grid-2" style="margin-top:12px">
+      <div>
+        <label class="evl-label">Make</label>
+        <input id="f-make" class="evl-input" type="text" placeholder="e.g. Toyota, Ford, GMC"/>
+      </div>
+      <div>
+        <label class="evl-label">Model</label>
+        <input id="f-model" class="evl-input" type="text" placeholder="e.g. Tundra, F-150, Acadia"/>
+      </div>
+    </div>
+    <div class="evl-grid-2" style="margin-top:12px">
+      <div>
+        <label class="evl-label">Trim / Package</label>
+        <input id="f-trim" class="evl-input" type="text" placeholder="e.g. SR5, Lariat, Denali"/>
+      </div>
+      <div>
+        <label class="evl-label">Color Preference</label>
+        <input id="f-color" class="evl-input" type="text" placeholder="e.g. White, Black, Silver"/>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <label class="evl-label">Body Style</label>
+      <select id="f-body" class="evl-input">
+        <option value="">Any Body Style</option>
+        <option>SUV / Crossover</option>
+        <option>Pickup Truck</option>
+        <option>Sedan</option>
+        <option>Coupe</option>
+        <option>Minivan</option>
+        <option>Convertible</option>
+        <option>Wagon</option>
+        <option>Van / Cargo</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- STEP 2: BUDGET -->
+  <div class="evl-card">
+    <div class="evl-card-title"><span class="step">2</span> Your Budget</div>
+    <div class="evl-budget-display">
+      <span style="font-size:12px;color:#8899aa;text-transform:uppercase;letter-spacing:1px">Max Budget</span>
+      <span class="evl-budget-val" id="budget-display">$35,000</span>
+    </div>
+    <input type="range" id="f-budget" min="5000" max="150000" step="1000" value="35000" oninput="updateBudget()"/>
+    <div style="display:flex;justify-content:space-between;margin-top:4px">
+      <span style="font-size:10px;color:#3a3a5e">$5,000</span>
+      <span style="font-size:10px;color:#3a3a5e">$150,000</span>
+    </div>
+    <div class="evl-grid-2" style="margin-top:16px">
+      <div>
+        <label class="evl-label">Financing</label>
+        <select id="f-finance" class="evl-input">
+          <option value="cash">Cash / Already Arranged</option>
+          <option value="need">Need Financing Help</option>
+          <option value="lease">Interested in Lease</option>
+        </select>
+      </div>
+      <div>
+        <label class="evl-label">Monthly Payment Target</label>
+        <input id="f-monthly" class="evl-input" type="text" placeholder="e.g. $500/mo (optional)"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: MUST-HAVE FEATURES -->
+  <div class="evl-card">
+    <div class="evl-card-title"><span class="step">3</span> Must-Have Features</div>
+    <p style="font-size:12px;color:#8899aa;margin-bottom:4px">Select everything you need (we'll only find vehicles that match):</p>
+    <div class="evl-features" id="evl-features">
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">4WD / AWD</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Leather Seats</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Sunroof / Moonroof</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Tow Package</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Heated Seats</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Navigation</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Apple CarPlay / Android Auto</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Backup Camera</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Remote Start</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Running Boards</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Lift Kit</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Third Row Seating</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Blind Spot Monitoring</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Lane Keep Assist</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Diesel Engine</div>
+      <div class="evl-feature" onclick="this.classList.toggle('selected')">Hybrid / Electric</div>
+    </div>
+    <div style="margin-top:14px">
+      <label class="evl-label">Anything else? (notes, preferences)</label>
+      <textarea id="f-notes" class="evl-input" rows="3" placeholder="e.g. Must have clean title, prefer under 40k miles, open to similar models..." style="resize:vertical;line-height:1.5"></textarea>
+    </div>
+  </div>
+
+  <!-- STEP 4: TIMELINE -->
+  <div class="evl-card">
+    <div class="evl-card-title"><span class="step">4</span> Purchase Timeline</div>
+    <div class="evl-priority">
+      <div class="evl-pri-box selected" id="pri-asap" onclick="selectPriority('asap')">
+        <div class="evl-pri-icon">🚀</div>
+        <div class="evl-pri-label">ASAP</div>
+      </div>
+      <div class="evl-pri-box" id="pri-month" onclick="selectPriority('month')">
+        <div class="evl-pri-icon">📅</div>
+        <div class="evl-pri-label">Within 30 Days</div>
+      </div>
+      <div class="evl-pri-box" id="pri-flexible" onclick="selectPriority('flexible')">
+        <div class="evl-pri-icon">🔍</div>
+        <div class="evl-pri-label">Just Looking</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: YOUR INFO -->
+  <div class="evl-card">
+    <div class="evl-card-title"><span class="step">5</span> Your Contact Info</div>
+    <div class="evl-grid-2">
+      <div>
+        <label class="evl-label">Your Name</label>
+        <input id="f-name" class="evl-input" type="text" placeholder="Full Name"/>
+      </div>
+      <div>
+        <label class="evl-label">Phone Number</label>
+        <input id="f-phone" class="evl-input" type="tel" placeholder="(555) 555-5555"/>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <label class="evl-label">Email Address</label>
+      <input id="f-email" class="evl-input" type="email" placeholder="your@email.com"/>
+    </div>
+    <button class="evl-btn evl-btn-primary" onclick="submitFinder()">🎯 ACTIVATE MY VEHICLE SEARCH</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="evl-success" id="evl-success">
+    <h2>🎯 Search Activated!</h2>
+    <p id="evl-success-msg">Your vehicle search is now active. Our team will reach out within 24 hours with matches.</p>
+  </div>
+
+</div>
+
+<script>
+const AUDIT_EMAIL = "togradyevl@gmail.com";
+let selectedPriority = "asap";
+
+function updateBudget() {
+  const val = parseInt(document.getElementById("f-budget").value);
+  const pct = ((val - 5000) / 145000) * 100;
+  const slider = document.getElementById("f-budget");
+  slider.style.background = `linear-gradient(to right,#2B84FE 0%,#2B84FE ${pct}%,#1a1a2e ${pct}%,#1a1a2e 100%)`;
+  document.getElementById("budget-display").textContent = "$" + val.toLocaleString();
+}
+
+function selectPriority(p) {
+  selectedPriority = p;
+  ["asap","month","flexible"].forEach(id => {
+    document.getElementById("pri-" + id).classList.toggle("selected", id === p);
+  });
+}
+
+function getFeatures() {
+  return [...document.querySelectorAll(".evl-feature.selected")].map(f => f.textContent.trim());
+}
+
+function submitFinder() {
+  const name  = document.getElementById("f-name").value.trim();
+  const phone = document.getElementById("f-phone").value.trim();
+  const email = document.getElementById("f-email").value.trim();
+  if (!name || !phone) { alert("Please enter your name and phone number."); return; }
+
+  const yearFrom = document.getElementById("f-year-from").value;
+  const yearTo   = document.getElementById("f-year-to").value;
+  const miles    = document.getElementById("f-miles").value;
+  const make     = document.getElementById("f-make").value.trim();
+  const model    = document.getElementById("f-model").value.trim();
+  const trim     = document.getElementById("f-trim").value.trim();
+  const color    = document.getElementById("f-color").value.trim();
+  const body     = document.getElementById("f-body").value;
+  const budget   = document.getElementById("budget-display").textContent;
+  const finance  = document.getElementById("f-finance").value;
+  const monthly  = document.getElementById("f-monthly").value.trim();
+  const notes    = document.getElementById("f-notes").value.trim();
+  const features = getFeatures();
+  const timeline = {asap:"ASAP — Ready to Buy",month:"Within 30 Days",flexible:"Just Looking / Open Timeline"}[selectedPriority];
+
+  const subject = "EVL Vehicle Search: " + [yearFrom, yearTo ? "–" + yearTo : "", make, model].filter(Boolean).join(" ");
+  const body2 =
+`EVL VEHICLE ACQUISITION REQUEST
+================================
+
+CUSTOMER: ${name}
+PHONE: ${phone}
+EMAIL: ${email}
+TIMELINE: ${timeline}
+
+VEHICLE REQUESTED:
+  Year: ${yearFrom || "Any"} ${yearTo ? "– " + yearTo : ""}
+  Make: ${make || "Any"}
+  Model: ${model || "Any"}
+  Trim: ${trim || "Any"}
+  Body Style: ${body || "Any"}
+  Color: ${color || "Any"}
+  Max Mileage: ${miles === "any" ? "No limit" : "Under " + parseInt(miles).toLocaleString() + " miles"}
+
+BUDGET:
+  Max Budget: ${budget}
+  Financing: ${finance}
+  ${monthly ? "Monthly Target: " + monthly : ""}
+
+MUST-HAVE FEATURES:
+  ${features.length > 0 ? features.join(", ") : "None specified"}
+
+ADDITIONAL NOTES:
+  ${notes || "None"}
+
+================================
+Submitted via EVL Vehicle Acquisition Radar`;
+
+  window.location.href = "mailto:" + AUDIT_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body2);
+
+  document.getElementById("evl-success").style.display = "block";
+  document.getElementById("evl-success-msg").textContent = "Your vehicle search request has been received, " + name + ". Our team will reach out within 24 hours with matches.";
+  document.getElementById("evl-success").scrollIntoView({behavior:"smooth"});
+}
+
+updateBudget();
+</script>
+</body>
+</html>
