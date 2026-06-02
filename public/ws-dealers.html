@@ -71,6 +71,11 @@ label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase
   .evl-ws-hamburger{display:block;}
 }
 </style>
+<style id="evl-nav-body-fix">
+/* Fix body flex centering that pushes nav down */
+body { display:block !important; align-items:unset !important; justify-content:unset !important; }
+.evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
+</style>
 </head>
 <body><nav class="evl-ws-nav">
   <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
