@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/admin-comms",
+      "destination": "/admin-comms.html"
+    },
+    {
+      "source": "/admin-comms.html",
+      "destination": "/admin-comms.html"
+    },
+    {
       "source": "/admin-docs",
       "destination": "/admin-docs.html"
     },
