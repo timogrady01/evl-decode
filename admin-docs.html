@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Legal & Documents | Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:#020203;display:flex;align-items:center;justify-content:center;z-index:1000}
+.login-box{background:#090E17;border:2px solid #2B84FE;border-radius:12px;padding:40px;width:100%;max-width:400px;text-align:center}
+.login-logo{font-size:13px;color:#2B84FE;letter-spacing:3px;font-weight:700;margin-bottom:6px}
+.login-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.login-sub{font-size:13px;color:#A1A1AA;margin-bottom:24px;letter-spacing:1px}
+.login-input{width:100%;background:#020203;border:2px solid #2a2a4e;color:#fff;padding:16px;border-radius:8px;font-size:24px;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:8px;text-align:center;outline:none;margin-bottom:16px}
+.login-input:focus{border-color:#2B84FE}
+.login-btn{width:100%;background:#2B84FE;color:#fff;border:none;padding:16px;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif}
+.login-btn:hover{background:#1a6fd4}
+.login-error{color:#FF3333;font-size:14px;font-weight:700;margin-top:12px;display:none;letter-spacing:1px}
+
+/* MAIN APP */
+#app{display:none}
+
+/* HEADER */
+.evl-header{background:#090E17;border-bottom:2px solid #2B84FE;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.evl-header-left{display:flex;align-items:center;gap:12px}
+.evl-logo-text{font-size:18px;font-weight:900;letter-spacing:1px;color:#fff}
+.evl-logo-sub{font-size:11px;font-weight:700;color:#2B84FE;letter-spacing:3px;text-transform:uppercase}
+.evl-badge{background:#2B84FE;color:#fff;font-size:11px;font-weight:900;padding:4px 12px;border-radius:4px;letter-spacing:2px}
+.evl-logout{background:transparent;border:1px solid #FF3333;color:#FF3333;font-size:12px;font-weight:700;padding:6px 14px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:'Oswald',sans-serif}
+.evl-logout:hover{background:#FF3333;color:#fff}
+
+/* WRAP */
+.evl-wrap{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
+
+/* SEARCH */
+.search-wrap{position:relative;margin-bottom:24px}
+.search-input{width:100%;background:#090E17;border:2px solid #2a2a4e;color:#fff;padding:16px 20px 16px 50px;border-radius:10px;font-size:16px;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:#2B84FE}
+.search-input::placeholder{color:#3a3a5e;font-weight:500}
+.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:18px;color:#2B84FE}
+.search-count{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:12px;color:#A1A1AA;font-weight:700;letter-spacing:1px}
+
+/* STATS */
+.stats-bar{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:24px;background:#090E17;border:1px solid #1a1a2e;border-radius:10px;padding:16px 24px}
+.stat{text-align:center}
+.stat-val{font-size:28px;font-weight:900;color:#2B84FE;display:block;line-height:1}
+.stat-lbl{font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-top:2px}
+
+/* CATEGORY FILTERS */
+.cat-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.cat-btn{background:#090E17;border:2px solid #1a1a2e;color:#A1A1AA;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;font-family:'Oswald',sans-serif}
+.cat-btn:hover,.cat-btn.active{border-color:#2B84FE;color:#2B84FE;background:#040e1a}
+.cat-btn.active{background:#040e1a}
+
+/* SECTION */
+.section-hdr{display:flex;align-items:center;gap:10px;margin:28px 0 14px;border-bottom:2px solid #1a1a2e;padding-bottom:10px}
+.section-hdr h2{font-size:18px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase}
+.section-count{background:#2B84FE;color:#fff;font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px}
+
+/* DOC CARDS */
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.doc-card{background:#090E17;border:2px solid #1a1a2e;border-radius:10px;overflow:hidden;transition:border-color .2s;cursor:pointer}
+.doc-card:hover{border-color:#2B84FE}
+.doc-card-header{padding:14px 16px;background:#0a0f1a;border-bottom:1px solid #1a1a2e;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.doc-title{font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;line-height:1.2}
+.doc-icon{font-size:20px;flex-shrink:0}
+.doc-card-body{padding:14px 16px}
+.doc-desc{font-size:14px;color:#ccd6e0;font-weight:600;line-height:1.5;margin-bottom:12px}
+.doc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.doc-tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase}
+.tag-required{background:#1a0a0a;border:1px solid #FF3333;color:#FF3333}
+.tag-federal{background:#0a0a1a;border:1px solid #2B84FE;color:#2B84FE}
+.tag-texas{background:#1a0f00;border:1px solid #FF8C00;color:#FF8C00}
+.tag-internal{background:#0d1a0d;border:1px solid #00C853;color:#00C853}
+.tag-customer{background:#1a1400;border:1px solid #FFD700;color:#FFD700}
+.tag-ws{background:#0a001a;border:1px solid #9B59B6;color:#9B59B6}
+.tag-pp{background:#001a1a;border:1px solid #00BCD4;color:#00BCD4}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:8px 14px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:'Oswald',sans-serif;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+.btn-blue{background:#2B84FE;color:#fff}
+.btn-blue:hover{background:#1a6fd4}
+.btn-green{background:#00C853;color:#020203}
+.btn-green:hover{background:#00a844}
+.btn-gold{background:#FFD700;color:#020203}
+.btn-gold:hover{background:#e6c200}
+.btn-dark{background:#1a1a2e;color:#fff;border:1px solid #2a2a4e}
+.btn-dark:hover{border-color:#2B84FE}
+
+/* DOCUMENT VIEWER */
+.doc-viewer{display:none;position:fixed;inset:0;background:rgba(2,2,3,0.97);z-index:200;overflow-y:auto;padding:20px}
+.doc-viewer.open{display:block}
+.doc-viewer-inner{max-width:900px;margin:0 auto;background:#090E17;border:2px solid #2B84FE;border-radius:12px;overflow:hidden}
+.doc-viewer-header{background:#0a0f1a;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e}
+.doc-viewer-title{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.doc-close{background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif;letter-spacing:1px}
+.doc-content{padding:30px;font-family:'Segoe UI',Arial,sans-serif;font-size:15px;line-height:1.7;color:#ccd6e0}
+.doc-content h1{font-size:24px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #2B84FE}
+.doc-content h2{font-size:18px;font-weight:700;color:#2B84FE;text-transform:uppercase;letter-spacing:1px;margin:20px 0 10px}
+.doc-content h3{font-size:15px;font-weight:700;color:#FFD700;margin:14px 0 6px}
+.doc-content p{margin-bottom:12px}
+.doc-content ul{margin:8px 0 12px 20px}
+.doc-content li{margin-bottom:4px}
+.doc-content .field-block{background:#020203;border:1px solid #2a2a4e;border-radius:6px;padding:12px 16px;margin:8px 0;font-family:'Oswald',sans-serif}
+.doc-content .field-label{font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.doc-content .field-line{border-bottom:1px solid #2B84FE;padding-bottom:4px;margin-bottom:8px;color:#fff;font-size:15px}
+.doc-content .signature-block{background:#020203;border:2px solid #2B84FE;border-radius:8px;padding:16px;margin:16px 0}
+.doc-content .sig-line{border-bottom:2px solid #fff;padding-bottom:8px;margin-bottom:8px;min-height:40px}
+.doc-content .notice{background:#1a1400;border:2px solid #FFD700;border-radius:8px;padding:16px;margin:16px 0}
+.doc-print-btn{display:block;margin:20px;background:#2B84FE;color:#fff;border:none;padding:14px 24px;font-size:15px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif;letter-spacing:2px;text-transform:uppercase;width:calc(100% - 40px)}
+.doc-print-btn:hover{background:#1a6fd4}
+
+/* NO RESULTS */
+.no-results{text-align:center;padding:60px 20px;color:#A1A1AA;font-size:18px;font-weight:700;display:none}
+
+@media(max-width:600px){
+  .doc-grid{grid-template-columns:1fr}
+  .stats-bar{gap:16px}
+}
+
+@media print{
+  #login-screen,#app>.evl-header,.search-wrap,.cat-filters,.section-hdr,.btn-row,.doc-print-btn,.doc-viewer-header{display:none!important}
+  .doc-viewer{position:static;background:#fff;padding:0}
+  .doc-viewer-inner{border:none;border-radius:0}
+  .doc-content{color:#000;background:#fff}
+  .doc-content h1{color:#000;border-color:#000}
+  .doc-content h2{color:#333}
+  .doc-content .field-block{background:#f5f5f5;border-color:#ccc}
+  .doc-content .sig-line{border-color:#000}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">EXPRESS VEHICLE LOCATORS</div>
+    <div class="login-title">Legal & Documents</div>
+    <div class="login-sub">ADMIN ACCESS ONLY — ENTER PIN</div>
+    <input type="password" class="login-input" id="pin-input" maxlength="4" placeholder="••••" autocomplete="off"/>
+    <button class="login-btn" onclick="checkPin()">🔐 ACCESS DOCUMENTS</button>
+    <div class="login-error" id="login-error">❌ INCORRECT PIN — TRY AGAIN</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+<div class="evl-header">
+  <div class="evl-header-left">
+    <svg width="28" height="28" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    <div>
+      <div class="evl-logo-text">EXPRESS VEHICLE LOCATORS</div>
+      <div class="evl-logo-sub">Legal & Documents — Admin</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="https://evl-decode-two.vercel.app/admin-scripts" style="color:#2B84FE;font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none">⬅ SCRIPTS</a>
+    <div class="evl-badge">🔒 SECURE</div>
+    <button class="evl-logout" onclick="logout()">LOGOUT</button>
+  </div>
+</div>
+
+<div class="evl-wrap">
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-val" id="stat-total">34</span><span class="stat-lbl">Total Documents</span></div>
+    <div class="stat"><span class="stat-val" style="color:#FF3333">8</span><span class="stat-lbl">Required by Law</span></div>
+    <div class="stat"><span class="stat-val" style="color:#FFD700">12</span><span class="stat-lbl">Customer Facing</span></div>
+    <div class="stat"><span class="stat-val" style="color:#00C853">9</span><span class="stat-lbl">Internal / Ops</span></div>
+    <div class="stat"><span class="stat-val" style="color:#00BCD4">5</span><span class="stat-lbl">P&P / SOPs</span></div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="search-input" placeholder="SEARCH DOCUMENTS — TYPE ANY KEYWORD..." oninput="filterDocs()"/>
+    <span class="search-count" id="search-count">34 docs</span>
+  </div>
+
+  <!-- CATEGORY FILTERS -->
+  <div class="cat-filters">
+    <button class="cat-btn active" onclick="filterCat('all',this)">ALL DOCUMENTS</button>
+    <button class="cat-btn" onclick="filterCat('customer',this)">📋 CUSTOMER FACING</button>
+    <button class="cat-btn" onclick="filterCat('internal',this)">⚙️ INTERNAL / OPS</button>
+    <button class="cat-btn" onclick="filterCat('compliance',this)">⚖️ COMPLIANCE</button>
+    <button class="cat-btn" onclick="filterCat('ws',this)">⚡ WHOLESALE</button>
+    <button class="cat-btn" onclick="filterCat('pp',this)">📘 P&P / SOPs</button>
+    <button class="cat-btn" onclick="filterCat('legal',this)">🔏 LEGAL / PROTECT</button>
+  </div>
+
+  <div id="no-results" class="no-results">No documents found matching your search.</div>
+
+  <!-- ═══ CUSTOMER FACING ═══ -->
+  <div class="section-hdr" data-cat="customer"><h2>📋 Customer-Facing Documents</h2><span class="section-count">12</span></div>
+  <div class="doc-grid" id="grid-customer">
+
+    <div class="doc-card" data-cat="customer" data-search="buyer order purchase agreement contract price">
+      <div class="doc-card-header"><div class="doc-title">BUYER'S ORDER / PURCHASE AGREEMENT</div><div class="doc-icon">📄</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Primary transaction document. Itemizes vehicle price, fees, taxes, and all deal terms. Customer and dealer signatures required.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('buyers-order')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('buyers-order')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="trade-in disclosure acknowledgment vehicle condition">
+      <div class="doc-card-header"><div class="doc-title">TRADE-IN DISCLOSURE & ACKNOWLEDGMENT</div><div class="doc-icon">🚗</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Customer acknowledges trade-in value, condition, and terms. Discloses EVL's right to competitive bids to maximize customer position.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('trade-disclosure')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('trade-disclosure')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="we owe promise perform dealer obligation">
+      <div class="doc-card-header"><div class="doc-title">"WE OWE" / PROMISE TO PERFORM</div><div class="doc-icon">✅</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Documents any items promised to the customer post-sale — repairs, accessories, second key, etc. Legally binding commitment.</div>
+        <div class="doc-tags"><span class="doc-tag tag-customer">CUSTOMER COPY</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('we-owe')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('we-owe')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="as-is no warranty sold condition">
+      <div class="doc-card-header"><div class="doc-title">AS-IS / NO WARRANTY NOTICE</div><div class="doc-icon">⚠️</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">FTC-required notice for used vehicles sold without warranty. Customer acknowledges vehicle purchased in current condition.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">FEDERAL</span><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('as-is')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('as-is')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="odometer disclosure mileage federal statement">
+      <div class="doc-card-header"><div class="doc-title">ODOMETER DISCLOSURE STATEMENT</div><div class="doc-icon">🔢</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Federal law requires odometer disclosure on every vehicle transfer under 10 years old. Seller certifies actual mileage reading.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">FEDERAL LAW</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('odometer')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('odometer')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="privacy notice GLBA financial information protect">
+      <div class="doc-card-header"><div class="doc-title">PRIVACY NOTICE (GLBA)</div><div class="doc-icon">🔏</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Gramm-Leach-Bliley Act requires auto dealers collecting financial info to provide written privacy notice. Required at first transaction.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">FEDERAL LAW</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('privacy-notice')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('privacy-notice')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="credit application authorization financial consent">
+      <div class="doc-card-header"><div class="doc-title">CREDIT APPLICATION AUTHORIZATION</div><div class="doc-icon">💳</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Customer authorizes EVL and partner dealers to pull credit, submit to lenders, and process financing on their behalf.</div>
+        <div class="doc-tags"><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('credit-auth')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('credit-auth')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="electronic signature consent digital esign">
+      <div class="doc-card-header"><div class="doc-title">ELECTRONIC SIGNATURE CONSENT</div><div class="doc-icon">✍️</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Customer consents to use of electronic signatures for all EVL documents per the E-SIGN Act and UETA.</div>
+        <div class="doc-tags"><span class="doc-tag tag-federal">FEDERAL</span><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('esign-consent')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('esign-consent')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="photo media release image upload permission">
+      <div class="doc-card-header"><div class="doc-title">PHOTO / MEDIA RELEASE</div><div class="doc-icon">📸</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Customer authorizes EVL to use submitted vehicle photos and information for evaluation, marketing, and dealer distribution purposes.</div>
+        <div class="doc-tags"><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('photo-release')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('photo-release')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="arbitration dispute resolution agreement">
+      <div class="doc-card-header"><div class="doc-title">ARBITRATION AGREEMENT</div><div class="doc-icon">⚖️</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Binding arbitration agreement for dispute resolution. Waives class action rights. Requires attorney review before deployment.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REVIEW REQUIRED</span><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('arbitration')">📄 VIEW / PRINT</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="deposit hold vehicle local out of state payment">
+      <div class="doc-card-header"><div class="doc-title">VEHICLE HOLD / DEPOSIT AGREEMENT</div><div class="doc-icon">🔒</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Documents deposit terms. Local: 48hr hold. Out-of-state: 72hr hold. No CC — check, wire, or ACH only. No delivery without full payment.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('deposit-agreement')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('deposit-agreement')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="customer" data-search="customer authorization work behalf permission decisions">
+      <div class="doc-card-header"><div class="doc-title">CUSTOMER AUTHORIZATION TO ACT</div><div class="doc-icon">🤝</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Authorizes EVL to negotiate, locate, and facilitate vehicle transactions on customer's behalf. Defines scope of authority and compensation.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-customer">CUSTOMER SIGNS</span></div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('customer-auth')">📄 VIEW / PRINT</button>
+          <button class="btn btn-green" onclick="generateDoc('customer-auth')">⚡ GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ COMPLIANCE & REGULATORY ═══ -->
+  <div class="section-hdr" data-cat="compliance"><h2>⚖️ Compliance & Regulatory</h2><span class="section-count">7</span></div>
+  <div class="doc-grid" id="grid-compliance">
+
+    <div class="doc-card" data-cat="compliance" data-search="FTC buyers guide used car rule window sticker">
+      <div class="doc-card-header"><div class="doc-title">FTC BUYERS GUIDE (USED CAR RULE)</div><div class="doc-icon">📋</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Federal law requires this form on every used vehicle offered for sale. Must be displayed in vehicle window. As-Is or warranty declaration.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">FEDERAL LAW</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('ftc-buyers-guide')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="compliance" data-search="red flags rule identity theft policy verification">
+      <div class="doc-card-header"><div class="doc-title">RED FLAGS RULE — IDENTITY THEFT POLICY</div><div class="doc-icon">🚨</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">FTC requires dealers with credit programs to have written ID theft prevention policies. Documents EVL's verification procedures.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">FEDERAL LAW</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('red-flags')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="compliance" data-search="OFAC compliance sanctions check customer screening">
+      <div class="doc-card-header"><div class="doc-title">OFAC COMPLIANCE ACKNOWLEDGMENT</div><div class="doc-icon">🛡️</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Documents OFAC sanctions screening procedure. Required before completing any transaction. EVL must screen all customers against SDN list.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">FEDERAL LAW</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('ofac')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="compliance" data-search="adverse action notice credit denial financing rejection">
+      <div class="doc-card-header"><div class="doc-title">ADVERSE ACTION NOTICE</div><div class="doc-icon">❌</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Required by ECOA when financing is denied or terms are less favorable. Must be sent within 30 days. Includes reason codes.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">FEDERAL LAW</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('adverse-action')">📄 VIEW / PRINT</button><button class="btn btn-green" onclick="generateDoc('adverse-action')">⚡ GENERATE</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="compliance" data-search="truth lending disclosure Reg Z APR finance charge">
+      <div class="doc-card-header"><div class="doc-title">TRUTH IN LENDING DISCLOSURE (REG Z)</div><div class="doc-icon">💰</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Discloses APR, finance charge, amount financed, and total payment. Required before credit extended. Must be clear and conspicuous.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">REG Z</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('tila')">📄 VIEW / PRINT</button><button class="btn btn-green" onclick="generateDoc('tila')">⚡ GENERATE</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="compliance" data-search="Texas dealer disclosure state requirement TxDMV">
+      <div class="doc-card-header"><div class="doc-title">TEXAS DEALER DISCLOSURE</div><div class="doc-icon">⭐</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Texas-specific disclosures required by TxDMV. Includes dealer license info, buyer's rights, and complaint contact information.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-texas">TEXAS LAW</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('texas-disclosure')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="compliance" data-search="equal credit opportunity ECOA discrimination notice">
+      <div class="doc-card-header"><div class="doc-title">EQUAL CREDIT OPPORTUNITY NOTICE</div><div class="doc-icon">🤝</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">ECOA prohibits credit discrimination. Notice informs applicants of their rights and EVL's non-discrimination policy.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">ECOA</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('ecoa')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ INTERNAL / OPERATIONAL ═══ -->
+  <div class="section-hdr" data-cat="internal"><h2>⚙️ Internal / Operational Documents</h2><span class="section-count">7</span></div>
+  <div class="doc-grid" id="grid-internal">
+
+    <div class="doc-card" data-cat="internal" data-search="dealer to dealer purchase agreement wholesale buy sell">
+      <div class="doc-card-header"><div class="doc-title">DEALER-TO-DEALER PURCHASE AGREEMENT</div><div class="doc-icon">🤝</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Documents wholesale vehicle transactions between buying dealer (BD) and independent dealer (ID). Includes VIN, ACV, transport, and payment terms.</div>
+        <div class="doc-tags"><span class="doc-tag tag-internal">INTERNAL</span><span class="doc-tag tag-ws">WHOLESALE</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('d2d-purchase')">📄 VIEW / PRINT</button><button class="btn btn-green" onclick="generateDoc('d2d-purchase')">⚡ GENERATE</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="internal" data-search="porter authorization route log pickup delivery hub 50 mile">
+      <div class="doc-card-header"><div class="doc-title">PORTER AUTHORIZATION & ROUTE LOG</div><div class="doc-icon">🚐</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Authorizes DS porter or SP to pick up vehicle from ID lot. Documents route, mileage, pickup/delivery timestamps, and vehicle condition at each point.</div>
+        <div class="doc-tags"><span class="doc-tag tag-internal">INTERNAL</span><span class="doc-tag tag-ws">WHOLESALE</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('porter-auth')">📄 VIEW / PRINT</button><button class="btn btn-green" onclick="generateDoc('porter-auth')">⚡ GENERATE</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="internal" data-search="vehicle condition report pre-delivery inspection checklist">
+      <div class="doc-card-header"><div class="doc-title">VEHICLE CONDITION REPORT</div><div class="doc-icon">🔍</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Pre and post-transport vehicle inspection. Documents exterior, interior, mechanical, tire condition, and any damage. Photos required.</div>
+        <div class="doc-tags"><span class="doc-tag tag-internal">INTERNAL</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('condition-report')">📄 VIEW / PRINT</button><button class="btn btn-green" onclick="generateDoc('condition-report')">⚡ GENERATE</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="internal" data-search="independent contractor agreement porter SP salesperson">
+      <div class="doc-card-header"><div class="doc-title">INDEPENDENT CONTRACTOR AGREEMENT</div><div class="doc-icon">📋</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Agreement for porters, runners, and referral partners. Classifies relationship, scope of work, payment terms, and liability limitations.</div>
+        <div class="doc-tags"><span class="doc-tag tag-internal">INTERNAL</span><span class="doc-tag tag-required">REVIEW REQUIRED</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('contractor-agreement')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="internal" data-search="commission fee schedule payment rate structure">
+      <div class="doc-card-header"><div class="doc-title">COMMISSION & FEE SCHEDULE</div><div class="doc-icon">💵</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Documents EVL's revenue buckets, commission rates, and fee structures for all service tiers. Internal reference — not shared with customers.</div>
+        <div class="doc-tags"><span class="doc-tag tag-internal">CONFIDENTIAL</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('fee-schedule')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="internal" data-search="hold harmless liability waiver indemnification">
+      <div class="doc-card-header"><div class="doc-title">HOLD HARMLESS AGREEMENT</div><div class="doc-icon">🛡️</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Indemnification agreement protecting EVL from liability related to vehicle transport, condition disputes, and third-party actions.</div>
+        <div class="doc-tags"><span class="doc-tag tag-internal">INTERNAL</span><span class="doc-tag tag-required">REVIEW REQUIRED</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('hold-harmless')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="internal" data-search="transport logistics agreement carrier third party">
+      <div class="doc-card-header"><div class="doc-title">TRANSPORT / LOGISTICS AGREEMENT</div><div class="doc-icon">🚛</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Agreement with transport carriers for long-distance vehicle moves outside the 50-mile hub radius. Defines insurance, liability, and delivery terms.</div>
+        <div class="doc-tags"><span class="doc-tag tag-internal">INTERNAL</span><span class="doc-tag tag-ws">WHOLESALE</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('transport-agreement')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ WHOLESALE ═══ -->
+  <div class="section-hdr" data-cat="ws"><h2>⚡ Wholesale / B2B Documents</h2><span class="section-count">4</span></div>
+  <div class="doc-grid" id="grid-ws">
+
+    <div class="doc-card" data-cat="ws" data-search="NDA non-disclosure agreement wholesale dealer network confidential">
+      <div class="doc-card-header"><div class="doc-title">DEALER NETWORK NDA</div><div class="doc-icon">🔒</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Non-disclosure agreement for wholesale dealer partners. Protects EVL pricing, processes, customer data, and proprietary platform information.</div>
+        <div class="doc-tags"><span class="doc-tag tag-ws">WHOLESALE</span><span class="doc-tag tag-required">REQUIRED</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('dealer-nda')">📄 VIEW / PRINT</button><button class="btn btn-green" onclick="generateDoc('dealer-nda')">⚡ GENERATE</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="ws" data-search="dealer network terms conditions B2B agreement partnership">
+      <div class="doc-card-header"><div class="doc-title">DEALER NETWORK TERMS & CONDITIONS</div><div class="doc-icon">📋</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Master agreement governing all wholesale dealer relationships. Defines rules of engagement, bid process, payment terms, and termination conditions.</div>
+        <div class="doc-tags"><span class="doc-tag tag-ws">WHOLESALE</span><span class="doc-tag tag-required">REQUIRED</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('dealer-terms')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="ws" data-search="dealer proposal onboarding pitch EVL wholesale join network">
+      <div class="doc-card-header"><div class="doc-title">EVL DEALER PROPOSAL / ONBOARDING PACK</div><div class="doc-icon">📦</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Complete onboarding package sent to prospective dealer partners. Covers EVL value proposition, hub system, porter logistics, and revenue structure.</div>
+        <div class="doc-tags"><span class="doc-tag tag-ws">WHOLESALE</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('dealer-proposal')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="ws" data-search="dealer scorecard performance rating metrics evaluation">
+      <div class="doc-card-header"><div class="doc-title">DEALER PERFORMANCE SCORECARD</div><div class="doc-icon">📊</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Quarterly scorecard tracking dealer response time, bid acceptance rate, payment speed, and relationship quality. Internal use only.</div>
+        <div class="doc-tags"><span class="doc-tag tag-ws">WHOLESALE</span><span class="doc-tag tag-internal">INTERNAL</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('dealer-scorecard')">📄 VIEW / PRINT</button><button class="btn btn-green" onclick="generateDoc('dealer-scorecard')">⚡ GENERATE</button></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ P&P / SOPs ═══ -->
+  <div class="section-hdr" data-cat="pp"><h2>📘 Policies & Procedures / SOPs</h2><span class="section-count">4</span></div>
+  <div class="doc-grid" id="grid-pp">
+
+    <div class="doc-card" data-cat="pp" data-search="trade-in evaluation SOP process standard procedure">
+      <div class="doc-card-header"><div class="doc-title">TRADE-IN EVALUATION SOP</div><div class="doc-icon">📘</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Step-by-step procedure for processing customer trade-in evaluations. From VIN decode through certified appraisal to dealer bid submission.</div>
+        <div class="doc-tags"><span class="doc-tag tag-pp">SOP</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('tradein-sop')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="pp" data-search="vehicle acquisition SOP process locate find customer order">
+      <div class="doc-card-header"><div class="doc-title">VEHICLE ACQUISITION SOP</div><div class="doc-icon">📘</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Standard procedure from customer vehicle request through location, vetting, deposit, and delivery. Includes express timeline benchmarks.</div>
+        <div class="doc-tags"><span class="doc-tag tag-pp">SOP</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('acquisition-sop')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="pp" data-search="porter dispatch hub 50 mile pickup SOP procedure">
+      <div class="doc-card-header"><div class="doc-title">50-MILE HUB PORTER DISPATCH SOP</div><div class="doc-icon">🚐</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Procedure for assigning, dispatching, and confirming porter pickups within the 50-mile hub radius. DS porter and newbie SP guidelines.</div>
+        <div class="doc-tags"><span class="doc-tag tag-pp">SOP</span><span class="doc-tag tag-ws">WHOLESALE</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('porter-sop')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="pp" data-search="customer communication standards email text call response time">
+      <div class="doc-card-header"><div class="doc-title">CUSTOMER COMMUNICATION STANDARDS</div><div class="doc-icon">📱</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">EVL's express communication standards — response times, approved language, notification triggers, and the "no negative connotations" policy.</div>
+        <div class="doc-tags"><span class="doc-tag tag-pp">P&P</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('comm-standards')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ LEGAL / BUSINESS PROTECTION ═══ -->
+  <div class="section-hdr" data-cat="legal"><h2>🔏 Legal / Business Protection</h2><span class="section-count">4</span></div>
+  <div class="doc-grid" id="grid-legal">
+
+    <div class="doc-card" data-cat="legal" data-search="limitation liability notice website terms use">
+      <div class="doc-card-header"><div class="doc-title">LIMITATION OF LIABILITY NOTICE</div><div class="doc-icon">⚖️</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Limits EVL's liability for vehicle condition, transaction outcomes, and third-party actions. Part of standard service agreement.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REVIEW REQUIRED</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('liability-limit')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="legal" data-search="dispute resolution policy complaint process">
+      <div class="doc-card-header"><div class="doc-title">DISPUTE RESOLUTION POLICY</div><div class="doc-icon">🤝</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Outlines EVL's process for handling customer and dealer disputes. Escalation path, timelines, and resolution standards.</div>
+        <div class="doc-tags"><span class="doc-tag tag-pp">P&P</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('dispute-policy')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="legal" data-search="data security privacy policy information protection">
+      <div class="doc-card-header"><div class="doc-title">DATA SECURITY & PRIVACY POLICY</div><div class="doc-icon">🔐</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Documents how EVL collects, stores, protects, and uses customer data. Satisfies GLBA safeguards requirements.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-federal">GLBA</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('data-security')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+    <div class="doc-card" data-cat="legal" data-search="no delivery without payment full cleared funds wire check">
+      <div class="doc-card-header"><div class="doc-title">NO DELIVERY WITHOUT FULL PAYMENT POLICY</div><div class="doc-icon">💰</div></div>
+      <div class="doc-card-body">
+        <div class="doc-desc">Policy requiring cleared funds before vehicle release. Wire confirmation 4hrs before delivery. No CC accepted. Out-of-state wire requirements.</div>
+        <div class="doc-tags"><span class="doc-tag tag-required">REQUIRED</span><span class="doc-tag tag-pp">P&P</span></div>
+        <div class="btn-row"><button class="btn btn-blue" onclick="openDoc('no-delivery-policy')">📄 VIEW / PRINT</button></div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /evl-wrap -->
+</div><!-- /app -->
+
+<!-- DOCUMENT VIEWER -->
+<div class="doc-viewer" id="doc-viewer">
+  <div class="doc-viewer-inner">
+    <div class="doc-viewer-header">
+      <div class="doc-viewer-title" id="doc-viewer-title">Document</div>
+      <button class="doc-close" onclick="closeDoc()">✕ CLOSE</button>
+    </div>
+    <button class="doc-print-btn" onclick="window.print()">🖨️ PRINT / SAVE AS PDF</button>
+    <div class="doc-content" id="doc-content"></div>
+  </div>
+</div>
+
+<script>
+const CORRECT_PIN = "1027";
+
+function checkPin(){
+  const pin = document.getElementById('pin-input').value;
+  if(pin === CORRECT_PIN){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    sessionStorage.setItem('evl-docs-auth','1027');
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pin-input').value='';
+    document.getElementById('pin-input').focus();
+  }
+}
+function logout(){sessionStorage.removeItem('evl-docs-auth');location.reload();}
+if(sessionStorage.getItem('evl-docs-auth')==='1027'){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+}
+document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
+
+// SEARCH
+function filterDocs(){
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const cards = document.querySelectorAll('.doc-card');
+  let visible = 0;
+  cards.forEach(c=>{
+    const text = (c.dataset.search||'') + ' ' + c.textContent.toLowerCase();
+    const show = text.includes(q);
+    c.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('search-count').textContent = visible + ' docs';
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+  // Show/hide section headers
+  document.querySelectorAll('.section-hdr').forEach(hdr=>{
+    const cat = hdr.dataset.cat;
+    const grid = document.querySelector(`[id^="grid-${cat}"]`);
+    if(grid){
+      const visCards = [...grid.querySelectorAll('.doc-card')].some(c=>c.style.display!=='none');
+      hdr.style.display = visCards ? '' : 'none';
+    }
+  });
+}
+
+// CATEGORY FILTER
+let activeCat = 'all';
+function filterCat(cat, btn){
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('search-input').value = '';
+  const cards = document.querySelectorAll('.doc-card');
+  let visible = 0;
+  cards.forEach(c=>{
+    const show = cat==='all' || c.dataset.cat===cat;
+    c.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('search-count').textContent = visible + ' docs';
+  document.getElementById('no-results').style.display = visible===0 ? 'block' : 'none';
+  document.querySelectorAll('.section-hdr').forEach(hdr=>{
+    hdr.style.display = cat==='all' || hdr.dataset.cat===cat ? '' : 'none';
+  });
+}
+
+// DOCUMENT VIEWER
+const DOCS = {
+  'deposit-agreement': {
+    title: 'VEHICLE HOLD / DEPOSIT AGREEMENT',
+    content: `<h1>VEHICLE HOLD & DEPOSIT AGREEMENT</h1>
+<div class="notice">⚠️ IMPORTANT: This agreement is legally binding. Read carefully before signing.</div>
+<h2>EXPRESS VEHICLE LOCATORS</h2>
+<p>Plano, Texas | togradyevl@gmail.com | expressvehiclelocators.com</p>
+<h2>Vehicle Information</h2>
+<div class="field-block">
+  <div class="field-label">Year / Make / Model / Trim</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">VIN</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Color / Mileage</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Selling Dealer (ID)</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Agreed Purchase Price</div><div class="field-line">&nbsp;</div>
+</div>
+<h2>Deposit Terms</h2>
+<p><strong>Deposit Amount:</strong> As agreed between parties.</p>
+<p><strong>Local Hold (within 150 miles):</strong> Vehicle held for <strong>48 hours</strong> from deposit receipt.</p>
+<p><strong>Out-of-State Hold:</strong> Vehicle held for <strong>72 hours</strong> from deposit receipt.</p>
+<h2>Payment Method</h2>
+<p>EVL accepts the following payment methods ONLY:</p>
+<ul>
+  <li>Personal or Certified Check</li>
+  <li>Wire Transfer (ACH)</li>
+  <li>Bank Wire Transfer</li>
+</ul>
+<p><strong>Credit cards are NOT accepted under any circumstances.</strong> This policy protects customers from potential fraud and ensures transaction integrity.</p>
+<h2>No Delivery Without Full Payment</h2>
+<p>Under no circumstances will EVL release a vehicle without confirmed full payment. For wire transfers, confirmation must be received a minimum of 4 hours prior to scheduled delivery.</p>
+<h2>Competitive Bid Rights</h2>
+<p>Customer acknowledges that EVL reserves the right to solicit competitive bids on the customer's trade-in vehicle in order to maximize the customer's financial position. This process is conducted transparently and in the customer's best interest.</p>
+<h2>Customer Acknowledgment</h2>
+<div class="signature-block">
+  <div class="field-label">Customer Full Name (Print)</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Customer Signature</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Date</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">EVL Representative</div><div class="sig-line">&nbsp;</div>
+</div>`
+  },
+  'trade-disclosure': {
+    title: 'TRADE-IN DISCLOSURE & ACKNOWLEDGMENT',
+    content: `<h1>TRADE-IN DISCLOSURE & ACKNOWLEDGMENT</h1>
+<div class="notice">⚠️ Please read this document carefully. It explains how Express Vehicle Locators handles your trade-in vehicle.</div>
+<h2>EXPRESS VEHICLE LOCATORS — TRADE-IN POLICY</h2>
+<h3>1. Trade-In Evaluation Process</h3>
+<p>EVL uses a certified appraisal process combining customer-reported condition, odometer verification, photo documentation, and current market data to establish trade-in value ranges.</p>
+<h3>2. Competitive Bid Process</h3>
+<p>To maximize your trade-in value, EVL reserves the right to submit your vehicle's information to multiple qualified dealers within our network. <strong>You will always know the offers received and retain final decision authority.</strong></p>
+<h3>3. Vehicle First Policy</h3>
+<p>EVL prioritizes securing your desired vehicle before finalizing trade-in negotiations. You will not lose your selected vehicle due to trade-in delays.</p>
+<h3>4. No Obligation</h3>
+<p>You are under no obligation to accept any trade-in offer. EVL will always present options transparently with no hidden agendas.</p>
+<h2>Customer Acknowledgment</h2>
+<div class="field-block">
+  <div class="field-label">Trade-In Vehicle (YMM)</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">VIN</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Odometer (Customer Stated)</div><div class="field-line">&nbsp;</div>
+</div>
+<div class="signature-block">
+  <div class="field-label">Customer Signature</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Print Name</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Date</div><div class="sig-line">&nbsp;</div>
+</div>`
+  },
+  'odometer': {
+    title: 'ODOMETER DISCLOSURE STATEMENT',
+    content: `<h1>FEDERAL ODOMETER DISCLOSURE STATEMENT</h1>
+<p><em>Federal law (49 U.S.C. 32705) and State law require that you state the mileage in connection with the transfer of ownership. Failure to complete or providing a false statement may result in fines and/or imprisonment.</em></p>
+<h2>Vehicle Information</h2>
+<div class="field-block">
+  <div class="field-label">Make</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Model</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Year</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Body Type</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Color</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">VIN</div><div class="field-line">&nbsp;</div>
+</div>
+<h2>Odometer Disclosure</h2>
+<p>I, the Transferor (Seller), state that the odometer of the described vehicle now reads:</p>
+<div class="field-block">
+  <div class="field-label">Odometer Reading (no tenths)</div><div class="field-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MILES</div>
+</div>
+<p>and to the best of my knowledge that it reflects the actual mileage of the vehicle described herein, UNLESS one of the following statements is checked:</p>
+<p>☐ I hereby certify that to the best of my knowledge the odometer reading reflects the amount of mileage in excess of its mechanical limits.</p>
+<p>☐ I hereby certify that the odometer reading is NOT the actual mileage. WARNING — ODOMETER DISCREPANCY.</p>
+<h2>Transferor (Seller)</h2>
+<div class="signature-block">
+  <div class="field-label">Printed Name</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Signature</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Address</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Date of Statement</div><div class="sig-line">&nbsp;</div>
+</div>
+<h2>Transferee (Buyer)</h2>
+<div class="signature-block">
+  <div class="field-label">Printed Name</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Signature</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Address</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Date of Statement</div><div class="sig-line">&nbsp;</div>
+</div>`
+  },
+  'porter-auth': {
+    title: 'PORTER AUTHORIZATION & ROUTE LOG',
+    content: `<h1>PORTER AUTHORIZATION & ROUTE LOG</h1>
+<h2>EXPRESS VEHICLE LOCATORS — HUB DISPATCH DOCUMENT</h2>
+<div class="field-block">
+  <div class="field-label">Dispatch Date / Time</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Hub Zone</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Porter Name</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Porter Cell</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Porter Type (DS Employee / SP / Contractor)</div><div class="field-line">&nbsp;</div>
+</div>
+<h2>Vehicle Information</h2>
+<div class="field-block">
+  <div class="field-label">Year / Make / Model</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">VIN</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Color</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Odometer at Pickup</div><div class="field-line">&nbsp;</div>
+</div>
+<h2>Route Information</h2>
+<div class="field-block">
+  <div class="field-label">Pickup Location (ID Dealer Name & Address)</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Delivery Location (BD Dealer Name & Address)</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Estimated Miles</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Estimated Drive Time</div><div class="field-line">&nbsp;</div>
+</div>
+<h2>Condition at Pickup</h2>
+<p>Porter certifies vehicle condition at time of pickup:</p>
+<div class="field-block">
+  <div class="field-label">Exterior Condition</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Damage Noted (describe or N/A)</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Keys Received (#)</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Fuel Level</div><div class="field-line">&nbsp;</div>
+</div>
+<h2>Signatures</h2>
+<div class="signature-block">
+  <div class="field-label">Porter Signature (Accepting Vehicle)</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">ID Dealer Representative</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Pickup Timestamp</div><div class="sig-line">&nbsp;</div>
+  <div style="margin-top:20px">
+  <div class="field-label">BD Dealer Representative (Delivery Confirmation)</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Odometer at Delivery</div><div class="sig-line">&nbsp;</div>
+  <div class="field-label">Delivery Timestamp</div><div class="sig-line">&nbsp;</div>
+  </div>
+</div>`
+  },
+};
+
+// Default doc for others not yet written
+function getDocContent(id, title){
+  if(DOCS[id]) return DOCS[id];
+  return {
+    title: title,
+    content: `<h1>${title}</h1>
+<div class="notice">⚠️ This document template is under development. Contact togradyevl@gmail.com for the current version.</div>
+<h2>Document Reference</h2>
+<p>Document ID: <strong>${id}</strong></p>
+<p>This document will contain the full template for <strong>${title}</strong> as used by Express Vehicle Locators.</p>
+<h2>In the Meantime</h2>
+<p>Please refer to:</p>
+<ul>
+  <li>Your existing service agreement at /service-agreement</li>
+  <li>Your privacy policy at /privacy</li>
+  <li>Your terms of service at /terms</li>
+</ul>
+<p>For legal guidance specific to Texas automotive dealers, consult a licensed Texas attorney before using any document template in an actual transaction.</p>`
+  };
+}
+
+function openDoc(id){
+  const card = document.querySelector(`[onclick="openDoc('${id}')"]`)?.closest('.doc-card');
+  const title = card ? card.querySelector('.doc-title').textContent : id.toUpperCase();
+  const doc = getDocContent(id, title);
+  document.getElementById('doc-viewer-title').textContent = doc.title;
+  document.getElementById('doc-content').innerHTML = doc.content;
+  document.getElementById('doc-viewer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDoc(){
+  document.getElementById('doc-viewer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function generateDoc(id){
+  openDoc(id);
+  // Future: open a form to pre-fill fields
+}
+
+// Close on escape
+document.addEventListener('keydown', e=>{if(e.key==='Escape') closeDoc();});
+</script>
+</body>
+</html>
