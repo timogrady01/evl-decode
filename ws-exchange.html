@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0A0A08;--s1:#111110;--s2:#1A1A16;--s3:#222220;
+  --gold:#F5C842;--gold2:#D4A820;--gold3:#FFE580;
+  --green:#00C853;--red:#FF3333;--orange:#FF8C00;--blue:#2B84FE;
+  --muted:#C8C4A8;--border:rgba(245,200,66,0.2);--border2:rgba(245,200,66,0.35);
+}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;-webkit-font-smoothing:antialiased;min-height:100vh;}
+nav{background:rgba(10,10,8,0.98);border-bottom:2px solid var(--border2);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.nav-logo{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;text-decoration:none;}
+.nav-logo span{color:#fff;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;padding:6px 0;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-badge{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;text-decoration:none;}
+.page-header{background:linear-gradient(160deg,#1A1600,var(--bg));border-bottom:2px solid var(--border);padding:32px 40px;}
+.ph-dealer{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.ph-title{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;}
+.ph-sub{color:var(--muted);font-size:16px;margin-top:6px;}
+.wrap{padding:40px;}
+.sec-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:20px;}
+.card{background:var(--s1);border:1px solid var(--border);padding:28px;margin-bottom:20px;}
+.card-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--s2);color:var(--muted);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;text-align:left;border-bottom:2px solid var(--border);}
+td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:15px;color:#fff;}
+tr:hover td{background:var(--s2);}
+.badge{display:inline-block;padding:4px 10px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.badge-green{background:rgba(0,200,83,.15);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+.badge-gold{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid var(--border2);}
+.badge-blue{background:rgba(43,132,254,.15);color:var(--blue);border:1px solid rgba(43,132,254,.3);}
+.badge-red{background:rgba(255,51,51,.15);color:var(--red);border:1px solid rgba(255,51,51,.3);}
+.btn{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn:hover{background:var(--gold3);}
+.btn-outline{background:none;border:2px solid var(--border2);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;cursor:pointer;text-decoration:none;display:inline-block;}
+.inp{background:var(--s2);border:1px solid var(--border2);color:#fff;font-family:"Barlow",sans-serif;font-size:15px;padding:12px 16px;width:100%;outline:none;}
+.inp:focus{border-color:var(--gold);}
+label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.form-row{margin-bottom:18px;}
+.stat-box{background:var(--s1);border:1px solid var(--border);padding:24px 28px;}
+.stat-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.stat-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;line-height:1;color:var(--gold);}
+.divider{border:none;border-top:1px solid var(--border);margin:24px 0;}
+</style>
+<style id="evl-ws-nav-css">
+/* ── EVL WHOLESALE NAV ── */
+.evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid #FFD700;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
+.evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
+.evl-ws-nav-links{display:flex;align-items:center;gap:4px;}
+.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-link:hover{color:#FFD700;background:#1a1400;}
+.evl-ws-nav-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;margin-left:8px;border:1px solid #2a2a2e;}
+.evl-ws-nav-retail:hover{color:#fff;border-color:#fff;}
+.evl-ws-nav-logout{background:#1a1400;border:1px solid #FFD700;color:#FFD700;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-logout:hover{background:#FFD700;color:#000;}
+.evl-ws-hamburger{display:none;background:none;border:none;color:#FFD700;font-size:22px;cursor:pointer;padding:4px 8px;}
+@media(max-width:768px){
+  .evl-ws-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#0a0800;border-bottom:2px solid #FFD700;padding:12px 0;gap:0;}
+  .evl-ws-nav-links.open{display:flex;}
+  .evl-ws-nav-link,.evl-ws-nav-retail,.evl-ws-nav-logout{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1400;}
+  .evl-ws-hamburger{display:block;}
+}
+</style>
+</head>
+<body><nav class="evl-ws-nav">
+  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
+    <span>EVL <span style="color:#FFD700">WHOLESALE</span></span>
+  </a>
+  <button class="evl-ws-hamburger" onclick="toggleWsNav()" aria-label="Menu">&#9776;</button>
+  <div class="evl-ws-nav-links" id="evl-ws-nav-links">
+    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link">EXCHANGE</a>
+    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
+    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
+    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-ws-nav-retail">⬅ RETAIL SITE</a>
+    <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logout">🔒 LOGOUT</a>
+  </div>
+</nav>
+<div class="page-header">
+  <div class="ph-dealer">⚡ WS-EVL Wholesale</div>
+  <div class="ph-title">Vehicle Exchange</div>
+  <div class="ph-sub">Browse, submit, and bid on wholesale inventory</div>
+</div>
+<div class="wrap">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;">
+    <div class="sec-title">⚡ Live Exchange Inventory</div>
+    <div style="display:flex;gap:12px;">
+      <button class="btn-outline">🔍 FILTER</button>
+      <button class="btn">+ SUBMIT VEHICLE</button>
+    </div>
+  </div>
+  <table>
+    <thead><tr>
+      <th>Vehicle</th><th>VIN</th><th>Mileage</th><th>Condition</th><th>Floor Price</th><th>Bids</th><th>Ends</th><th>Action</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>2023 Toyota Camry SE</strong></td><td style="color:var(--muted);font-size:13px;">4T1T11AKXPU135100</td><td>28,400</td><td><span class="badge badge-green">CLEAN</span></td><td style="color:var(--gold);font-weight:700;">$21,500</td><td>4</td><td style="color:var(--orange);">2h 14m</td><td><button class="btn" style="padding:6px 14px;font-size:13px;">BID</button></td></tr>
+      <tr><td><strong>2022 Ford F-150 XLT</strong></td><td style="color:var(--muted);font-size:13px;">1FTFW1E83NFA12345</td><td>41,200</td><td><span class="badge badge-gold">GOOD</span></td><td style="color:var(--gold);font-weight:700;">$34,800</td><td>7</td><td style="color:var(--orange);">5h 30m</td><td><button class="btn" style="padding:6px 14px;font-size:13px;">BID</button></td></tr>
+      <tr><td><strong>2024 Honda CR-V EX</strong></td><td style="color:var(--muted);font-size:13px;">2HKRW2H59RH123456</td><td>11,800</td><td><span class="badge badge-green">CLEAN</span></td><td style="color:var(--gold);font-weight:700;">$28,200</td><td>2</td><td style="color:var(--red);">47m</td><td><button class="btn" style="padding:6px 14px;font-size:13px;">BID</button></td></tr>
+      <tr><td><strong>2021 Chevy Silverado LT</strong></td><td style="color:var(--muted);font-size:13px;">3GCPYBEK5MG123456</td><td>67,900</td><td><span class="badge badge-blue">RECON</span></td><td style="color:var(--gold);font-weight:700;">$29,100</td><td>1</td><td style="color:var(--muted);">18h 00m</td><td><button class="btn" style="padding:6px 14px;font-size:13px;">BID</button></td></tr>
+      <tr><td><strong>2023 BMW 3-Series 330i</strong></td><td style="color:var(--muted);font-size:13px;">3MW69FF08P8C12345</td><td>19,200</td><td><span class="badge badge-green">CLEAN</span></td><td style="color:var(--gold);font-weight:700;">$38,500</td><td>9</td><td style="color:var(--orange);">3h 55m</td><td><button class="btn" style="padding:6px 14px;font-size:13px;">BID</button></td></tr>
+    </tbody>
+  </table>
+  <hr class="divider">
+  <div class="sec-title" style="margin-top:32px;">+ Submit a Vehicle to Exchange</div>
+  <div class="card">
+    <div class="grid2">
+      <div class="form-row"><label>VIN</label><input class="inp" placeholder="Enter 17-digit VIN" maxlength="17"></div>
+      <div class="form-row"><label>Asking Floor Price</label><input class="inp" placeholder="$0.00"></div>
+      <div class="form-row"><label>Mileage</label><input class="inp" placeholder="e.g. 34,200"></div>
+      <div class="form-row"><label>Condition</label>
+        <select class="inp"><option>Clean</option><option>Good</option><option>Recon Needed</option><option>Parts/Salvage</option></select>
+      </div>
+    </div>
+    <div class="form-row"><label>Notes for Buyers</label><textarea class="inp" rows="3" placeholder="Known issues, recent service, extras included..."></textarea></div>
+    <button class="btn">⚡ SUBMIT TO EXCHANGE</button>
+  </div>
+</div>
+<script id="evl-ws-nav-js">
+function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.toggle('open');}
+(function(){var path=window.location.pathname;document.querySelectorAll('.evl-ws-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){a.style.color='#FFD700';a.style.borderBottom='2px solid #FFD700';}});})();
+</script>
+</body></html>
