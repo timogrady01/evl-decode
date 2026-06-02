@@ -370,6 +370,11 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
   .evl-nav-hamburger{display:block;}
 }
 </style>
+<style id="evl-nav-body-fix">
+/* Fix body flex centering that pushes nav down */
+body { display:block !important; align-items:unset !important; justify-content:unset !important; }
+.evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
+</style>
 </head>
 <body>
 
