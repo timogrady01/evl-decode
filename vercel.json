@@ -2,19 +2,19 @@
   "rewrites": [
     {
       "source": "/trade-in",
-      "destination": "/public/trade-in.html"
+      "destination": "/trade-in.html"
     },
     {
       "source": "/trade-in.html",
-      "destination": "/public/trade-in.html"
+      "destination": "/trade-in.html"
     },
     {
       "source": "/finder",
-      "destination": "/public/finder.html"
+      "destination": "/finder.html"
     },
     {
       "source": "/finder.html",
-      "destination": "/public/finder.html"
+      "destination": "/finder.html"
     },
     {
       "source": "/api/journal",
