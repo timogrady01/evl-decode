@@ -94,51 +94,51 @@
     },
     {
       "source": "/home.html",
-      "destination": "/public/home.html"
+      "destination": "/home.html"
     },
     {
       "source": "/home",
-      "destination": "/public/home.html"
+      "destination": "/home.html"
     },
     {
       "source": "/find.html",
-      "destination": "/public/find.html"
+      "destination": "/find.html"
     },
     {
       "source": "/find",
-      "destination": "/public/find.html"
+      "destination": "/find.html"
     },
     {
       "source": "/how.html",
-      "destination": "/public/how.html"
+      "destination": "/how.html"
     },
     {
       "source": "/how",
-      "destination": "/public/how.html"
+      "destination": "/how.html"
     },
     {
       "source": "/savings.html",
-      "destination": "/public/savings.html"
+      "destination": "/savings.html"
     },
     {
       "source": "/savings",
-      "destination": "/public/savings.html"
+      "destination": "/savings.html"
     },
     {
       "source": "/contact.html",
-      "destination": "/public/contact.html"
+      "destination": "/contact.html"
     },
     {
       "source": "/contact",
-      "destination": "/public/contact.html"
+      "destination": "/contact.html"
     },
     {
       "source": "/admin.html",
-      "destination": "/public/admin.html"
+      "destination": "/admin.html"
     },
     {
       "source": "/admin",
-      "destination": "/public/admin.html"
+      "destination": "/admin.html"
     },
     {
       "source": "/tradein.html",
@@ -150,51 +150,51 @@
     },
     {
       "source": "/privacy.html",
-      "destination": "/public/privacy.html"
+      "destination": "/privacy.html"
     },
     {
       "source": "/privacy",
-      "destination": "/public/privacy.html"
+      "destination": "/privacy.html"
     },
     {
       "source": "/terms.html",
-      "destination": "/public/terms.html"
+      "destination": "/terms.html"
     },
     {
       "source": "/terms",
-      "destination": "/public/terms.html"
+      "destination": "/terms.html"
     },
     {
       "source": "/financing.html",
-      "destination": "/public/financing.html"
+      "destination": "/financing.html"
     },
     {
       "source": "/financing",
-      "destination": "/public/financing.html"
+      "destination": "/financing.html"
     },
     {
       "source": "/protection.html",
-      "destination": "/public/protection.html"
+      "destination": "/protection.html"
     },
     {
       "source": "/protection",
-      "destination": "/public/protection.html"
+      "destination": "/protection.html"
     },
     {
       "source": "/refund.html",
-      "destination": "/public/refund.html"
+      "destination": "/refund.html"
     },
     {
       "source": "/refund",
-      "destination": "/public/refund.html"
+      "destination": "/refund.html"
     },
     {
       "source": "/service-agreement.html",
-      "destination": "/public/service-agreement.html"
+      "destination": "/service-agreement.html"
     },
     {
       "source": "/service-agreement",
-      "destination": "/public/service-agreement.html"
+      "destination": "/service-agreement.html"
     },
     {
       "source": "/",
