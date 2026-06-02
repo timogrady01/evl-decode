@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Script Repository | Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-height:100vh; }
+
+/* LOGIN */
+#login-screen {
+  position:fixed; inset:0; background:#020203;
+  display:flex; align-items:center; justify-content:center; z-index:1000;
+}
+.login-box {
+  background:#090E17; border:2px solid #2B84FE;
+  border-radius:12px; padding:40px; width:100%; max-width:400px; text-align:center;
+}
+.login-logo { font-size:13px; color:#2B84FE; letter-spacing:3px; font-weight:700; margin-bottom:6px; }
+.login-title { font-size:28px; font-weight:900; color:#fff; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.login-sub { font-size:13px; color:#A1A1AA; margin-bottom:30px; letter-spacing:1px; }
+.login-input {
+  width:100%; background:#020203; border:2px solid #2a2a4e;
+  color:#fff; padding:16px; border-radius:8px; font-size:24px;
+  font-family:'Oswald',sans-serif; font-weight:700; letter-spacing:8px;
+  text-align:center; outline:none; margin-bottom:16px;
+}
+.login-input:focus { border-color:#2B84FE; }
+.login-btn {
+  width:100%; background:#2B84FE; color:#fff; border:none;
+  padding:16px; font-size:16px; font-weight:900; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer; border-radius:8px;
+  font-family:'Oswald',sans-serif;
+}
+.login-btn:hover { background:#1a6fd4; }
+.login-error { color:#FF3333; font-size:14px; font-weight:700; margin-top:12px; display:none; letter-spacing:1px; }
+
+/* MAIN APP */
+#app { display:none; }
+
+/* HEADER */
+.evl-header {
+  background:#090E17; border-bottom:2px solid #2B84FE;
+  padding:14px 24px; display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+}
+.evl-header-left { display:flex; align-items:center; gap:12px; }
+.evl-logo-text { font-size:18px; font-weight:900; letter-spacing:1px; color:#fff; }
+.evl-logo-sub { font-size:11px; font-weight:700; color:#2B84FE; letter-spacing:3px; text-transform:uppercase; }
+.evl-badge { background:#2B84FE; color:#fff; font-size:11px; font-weight:900; padding:4px 12px; border-radius:4px; letter-spacing:2px; }
+.evl-logout { background:transparent; border:1px solid #FF3333; color:#FF3333; font-size:12px; font-weight:700; padding:6px 14px; border-radius:4px; cursor:pointer; letter-spacing:1px; font-family:'Oswald',sans-serif; }
+.evl-logout:hover { background:#FF3333; color:#fff; }
+
+/* STATS BAR */
+.stats-bar {
+  background:#090E17; border-bottom:1px solid #1a1a2e;
+  padding:16px 24px; display:flex; gap:30px; flex-wrap:wrap;
+}
+.stat-item { text-align:center; }
+.stat-val { font-size:26px; font-weight:900; color:#2B84FE; display:block; line-height:1; }
+.stat-lbl { font-size:11px; color:#A1A1AA; letter-spacing:1px; text-transform:uppercase; font-weight:700; margin-top:2px; }
+
+/* WRAP */
+.evl-wrap { max-width:1200px; margin:0 auto; padding:24px 20px 60px; }
+
+/* SECTION HEADERS */
+.section-hdr {
+  display:flex; align-items:center; gap:10px;
+  margin:28px 0 14px; border-bottom:2px solid #2B84FE; padding-bottom:10px;
+}
+.section-hdr h2 { font-size:20px; font-weight:900; color:#fff; letter-spacing:2px; text-transform:uppercase; }
+.section-count { background:#2B84FE; color:#fff; font-size:12px; font-weight:900; padding:3px 10px; border-radius:20px; }
+
+/* FILE CARDS */
+.file-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:14px; }
+.file-card {
+  background:#090E17; border:2px solid #1a1a2e;
+  border-radius:10px; overflow:hidden; transition:border-color .2s;
+}
+.file-card:hover { border-color:#2B84FE; }
+.file-card-header {
+  padding:14px 16px; background:#0a0f1a;
+  border-bottom:1px solid #1a1a2e; display:flex; align-items:center; justify-content:space-between;
+}
+.file-name { font-size:17px; font-weight:900; color:#fff; letter-spacing:1px; }
+.file-size { font-size:12px; color:#A1A1AA; font-weight:700; }
+.file-card-body { padding:14px 16px; }
+.file-url { font-size:13px; color:#2B84FE; font-weight:700; letter-spacing:1px; margin-bottom:8px; display:block; }
+.file-desc { font-size:13px; color:#ccd6e0; font-weight:600; margin-bottom:12px; line-height:1.4; }
+.file-status { display:inline-block; font-size:11px; font-weight:900; padding:3px 10px; border-radius:20px; letter-spacing:1px; margin-bottom:12px; }
+.status-live { background:#0d1a0d; border:1px solid #00C853; color:#00C853; }
+.status-ws { background:#1a1400; border:1px solid #FFD700; color:#FFD700; }
+.status-legal { background:#1a1a0d; border:1px solid #A1A1AA; color:#A1A1AA; }
+.status-api { background:#0a1525; border:1px solid #2B84FE; color:#2B84FE; }
+
+/* BUTTONS */
+.btn-row { display:flex; gap:8px; flex-wrap:wrap; }
+.btn { 
+  padding:8px 14px; font-size:12px; font-weight:900; letter-spacing:1px;
+  text-transform:uppercase; border:none; border-radius:6px; cursor:pointer;
+  font-family:'Oswald',sans-serif; transition:all .2s; text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.btn-blue { background:#2B84FE; color:#fff; }
+.btn-blue:hover { background:#1a6fd4; }
+.btn-green { background:#00C853; color:#020203; }
+.btn-green:hover { background:#00a844; }
+.btn-dark { background:#1a1a2e; color:#fff; border:1px solid #2a2a4e; }
+.btn-dark:hover { border-color:#2B84FE; }
+.btn-copy { background:#1a1a2e; color:#A1A1AA; border:1px solid #2a2a4e; }
+.btn-copy:hover { border-color:#00C853; color:#00C853; }
+.btn-copy.copied { background:#0d1a0d; border-color:#00C853; color:#00C853; }
+
+/* CODE VIEWER */
+.code-viewer {
+  display:none; margin-top:12px; background:#020203;
+  border:1px solid #2a2a4e; border-radius:8px; overflow:hidden;
+}
+.code-viewer.open { display:block; }
+.code-toolbar {
+  background:#0a0a1a; padding:8px 12px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid #1a1a2e;
+}
+.code-toolbar-label { font-size:12px; color:#2B84FE; font-weight:700; letter-spacing:1px; }
+.code-content {
+  padding:16px; font-family:monospace; font-size:12px; color:#ccd6e0;
+  max-height:400px; overflow-y:auto; white-space:pre-wrap; word-break:break-all;
+  line-height:1.5;
+}
+.code-loading { text-align:center; padding:30px; color:#2B84FE; font-size:14px; font-weight:700; letter-spacing:2px; }
+
+/* INFO BOX */
+.info-box {
+  background:#090E17; border:2px solid #2B84FE;
+  border-radius:10px; padding:20px 24px; margin-bottom:20px;
+}
+.info-box h3 { font-size:16px; font-weight:900; color:#2B84FE; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+.info-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; }
+.info-row { display:flex; flex-direction:column; gap:3px; }
+.info-label { font-size:11px; color:#A1A1AA; letter-spacing:1px; text-transform:uppercase; font-weight:700; }
+.info-value { font-size:14px; color:#fff; font-weight:700; font-family:monospace; }
+.info-value.blue { color:#2B84FE; }
+.info-value.green { color:#00C853; }
+
+/* SEARCH */
+.search-bar {
+  background:#090E17; border:2px solid #2a2a4e;
+  border-radius:8px; padding:12px 16px; width:100%;
+  font-size:16px; color:#fff; font-family:'Oswald',sans-serif;
+  font-weight:700; outline:none; margin-bottom:20px; letter-spacing:1px;
+}
+.search-bar:focus { border-color:#2B84FE; }
+.search-bar::placeholder { color:#3a3a5e; font-weight:500; }
+
+@media(max-width:600px) {
+  .stats-bar { gap:16px; }
+  .file-grid { grid-template-columns:1fr; }
+  .info-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">EXPRESS VEHICLE LOCATORS</div>
+    <div class="login-title">Script Repository</div>
+    <div class="login-sub">ADMIN ACCESS ONLY — ENTER PIN</div>
+    <input type="password" class="login-input" id="pin-input" maxlength="4" placeholder="••••" autocomplete="off"/>
+    <button class="login-btn" onclick="checkPin()">🔐 ACCESS REPOSITORY</button>
+    <div class="login-error" id="login-error">❌ INCORRECT PIN — TRY AGAIN</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <!-- HEADER -->
+  <div class="evl-header">
+    <div class="evl-header-left">
+      <svg width="28" height="28" viewBox="0 0 20 20" fill="none">
+        <polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/>
+        <circle cx="10" cy="10" r="3" fill="#2B84FE"/>
+      </svg>
+      <div>
+        <div class="evl-logo-text">EXPRESS VEHICLE LOCATORS</div>
+        <div class="evl-logo-sub">Script Repository — Admin</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="evl-badge">🔒 SECURE</div>
+      <button class="evl-logout" onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item"><span class="stat-val">21</span><span class="stat-lbl">Total Pages</span></div>
+    <div class="stat-item"><span class="stat-val">4</span><span class="stat-lbl">API Functions</span></div>
+    <div class="stat-item"><span class="stat-val" id="stat-site">evl-decode-two</span><span class="stat-lbl">Live Domain</span></div>
+    <div class="stat-item"><span class="stat-val green" style="color:#00C853">FREE</span><span class="stat-lbl">Vercel Plan</span></div>
+    <div class="stat-item"><span class="stat-val" style="font-size:14px;padding-top:6px">timogrady01</span><span class="stat-lbl">GitHub Account</span></div>
+  </div>
+
+  <div class="evl-wrap">
+
+    <!-- QUICK LINKS -->
+    <div class="info-box">
+      <h3>🔗 Platform Quick Links</h3>
+      <div class="info-grid">
+        <div class="info-row"><span class="info-label">Live Website</span><span class="info-value blue">evl-decode-two.vercel.app</span></div>
+        <div class="info-row"><span class="info-label">GitHub Repo</span><span class="info-value blue">github.com/timogrady01/evl-decode</span></div>
+        <div class="info-row"><span class="info-label">Vercel Dashboard</span><span class="info-value blue">vercel.com/vehicle-locator-service</span></div>
+        <div class="info-row"><span class="info-label">Notification Email</span><span class="info-value green">togradyevl@gmail.com</span></div>
+        <div class="info-row"><span class="info-label">MarketCheck API Key</span><span class="info-value" style="font-size:11px">B15Zgw0IlF2pSbOTaxeNmq8mV9VpoELj</span></div>
+        <div class="info-row"><span class="info-label">Design Background</span><span class="info-value">#020203 | Blue: #2B84FE | Green: #00C853</span></div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <a href="https://github.com/timogrady01/evl-decode" target="_blank" class="btn btn-blue">📁 Open GitHub Repo</a>
+        <a href="https://vercel.com/vehicle-locator-service/evl-decode" target="_blank" class="btn btn-dark">▲ Vercel Dashboard</a>
+        <a href="https://evl-decode-two.vercel.app" target="_blank" class="btn btn-green">🌐 View Live Site</a>
+        <a href="https://github.com/settings/tokens" target="_blank" class="btn btn-dark">🔑 GitHub Tokens</a>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <input type="text" class="search-bar" id="search-input" placeholder="🔍 SEARCH PAGES..." oninput="filterCards()"/>
+
+    <!-- CUSTOMER PAGES -->
+    <div class="section-hdr"><h2>Customer Pages</h2><span class="section-count">9</span></div>
+    <div class="file-grid" id="grid-customer">
+
+      <div class="file-card" data-name="home trade-in evaluator finder vehicle find how financing savings contact">
+        <div class="file-card-header">
+          <span class="file-name">🏠 HOME</span>
+          <span class="file-size">30.9 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/home</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Main landing page. Hero section, services overview, CTAs.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/home" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/home.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/home.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="trade-in evaluator vin decode condition slider upgrades photos certification">
+        <div class="file-card-header">
+          <span class="file-name">🚗 TRADE-IN EVALUATOR</span>
+          <span class="file-size">72.1 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/trade-in</span>
+          <div class="file-status status-live">✅ LIVE — v7.5</div>
+          <div class="file-desc">VIN decoder, condition slider, upgrades checkboxes, photo upload, certification badge. 4 collapsible drawers. Submits to togradyevl@gmail.com.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/trade-in" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/trade-in.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/trade-in.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="finder vehicle acquisition radar find car budget features">
+        <div class="file-card-header">
+          <span class="file-name">🎯 VEHICLE FINDER</span>
+          <span class="file-size">17.9 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/finder</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Acquisition Radar. Customer submits vehicle they want — make, model, year, budget, features. Sends to togradyevl@gmail.com.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/finder" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/finder.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/finder.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="find vehicle search inventory">
+        <div class="file-card-header">
+          <span class="file-name">🔍 FIND A VEHICLE</span>
+          <span class="file-size">49.4 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/find</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Vehicle search and inventory lookup page.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/find" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/find.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/find.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="how it works process steps">
+        <div class="file-card-header">
+          <span class="file-name">📖 HOW IT WORKS</span>
+          <span class="file-size">33.8 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/how</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Explains the EVL process to customers step by step.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/how" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/how.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/how.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="financing loans payments calculator lender">
+        <div class="file-card-header">
+          <span class="file-name">💰 FINANCING</span>
+          <span class="file-size">20.4 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/financing</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Financing options, rate comparison, payment calculator, lender network.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/financing" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/financing.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/financing.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="savings deals value money">
+        <div class="file-card-header">
+          <span class="file-name">💵 SAVINGS</span>
+          <span class="file-size">42.0 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/savings</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Savings and deals page for customers.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/savings" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/savings.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/savings.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="protection warranty gap ceramic pdr coverage">
+        <div class="file-card-header">
+          <span class="file-name">🛡️ PROTECTION</span>
+          <span class="file-size">19.2 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/protection</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Vehicle protection plans — PDR, GAP, ceramic, warranty options.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/protection" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/protection.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/protection.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="contact phone email address">
+        <div class="file-card-header">
+          <span class="file-name">📞 CONTACT</span>
+          <span class="file-size">43.1 KB</span>
+        </div>
+        <div class="file-card-body">
+          <span class="file-url">/contact</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">Contact form and business information.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/contact" target="_blank" class="btn btn-green">🌐 View Live</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/contact.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/contact.html')">📋 View Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WHOLESALE PAGES -->
+    <div class="section-hdr"><h2>⚡ Wholesale / Internal (WS)</h2><span class="section-count">6</span></div>
+    <div class="file-grid" id="grid-ws">
+
+      <div class="file-card" data-name="ws login wholesale internal dealer">
+        <div class="file-card-header"><span class="file-name">🔐 WS LOGIN</span><span class="file-size">4.8 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/ws</span>
+          <div class="file-status status-ws">⚡ WHOLESALE</div>
+          <div class="file-desc">Wholesale dealer login portal.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/ws" target="_blank" class="btn btn-green">🌐 View</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/ws-login.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/ws-login.html')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="ws dashboard wholesale dealer command">
+        <div class="file-card-header"><span class="file-name">📊 WS DASHBOARD</span><span class="file-size">21.4 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/ws-dashboard</span>
+          <div class="file-status status-ws">⚡ WHOLESALE</div>
+          <div class="file-desc">Dealer command console and dashboard.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/ws-dashboard" target="_blank" class="btn btn-green">🌐 View</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/ws-dashboard.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/ws-dashboard.html')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="ws dealers dealer network list">
+        <div class="file-card-header"><span class="file-name">🏪 WS DEALERS</span><span class="file-size">8.6 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/ws-dealers</span>
+          <div class="file-status status-ws">⚡ WHOLESALE</div>
+          <div class="file-desc">Dealer network management.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/ws-dealers" target="_blank" class="btn btn-green">🌐 View</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/ws-dealers.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/ws-dealers.html')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="ws exchange vehicle exchange trade">
+        <div class="file-card-header"><span class="file-name">🔄 WS EXCHANGE</span><span class="file-size">9.0 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/ws-exchange</span>
+          <div class="file-status status-ws">⚡ WHOLESALE</div>
+          <div class="file-desc">Wholesale vehicle exchange platform.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/ws-exchange" target="_blank" class="btn btn-green">🌐 View</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/ws-exchange.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/ws-exchange.html')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="ws onboarding setup new dealer">
+        <div class="file-card-header"><span class="file-name">📋 WS ONBOARDING</span><span class="file-size">8.5 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/ws-onboarding</span>
+          <div class="file-status status-ws">⚡ WHOLESALE</div>
+          <div class="file-desc">New dealer onboarding workflow.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/ws-onboarding" target="_blank" class="btn btn-green">🌐 View</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/ws-onboarding.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/ws-onboarding.html')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="ws vault secure storage documents">
+        <div class="file-card-header"><span class="file-name">🔒 WS VAULT</span><span class="file-size">8.1 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/ws-vault</span>
+          <div class="file-status status-ws">⚡ WHOLESALE</div>
+          <div class="file-desc">Secure document vault for wholesale dealers.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/ws-vault" target="_blank" class="btn btn-green">🌐 View</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/ws-vault.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/ws-vault.html')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ADMIN -->
+    <div class="section-hdr"><h2>🛡️ Admin</h2><span class="section-count">2</span></div>
+    <div class="file-grid">
+      <div class="file-card" data-name="admin dashboard intelligence submissions">
+        <div class="file-card-header"><span class="file-name">🛡️ ADMIN DASHBOARD</span><span class="file-size">61.1 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/admin</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">EVL Admin Intelligence Dashboard — view submissions, analytics.</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/admin" target="_blank" class="btn btn-green">🌐 View</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/admin.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'public/admin.html')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="admin scripts repository this page">
+        <div class="file-card-header"><span class="file-name">📚 SCRIPT REPOSITORY</span><span class="file-size">THIS PAGE</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/admin-scripts</span>
+          <div class="file-status status-live">✅ LIVE</div>
+          <div class="file-desc">This page. Master reference for all EVL scripts, pages, and platform info.</div>
+          <div class="btn-row">
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/public/admin-scripts.html" target="_blank" class="btn btn-dark">📁 GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- API FUNCTIONS -->
+    <div class="section-hdr"><h2>⚙️ API Functions</h2><span class="section-count">4</span></div>
+    <div class="file-grid">
+
+      <div class="file-card" data-name="api decode vin marketcheck">
+        <div class="file-card-header"><span class="file-name">⚡ VIN DECODE API</span><span class="file-size">4.0 KB</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/api/decode</span>
+          <div class="file-status status-api">🔵 API</div>
+          <div class="file-desc">Decodes VIN via MarketCheck. Returns Year/Make/Model/Trim/Engine. Key: B15Zgw0IlF2pSbOTaxeNmq8mV9VpoELj</div>
+          <div class="btn-row">
+            <a href="https://evl-decode-two.vercel.app/api/decode?vin=1GKENLKS6RJ153257" target="_blank" class="btn btn-green">🧪 Test</a>
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/api/decode.js" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'api/decode.js')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="api submit form submissions firebase">
+        <div class="file-card-header"><span class="file-name">📤 SUBMIT API</span><span class="file-size">—</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/api/submit</span>
+          <div class="file-status status-api">🔵 API</div>
+          <div class="file-desc">Handles form submissions from customer pages.</div>
+          <div class="btn-row">
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/api/submit.js" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'api/submit.js')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="api lookup vehicle search">
+        <div class="file-card-header"><span class="file-name">🔍 LOOKUP API</span><span class="file-size">—</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/api/lookup</span>
+          <div class="file-status status-api">🔵 API</div>
+          <div class="file-desc">Vehicle lookup and search function.</div>
+          <div class="btn-row">
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/api/lookup.js" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'api/lookup.js')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+      <div class="file-card" data-name="api journal log activity">
+        <div class="file-card-header"><span class="file-name">📓 JOURNAL API</span><span class="file-size">—</span></div>
+        <div class="file-card-body">
+          <span class="file-url">/api/journal</span>
+          <div class="file-status status-api">🔵 API</div>
+          <div class="file-desc">Activity logging and journal entries.</div>
+          <div class="btn-row">
+            <a href="https://github.com/timogrady01/evl-decode/blob/main/api/journal.js" target="_blank" class="btn btn-dark">📁 GitHub</a>
+            <button class="btn btn-copy" onclick="loadCode(this,'api/journal.js')">📋 Code</button>
+          </div>
+          <div class="code-viewer"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LEGAL PAGES -->
+    <div class="section-hdr"><h2>📄 Legal Pages</h2><span class="section-count">4</span></div>
+    <div class="file-grid">
+      <div class="file-card" data-name="privacy policy">
+        <div class="file-card-header"><span class="file-name">🔏 PRIVACY POLICY</span><span class="file-size">16.5 KB</span></div>
+        <div class="file-card-body"><span class="file-url">/privacy</span><div class="file-status status-legal">📄 LEGAL</div>
+          <div class="btn-row"><a href="https://evl-decode-two.vercel.app/privacy" target="_blank" class="btn btn-green">🌐 View</a><a href="https://github.com/timogrady01/evl-decode/blob/main/public/privacy.html" target="_blank" class="btn btn-dark">📁 GitHub</a></div>
+        </div>
+      </div>
+      <div class="file-card" data-name="terms service conditions">
+        <div class="file-card-header"><span class="file-name">📋 TERMS OF SERVICE</span><span class="file-size">16.5 KB</span></div>
+        <div class="file-card-body"><span class="file-url">/terms</span><div class="file-status status-legal">📄 LEGAL</div>
+          <div class="btn-row"><a href="https://evl-decode-two.vercel.app/terms" target="_blank" class="btn btn-green">🌐 View</a><a href="https://github.com/timogrady01/evl-decode/blob/main/public/terms.html" target="_blank" class="btn btn-dark">📁 GitHub</a></div>
+        </div>
+      </div>
+      <div class="file-card" data-name="service agreement contract">
+        <div class="file-card-header"><span class="file-name">📝 SERVICE AGREEMENT</span><span class="file-size">36.2 KB</span></div>
+        <div class="file-card-body"><span class="file-url">/service-agreement</span><div class="file-status status-legal">📄 LEGAL</div>
+          <div class="btn-row"><a href="https://evl-decode-two.vercel.app/service-agreement" target="_blank" class="btn btn-green">🌐 View</a><a href="https://github.com/timogrady01/evl-decode/blob/main/public/service-agreement.html" target="_blank" class="btn btn-dark">📁 GitHub</a></div>
+        </div>
+      </div>
+      <div class="file-card" data-name="refund policy returns">
+        <div class="file-card-header"><span class="file-name">💸 REFUND POLICY</span><span class="file-size">12.7 KB</span></div>
+        <div class="file-card-body"><span class="file-url">/refund</span><div class="file-status status-legal">📄 LEGAL</div>
+          <div class="btn-row"><a href="https://evl-decode-two.vercel.app/refund" target="_blank" class="btn btn-green">🌐 View</a><a href="https://github.com/timogrady01/evl-decode/blob/main/public/refund.html" target="_blank" class="btn btn-dark">📁 GitHub</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /evl-wrap -->
+</div><!-- /app -->
+
+<script>
+const CORRECT_PIN = "1027";
+const GITHUB_TOKEN = sessionStorage.getItem("evl-gh-token") || "";
+const REPO = "timogrady01/evl-decode";
+
+// LOGIN
+function checkPin() {
+  const pin = document.getElementById('pin-input').value;
+  if (pin === CORRECT_PIN) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    sessionStorage.setItem("evl-auth", "1027");
+    const gt = prompt("Optional: Enter GitHub token for live code viewing (or cancel to skip):");
+    if(gt) sessionStorage.setItem("evl-gh-token", gt);
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pin-input').value = '';
+    document.getElementById('pin-input').focus();
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('evl-auth');
+  location.reload();
+}
+
+// Auto-login if already authenticated this session
+if (sessionStorage.getItem('evl-auth') === '1027') {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// Enter key on PIN
+document.getElementById('pin-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPin();
+});
+
+// LOAD CODE from GitHub
+async function loadCode(btn, path) {
+  const card = btn.closest('.file-card');
+  const viewer = card.querySelector('.code-viewer');
+
+  if (viewer.classList.contains('open')) {
+    viewer.classList.remove('open');
+    btn.textContent = '📋 View Code';
+    btn.classList.remove('copied');
+    return;
+  }
+
+  viewer.classList.add('open');
+  btn.textContent = '⏳ Loading...';
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+      headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    const data = await res.json();
+    const content = atob(data.content.replace(/\n/g,''));
+
+    viewer.innerHTML = `
+      <div class="code-toolbar">
+        <span class="code-toolbar-label">📄 ${path} — ${(content.length/1024).toFixed(1)} KB</span>
+        <button class="btn btn-copy" onclick="copyCode(this, \`${escapeForAttr(content)}\`)">📋 COPY ALL</button>
+      </div>
+      <div class="code-content">${escapeHtml(content)}</div>
+    `;
+    btn.textContent = '✅ Close Code';
+  } catch(e) {
+    viewer.innerHTML = `<div class="code-loading" style="color:#FF3333">❌ Error loading — check GitHub token</div>`;
+    btn.textContent = '📋 View Code';
+  }
+}
+
+function copyCode(btn, content) {
+  navigator.clipboard.writeText(content).then(() => {
+    btn.textContent = '✅ COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 COPY ALL'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function escapeForAttr(str) {
+  return str.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$/g,'\\$');
+}
+
+// SEARCH
+function filterCards() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  document.querySelectorAll('.file-card').forEach(card => {
+    const text = (card.dataset.name || '') + ' ' + card.textContent.toLowerCase();
+    card.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
