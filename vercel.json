@@ -1,53 +1,196 @@
 {
   "rewrites": [
-    { "source": "/api/journal", "destination": "/api/journal.js" },
-    { "source": "/api/submit", "destination": "/api/submit.js" },
-    { "source": "/api/lookup", "destination": "/api/lookup.js" },
-    { "source": "/api/decode", "destination": "/api/decode.js" },
-    { "source": "/ws-login.html", "destination": "/public/ws-login.html" },
-    { "source": "/ws-exchange.html", "destination": "/public/ws-exchange.html" },
-    { "source": "/ws-exchange", "destination": "/public/ws-exchange.html" },
-    { "source": "/ws-vault.html", "destination": "/public/ws-vault.html" },
-    { "source": "/ws-vault", "destination": "/public/ws-vault.html" },
-    { "source": "/ws-onboarding.html", "destination": "/public/ws-onboarding.html" },
-    { "source": "/ws-onboarding", "destination": "/public/ws-onboarding.html" },
-    { "source": "/ws-dealers.html", "destination": "/public/ws-dealers.html" },
-    { "source": "/ws-dealers", "destination": "/public/ws-dealers.html" },
-    { "source": "/ws-login", "destination": "/public/ws-login.html" },
-    { "source": "/ws-dashboard.html", "destination": "/public/ws-dashboard.html" },
-    { "source": "/ws-dashboard", "destination": "/public/ws-dashboard.html" },
-    { "source": "/ws", "destination": "/public/ws-login.html" },
-    { "source": "/home.html", "destination": "/public/home.html" },
-    { "source": "/home", "destination": "/public/home.html" },
-    { "source": "/find.html", "destination": "/public/find.html" },
-    { "source": "/find", "destination": "/public/find.html" },
-    { "source": "/how.html", "destination": "/public/how.html" },
-    { "source": "/how", "destination": "/public/how.html" },
-    { "source": "/savings.html", "destination": "/public/savings.html" },
-    { "source": "/savings", "destination": "/public/savings.html" },
-    { "source": "/contact.html", "destination": "/public/contact.html" },
-    { "source": "/contact", "destination": "/public/contact.html" },
-    { "source": "/admin.html", "destination": "/public/admin.html" },
-    { "source": "/admin", "destination": "/public/admin.html" },
-    { "source": "/trade-in.html", "destination": "/public/trade-in.html" },
-    { "source": "/trade-in", "destination": "/public/trade-in.html" },
-    { "source": "/finder.html", "destination": "/public/finder.html" },
-    { "source": "/finder", "destination": "/public/finder.html" },
-    { "source": "/tradein.html", "destination": "/public/index.html" },
-    { "source": "/tradein", "destination": "/public/index.html" },
-    { "source": "/privacy.html", "destination": "/public/privacy.html" },
-    { "source": "/privacy", "destination": "/public/privacy.html" },
-    { "source": "/terms.html", "destination": "/public/terms.html" },
-    { "source": "/terms", "destination": "/public/terms.html" },
-    { "source": "/financing.html", "destination": "/public/financing.html" },
-    { "source": "/financing", "destination": "/public/financing.html" },
-    { "source": "/protection.html", "destination": "/public/protection.html" },
-    { "source": "/protection", "destination": "/public/protection.html" },
-    { "source": "/refund.html", "destination": "/public/refund.html" },
-    { "source": "/refund", "destination": "/public/refund.html" },
-    { "source": "/service-agreement.html", "destination": "/public/service-agreement.html" },
-    { "source": "/service-agreement", "destination": "/public/service-agreement.html" },
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/(.*)", "destination": "/public/index.html" }
+    {
+      "source": "/trade-in",
+      "destination": "/public/trade-in.html"
+    },
+    {
+      "source": "/trade-in.html",
+      "destination": "/public/trade-in.html"
+    },
+    {
+      "source": "/finder",
+      "destination": "/public/finder.html"
+    },
+    {
+      "source": "/finder.html",
+      "destination": "/public/finder.html"
+    },
+    {
+      "source": "/api/journal",
+      "destination": "/api/journal.js"
+    },
+    {
+      "source": "/api/submit",
+      "destination": "/api/submit.js"
+    },
+    {
+      "source": "/api/lookup",
+      "destination": "/api/lookup.js"
+    },
+    {
+      "source": "/api/decode",
+      "destination": "/api/decode.js"
+    },
+    {
+      "source": "/ws-login.html",
+      "destination": "/public/ws-login.html"
+    },
+    {
+      "source": "/ws-exchange.html",
+      "destination": "/public/ws-exchange.html"
+    },
+    {
+      "source": "/ws-exchange",
+      "destination": "/public/ws-exchange.html"
+    },
+    {
+      "source": "/ws-vault.html",
+      "destination": "/public/ws-vault.html"
+    },
+    {
+      "source": "/ws-vault",
+      "destination": "/public/ws-vault.html"
+    },
+    {
+      "source": "/ws-onboarding.html",
+      "destination": "/public/ws-onboarding.html"
+    },
+    {
+      "source": "/ws-onboarding",
+      "destination": "/public/ws-onboarding.html"
+    },
+    {
+      "source": "/ws-dealers.html",
+      "destination": "/public/ws-dealers.html"
+    },
+    {
+      "source": "/ws-dealers",
+      "destination": "/public/ws-dealers.html"
+    },
+    {
+      "source": "/ws-login",
+      "destination": "/public/ws-login.html"
+    },
+    {
+      "source": "/ws-dashboard.html",
+      "destination": "/public/ws-dashboard.html"
+    },
+    {
+      "source": "/ws-dashboard",
+      "destination": "/public/ws-dashboard.html"
+    },
+    {
+      "source": "/ws",
+      "destination": "/public/ws-login.html"
+    },
+    {
+      "source": "/home.html",
+      "destination": "/public/home.html"
+    },
+    {
+      "source": "/home",
+      "destination": "/public/home.html"
+    },
+    {
+      "source": "/find.html",
+      "destination": "/public/find.html"
+    },
+    {
+      "source": "/find",
+      "destination": "/public/find.html"
+    },
+    {
+      "source": "/how.html",
+      "destination": "/public/how.html"
+    },
+    {
+      "source": "/how",
+      "destination": "/public/how.html"
+    },
+    {
+      "source": "/savings.html",
+      "destination": "/public/savings.html"
+    },
+    {
+      "source": "/savings",
+      "destination": "/public/savings.html"
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/public/contact.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/public/contact.html"
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/public/admin.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/public/admin.html"
+    },
+    {
+      "source": "/tradein.html",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/tradein",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/public/privacy.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/public/privacy.html"
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/public/terms.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/public/terms.html"
+    },
+    {
+      "source": "/financing.html",
+      "destination": "/public/financing.html"
+    },
+    {
+      "source": "/financing",
+      "destination": "/public/financing.html"
+    },
+    {
+      "source": "/protection.html",
+      "destination": "/public/protection.html"
+    },
+    {
+      "source": "/protection",
+      "destination": "/public/protection.html"
+    },
+    {
+      "source": "/refund.html",
+      "destination": "/public/refund.html"
+    },
+    {
+      "source": "/refund",
+      "destination": "/public/refund.html"
+    },
+    {
+      "source": "/service-agreement.html",
+      "destination": "/public/service-agreement.html"
+    },
+    {
+      "source": "/service-agreement",
+      "destination": "/public/service-agreement.html"
+    },
+    {
+      "source": "/",
+      "destination": "/public/index.html"
+    }
   ]
 }
