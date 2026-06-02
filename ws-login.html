@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>WS-EVL Wholesale Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0A0A08;--s1:#111110;--s2:#1A1A16;--s3:#222220;
+  --gold:#F5C842;--gold2:#D4A820;--gold3:#FFE580;
+  --green:#00C853;--red:#FF3333;--blue:#2B84FE;
+  --muted:#C8C4A8;--border:rgba(245,200,66,0.2);
+  --border2:rgba(245,200,66,0.4);
+}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+
+/* LOGIN SCREEN */
+.login-wrap{width:100%;max-width:480px;padding:32px 24px;}
+.ws-logo{text-align:center;margin-bottom:40px;}
+.ws-logo-mark{font-family:"Barlow Condensed",sans-serif;font-size:52px;font-weight:900;color:var(--gold);letter-spacing:4px;text-transform:uppercase;line-height:1;}
+.ws-logo-sub{font-size:14px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.ws-logo-divider{width:60px;height:3px;background:var(--gold);margin:16px auto;}
+
+.login-card{background:var(--s1);border:2px solid var(--border2);padding:40px;}
+.login-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;color:var(--gold);}
+.login-sub{font-size:15px;color:var(--muted);margin-bottom:28px;line-height:1.6;}
+.fgroup{margin-bottom:18px;}
+.fgroup label{display:block;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.finput{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;padding:14px 16px;outline:none;transition:border-color .2s;}
+.finput:focus{border-color:var(--gold);}
+.finput::placeholder{color:#555;}
+.login-btn{display:block;width:100%;background:var(--gold);border:none;color:#000;font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:16px;cursor:pointer;margin-top:24px;transition:all .2s;}
+.login-btn:hover{background:var(--gold3);}
+.login-err{display:none;background:rgba(255,51,51,.1);border:2px solid rgba(255,51,51,.3);color:var(--red);padding:12px 16px;font-size:15px;font-weight:600;margin-top:14px;}
+.login-err.show{display:block;}
+.login-note{text-align:center;color:var(--muted);font-size:13px;margin-top:16px;font-weight:600;}
+.back-link{display:block;text-align:center;margin-top:24px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.back-link:hover{color:var(--gold);}
+
+/* ACCESS DENIED */
+.access-denied{text-align:center;padding:48px 24px;}
+.ad-icon{font-size:64px;margin-bottom:20px;}
+.ad-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:3px;color:var(--red);margin-bottom:12px;}
+.ad-sub{color:var(--muted);font-size:18px;line-height:1.75;}
+</style>
+<style id="evl-ws-nav-css">
+/* ── EVL WHOLESALE NAV ── */
+.evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid #FFD700;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
+.evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
+.evl-ws-nav-links{display:flex;align-items:center;gap:4px;}
+.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-link:hover{color:#FFD700;background:#1a1400;}
+.evl-ws-nav-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;margin-left:8px;border:1px solid #2a2a2e;}
+.evl-ws-nav-retail:hover{color:#fff;border-color:#fff;}
+.evl-ws-nav-logout{background:#1a1400;border:1px solid #FFD700;color:#FFD700;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-logout:hover{background:#FFD700;color:#000;}
+.evl-ws-hamburger{display:none;background:none;border:none;color:#FFD700;font-size:22px;cursor:pointer;padding:4px 8px;}
+@media(max-width:768px){
+  .evl-ws-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#0a0800;border-bottom:2px solid #FFD700;padding:12px 0;gap:0;}
+  .evl-ws-nav-links.open{display:flex;}
+  .evl-ws-nav-link,.evl-ws-nav-retail,.evl-ws-nav-logout{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1400;}
+  .evl-ws-hamburger{display:block;}
+}
+</style>
+</head>
+<body>
+<nav class="evl-ws-nav">
+  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
+    <span>EVL <span style="color:#FFD700">WHOLESALE</span></span>
+  </a>
+  <button class="evl-ws-hamburger" onclick="toggleWsNav()" aria-label="Menu">&#9776;</button>
+  <div class="evl-ws-nav-links" id="evl-ws-nav-links">
+    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link">EXCHANGE</a>
+    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
+    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
+    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-ws-nav-retail">⬅ RETAIL SITE</a>
+    <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logout">🔒 LOGOUT</a>
+  </div>
+</nav>
+<div class="login-wrap">
+  <div class="ws-logo">
+    <div class="ws-logo-mark">⚡ WS-EVL</div>
+    <div class="ws-logo-divider"></div>
+    <div class="ws-logo-sub">Wholesale Command Center</div>
+  </div>
+
+  <div class="login-card">
+    <div class="login-title">🔒 Secure Access</div>
+    <div class="login-sub">WS-EVL is a restricted platform for authorized EVL wholesale partners, dealers, and operators only.</div>
+    <div class="fgroup">
+      <label>Access Code</label>
+      <input class="finput" id="pwInput" type="password" placeholder="Enter access code" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">⚡ Enter Command Center</button>
+    <div class="login-err" id="loginErr">⛔ Invalid access code. Authorized personnel only.</div>
+    <div class="login-note">🔒 This area is monitored. Unauthorized access attempts are logged.</div>
+  </div>
+  <a href="https://www.expressvehiclelocators.com/home.html" class="back-link">← Back to EVL Customer Platform</a>
+</div>
+
+<script>
+function doLogin(){
+  var pw = document.getElementById('pwInput').value;
+  var codes = ['WSEVL2026','EVLWS2026','DEALER2026','WSADMIN'];
+  if(codes.indexOf(pw.toUpperCase()) > -1){
+    window.location.href = '/ws-dashboard.html';
+  } else {
+    document.getElementById('loginErr').classList.add('show');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+</script>
+<script id="evl-ws-nav-js">
+function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.toggle('open');}
+(function(){var path=window.location.pathname;document.querySelectorAll('.evl-ws-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){a.style.color='#FFD700';a.style.borderBottom='2px solid #FFD700';}});})();
+</script>
+</body>
+</html>
