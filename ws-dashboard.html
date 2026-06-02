@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Dealer Command Console — WS-EVL</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0A0A08;--s1:#111110;--s2:#1A1A16;--s3:#222220;
+  --gold:#F5C842;--gold2:#D4A820;--gold3:#FFE580;
+  --green:#00C853;--red:#FF3333;--orange:#FF8C00;--blue:#2B84FE;
+  --muted:#C8C4A8;--border:rgba(245,200,66,0.2);--border2:rgba(245,200,66,0.35);
+}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+/* TOP NAV */
+nav{background:rgba(10,10,8,0.98);border-bottom:2px solid var(--border2);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.nav-logo{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;text-decoration:none;}
+.nav-logo span{color:#fff;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;padding:6px 0;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-badge{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;text-decoration:none;transition:all .2s;}
+.nav-badge:hover{background:var(--gold3);}
+
+/* HEADER */
+.page-header{background:linear-gradient(160deg,#1A1600,var(--bg));border-bottom:2px solid var(--border);padding:32px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.ph-left{}
+.ph-dealer{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.ph-title{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;}
+.ph-sub{color:var(--muted);font-size:16px;margin-top:6px;}
+.ph-right{display:flex;gap:12px;align-items:center;}
+.status-pill{background:rgba(0,200,83,.12);border:2px solid rgba(0,200,83,.3);color:var(--green);font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;}
+.tier-pill{background:rgba(245,200,66,.12);border:2px solid var(--border2);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-bottom:2px solid var(--border);}
+.stat-box{background:var(--s1);padding:24px 28px;border-right:1px solid var(--border);}
+.stat-box:last-child{border-right:none;}
+.stat-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.stat-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;line-height:1;color:var(--gold);}
+.stat-change{font-size:13px;font-weight:700;margin-top:6px;}
+.up{color:var(--green);}
+.down{color:var(--red);}
+
+/* MAIN LAYOUT */
+.main{display:grid;grid-template-columns:1fr 380px;gap:0;min-height:calc(100vh - 280px);}
+.main-left{padding:32px 40px;border-right:1px solid var(--border);}
+.main-right{padding:32px 28px;background:var(--s1);}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.sec-title{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--gold);}
+.sec-action{background:none;border:2px solid var(--border2);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;cursor:pointer;transition:all .2s;}
+.sec-action:hover{background:var(--gold);color:#000;}
+
+/* ACTIVE LEADS */
+.leads-table{width:100%;border-collapse:collapse;margin-bottom:32px;}
+.leads-table th{padding:10px 14px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:2px solid var(--border);background:var(--s2);}
+.leads-table td{padding:14px;font-size:15px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.leads-table tr:last-child td{border:none;}
+.leads-table tr:hover td{background:rgba(245,200,66,.03);}
+.lead-name{font-weight:700;color:#fff;}
+.lead-vehicle{color:var(--muted);font-size:14px;margin-top:2px;}
+.lead-status{font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;display:inline-block;}
+.ls-new{background:rgba(43,132,254,.15);color:var(--blue);}
+.ls-active{background:rgba(0,200,83,.15);color:var(--green);}
+.ls-pending{background:rgba(245,200,66,.15);color:var(--gold);}
+.ls-closed{background:rgba(255,51,51,.1);color:var(--red);}
+.lead-value{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;color:var(--gold);}
+.lead-time{font-size:13px;color:var(--muted);}
+.lead-action{background:none;border:1px solid var(--border2);color:var(--gold);font-size:13px;font-weight:700;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.lead-action:hover{background:var(--gold);color:#000;}
+
+/* QUICK ACTIONS */
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;}
+.qa-btn{background:var(--s2);border:2px solid var(--border);padding:18px 16px;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:12px;}
+.qa-btn:hover{border-color:var(--gold);}
+.qa-icon{font-size:24px;flex-shrink:0;}
+.qa-label{font-family:"Barlow Condensed",sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:#fff;}
+.qa-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+
+/* EARNINGS */
+.earn-box{background:var(--s2);border:2px solid var(--border2);padding:24px;margin-bottom:20px;}
+.earn-title{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:16px;}
+.earn-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:15px;}
+.earn-row:last-child{border:none;}
+.earn-lbl{color:var(--muted);}
+.earn-val{font-weight:700;font-family:"Barlow Condensed",sans-serif;font-size:20px;}
+.earn-total{margin-top:14px;padding:16px;background:rgba(245,200,66,.08);border:2px solid var(--border2);display:flex;justify-content:space-between;align-items:center;}
+.et-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.et-val{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;color:var(--gold);}
+
+/* RECENT ACTIVITY */
+.activity-list{display:flex;flex-direction:column;gap:10px;}
+.act-item{background:var(--s2);border:2px solid var(--border);padding:14px 16px;display:flex;align-items:flex-start;gap:12px;}
+.act-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.act-dot.green{background:var(--green);}
+.act-dot.gold{background:var(--gold);}
+.act-dot.blue{background:var(--blue);}
+.act-dot.red{background:var(--red);}
+.act-text{font-size:15px;color:var(--muted);line-height:1.5;}
+.act-text strong{color:#fff;}
+.act-time{font-size:12px;color:var(--muted);margin-top:3px;font-weight:600;}
+
+/* RATING */
+.rating-box{background:var(--s2);border:2px solid var(--border);padding:20px;text-align:center;margin-bottom:16px;}
+.rating-num{font-family:"Barlow Condensed",sans-serif;font-size:56px;font-weight:900;color:var(--gold);line-height:1;}
+.rating-stars{font-size:24px;margin:8px 0;}
+.rating-lbl{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+
+footer{background:var(--s1);border-top:2px solid var(--border);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;}
+.fl{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;color:var(--gold);}
+.fc{color:var(--muted);font-size:13px;}
+
+@media(max-width:1000px){.main{grid-template-columns:1fr;}.stats-row{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){nav{padding:0 16px;}.page-header{padding:24px 16px;}.main-left,.main-right{padding:20px 16px;}.stats-row{grid-template-columns:1fr 1fr;}.qa-grid{grid-template-columns:1fr;}footer{padding:16px;flex-direction:column;gap:8px;}}
+</style>
+<style id="evl-ws-nav-css">
+/* ── EVL WHOLESALE NAV ── */
+.evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid #FFD700;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
+.evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
+.evl-ws-nav-links{display:flex;align-items:center;gap:4px;}
+.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-link:hover{color:#FFD700;background:#1a1400;}
+.evl-ws-nav-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;margin-left:8px;border:1px solid #2a2a2e;}
+.evl-ws-nav-retail:hover{color:#fff;border-color:#fff;}
+.evl-ws-nav-logout{background:#1a1400;border:1px solid #FFD700;color:#FFD700;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;transition:all .2s;white-space:nowrap;}
+.evl-ws-nav-logout:hover{background:#FFD700;color:#000;}
+.evl-ws-hamburger{display:none;background:none;border:none;color:#FFD700;font-size:22px;cursor:pointer;padding:4px 8px;}
+@media(max-width:768px){
+  .evl-ws-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#0a0800;border-bottom:2px solid #FFD700;padding:12px 0;gap:0;}
+  .evl-ws-nav-links.open{display:flex;}
+  .evl-ws-nav-link,.evl-ws-nav-retail,.evl-ws-nav-logout{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1400;}
+  .evl-ws-hamburger{display:block;}
+}
+</style>
+</head>
+<body>
+
+<nav class="evl-ws-nav">
+  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
+    <span>EVL <span style="color:#FFD700">WHOLESALE</span></span>
+  </a>
+  <button class="evl-ws-hamburger" onclick="toggleWsNav()" aria-label="Menu">&#9776;</button>
+  <div class="evl-ws-nav-links" id="evl-ws-nav-links">
+    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link">EXCHANGE</a>
+    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
+    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
+    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-ws-nav-retail">⬅ RETAIL SITE</a>
+    <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logout">🔒 LOGOUT</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="ph-left">
+    <div class="ph-dealer">⚡ WS-EVL Dealer Portal</div>
+    <div class="ph-title">Command Console</div>
+    <div class="ph-sub">Welcome back — here's your real-time performance overview</div>
+  </div>
+  <div class="ph-right">
+    <span class="status-pill">● Active</span>
+    <span class="tier-pill">⭐ Gold Partner</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-box">
+    <div class="stat-lbl">Active Leads</div>
+    <div class="stat-num" id="sLeads">47</div>
+    <div class="stat-change up">↑ +12 this week</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-lbl">Sales This Month</div>
+    <div class="stat-num" id="sSales">23</div>
+    <div class="stat-change up">↑ +18% vs last month</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-lbl">Revenue This Month</div>
+    <div class="stat-num" id="sRev">$12.5K</div>
+    <div class="stat-change up">↑ +22% vs last month</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-lbl">Avg Deal Value</div>
+    <div class="stat-num">$543</div>
+    <div class="stat-change up">↑ +$47 vs last month</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-lbl">Customer Rating</div>
+    <div class="stat-num" style="color:var(--gold);">4.8★</div>
+    <div class="stat-change up">↑ +0.3 vs last month</div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- LEFT PANEL -->
+  <div class="main-left">
+
+    <!-- QUICK ACTIONS -->
+    <div class="sec-head">
+      <div class="sec-title">⚡ Quick Actions</div>
+    </div>
+    <div class="qa-grid" style="margin-bottom:32px;">
+      <button class="qa-btn" onclick="window.location='/ws-exchange.html'">
+        <span class="qa-icon">🔄</span>
+        <div><div class="qa-label">Vehicle Exchange</div><div class="qa-sub">Submit or browse exchange inventory</div></div>
+      </button>
+      <button class="qa-btn" onclick="window.location='/ws-vault.html'">
+        <span class="qa-icon">🔒</span>
+        <div><div class="qa-label">The Vault</div><div class="qa-sub">Access documents & deal files</div></div>
+      </button>
+      <button class="qa-btn" onclick="window.location='/ws-onboarding.html'">
+        <span class="qa-icon">📋</span>
+        <div><div class="qa-label">Onboarding</div><div class="qa-sub">New dealer registration & setup</div></div>
+      </button>
+      <button class="qa-btn" onclick="window.location='https://www.expressvehiclelocators.com/contact.html'">
+        <span class="qa-icon">📞</span>
+        <div><div class="qa-label">Contact EVL</div><div class="qa-sub">Submit a request or get support</div></div>
+      </button>
+    </div>
+
+    <!-- ACTIVE LEADS -->
+    <div class="sec-head">
+      <div class="sec-title">📋 Active Leads</div>
+      <button class="sec-action">View All →</button>
+    </div>
+    <table class="leads-table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Vehicle</th>
+          <th>Status</th>
+          <th>Value</th>
+          <th>Age</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="lead-name">Sarah Johnson</div><div class="lead-vehicle">sarah.j@email.com</div></td>
+          <td><div class="lead-name">2026 BMW X5</div><div class="lead-vehicle">xDrive40i · Silver · Buy</div></td>
+          <td><span class="lead-status ls-active">Active</span></td>
+          <td><div class="lead-value">$67,500</div></td>
+          <td><div class="lead-time">2 hrs ago</div></td>
+          <td><button class="lead-action">View</button></td>
+        </tr>
+        <tr>
+          <td><div class="lead-name">Marcus Williams</div><div class="lead-vehicle">m.williams@email.com</div></td>
+          <td><div class="lead-name">2025 Ford F-150</div><div class="lead-vehicle">Lariat 4WD · Black · Buy</div></td>
+          <td><span class="lead-status ls-new">New</span></td>
+          <td><div class="lead-value">$58,200</div></td>
+          <td><div class="lead-time">4 hrs ago</div></td>
+          <td><button class="lead-action">View</button></td>
+        </tr>
+        <tr>
+          <td><div class="lead-name">Jennifer Park</div><div class="lead-vehicle">j.park@email.com</div></td>
+          <td><div class="lead-name">2026 Mercedes GLE</div><div class="lead-vehicle">GLE450 · White · Lease</div></td>
+          <td><span class="lead-status ls-pending">Pending</span></td>
+          <td><div class="lead-value">$890/mo</div></td>
+          <td><div class="lead-time">1 day ago</div></td>
+          <td><button class="lead-action">View</button></td>
+        </tr>
+        <tr>
+          <td><div class="lead-name">Robert Chen</div><div class="lead-vehicle">r.chen@email.com</div></td>
+          <td><div class="lead-name">2026 Toyota Tundra</div><div class="lead-vehicle">TRD Pro · Midnight Black · Buy</div></td>
+          <td><span class="lead-status ls-active">Active</span></td>
+          <td><div class="lead-value">$72,100</div></td>
+          <td><div class="lead-time">1 day ago</div></td>
+          <td><button class="lead-action">View</button></td>
+        </tr>
+        <tr>
+          <td><div class="lead-name">Amanda Foster</div><div class="lead-vehicle">a.foster@email.com</div></td>
+          <td><div class="lead-name">2026 Porsche Cayenne</div><div class="lead-vehicle">S · Chalk · Buy</div></td>
+          <td><span class="lead-status ls-pending">Pending</span></td>
+          <td><div class="lead-value">$94,800</div></td>
+          <td><div class="lead-time">2 days ago</div></td>
+          <td><button class="lead-action">View</button></td>
+        </tr>
+        <tr>
+          <td><div class="lead-name">David Kim</div><div class="lead-vehicle">d.kim@email.com</div></td>
+          <td><div class="lead-name">2025 Tesla Model Y</div><div class="lead-vehicle">Long Range AWD · Red · Buy</div></td>
+          <td><span class="lead-status ls-closed">Closed ✓</span></td>
+          <td><div class="lead-value">$52,400</div></td>
+          <td><div class="lead-time">3 days ago</div></td>
+          <td><button class="lead-action">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="sec-head">
+      <div class="sec-title">📡 Recent Activity</div>
+    </div>
+    <div class="activity-list">
+      <div class="act-item">
+        <div class="act-dot green"></div>
+        <div>
+          <div class="act-text"><strong>New lead assigned:</strong> Sarah Johnson — 2026 BMW X5 xDrive40i</div>
+          <div class="act-time">2 hours ago</div>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="act-dot gold"></div>
+        <div>
+          <div class="act-text"><strong>Deal approved:</strong> David Kim confirmed Tesla Model Y — $52,400</div>
+          <div class="act-time">3 hours ago</div>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="act-dot blue"></div>
+        <div>
+          <div class="act-text"><strong>Document uploaded:</strong> Chen trade-in authorization added to Vault</div>
+          <div class="act-time">5 hours ago</div>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="act-dot green"></div>
+        <div>
+          <div class="act-text"><strong>Exchange match:</strong> 2024 RAM 1500 matched to wholesale buyer — $38,500</div>
+          <div class="act-time">Yesterday 4:22 PM</div>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="act-dot gold"></div>
+        <div>
+          <div class="act-text"><strong>Monthly milestone:</strong> 23 deals closed — Gold Partner threshold exceeded</div>
+          <div class="act-time">Yesterday 2:00 PM</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="main-right">
+
+    <!-- RATING -->
+    <div class="rating-box" style="margin-bottom:20px;">
+      <div class="rating-num">4.8</div>
+      <div class="rating-stars">★★★★★</div>
+      <div class="rating-lbl">Customer Satisfaction Score</div>
+    </div>
+
+    <!-- EARNINGS -->
+    <div class="earn-box">
+      <div class="earn-title">💰 May 2026 Earnings</div>
+      <div class="earn-row"><span class="earn-lbl">Vehicle Sales (23)</span><span class="earn-val" style="color:var(--green);">$11,200</span></div>
+      <div class="earn-row"><span class="earn-lbl">Trade-In Fees (8)</span><span class="earn-val" style="color:var(--green);">$780</span></div>
+      <div class="earn-row"><span class="earn-lbl">Finance Referrals (12)</span><span class="earn-val" style="color:var(--green);">$480</span></div>
+      <div class="earn-row"><span class="earn-lbl">Protection Products (6)</span><span class="earn-val" style="color:var(--green);">$320</span></div>
+      <div class="earn-row"><span class="earn-lbl">EVL Platform Fee</span><span class="earn-val" style="color:var(--red);">-$295</span></div>
+      <div class="earn-total">
+        <div>
+          <div class="et-lbl">Net Revenue</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px;">May 1–30, 2026</div>
+        </div>
+        <div class="et-val">$12,485</div>
+      </div>
+    </div>
+
+    <!-- INVENTORY SUMMARY -->
+    <div style="margin-bottom:20px;">
+      <div class="sec-title" style="margin-bottom:14px;">🚗 My Inventory</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:var(--s2);border:2px solid var(--border);padding:16px;text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--gold);">14</div>
+          <div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">Available</div>
+        </div>
+        <div style="background:var(--s2);border:2px solid var(--border);padding:16px;text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--blue);">6</div>
+          <div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">In Transit</div>
+        </div>
+        <div style="background:var(--s2);border:2px solid var(--border);padding:16px;text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--green);">23</div>
+          <div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">Sold MTD</div>
+        </div>
+        <div style="background:var(--s2);border:2px solid var(--border);padding:16px;text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--orange);">3</div>
+          <div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">Aged 45+ Days</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNER TIER -->
+    <div style="background:rgba(245,200,66,.08);border:2px solid var(--border2);padding:20px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;">⭐ Gold Partner Status</div>
+      <div style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:14px;">23 of 25 deals to reach <strong style="color:#fff;">Platinum</strong> tier this month.</div>
+      <div style="background:var(--s3);height:8px;border-radius:4px;overflow:hidden;">
+        <div style="background:linear-gradient(90deg,var(--gold2),var(--gold));height:100%;width:92%;border-radius:4px;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:13px;color:var(--muted);">
+        <span>23 deals</span><span>25 for Platinum</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="fl">⚡ WS-EVL Command Center</div>
+  <div class="fc">Restricted Access · © 2026 Express Vehicle Locators · Authorized Personnel Only</div>
+</footer>
+
+<script id="evl-ws-nav-js">
+function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.toggle('open');}
+(function(){var path=window.location.pathname;document.querySelectorAll('.evl-ws-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){a.style.color='#FFD700';a.style.borderBottom='2px solid #FFD700';}});})();
+</script>
+</body>
+</html>
