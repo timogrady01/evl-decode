@@ -100,18 +100,50 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:28px 48px
 @media(max-width:900px){.rate-compare,.lender-grid,.steps,.calc-grid,.calc-results{grid-template-columns:1fr 1fr;}.hero h1{font-size:48px;}}
 @media(max-width:600px){nav{padding:0 16px;}.hero{padding:48px 20px 44px;}.section{padding:48px 20px;}.strip{gap:16px;padding:14px 16px;flex-direction:column;}.rate-compare,.lender-grid,.steps,.calc-grid,.calc-results{grid-template-columns:1fr;}footer{padding:24px 20px;}}
 </style>
+<style id="evl-nav-css">
+/* ── EVL GLOBAL NAV ── */
+.evl-nav{position:sticky;top:0;z-index:500;background:#090E17;border-bottom:2px solid #2B84FE;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
+.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
+.evl-nav-links{display:flex;align-items:center;gap:4px;}
+.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-nav-link:hover{color:#fff;background:#1a1a2e;}
+.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:14px;font-weight:900;letter-spacing:1px;padding:8px 16px;border-radius:6px;margin-left:8px;transition:background .2s;white-space:nowrap;}
+.evl-nav-cta:hover{background:#1a6fd4;}
+.evl-nav-hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 8px;}
+/* ── EVL GLOBAL FOOTER ── */
+.evl-footer{background:#090E17;border-top:2px solid #1a1a2e;padding:24px 20px 16px;margin-top:40px;font-family:'Oswald',sans-serif;}
+.evl-footer-inner{max-width:1100px;margin:0 auto;}
+.evl-footer-logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;margin-bottom:16px;}
+.evl-footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:16px;}
+.evl-footer-links a{color:#ccd6e0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;transition:color .2s;}
+.evl-footer-links a:hover{color:#2B84FE;}
+.evl-footer-copy{font-size:13px;color:#8899aa;font-weight:600;}
+.evl-footer-copy a{color:#2B84FE;text-decoration:none;}
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#090E17;border-bottom:2px solid #2B84FE;padding:12px 0;gap:0;}
+  .evl-nav-links.open{display:flex;}
+  .evl-nav-link,.evl-nav-cta{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1a2e;}
+  .evl-nav-hamburger{display:block;}
+}
+</style>
 </head>
 <body>
-<nav>
-  <a href="https://www.expressvehiclelocators.com/home.html" class="logo">◈ Express <span>Vehicle</span> Locators</a>
-  <div class="nav-links">
-    <a href="https://www.expressvehiclelocators.com/find.html">Find</a>
-    <a href="https://www.expressvehiclelocators.com/tradein.html">Trade-In</a>
-    <a href="https://www.expressvehiclelocators.com/how.html">How It Works</a>
-    <a href="https://www.expressvehiclelocators.com/savings.html">Savings</a>
-    <a href="https://www.expressvehiclelocators.com/financing.html" class="active">Financing</a>
-    <a href="https://www.expressvehiclelocators.com/contact.html">Contact</a>
-    <a href="https://www.expressvehiclelocators.com/find.html" class="nav-cta">⚡ Find My Vehicle</a>
+<nav class="evl-nav">
+  <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-logo">
+    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    <span>EXPRESS <span style="color:#2B84FE">VEHICLE</span> LOCATORS</span>
+  </a>
+  <button class="evl-nav-hamburger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  <div class="evl-nav-links" id="evl-nav-links">
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
+    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link">FIND MY CAR</a>
+    <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
+    <a href="https://evl-decode-two.vercel.app/how" class="evl-nav-link">HOW IT WORKS</a>
+    <a href="https://evl-decode-two.vercel.app/financing" class="evl-nav-link">FINANCING</a>
+    <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
+    <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
+    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
   </div>
 </nav>
 
@@ -274,16 +306,30 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:28px 48px
   <a href="https://www.expressvehiclelocators.com/contact.html" class="btn-primary">⚡ Start Finance Shopping — $195</a>
 </section>
 
-<footer style="background:var(--s1);border-top:2px solid var(--border);padding:28px 48px;">
-  <div style="max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;">◈ Express <span style="color:var(--blue);">Vehicle</span> Locators</div>
-    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
-      <a href="https://www.expressvehiclelocators.com/privacy.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Privacy Policy</a>
-      <a href="https://www.expressvehiclelocators.com/terms.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Terms of Service</a>
-      <a href="https://www.expressvehiclelocators.com/service-agreement.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Service Agreement</a>
-      <a href="https://www.expressvehiclelocators.com/contact.html" style="color:#C8C8D8;text-decoration:none;font-size:14px;font-weight:600;">Contact</a>
+<footer class="evl-footer">
+  <div class="evl-footer-inner">
+    <div class="evl-footer-logo">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+      <span>EXPRESS <span style="color:#2B84FE">VEHICLE</span> LOCATORS</span>
     </div>
-    <div style="color:#C8C8D8;font-size:14px;">© 2026 Express Vehicle Locators · Texas, USA</div>
+    <div class="evl-footer-links">
+      <a href="https://evl-decode-two.vercel.app/home">Home</a>
+      <a href="https://evl-decode-two.vercel.app/find">Find My Car</a>
+      <a href="https://evl-decode-two.vercel.app/trade-in">Trade-In</a>
+      <a href="https://evl-decode-two.vercel.app/financing">Financing</a>
+      <a href="https://evl-decode-two.vercel.app/contact">Contact</a>
+      <a href="https://evl-decode-two.vercel.app/privacy">Privacy Policy</a>
+      <a href="https://evl-decode-two.vercel.app/terms">Terms</a>
+      <a href="https://evl-decode-two.vercel.app/service-agreement">Service Agreement</a>
+    </div>
+    <div class="evl-footer-copy">
+      &copy; 2026 Express Vehicle Locators &mdash; Plano, TX &mdash; <a href="mailto:togradyevl@gmail.com">togradyevl@gmail.com</a>
+    </div>
+  </div>
+  <!-- COOKIE BANNER -->
+  <div id="evl-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#090E17;border-top:2px solid #2B84FE;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;z-index:9999;">
+    <span style="font-size:14px;color:#ccd6e0;font-weight:600;max-width:700px;">We use cookies to improve your experience. By using our site you agree to our <a href="https://evl-decode-two.vercel.app/privacy" style="color:#2B84FE;text-decoration:none;font-weight:700;">Privacy Policy</a>.</span>
+    <button onclick="acceptCookie()" style="background:#2B84FE;color:#fff;border:none;padding:10px 24px;font-size:14px;font-weight:900;border-radius:6px;cursor:pointer;letter-spacing:1px;white-space:nowrap;">ACCEPT &amp; CLOSE</button>
   </div>
 </footer>
 
@@ -302,6 +348,14 @@ function calcFinance(){
   document.getElementById('rSave').textContent='$'+save.toLocaleString();
 }
 calcFinance();
+</script>
+<script id="evl-nav-js">
+function toggleNav(){document.getElementById('evl-nav-links').classList.toggle('open');}
+// Cookie banner
+function acceptCookie(){document.getElementById('evl-cookie').style.display='none';localStorage.setItem('evl-cookie','1');}
+window.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem('evl-cookie')){var b=document.getElementById('evl-cookie');if(b)b.style.display='flex';}});
+// Highlight active page
+(function(){var path=window.location.pathname;document.querySelectorAll('.evl-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.endsWith(a.getAttribute('href').split('/').pop())){a.style.color='#2B84FE';a.style.borderBottom='2px solid #2B84FE';}});})();
 </script>
 </body>
 </html>
