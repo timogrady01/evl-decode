@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/admin-calls",
+      "destination": "/admin-calls.html"
+    },
+    {
+      "source": "/admin-calls.html",
+      "destination": "/admin-calls.html"
+    },
+    {
       "source": "/mastermind",
       "destination": "/mastermind.html"
     },
