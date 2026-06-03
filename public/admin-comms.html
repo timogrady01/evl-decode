@@ -1089,3 +1089,287 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTemplate();});
 </script>
 </body>
 </html>
+
+<!-- SMART FILL OVERLAY -->
+<div id="smart-fill-overlay" style="display:none;position:fixed;inset:0;background:rgba(2,2,3,0.97);z-index:300;overflow-y:auto;padding:20px">
+  <div style="max-width:680px;margin:0 auto;background:#090E17;border:2px solid #2B84FE;border-radius:12px;overflow:hidden">
+    
+    <!-- Header -->
+    <div style="background:#0a0f1a;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
+      <div>
+        <div style="font-size:18px;font-weight:900;color:#fff;letter-spacing:1px">⚡ SMART FILL</div>
+        <div style="font-size:12px;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-top:2px" id="sf-template-name">Template Name</div>
+      </div>
+      <button onclick="closeSmartFill()" style="background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif;letter-spacing:1px">✕ CLOSE</button>
+    </div>
+
+    <!-- Timestamp bar -->
+    <div style="background:#040e1a;padding:10px 20px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:12px;color:#2B84FE;font-weight:700;letter-spacing:1px">🕐 AUTO-TIMESTAMP: <span id="sf-timestamp" style="color:#00C853"></span></span>
+      <span style="font-size:11px;color:#A1A1AA;font-weight:700;letter-spacing:1px">DEAL ID: <span id="sf-deal-id" style="color:#FFD700"></span></span>
+    </div>
+
+    <!-- Form -->
+    <div style="padding:20px" id="sf-form-body">
+
+      <!-- CORE FIELDS - always shown -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e">CORE DEAL DATA</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label class="sf-label">Customer First Name</label><input class="sf-input" id="sf-CUSTOMER_FIRST_NAME" placeholder="e.g. Tim" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Customer Full Name</label><input class="sf-input" id="sf-CUSTOMER_NAME" placeholder="e.g. Timothy O'Grady" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Year</label><input class="sf-input" id="sf-YEAR" placeholder="2023" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Make</label><input class="sf-input" id="sf-MAKE" placeholder="Toyota" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Model</label><input class="sf-input" id="sf-MODEL" placeholder="Camry" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Trim</label><input class="sf-input" id="sf-TRIM" placeholder="SE" oninput="livePreview()"/></div>
+          <div><label class="sf-label">VIN</label><input class="sf-input" id="sf-VIN" placeholder="17-char VIN" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Mileage</label><input class="sf-input" id="sf-MILES" placeholder="45,000" oninput="livePreview()"/></div>
+        </div>
+      </div>
+
+      <!-- FINANCIAL FIELDS -->
+      <div style="margin-bottom:20px" id="sf-financial-section">
+        <div style="font-size:13px;font-weight:900;color:#FFD700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e">FINANCIAL DATA</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label class="sf-label">Price / ACV</label><input class="sf-input" id="sf-PRICE" placeholder="$28,500" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Budget</label><input class="sf-input" id="sf-BUDGET" placeholder="$35,000" oninput="livePreview()"/></div>
+          <div><label class="sf-label">WS Low</label><input class="sf-input" id="sf-WS_LOW" placeholder="$22,000" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Mid Market</label><input class="sf-input" id="sf-MID" placeholder="$25,500" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Retail High</label><input class="sf-input" id="sf-RETAIL_HIGH" placeholder="$29,000" oninput="livePreview()"/></div>
+        </div>
+      </div>
+
+      <!-- VEHICLE DETAILS -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:900;color:#00C853;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e">VEHICLE DETAILS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label class="sf-label">Color (Exterior)</label><input class="sf-input" id="sf-COLOR" placeholder="Pearl White" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Interior</label><input class="sf-input" id="sf-INTERIOR" placeholder="Black Leather" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Condition</label>
+            <select class="sf-input" id="sf-CONDITION" oninput="livePreview()">
+              <option value="">Select...</option>
+              <option>Excellent</option><option>Good</option><option>Fair</option><option>Below Average</option>
+            </select>
+          </div>
+          <div><label class="sf-label">Title Status</label>
+            <select class="sf-input" id="sf-TITLE" oninput="livePreview()">
+              <option value="">Select...</option>
+              <option>Clean Title</option><option>Salvage</option><option>Rebuilt</option><option>Lien Present</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEALER / CONTACT FIELDS -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:900;color:#9B59B6;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e">DEALER & CONTACT INFO</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label class="sf-label">BD Dealer Name</label><input class="sf-input" id="sf-BD_NAME" placeholder="Toyota of McKinney" oninput="livePreview()"/></div>
+          <div><label class="sf-label">BD Contact Name</label><input class="sf-input" id="sf-BD_CONTACT" placeholder="John Smith" oninput="livePreview()"/></div>
+          <div><label class="sf-label">ID Dealer Name</label><input class="sf-input" id="sf-ID_NAME" placeholder="Frisco CDJR" oninput="livePreview()"/></div>
+          <div><label class="sf-label">ID Contact Name</label><input class="sf-input" id="sf-ID_CONTACT" placeholder="Mike Jones" oninput="livePreview()"/></div>
+          <div><label class="sf-label">UC Manager Name</label><input class="sf-input" id="sf-UC_MANAGER_NAME" placeholder="Used Car Manager" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Porter Name</label><input class="sf-input" id="sf-PORTER_NAME" placeholder="Porter Name" oninput="livePreview()"/></div>
+          <div><label class="sf-label">EVL Rep Name</label><input class="sf-input" id="sf-EVL_REP" placeholder="Tim O'Grady" oninput="livePreview()"/></div>
+          <div><label class="sf-label">City / State</label><input class="sf-input" id="sf-CITY" placeholder="Plano, TX" oninput="livePreview()"/></div>
+        </div>
+      </div>
+
+      <!-- TIMING FIELDS -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:900;color:#00BCD4;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e">TIMING</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label class="sf-label">Hold Expiry Date</label><input class="sf-input" type="date" id="sf-EXPIRY_DATE" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Hold Expiry Time</label><input class="sf-input" type="time" id="sf-EXPIRY_TIME" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Delivery Date</label><input class="sf-input" type="date" id="sf-DELIVERY_DATE" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Delivery Time</label><input class="sf-input" type="time" id="sf-DELIVERY_TIME" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Bid Deadline</label><input class="sf-input" type="datetime-local" id="sf-BID_DEADLINE" oninput="livePreview()"/></div>
+          <div><label class="sf-label">Days on Lot</label><input class="sf-input" id="sf-DAYS_ON_LOT" placeholder="84" oninput="livePreview()"/></div>
+        </div>
+      </div>
+
+    </div><!-- /sf-form-body -->
+
+    <!-- LIVE PREVIEW -->
+    <div style="margin:0 20px 20px">
+      <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">LIVE PREVIEW</div>
+      <div id="sf-preview" style="background:#020203;border:1px solid #2a2a4e;border-radius:8px;padding:16px;font-family:'Segoe UI',Arial,sans-serif;font-size:13px;color:#ccd6e0;white-space:pre-wrap;max-height:300px;overflow-y:auto;line-height:1.6"></div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div style="padding:16px 20px;background:#0a0f1a;border-top:2px solid #1a1a2e;display:flex;gap:10px;flex-wrap:wrap">
+      <button onclick="copySmartFilled()" style="background:#00C853;color:#020203;border:none;padding:14px 24px;font-size:15px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif;letter-spacing:2px;text-transform:uppercase;flex:1">📋 COPY FILLED TEMPLATE</button>
+      <button onclick="clearSmartFill()" style="background:#1a1a2e;color:#fff;border:1px solid #2a2a4e;padding:14px 20px;font-size:14px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif;letter-spacing:1px">🗑 CLEAR</button>
+      <button onclick="closeSmartFill()" style="background:#FF3333;color:#fff;border:none;padding:14px 20px;font-size:14px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif;letter-spacing:1px">✕ CLOSE</button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.sf-label{font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px;font-family:'Oswald',sans-serif}
+.sf-input{width:100%;background:#020203;border:2px solid #2a2a4e;color:#fff;padding:10px 12px;border-radius:6px;font-size:14px;font-family:'Oswald',sans-serif;font-weight:600;outline:none;transition:border-color .2s}
+.sf-input:focus{border-color:#2B84FE}
+.sf-input option{background:#0a0a1a}
+</style>
+
+<script>
+// SMART FILL SYSTEM
+let sfTemplateId = '';
+let sfTemplateData = null;
+
+function generateCST(){
+  const now = new Date();
+  const options = {timeZone:'America/Chicago',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true};
+  return now.toLocaleString('en-US',options) + ' CST';
+}
+
+function generateDealId(){
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  return 'EVL-' + now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + '-' + Math.floor(Math.random()*9000+1000);
+}
+
+function openSmartFill(templateId){
+  sfTemplateId = templateId;
+  sfTemplateData = TEMPLATES[templateId];
+  if(!sfTemplateData) return;
+  
+  // Set timestamp and deal ID
+  const ts = generateCST();
+  const dealId = generateDealId();
+  document.getElementById('sf-timestamp').textContent = ts;
+  document.getElementById('sf-deal-id').textContent = dealId;
+  document.getElementById('sf-template-name').textContent = sfTemplateData.title;
+  
+  // Pre-fill date/time fields with now
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
+  const timeStr = now.toTimeString().slice(0,5);
+  document.getElementById('sf-EXPIRY_DATE').value = todayStr;
+  document.getElementById('sf-EXPIRY_TIME').value = timeStr;
+  document.getElementById('sf-DELIVERY_DATE').value = todayStr;
+  
+  // Store timestamp/dealid as globals for template
+  window._sfTimestamp = ts;
+  window._sfDealId = dealId;
+  
+  livePreview();
+  document.getElementById('smart-fill-overlay').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSmartFill(){
+  document.getElementById('smart-fill-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function clearSmartFill(){
+  document.querySelectorAll('.sf-input').forEach(i => { if(i.type !== 'date' && i.type !== 'time' && i.type !== 'datetime-local') i.value = ''; });
+  livePreview();
+}
+
+function getFieldValue(varName){
+  // Special computed values
+  if(varName === 'DATE') return new Date().toLocaleDateString('en-US',{timeZone:'America/Chicago',year:'numeric',month:'long',day:'numeric'});
+  if(varName === 'TIME') return new Date().toLocaleTimeString('en-US',{timeZone:'America/Chicago',hour:'2-digit',minute:'2-digit',hour12:true}) + ' CST';
+  if(varName === 'TIMESTAMP') return window._sfTimestamp || generateCST();
+  if(varName === 'DEAL_ID') return window._sfDealId || generateDealId();
+  if(varName === 'YMM') {
+    const y = document.getElementById('sf-YEAR')?.value || '[YEAR]';
+    const m = document.getElementById('sf-MAKE')?.value || '[MAKE]';
+    const mo = document.getElementById('sf-MODEL')?.value || '[MODEL]';
+    return [y,m,mo].filter(v=>v&&!v.startsWith('[')).join(' ') || '[YMM]';
+  }
+  if(varName === 'VIN_LAST6'){
+    const vin = document.getElementById('sf-VIN')?.value || '';
+    return vin.length >= 6 ? vin.slice(-6) : '[VIN_LAST6]';
+  }
+  if(varName === 'EXPIRY_DATE'){
+    const val = document.getElementById('sf-EXPIRY_DATE')?.value;
+    if(val) return new Date(val + 'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    return '[EXPIRY_DATE]';
+  }
+  if(varName === 'EXPIRY_TIME'){
+    const val = document.getElementById('sf-EXPIRY_TIME')?.value;
+    if(val){ const [h,m] = val.split(':'); const d = new Date(); d.setHours(h,m); return d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true}) + ' CST'; }
+    return '[EXPIRY_TIME]';
+  }
+  if(varName === 'DELIVERY_DATE'){
+    const val = document.getElementById('sf-DELIVERY_DATE')?.value;
+    if(val) return new Date(val + 'T12:00:00').toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    return '[DELIVERY_DATE]';
+  }
+  if(varName === 'DELIVERY_TIME'){
+    const val = document.getElementById('sf-DELIVERY_TIME')?.value;
+    if(val){ const [h,m] = val.split(':'); const d = new Date(); d.setHours(h,m); return d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true}) + ' CST'; }
+    return '[DELIVERY_TIME]';
+  }
+  if(varName === 'BID_DEADLINE'){
+    const val = document.getElementById('sf-BID_DEADLINE')?.value;
+    if(val) return new Date(val).toLocaleString('en-US',{timeZone:'America/Chicago',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}) + ' CST';
+    return '[BID_DEADLINE]';
+  }
+  
+  // Standard field lookup
+  const el = document.getElementById('sf-' + varName);
+  return el?.value || '[' + varName + ']';
+}
+
+function fillTemplate(text){
+  return text.replace(/\[([A-Z_0-9]+)\]/g, (match, varName) => {
+    const val = getFieldValue(varName);
+    return val;
+  });
+}
+
+function livePreview(){
+  if(!sfTemplateData) return;
+  const subject = fillTemplate(sfTemplateData.subject || '');
+  const body = fillTemplate(sfTemplateData.body || '');
+  const preview = document.getElementById('sf-preview');
+  let full = '';
+  if(subject && subject !== 'N/A — TEXT MESSAGE') full = 'SUBJECT: ' + subject + '\n\n';
+  full += body;
+  // Highlight unfilled vars
+  preview.textContent = full;
+}
+
+function copySmartFilled(){
+  if(!sfTemplateData) return;
+  const subject = fillTemplate(sfTemplateData.subject || '');
+  const body = fillTemplate(sfTemplateData.body || '');
+  let full = '';
+  if(subject && subject !== 'N/A — TEXT MESSAGE') full = 'SUBJECT: ' + subject + '\n\n';
+  full += body;
+  full += '\n\n---\nGenerated: ' + (window._sfTimestamp || generateCST()) + ' | Deal ID: ' + (window._sfDealId || '') + ' | EVL Platform';
+  
+  navigator.clipboard.writeText(full).then(() => {
+    const btn = document.querySelector('#smart-fill-overlay button[onclick="copySmartFilled()"]');
+    const orig = btn.textContent;
+    btn.textContent = '✅ COPIED & TIMESTAMPED!';
+    btn.style.background = '#00a844';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = '#00C853'; }, 2500);
+  });
+}
+
+// Override openTemplate to add Smart Fill button
+const _originalOpenTemplate = openTemplate;
+window.openTemplate = function(id){
+  _originalOpenTemplate(id);
+  // Add smart fill button to toolbar if template has variables
+  const tmpl = TEMPLATES[id];
+  if(tmpl){
+    const toolbar = document.querySelector('.tmpl-toolbar');
+    if(toolbar && !toolbar.querySelector('.sf-btn')){
+      const sfBtn = document.createElement('button');
+      sfBtn.className = 'btn btn-gold sf-btn';
+      sfBtn.textContent = '⚡ SMART FILL';
+      sfBtn.onclick = () => { closeTemplate(); openSmartFill(id); };
+      toolbar.insertBefore(sfBtn, toolbar.firstChild);
+    }
+  }
+};
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeSmartFill(); });
+</script>
