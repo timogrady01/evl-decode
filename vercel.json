@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/mastermind",
+      "destination": "/mastermind.html"
+    },
+    {
+      "source": "/mastermind.html",
+      "destination": "/mastermind.html"
+    },
+    {
       "source": "/admin-comms",
       "destination": "/admin-comms.html"
     },
