@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL MASTERMIND | Customer Intelligence CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#020203;--s1:#090E17;--s2:#0a0f1a;--s3:#070710;
+  --blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;
+  --white:#ffffff;--muted:#A1A1AA;--dim:#ccd6e0;
+  --font:'Oswald',sans-serif;--body:'Barlow',sans-serif;
+}
+body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
+.login-box{background:var(--s1);border:2px solid var(--blue);border-radius:12px;padding:40px;width:100%;max-width:420px;text-align:center}
+.login-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
+.login-title{font-size:32px;font-weight:900;color:var(--white);letter-spacing:3px;margin-bottom:4px}
+.login-sub{font-size:12px;color:var(--muted);margin-bottom:28px;letter-spacing:2px}
+.login-input{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:16px;border-radius:8px;font-size:26px;font-family:var(--font);font-weight:700;letter-spacing:10px;text-align:center;outline:none;margin-bottom:16px;transition:border-color .2s}
+.login-input:focus{border-color:var(--blue)}
+.login-btn{width:100%;background:var(--blue);color:var(--white);border:none;padding:16px;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:8px;font-family:var(--font);transition:background .2s}
+.login-btn:hover{background:#1a6fd4}
+.login-error{color:var(--red);font-size:14px;font-weight:700;margin-top:12px;display:none;letter-spacing:1px}
+
+/* MAIN APP */
+#app{display:none}
+
+/* HEADER */
+.evl-header{background:var(--s1);border-bottom:2px solid var(--blue);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px}
+.evl-header-brand{display:flex;align-items:center;gap:10px}
+.evl-header-title{font-size:20px;font-weight:900;letter-spacing:2px;color:var(--white)}
+.evl-header-sub{font-size:10px;color:var(--blue);letter-spacing:3px;font-weight:700;text-transform:uppercase}
+.evl-header-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hdr-stat{background:var(--s2);border:1px solid #1a1a2e;border-radius:6px;padding:6px 12px;text-align:center}
+.hdr-stat-val{font-size:18px;font-weight:900;color:var(--blue);display:block;line-height:1}
+.hdr-stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:12px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
+.evl-logout:hover{background:var(--red);color:var(--white)}
+
+/* TAB NAV */
+.tab-nav{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;gap:0;overflow-x:auto}
+.tab-btn{padding:14px 20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:var(--font)}
+.tab-btn:hover{color:var(--white)}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* WRAP */
+.evl-wrap{max-width:1400px;margin:0 auto;padding:20px}
+
+/* ── PIPELINE VIEW ── */
+.pipeline-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.pipeline-title{font-size:20px;font-weight:900;letter-spacing:2px;color:var(--white)}
+.pipeline-board{display:grid;grid-template-columns:repeat(7,minmax(180px,1fr));gap:12px;overflow-x:auto;padding-bottom:12px}
+.pipeline-col{background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden;min-height:400px}
+.pipeline-col-header{padding:12px 14px;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a2e}
+.pipeline-col-count{font-size:18px;font-weight:900}
+.pipeline-cards{padding:10px;display:flex;flex-direction:column;gap:8px;min-height:300px}
+
+/* Stage colors */
+.stage-lead{border-top:3px solid var(--muted)}.stage-lead .pipeline-col-header{color:var(--muted)}
+.stage-search{border-top:3px solid var(--blue)}.stage-search .pipeline-col-header{color:var(--blue)}
+.stage-match{border-top:3px solid var(--cyan)}.stage-match .pipeline-col-header{color:var(--cyan)}
+.stage-deposit{border-top:3px solid var(--gold)}.stage-deposit .pipeline-col-header{color:var(--gold)}
+.stage-process{border-top:3px solid var(--purple)}.stage-process .pipeline-col-header{color:var(--purple)}
+.stage-delivered{border-top:3px solid var(--green)}.stage-delivered .pipeline-col-header{color:var(--green)}
+.stage-followup{border-top:3px solid #FF6B6B}.stage-followup .pipeline-col-header{color:#FF6B6B}
+
+/* Deal cards */
+.deal-card{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all .2s;position:relative}
+.deal-card:hover{border-color:var(--blue);transform:translateY(-1px)}
+.deal-card-name{font-size:14px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:3px}
+.deal-card-vehicle{font-size:12px;color:var(--dim);font-weight:600;margin-bottom:6px}
+.deal-card-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.deal-card-days{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px}
+.deal-card-budget{font-size:12px;font-weight:900;color:var(--green)}
+.deal-card-urgent{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse-dot 1.5s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+/* ── CUSTOMER DATABASE ── */
+.db-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.db-search{flex:1;min-width:200px;background:var(--s1);border:2px solid #2a2a4e;color:var(--white);padding:12px 16px 12px 40px;border-radius:8px;font-size:15px;font-family:var(--font);font-weight:700;letter-spacing:1px;outline:none;transition:border-color .2s}
+.db-search:focus{border-color:var(--blue)}
+.db-search-wrap{position:relative;flex:1;min-width:200px}
+.db-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--blue);font-size:16px}
+.btn{padding:10px 16px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
+.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
+.btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
+.btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
+.btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
+.btn-sm{padding:6px 12px;font-size:11px}
+
+/* Customer table */
+.cust-table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden}
+.cust-table th{background:#0a0f1a;color:var(--blue);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.cust-table td{padding:12px 14px;border-bottom:1px solid #0d0d1a;font-size:14px;color:var(--dim);font-weight:600;vertical-align:middle}
+.cust-table tr:hover td{background:#0a0f1a;color:var(--white)}
+.cust-table tr:last-child td{border-bottom:none}
+.status-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.pill-lead{background:#1a1a2e;color:var(--muted);border:1px solid #2a2a4e}
+.pill-search{background:#040e1a;color:var(--blue);border:1px solid var(--blue)}
+.pill-match{background:#001a1a;color:var(--cyan);border:1px solid var(--cyan)}
+.pill-deposit{background:#1a1400;color:var(--gold);border:1px solid var(--gold)}
+.pill-process{background:#0d001a;color:var(--purple);border:1px solid var(--purple)}
+.pill-delivered{background:#0d1a0d;color:var(--green);border:1px solid var(--green)}
+.pill-followup{background:#1a0808;color:#FF6B6B;border:1px solid #FF6B6B}
+.pill-lost{background:#1a0a0a;color:var(--red);border:1px solid var(--red)}
+
+/* ── FOLLOW-UP QUEUE ── */
+.followup-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.fu-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:16px;transition:border-color .2s}
+.fu-card:hover{border-color:var(--blue)}
+.fu-card.urgent{border-color:var(--red);background:#0d0000}
+.fu-card.today{border-color:var(--gold);background:#0d0a00}
+.fu-card-name{font-size:17px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:3px}
+.fu-card-vehicle{font-size:13px;color:var(--dim);font-weight:600;margin-bottom:8px}
+.fu-card-task{font-size:13px;font-weight:700;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.fu-task-call{background:#040e1a;border-left:3px solid var(--blue);color:var(--blue)}
+.fu-task-text{background:#0d1a0d;border-left:3px solid var(--green);color:var(--green)}
+.fu-task-email{background:#1a1400;border-left:3px solid var(--gold);color:var(--gold)}
+.fu-task-equity{background:#0d001a;border-left:3px solid var(--purple);color:var(--purple)}
+.fu-due{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.fu-due.overdue{color:var(--red)}
+.fu-due.today-label{color:var(--gold)}
+
+/* ── EQUITY MINING ── */
+.equity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.eq-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;overflow:hidden;transition:border-color .2s}
+.eq-card:hover{border-color:var(--purple)}
+.eq-card-header{background:#0d001a;padding:12px 16px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between}
+.eq-score{font-size:22px;font-weight:900}
+.eq-score.hot{color:var(--green)}
+.eq-score.warm{color:var(--gold)}
+.eq-score.cool{color:var(--blue)}
+.eq-card-body{padding:14px 16px}
+.eq-meter{height:8px;background:#1a1a2e;border-radius:4px;margin:8px 0;overflow:hidden}
+.eq-meter-fill{height:100%;border-radius:4px;transition:width .3s}
+
+/* ── CUSTOMER PROFILE MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(2,2,3,0.95);z-index:200;overflow-y:auto;padding:20px}
+.modal-overlay.open{display:block}
+.modal-inner{max-width:900px;margin:0 auto;background:var(--s1);border:2px solid var(--blue);border-radius:12px;overflow:hidden}
+.modal-header{background:var(--s2);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e}
+.modal-title{font-size:20px;font-weight:900;color:var(--white);letter-spacing:1px}
+.modal-close{background:var(--red);color:var(--white);border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font);letter-spacing:1px}
+.modal-body{padding:24px}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.modal-section{margin-bottom:20px}
+.modal-section-title{font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e}
+.info-row{display:flex;flex-direction:column;margin-bottom:10px}
+.info-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:3px}
+.info-value{font-size:15px;color:var(--white);font-weight:700;font-family:var(--body)}
+
+/* Timeline */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:#1a1a2e}
+.tl-item{position:relative;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #0d0d1a}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{position:absolute;left:-24px;top:3px;width:14px;height:14px;border-radius:50%;border:2px solid var(--blue);background:var(--bg)}
+.tl-dot.green{border-color:var(--green)}
+.tl-dot.gold{border-color:var(--gold)}
+.tl-dot.red{border-color:var(--red)}
+.tl-time{font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:700;margin-bottom:3px}
+.tl-text{font-size:14px;color:var(--dim);font-weight:600;font-family:var(--body);line-height:1.4}
+
+/* ADD CUSTOMER FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:12px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 14px;border-radius:8px;font-size:15px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus{border-color:var(--blue)}
+.form-input option{background:#0a0a1a}
+
+/* REVENUE SNAPSHOT */
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+.rev-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:18px;text-align:center;transition:border-color .2s}
+.rev-card:hover{border-color:var(--blue)}
+.rev-val{font-size:30px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
+.rev-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.rev-sub{font-size:12px;color:var(--dim);font-weight:600;margin-top:4px}
+
+/* TABS CONTENT */
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* MOBILE */
+@media(max-width:768px){
+  .pipeline-board{grid-template-columns:repeat(4,minmax(160px,1fr))}
+  .modal-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .evl-header{flex-wrap:wrap}
+  .hdr-stat{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-badge">EVL INTERNAL — AUTHORIZED ONLY</div>
+    <div class="login-title">MASTERMIND</div>
+    <div class="login-sub">CUSTOMER INTELLIGENCE CRM</div>
+    <input type="password" class="login-input" id="pin-input" maxlength="4" placeholder="••••" autocomplete="off"/>
+    <button class="login-btn" onclick="checkPin()">⚡ ACCESS MASTERMIND</button>
+    <div class="login-error" id="login-error">❌ INCORRECT PIN</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+<!-- HEADER -->
+<div class="evl-header">
+  <div class="evl-header-brand">
+    <svg width="26" height="26" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    <div>
+      <div class="evl-header-title">MASTERMIND</div>
+      <div class="evl-header-sub">Customer Intelligence CRM</div>
+    </div>
+  </div>
+  <div class="evl-header-nav">
+    <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-total" style="font-size:18px;color:var(--blue)">0</span><span class="rev-lbl" style="font-size:10px">Customers</span></div>
+    <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-active" style="font-size:18px;color:var(--green)">0</span><span class="rev-lbl" style="font-size:10px">Active Deals</span></div>
+    <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-followup" style="font-size:18px;color:var(--gold)">0</span><span class="rev-lbl" style="font-size:10px">Follow-Ups Due</span></div>
+    <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-equity" style="font-size:18px;color:var(--purple)">0</span><span class="rev-lbl" style="font-size:10px">Equity Alerts</span></div>
+    <a href="https://evl-decode-two.vercel.app/admin-scripts" style="color:var(--blue);font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:6px 10px">⬅ ADMIN</a>
+    <button class="evl-logout" onclick="logout()">LOGOUT</button>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('pipeline',this)">📊 DEAL PIPELINE</button>
+  <button class="tab-btn" onclick="switchTab('customers',this)">👥 CUSTOMERS</button>
+  <button class="tab-btn" onclick="switchTab('followup',this)">📅 FOLLOW-UP QUEUE</button>
+  <button class="tab-btn" onclick="switchTab('equity',this)">💰 EQUITY MINING</button>
+  <button class="tab-btn" onclick="switchTab('revenue',this)">📈 REVENUE SNAPSHOT</button>
+  <button class="tab-btn" onclick="switchTab('add',this)">➕ ADD CUSTOMER</button>
+</div>
+
+<div class="evl-wrap">
+
+<!-- ══ PIPELINE TAB ══ -->
+<div id="tab-pipeline" class="tab-content active">
+  <div class="pipeline-header">
+    <div class="pipeline-title">ACTIVE DEAL PIPELINE</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-blue btn-sm" onclick="switchTab('add',document.querySelector('.tab-btn:last-child'))">➕ NEW DEAL</button>
+      <button class="btn btn-dark btn-sm" onclick="renderPipeline()">🔄 REFRESH</button>
+    </div>
+  </div>
+  <div class="pipeline-board" id="pipeline-board"></div>
+</div>
+
+<!-- ══ CUSTOMERS TAB ══ -->
+<div id="tab-customers" class="tab-content">
+  <div class="db-toolbar">
+    <div class="db-search-wrap">
+      <span class="db-search-icon">🔍</span>
+      <input type="text" class="db-search" id="cust-search" placeholder="SEARCH CUSTOMERS..." oninput="renderCustomers()"/>
+    </div>
+    <select class="form-input" id="cust-filter-status" style="width:auto;padding:12px 14px" onchange="renderCustomers()">
+      <option value="">ALL STATUS</option>
+      <option>Lead</option><option>Searching</option><option>Match Found</option>
+      <option>Deposit</option><option>In Process</option><option>Delivered</option>
+      <option>Follow-Up</option><option>Lost</option>
+    </select>
+    <button class="btn btn-blue btn-sm" onclick="switchTab('add',document.querySelector('[onclick*=add]'))">➕ ADD</button>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="cust-table" id="cust-table">
+      <thead>
+        <tr>
+          <th>CUSTOMER</th>
+          <th>PHONE</th>
+          <th>VEHICLE INTEREST</th>
+          <th>BUDGET</th>
+          <th>STATUS</th>
+          <th>LAST CONTACT</th>
+          <th>NEXT ACTION</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="cust-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ FOLLOW-UP TAB ══ -->
+<div id="tab-followup" class="tab-content">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+    <div style="font-size:20px;font-weight:900;letter-spacing:2px">FOLLOW-UP QUEUE</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-dark btn-sm" onclick="filterFollowUp('all',this)" style="border-color:var(--blue);color:var(--blue)">ALL</button>
+      <button class="btn btn-dark btn-sm" onclick="filterFollowUp('overdue',this)">🔴 OVERDUE</button>
+      <button class="btn btn-dark btn-sm" onclick="filterFollowUp('today',this)">🟡 TODAY</button>
+      <button class="btn btn-dark btn-sm" onclick="filterFollowUp('upcoming',this)">🔵 UPCOMING</button>
+    </div>
+  </div>
+  <div class="followup-grid" id="followup-grid"></div>
+</div>
+
+<!-- ══ EQUITY MINING TAB ══ -->
+<div id="tab-equity" class="tab-content">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+    <div>
+      <div style="font-size:20px;font-weight:900;letter-spacing:2px">EQUITY MINING RADAR</div>
+      <div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">Customers with positive equity position — ready for upgrade outreach</div>
+    </div>
+    <div style="background:#0d001a;border:1px solid var(--purple);border-radius:8px;padding:10px 16px;text-align:center">
+      <div style="font-size:22px;font-weight:900;color:var(--purple)" id="equity-count">0</div>
+      <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700">Equity Alerts</div>
+    </div>
+  </div>
+  <div class="equity-grid" id="equity-grid"></div>
+</div>
+
+<!-- ══ REVENUE SNAPSHOT TAB ══ -->
+<div id="tab-revenue" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">REVENUE SNAPSHOT</div>
+  <div class="rev-grid" id="rev-grid"></div>
+  <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden">
+    <div style="padding:14px 20px;background:var(--s2);border-bottom:1px solid #1a1a2e;font-size:14px;font-weight:900;color:var(--blue);letter-spacing:2px">RECENT DEALS</div>
+    <div style="overflow-x:auto">
+      <table class="cust-table" id="rev-table">
+        <thead><tr><th>CUSTOMER</th><th>VEHICLE</th><th>CLOSE DATE</th><th>REVENUE BUCKET</th><th>GROSS</th><th>STATUS</th></tr></thead>
+        <tbody id="rev-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD CUSTOMER TAB ══ -->
+<div id="tab-add" class="tab-content">
+  <div style="max-width:700px">
+    <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">➕ ADD NEW CUSTOMER / DEAL</div>
+    <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:24px">
+
+      <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">CUSTOMER INFO</div>
+      <div class="form-grid" style="margin-bottom:20px">
+        <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="add-fname" placeholder="First Name"/></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="add-lname" placeholder="Last Name"/></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="add-phone" placeholder="(555) 555-5555" type="tel"/></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="add-email" placeholder="email@address.com" type="email"/></div>
+      </div>
+
+      <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">VEHICLE INTEREST</div>
+      <div class="form-grid" style="margin-bottom:20px">
+        <div class="form-group"><label class="form-label">Year (From)</label><input class="form-input" id="add-year-from" placeholder="2021"/></div>
+        <div class="form-group"><label class="form-label">Year (To)</label><input class="form-input" id="add-year-to" placeholder="2024"/></div>
+        <div class="form-group"><label class="form-label">Make</label><input class="form-input" id="add-make" placeholder="Toyota, Ford..."/></div>
+        <div class="form-group"><label class="form-label">Model</label><input class="form-input" id="add-model" placeholder="Tundra, F-150..."/></div>
+        <div class="form-group"><label class="form-label">Max Budget</label><input class="form-input" id="add-budget" placeholder="$45,000"/></div>
+        <div class="form-group"><label class="form-label">Max Mileage</label><input class="form-input" id="add-miles" placeholder="50,000"/></div>
+      </div>
+
+      <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">TRADE-IN (IF APPLICABLE)</div>
+      <div class="form-grid" style="margin-bottom:20px">
+        <div class="form-group"><label class="form-label">Trade-In Vehicle</label><input class="form-input" id="add-trade" placeholder="2019 Honda CR-V"/></div>
+        <div class="form-group"><label class="form-label">Trade-In VIN</label><input class="form-input" id="add-trade-vin" placeholder="17-char VIN"/></div>
+        <div class="form-group"><label class="form-label">Trade-In Mileage</label><input class="form-input" id="add-trade-miles" placeholder="68,000"/></div>
+        <div class="form-group"><label class="form-label">Est. Trade Value</label><input class="form-input" id="add-trade-value" placeholder="$18,500"/></div>
+      </div>
+
+      <div style="font-size:12px;font-weight:900;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL STATUS & NOTES</div>
+      <div class="form-grid" style="margin-bottom:20px">
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-input" id="add-status">
+            <option>Lead</option><option>Searching</option><option>Match Found</option>
+            <option>Deposit</option><option>In Process</option><option>Delivered</option><option>Follow-Up</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Lead Source</label>
+          <select class="form-input" id="add-source">
+            <option>Website — Trade-In Form</option><option>Website — Vehicle Finder</option>
+            <option>Referral</option><option>Direct Call</option><option>Walk-In</option><option>Social Media</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Assigned Rep</label><input class="form-input" id="add-rep" placeholder="Tim O'Grady"/></div>
+        <div class="form-group"><label class="form-label">Next Follow-Up Date</label><input class="form-input" id="add-followup-date" type="date"/></div>
+      </div>
+      <div class="form-group" style="margin-bottom:20px">
+        <label class="form-label">Notes</label>
+        <textarea class="form-input" id="add-notes" rows="3" placeholder="Customer details, preferences, special requirements..." style="resize:vertical;line-height:1.5"></textarea>
+      </div>
+
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-green" onclick="addCustomer()" style="flex:1;font-size:15px;padding:14px">✅ SAVE CUSTOMER</button>
+        <button class="btn btn-dark" onclick="clearAddForm()">🗑 CLEAR</button>
+      </div>
+      <div id="add-success" style="display:none;margin-top:14px;background:#0d1a0d;border:2px solid var(--green);border-radius:8px;padding:14px;text-align:center;color:var(--green);font-size:15px;font-weight:900;letter-spacing:1px">✅ CUSTOMER SAVED SUCCESSFULLY!</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /evl-wrap -->
+</div><!-- /app -->
+
+<!-- CUSTOMER PROFILE MODAL -->
+<div class="modal-overlay" id="profile-modal">
+  <div class="modal-inner">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Customer Profile</div>
+      <button class="modal-close" onclick="closeModal()">✕ CLOSE</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const CORRECT_PIN = "1027";
+
+// ── AUTH ──
+function checkPin(){
+  if(document.getElementById('pin-input').value === CORRECT_PIN){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    sessionStorage.setItem('evl-mm-auth','1027');
+    initApp();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pin-input').value='';
+    document.getElementById('pin-input').focus();
+  }
+}
+function logout(){sessionStorage.removeItem('evl-mm-auth');location.reload();}
+document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
+if(sessionStorage.getItem('evl-mm-auth')==='1027'){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+}
+
+// ── DATA STORE ──
+const STORAGE_KEY = 'evl_mastermind_customers';
+
+function loadCustomers(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); }
+  catch(e){ return []; }
+}
+function saveCustomers(customers){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
+}
+
+// Sample data for demo
+function initSampleData(){
+  const existing = loadCustomers();
+  if(existing.length > 0) return;
+  const now = new Date();
+  const daysAgo = n => new Date(now - n*86400000).toISOString();
+  const daysAhead = n => new Date(+now + n*86400000).toISOString().split('T')[0];
+  
+  const samples = [
+    {id:'EVL-001',fname:'Robert',lname:'Martinez',phone:'(214) 555-0192',email:'rmartinez@email.com',vehicleInterest:'2022-2024 Toyota Tundra TRD Pro',budget:'$68,000',maxMiles:'45,000',tradeIn:'2019 Ford F-150 XLT',tradeVin:'1FTEW1EP0KFA12345',tradeMiles:'62,000',tradeValue:'$28,500',status:'Match Found',source:'Website — Vehicle Finder',rep:"Tim O'Grady",followupDate:daysAhead(0),notes:'Prefers white exterior. Needs tow package. Has trade-in F-150. Pre-approved at credit union $60k.',created:daysAgo(5),lastContact:daysAgo(1),deliveryDate:null,grossRevenue:null,revBucket:null},
+    {id:'EVL-002',fname:'Jennifer',lname:'Thompson',phone:'(972) 555-0847',email:'jthompson@email.com',vehicleInterest:'2021-2023 BMW X5 xDrive40i',budget:'$72,000',maxMiles:'35,000',tradeIn:'2020 Lexus RX 350',tradeVin:'2T2BZMCA5LC123456',tradeMiles:'41,000',tradeValue:'$38,000',status:'Deposit',source:'Referral',rep:"Tim O'Grady",followupDate:daysAhead(1),notes:'Ready to move fast. Deposit received $500. Hold expires 48hrs. Financing through BMW FS.',created:daysAgo(3),lastContact:daysAgo(0),deliveryDate:null,grossRevenue:null,revBucket:null},
+    {id:'EVL-003',fname:'Marcus',lname:'Johnson',phone:'(469) 555-0231',email:'mjohnson@email.com',vehicleInterest:'2022-2024 GMC Yukon Denali',budget:'$85,000',maxMiles:'30,000',tradeIn:'2020 Chevrolet Tahoe LT',tradeVin:'1GNSKBKC3LR234567',tradeMiles:'38,500',tradeValue:'$42,000',status:'Searching',source:'Website — Vehicle Finder',rep:"Tim O'Grady",followupDate:daysAhead(2),notes:'Wants black on black. 3rd row mandatory. Cash buyer — no financing needed.',created:daysAgo(7),lastContact:daysAgo(2),deliveryDate:null,grossRevenue:null,revBucket:null},
+    {id:'EVL-004',fname:'Sarah',lname:'Williams',phone:'(214) 555-0563',email:'swilliams@email.com',vehicleInterest:'2023 Ford Bronco Wildtrak',budget:'$52,000',maxMiles:'20,000',tradeIn:'',tradeVin:'',tradeMiles:'',tradeValue:'',status:'Lead',source:'Website — Trade-In Form',rep:"Tim O'Grady",followupDate:daysAhead(0),notes:'Just browsing for now. No trade-in. Interested in Bronco or 4Runner. Timeline 30-60 days.',created:daysAgo(1),lastContact:daysAgo(1),deliveryDate:null,grossRevenue:null,revBucket:null},
+    {id:'EVL-005',fname:'David',lname:'Chen',phone:'(972) 555-0789',email:'dchen@email.com',vehicleInterest:'2021 Tesla Model Y Long Range',budget:'$48,000',maxMiles:'40,000',tradeIn:'2018 Toyota Camry XSE',tradeVin:'4T1BF1FK4JU678901',tradeMiles:'55,000',tradeValue:'$19,500',status:'Delivered',source:'Referral',rep:"Tim O'Grady",followupDate:daysAhead(-25),notes:'Delivered June 1. Smooth transaction. Has trade-in Camry we moved through network. Happy customer.',created:daysAgo(35),lastContact:daysAgo(1),deliveryDate:daysAgo(1),grossRevenue:'$2,850',revBucket:'Find + Trade + Finance'},
+    {id:'EVL-006',fname:'Amanda',lname:'Rodriguez',phone:'(214) 555-0412',email:'arodriguez@email.com',vehicleInterest:'2022 Honda Pilot Elite AWD',budget:'$44,000',maxMiles:'35,000',tradeIn:'2018 Honda CR-V EX',tradeVin:'2HKRW2H89JH345678',tradeMiles:'71,000',tradeValue:'$16,800',status:'Follow-Up',source:'Website — Trade-In Form',rep:"Tim O'Grady",followupDate:daysAhead(-2),notes:'Delivered May 8. 30-day CSI due. Very happy with process. Ask for referrals. Equity check in 6mo.',created:daysAgo(45),lastContact:daysAgo(28),deliveryDate:daysAgo(25),grossRevenue:'$1,950',revBucket:'Find + Trade'},
+    {id:'EVL-007',fname:'James',lname:'Patterson',phone:'(469) 555-0956',email:'jpatterson@email.com',vehicleInterest:'2023 Ram 1500 Laramie',budget:'$58,000',maxMiles:'25,000',tradeIn:'2020 Ram 1500 Big Horn',tradeVin:'1C6SRFFT0LN456789',tradeMiles:'44,000',tradeValue:'$31,500',status:'In Process',source:'Direct Call',rep:"Tim O'Grady",followupDate:daysAhead(1),notes:'Price agreed. Worksheet sent. Waiting on financing approval. Trade-in bid accepted by Toyota McKinney.',created:daysAgo(10),lastContact:daysAgo(0),deliveryDate:null,grossRevenue:null,revBucket:null},
+  ];
+  saveCustomers(samples);
+}
+
+// ── INIT ──
+function initApp(){
+  initSampleData();
+  updateHeaderStats();
+  renderPipeline();
+  setInterval(updateHeaderStats, 30000);
+}
+
+if(sessionStorage.getItem('evl-mm-auth')==='1027') initApp();
+
+// ── HEADER STATS ──
+function updateHeaderStats(){
+  const customers = loadCustomers();
+  const active = customers.filter(c=>!['Delivered','Lost'].includes(c.status)).length;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const followupDue = customers.filter(c=>{
+    if(!c.followupDate) return false;
+    const d = new Date(c.followupDate); d.setHours(0,0,0,0);
+    return d <= now;
+  }).length;
+  const equity = customers.filter(c=>{
+    if(!c.deliveryDate) return false;
+    const days = (Date.now() - new Date(c.deliveryDate)) / 86400000;
+    return days >= 180;
+  }).length;
+  document.getElementById('hdr-total').textContent = customers.length;
+  document.getElementById('hdr-active').textContent = active;
+  document.getElementById('hdr-followup').textContent = followupDue;
+  document.getElementById('hdr-equity').textContent = equity;
+}
+
+// ── TAB SWITCHING ──
+function switchTab(tab, btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(tab==='pipeline') renderPipeline();
+  if(tab==='customers') renderCustomers();
+  if(tab==='followup') renderFollowUp();
+  if(tab==='equity') renderEquity();
+  if(tab==='revenue') renderRevenue();
+}
+
+// ── PIPELINE ──
+const STAGES = [
+  {key:'Lead',label:'LEAD',icon:'👤'},
+  {key:'Searching',label:'SEARCHING',icon:'🔍'},
+  {key:'Match Found',label:'MATCH FOUND',icon:'🎯'},
+  {key:'Deposit',label:'DEPOSIT',icon:'💰'},
+  {key:'In Process',label:'IN PROCESS',icon:'⚙️'},
+  {key:'Delivered',label:'DELIVERED',icon:'🚗'},
+  {key:'Follow-Up',label:'FOLLOW-UP',icon:'📅'},
+];
+const STAGE_CLASS = {'Lead':'lead','Searching':'search','Match Found':'match','Deposit':'deposit','In Process':'process','Delivered':'delivered','Follow-Up':'followup'};
+
+function renderPipeline(){
+  const customers = loadCustomers();
+  const board = document.getElementById('pipeline-board');
+  board.innerHTML = STAGES.map(stage => {
+    const cards = customers.filter(c=>c.status===stage.key);
+    const cls = STAGE_CLASS[stage.key]||'lead';
+    return `<div class="pipeline-col stage-${cls}">
+      <div class="pipeline-col-header">
+        <span>${stage.icon} ${stage.label}</span>
+        <span class="pipeline-col-count">${cards.length}</span>
+      </div>
+      <div class="pipeline-cards">
+        ${cards.map(c => {
+          const now = new Date(); now.setHours(0,0,0,0);
+          const fu = c.followupDate ? new Date(c.followupDate) : null;
+          if(fu) fu.setHours(0,0,0,0);
+          const urgent = fu && fu <= now;
+          const created = c.created ? Math.floor((Date.now()-new Date(c.created))/86400000) : 0;
+          return `<div class="deal-card" onclick="openProfile('${c.id}')">
+            ${urgent ? '<div class="deal-card-urgent"></div>' : ''}
+            <div class="deal-card-name">${c.fname} ${c.lname}</div>
+            <div class="deal-card-vehicle">${c.vehicleInterest||'Vehicle TBD'}</div>
+            <div class="deal-card-meta">
+              <span class="deal-card-days">Day ${created}</span>
+              <span class="deal-card-budget">${c.budget||'—'}</span>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── CUSTOMER TABLE ──
+const PILL_CLASS = {'Lead':'pill-lead','Searching':'pill-search','Match Found':'pill-match','Deposit':'pill-deposit','In Process':'pill-process','Delivered':'pill-delivered','Follow-Up':'pill-followup','Lost':'pill-lost'};
+
+function renderCustomers(){
+  const q = (document.getElementById('cust-search')?.value||'').toLowerCase();
+  const statusFilter = document.getElementById('cust-filter-status')?.value||'';
+  const customers = loadCustomers().filter(c=>{
+    const text = `${c.fname} ${c.lname} ${c.phone} ${c.email} ${c.vehicleInterest} ${c.status}`.toLowerCase();
+    return text.includes(q) && (!statusFilter || c.status===statusFilter);
+  });
+  const tbody = document.getElementById('cust-tbody');
+  if(customers.length === 0){
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted);font-size:16px;font-weight:700">No customers found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = customers.map(c => {
+    const pill = PILL_CLASS[c.status]||'pill-lead';
+    const lastContact = c.lastContact ? new Date(c.lastContact).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+    const nextAction = c.followupDate ? new Date(c.followupDate).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+    return `<tr>
+      <td><strong style="color:var(--white)">${c.fname} ${c.lname}</strong><br><span style="font-size:12px;color:var(--muted)">${c.id}</span></td>
+      <td><a href="tel:${c.phone}" style="color:var(--blue);text-decoration:none;font-weight:700">${c.phone}</a></td>
+      <td style="max-width:200px">${c.vehicleInterest||'—'}</td>
+      <td style="color:var(--green);font-weight:900">${c.budget||'—'}</td>
+      <td><span class="status-pill ${pill}">${c.status}</span></td>
+      <td>${lastContact}</td>
+      <td style="color:var(--gold);font-weight:700">${nextAction}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-blue btn-sm" onclick="openProfile('${c.id}')">👤</button>
+          <button class="btn btn-dark btn-sm" onclick="quickStatus('${c.id}')">📊</button>
+          <button class="btn btn-dark btn-sm" onclick="deleteCustomer('${c.id}')">🗑</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── FOLLOW-UP QUEUE ──
+function renderFollowUp(filter='all'){
+  const customers = loadCustomers();
+  const now = new Date(); now.setHours(0,0,0,0);
+  
+  const withFollowUp = customers.filter(c=>c.followupDate).map(c=>{
+    const d = new Date(c.followupDate); d.setHours(0,0,0,0);
+    const diff = Math.floor((d-now)/86400000);
+    return {...c, _diff: diff};
+  }).sort((a,b)=>a._diff-b._diff);
+
+  const filtered = withFollowUp.filter(c=>{
+    if(filter==='overdue') return c._diff < 0;
+    if(filter==='today') return c._diff === 0;
+    if(filter==='upcoming') return c._diff > 0;
+    return c._diff <= 7;
+  });
+
+  const getTaskType = (c) => {
+    if(c.status==='Delivered') return {type:'email',text:'📧 30-Day CSI Check-In',cls:'fu-task-email'};
+    if(c.status==='Follow-Up') return {type:'call',text:'📞 Re-engagement Call',cls:'fu-task-call'};
+    if(c.status==='Match Found') return {type:'call',text:'📞 Match Update Call',cls:'fu-task-call'};
+    if(c.status==='Lead') return {type:'text',text:'💬 Initial Outreach Text',cls:'fu-task-text'};
+    return {type:'call',text:'📞 Status Update Call',cls:'fu-task-call'};
+  };
+
+  document.getElementById('followup-grid').innerHTML = filtered.length === 0
+    ? '<div style="text-align:center;padding:60px;color:var(--muted);font-size:16px;font-weight:700;grid-column:1/-1">✅ No follow-ups in this category</div>'
+    : filtered.map(c => {
+      const task = getTaskType(c);
+      const diff = c._diff;
+      const dueText = diff < 0 ? `⚠️ ${Math.abs(diff)} DAY${Math.abs(diff)!==1?'S':''} OVERDUE` : diff===0 ? '🟡 DUE TODAY' : `🔵 IN ${diff} DAY${diff!==1?'S':''}`;
+      const dueCls = diff < 0 ? 'overdue' : diff===0 ? 'today-label' : '';
+      const cardCls = diff < 0 ? 'urgent' : diff===0 ? 'today' : '';
+      return `<div class="fu-card ${cardCls}">
+        <div class="fu-card-name">${c.fname} ${c.lname}</div>
+        <div class="fu-card-vehicle">${c.vehicleInterest||'Vehicle TBD'} • <span class="status-pill ${PILL_CLASS[c.status]||'pill-lead'}" style="font-size:10px">${c.status}</span></div>
+        <div class="fu-card-task ${task.cls}">${task.text}</div>
+        <div class="fu-due ${dueCls}">${dueText}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <a href="tel:${c.phone}" class="btn btn-blue btn-sm">📞 CALL</a>
+          <button class="btn btn-green btn-sm" onclick="openProfile('${c.id}')">👤 PROFILE</button>
+          <button class="btn btn-dark btn-sm" onclick="markContactedAndSnooze('${c.id}')">✅ DONE +3</button>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+function filterFollowUp(type, btn){
+  document.querySelectorAll('#tab-followup .btn-sm').forEach(b=>{ b.style.borderColor=''; b.style.color=''; });
+  if(btn){ btn.style.borderColor='var(--blue)'; btn.style.color='var(--blue)'; }
+  renderFollowUp(type);
+}
+
+function markContactedAndSnooze(id){
+  const customers = loadCustomers();
+  const idx = customers.findIndex(c=>c.id===id);
+  if(idx<0) return;
+  const d = new Date(); d.setDate(d.getDate()+3);
+  customers[idx].lastContact = new Date().toISOString();
+  customers[idx].followupDate = d.toISOString().split('T')[0];
+  saveCustomers(customers);
+  renderFollowUp();
+  updateHeaderStats();
+}
+
+// ── EQUITY MINING ──
+function renderEquity(){
+  const customers = loadCustomers().filter(c=>c.deliveryDate);
+  const now = Date.now();
+  
+  const equityCustomers = customers.map(c=>{
+    const daysSince = Math.floor((now - new Date(c.deliveryDate))/86400000);
+    const score = Math.min(100, Math.floor((daysSince/180)*100));
+    return {...c, daysSince, equityScore:score};
+  }).filter(c=>c.equityScore >= 50).sort((a,b)=>b.equityScore-a.equityScore);
+
+  document.getElementById('equity-count').textContent = equityCustomers.length;
+  
+  document.getElementById('equity-grid').innerHTML = equityCustomers.length === 0
+    ? '<div style="text-align:center;padding:60px;color:var(--muted);font-size:16px;font-weight:700;grid-column:1/-1">No equity opportunities yet — check back as delivered customers mature</div>'
+    : equityCustomers.map(c=>{
+      const hot = c.equityScore >= 90; const warm = c.equityScore >= 70;
+      const scoreCls = hot?'hot':warm?'warm':'cool';
+      const scoreLabel = hot?'🔥 HOT — CONTACT NOW':warm?'⚡ WARM — PRIORITY OUTREACH':'🔵 BUILDING — MONITOR';
+      return `<div class="eq-card">
+        <div class="eq-card-header">
+          <div>
+            <div style="font-size:15px;font-weight:900;color:var(--white)">${c.fname} ${c.lname}</div>
+            <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:2px">${c.vehicleInterest||'—'}</div>
+          </div>
+          <div>
+            <div class="eq-score ${scoreCls}">${c.equityScore}%</div>
+            <div style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-align:right">EQUITY</div>
+          </div>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="font-size:12px;font-weight:700;color:${hot?'var(--green)':warm?'var(--gold)':'var(--blue)'};margin-bottom:8px">${scoreLabel}</div>
+          <div class="eq-meter"><div class="eq-meter-fill" style="width:${c.equityScore}%;background:${hot?'var(--green)':warm?'var(--gold)':'var(--blue)'}"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:12px">
+            <span>${c.daysSince} days since delivery</span>
+            <span>Target: 180 days</span>
+          </div>
+          <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:6px;padding:10px;margin-bottom:12px;font-size:13px;color:var(--dim)">
+            <strong style="color:var(--white)">Vehicle:</strong> ${c.vehicleInterest||'—'}<br>
+            <strong style="color:var(--white)">Budget was:</strong> ${c.budget||'—'}<br>
+            <strong style="color:var(--white)">Phone:</strong> ${c.phone}
+          </div>
+          <div style="display:flex;gap:6px">
+            <a href="tel:${c.phone}" class="btn btn-blue btn-sm" style="flex:1">📞 CALL</a>
+            <button class="btn btn-gold btn-sm" onclick="openProfile('${c.id}')">👤 PROFILE</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+// ── REVENUE ──
+function renderRevenue(){
+  const customers = loadCustomers();
+  const delivered = customers.filter(c=>c.status==='Delivered'||c.deliveryDate);
+  const totalRev = delivered.reduce((sum,c)=>{
+    const val = parseFloat((c.grossRevenue||'0').replace(/[^0-9.]/g,''))||0;
+    return sum+val;
+  },0);
+  const avgRev = delivered.length ? (totalRev/delivered.length) : 0;
+  const pipeline = customers.filter(c=>!['Delivered','Lost'].includes(c.status)).length;
+
+  document.getElementById('rev-grid').innerHTML = [
+    {val:'$'+totalRev.toLocaleString(),lbl:'Total Gross Revenue',sub:`${delivered.length} deals closed`,color:'var(--green)'},
+    {val:'$'+Math.round(avgRev).toLocaleString(),lbl:'Avg Revenue / Deal',sub:'All buckets combined',color:'var(--blue)'},
+    {val:delivered.length,lbl:'Deals Delivered',sub:'Completed transactions',color:'var(--gold)'},
+    {val:pipeline,lbl:'Pipeline Value',sub:'Active opportunities',color:'var(--purple)'},
+    {val:customers.length,lbl:'Total Customers',sub:'All time database',color:'var(--cyan)'},
+  ].map(s=>`<div class="rev-card">
+    <span class="rev-val" style="color:${s.color}">${s.val}</span>
+    <div class="rev-lbl">${s.lbl}</div>
+    <div class="rev-sub">${s.sub}</div>
+  </div>`).join('');
+
+  document.getElementById('rev-tbody').innerHTML = delivered.map(c=>`<tr>
+    <td><strong style="color:var(--white)">${c.fname} ${c.lname}</strong></td>
+    <td>${c.vehicleInterest||'—'}</td>
+    <td>${c.deliveryDate ? new Date(c.deliveryDate).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}</td>
+    <td style="color:var(--cyan)">${c.revBucket||'—'}</td>
+    <td style="color:var(--green);font-weight:900">${c.grossRevenue||'—'}</td>
+    <td><span class="status-pill pill-delivered">Delivered</span></td>
+  </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted)">No delivered deals yet</td></tr>';
+}
+
+// ── ADD CUSTOMER ──
+function addCustomer(){
+  const fname = document.getElementById('add-fname').value.trim();
+  const lname = document.getElementById('add-lname').value.trim();
+  if(!fname || !lname){ alert('Please enter customer first and last name'); return; }
+
+  const customers = loadCustomers();
+  const now = new Date();
+  const id = 'EVL-' + String(customers.length + 1).padStart(3,'0');
+
+  const newCustomer = {
+    id, fname, lname,
+    phone: document.getElementById('add-phone').value.trim(),
+    email: document.getElementById('add-email').value.trim(),
+    vehicleInterest: [document.getElementById('add-year-from').value, document.getElementById('add-year-to').value&&'–'+document.getElementById('add-year-to').value, document.getElementById('add-make').value, document.getElementById('add-model').value].filter(Boolean).join(' '),
+    budget: document.getElementById('add-budget').value.trim(),
+    maxMiles: document.getElementById('add-miles').value.trim(),
+    tradeIn: document.getElementById('add-trade').value.trim(),
+    tradeVin: document.getElementById('add-trade-vin').value.trim(),
+    tradeMiles: document.getElementById('add-trade-miles').value.trim(),
+    tradeValue: document.getElementById('add-trade-value').value.trim(),
+    status: document.getElementById('add-status').value,
+    source: document.getElementById('add-source').value,
+    rep: document.getElementById('add-rep').value.trim(),
+    followupDate: document.getElementById('add-followup-date').value,
+    notes: document.getElementById('add-notes').value.trim(),
+    created: now.toISOString(),
+    lastContact: now.toISOString(),
+    deliveryDate: null,
+    grossRevenue: null,
+    revBucket: null,
+  };
+
+  customers.unshift(newCustomer);
+  saveCustomers(customers);
+  updateHeaderStats();
+  
+  document.getElementById('add-success').style.display='block';
+  setTimeout(()=>{ document.getElementById('add-success').style.display='none'; }, 3000);
+  clearAddForm();
+  renderPipeline();
+}
+
+function clearAddForm(){
+  ['add-fname','add-lname','add-phone','add-email','add-year-from','add-year-to','add-make','add-model','add-budget','add-miles','add-trade','add-trade-vin','add-trade-miles','add-trade-value','add-rep','add-followup-date','add-notes'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+}
+
+// ── CUSTOMER PROFILE MODAL ──
+function openProfile(id){
+  const customers = loadCustomers();
+  const c = customers.find(x=>x.id===id);
+  if(!c) return;
+  
+  const pill = PILL_CLASS[c.status]||'pill-lead';
+  const created = c.created ? new Date(c.created).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '—';
+  const lastContact = c.lastContact ? new Date(c.lastContact).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '—';
+  const nextFU = c.followupDate ? new Date(c.followupDate).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '—';
+
+  document.getElementById('modal-title').textContent = `${c.fname} ${c.lname} — ${c.id}`;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-grid">
+      <div>
+        <div class="modal-section">
+          <div class="modal-section-title">Customer Info</div>
+          <div class="info-row"><span class="info-label">Name</span><span class="info-value">${c.fname} ${c.lname}</span></div>
+          <div class="info-row"><span class="info-label">Phone</span><span class="info-value"><a href="tel:${c.phone}" style="color:var(--blue)">${c.phone}</a></span></div>
+          <div class="info-row"><span class="info-label">Email</span><span class="info-value"><a href="mailto:${c.email}" style="color:var(--blue)">${c.email}</a></span></div>
+          <div class="info-row"><span class="info-label">Status</span><span class="info-value"><span class="status-pill ${pill}">${c.status}</span></span></div>
+          <div class="info-row"><span class="info-label">Lead Source</span><span class="info-value">${c.source||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Assigned Rep</span><span class="info-value">${c.rep||'—'}</span></div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Vehicle Interest</div>
+          <div class="info-row"><span class="info-label">Vehicle</span><span class="info-value">${c.vehicleInterest||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Budget</span><span class="info-value" style="color:var(--green)">${c.budget||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Max Miles</span><span class="info-value">${c.maxMiles||'—'}</span></div>
+        </div>
+
+        ${c.tradeIn ? `<div class="modal-section">
+          <div class="modal-section-title">Trade-In Vehicle</div>
+          <div class="info-row"><span class="info-label">Vehicle</span><span class="info-value">${c.tradeIn}</span></div>
+          <div class="info-row"><span class="info-label">VIN</span><span class="info-value" style="font-family:monospace;font-size:13px">${c.tradeVin||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Mileage</span><span class="info-value">${c.tradeMiles||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Est. Value</span><span class="info-value" style="color:var(--green)">${c.tradeValue||'—'}</span></div>
+        </div>` : ''}
+      </div>
+
+      <div>
+        <div class="modal-section">
+          <div class="modal-section-title">Timeline & Follow-Up</div>
+          <div class="info-row"><span class="info-label">Created</span><span class="info-value">${created}</span></div>
+          <div class="info-row"><span class="info-label">Last Contact</span><span class="info-value">${lastContact}</span></div>
+          <div class="info-row"><span class="info-label">Next Follow-Up</span><span class="info-value" style="color:var(--gold)">${nextFU}</span></div>
+          ${c.deliveryDate ? `<div class="info-row"><span class="info-label">Delivery Date</span><span class="info-value" style="color:var(--green)">${new Date(c.deliveryDate).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</span></div>` : ''}
+          ${c.grossRevenue ? `<div class="info-row"><span class="info-label">Revenue</span><span class="info-value" style="color:var(--green)">${c.grossRevenue}</span></div>` : ''}
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Notes</div>
+          <p style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.6">${c.notes||'No notes yet.'}</p>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Quick Actions</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <a href="tel:${c.phone}" class="btn btn-blue btn-sm">📞 CALL</a>
+            <a href="mailto:${c.email}" class="btn btn-dark btn-sm">📧 EMAIL</a>
+            <a href="https://evl-decode-two.vercel.app/admin-comms" target="_blank" class="btn btn-gold btn-sm">✉️ TEMPLATES</a>
+            <button class="btn btn-green btn-sm" onclick="markContacted('${id}')">✅ MARK CONTACTED</button>
+            <button class="btn btn-dark btn-sm" onclick="advanceStage('${id}')">⏭ ADVANCE STAGE</button>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Update Status</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            ${['Lead','Searching','Match Found','Deposit','In Process','Delivered','Follow-Up','Lost'].map(s=>
+              `<button class="btn btn-sm ${c.status===s?'btn-blue':'btn-dark'}" onclick="updateStatus('${id}','${s}')">${s}</button>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById('profile-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('profile-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function markContacted(id){
+  const customers = loadCustomers();
+  const idx = customers.findIndex(c=>c.id===id);
+  if(idx<0) return;
+  const d = new Date(); d.setDate(d.getDate()+3);
+  customers[idx].lastContact = new Date().toISOString();
+  customers[idx].followupDate = d.toISOString().split('T')[0];
+  saveCustomers(customers);
+  openProfile(id);
+  updateHeaderStats();
+}
+
+function advanceStage(id){
+  const stages = ['Lead','Searching','Match Found','Deposit','In Process','Delivered','Follow-Up'];
+  const customers = loadCustomers();
+  const idx = customers.findIndex(c=>c.id===id);
+  if(idx<0) return;
+  const cur = stages.indexOf(customers[idx].status);
+  if(cur < stages.length-1) customers[idx].status = stages[cur+1];
+  if(customers[idx].status==='Delivered') customers[idx].deliveryDate = new Date().toISOString();
+  saveCustomers(customers);
+  openProfile(id);
+  renderPipeline();
+  updateHeaderStats();
+}
+
+function updateStatus(id, status){
+  const customers = loadCustomers();
+  const idx = customers.findIndex(c=>c.id===id);
+  if(idx<0) return;
+  customers[idx].status = status;
+  if(status==='Delivered' && !customers[idx].deliveryDate) customers[idx].deliveryDate = new Date().toISOString();
+  saveCustomers(customers);
+  openProfile(id);
+  renderPipeline();
+  updateHeaderStats();
+}
+
+function quickStatus(id){
+  openProfile(id);
+}
+
+function deleteCustomer(id){
+  if(!confirm('Delete this customer? This cannot be undone.')) return;
+  const customers = loadCustomers().filter(c=>c.id!==id);
+  saveCustomers(customers);
+  renderCustomers();
+  updateHeaderStats();
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
