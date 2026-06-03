@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Call Center | Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#020203;--s1:#090E17;--s2:#0a0f1a;
+  --blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;
+  --white:#ffffff;--muted:#A1A1AA;--dim:#ccd6e0;
+  --font:'Oswald',sans-serif;--body:'Barlow',sans-serif;
+}
+body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
+.login-box{background:var(--s1);border:2px solid var(--green);border-radius:12px;padding:40px;width:100%;max-width:420px;text-align:center}
+.login-badge{display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
+.login-title{font-size:32px;font-weight:900;color:var(--white);letter-spacing:3px;margin-bottom:4px}
+.login-sub{font-size:12px;color:var(--muted);margin-bottom:28px;letter-spacing:2px}
+.login-input{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:16px;border-radius:8px;font-size:26px;font-family:var(--font);font-weight:700;letter-spacing:10px;text-align:center;outline:none;margin-bottom:16px;transition:border-color .2s}
+.login-input:focus{border-color:var(--green)}
+.login-btn{width:100%;background:var(--green);color:#020203;border:none;padding:16px;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:8px;font-family:var(--font)}
+.login-error{color:var(--red);font-size:14px;font-weight:700;margin-top:12px;display:none}
+
+#app{display:none}
+
+/* ADMIN NAV */
+.evl-admin-nav{position:sticky;top:0;z-index:500;background:#020a02;border-bottom:2px solid var(--green);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:var(--font)}
+.evl-admin-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
+.evl-admin-links{display:flex;align-items:center;gap:4px}
+.evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-admin-link:hover{color:var(--white);background:#0d1a0d}
+.evl-admin-link.active-link{color:var(--green);border-bottom:2px solid var(--green)}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:12px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
+.evl-logout:hover{background:var(--red);color:var(--white)}
+
+/* TAB NAV */
+.tab-nav{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;gap:0;overflow-x:auto}
+.tab-btn{padding:14px 20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:var(--font)}
+.tab-btn:hover{color:var(--white)}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+
+/* WRAP */
+.evl-wrap{max-width:1400px;margin:0 auto;padding:20px}
+
+/* TAB CONTENT */
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:16px;text-align:center;transition:border-color .2s}
+.stat-card:hover{border-color:var(--green)}
+.stat-val{font-size:32px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.stat-sub{font-size:12px;font-weight:600;margin-top:4px}
+
+/* ALERT BANNER */
+.alert-banner{background:#1a0000;border:2px solid var(--red);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;animation:pulse-border 2s infinite}
+@keyframes pulse-border{0%,100%{border-color:var(--red)}50%{border-color:#ff6666}}
+.alert-banner-text{font-size:16px;font-weight:900;color:var(--red);letter-spacing:1px}
+.alert-banner-sub{font-size:13px;color:var(--dim);font-weight:600;margin-top:2px;font-family:var(--body)}
+
+/* CALL CARDS */
+.calls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.call-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;overflow:hidden;transition:border-color .2s}
+.call-card:hover{border-color:var(--green)}
+.call-card.missed{border-color:var(--red);background:#0d0000}
+.call-card.active-call{border-color:var(--green);background:#020a02;animation:pulse-border 1.5s infinite}
+.call-card.completed{border-color:#1a1a2e;opacity:.8}
+.call-card-header{padding:12px 16px;background:rgba(0,0,0,0.2);border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.call-type-badge{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.badge-inbound{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+.badge-outbound{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+.badge-missed{background:#1a0000;border:1px solid var(--red);color:var(--red)}
+.badge-active{background:#020a02;border:1px solid var(--green);color:var(--green);animation:pulse-border 1s infinite}
+.call-time{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px}
+.call-card-body{padding:14px 16px}
+.call-caller{font-size:18px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:3px}
+.call-number{font-size:14px;color:var(--blue);font-weight:700;margin-bottom:6px}
+.call-match{font-size:13px;font-weight:700;padding:6px 10px;border-radius:6px;margin-bottom:10px}
+.match-found{background:#0d1a0d;border-left:3px solid var(--green);color:var(--green)}
+.match-none{background:#1a1000;border-left:3px solid var(--gold);color:var(--gold)}
+.call-duration{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:10px}
+.call-notes-text{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.4;margin-bottom:10px}
+
+/* BUTTONS */
+.btn{padding:8px 14px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
+.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
+.btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
+.btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
+.btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
+.btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--green)}
+.btn-sm{padding:6px 12px;font-size:11px}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap}
+
+/* FORMS */
+.form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus{border-color:var(--green)}
+.form-input option{background:#0a0a1a}
+.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:6px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* DIRECTORY TREE */
+.dir-tree{background:var(--s1);border:2px solid var(--green);border-radius:12px;overflow:hidden;margin-bottom:20px}
+.dir-header{background:#020a02;padding:16px 20px;border-bottom:2px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between}
+.dir-tree-body{padding:0}
+.dir-option{border-bottom:1px solid #1a1a2e;padding:16px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:background .2s}
+.dir-option:hover{background:#0a0f1a}
+.dir-option:last-child{border-bottom:none}
+.dir-key{background:var(--green);color:#020203;font-size:16px;font-weight:900;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dir-key.spanish{background:var(--gold)}
+.dir-key.operator{background:var(--blue)}
+.dir-info{flex:1}
+.dir-label{font-size:15px;font-weight:900;color:var(--white);letter-spacing:0.5px}
+.dir-desc{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;font-family:var(--body)}
+.dir-route{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.route-direct{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+.route-vm{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.route-text{background:#0d001a;border:1px solid var(--purple);color:var(--purple)}
+
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px}
+.metric-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:18px}
+.metric-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e}
+.metric-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #0d0d1a}
+.metric-row:last-child{border-bottom:none;margin-bottom:0}
+.metric-key{font-size:13px;color:var(--dim);font-weight:600;font-family:var(--body)}
+.metric-val{font-size:15px;font-weight:900;color:var(--white)}
+
+/* SETUP GUIDE */
+.setup-step{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:20px;margin-bottom:14px;display:flex;gap:16px}
+.setup-step.done{border-color:var(--green);background:#020a02}
+.setup-step.active{border-color:var(--blue)}
+.step-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
+.step-num.done{background:var(--green);color:#020203}
+.step-num.active{background:var(--blue);color:var(--white)}
+.step-num.pending{background:#1a1a2e;color:var(--muted)}
+.step-content{flex:1}
+.step-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px}
+.step-desc{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6}
+.step-cost{font-size:12px;font-weight:900;letter-spacing:1px;margin-top:8px}
+
+/* INCOMING CALL SIMULATOR */
+.incoming-call{display:none;position:fixed;top:80px;right:20px;z-index:400;background:var(--s1);border:3px solid var(--green);border-radius:16px;padding:20px;width:300px;box-shadow:0 0 40px rgba(0,200,83,0.3);animation:ring 0.5s ease infinite alternate}
+@keyframes ring{from{box-shadow:0 0 20px rgba(0,200,83,0.2)}to{box-shadow:0 0 40px rgba(0,200,83,0.6)}}
+.incoming-call.show{display:block}
+
+@media(max-width:768px){
+  .form-grid{grid-template-columns:1fr}
+  .evl-admin-links{display:none}
+  .stats-bar{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-badge">EVL INTERNAL — AUTHORIZED ONLY</div>
+    <div class="login-title">CALL CENTER</div>
+    <div class="login-sub">EVL PHONE COMMAND — ADMIN ACCESS</div>
+    <input type="password" class="login-input" id="pin-input" maxlength="4" placeholder="••••" autocomplete="off"/>
+    <button class="login-btn" onclick="checkPin()">📞 ACCESS CALL CENTER</button>
+    <div class="login-error" id="login-error">❌ INCORRECT PIN</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+<!-- ADMIN NAV -->
+<nav class="evl-admin-nav">
+  <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#00C853" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#00C853"/></svg>
+    EVL <span style="color:var(--green);margin-left:4px">ADMIN</span>
+  </a>
+  <div class="evl-admin-links">
+    <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-link">🛡️ DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/mastermind" class="evl-admin-link">🧠 MASTERMIND</a>
+    <a href="https://evl-decode-two.vercel.app/admin-docs" class="evl-admin-link">📋 DOCUMENTS</a>
+    <a href="https://evl-decode-two.vercel.app/admin-comms" class="evl-admin-link">📨 TEMPLATES</a>
+    <a href="https://evl-decode-two.vercel.app/admin-scripts" class="evl-admin-link">⚙️ SCRIPTS</a>
+    <a href="https://evl-decode-two.vercel.app/admin-calls" class="evl-admin-link active-link">📞 CALLS</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-admin-link">🌐 RETAIL</a>
+    <button class="evl-logout" onclick="logout()">LOGOUT</button>
+  </div>
+</nav>
+
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('live',this)">📞 LIVE CALLS</button>
+  <button class="tab-btn" onclick="switchTab('log',this)">📋 CALL LOG</button>
+  <button class="tab-btn" onclick="switchTab('metrics',this)">📊 METRICS</button>
+  <button class="tab-btn" onclick="switchTab('directory',this)">🌲 DIRECTORY TREE</button>
+  <button class="tab-btn" onclick="switchTab('scripts',this)">📖 CALL SCRIPTS</button>
+  <button class="tab-btn" onclick="switchTab('setup',this)">⚙️ SETUP GUIDE</button>
+</div>
+
+<div class="evl-wrap">
+
+<!-- ══ LIVE CALLS TAB ══ -->
+<div id="tab-live" class="tab-content active">
+
+  <!-- MISSED CALL ALERT -->
+  <div id="missed-alert" class="alert-banner" style="display:none">
+    <div>
+      <div class="alert-banner-text">🔴 MISSED CALLS REQUIRE CALLBACK</div>
+      <div class="alert-banner-sub" id="missed-alert-text">Customers waiting — callback within 2 hours is critical to avoid losing the deal</div>
+    </div>
+    <button class="btn btn-red" onclick="filterCalls('missed')">VIEW MISSED CALLS</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <span class="stat-val" id="stat-today" style="color:var(--green)">0</span>
+      <div class="stat-lbl">Calls Today</div>
+      <div class="stat-sub" style="color:var(--muted)">All types</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val" id="stat-missed" style="color:var(--red)">0</span>
+      <div class="stat-lbl">Missed</div>
+      <div class="stat-sub" style="color:var(--red)" id="stat-missed-sub">Needs callback</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val" id="stat-connect" style="color:var(--blue)">0%</span>
+      <div class="stat-lbl">Connect Rate</div>
+      <div class="stat-sub" style="color:var(--muted)">Target: 80%+</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val" id="stat-avg-duration" style="color:var(--gold)">0m</span>
+      <div class="stat-lbl">Avg Duration</div>
+      <div class="stat-sub" style="color:var(--muted)">Connected calls</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val" id="stat-week" style="color:var(--cyan)">0</span>
+      <div class="stat-lbl">This Week</div>
+      <div class="stat-sub" style="color:var(--muted)">Total calls</div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn btn-dark btn-sm active-filter" onclick="filterCalls('all',this)" style="border-color:var(--green);color:var(--green)">ALL</button>
+    <button class="btn btn-dark btn-sm" onclick="filterCalls('missed',this)">🔴 MISSED</button>
+    <button class="btn btn-dark btn-sm" onclick="filterCalls('inbound',this)">📥 INBOUND</button>
+    <button class="btn btn-dark btn-sm" onclick="filterCalls('outbound',this)">📤 OUTBOUND</button>
+    <button class="btn btn-dark btn-sm" onclick="filterCalls('completed',this)">✅ COMPLETED</button>
+    <div style="margin-left:auto">
+      <button class="btn btn-green btn-sm" onclick="openLogNewCall()">➕ LOG CALL</button>
+    </div>
+  </div>
+
+  <div class="calls-grid" id="calls-grid"></div>
+  <div id="no-calls" style="display:none;text-align:center;padding:60px;color:var(--muted);font-size:16px;font-weight:700">No calls in this category</div>
+
+</div>
+
+<!-- ══ CALL LOG TAB ══ -->
+<div id="tab-log" class="tab-content">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+    <div style="font-size:20px;font-weight:900;letter-spacing:2px">FULL CALL LOG</div>
+    <button class="btn btn-green btn-sm" onclick="openLogNewCall()">➕ LOG NEW CALL</button>
+  </div>
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden">
+      <thead>
+        <tr>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap">DATE / TIME</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">CALLER</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">TYPE</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">OUTCOME</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">DURATION</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">MATCH</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="call-log-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ METRICS TAB ══ -->
+<div id="tab-metrics" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">CALL METRICS & PERFORMANCE</div>
+
+  <!-- CONNECT RATE GAUGE -->
+  <div style="background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">CONNECT RATE</div>
+        <div style="font-size:56px;font-weight:900;color:var(--green);line-height:1" id="big-connect-rate">—</div>
+        <div style="font-size:14px;color:var(--dim);font-weight:600;margin-top:6px;font-family:var(--body)">Industry avg: 62% | EVL Target: 80%+</div>
+      </div>
+      <div style="flex:1;max-width:400px">
+        <div style="background:#1a1a2e;border-radius:8px;height:16px;overflow:hidden;margin-bottom:8px">
+          <div id="connect-rate-bar" style="height:100%;background:var(--green);border-radius:8px;transition:width .5s;width:0%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:700">
+          <span>0%</span><span style="color:var(--gold)">62% Industry</span><span style="color:var(--green)">80% Target</span><span>100%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics-grid" id="metrics-grid"></div>
+
+  <!-- DAILY BREAKDOWN -->
+  <div style="background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:20px">
+    <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">7-DAY CALL VOLUME</div>
+    <div id="weekly-chart" style="display:flex;align-items:flex-end;gap:8px;height:120px;padding:0 4px"></div>
+    <div id="weekly-labels" style="display:flex;gap:8px;margin-top:6px"></div>
+  </div>
+</div>
+
+<!-- ══ DIRECTORY TREE TAB ══ -->
+<div id="tab-directory" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">EVL PHONE DIRECTORY TREE</div>
+  <div style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:20px;font-family:var(--body)">Configure your automated phone greeting and call routing</div>
+
+  <!-- GREETING SCRIPT -->
+  <div style="background:var(--s1);border:2px solid var(--green);border-radius:12px;padding:20px;margin-bottom:20px">
+    <div style="font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">📢 MAIN GREETING SCRIPT</div>
+    <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:16px;font-family:var(--body);font-size:14px;color:var(--dim);line-height:1.8;font-style:italic">
+      "Thank you for calling <strong style="color:var(--white);font-style:normal">Express Vehicle Locators</strong> — where we find your vehicle, you get the deal.<br><br>
+      We are available <strong style="color:var(--green);font-style:normal">24 hours a day, 7 days a week</strong>.<br><br>
+      Please listen carefully as our options have recently changed."
+    </div>
+    <button class="btn btn-dark btn-sm" style="margin-top:12px" onclick="copyGreeting()">📋 COPY SCRIPT</button>
+  </div>
+
+  <!-- DIRECTORY OPTIONS -->
+  <div class="dir-tree">
+    <div class="dir-header">
+      <div style="font-size:16px;font-weight:900;color:var(--white);letter-spacing:2px">MENU OPTIONS</div>
+      <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px">PRESS A NUMBER TO HEAR THAT OPTION'S SCRIPT</div>
+    </div>
+    <div class="dir-tree-body">
+
+      <div class="dir-option" onclick="showDirScript(1)">
+        <div class="dir-key">1</div>
+        <div class="dir-info">
+          <div class="dir-label">🔍 FIND MY VEHICLE</div>
+          <div class="dir-desc">Customer looking for a specific vehicle — HOT LEAD. Route direct, no voicemail.</div>
+        </div>
+        <span class="dir-route route-direct">DIRECT TO YOU</span>
+      </div>
+
+      <div class="dir-option" onclick="showDirScript(2)">
+        <div class="dir-key">2</div>
+        <div class="dir-info">
+          <div class="dir-label">🚗 TRADE-IN EVALUATION</div>
+          <div class="dir-desc">Customer wants to know their vehicle's value — revenue opportunity. Route direct.</div>
+        </div>
+        <span class="dir-route route-direct">DIRECT TO YOU</span>
+      </div>
+
+      <div class="dir-option" onclick="showDirScript(3)">
+        <div class="dir-key">3</div>
+        <div class="dir-info">
+          <div class="dir-label">📊 ACTIVE DEAL STATUS</div>
+          <div class="dir-desc">Mid-deal customer checking in — CRITICAL. Must answer. Loss risk if missed.</div>
+        </div>
+        <span class="dir-route route-direct" style="background:#1a0000;border-color:var(--red);color:var(--red)">PRIORITY ROUTE</span>
+      </div>
+
+      <div class="dir-option" onclick="showDirScript(4)">
+        <div class="dir-key">4</div>
+        <div class="dir-info">
+          <div class="dir-label">💰 FINANCING & PAYMENT</div>
+          <div class="dir-desc">Rate questions, approvals, payment options. Can go to voicemail off-hours.</div>
+        </div>
+        <span class="dir-route route-vm">VM OFF-HOURS</span>
+      </div>
+
+      <div class="dir-option" onclick="showDirScript(5)">
+        <div class="dir-key">5</div>
+        <div class="dir-info">
+          <div class="dir-label">⚡ WHOLESALE / DEALER NETWORK</div>
+          <div class="dir-desc">B2B dealer inquiries — separate from retail. Route to dealer line.</div>
+        </div>
+        <span class="dir-route route-text">TEXT ALERT</span>
+      </div>
+
+      <div class="dir-option" onclick="showDirScript(6)">
+        <div class="dir-key">6</div>
+        <div class="dir-info">
+          <div class="dir-label">📋 BILLING & ACCOUNT SERVICES</div>
+          <div class="dir-desc">Existing customer account questions. Lower urgency.</div>
+        </div>
+        <span class="dir-route route-vm">VM + EMAIL</span>
+      </div>
+
+      <div class="dir-option" onclick="showDirScript(0)">
+        <div class="dir-key operator">0</div>
+        <div class="dir-info">
+          <div class="dir-label">👤 SPEAK WITH AN EVL SPECIALIST</div>
+          <div class="dir-desc">Direct to live person — always available 24/7. Never a dead end.</div>
+        </div>
+        <span class="dir-route route-direct">ALWAYS LIVE</span>
+      </div>
+
+      <div class="dir-option" onclick="showDirScript(9)">
+        <div class="dir-key spanish">9</div>
+        <div class="dir-info">
+          <div class="dir-label">🇲🇽 PARA ESPAÑOL — OPRIMA 9</div>
+          <div class="dir-desc">Spanish language menu — same options, full bilingual service. Critical for DFW market.</div>
+        </div>
+        <span class="dir-route route-direct">ESPAÑOL DIRECTO</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SPANISH GREETING -->
+  <div style="background:var(--s1);border:2px solid var(--gold);border-radius:12px;padding:20px">
+    <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">🇲🇽 GREETING ESPAÑOL</div>
+    <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:16px;font-family:var(--body);font-size:14px;color:var(--dim);line-height:1.8;font-style:italic">
+      "Gracias por llamar a <strong style="color:var(--white);font-style:normal">Express Vehicle Locators</strong> — encontramos su vehículo, usted obtiene el mejor trato.<br><br>
+      Estamos disponibles <strong style="color:var(--gold);font-style:normal">las 24 horas, los 7 días de la semana</strong>.<br><br>
+      Por favor escuche atentamente ya que nuestras opciones han cambiado recientemente."
+    </div>
+    <button class="btn btn-dark btn-sm" style="margin-top:12px;border-color:var(--gold);color:var(--gold)" onclick="copySpanishGreeting()">📋 COPIAR GUIÓN</button>
+  </div>
+</div>
+
+<!-- ══ CALL SCRIPTS TAB ══ -->
+<div id="tab-scripts" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">CALL SCRIPTS — CRISP FRAMEWORK</div>
+
+  <div style="background:#040e1a;border:2px solid var(--blue);border-radius:12px;padding:20px;margin-bottom:20px">
+    <div style="font-size:14px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-bottom:14px">THE CRISP CALL FRAMEWORK</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
+      ${['C — CONNECT: Use their name immediately. Warm, professional, confident.','R — REASON: State why you\'re calling clearly in one sentence.','I — INVOLVE: Ask questions. Listen 70%, talk 30%.','S — SCHEDULE: Always set the next step before hanging up.','P — PROMISE: Confirm exactly what you will do and by when.'].map((item,i)=>`
+      <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:14px">
+        <div style="font-size:20px;font-weight:900;color:var(--blue);margin-bottom:6px">${item[0]}</div>
+        <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;font-weight:600">${item.slice(4)}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div id="scripts-list"></div>
+</div>
+
+<!-- ══ SETUP GUIDE TAB ══ -->
+<div id="tab-setup" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">CALL CENTER SETUP GUIDE</div>
+  <div style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:20px;font-family:var(--body)">Follow these steps to get your EVL phone system running</div>
+
+  <div class="setup-step done">
+    <div class="step-num done">✅</div>
+    <div class="step-content">
+      <div class="step-title">STEP 1 — Call Log & Tracking</div>
+      <div class="step-desc">EVL Call Center admin page is live. Log calls, track metrics, view history. All stored locally and linked to Mastermind CRM.</div>
+      <div class="step-cost" style="color:var(--green)">✅ COMPLETE — FREE</div>
+    </div>
+  </div>
+
+  <div class="setup-step active">
+    <div class="step-num active">2</div>
+    <div class="step-content">
+      <div class="step-title">STEP 2 — Get a Dedicated EVL Phone Number</div>
+      <div class="step-desc">Get a professional business number separate from your personal cell. Two options:<br><br>
+        <strong style="color:var(--white)">Option A — Google Voice (FREE):</strong> Go to voice.google.com → Choose a number with your area code → Forward to your cell. Takes 5 minutes. Best for starting out.<br><br>
+        <strong style="color:var(--white)">Option B — OpenPhone ($13/month):</strong> openphone.com → Full business phone system, text from same number, call recording, team inbox.
+      </div>
+      <div class="step-cost" style="color:var(--gold)">⏳ PENDING — FREE or $13/month</div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <a href="https://voice.google.com" target="_blank" class="btn btn-dark btn-sm">🆓 Google Voice — FREE</a>
+        <a href="https://www.openphone.com" target="_blank" class="btn btn-dark btn-sm">📞 OpenPhone — $13/mo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="setup-step">
+    <div class="step-num pending">3</div>
+    <div class="step-content">
+      <div class="step-title">STEP 3 — Record Your Greeting</div>
+      <div class="step-desc">Record the EVL greeting script using your phone or computer microphone. Upload to Google Voice or OpenPhone. Use the script in the Directory Tree tab.<br><br>
+        <strong style="color:var(--white)">Pro tip:</strong> Record in a quiet room. Speak slowly and confidently. The greeting is the first impression of your brand.
+      </div>
+      <div class="step-cost" style="color:var(--muted)">⏳ PENDING — FREE</div>
+      <button class="btn btn-dark btn-sm" style="margin-top:10px" onclick="switchTab('directory',document.querySelectorAll('.tab-btn')[3])">📖 VIEW GREETING SCRIPT</button>
+    </div>
+  </div>
+
+  <div class="setup-step">
+    <div class="step-num pending">4</div>
+    <div class="step-content">
+      <div class="step-title">STEP 4 — Set Up Directory Tree / IVR</div>
+      <div class="step-desc">Configure the press-1-for-X menu in Google Voice or OpenPhone. Use the EVL Directory Tree from the previous tab.<br><br>
+        <strong style="color:var(--white)">Google Voice:</strong> Settings → Calls → Set up forwarding rules<br>
+        <strong style="color:var(--white)">OpenPhone:</strong> Phone Numbers → IVR → Add menu options
+      </div>
+      <div class="step-cost" style="color:var(--muted)">⏳ PENDING — FREE</div>
+    </div>
+  </div>
+
+  <div class="setup-step">
+    <div class="step-num pending">5</div>
+    <div class="step-content">
+      <div class="step-title">STEP 5 — Upgrade to Twilio (When Ready)</div>
+      <div class="step-desc">When call volume grows, upgrade to Twilio for full integration with Mastermind CRM — automatic call logging, customer ID matching, voicemail transcription, and SMS from the same number.<br><br>
+        Cost: ~$15-25/month vs CarWars at $400-800/month. Same features, 95% savings.
+      </div>
+      <div class="step-cost" style="color:var(--muted)">⏳ FUTURE — $15-25/month</div>
+      <a href="https://www.twilio.com" target="_blank" class="btn btn-dark btn-sm" style="margin-top:10px">🔗 twilio.com</a>
+    </div>
+  </div>
+
+  <div class="setup-step">
+    <div class="step-num pending">6</div>
+    <div class="step-content">
+      <div class="step-title">STEP 6 — Add EVL Number to Website</div>
+      <div class="step-desc">Once you have your EVL number, add it to the Contact page, footer, and all customer-facing pages. Update admin-comms templates with the real number. Make it click-to-call on mobile.</div>
+      <div class="step-cost" style="color:var(--muted)">⏳ PENDING — FREE</div>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /evl-wrap -->
+</div><!-- /app -->
+
+<!-- LOG NEW CALL MODAL -->
+<div id="log-modal" style="display:none;position:fixed;inset:0;background:rgba(2,2,3,0.95);z-index:300;overflow-y:auto;padding:20px">
+  <div style="max-width:600px;margin:0 auto;background:var(--s1);border:2px solid var(--green);border-radius:12px;overflow:hidden">
+    <div style="background:#020a02;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
+      <div style="font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px">➕ LOG NEW CALL</div>
+      <button onclick="closeLogModal()" style="background:var(--red);color:var(--white);border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font);letter-spacing:1px">✕ CLOSE</button>
+    </div>
+    <div style="padding:20px">
+      <div class="form-grid" style="margin-bottom:14px">
+        <div class="form-group"><label class="form-label">Caller Name</label><input class="form-input" id="log-name" placeholder="Caller's name"/></div>
+        <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" id="log-phone" placeholder="(555) 555-5555" type="tel"/></div>
+        <div class="form-group">
+          <label class="form-label">Call Type</label>
+          <select class="form-input" id="log-type">
+            <option value="inbound">📥 Inbound</option>
+            <option value="outbound">📤 Outbound</option>
+            <option value="missed">🔴 Missed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Directory Option</label>
+          <select class="form-input" id="log-dir">
+            <option value="">Unknown / Direct</option>
+            <option value="1">Press 1 — Find My Vehicle</option>
+            <option value="2">Press 2 — Trade-In</option>
+            <option value="3">Press 3 — Active Deal</option>
+            <option value="4">Press 4 — Financing</option>
+            <option value="5">Press 5 — Wholesale</option>
+            <option value="6">Press 6 — Billing</option>
+            <option value="0">Press 0 — Specialist</option>
+            <option value="9">Press 9 — Español</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Outcome</label>
+          <select class="form-input" id="log-outcome">
+            <option>✅ Connected — Positive</option>
+            <option>✅ Connected — Neutral</option>
+            <option>✅ Connected — Needs Follow-Up</option>
+            <option>📵 No Answer — Left Voicemail</option>
+            <option>📵 No Answer — No Voicemail</option>
+            <option>🔴 Missed — Needs Callback</option>
+            <option>🔴 Customer Not Interested</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duration</label>
+          <select class="form-input" id="log-duration">
+            <option>Under 1 min</option>
+            <option>1-3 mins</option>
+            <option>3-5 mins</option>
+            <option>5-10 mins</option>
+            <option>10-20 mins</option>
+            <option>20+ mins</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">Link to Mastermind Customer (optional)</label>
+        <select class="form-input" id="log-customer">
+          <option value="">Unknown / New Lead</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label class="form-label">Notes</label>
+        <textarea class="form-input" id="log-notes" rows="4" placeholder="What was discussed? Action items, customer needs, follow-up required..." style="resize:none;line-height:1.5"></textarea>
+      </div>
+      <button class="btn btn-green" onclick="saveNewCall()" style="width:100%;font-size:15px;padding:14px">✅ SAVE CALL LOG</button>
+      <div id="log-saved" style="display:none;text-align:center;color:var(--green);font-weight:900;font-size:15px;margin-top:10px;letter-spacing:1px">✅ CALL LOGGED!</div>
+    </div>
+  </div>
+</div>
+
+<!-- DIRECTORY SCRIPT MODAL -->
+<div id="dir-script-modal" style="display:none;position:fixed;inset:0;background:rgba(2,2,3,0.95);z-index:300;overflow-y:auto;padding:20px">
+  <div style="max-width:600px;margin:0 auto;background:var(--s1);border:2px solid var(--green);border-radius:12px;overflow:hidden">
+    <div style="background:#020a02;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
+      <div style="font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px" id="dir-script-title">Option Script</div>
+      <button onclick="closeDirScript()" style="background:var(--red);color:var(--white);border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font)">✕ CLOSE</button>
+    </div>
+    <div style="padding:20px">
+      <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:16px;font-family:var(--body);font-size:14px;color:var(--dim);line-height:1.8;font-style:italic;margin-bottom:16px" id="dir-script-content"></div>
+      <button class="btn btn-green" onclick="copyDirScript()">📋 COPY SCRIPT</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CORRECT_PIN = "1027";
+const CALLS_STORAGE = 'evl_call_log';
+
+function checkPin(){
+  if(document.getElementById('pin-input').value === CORRECT_PIN){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    sessionStorage.setItem('evl-calls-auth','1027');
+    initApp();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pin-input').value='';
+    document.getElementById('pin-input').focus();
+  }
+}
+function logout(){sessionStorage.removeItem('evl-calls-auth');location.reload();}
+document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
+if(sessionStorage.getItem('evl-calls-auth')==='1027'){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+}
+
+// DATA
+function loadCalls(){ try{ return JSON.parse(localStorage.getItem(CALLS_STORAGE)||'[]'); }catch(e){ return []; } }
+function saveCalls(c){ localStorage.setItem(CALLS_STORAGE, JSON.stringify(c)); }
+
+function loadMastermindCustomers(){
+  try{ return JSON.parse(localStorage.getItem('evl_mastermind_customers')||'[]'); }catch(e){ return []; }
+}
+
+// INIT
+function initApp(){
+  addSampleCalls();
+  renderCalls('all');
+  updateStats();
+  renderMetrics();
+  renderScripts();
+  populateCustomerDropdown();
+}
+if(sessionStorage.getItem('evl-calls-auth')==='1027') initApp();
+
+function addSampleCalls(){
+  const existing = loadCalls();
+  if(existing.length > 0) return;
+  const now = new Date();
+  const hoursAgo = h => new Date(now - h*3600000).toISOString();
+  
+  const samples = [
+    {id:'CL-001',name:'Robert Martinez',phone:'(214) 555-0192',type:'inbound',dir:'1',outcome:'✅ Connected — Positive',duration:'5-10 mins',notes:'Looking for 2023 Tundra TRD Pro. Has trade-in F-150. Ready to move. Sent to Mastermind.',customerId:'EVL-001',timestamp:hoursAgo(0.5)},
+    {id:'CL-002',name:'Unknown Caller',phone:'(972) 555-3847',type:'missed',dir:'2',outcome:'🔴 Missed — Needs Callback',duration:'Under 1 min',notes:'Missed call — pressed 2 for trade-in. Call back immediately.',customerId:'',timestamp:hoursAgo(1.2)},
+    {id:'CL-003',name:'Jennifer Thompson',phone:'(972) 555-0847',type:'outbound',dir:'3',outcome:'✅ Connected — Positive',duration:'3-5 mins',notes:'Deal status update. Deposit confirmed. Delivery scheduled.',customerId:'EVL-002',timestamp:hoursAgo(2)},
+    {id:'CL-004',name:'Unknown Caller',phone:'(469) 555-9921',type:'missed',dir:'',outcome:'🔴 Missed — Needs Callback',duration:'Under 1 min',notes:'No voicemail left. Call back ASAP.',customerId:'',timestamp:hoursAgo(3)},
+    {id:'CL-005',name:'Marcus Johnson',phone:'(469) 555-0231',type:'inbound',dir:'1',outcome:'✅ Connected — Neutral',duration:'10-20 mins',notes:'GMC Yukon Denali search. Cash buyer. Needs black on black.',customerId:'EVL-003',timestamp:hoursAgo(5)},
+    {id:'CL-006',name:'Dealer — Toyota McKinney',phone:'(214) 555-7700',type:'inbound',dir:'5',outcome:'✅ Connected — Positive',duration:'5-10 mins',notes:'UC Manager calling about trade card EVL-001. Interested in the Camry.',customerId:'',timestamp:hoursAgo(6)},
+    {id:'CL-007',name:'Sarah Williams',phone:'(214) 555-0563',type:'inbound',dir:'2',outcome:'✅ Connected — Needs Follow-Up',duration:'3-5 mins',notes:'Wants trade-in value on 2019 Bronco. Will send VIN tomorrow.',customerId:'EVL-004',timestamp:hoursAgo(22)},
+  ];
+  saveCalls(samples);
+}
+
+// RENDER CALLS
+function renderCalls(filter='all'){
+  const calls = loadCalls();
+  const grid = document.getElementById('calls-grid');
+  const noCalls = document.getElementById('no-calls');
+  
+  const filtered = filter==='all' ? calls : calls.filter(c=>{
+    if(filter==='missed') return c.type==='missed'||c.outcome.includes('Missed');
+    if(filter==='inbound') return c.type==='inbound';
+    if(filter==='outbound') return c.type==='outbound';
+    if(filter==='completed') return c.outcome.includes('Connected');
+    return true;
+  });
+
+  if(filtered.length===0){
+    grid.innerHTML=''; noCalls.style.display='block'; return;
+  }
+  noCalls.style.display='none';
+
+  const customers = loadMastermindCustomers();
+  
+  grid.innerHTML = filtered.map(call => {
+    const isMissed = call.type==='missed'||call.outcome.includes('Missed');
+    const cardCls = isMissed ? 'missed' : call.type==='outbound' ? '' : '';
+    
+    // Find customer match
+    const customer = call.customerId ? customers.find(c=>c.id===call.customerId) : null;
+    const matchHtml = customer 
+      ? `<div class="call-match match-found">🔗 MATCHED: ${customer.fname} ${customer.lname} — ${customer.id} — ${customer.status}</div>`
+      : `<div class="call-match match-none">⚡ NEW LEAD — Add to Mastermind</div>`;
+
+    const badgeCls = call.type==='missed'?'badge-missed':call.type==='outbound'?'badge-outbound':'badge-inbound';
+    const badgeText = call.type==='missed'?'🔴 MISSED':call.type==='outbound'?'📤 OUTBOUND':'📥 INBOUND';
+    
+    const timeStr = new Date(call.timestamp).toLocaleString('en-US',{timeZone:'America/Chicago',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true});
+    const dirLabels = {'1':'Press 1 — Find Vehicle','2':'Press 2 — Trade-In','3':'Press 3 — Deal Status','4':'Press 4 — Financing','5':'Press 5 — Wholesale','6':'Press 6 — Billing','0':'Press 0 — Specialist','9':'Press 9 — Español'};
+
+    return `<div class="call-card ${cardCls}">
+      <div class="call-card-header">
+        <span class="call-type-badge ${badgeCls}">${badgeText}</span>
+        <span class="call-time">${timeStr} CST</span>
+      </div>
+      <div class="call-card-body">
+        <div class="call-caller">${call.name||'Unknown Caller'}</div>
+        <div class="call-number"><a href="tel:${call.phone}" style="color:var(--blue);text-decoration:none">${call.phone}</a></div>
+        ${call.dir ? `<div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:6px">${dirLabels[call.dir]||''}</div>` : ''}
+        ${matchHtml}
+        <div class="call-duration">⏱ ${call.duration} · ${call.outcome}</div>
+        ${call.notes ? `<div class="call-notes-text">${call.notes}</div>` : ''}
+        <div class="btn-row">
+          <a href="tel:${call.phone}" class="btn btn-green btn-sm">📞 CALL BACK</a>
+          <a href="sms:${call.phone}" class="btn btn-dark btn-sm">💬 TEXT</a>
+          ${!call.customerId ? `<button class="btn btn-gold btn-sm" onclick="quickAddToMastermind('${call.id}')">➕ ADD TO CRM</button>` : `<a href="https://evl-decode-two.vercel.app/mastermind" target="_blank" class="btn btn-dark btn-sm">🧠 CRM</a>`}
+          <button class="btn btn-dark btn-sm" onclick="deleteCall('${call.id}')">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterCalls(type, btn){
+  document.querySelectorAll('.tab-content.active .btn-sm').forEach(b=>{b.style.borderColor='';b.style.color='';});
+  if(btn){btn.style.borderColor='var(--green)';btn.style.color='var(--green)';}
+  renderCalls(type);
+}
+
+// STATS
+function updateStats(){
+  const calls = loadCalls();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayCalls = calls.filter(c=>new Date(c.timestamp)>=today);
+  const missed = calls.filter(c=>c.type==='missed'||c.outcome.includes('Missed'));
+  const connected = calls.filter(c=>c.outcome.includes('Connected'));
+  const connectRate = calls.length ? Math.round((connected.length/calls.length)*100) : 0;
+  
+  // Week
+  const weekAgo = new Date(Date.now()-7*86400000);
+  const weekCalls = calls.filter(c=>new Date(c.timestamp)>=weekAgo);
+
+  document.getElementById('stat-today').textContent = todayCalls.length;
+  document.getElementById('stat-missed').textContent = missed.length;
+  document.getElementById('stat-connect').textContent = connectRate+'%';
+  document.getElementById('stat-week').textContent = weekCalls.length;
+  
+  // Avg duration (rough)
+  const durationMap = {'Under 1 min':0.5,'1-3 mins':2,'3-5 mins':4,'5-10 mins':7,'10-20 mins':15,'20+ mins':25};
+  const connectedCalls = connected.filter(c=>c.duration);
+  const avgMin = connectedCalls.length ? connectedCalls.reduce((s,c)=>s+(durationMap[c.duration]||0),0)/connectedCalls.length : 0;
+  document.getElementById('stat-avg-duration').textContent = avgMin ? Math.round(avgMin)+'m' : '—';
+
+  // Missed alert
+  if(missed.length > 0){
+    document.getElementById('missed-alert').style.display='flex';
+    document.getElementById('missed-alert-text').textContent = `${missed.length} missed call${missed.length>1?'s':''} need callback — within 2 hours to avoid losing the deal`;
+  }
+
+  // Log table
+  renderCallLog(calls);
+}
+
+function renderCallLog(calls){
+  const customers = loadMastermindCustomers();
+  const tbody = document.getElementById('call-log-tbody');
+  if(!calls.length){ tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">No calls logged yet</td></tr>'; return; }
+  tbody.innerHTML = calls.map(c=>{
+    const customer = c.customerId ? customers.find(cu=>cu.id===c.customerId) : null;
+    const timeStr = new Date(c.timestamp).toLocaleString('en-US',{timeZone:'America/Chicago',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true});
+    const typeBadge = c.type==='missed'?'<span style="color:var(--red);font-weight:900">🔴 MISSED</span>':c.type==='outbound'?'<span style="color:var(--blue);font-weight:900">📤 OUT</span>':'<span style="color:var(--green);font-weight:900">📥 IN</span>';
+    return `<tr>
+      <td style="color:var(--muted);font-size:13px;white-space:nowrap">${timeStr}</td>
+      <td><strong style="color:var(--white)">${c.name||'Unknown'}</strong><br><span style="font-size:12px;color:var(--blue)">${c.phone}</span></td>
+      <td>${typeBadge}</td>
+      <td style="font-size:13px;color:var(--dim)">${c.outcome}</td>
+      <td style="font-size:13px;color:var(--muted)">${c.duration||'—'}</td>
+      <td style="font-size:13px">${customer?`<span style="color:var(--green)">${customer.fname} ${customer.lname}</span>`:'<span style="color:var(--muted)">—</span>'}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <a href="tel:${c.phone}" class="btn btn-green btn-sm">📞</a>
+          <button class="btn btn-dark btn-sm" onclick="deleteCall('${c.id}')">🗑</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// METRICS
+function renderMetrics(){
+  const calls = loadCalls();
+  const connected = calls.filter(c=>c.outcome.includes('Connected'));
+  const missed = calls.filter(c=>c.type==='missed'||c.outcome.includes('Missed'));
+  const inbound = calls.filter(c=>c.type==='inbound');
+  const outbound = calls.filter(c=>c.type==='outbound');
+  const connectRate = calls.length ? Math.round((connected.length/calls.length)*100) : 0;
+  
+  // Update big gauge
+  document.getElementById('big-connect-rate').textContent = connectRate+'%';
+  document.getElementById('big-connect-rate').style.color = connectRate>=80?'var(--green)':connectRate>=62?'var(--gold)':'var(--red)';
+  document.getElementById('connect-rate-bar').style.width = connectRate+'%';
+  document.getElementById('connect-rate-bar').style.background = connectRate>=80?'var(--green)':connectRate>=62?'var(--gold)':'var(--red)';
+
+  // Dir breakdown
+  const dirLabels = {'1':'Find Vehicle','2':'Trade-In','3':'Deal Status','4':'Financing','5':'Wholesale','0':'Operator','9':'Español'};
+  const dirCounts = {};
+  calls.forEach(c=>{ if(c.dir) dirCounts[c.dir] = (dirCounts[c.dir]||0)+1; });
+
+  document.getElementById('metrics-grid').innerHTML = [
+    {title:'VOLUME',rows:[['Total Calls',calls.length],['Inbound',inbound.length],['Outbound',outbound.length],['Missed',missed.length]]},
+    {title:'PERFORMANCE',rows:[['Connect Rate',connectRate+'%'],['Avg Duration','~7 min'],['Callback Rate',missed.length?Math.round(((missed.length)/missed.length)*100)+'%':'N/A'],['Deals Generated',connected.length]]},
+    {title:'TOP DIRECTORY OPTIONS',rows:Object.entries(dirCounts).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([k,v])=>[dirLabels[k]||'Press '+k,v+' calls'])},
+  ].map(m=>`<div class="metric-card">
+    <div class="metric-title">${m.title}</div>
+    ${m.rows.map(r=>`<div class="metric-row"><span class="metric-key">${r[0]}</span><span class="metric-val">${r[1]}</span></div>`).join('')}
+  </div>`).join('');
+
+  // Weekly chart
+  renderWeeklyChart();
+}
+
+function renderWeeklyChart(){
+  const calls = loadCalls();
+  const days = [];
+  for(let i=6;i>=0;i--){
+    const d = new Date(); d.setDate(d.getDate()-i); d.setHours(0,0,0,0);
+    const next = new Date(d); next.setDate(next.getDate()+1);
+    const count = calls.filter(c=>{ const t=new Date(c.timestamp); return t>=d&&t<next; }).length;
+    days.push({label:d.toLocaleDateString('en-US',{weekday:'short'}),count});
+  }
+  const max = Math.max(...days.map(d=>d.count),1);
+  const chart = document.getElementById('weekly-chart');
+  const labels = document.getElementById('weekly-labels');
+  const w = `calc(${100/7}% - 8px)`;
+  chart.innerHTML = days.map(d=>`
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div style="font-size:12px;font-weight:900;color:var(--dim)">${d.count||''}</div>
+      <div style="width:100%;background:${d.count>0?'var(--green)':'#1a1a2e'};border-radius:4px 4px 0 0;height:${Math.max(8,(d.count/max)*100)}px;transition:height .3s"></div>
+    </div>`).join('');
+  labels.innerHTML = days.map(d=>`<div style="flex:1;text-align:center;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px">${d.label}</div>`).join('');
+}
+
+// SCRIPTS
+const CALL_SCRIPTS = [
+  {title:'INBOUND — FIND MY VEHICLE',color:'var(--green)',script:`"Thank you for calling Express Vehicle Locators, this is [YOUR NAME], how can I help you today?"\n\n[Listen to their need]\n\n"Perfect — finding the right vehicle is exactly what we do, and we work 24/7 to make it happen. Let me pull up your information."\n\n"Can I get your name and the best number to reach you?"\n\n"[VEHICLE THEY WANT] — great choice. Let me ask you a few quick questions so I can find the exact right fit for you..."\n\n"What's your budget?"\n"Do you have a trade-in?"\n"What's your timeline — are you looking to be in something within 30 days or more flexible?"\n\n"Here's what I'm going to do — I'm going to search our nationwide network right now and I'll have matches for you within 24 hours. Fair enough?"\n\n"What's the best way to reach you — call or text?"`},
+  {title:'INBOUND — TRADE-IN',color:'var(--blue)',script:`"Thanks for calling EVL — you're interested in knowing what your vehicle is worth?"\n\n[Get vehicle info]\n\n"Great. I need three things from you: your VIN number, current mileage, and a few photos. Do you have your VIN handy? It's on your dashboard or door jamb."\n\n[Get VIN]\n\n"Perfect. I'm going to run this through our certified evaluation system. I'll have a value range for you within the hour."\n\n"Now here's the EVL advantage — we don't just give you one dealer's low offer. We shop your trade to our entire dealer network to maximize what you get. That means more money in your pocket."\n\n"I'll text you a link to complete the evaluation. Takes about 5 minutes. Sound good?"`},
+  {title:'OUTBOUND — FOLLOW-UP CALL',color:'var(--gold)',script:`"Hi, is this [CUSTOMER NAME]? This is [YOUR NAME] calling from Express Vehicle Locators."\n\n"I'm calling to [reason — give update / follow up on your vehicle search / check in on your delivery]."\n\n[State the update or reason clearly in one sentence]\n\n"I wanted to make sure you got that information and see if you have any questions."\n\n[Listen — don't interrupt]\n\n"That's a great question — [answer or 'let me find out and get back to you within the hour']."\n\n"Here's what happens next — [clear next step]."\n\n"Is there anything else I can help you with today?"\n\n"Perfect. I'll [specific action] and you'll hear from me by [specific time]. Thank you [NAME]!"`},
+  {title:'MISSED CALL — CALLBACK',color:'var(--red)',script:`"Hi, this is [YOUR NAME] from Express Vehicle Locators returning your call."\n\n[If voicemail]: "You reached out to us earlier — I'm sorry I missed your call. I'm available right now and want to make sure I take care of whatever brought you to EVL today. Please call me back at [EVL NUMBER] or reply to this voicemail. I'm here 24/7."\n\n[If they answer]: "I see I missed a call from this number earlier — I apologize for that. How can I help you today?"\n\n[Important]: Never let more than 2 hours pass before calling a missed call back. Every missed call is a potential deal walking out the door.`},
+  {title:'DEALER / WHOLESALE CALL',color:'var(--purple)',script:`"Express Vehicle Locators wholesale, this is [NAME]."\n\n"[DEALER NAME], how are you?"\n\n[Listen to their inquiry]\n\n[If calling about a trade card]: "Yes — VIN [XXX], the [YEAR MAKE MODEL]. I sent that over earlier. Did you have a chance to look at it?"\n\n[If they have a bid]: "Great — what number are you at?"\n\n[If negotiating]: "I appreciate that. Based on market data that unit is sitting at [RANGE]. What can we do to get to a number that works for both of us?"\n\n[Close]: "Let's get this done. I'll confirm the porter pickup as soon as we agree on price. Fair?"`},
+];
+
+function renderScripts(){
+  document.getElementById('scripts-list').innerHTML = CALL_SCRIPTS.map(s=>`
+    <div style="background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;overflow:hidden;margin-bottom:14px;transition:border-color .2s" onmouseover="this.style.borderColor='${s.color}'" onmouseout="this.style.borderColor='#1a1a2e'">
+      <div style="background:var(--s2);padding:14px 18px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:15px;font-weight:900;color:var(--white);letter-spacing:1px">${s.title}</div>
+        <button class="btn btn-dark btn-sm" onclick="copyScript(this,'${encodeURIComponent(s.script)}')" style="border-color:${s.color};color:${s.color}">📋 COPY</button>
+      </div>
+      <div style="padding:16px 18px;font-family:var(--body);font-size:13px;color:var(--dim);line-height:1.8;white-space:pre-wrap">${s.script}</div>
+    </div>`).join('');
+}
+
+function copyScript(btn, encoded){
+  navigator.clipboard.writeText(decodeURIComponent(encoded)).then(()=>{
+    btn.textContent='✅ COPIED!'; btn.style.color='var(--green)';
+    setTimeout(()=>{btn.textContent='📋 COPY';btn.style.color='';},2000);
+  });
+}
+
+// DIRECTORY SCRIPTS
+const DIR_SCRIPTS = {
+  1: {title:'Press 1 — Find My Vehicle',script:`"For vehicle search and acquisition, please stay on the line.\n\nExpress Vehicle Locators specializes in finding the exact vehicle you're looking for — any make, any model, any configuration. Our nationwide network means if it's available, we find it.\n\nPlease hold and an EVL specialist will be with you momentarily. We're available 24 hours a day, 7 days a week."`},
+  2: {title:'Press 2 — Trade-In Evaluation',script:`"For trade-in evaluations, please stay on the line.\n\nEVL's certified appraisal process gives you the true market value for your vehicle — not a dealer's low offer. We shop your trade to our entire network to maximize your position.\n\nPlease hold and a trade-in specialist will be with you shortly."`},
+  3: {title:'Press 3 — Active Deal Status',script:`"For updates on an active deal, please stay on the line.\n\nYour deal is our priority. An EVL specialist will update you on the status of your vehicle immediately.\n\nPlease hold — we'll be right with you."`},
+  4: {title:'Press 4 — Financing',script:`"For financing and payment questions, please hold and a specialist will assist you.\n\nIf you're calling after hours, please leave a message and we'll return your call within 2 hours.\n\nRemember — EVL works with multiple lenders to find the best rate for your situation."`},
+  5: {title:'Press 5 — Wholesale / Dealer',script:`"For wholesale dealer inquiries and B2B partnerships, please hold.\n\nEVL operates a nationwide dealer network with hub locations covering 50-mile service zones. A wholesale specialist will assist you shortly."`},
+  0: {title:'Press 0 — EVL Specialist',script:`"Connecting you to an EVL specialist now.\n\nExpress Vehicle Locators — available 24 hours a day, 7 days a week. No voicemail, no automated systems. A real person will answer your call.\n\nPlease hold."`},
+  9: {title:'Press 9 — Español',script:`"Para hablar con un especialista de EVL en español, por favor espere en línea.\n\nExpress Vehicle Locators está disponible para servirle en español, las 24 horas del día, los 7 días de la semana.\n\nPor favor permanezca en línea, un especialista le atenderá en breve."`},
+};
+
+let currentDirScript = '';
+function showDirScript(num){
+  const s = DIR_SCRIPTS[num];
+  if(!s) return;
+  currentDirScript = s.script;
+  document.getElementById('dir-script-title').textContent = s.title;
+  document.getElementById('dir-script-content').innerHTML = s.script.replace(/\n/g,'<br>');
+  document.getElementById('dir-script-modal').style.display='block';
+}
+function closeDirScript(){ document.getElementById('dir-script-modal').style.display='none'; }
+function copyDirScript(){ navigator.clipboard.writeText(currentDirScript).then(()=>{ const btn=document.querySelector('#dir-script-modal .btn-green'); btn.textContent='✅ COPIED!'; setTimeout(()=>btn.textContent='📋 COPY SCRIPT',2000); }); }
+
+// GREETINGS
+function copyGreeting(){
+  const text = "Thank you for calling Express Vehicle Locators — where we find your vehicle, you get the deal. We are available 24 hours a day, 7 days a week. Please listen carefully as our options have recently changed.";
+  navigator.clipboard.writeText(text).then(()=>alert('✅ Greeting copied!'));
+}
+function copySpanishGreeting(){
+  const text = "Gracias por llamar a Express Vehicle Locators — encontramos su vehículo, usted obtiene el mejor trato. Estamos disponibles las 24 horas, los 7 días de la semana. Por favor escuche atentamente ya que nuestras opciones han cambiado recientemente.";
+  navigator.clipboard.writeText(text).then(()=>alert('✅ Guión copiado!'));
+}
+
+// LOG NEW CALL
+function openLogNewCall(){
+  document.getElementById('log-modal').style.display='block';
+  document.getElementById('log-saved').style.display='none';
+  populateCustomerDropdown();
+}
+function closeLogModal(){ document.getElementById('log-modal').style.display='none'; }
+
+function populateCustomerDropdown(){
+  const customers = loadMastermindCustomers();
+  const sel = document.getElementById('log-customer');
+  if(!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">Unknown / New Lead</option>' + customers.map(c=>`<option value="${c.id}">${c.fname} ${c.lname} — ${c.id} — ${c.status}</option>`).join('');
+  if(cur) sel.value = cur;
+}
+
+function saveNewCall(){
+  const name = document.getElementById('log-name').value.trim();
+  const phone = document.getElementById('log-phone').value.trim();
+  const type = document.getElementById('log-type').value;
+  const outcome = document.getElementById('log-outcome').value;
+  if(!phone){ alert('Please enter a phone number'); return; }
+
+  const calls = loadCalls();
+  const newCall = {
+    id: 'CL-'+String(Date.now()).slice(-6),
+    name: name||'Unknown Caller',
+    phone, type,
+    dir: document.getElementById('log-dir').value,
+    outcome, 
+    duration: document.getElementById('log-duration').value,
+    customerId: document.getElementById('log-customer').value,
+    notes: document.getElementById('log-notes').value.trim(),
+    timestamp: new Date().toISOString(),
+  };
+  calls.unshift(newCall);
+  saveCalls(calls);
+  updateStats();
+  renderCalls('all');
+  renderMetrics();
+
+  document.getElementById('log-saved').style.display='block';
+  setTimeout(()=>{ closeLogModal(); document.getElementById('log-saved').style.display='none'; },1500);
+}
+
+function deleteCall(id){
+  if(!confirm('Delete this call record?')) return;
+  saveCalls(loadCalls().filter(c=>c.id!==id));
+  renderCalls('all'); updateStats(); renderMetrics();
+}
+
+function quickAddToMastermind(callId){
+  const call = loadCalls().find(c=>c.id===callId);
+  if(!call) return;
+  alert(`Open Mastermind and add:\nName: ${call.name}\nPhone: ${call.phone}\nSource: Direct Call\n\nThen link back here.`);
+  window.open('https://evl-decode-two.vercel.app/mastermind','_blank');
+}
+
+// TAB SWITCHING
+function switchTab(tab, btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(tab==='metrics') renderMetrics();
+  if(tab==='scripts') renderScripts();
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLogModal();closeDirScript();}});
+</script>
+</body>
+</html>
