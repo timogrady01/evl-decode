@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/leasing",
+      "destination": "/leasing.html"
+    },
+    {
+      "source": "/leasing.html",
+      "destination": "/leasing.html"
+    },
+    {
       "source": "/faq",
       "destination": "/faq.html"
     },
