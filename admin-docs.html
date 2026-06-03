@@ -134,8 +134,44 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
   .doc-content .sig-line{border-color:#000}
 }
 </style>
+<style id="evl-admin-nav-css">
+/* ── EVL ADMIN NAV ── */
+.evl-admin-nav{position:sticky;top:0;z-index:500;background:#020a02;border-bottom:2px solid #00C853;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
+.evl-admin-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
+.evl-admin-links{display:flex;align-items:center;gap:4px;}
+.evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-admin-link:hover{color:#fff;background:#0d1a0d;}
+.evl-admin-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;border:1px solid #2a2a4e;transition:all .2s;white-space:nowrap;}
+.evl-admin-retail:hover{color:#fff;border-color:#fff;}
+.evl-admin-hamburger{display:none;background:none;border:none;color:#00C853;font-size:22px;cursor:pointer;padding:4px 8px;}
+/* Fix body centering */
+body{display:block !important;align-items:unset !important;justify-content:unset !important;}
+.evl-admin-nav{position:sticky !important;top:0 !important;z-index:9999 !important;width:100% !important;}
+@media(max-width:768px){{
+  .evl-admin-links{{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#020a02;border-bottom:2px solid #00C853;padding:12px 0;gap:0;}}
+  .evl-admin-links.open{{display:flex;}}
+  .evl-admin-link,.evl-admin-retail{{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #0d1a0d;}}
+  .evl-admin-hamburger{{display:block;}}
+}}
+</style>
 </head>
 <body>
+<nav class="evl-admin-nav">
+  <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#00C853" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#00C853"/></svg>
+    <span>EVL <span style="color:#00C853">ADMIN</span></span>
+  </a>
+  <button class="evl-admin-hamburger" onclick="toggleAdminNav()" aria-label="Menu">&#9776;</button>
+  <div class="evl-admin-links" id="evl-admin-links">
+    <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-link">🛡️ DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/mastermind" class="evl-admin-link">🧠 MASTERMIND</a>
+    <a href="https://evl-decode-two.vercel.app/admin-docs" class="evl-admin-link">📋 DOCUMENTS</a>
+    <a href="https://evl-decode-two.vercel.app/admin-comms" class="evl-admin-link">📨 TEMPLATES</a>
+    <a href="https://evl-decode-two.vercel.app/admin-scripts" class="evl-admin-link">⚙️ SCRIPTS</a>
+    <a href="https://evl-decode-two.vercel.app/ws" class="evl-admin-link">⚡ WHOLESALE</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-admin-retail">🌐 RETAIL SITE</a>
+  </div>
+</nav>
 
 <!-- LOGIN -->
 <div id="login-screen">
@@ -884,6 +920,10 @@ function generateDoc(id){
 
 // Close on escape
 document.addEventListener('keydown', e=>{if(e.key==='Escape') closeDoc();});
+</script>
+<script id="evl-admin-nav-js">
+function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.toggle('open');}}
+(function(){{var path=window.location.pathname;document.querySelectorAll('.evl-admin-link').forEach(function(a){{if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){{a.style.color='#00C853';a.style.borderBottom='2px solid #00C853';}}}});}} )();
 </script>
 </body>
 </html>
