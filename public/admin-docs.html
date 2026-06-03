@@ -207,7 +207,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
 
   <!-- STATS -->
   <div class="stats-bar">
-    <div class="stat"><span class="stat-val" id="stat-total">34</span><span class="stat-lbl">Total Documents</span></div>
+    <div class="stat"><span class="stat-val" id="stat-total">35</span><span class="stat-lbl">Total Documents</span></div>
     <div class="stat"><span class="stat-val" style="color:#FF3333">8</span><span class="stat-lbl">Required by Law</span></div>
     <div class="stat"><span class="stat-val" style="color:#FFD700">12</span><span class="stat-lbl">Customer Facing</span></div>
     <div class="stat"><span class="stat-val" style="color:#00C853">9</span><span class="stat-lbl">Internal / Ops</span></div>
@@ -661,6 +661,26 @@ body{display:block !important;align-items:unset !important;justify-content:unset
   </div>
   <div class="doc-grid" id="grid-legal-clarity">
 
+    <div class="doc-card" data-cat="legal" data-search="attorney review checklist legal questions texas automotive counsel">
+      <div class="doc-card-header" style="background:#1a0a00;border-color:#FF3333">
+        <div class="doc-title" style="color:#FF3333">⚠️ ATTORNEY REVIEW CHECKLIST — 30 OPEN QUESTIONS</div>
+        <div class="doc-icon">🔴</div>
+      </div>
+      <div class="doc-card-body">
+        <div class="doc-desc" style="color:#FF6666">PRINT THIS AND BRING TO YOUR ATTORNEY. 30 specific legal questions covering business structure, leasing, fee language, wholesale operations, compliance, and document review. Estimated cost: $500-$1,000 one-time review.</div>
+        <div class="doc-tags">
+          <span class="doc-tag" style="background:#1a0000;border:1px solid #FF3333;color:#FF3333">🔴 DO BEFORE LEASING LAUNCH</span>
+          <span class="doc-tag tag-required">PRIORITY ACTION</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-blue" onclick="openDoc('attorney-review-checklist')">📄 VIEW ALL 30 QUESTIONS</button>
+          <button class="btn" style="background:#FF3333;color:#fff" onclick="window.open('https://www.texasbar.com/AM/Template.cfm?Section=Lawyer_Referral_Service','_blank')">⚖️ FIND TX ATTORNEY</button>
+        </div>
+      </div>
+    </div>
+
+
+
     <div class="doc-card" data-cat="legal" data-search="EVL non dealer SaaS advisory consulting legal framework texas GDN">
       <div class="doc-card-header"><div class="doc-title">EVL LEGAL FRAMEWORK — NON-DEALER ADVISORY MODEL</div><div class="doc-icon">⚖️</div></div>
       <div class="doc-card-body">
@@ -984,6 +1004,115 @@ function closeDoc(){
 }
 
 
+
+  'attorney-review-checklist': {
+    title: 'ATTORNEY REVIEW CHECKLIST — ALL OPEN LEGAL QUESTIONS',
+    content: `<h1>EVL ATTORNEY REVIEW CHECKLIST</h1>
+<div class="notice">⚠️ PRINT THIS PAGE AND BRING IT TO YOUR ATTORNEY CONSULTATION. Estimated cost: $500-$1,000 for a one-time review. Do this before launching leasing advisory services publicly.</div>
+
+<h2>RECOMMENDED ATTORNEY PROFILE</h2>
+<p>You need a <strong>Texas automotive attorney</strong> who is familiar with:</p>
+<ul>
+  <li>Texas Transportation Code Chapter 503 (motor vehicle dealers)</li>
+  <li>Texas Occupations Code Chapter 2301</li>
+  <li>TxDMV licensing requirements (GDN, Lease Facilitator, Lessor)</li>
+  <li>FTC dealer regulations</li>
+  <li>SaaS/technology company structures in regulated industries</li>
+</ul>
+<p>Search: <strong>"Texas automotive dealer attorney"</strong> or <strong>"Texas motor vehicle law"</strong></p>
+<p>Dallas/Plano area bar referral: <strong>State Bar of Texas — texasbar.com/referral</strong></p>
+
+<h2 style="color:#FF3333">🔴 PRIORITY 1 — BUSINESS STRUCTURE QUESTIONS</h2>
+<div class="field-block">
+  <p><strong>Q1.</strong> Does EVL's current advisory/consulting model require any license from TxDMV to operate legally in Texas?</p>
+  <p><strong>Q2.</strong> At what point does EVL's activity cross from "advisory" into "facilitating" — specifically when EVL submits trade cards to dealers, attends negotiations, or coordinates delivery logistics?</p>
+  <p><strong>Q3.</strong> Does acting as a customer's "authorized representative" in negotiations with a dealer require a license?</p>
+  <p><strong>Q4.</strong> Can EVL legally charge a consulting fee for vehicle research and market intelligence without a GDN license?</p>
+  <p><strong>Q5.</strong> Is EVL's current service agreement language sufficient to establish the advisory/consulting relationship, or does it need revision?</p>
+</div>
+
+<h2 style="color:#FF3333">🔴 PRIORITY 2 — LEASING QUESTIONS</h2>
+<div class="field-block">
+  <p><strong>Q6.</strong> Does EVL's leasing advisory service — providing lease intelligence reports, money factor data, and negotiation strategy — require a Lease Facilitator GDN license under Texas Transportation Code?</p>
+  <p><strong>Q7.</strong> Can EVL legally advise customers on lease transfer options (SwapALease, LeaseTrader) for a consulting fee without a license?</p>
+  <p><strong>Q8.</strong> Does connecting customers to dealers for lease transactions (even as a flat-fee platform service) constitute lease facilitation?</p>
+  <p><strong>Q9.</strong> Review the leasing page at expressvehiclelocators.com/leasing — does any language on this page create licensing risk?</p>
+  <p><strong>Q10.</strong> Is the "Leasing Advisory Scope of Services" document (in EVL admin-docs) sufficient to establish the advisory — not facilitator — relationship?</p>
+</div>
+
+<h2 style="color:#FFD700">🟡 PRIORITY 3 — FEE STRUCTURE QUESTIONS</h2>
+<div class="field-block">
+  <p><strong>Q11.</strong> EVL currently uses the term "referral fee" for payments from dealer partners. Should this be renamed to "Platform Access Fee," "Marketing Service Fee," or "Transaction Facilitation Fee" — and which term creates the least legal exposure?</p>
+  <p><strong>Q12.</strong> Can EVL legally receive a flat monthly fee from licensed dealers for being listed in the EVL dealer network?</p>
+  <p><strong>Q13.</strong> If EVL receives a per-introduction fee from dealers (vs. flat monthly fee) — does that change EVL's legal classification?</p>
+  <p><strong>Q14.</strong> Can EVL charge customers a consulting fee that is NOT contingent on a transaction completing — and does that non-contingency language adequately protect EVL from facilitator classification?</p>
+  <p><strong>Q15.</strong> Review the Consulting Fee Agreement in EVL admin-docs — is this document enforceable and does it adequately protect EVL?</p>
+</div>
+
+<h2 style="color:#FFD700">🟡 PRIORITY 4 — WHOLESALE / B2B QUESTIONS</h2>
+<div class="field-block">
+  <p><strong>Q16.</strong> EVL connects buying dealers (BD) with selling dealers (ID) for wholesale vehicle transactions. Does this activity require any license?</p>
+  <p><strong>Q17.</strong> EVL dispatches porters (DS employees, SPs) to pick up vehicles on behalf of dealers. Does EVL have any liability exposure in this process?</p>
+  <p><strong>Q18.</strong> The Porter Authorization & Route Log document — does it adequately transfer liability for vehicle condition from EVL to the parties?</p>
+  <p><strong>Q19.</strong> Does the 50-mile hub porter system create any employment or independent contractor classification issues for EVL?</p>
+  <p><strong>Q20.</strong> Review the Dealer Network Terms & Conditions and Dealer Platform Access Agreement — are these documents legally sufficient?</p>
+</div>
+
+<h2 style="color:#2B84FE">🔵 PRIORITY 5 — COMPLIANCE QUESTIONS</h2>
+<div class="field-block">
+  <p><strong>Q21.</strong> EVL collects customer financial information (credit applications, income, SSN). Does this trigger GLBA Safeguards Rule requirements even though EVL is not a dealer?</p>
+  <p><strong>Q22.</strong> Does EVL's trade-in appraisal service trigger any FTC or Texas consumer protection regulations?</p>
+  <p><strong>Q23.</strong> EVL's website collects personal data. Does EVL need a formal Privacy Policy update to comply with current Texas privacy law (Texas Data Privacy and Security Act)?</p>
+  <p><strong>Q24.</strong> Does EVL need to comply with the FTC's Red Flags Rule even as a non-dealer?</p>
+  <p><strong>Q25.</strong> Does EVL's text/SMS communication system require any TCPA disclosures or opt-in language?</p>
+</div>
+
+<h2 style="color:#2B84FE">🔵 PRIORITY 6 — DOCUMENT LANGUAGE REVIEW</h2>
+<div class="field-block">
+  <p><strong>Q26.</strong> Review Service Agreement at expressvehiclelocators.com/service-agreement — flag any language that implies dealer activity.</p>
+  <p><strong>Q27.</strong> Review Terms of Service at expressvehiclelocators.com/terms — adequate for a SaaS/advisory company?</p>
+  <p><strong>Q28.</strong> Review Privacy Policy at expressvehiclelocators.com/privacy — GLBA and Texas privacy law compliant?</p>
+  <p><strong>Q29.</strong> The EVL website footer disclaimer: "EVL is a vehicle advisory and technology platform. EVL is not a licensed motor vehicle dealer, lease facilitator, or lessor under Texas Transportation Code." — Is this disclaimer sufficient and correctly worded?</p>
+  <p><strong>Q30.</strong> Do any of EVL's customer-facing page descriptions (Find My Car, Trade-In, Leasing) need modification to avoid implied dealer or facilitator activity?</p>
+</div>
+
+<h2>DOCUMENTS TO BRING TO ATTORNEY MEETING</h2>
+<p>Print or bring digital copies of all of the following from EVL Admin Documents:</p>
+<ul>
+  <li>✅ Service Agreement (live at /service-agreement)</li>
+  <li>✅ EVL Legal Framework — Non-Dealer Advisory Model</li>
+  <li>✅ EVL CAN / CANNOT DO Quick Reference</li>
+  <li>✅ Leasing Advisory Scope of Services</li>
+  <li>✅ Consulting Fee Agreement</li>
+  <li>✅ Dealer Platform Access Agreement (flagged for fee language review)</li>
+  <li>✅ Website Legal Disclaimer</li>
+  <li>✅ Porter Authorization & Route Log</li>
+  <li>✅ Dealer Network Terms & Conditions</li>
+  <li>✅ Privacy Policy (live at /privacy)</li>
+  <li>✅ Terms of Service (live at /terms)</li>
+</ul>
+
+<h2>ESTIMATED COST & TIMELINE</h2>
+<div class="field-block">
+  <div class="field-label">One-Time Review</div><div class="field-line">$500 — $1,000</div>
+  <div class="field-label">Timeline</div><div class="field-line">1-2 hours consultation + document review</div>
+  <div class="field-label">When to Do This</div><div class="field-line">BEFORE launching leasing advisory services publicly</div>
+  <div class="field-label">Attorney Type</div><div class="field-line">Texas automotive / motor vehicle attorney</div>
+  <div class="field-label">Referral Source</div><div class="field-line">texasbar.com/referral — search "motor vehicle"</div>
+</div>
+
+<h2>POST-ATTORNEY ACTION ITEMS</h2>
+<p>After the attorney meeting, update this document with:</p>
+<div class="field-block">
+  <div class="field-label">Date of Review</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Attorney Name & Firm</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Key Findings</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Documents Requiring Changes</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Changes Made</div><div class="field-line">&nbsp;</div>
+  <div class="field-label">Cleared for Leasing Launch</div><div class="field-line">☐ YES  ☐ NO  ☐ PENDING CHANGES</div>
+</div>`
+  },
+
   'evl-legal-framework': {
     title: 'EVL LEGAL FRAMEWORK — NON-DEALER ADVISORY MODEL',
     content: `<h1>EVL LEGAL FRAMEWORK — NON-DEALER ADVISORY MODEL</h1>
@@ -1029,7 +1158,7 @@ function closeDoc(){
   <li>Service Agreement language (currently at /service-agreement)</li>
   <li>Leasing Advisory Scope of Services document</li>
   <li>Consulting Fee Agreement</li>
-  <li>Dealer Referral Marketing Agreement</li>
+  <li>Dealer Platform Access Agreement</li>
   <li>All website disclaimers on leasing pages</li>
   <li>Customer communications referencing leasing services</li>
 </ul>`
@@ -1098,7 +1227,7 @@ function closeDoc(){
   <li>The consulting fee above is for advisory services rendered — it is <strong>not</strong> contingent on any vehicle transaction completing</li>
   <li>All vehicle transactions will occur directly between Client and a licensed dealer</li>
   <li>EVL's advice does not guarantee any specific price, availability, or outcome</li>
-  <li>EVL may receive separate marketing fees from dealer partners — this does not affect the objectivity of EVL's advice</li>
+  <li>EVL may receive separate platform access fees from dealer partners — this does not affect the objectivity of EVL's advice</li>
 </ul>
 <div class="signature-block">
   <div class="field-label">Client Signature</div><div class="sig-line">&nbsp;</div>
