@@ -1,6 +1,18 @@
 {
   "rewrites": [
     {
+      "source": "/my-deal",
+      "destination": "my-deal.html"
+    },
+    {
+      "source": "/my-deal.html",
+      "destination": "my-deal.html"
+    },
+    {
+      "source": "/compare.html",
+      "destination": "compare.html"
+    },
+    {
       "source": "/compare",
       "destination": "compare.html"
     },
