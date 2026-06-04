@@ -443,10 +443,10 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
     <div class="advisory-banner">
       <div class="advisory-banner-icon">⚡</div>
       <div class="advisory-banner-text">
-        <div class="advisory-banner-title">SEE SOMETHING YOU LIKE? EVL NEGOTIATES FOR YOU.</div>
-        <div class="advisory-banner-sub">Don't pay sticker price. EVL's advisory service gets you below market — plus maximizes your trade-in. Average savings: $4,300 per deal.</div>
+        <div class="advisory-banner-title">SEE SOMETHING YOU LIKE? EVL ADVISES YOU.</div>
+        <div class="advisory-banner-sub">EVL delivers a Vehicle Intelligence Report on this listing — real market data, what to offer, and trade-in strategy. You walk in armed with facts. Average client savings: $4,300.</div>
       </div>
-      <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 GET EVL TO NEGOTIATE</a>
+      <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 REQUEST EVL ADVISORY</a>
     </div>
 
     <!-- VEHICLES CONTAINER -->
@@ -817,7 +817,7 @@ function buildVehicleCard(v, isList){
     </div>
     <div class="vehicle-card-actions">
       <button class="btn btn-blue btn-sm" onclick="event.stopPropagation();openVDP('${vin}')">🔍 DETAILS</button>
-      <button class="btn btn-green btn-sm" onclick="event.stopPropagation();requestVehicle('${vin}','${year} ${make} ${model} ${trim}')">⚡ REQUEST EVL</button>
+      <button class="btn btn-green btn-sm" onclick="event.stopPropagation();requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')">⚡ REQUEST EVL</button>
     </div>
   </div>`;
 }
@@ -895,7 +895,7 @@ async function openVDP(vin){
       ${[['Market Low',v.price_stats?.mean?v.price_stats.mean*0.88:0],['This Vehicle',v.price||0],['Market High',v.price_stats?.mean?v.price_stats.mean*1.12:0]].map(([l,p])=>`<div class="vdp-market-bar-wrap"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:3px"><span>${l}</span><span>$${Math.round(p).toLocaleString()}</span></div></div>`).join('')}
     </div>
     <div style="display:flex;flex-direction:column;gap:8px">
-      <button class="btn btn-green" onclick="requestVehicle('${vin}','${year} ${make} ${model} ${trim}')" style="width:100%;justify-content:center">⚡ GET EVL TO NEGOTIATE</button>
+      <button class="btn btn-green" onclick="requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')" style="width:100%;justify-content:center">⚡ REQUEST EVL ADVISORY</button>
       <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue" style="width:100%;justify-content:center">📅 BOOK CONSULTATION</a>
       <a href="https://evl-decode-two.vercel.app/trade-in" class="btn btn-dark" style="width:100%;justify-content:center">🚗 VALUE MY TRADE-IN</a>
     </div>
@@ -907,7 +907,7 @@ function closeVDP(){
   document.body.style.overflow='';
 }
 
-function requestVehicle(vin, vehicleName){
+function requestAdvisory(vin, vehicleName){
   const url = `https://evl-decode-two.vercel.app/appointment?q=${encodeURIComponent('EVL Advisory — '+vehicleName+' (VIN: '+vin+')')}`;
   window.location.href = url;
 }
