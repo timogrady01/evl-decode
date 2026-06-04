@@ -226,7 +226,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
           <div class="input-hint">What they told you it costs</div>
         </div>
         <div class="input-group">
-          <label class="input-label">EVL Negotiated Price</label>
+          <label class="input-label">EVL-Advised Target Price</label>
           <input class="input-field evl-col" id="in-evl-price" type="number" value="63100" oninput="calculate()"/>
           <div class="input-hint">What EVL got it for</div>
         </div>
@@ -251,7 +251,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
           <div class="input-hint">Rate dealer offered</div>
         </div>
         <div class="input-group">
-          <label class="input-label">EVL Secured APR (%)</label>
+          <label class="input-label">EVL-Found APR (%)</label>
           <input class="input-field evl-col" id="in-evl-apr" type="number" step="0.1" value="5.4" oninput="calculate()"/>
           <div class="input-hint">Rate EVL found</div>
         </div>
@@ -464,10 +464,10 @@ function calculate(){
   // ── RENDER EVL SIDE ──
   document.getElementById('evl-body').innerHTML = `
     ${renderShowdownRow('Sticker Price',fmt(msrp),'neutral')}
-    ${renderShowdownRow('EVL Negotiated Price',fmt(evlP)+' ✅','good')}
+    ${renderShowdownRow('EVL-Advised Target Price',fmt(evlP)+' ✅','good')}
     ${renderShowdownRow('EVL Trade-In Result',fmt(evlT)+' ✅','good')}
     ${renderShowdownRow('Amount to Finance',fmt(Math.max(0,evlNetPrice)),'good')}
-    ${renderShowdownRow('EVL Secured Rate',evlApr+'%','good')}
+    ${renderShowdownRow('EVL-Found Rate',evlApr+'%','good')}
     ${renderShowdownRow('Monthly Payment',fmt(evlMonthly),'good')}
     ${renderShowdownRow('Total Interest Paid',fmt(evlInterest),'good')}
     ${renderShowdownRow('EVL Advisory Fee',fmt(evlFee),'gold')}
@@ -491,7 +491,7 @@ function calculate(){
 
   // ── BREAKDOWN TABLE ──
   const rows = [
-    {label:'🏷️ Vehicle Price Negotiation', dealer:dealerP, evl:evlP, savings:vehicleSavings, note:'EVL negotiated below dealer asking price'},
+    {label:'🏷️ Vehicle Price Negotiation', dealer:dealerP, evl:evlP, savings:vehicleSavings, note:'EVL-recommended below dealer asking price'},
     {label:'🚗 Trade-In Competitive Bidding', dealer:dealerT, evl:evlT, savings:tradeSavings, note:'EVL shopped trade to multiple dealers', flip:true},
     {label:'💳 Interest Rate Optimization', dealer:dealerApr+'%', evl:evlApr+'%', savings:interestSavings, note:`${term}-month loan savings from lower APR`, isDollar:true},
     {label:'💰 Monthly Payment Difference', dealer:fmt(dealerMonthly)+'/mo', evl:fmt(evlMonthly)+'/mo', savings:monthlySavings*term, note:`${fmt(monthlySavings)}/mo × ${term} months`, isDollar:true},
