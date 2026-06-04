@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My EVL Deal | Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh;display:block!important}
+:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+
+/* NAV */
+.evl-nav{position:sticky;top:0;z-index:9999;background:var(--s1);border-bottom:2px solid var(--blue);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
+.evl-nav-links{display:flex;align-items:center;gap:4px}
+.evl-nav-link{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-nav-link:hover{color:var(--white);background:#1a1a2e}
+.evl-nav-cta{background:var(--blue);color:var(--white)!important;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:8px 16px;border-radius:6px;margin-left:8px;white-space:nowrap}
+.evl-nav-hamburger{display:none;background:none;border:none;color:var(--white);font-size:22px;cursor:pointer}
+@media(max-width:768px){
+  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:var(--s1);border-bottom:2px solid var(--blue);padding:12px 0}
+  .evl-nav-links.open{display:flex}
+  .evl-nav-link,.evl-nav-cta{width:100%;padding:14px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e}
+  .evl-nav-hamburger{display:block}
+}
+
+/* WRAP */
+.portal-wrap{max-width:860px;margin:0 auto;padding:40px 20px 80px}
+
+/* HERO */
+.portal-hero{background:var(--s1);border-bottom:2px solid #1a1a2e;padding:40px 24px;text-align:center}
+.hero-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px}
+.hero-h1{font-size:40px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;line-height:1.1}
+.hero-h1 span{color:var(--blue)}
+.hero-sub{font-size:16px;color:var(--dim);font-family:var(--body);max-width:520px;margin:0 auto;line-height:1.7}
+
+/* EMAIL LOOKUP */
+.lookup-card{background:var(--s1);border:2px solid var(--blue);border-radius:16px;padding:32px;margin-bottom:24px;text-align:center}
+.lookup-title{font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
+.lookup-sub{font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px;line-height:1.6}
+.lookup-row{display:flex;gap:12px;max-width:480px;margin:0 auto}
+.lookup-input{flex:1;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:14px 16px;border-radius:8px;font-size:15px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s}
+.lookup-input:focus{border-color:var(--blue)}
+.lookup-btn{background:var(--blue);color:var(--white);border:none;padding:14px 24px;border-radius:8px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap}
+.lookup-btn:hover{background:#1a6fd4}
+
+/* DEAL CARD */
+.deal-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:14px;overflow:hidden;margin-bottom:16px;transition:border-color .2s}
+.deal-card:hover{border-color:var(--blue)}
+.deal-card-header{background:var(--s2);padding:14px 20px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.deal-id{font-size:13px;font-weight:900;color:var(--blue);letter-spacing:2px}
+.deal-status-badge{font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.status-searching{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+.status-match{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+.status-hold{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.status-process{background:#0d001a;border:1px solid var(--purple,#9B59B6);color:var(--purple,#9B59B6)}
+.status-delivered{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+.deal-card-body{padding:20px}
+.deal-vehicle{font-size:20px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:6px}
+.deal-spec{font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:14px}
+.deal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.deal-item{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:10px 12px}
+.deal-item-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.deal-item-val{font-size:14px;font-weight:900;color:var(--white)}
+.deal-progress-wrap{margin-bottom:16px}
+.deal-stages{display:flex;gap:0;overflow-x:auto;margin-bottom:8px}
+.deal-stage{flex:1;text-align:center;min-width:80px;position:relative}
+.deal-stage::after{content:'';position:absolute;top:12px;right:-1px;width:100%;height:2px;background:#1a1a2e;z-index:0}
+.deal-stage:last-child::after{display:none}
+.deal-stage-dot{width:26px;height:26px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:12px;position:relative;z-index:1;border:2px solid #2a2a4e;background:var(--bg);transition:all .3s}
+.deal-stage.done .deal-stage-dot{background:#0d1a0d;border-color:var(--green);color:var(--green)}
+.deal-stage.active .deal-stage-dot{background:#040e1a;border-color:var(--blue);color:var(--blue);animation:pulse-dot 1.5s infinite}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(43,132,254,.4)}50%{box-shadow:0 0 0 6px rgba(43,132,254,0)}}
+.deal-stage-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;line-height:1.3}
+.deal-stage.done .deal-stage-label,.deal-stage.active .deal-stage-label{color:var(--white)}
+.deal-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* TIMELINE PREVIEW */
+.timeline-preview{background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px;margin-bottom:16px}
+.timeline-preview-title{font-size:11px;color:var(--muted);font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.timeline-entry{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
+.timeline-entry:last-child{margin-bottom:0}
+.timeline-dot-sm{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.timeline-text{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.4;flex:1}
+.timeline-time{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap}
+
+/* NO DEALS */
+.no-deals{text-align:center;padding:60px 20px}
+.no-deals-icon{font-size:56px;display:block;margin-bottom:16px}
+.no-deals-title{font-size:20px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
+.no-deals-sub{font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.6;margin-bottom:24px}
+
+/* SAVE SEARCH CTA */
+.save-search-card{background:#040e1a;border:2px solid var(--blue);border-radius:12px;padding:24px;margin-bottom:24px;text-align:center}
+.save-search-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
+.save-search-sub{font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:16px;line-height:1.6}
+.save-email-row{display:flex;gap:10px;max-width:440px;margin:0 auto}
+
+/* BUTTONS */
+.btn{padding:10px 20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
+.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
+.btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
+.btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
+.btn-sm{padding:7px 14px;font-size:11px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:#0d1a0d;border:2px solid var(--green);border-radius:10px;padding:14px 20px;font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* FOOTER */
+.evl-footer{background:var(--s1);border-top:2px solid #1a1a2e;padding:24px 20px;font-family:var(--font)}
+.evl-footer-inner{max-width:1100px;margin:0 auto}
+.evl-footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:12px}
+.evl-footer-links a{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;transition:color .2s}
+.evl-footer-links a:hover{color:var(--blue)}
+.evl-footer-copy{font-size:12px;color:#445566;font-weight:600}
+
+@media(max-width:600px){
+  .lookup-row,.save-email-row{flex-direction:column}
+  .deal-grid{grid-template-columns:1fr}
+  .hero-h1{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="evl-nav">
+  <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-logo">
+    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
+  </a>
+  <button class="evl-nav-hamburger" onclick="document.getElementById('evl-nav-links').classList.toggle('open')">&#9776;</button>
+  <div class="evl-nav-links" id="evl-nav-links">
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
+    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link">FIND MY CAR</a>
+    <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
+    <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
+    <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link">COMPARE</a>
+    <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
+    <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
+    <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
+    <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
+    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="portal-hero">
+  <div class="hero-badge">YOUR PERSONAL EVL PORTAL</div>
+  <h1 class="hero-h1">PICK UP<br><span>WHERE YOU LEFT OFF</span></h1>
+  <p class="hero-sub">Enter your email to see your saved searches, deal status, and all activity — no password needed.</p>
+</div>
+
+<div class="portal-wrap">
+
+  <!-- EMAIL LOOKUP -->
+  <div class="lookup-card" id="lookup-card">
+    <div class="lookup-title">🔍 FIND YOUR DEAL</div>
+    <div class="lookup-sub">Enter the email address you used when you first contacted EVL. We'll pull up everything instantly.</div>
+    <div class="lookup-row">
+      <input class="lookup-input" id="lookup-email" type="email" placeholder="your@email.com" onkeydown="if(event.key==='Enter')lookupDeals()"/>
+      <button class="lookup-btn" onclick="lookupDeals()">FIND MY DEAL →</button>
+    </div>
+    <div id="lookup-error" style="color:var(--red);font-size:13px;font-weight:700;margin-top:12px;display:none">❌ No deals found for that email. Check the address or start a new search below.</div>
+  </div>
+
+  <!-- DEALS DISPLAY AREA -->
+  <div id="deals-area" style="display:none"></div>
+
+  <!-- SAVE YOUR SEARCH CTA -->
+  <div class="save-search-card" id="save-search-card">
+    <div class="save-search-title">📧 SAVE YOUR SEARCH — GET STATUS UPDATES</div>
+    <div class="save-search-sub">Enter your email and we'll send you a personal link anytime. Check your deal status, see new matches, and pick up right where you left off — from any device, anytime.</div>
+    <div class="save-email-row">
+      <input class="lookup-input" id="save-email" type="email" placeholder="your@email.com" style="flex:1"/>
+      <button class="lookup-btn" onclick="saveSearch()" style="background:var(--green);color:#020203">📧 SEND MY LINK</button>
+    </div>
+    <div id="save-success" style="display:none;color:var(--green);font-size:14px;font-weight:900;margin-top:12px;letter-spacing:1px">✅ LINK SENT! Check your email — click it anytime to return to your deal.</div>
+  </div>
+
+  <!-- NEW SEARCH BUTTONS -->
+  <div style="text-align:center;margin-bottom:40px">
+    <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">START SOMETHING NEW</div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="https://evl-decode-two.vercel.app/find" class="btn btn-blue">🔍 FIND MY VEHICLE</a>
+      <a href="https://evl-decode-two.vercel.app/trade-in" class="btn btn-green">🚗 TRADE-IN EVALUATOR</a>
+      <a href="https://evl-decode-two.vercel.app/compare" class="btn btn-dark">⚡ COMPARE VEHICLES</a>
+      <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-dark">📅 BOOK CONSULTATION</a>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:24px">
+    <div style="font-size:14px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">HOW YOUR EVL PORTAL WORKS</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px">
+      ${[
+        {icon:'📧',title:'EMAIL = YOUR KEY',desc:'Your email address is your portal key. No password to forget. No account to create.'},
+        {icon:'🔗',title:'PERSONAL LINK',desc:'Every EVL deal gets a unique link emailed to you. Bookmark it or click it from your email anytime.'},
+        {icon:'📊',title:'LIVE STATUS',desc:'See exactly where your deal is — Searching, Match Found, Deposit, In Process, Delivered.'},
+        {icon:'📱',title:'ANY DEVICE',desc:'Works on phone, tablet, or desktop. Pick up exactly where you left off, every time.'},
+      ].map(s=>`<div style="text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">${s.icon}</div>
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px">${s.title}</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">${s.desc}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer class="evl-footer">
+  <div class="evl-footer-inner">
+    <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:14px">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+      EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
+    </div>
+    <div class="evl-footer-links">
+      <a href="https://evl-decode-two.vercel.app/home">Home</a>
+      <a href="https://evl-decode-two.vercel.app/find">Find My Car</a>
+      <a href="https://evl-decode-two.vercel.app/trade-in">Trade-In</a>
+      <a href="https://evl-decode-two.vercel.app/faq">FAQ</a>
+      <a href="https://evl-decode-two.vercel.app/contact">Contact</a>
+      <a href="https://evl-decode-two.vercel.app/privacy">Privacy</a>
+    </div>
+    <div class="evl-footer-copy">&copy; 2026 Express Vehicle Locators — Plano, TX</div>
+  </div>
+</footer>
+
+<script>
+const DEALS_KEY = 'evl_customer_deals';
+const APPTS_KEY = 'evl_appointments';
+
+// ── STAGE CONFIG ──
+const STAGES = [
+  {id:'lead',    label:'INQUIRY',    icon:'📋'},
+  {id:'search',  label:'SEARCHING',  icon:'🔍'},
+  {id:'match',   label:'MATCH FOUND',icon:'🎯'},
+  {id:'deposit', label:'DEPOSIT',    icon:'💰'},
+  {id:'process', label:'IN PROCESS', icon:'⚙️'},
+  {id:'delivered',label:'DELIVERED', icon:'🚗'},
+];
+
+const STAGE_ORDER = STAGES.map(s=>s.id);
+
+function getStageIndex(status){
+  const map = {
+    'Lead':0,'Searching':1,'Match Found':2,
+    'Deposit':3,'In Process':4,'Delivered':5,'Follow-Up':5
+  };
+  return map[status]||0;
+}
+
+function getStatusCls(status){
+  const map = {'Searching':'status-searching','Match Found':'status-match','Deposit':'status-hold','In Process':'status-process','Delivered':'status-delivered','Follow-Up':'status-delivered'};
+  return map[status]||'status-searching';
+}
+
+// ── LOAD DEALS ──
+function loadCustomerDeals(email){
+  // Check Mastermind CRM for matching customer
+  const customers = JSON.parse(localStorage.getItem('evl_mastermind_customers')||'[]');
+  const actLog = JSON.parse(localStorage.getItem('evl_activity_log')||'{}');
+  const dealDesks = JSON.parse(localStorage.getItem('evl_deal_desk')||'{}');
+  const appts = JSON.parse(localStorage.getItem(APPTS_KEY)||'[]');
+
+  const matching = customers.filter(c=>
+    (c.email||'').toLowerCase() === email.toLowerCase()
+  );
+
+  // Also check appointments
+  const matchingAppts = appts.filter(a=>
+    (a.email||'').toLowerCase() === email.toLowerCase()
+  );
+
+  return {customers: matching, appointments: matchingAppts, actLog, dealDesks};
+}
+
+// ── LOOKUP ──
+function lookupDeals(){
+  const email = document.getElementById('lookup-email').value.trim();
+  if(!email || !email.includes('@')){ showError('Please enter a valid email address'); return; }
+
+  const {customers, appointments} = loadCustomerDeals(email);
+
+  // Pre-populate save email
+  document.getElementById('save-email').value = email;
+
+  if(customers.length === 0 && appointments.length === 0){
+    document.getElementById('lookup-error').style.display = 'block';
+    // Auto-suggest
+    setTimeout(()=>{ document.getElementById('save-search-card').scrollIntoView({behavior:'smooth'}); }, 500);
+    return;
+  }
+
+  document.getElementById('lookup-error').style.display = 'none';
+  document.getElementById('lookup-card').style.background = '#020a02';
+  document.getElementById('lookup-card').style.borderColor = 'var(--green)';
+
+  renderDeals(customers, appointments, email);
+}
+
+function renderDeals(customers, appointments, email){
+  const actLog = JSON.parse(localStorage.getItem('evl_activity_log')||'{}');
+  const dealDesks = JSON.parse(localStorage.getItem('evl_deal_desk')||'{}');
+  let html = '';
+
+  // CUSTOMER DEALS FROM CRM
+  customers.forEach(c=>{
+    const desk = dealDesks[c.id]||{};
+    const activities = (actLog[c.id]||[]).slice(0,4);
+    const stageIdx = getStageIndex(c.status);
+    const statusCls = getStatusCls(c.status);
+
+    html += `<div class="deal-card">
+      <div class="deal-card-header">
+        <div class="deal-id">⚡ ${c.id} — EVL DEAL</div>
+        <span class="deal-status-badge ${statusCls}">${c.status}</span>
+      </div>
+      <div class="deal-card-body">
+        <div class="deal-vehicle">${desk.vehicle||c.vehicleInterest||'Vehicle Search Active'}</div>
+        <div class="deal-spec">
+          ${c.budget?'Budget: '+c.budget+' · ':''} 
+          ${desk.mileage?'Max Miles: '+desk.mileage+' · ':''}
+          Started: ${c.createdAt?new Date(c.createdAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—'}
+        </div>
+
+        <div class="deal-grid">
+          <div class="deal-item">
+            <div class="deal-item-label">Customer</div>
+            <div class="deal-item-val">${c.fname} ${c.lname}${c.nickname?' ('+c.nickname+')':''}</div>
+          </div>
+          <div class="deal-item">
+            <div class="deal-item-label">Current Status</div>
+            <div class="deal-item-val" style="color:var(--blue)">${c.status}</div>
+          </div>
+          ${c.tradeIn?`<div class="deal-item">
+            <div class="deal-item-label">Trade-In</div>
+            <div class="deal-item-val">${c.tradeIn}</div>
+          </div>`:''}
+          <div class="deal-item">
+            <div class="deal-item-label">EVL Advisor</div>
+            <div class="deal-item-val">Tim O'Grady</div>
+          </div>
+          ${desk.sellingPrice?`<div class="deal-item">
+            <div class="deal-item-label">Deal Price</div>
+            <div class="deal-item-val" style="color:var(--gold)">$${Number(desk.sellingPrice).toLocaleString()}</div>
+          </div>`:''}
+          <div class="deal-item">
+            <div class="deal-item-label">Last Activity</div>
+            <div class="deal-item-val">${c.lastContact?new Date(c.lastContact).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—'}</div>
+          </div>
+        </div>
+
+        <!-- DEAL PROGRESS -->
+        <div class="deal-progress-wrap">
+          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">DEAL PROGRESS</div>
+          <div class="deal-stages">
+            ${STAGES.map((s,i)=>{
+              const cls = i<stageIdx?'done':i===stageIdx?'active':'';
+              return `<div class="deal-stage ${cls}">
+                <div class="deal-stage-dot">${i<stageIdx?'✓':s.icon}</div>
+                <div class="deal-stage-label">${s.label}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+
+        ${activities.length>0?`
+        <!-- RECENT ACTIVITY -->
+        <div class="timeline-preview">
+          <div class="timeline-preview-title">RECENT ACTIVITY</div>
+          ${activities.map(a=>{
+            const colors = {call:'var(--blue)',text:'var(--green)',email:'var(--gold)',note:'var(--muted)',stage:'var(--cyan,#00BCD4)',voi:'#FF6B35',deal:'#FF6B35'};
+            const color = colors[a.type]||'var(--muted)';
+            const t = new Date(a.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+            return `<div class="timeline-entry">
+              <div class="timeline-dot-sm" style="background:${color}"></div>
+              <div class="timeline-text">${a.content.slice(0,100)}${a.content.length>100?'...':''}</div>
+              <div class="timeline-time">${t}</div>
+            </div>`;
+          }).join('')}
+        </div>`:''}
+
+        <div class="deal-actions">
+          <a href="https://evl-decode-two.vercel.app/find" class="btn btn-blue btn-sm">🔍 UPDATE SEARCH</a>
+          <a href="https://evl-decode-two.vercel.app/trade-in" class="btn btn-dark btn-sm">🚗 TRADE-IN</a>
+          <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-dark btn-sm">📅 SCHEDULE CALL</a>
+          <button class="btn btn-dark btn-sm" onclick="copyLink('${c.id}','${email}')">🔗 COPY MY LINK</button>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  // APPOINTMENTS
+  appointments.forEach(a=>{
+    const apptDate = a.date ? new Date(a.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '—';
+    const fmt12 = t=>{ if(!t)return'—'; const [h,m]=t.split(':'); const hh=parseInt(h); return `${hh>12?hh-12:hh||12}:${m} ${hh>=12?'PM':'AM'} CST`; };
+    html += `<div class="deal-card">
+      <div class="deal-card-header">
+        <div class="deal-id">📅 ${a.id} — APPOINTMENT</div>
+        <span class="deal-status-badge status-match">CONFIRMED ✅</span>
+      </div>
+      <div class="deal-card-body">
+        <div class="deal-vehicle">${a.service}</div>
+        <div class="deal-spec">Scheduled consultation with EVL</div>
+        <div class="deal-grid">
+          <div class="deal-item"><div class="deal-item-label">Date</div><div class="deal-item-val">${apptDate}</div></div>
+          <div class="deal-item"><div class="deal-item-label">Time</div><div class="deal-item-val" style="color:var(--blue)">${fmt12(a.time)}</div></div>
+          <div class="deal-item"><div class="deal-item-label">Duration</div><div class="deal-item-val">${a.duration}</div></div>
+          <div class="deal-item"><div class="deal-item-label">Contact Via</div><div class="deal-item-val">${a.pref||'—'}</div></div>
+        </div>
+        ${a.notes?`<div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.5"><strong style="color:var(--white)">Your Notes:</strong> ${a.notes}</div>`:''}
+        <div class="deal-actions">
+          <a href="https://evl-decode-two.vercel.app/contact" class="btn btn-blue btn-sm">📞 CONTACT EVL</a>
+          <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-dark btn-sm">🔄 RESCHEDULE</a>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('deals-area').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px">✅ FOUND ${customers.length+appointments.length} RECORD${customers.length+appointments.length!==1?'S':''} FOR ${email.toUpperCase()}</div>
+      <button class="btn btn-dark btn-sm" onclick="clearLookup()">🔍 SEARCH DIFFERENT EMAIL</button>
+    </div>
+    ${html}`;
+  document.getElementById('deals-area').style.display='block';
+  showToast('✅ Deal found! Showing your EVL portal.');
+}
+
+function clearLookup(){
+  document.getElementById('deals-area').innerHTML='';
+  document.getElementById('deals-area').style.display='none';
+  document.getElementById('lookup-email').value='';
+  document.getElementById('lookup-card').style.background='';
+  document.getElementById('lookup-card').style.borderColor='var(--blue)';
+  document.getElementById('lookup-error').style.display='none';
+}
+
+function copyLink(dealId, email){
+  const url = `${window.location.origin}/my-deal?email=${encodeURIComponent(email)}&deal=${dealId}`;
+  navigator.clipboard?.writeText(url).then(()=>{
+    showToast('🔗 Link copied! Share or bookmark it.');
+  }).catch(()=>{
+    prompt('Copy this link:', url);
+  });
+}
+
+function saveSearch(){
+  const email = document.getElementById('save-email').value.trim();
+  if(!email||!email.includes('@')){ alert('Please enter a valid email address'); return; }
+  // Send via mailto
+  const subject = 'Your EVL Portal Link — Return Anytime';
+  const body = `Hi!\n\nHere is your personal EVL portal link — click it anytime to pick up where you left off:\n\n${window.location.origin}/my-deal?email=${encodeURIComponent(email)}\n\nThis link restores your saved searches, deal status, and appointment info automatically.\n\n— Express Vehicle Locators\ntogradyevl@gmail.com\nAvailable 24/7`;
+  window.location.href = `mailto:togradyevl@gmail.com?subject=${encodeURIComponent('PORTAL LINK REQUEST: '+email)}&body=${encodeURIComponent(body)}`;
+  document.getElementById('save-success').style.display='block';
+  showToast('📧 Portal link request sent!');
+}
+
+function showError(msg){ document.getElementById('lookup-error').textContent='❌ '+msg; document.getElementById('lookup-error').style.display='block'; }
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// Check URL params on load
+window.addEventListener('DOMContentLoaded',function(){
+  if(!localStorage.getItem('evl-cookie')){const b=document.getElementById('evl-cookie');if(b)b.style.display='flex';}
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get('email');
+  const dealId = params.get('deal');
+  if(email){
+    document.getElementById('lookup-email').value = email;
+    document.getElementById('save-email').value = email;
+    lookupDeals();
+    if(dealId) showToast('✅ Welcome back! Your deal is loaded.');
+  }
+});
+</script>
+</body>
+</html>
