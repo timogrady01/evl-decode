@@ -237,14 +237,15 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 const DEALS_KEY = 'evl_customer_deals';
 const APPTS_KEY = 'evl_appointments';
 
-// ── STAGE CONFIG ──
+
+// ── ENHANCED STAGE CONFIG WITH TIMING ──
 const STAGES = [
-  {id:'lead',    label:'INQUIRY',    icon:'📋'},
-  {id:'search',  label:'SEARCHING',  icon:'🔍'},
-  {id:'match',   label:'MATCH FOUND',icon:'🎯'},
-  {id:'deposit', label:'DEPOSIT',    icon:'💰'},
-  {id:'process', label:'IN PROCESS', icon:'⚙️'},
-  {id:'delivered',label:'DELIVERED', icon:'🚗'},
+  {id:'lead',    label:'INQUIRY',     icon:'📋', avgDays:0,  desc:'Initial contact received'},
+  {id:'search',  label:'SEARCHING',   icon:'🔍', avgDays:1,  desc:'Nationwide search active'},
+  {id:'match',   label:'MATCH FOUND', icon:'🎯', avgDays:2,  desc:'Vehicle match identified'},
+  {id:'deposit', label:'DEPOSIT',     icon:'💰', avgDays:1,  desc:'Hold secured'},
+  {id:'process', label:'IN PROCESS',  icon:'⚙️', avgDays:2,  desc:'Deal & delivery prep'},
+  {id:'delivered',label:'DELIVERED',  icon:'🚗', avgDays:0,  desc:'Vehicle delivered!'},
 ];
 
 const STAGE_ORDER = STAGES.map(s=>s.id);
@@ -304,6 +305,21 @@ function lookupDeals(){
   document.getElementById('lookup-card').style.borderColor = 'var(--green)';
 
   renderDeals(customers, appointments, email);
+}
+
+
+function calcEstDelivery(status, createdAt){
+  const stageOrder = ['Lead','Searching','Match Found','Deposit','In Process','Delivered'];
+  const avgDaysRemaining = {'Lead':7,'Searching':5,'Match Found':3,'Deposit':2,'In Process':1,'Delivered':0,'Follow-Up':0};
+  const remaining = avgDaysRemaining[status]||0;
+  if(remaining===0) return null;
+  const est = new Date();
+  est.setDate(est.getDate()+remaining);
+  return {
+    days: remaining,
+    date: est.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}),
+    label: remaining===1?'Tomorrow':remaining<=3?'In '+remaining+' days':'Est. '+est.toLocaleDateString('en-US',{month:'short',day:'numeric'})
+  };
 }
 
 function renderDeals(customers, appointments, email){
@@ -371,6 +387,26 @@ function renderDeals(customers, appointments, email){
             }).join('')}
           </div>
         </div>
+
+        <!-- DELIVERY ESTIMATE -->
+        ${(()=>{
+          const eta = calcEstDelivery(c.status, c.createdAt);
+          if(!eta) return c.status==='Delivered'?`<div style="background:#020a02;border:2px solid var(--green);border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px"><span style="font-size:28px">🎉</span><div><div style="font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px">VEHICLE DELIVERED!</div><div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-top:2px">Your EVL deal is complete. How are you enjoying your new vehicle?</div></div></div>`:'';
+          return `<div style="background:#040e1a;border:2px solid var(--blue);border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-size:28px">⏱</span>
+              <div>
+                <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px">ESTIMATED DELIVERY</div>
+                <div style="font-size:22px;font-weight:900;color:var(--blue)">${eta.label}</div>
+                <div style="font-size:12px;color:var(--dim);font-family:var(--body);margin-top:2px">Approximately ${eta.days} business day${eta.days!==1?'s':''} remaining · ${eta.date}</div>
+              </div>
+            </div>
+            <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:10px 16px;text-align:center">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">CURRENT STAGE</div>
+              <div style="font-size:14px;font-weight:900;color:var(--gold)">${c.status}</div>
+            </div>
+          </div>`;
+        })()}
 
         ${activities.length>0?`
         <!-- RECENT ACTIVITY -->
