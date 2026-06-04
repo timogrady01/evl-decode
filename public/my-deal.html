@@ -310,7 +310,19 @@ function lookupDeals(){
 
 function calcEstDelivery(status, createdAt){
   const stageOrder = ['Lead','Searching','Match Found','Deposit','In Process','Delivered'];
-  const avgDaysRemaining = {'Lead':7,'Searching':5,'Match Found':3,'Deposit':2,'In Process':1,'Delivered':0,'Follow-Up':0};
+  // Realistic delivery timelines — local same day, search 24-48hrs, out-of-state 3-5 days
+  const avgDaysRemaining = {
+    'Lead':0,         // Just submitted — EVL responds within 2 hrs
+    'Searching':1,    // Active search — matches within 24-48hrs
+    'Match Found':1,  // Found it — move to deposit today
+    'Deposit':1,      // Vehicle held — close deal within 24hrs
+    'In Process':1,   // Paperwork — delivery same day or next
+    'Delivered':0,
+    'Follow-Up':0
+  };
+  // Note: Local in-stock deals = same day (2-4 hrs)
+  // Search/locate deals = 24-48 hrs typically
+  // Out-of-state transport = 3-5 business days
   const remaining = avgDaysRemaining[status]||0;
   if(remaining===0) return null;
   const est = new Date();
