@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/revenue-radar",
+      "destination": "/revenue-radar.html"
+    },
+    {
+      "source": "/revenue-radar.html",
+      "destination": "/revenue-radar.html"
+    },
+    {
       "source": "/appointment",
       "destination": "/appointment.html"
     },
