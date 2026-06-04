@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/ws-hub",
+      "destination": "/ws-hub.html"
+    },
+    {
+      "source": "/ws-hub.html",
+      "destination": "/ws-hub.html"
+    },
+    {
       "source": "/revenue-radar",
       "destination": "/revenue-radar.html"
     },
