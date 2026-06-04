@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/appointment",
+      "destination": "/appointment.html"
+    },
+    {
+      "source": "/appointment.html",
+      "destination": "/appointment.html"
+    },
+    {
       "source": "/leasing",
       "destination": "/leasing.html"
     },
