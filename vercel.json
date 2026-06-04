@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/compare",
+      "destination": "compare.html"
+    },
+    {
+      "source": "compare.html",
+      "destination": "compare.html"
+    },
+    {
       "source": "/ws-hub",
       "destination": "/ws-hub.html"
     },
