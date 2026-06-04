@@ -1612,3 +1612,839 @@ document.addEventListener('keydown', e=>{
   }
 });
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     MASTERMIND 2.0 — Activity Timeline, VOI, Duplicate Detection,
+     Merge, Nickname, Deal Desk, Auto-Triggers
+     ═══════════════════════════════════════════════════════ -->
+
+<!-- MERGE MODAL -->
+<div class="merge-modal" id="merge-modal">
+  <div class="merge-inner">
+    <div class="merge-header">
+      <div>
+        <div style="font-size:18px;font-weight:900;color:#FF3333;letter-spacing:1px">🔀 MERGE DUPLICATE CUSTOMERS</div>
+        <div style="font-size:13px;color:#A1A1AA;margin-top:4px;font-family:'Barlow',sans-serif">Click any field value to select it for the merged record. All activity from both records will be combined.</div>
+      </div>
+      <button onclick="closeMergeModal()" style="background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif">✕ CLOSE</button>
+    </div>
+    <div style="padding:12px 16px;background:#1a1400;border-bottom:1px solid #2a2000;font-size:13px;color:#FFD700;font-weight:700;text-align:center">
+      ⚠️ GREEN = data to keep in merged record. Click any field to choose. PRIMARY record ID will be preserved.
+    </div>
+    <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px" id="merge-compare-grid"></div>
+    <div style="padding:16px;background:#020a02;border-top:2px solid #1a1a2e;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <div style="font-size:13px;color:#A1A1AA;font-family:'Barlow',sans-serif;flex:1">✅ All calls, texts, emails, and notes from BOTH records will be preserved in the merged record. The secondary record will be archived — not deleted.</div>
+      <button onclick="executeMerge()" style="background:#00C853;color:#020203;border:none;padding:12px 24px;font-size:14px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif;letter-spacing:1px">✅ EXECUTE MERGE</button>
+      <button onclick="closeMergeModal()" style="background:#1a1a2e;color:#fff;border:1px solid #2a2a4e;padding:12px 20px;font-size:14px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<!-- DEAL DESK MODAL -->
+<div id="deal-desk-modal" style="display:none;position:fixed;inset:0;background:rgba(2,2,3,0.95);z-index:250;overflow-y:auto;padding:20px">
+  <div style="max-width:600px;margin:0 auto;background:#090E17;border:2px solid #2B84FE;border-radius:12px;overflow:hidden">
+    <div style="background:#0a0f1a;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
+      <div>
+        <div style="font-size:18px;font-weight:900;color:#fff;letter-spacing:1px">🖊️ DEAL DESK</div>
+        <div style="font-size:12px;color:#2B84FE;font-weight:700;letter-spacing:1px;margin-top:2px" id="dd-customer-name">Customer</div>
+      </div>
+      <button onclick="closeDealDesk()" style="background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif">✕ CLOSE</button>
+    </div>
+    <div style="padding:20px">
+      <!-- VOI -->
+      <div style="font-size:12px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">VEHICLE OF INTEREST</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Vehicle (YMM)</label><input id="dd-vehicle" class="form-input" placeholder="2023 Toyota Tundra TRD Pro"/></div>
+        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">VIN (if known)</label><input id="dd-vin" class="form-input" placeholder="17-digit VIN"/></div>
+        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Color</label><input id="dd-color" class="form-input" placeholder="White Exterior"/></div>
+        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Mileage</label><input id="dd-mileage" class="form-input" placeholder="22,000"/></div>
+      </div>
+
+      <!-- DEAL NUMBERS -->
+      <div style="font-size:12px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL NUMBERS</div>
+      <div id="dd-rows" style="margin-bottom:16px"></div>
+
+      <!-- GROSS DISPLAY -->
+      <div style="background:#020203;border:2px solid #1a1a2e;border-radius:10px;padding:16px;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span style="font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase">TOTAL DEAL GROSS</span>
+          <span id="dd-total-gross" style="font-size:28px;font-weight:900;color:#00C853">$0</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#A1A1AA">
+          <span>Front End: <strong id="dd-front" style="color:#ccd6e0">$0</strong></span>
+          <span>Back End: <strong id="dd-back" style="color:#ccd6e0">$0</strong></span>
+          <span>EVL Fee: <strong id="dd-fee" style="color:#FFD700">$0</strong></span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <button onclick="saveDealDesk()" style="background:#00C853;color:#020203;border:none;padding:14px 24px;font-size:15px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif;letter-spacing:1px;flex:1">✅ SAVE DEAL DESK</button>
+        <button onclick="closeDealDesk()" style="background:#1a1a2e;color:#fff;border:1px solid #2a2a4e;padding:14px 20px;font-size:14px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── V2 STYLES ── */
+.act-timeline{list-style:none;padding:0;position:relative}
+.act-timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:#1a1a2e}
+.act-item{display:flex;gap:0;margin-bottom:12px;position:relative;padding-left:38px}
+.act-dot{position:absolute;left:6px;top:3px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;z-index:1;flex-shrink:0}
+.act-call{background:#040e1a;border:2px solid #2B84FE}
+.act-text-dot{background:#0d1a0d;border:2px solid #00C853}
+.act-email-dot{background:#1a1400;border:2px solid #FFD700}
+.act-note-dot{background:#0d001a;border:2px solid #9B59B6}
+.act-stage-dot{background:#001a1a;border:2px solid #00BCD4}
+.act-voi-dot{background:#1a0a00;border:2px solid #FF6B35}
+.act-body{flex:1;background:#090E17;border:1px solid #1a1a2e;border-radius:8px;padding:10px 12px;transition:border-color .2s}
+.act-body:hover{border-color:#2B84FE}
+.act-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.act-type-label{font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.act-timestamp{font-size:11px;color:#A1A1AA;font-weight:700;letter-spacing:1px;margin-left:auto}
+.act-content{font-size:13px;color:#ccd6e0;font-family:'Barlow',sans-serif;line-height:1.5}
+.act-outcome-badge{display:inline-block;font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;margin-top:5px;letter-spacing:1px}
+
+/* VOI CARD */
+.voi-card{background:#1a0a00;border:2px solid #FF6B35;border-radius:10px;padding:14px;margin-bottom:12px}
+.voi-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.voi-label{font-size:11px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase}
+.voi-status-badge{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.voi-spec-text{font-size:15px;font-weight:900;color:#fff;margin-bottom:4px}
+.voi-detail-text{font-size:12px;color:#ccd6e0;font-family:'Barlow',sans-serif;margin-bottom:10px}
+.voi-match-bar{background:#0d1a0d;border:1px solid #00C853;border-radius:6px;padding:8px 12px;font-size:12px;color:#00C853;font-weight:700}
+
+/* DUP ALERT */
+.dup-alert-card{background:#0d0000;border:2px solid #FF3333;border-radius:10px;padding:14px;margin-bottom:12px}
+.dup-alert-title{font-size:13px;font-weight:900;color:#FF3333;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.dup-match-row{background:#020203;border:1px solid #2a0000;border-radius:6px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.dup-match-row:last-child{margin-bottom:0}
+.dup-reason-badge{font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;letter-spacing:1px}
+.dup-score-pct{font-size:20px;font-weight:900}
+
+/* MERGE/COMPARE */
+.merge-col-box{background:#020203;border:2px solid #1a1a2e;border-radius:10px;padding:14px}
+.merge-col-box.primary-col{border-color:#00C853}
+.merge-col-box.secondary-col{border-color:#FF3333}
+.merge-field{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
+.merge-field-lbl{font-size:11px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase;width:90px;flex-shrink:0;padding-top:4px;font-family:'Oswald',sans-serif}
+.merge-field-value{font-size:14px;font-weight:700;color:#ccd6e0;font-family:'Barlow',sans-serif;flex:1;padding:5px 10px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .2s}
+.merge-field-value:hover{background:#1a1a2e;border-color:#2B84FE}
+.merge-field-value.selected{background:#0d1a0d;border-color:#00C853;color:#00C853}
+.merge-field-value.rejected{opacity:.4;text-decoration:line-through}
+
+/* DEAL DESK ROWS */
+.dd-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #0d0d1a}
+.dd-row:last-child{border-bottom:none}
+.dd-row-label{font-size:12px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.dd-input{background:#020203;border:1px solid #2a2a4e;color:#fff;padding:6px 10px;border-radius:6px;font-size:14px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;width:130px;text-align:right}
+.dd-input:focus{border-color:#2B84FE}
+
+/* DUP CHECK LIVE */
+.live-dup-check{background:#1a0000;border:1px solid #FF3333;border-radius:8px;padding:10px 14px;margin-top:8px;display:none}
+.live-dup-check.show{display:block}
+.live-dup-check-title{font-size:12px;font-weight:900;color:#FF3333;letter-spacing:1px;margin-bottom:8px}
+.live-dup-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2a0000;font-size:13px}
+.live-dup-item:last-child{border-bottom:none}
+</style>
+
+<script>
+// ════════════════════════════════════════════════════
+// MASTERMIND 2.0 — ACTIVITY TIMELINE + VOI + DUPLICATES
+// ════════════════════════════════════════════════════
+
+const ACT_STORAGE = 'evl_activity_log';
+const DEAL_STORAGE = 'evl_deal_desk';
+let mergeSourceId = null;
+let mergeTargetId = null;
+let mergeSelections = {};
+let currentDealCustomerId = null;
+
+// ── ACTIVITY LOG STORAGE ──
+function loadActivityLog(){try{return JSON.parse(localStorage.getItem(ACT_STORAGE)||'{}')}catch(e){return{}}}
+function saveActivityLog(log){localStorage.setItem(ACT_STORAGE,JSON.stringify(log))}
+
+function addActivity(customerId, type, content, outcome='', metadata={}){
+  const log = loadActivityLog();
+  if(!log[customerId]) log[customerId] = [];
+  log[customerId].unshift({
+    id: Date.now(),
+    type, content, outcome, metadata,
+    timestamp: new Date().toISOString(),
+    rep: 'Tim O\'Grady'
+  });
+  if(log[customerId].length > 200) log[customerId] = log[customerId].slice(0,200);
+  saveActivityLog(log);
+}
+
+function getActivityForCustomer(customerId){
+  const log = loadActivityLog();
+  return log[customerId] || [];
+}
+
+// ── RENDER ACTIVITY TIMELINE ──
+function renderActivityTimeline(customerId, containerId){
+  const activities = getActivityForCustomer(customerId);
+  const el = document.getElementById(containerId);
+  if(!el) return;
+
+  const typeConfig = {
+    call:  {cls:'act-call',  icon:'📞', label:'CALL',  color:'#2B84FE'},
+    text:  {cls:'act-text-dot', icon:'💬', label:'TEXT', color:'#00C853'},
+    email: {cls:'act-email-dot',icon:'📧', label:'EMAIL',color:'#FFD700'},
+    note:  {cls:'act-note-dot', icon:'📋', label:'NOTE', color:'#9B59B6'},
+    stage: {cls:'act-stage-dot',icon:'⚡', label:'STAGE CHANGE',color:'#00BCD4'},
+    voi:   {cls:'act-voi-dot',  icon:'🚗', label:'VEHICLE OF INTEREST',color:'#FF6B35'},
+    deal:  {cls:'act-voi-dot',  icon:'🖊️', label:'DEAL DESK UPDATE',color:'#FF6B35'},
+  };
+
+  if(activities.length === 0){
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:#A1A1AA;font-size:14px;font-weight:700;font-family:\'Barlow\',sans-serif">No activity yet — communications will appear here automatically</div>';
+    return;
+  }
+
+  // Group by date
+  const grouped = {};
+  activities.forEach(act=>{
+    const d = new Date(act.timestamp);
+    const key = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    if(!grouped[key]) grouped[key]=[];
+    grouped[key].push(act);
+  });
+
+  el.innerHTML = Object.entries(grouped).map(([date, acts])=>`
+    <div style="font-size:11px;font-weight:900;color:#A1A1AA;letter-spacing:2px;text-transform:uppercase;margin:16px 0 8px;padding-left:38px">${date}</div>
+    <ul class="act-timeline">
+      ${acts.map(act=>{
+        const cfg = typeConfig[act.type]||typeConfig['note'];
+        const t = new Date(act.timestamp).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'America/Chicago'});
+        return `<li class="act-item">
+          <div class="act-dot ${cfg.cls}">${cfg.icon}</div>
+          <div class="act-body">
+            <div class="act-meta">
+              <span class="act-type-label" style="color:${cfg.color}">${cfg.label}</span>
+              ${act.outcome ? `<span class="act-outcome-badge" style="background:#0a0a1a;border:1px solid ${cfg.color};color:${cfg.color}">${act.outcome}</span>` : ''}
+              <span class="act-timestamp">${t} CST · ${act.rep||'EVL'}</span>
+            </div>
+            <div class="act-content">${act.content}</div>
+            ${act.metadata?.vehicle ? `<div style="font-size:11px;color:#FF6B35;font-weight:700;margin-top:4px;letter-spacing:1px">🚗 ${act.metadata.vehicle}</div>` : ''}
+          </div>
+        </li>`;
+      }).join('')}
+    </ul>
+  `).join('');
+}
+
+// ── VOI PANEL ──
+function loadDealDesks(){try{return JSON.parse(localStorage.getItem(DEAL_STORAGE)||'{}')}catch(e){return{}}}
+function saveDealDesks(d){localStorage.setItem(DEAL_STORAGE,JSON.stringify(d))}
+
+function getCustomerVOI(c){
+  const desks = loadDealDesks();
+  const desk = desks[c.id];
+  const voi = desk?.vehicle || c.vehicleInterest || null;
+  const vin = desk?.vin || c.tradeVin || null;
+  const matchCount = desk?.matchCount || 0;
+  return {voi, vin, matchCount, desk};
+}
+
+function renderVOICard(c, containerId){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const {voi, vin, matchCount, desk} = getCustomerVOI(c);
+  if(!voi){ el.innerHTML = `<div style="text-align:center;padding:16px;color:#A1A1AA;font-size:13px;font-weight:700;cursor:pointer;border:2px dashed #2a2a4e;border-radius:10px" onclick="openDealDesk('${c.id}')">➕ ADD VEHICLE OF INTEREST</div>`; return; }
+  const statusColor = matchCount > 0 ? '#00C853' : '#FFD700';
+  const statusLabel = matchCount > 0 ? `${matchCount} MATCHES FOUND` : 'SEARCHING...';
+  el.innerHTML = `<div class="voi-card">
+    <div class="voi-header">
+      <span class="voi-label">🚗 VEHICLE OF INTEREST</span>
+      <span class="voi-status-badge" style="background:${matchCount>0?'#0d1a0d':'#1a1400'};border:1px solid ${statusColor};color:${statusColor}">${statusLabel}</span>
+    </div>
+    <div class="voi-spec-text">${voi}</div>
+    ${vin ? `<div style="font-size:12px;color:#A1A1AA;font-family:'Barlow',sans-serif;margin-bottom:6px">VIN: ${vin}</div>` : ''}
+    <div class="voi-detail-text">Budget: ${c.budget||'—'} · Max Miles: ${c.maxMiles||'—'} · Status: <strong style="color:#ccd6e0">${c.status}</strong></div>
+    ${desk?.sellingPrice ? `<div class="voi-match-bar">💰 Deal Desk Active: Selling $${Number(desk.sellingPrice||0).toLocaleString()} · Gross: <strong>$${Number(desk.grossTotal||0).toLocaleString()}</strong></div>` : ''}
+    <div style="display:flex;gap:6px;margin-top:10px">
+      <button class="btn btn-dark btn-sm" onclick="openDealDesk('${c.id}')">🖊️ DEAL DESK</button>
+      <button class="btn btn-dark btn-sm" onclick="searchMarketCheck('${c.id}')">🔍 SEARCH INVENTORY</button>
+      ${matchCount > 0 ? `<button class="btn btn-green btn-sm">🎯 VIEW MATCHES</button>` : ''}
+    </div>
+  </div>`;
+}
+
+// ── DUPLICATE DETECTION ENGINE ──
+function calculateDupScore(a, b){
+  let score = 0;
+  const reasons = [];
+  // Exact phone match = very high
+  const phoneA = (a.phone||'').replace(/\D/g,'');
+  const phoneB = (b.phone||'').replace(/\D/g,'');
+  if(phoneA && phoneB && phoneA === phoneB){ score += 90; reasons.push('SAME PHONE'); }
+  // Exact email match
+  const emailA = (a.email||'').toLowerCase().trim();
+  const emailB = (b.email||'').toLowerCase().trim();
+  if(emailA && emailB && emailA === emailB){ score += 85; reasons.push('SAME EMAIL'); }
+  // Same last name + similar first
+  const lnA = (a.lname||'').toLowerCase();
+  const lnB = (b.lname||'').toLowerCase();
+  if(lnA && lnB && lnA === lnB){
+    score += 30;
+    const fnA = (a.fname||'').toLowerCase();
+    const fnB = (b.fname||'').toLowerCase();
+    if(fnA && fnB){
+      if(fnA === fnB){ score += 30; reasons.push('SAME NAME'); }
+      else if(fnA.startsWith(fnB[0]) || fnB.startsWith(fnA[0])){ score += 15; reasons.push('SAME LAST + SIMILAR FIRST'); }
+    }
+  }
+  // Nickname match - check if nickname of A matches first of B or vice versa
+  if(a.nickname && (a.nickname.toLowerCase() === (b.fname||'').toLowerCase())){ score += 20; reasons.push('NICKNAME MATCH'); }
+  if(b.nickname && (b.nickname.toLowerCase() === (a.fname||'').toLowerCase())){ score += 20; reasons.push('NICKNAME MATCH'); }
+  // Same vehicle interest
+  const voiA = (a.vehicleInterest||'').toLowerCase();
+  const voiB = (b.vehicleInterest||'').toLowerCase();
+  if(voiA && voiB && voiA.length > 5){
+    const wordsA = voiA.split(' ').filter(w=>w.length>3);
+    const wordsB = voiB.split(' ').filter(w=>w.length>3);
+    const shared = wordsA.filter(w=>wordsB.includes(w));
+    if(shared.length >= 2){ score += 15; reasons.push('SIMILAR VEHICLE INTEREST'); }
+  }
+  return {score: Math.min(score, 99), reasons};
+}
+
+function findDuplicates(customerId){
+  const customers = loadCustomers();
+  const target = customers.find(c=>c.id===customerId);
+  if(!target) return [];
+  return customers
+    .filter(c=>c.id!==customerId && c.status!=='[ARCHIVED]')
+    .map(c=>({...c, ...calculateDupScore(target,c)}))
+    .filter(c=>c.score >= 40)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,3);
+}
+
+function renderDupAlert(customerId, containerId){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const dups = findDuplicates(customerId);
+  if(dups.length === 0){ el.innerHTML=''; return; }
+  el.innerHTML = `<div class="dup-alert-card">
+    <div class="dup-alert-title">🔴 POTENTIAL DUPLICATE${dups.length>1?'S':''} DETECTED — ${dups.length} MATCH${dups.length>1?'ES':''}</div>
+    ${dups.map(d=>`<div class="dup-match-row">
+      <div>
+        <div style="font-size:14px;font-weight:900;color:#fff">${d.fname} ${d.lname}${d.nickname?' ('+d.nickname+')':''} — ${d.id}</div>
+        <div style="font-size:12px;color:#ccd6e0;font-family:'Barlow',sans-serif;margin-top:2px">${d.phone||'—'} · ${d.email||'—'} · ${d.status}</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px">${d.reasons.map(r=>`<span class="dup-reason-badge" style="background:#1a0000;border:1px solid #FF3333;color:#FF3333">${r}</span>`).join('')}</div>
+      </div>
+      <div style="text-align:center;flex-shrink:0">
+        <div class="dup-score-pct" style="color:${d.score>=70?'#FF3333':d.score>=50?'#FFD700':'#A1A1AA'}">${d.score}%</div>
+        <div style="font-size:10px;color:#A1A1AA;letter-spacing:1px;font-weight:700">MATCH</div>
+        <button class="btn btn-sm" style="background:#1a0000;border:1px solid #FF3333;color:#FF3333;margin-top:6px" onclick="openMergeModal('${customerId}','${d.id}')">🔀 MERGE</button>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── LIVE DUP CHECK (while typing in add form) ──
+function liveDupCheck(){
+  const fname = (document.getElementById('add-fname')?.value||'').toLowerCase();
+  const lname = (document.getElementById('add-lname')?.value||'').toLowerCase();
+  const phone = (document.getElementById('add-phone')?.value||'').replace(/\D/g,'');
+  const email = (document.getElementById('add-email')?.value||'').toLowerCase();
+  const container = document.getElementById('live-dup-container');
+  if(!container) return;
+  if(!fname && !lname && !phone && !email){ container.innerHTML=''; return; }
+  const customers = loadCustomers();
+  const matches = customers.filter(c=>{
+    if(c.status==='[ARCHIVED]') return false;
+    const pMatch = phone && (c.phone||'').replace(/\D/g,'')=== phone;
+    const eMatch = email && (c.email||'').toLowerCase()===email;
+    const nMatch = lname && (c.lname||'').toLowerCase()===lname && fname && ((c.fname||'').toLowerCase()===fname||(c.nickname||'').toLowerCase()===fname);
+    return pMatch || eMatch || nMatch;
+  });
+  if(matches.length===0){ container.innerHTML=''; return; }
+  container.innerHTML = `<div class="live-dup-check show">
+    <div class="live-dup-check-title">⚠️ POSSIBLE DUPLICATE${matches.length>1?'S':''} — ${matches.length} EXISTING RECORD${matches.length>1?'S':''} MATCH</div>
+    ${matches.slice(0,3).map(m=>`<div class="live-dup-item">
+      <span style="font-weight:700;color:#fff">${m.fname} ${m.lname}${m.nickname?' ('+m.nickname+')':''}</span>
+      <span style="color:#A1A1AA;font-family:'Barlow',sans-serif;font-size:12px">${m.phone||''} · ${m.status}</span>
+      <button class="btn btn-sm" style="background:#040e1a;border:1px solid #2B84FE;color:#2B84FE" onclick="openProfile('${m.id}')">VIEW</button>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── MERGE MODAL ──
+function openMergeModal(primaryId, secondaryId){
+  mergeSourceId = primaryId;
+  mergeTargetId = secondaryId;
+  mergeSelections = {};
+  const customers = loadCustomers();
+  const primary = customers.find(c=>c.id===primaryId);
+  const secondary = customers.find(c=>c.id===secondaryId);
+  if(!primary||!secondary) return;
+  const fields = [
+    {key:'fname',label:'First Name'},
+    {key:'nickname',label:'Nickname'},
+    {key:'lname',label:'Last Name'},
+    {key:'phone',label:'Phone'},
+    {key:'email',label:'Email'},
+    {key:'vehicleInterest',label:'Vehicle Interest'},
+    {key:'budget',label:'Budget'},
+    {key:'tradeIn',label:'Trade-In'},
+    {key:'status',label:'Status'},
+    {key:'source',label:'Lead Source'},
+    {key:'notes',label:'Notes'},
+  ];
+  const makeCol = (c, side)=>`<div class="merge-col-box ${side}-col">
+    <div style="font-size:12px;font-weight:900;color:${side==='primary'?'#00C853':'#FF3333'};letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">
+      ${side==='primary'?'✅ PRIMARY (KEEP ID)':'🔴 SECONDARY (ARCHIVE)'}
+      <span style="font-size:11px;color:#A1A1AA;margin-left:8px">${c.id}</span>
+    </div>
+    ${fields.map(f=>`<div class="merge-field">
+      <div class="merge-field-lbl">${f.label}</div>
+      <div class="merge-field-value ${mergeSelections[f.key]===c.id?'selected':''}" 
+           id="mf-${side}-${f.key}"
+           onclick="selectMergeField('${f.key}','${c.id}')"
+           data-cid="${c.id}" data-field="${f.key}">
+        ${c[f.key]||'<span style="color:#556677;font-style:italic">empty</span>'}
+      </div>
+    </div>`).join('')}
+  </div>`;
+  document.getElementById('merge-compare-grid').innerHTML = makeCol(primary,'primary') + makeCol(secondary,'secondary');
+  // Auto-select primary fields
+  fields.forEach(f=>{ if(primary[f.key]) selectMergeField(f.key, primaryId, false); });
+  document.getElementById('merge-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function selectMergeField(fieldKey, customerId, updateUI=true){
+  mergeSelections[fieldKey] = customerId;
+  if(!updateUI) return;
+  document.querySelectorAll(`[data-field="${fieldKey}"]`).forEach(el=>{
+    el.classList.toggle('selected', el.dataset.cid===customerId);
+  });
+}
+
+function executeMerge(){
+  if(!mergeSourceId||!mergeTargetId){ closeMergeModal(); return; }
+  const customers = loadCustomers();
+  const primaryIdx = customers.findIndex(c=>c.id===mergeSourceId);
+  const secondaryIdx = customers.findIndex(c=>c.id===mergeTargetId);
+  if(primaryIdx<0||secondaryIdx<0){ closeMergeModal(); return; }
+  const primary = customers[primaryIdx];
+  const secondary = customers[secondaryIdx];
+  // Apply selections
+  Object.entries(mergeSelections).forEach(([field, cid])=>{
+    const source = cid===mergeSourceId ? primary : secondary;
+    if(source[field]) primary[field] = source[field];
+  });
+  primary.mergedFrom = secondary.id;
+  primary.mergedAt = new Date().toISOString();
+  primary.lastContact = new Date().toISOString();
+  // Archive secondary
+  customers[secondaryIdx].status = '[ARCHIVED]';
+  customers[secondaryIdx].archivedReason = `Merged into ${mergeSourceId}`;
+  customers[primaryIdx] = primary;
+  saveCustomers(customers);
+  // Merge activity logs
+  const actLog = loadActivityLog();
+  const secActivity = actLog[mergeTargetId]||[];
+  if(!actLog[mergeSourceId]) actLog[mergeSourceId]=[];
+  actLog[mergeSourceId] = [...actLog[mergeSourceId], ...secActivity].sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp));
+  // Add merge note
+  addActivity(mergeSourceId,'note',`Records merged — ${mergeTargetId} (${secondary.fname} ${secondary.lname}) archived. ${secActivity.length} activity entries combined.`,'MERGED');
+  saveActivityLog(actLog);
+  closeMergeModal();
+  renderPipeline();
+  updateHeaderStats();
+  openProfile(mergeSourceId);
+  alert(`✅ Records merged! ${secondary.fname} ${secondary.lname} (${mergeTargetId}) archived. All activity combined into ${mergeSourceId}.`);
+}
+
+function closeMergeModal(){
+  document.getElementById('merge-modal').classList.remove('open');
+  document.body.style.overflow='';
+  mergeSourceId=null; mergeTargetId=null; mergeSelections={};
+}
+
+// ── DEAL DESK ──
+const DD_ROWS = [
+  {key:'sellingPrice',label:'Selling Price',section:'front',sign:1},
+  {key:'dealerCost',label:'Dealer Cost / ACV',section:'front',sign:-1},
+  {key:'dealerAdds',label:'Dealer Add-Ons',section:'front',sign:-1},
+  {key:'tradeACV',label:'Trade-In ACV',section:'front',sign:-1},
+  {key:'tradeAllowance',label:'Trade Allowance',section:'front',sign:1},
+  {key:'evlFee',label:'EVL Advisory Fee',section:'evl',sign:1},
+  {key:'fiGross',label:'F&I Gross (Est.)',section:'back',sign:1},
+  {key:'holdback',label:'Holdback / Incentive',section:'back',sign:1},
+];
+
+function openDealDesk(customerId){
+  currentDealCustomerId = customerId;
+  const customers = loadCustomers();
+  const c = customers.find(x=>x.id===customerId);
+  if(!c) return;
+  const desks = loadDealDesks();
+  const desk = desks[customerId]||{};
+  document.getElementById('dd-customer-name').textContent = `${c.fname} ${c.lname} — ${c.id}`;
+  document.getElementById('dd-vehicle').value = desk.vehicle||c.vehicleInterest||'';
+  document.getElementById('dd-vin').value = desk.vin||c.tradeVin||'';
+  document.getElementById('dd-color').value = desk.color||'';
+  document.getElementById('dd-mileage').value = desk.mileage||c.tradeMiles||'';
+  const rows = document.getElementById('dd-rows');
+  rows.innerHTML = DD_ROWS.map(r=>`<div class="dd-row">
+    <span class="dd-row-label">${r.label}</span>
+    <input class="dd-input" id="dd-${r.key}" type="number" placeholder="0" value="${desk[r.key]||''}" oninput="calcDealDesk()"/>
+  </div>`).join('');
+  calcDealDesk();
+  document.getElementById('deal-desk-modal').style.display='block';
+  document.body.style.overflow='hidden';
+}
+
+function calcDealDesk(){
+  let front=0, back=0, evlFee=0;
+  DD_ROWS.forEach(r=>{
+    const val = parseFloat(document.getElementById('dd-'+r.key)?.value)||0;
+    if(r.section==='front') front += val*r.sign;
+    if(r.section==='back') back += val*r.sign;
+    if(r.section==='evl') evlFee += val;
+  });
+  const total = front+back+evlFee;
+  const el = document.getElementById('dd-total-gross');
+  if(el){
+    el.textContent = '$'+Math.abs(total).toLocaleString();
+    el.style.color = total>0?'#00C853':total<0?'#FF3333':'#A1A1AA';
+  }
+  const fe = document.getElementById('dd-front');
+  const be = document.getElementById('dd-back');
+  const fee = document.getElementById('dd-fee');
+  if(fe) fe.textContent='$'+Math.abs(front).toLocaleString();
+  if(be) be.textContent='$'+back.toLocaleString();
+  if(fee) fee.textContent='$'+evlFee.toLocaleString();
+}
+
+function saveDealDesk(){
+  if(!currentDealCustomerId) return;
+  const desks = loadDealDesks();
+  const deskData = {
+    vehicle: document.getElementById('dd-vehicle').value,
+    vin: document.getElementById('dd-vin').value,
+    color: document.getElementById('dd-color').value,
+    mileage: document.getElementById('dd-mileage').value,
+    updatedAt: new Date().toISOString(),
+  };
+  DD_ROWS.forEach(r=>{ deskData[r.key]=parseFloat(document.getElementById('dd-'+r.key)?.value)||0; });
+  let front=0,back=0,evlFee=0;
+  DD_ROWS.forEach(r=>{ const v=deskData[r.key]||0; if(r.section==='front')front+=v*r.sign; if(r.section==='back')back+=v*r.sign; if(r.section==='evl')evlFee+=v; });
+  deskData.grossTotal = front+back+evlFee;
+  deskData.sellingPrice = deskData.sellingPrice||0;
+  desks[currentDealCustomerId] = deskData;
+  saveDealDesks(desks);
+  addActivity(currentDealCustomerId,'deal',`Deal Desk updated: ${deskData.vehicle||'Vehicle TBD'} · Selling $${Number(deskData.sellingPrice).toLocaleString()} · Total Gross $${Number(deskData.grossTotal).toLocaleString()}`,'UPDATED',{vehicle:deskData.vehicle});
+  closeDealDesk();
+  if(document.getElementById('profile-modal')?.classList.contains('open')) openProfile(currentDealCustomerId);
+}
+
+function closeDealDesk(){
+  document.getElementById('deal-desk-modal').style.display='none';
+  document.body.style.overflow='';
+  currentDealCustomerId=null;
+}
+
+// ── MARKECHECK SEARCH FROM PROFILE ──
+function searchMarketCheck(customerId){
+  const customers = loadCustomers();
+  const c = customers.find(x=>x.id===customerId);
+  if(!c) return;
+  const make = (c.vehicleInterest||'').split(' ')[1]||'';
+  const model = (c.vehicleInterest||'').split(' ')[2]||'';
+  const year = (c.vehicleInterest||'').split(' ')[0]||'';
+  const budget = (c.budget||'').replace(/[^0-9]/g,'')||'50000';
+  const url = `https://www.cars.com/shopping/results/?makes[]=${make.toLowerCase()}&models[]=${make.toLowerCase()}-${model.toLowerCase()}&maximum_price=${budget}&year_min=${year}&sort=price_asc`;
+  addActivity(customerId,'note',`Inventory search initiated for ${c.vehicleInterest||'vehicle'} — Budget: ${c.budget||'TBD'}`,'SEARCHED',{vehicle:c.vehicleInterest});
+  window.open(url,'_blank');
+}
+
+// ── AUTO-TRIGGER SYSTEM ──
+function fireAutoTrigger(customerId, newStatus){
+  const customers = loadCustomers();
+  const c = customers.find(x=>x.id===customerId);
+  if(!c) return;
+  const triggers = {
+    'Searching':    ()=>addActivity(customerId,'stage',`Deal moved to SEARCHING — Vehicle search activated for ${c.vehicleInterest||'target vehicle'}. 24/7 nationwide scan initiated.`,'AUTO'),
+    'Match Found':  ()=>addActivity(customerId,'stage',`MATCH FOUND — Vehicle match identified. Customer notification queued. 48hr hold window starting.`,'AUTO'),
+    'Deposit':      ()=>addActivity(customerId,'stage',`DEPOSIT RECEIVED — Vehicle hold confirmed. Payment instructions sent. Financing process begins.`,'AUTO'),
+    'In Process':   ()=>addActivity(customerId,'stage',`IN PROCESS — Deal in finance. Documents prepared. Delivery scheduling underway.`,'AUTO'),
+    'Delivered':    ()=>{
+      addActivity(customerId,'stage',`DELIVERED — Vehicle delivered successfully. Day 1 follow-up scheduled.`,'AUTO');
+      // Schedule follow-ups
+      const d1 = new Date(); d1.setDate(d1.getDate()+1);
+      const d30 = new Date(); d30.setDate(d30.getDate()+30);
+      const d180 = new Date(); d180.setDate(d180.getDate()+180);
+      const custs = loadCustomers();
+      const idx = custs.findIndex(x=>x.id===customerId);
+      if(idx>=0){
+        custs[idx].deliveryDate = new Date().toISOString();
+        custs[idx].followupDate = d1.toISOString().split('T')[0];
+        custs[idx].followup30 = d30.toISOString().split('T')[0];
+        custs[idx].equityAlertDate = d180.toISOString().split('T')[0];
+        saveCustomers(custs);
+      }
+    },
+    'Follow-Up':    ()=>addActivity(customerId,'stage',`POST-DELIVERY FOLLOW-UP — Customer in follow-up queue. CSI and referral outreach scheduled.`,'AUTO'),
+  };
+  if(triggers[newStatus]) triggers[newStatus]();
+}
+
+// ── OVERRIDE updateStatus to fire triggers + log ──
+const _origUpdateStatus = window.updateStatus;
+window.updateStatus = function(id, status){
+  const customers = loadCustomers();
+  const c = customers.find(x=>x.id===id);
+  const oldStatus = c?.status;
+  _origUpdateStatus(id, status);
+  if(oldStatus !== status){
+    addActivity(id,'stage',`Status changed: ${oldStatus} → ${status}`,'SYSTEM');
+    fireAutoTrigger(id, status);
+  }
+};
+
+// ── OVERRIDE openProfile to add V2 sections ──
+const _origOpenProfileV1 = window.openProfile;
+window.openProfile = function(id){
+  _origOpenProfileV1(id);
+  setTimeout(()=>{
+    const customers = loadCustomers();
+    const c = customers.find(x=>x.id===id);
+    if(!c) return;
+    const modalBody = document.getElementById('modal-body');
+    if(!modalBody) return;
+
+    // Add Activity Timeline + VOI + Dup sections
+    const v2Section = document.getElementById('v2-section-'+id);
+    if(v2Section) v2Section.remove();
+
+    const div = document.createElement('div');
+    div.id = 'v2-section-'+id;
+    div.style.cssText = 'border-top:2px solid #1a1a2e;margin-top:20px;padding-top:20px';
+    div.innerHTML = `
+      <!-- VOI -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">🚗 VEHICLE OF INTEREST & DEAL DESK</div>
+        <div id="voi-container-${id}"></div>
+      </div>
+      <!-- DUPLICATES -->
+      <div id="dup-container-${id}" style="margin-bottom:16px"></div>
+      <!-- ACTIVITY TIMELINE -->
+      <div>
+        <div style="font-size:12px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+          ACTIVITY TIMELINE
+          <button class="btn btn-dark btn-sm" onclick="openAddActivityForm('${id}')">➕ ADD NOTE</button>
+        </div>
+        <div id="inline-note-form-${id}" style="display:none;margin-bottom:12px;background:#020203;border:1px solid #2a2a4e;border-radius:8px;padding:12px">
+          <textarea id="inline-note-text-${id}" style="width:100%;background:#090E17;border:1px solid #2a2a4e;color:#fff;padding:10px;border-radius:6px;font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;line-height:1.5" rows="3" placeholder="Add a note..."></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn btn-blue btn-sm" onclick="saveInlineNote('${id}')">✅ SAVE NOTE</button>
+            <button class="btn btn-dark btn-sm" onclick="document.getElementById('inline-note-form-${id}').style.display='none'">CANCEL</button>
+          </div>
+        </div>
+        <div id="activity-timeline-${id}" style="max-height:400px;overflow-y:auto;padding-right:4px"></div>
+      </div>
+    `;
+    modalBody.appendChild(div);
+    renderVOICard(c, `voi-container-${id}`);
+    renderDupAlert(id, `dup-container-${id}`);
+    renderActivityTimeline(id, `activity-timeline-${id}`);
+
+    // Add COMM CENTER button to existing quick actions
+    const existingBtns = modalBody.querySelector('[style*="flex-wrap:wrap;gap:8px"]');
+    if(existingBtns && !existingBtns.querySelector('[data-v2-btns]')){
+      const newBtns = document.createElement('div');
+      newBtns.setAttribute('data-v2-btns','1');
+      newBtns.innerHTML = `
+        <button class="btn btn-gold btn-sm" onclick="closeModal();openCommCenter('${id}')">📨 COMM CENTER</button>
+        <button class="btn btn-sm" style="background:#1a0a00;border:1px solid #FF6B35;color:#FF6B35" onclick="openDealDesk('${id}')">🖊️ DEAL DESK</button>
+        <button class="btn btn-sm" style="background:#0d0000;border:1px solid #FF3333;color:#FF3333" onclick="openMergeModal('${id}',null)">🔀 CHECK DUPES</button>
+      `;
+      existingBtns.appendChild(newBtns);
+    }
+  }, 150);
+};
+
+function openAddActivityForm(id){
+  const f = document.getElementById('inline-note-form-'+id);
+  if(f){ f.style.display = f.style.display==='none'?'block':'none'; }
+}
+
+function saveInlineNote(id){
+  const txt = document.getElementById('inline-note-text-'+id)?.value?.trim();
+  if(!txt) return;
+  addActivity(id,'note',txt,'NOTE');
+  updateLastContact(id);
+  document.getElementById('inline-note-text-'+id).value='';
+  document.getElementById('inline-note-form-'+id).style.display='none';
+  renderActivityTimeline(id,'activity-timeline-'+id);
+}
+
+// ── PATCH addCustomer TO: add nickname + live dup check + activity log entry ──
+const _origAddCustomer = window.addCustomer;
+window.addCustomer = function(){
+  const fname = document.getElementById('add-fname').value.trim();
+  const lname = document.getElementById('add-lname').value.trim();
+  if(!fname||!lname){ alert('Please enter customer first and last name'); return; }
+  _origAddCustomer();
+  // Get the newly added customer (first in list)
+  const customers = loadCustomers();
+  const newC = customers[0];
+  if(newC){
+    const nickname = document.getElementById('add-nickname')?.value?.trim();
+    if(nickname){ 
+      const idx = customers.findIndex(c=>c.id===newC.id);
+      if(idx>=0){ customers[idx].nickname = nickname; saveCustomers(customers); }
+    }
+    addActivity(newC.id,'note',`Customer record created. Source: ${newC.source||'Direct'}. Vehicle interest: ${newC.vehicleInterest||'TBD'}. Budget: ${newC.budget||'TBD'}.`,'CREATED');
+    fireAutoTrigger(newC.id, newC.status);
+  }
+};
+
+// ── ADD NICKNAME FIELD to add form (patch) ──
+window.addEventListener('DOMContentLoaded',function(){
+  // Inject nickname field after first name fields
+  const fnameGroup = document.getElementById('add-fname')?.closest('.form-group');
+  if(fnameGroup && !document.getElementById('add-nickname')){
+    const nickDiv = document.createElement('div');
+    nickDiv.className='form-group';
+    nickDiv.innerHTML='<label class="form-label">Nickname / Goes By <span style="color:#A1A1AA;font-size:11px">(optional)</span></label><input class="form-input" id="add-nickname" placeholder="e.g. Bob, Liz, Mike"/>';
+    fnameGroup.parentNode.insertBefore(nickDiv, fnameGroup.nextSibling);
+  }
+  // Inject live dup check container
+  const emailGroup = document.getElementById('add-email')?.closest('.form-group');
+  if(emailGroup && !document.getElementById('live-dup-container')){
+    const dupDiv = document.createElement('div');
+    dupDiv.id='live-dup-container';
+    emailGroup.parentNode.insertBefore(dupDiv, emailGroup.parentNode.querySelector('[class*="form-grid"]')?.nextSibling||emailGroup.nextSibling);
+  }
+  // Wire live dup check to inputs
+  ['add-fname','add-lname','add-phone','add-email'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', liveDupCheck);
+  });
+  // Log comm center sends to activity
+  const origSendText = window.sendText;
+  if(origSendText) window.sendText = function(e){
+    origSendText(e);
+    if(window.currentCommCustomer){
+      const body = document.getElementById('text-body')?.value?.trim();
+      addActivity(window.currentCommCustomer.id,'text',body?.slice(0,200)||'Text message sent','SENT');
+      renderActivityTimeline(window.currentCommCustomer.id,'activity-timeline-'+window.currentCommCustomer.id);
+    }
+  };
+  const origSendEmail = window.sendEmail;
+  if(origSendEmail) window.sendEmail = function(e){
+    origSendEmail(e);
+    if(window.currentCommCustomer){
+      const subj = document.getElementById('email-subject')?.value||'Email';
+      const body = document.getElementById('email-body')?.value?.trim();
+      addActivity(window.currentCommCustomer.id,'email',`Subject: ${subj} — ${body?.slice(0,150)||''}...`,'SENT');
+      renderActivityTimeline(window.currentCommCustomer.id,'activity-timeline-'+window.currentCommCustomer.id);
+    }
+  };
+  const origSaveCallLog = window.saveCallLog;
+  if(origSaveCallLog) window.saveCallLog = function(){
+    const outcome = document.getElementById('call-outcome')?.value||'';
+    const dur = document.getElementById('call-duration')?.value||'';
+    const notes = document.getElementById('call-notes')?.value?.trim()||'';
+    origSaveCallLog();
+    if(window.currentCommCustomer){
+      addActivity(window.currentCommCustomer.id,'call',`${outcome} · Duration: ${dur}${notes?' · '+notes:''}`,outcome.includes('Connected')?'CONNECTED':'NO ANSWER');
+      renderActivityTimeline(window.currentCommCustomer.id,'activity-timeline-'+window.currentCommCustomer.id);
+    }
+  };
+});
+
+// ── PATCH CUSTOMERS TO INCLUDE NICKNAME IN SEARCH ──
+const _origRenderCustomers = window.renderCustomers;
+window.renderCustomers = function(){
+  _origRenderCustomers();
+  // Update search to include nickname
+  const searchInput = document.getElementById('cust-search');
+  if(searchInput){
+    const oldInput = searchInput.getAttribute('oninput');
+    if(!oldInput?.includes('nickname')) searchInput.setAttribute('oninput','renderCustomersV2()');
+  }
+};
+
+window.renderCustomersV2 = function(){
+  const q = (document.getElementById('cust-search')?.value||'').toLowerCase();
+  const statusFilter = document.getElementById('cust-filter-status')?.value||'';
+  const customers = loadCustomers().filter(c=>{
+    if(c.status==='[ARCHIVED]') return false;
+    const text = `${c.fname} ${c.lname} ${c.nickname||''} ${c.phone} ${c.email} ${c.vehicleInterest} ${c.status}`.toLowerCase();
+    return text.includes(q) && (!statusFilter || c.status===statusFilter);
+  });
+  const tbody = document.getElementById('cust-tbody');
+  const PILL_CLASS={'Lead':'pill-lead','Searching':'pill-search','Match Found':'pill-match','Deposit':'pill-deposit','In Process':'pill-process','Delivered':'pill-delivered','Follow-Up':'pill-followup','Lost':'pill-lost'};
+  if(!customers.length){ tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted);font-size:16px;font-weight:700">No customers found</td></tr>'; return; }
+  tbody.innerHTML = customers.map(c=>{
+    const pill = PILL_CLASS[c.status]||'pill-lead';
+    const lastContact = c.lastContact ? new Date(c.lastContact).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+    const actCount = getActivityForCustomer(c.id).length;
+    return `<tr>
+      <td><strong style="color:#fff">${c.fname} ${c.lname}</strong>${c.nickname?` <span style="color:#A1A1AA;font-size:12px">(${c.nickname})</span>`:''}<br><span style="font-size:12px;color:#A1A1AA">${c.id}</span></td>
+      <td><a href="tel:${c.phone}" style="color:#2B84FE;text-decoration:none;font-weight:700">${c.phone}</a></td>
+      <td style="max-width:200px">${c.vehicleInterest||'—'}</td>
+      <td style="color:#00C853;font-weight:900">${c.budget||'—'}</td>
+      <td><span class="status-pill ${pill}">${c.status}</span></td>
+      <td>${lastContact}</td>
+      <td style="color:#FFD700;font-weight:700">${actCount > 0 ? actCount+' activities' : '—'}</td>
+      <td><div style="display:flex;gap:4px">
+        <button class="btn btn-blue btn-sm" onclick="openProfile('${c.id}')">👤</button>
+        <button class="btn btn-dark btn-sm" onclick="openCommCenter('${c.id}')">📨</button>
+        <button class="btn btn-dark btn-sm" onclick="deleteCustomer('${c.id}')">🗑</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+};
+
+// Seed sample activity for existing customers on first load
+(function seedSampleActivity(){
+  const existing = loadActivityLog();
+  if(Object.keys(existing).length > 0) return;
+  const customers = loadCustomers();
+  const now = new Date();
+  const ha = h => new Date(now - h*3600000).toISOString();
+  const sampleActs = {
+    'EVL-001': [
+      {type:'note',content:'Customer created via Vehicle Finder form. Looking for 2023 Tundra TRD Pro, white exterior, tow package.',outcome:'CREATED',timestamp:ha(120)},
+      {type:'call',content:'Inbound call — Press 1 (Find Vehicle). Connected 7 min. Confirmed vehicle specs. Preapproved at credit union $60k.',outcome:'CONNECTED',timestamp:ha(24)},
+      {type:'text',content:'Hi Robert! Your vehicle search is ACTIVE ⚡ We\'re scanning nationwide now. Expect matches within 24-48hrs.',outcome:'SENT',timestamp:ha(23)},
+      {type:'stage',content:'Status changed: Lead → Searching',outcome:'AUTO',timestamp:ha(23)},
+      {type:'note',content:'Confirmed: Must have tow package. Prefers white pearl. Open to silver. Has trade-in 2019 F-150 XLT.',outcome:'NOTE',timestamp:ha(20)},
+      {type:'stage',content:'MATCH FOUND — 3 units located matching criteria. Customer notification sent.',outcome:'AUTO',timestamp:ha(5)},
+    ],
+    'EVL-002': [
+      {type:'note',content:'Referral from Marcus Johnson. Wants 2021-2023 BMW X5 xDrive40i. Has trade Lexus RX350.',outcome:'CREATED',timestamp:ha(72)},
+      {type:'call',content:'Outbound follow-up — Connected 12 min. Discussed BMW lease options vs purchase. Very interested in lease.',outcome:'CONNECTED',timestamp:ha(48)},
+      {type:'email',content:'Subject: EVL ⚡ BMW X5 Match Found — Sent vehicle details, 3 matches priced $67-71k.',outcome:'SENT',timestamp:ha(36)},
+      {type:'stage',content:'Status changed: Searching → Match Found',outcome:'AUTO',timestamp:ha(36)},
+      {type:'call',content:'Jennifer called in — Press 3 (Active Deal). Connected 5 min. Confirmed deposit terms. Ready to proceed.',outcome:'CONNECTED',timestamp:ha(12)},
+      {type:'stage',content:'DEPOSIT RECEIVED — Vehicle hold confirmed. 48hr local hold. Payment instructions sent.',outcome:'AUTO',timestamp:ha(6)},
+      {type:'text',content:'Hi Jennifer! Your BMW X5 is ON HOLD 🔒 48hr hold expires tomorrow. Payment instructions sent by email.',outcome:'SENT',timestamp:ha(6)},
+    ],
+    'EVL-005': [
+      {type:'note',content:'Referral customer. Wanted Tesla Model Y LR. Trade-in Camry XSE.',outcome:'CREATED',timestamp:ha(840)},
+      {type:'call',content:'Initial consultation — Connected 15 min. Discussed Tesla vs alternatives. Open to slightly used CPO.',outcome:'CONNECTED',timestamp:ha(720)},
+      {type:'stage',content:'Status changed: Searching → Match Found → Deposit → Delivered',outcome:'AUTO',timestamp:ha(36)},
+      {type:'stage',content:'DELIVERED — Vehicle delivered successfully. Day 1 follow-up scheduled.',outcome:'AUTO',timestamp:ha(26)},
+      {type:'text',content:'Hi David! Hope you\'re loving the Model Y! Quick check-in — everything going great?',outcome:'SENT',timestamp:ha(2)},
+    ],
+  };
+  const log = {};
+  Object.entries(sampleActs).forEach(([id,acts])=>{
+    log[id] = acts.map(a=>({...a,id:Date.now()+Math.random(),rep:"Tim O'Grady",metadata:{}}));
+  });
+  saveActivityLog(log);
+})();
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMergeModal();closeDealDesk();}});
+</script>
