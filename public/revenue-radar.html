@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Revenue Radar | Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
+.login-box{background:var(--s1);border:2px solid var(--green);border-radius:12px;padding:40px;width:100%;max-width:420px;text-align:center}
+.login-badge{display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
+.login-input{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:16px;border-radius:8px;font-size:26px;font-family:var(--font);font-weight:700;letter-spacing:10px;text-align:center;outline:none;margin-bottom:16px;transition:border-color .2s}
+.login-input:focus{border-color:var(--green)}
+.login-btn{width:100%;background:var(--green);color:#020203;border:none;padding:16px;font-size:16px;font-weight:900;letter-spacing:2px;cursor:pointer;border-radius:8px;font-family:var(--font)}
+.login-error{color:var(--red);font-size:14px;font-weight:700;margin-top:12px;display:none}
+
+#app{display:none}
+
+/* ADMIN NAV */
+.evl-admin-nav{position:sticky;top:0;z-index:500;background:#020a02;border-bottom:2px solid var(--green);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:var(--font)}
+.evl-admin-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
+.evl-admin-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-admin-link:hover{color:var(--white);background:#0d1a0d}
+.evl-admin-link.active-link{color:var(--green);border-bottom:2px solid var(--green)}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:12px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;font-family:var(--font)}
+
+/* TABS */
+.tab-nav{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;gap:0;overflow-x:auto}
+.tab-btn{padding:14px 20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:var(--font)}
+.tab-btn:hover{color:var(--white)}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* WRAP */
+.evl-wrap{max-width:1400px;margin:0 auto;padding:24px 20px 60px}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.kpi-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:20px;transition:border-color .2s;position:relative;overflow:hidden}
+.kpi-card:hover{border-color:var(--green)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-card.blue::before{background:var(--blue)}
+.kpi-card.green::before{background:var(--green)}
+.kpi-card.gold::before{background:var(--gold)}
+.kpi-card.red::before{background:var(--red)}
+.kpi-card.purple::before{background:var(--purple)}
+.kpi-card.cyan::before{background:var(--cyan)}
+.kpi-card.orange::before{background:var(--orange)}
+.kpi-val{font-size:34px;font-weight:900;line-height:1;display:block;margin-bottom:4px}
+.kpi-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.kpi-trend{font-size:12px;font-weight:700;font-family:var(--body)}
+.kpi-trend.up{color:var(--green)}
+.kpi-trend.down{color:var(--red)}
+.kpi-trend.flat{color:var(--muted)}
+
+/* SECTION */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.section-title{font-size:18px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase}
+
+/* CHARTS */
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:24px}
+.chart-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;overflow:hidden}
+.chart-card-header{background:var(--s2);padding:14px 18px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between}
+.chart-title{font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px}
+.chart-body{padding:18px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bar-row:last-child{margin-bottom:0}
+.bar-label{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600;width:100px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;background:#1a1a2e;border-radius:4px;height:20px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:4px;transition:width .6s ease;display:flex;align-items:center;padding-left:8px}
+.bar-fill-label{font-size:11px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
+.bar-val{font-size:13px;font-weight:900;color:var(--white);width:70px;text-align:right;flex-shrink:0}
+
+/* MINI CHART (sparkline) */
+.sparkline{display:flex;align-items:flex-end;gap:3px;height:50px}
+.spark-bar{flex:1;border-radius:2px 2px 0 0;transition:height .3s;min-width:6px}
+.spark-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-align:center;margin-top:4px}
+
+/* DEAL TABLE */
+.deal-table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden}
+.deal-table th{background:var(--s2);color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.deal-table td{padding:12px 14px;border-bottom:1px solid #0d0d1a;font-size:14px;color:var(--dim);font-weight:600;vertical-align:middle}
+.deal-table tr:hover td{background:#0a0f1a;color:var(--white)}
+.deal-table tr:last-child td{border-bottom:none}
+
+/* BUCKET TAGS */
+.bucket-tag{display:inline-block;font-size:10px;font-weight:900;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase}
+.bucket-find{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+.bucket-trade{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+.bucket-fi{background:#0d001a;border:1px solid var(--purple);color:var(--purple)}
+.bucket-lease{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.bucket-advisory{background:#001a1a;border:1px solid var(--cyan);color:var(--cyan)}
+.bucket-ws{background:#1a0a00;border:1px solid var(--orange);color:var(--orange)}
+
+/* ADD DEAL FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:11px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus{border-color:var(--green)}
+.form-input option{background:#0a0a1a}
+
+/* BUTTONS */
+.btn{padding:10px 18px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
+.btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
+.btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
+.btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--green)}
+.btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
+.btn-sm{padding:6px 12px;font-size:11px}
+
+/* GOAL METER */
+.goal-meter{margin-bottom:10px}
+.goal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.goal-label{font-size:12px;color:var(--dim);font-weight:700;font-family:var(--body)}
+.goal-pct{font-size:13px;font-weight:900}
+.goal-track{height:10px;background:#1a1a2e;border-radius:5px;overflow:hidden}
+.goal-fill{height:100%;border-radius:5px;transition:width .5s}
+
+/* PACE CARD */
+.pace-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:20px;margin-bottom:16px}
+.pace-title{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.pace-number{font-size:48px;font-weight:900;line-height:1;margin-bottom:4px}
+.pace-sub{font-size:13px;color:var(--muted);font-weight:700;font-family:var(--body)}
+
+/* REVENUE BUCKETS */
+.buckets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+.bucket-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:16px;text-align:center;transition:border-color .2s}
+.bucket-card:hover{border-color:var(--green)}
+.bucket-icon{font-size:28px;display:block;margin-bottom:8px}
+.bucket-name{font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px}
+.bucket-amount{font-size:24px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
+.bucket-count{font-size:12px;color:var(--muted);font-weight:700;font-family:var(--body)}
+
+/* F&I PENETRATION */
+.fi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.fi-card{background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px;text-align:center}
+.fi-pct{font-size:28px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
+.fi-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.fi-gauge{height:8px;background:#1a1a2e;border-radius:4px;overflow:hidden}
+.fi-fill{height:100%;border-radius:4px;transition:width .5s}
+
+/* LEADERBOARD */
+.leaderboard{background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden}
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #0d0d1a;transition:background .2s}
+.lb-row:hover{background:#0a0f1a}
+.lb-row:last-child{border-bottom:none}
+.lb-rank{font-size:16px;font-weight:900;color:var(--muted);width:24px;flex-shrink:0;text-align:center}
+.lb-name{flex:1;font-size:14px;font-weight:900;color:var(--white)}
+.lb-deals{font-size:13px;color:var(--dim);font-weight:700;font-family:var(--body);width:60px;text-align:center}
+.lb-gross{font-size:15px;font-weight:900;width:90px;text-align:right}
+
+@media(max-width:768px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .evl-admin-links{display:none}
+  .chart-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-badge">EVL INTERNAL — AUTHORIZED ONLY</div>
+    <div style="font-size:32px;font-weight:900;letter-spacing:3px;margin-bottom:4px">REVENUE RADAR</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:28px;letter-spacing:2px">DEAL INTELLIGENCE — ADMIN ACCESS</div>
+    <input type="password" class="login-input" id="pin-input" maxlength="4" placeholder="••••" autocomplete="off"/>
+    <button class="login-btn" onclick="checkPin()">📈 ACCESS REVENUE RADAR</button>
+    <div class="login-error" id="login-error">❌ INCORRECT PIN</div>
+  </div>
+</div>
+
+<div id="app">
+
+<!-- ADMIN NAV -->
+<nav class="evl-admin-nav">
+  <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#00C853" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#00C853"/></svg>
+    EVL <span style="color:var(--green);margin-left:4px">ADMIN</span>
+  </a>
+  <div class="evl-admin-links">
+    <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-link">🛡️ DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/mastermind" class="evl-admin-link">🧠 MASTERMIND</a>
+    <a href="https://evl-decode-two.vercel.app/admin-docs" class="evl-admin-link">📋 DOCUMENTS</a>
+    <a href="https://evl-decode-two.vercel.app/admin-comms" class="evl-admin-link">📨 TEMPLATES</a>
+    <a href="https://evl-decode-two.vercel.app/admin-scripts" class="evl-admin-link">⚙️ SCRIPTS</a>
+    <a href="https://evl-decode-two.vercel.app/admin-calls" class="evl-admin-link">📞 CALLS</a>
+    <a href="https://evl-decode-two.vercel.app/revenue-radar" class="evl-admin-link active-link">📈 REVENUE</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-admin-link">🌐 RETAIL</a>
+    <button class="evl-logout" onclick="logout()">LOGOUT</button>
+  </div>
+</nav>
+
+<!-- TABS -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('dashboard',this)">📈 DASHBOARD</button>
+  <button class="tab-btn" onclick="switchTab('deals',this)">🤝 DEAL LOG</button>
+  <button class="tab-btn" onclick="switchTab('buckets',this)">💰 REVENUE BUCKETS</button>
+  <button class="tab-btn" onclick="switchTab('fi',this)">📊 F&I PENETRATION</button>
+  <button class="tab-btn" onclick="switchTab('goals',this)">🎯 GOALS & PACE</button>
+  <button class="tab-btn" onclick="switchTab('add',this)">➕ LOG DEAL</button>
+</div>
+
+<div class="evl-wrap">
+
+<!-- ══ DASHBOARD TAB ══ -->
+<div id="tab-dashboard" class="tab-content active">
+
+  <!-- TOP KPIs -->
+  <div class="kpi-grid" id="kpi-grid"></div>
+
+  <!-- SPARKLINE CHART + BUCKETS -->
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:24px">
+
+    <!-- Monthly Gross Chart -->
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div class="chart-title">📈 MONTHLY GROSS — LAST 6 MONTHS</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px">ALL BUCKETS COMBINED</div>
+      </div>
+      <div class="chart-body">
+        <div style="display:flex;align-items:flex-end;gap:8px;height:120px;margin-bottom:8px" id="monthly-chart"></div>
+        <div style="display:flex;gap:8px" id="monthly-labels"></div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-title">⚡ THIS MONTH AT A GLANCE</div></div>
+      <div class="chart-body" id="glance-stats"></div>
+    </div>
+  </div>
+
+  <!-- DEAL SOURCE + CLOSING RATIO -->
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-title">🔍 REVENUE BY BUCKET</div></div>
+      <div class="chart-body" id="bucket-chart"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-title">📊 CLOSING RATIOS</div></div>
+      <div class="chart-body" id="closing-chart"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-title">📅 DEALS BY DAY OF WEEK</div></div>
+      <div class="chart-body" id="dow-chart"></div>
+    </div>
+  </div>
+
+  <!-- RECENT DEALS -->
+  <div class="section-hdr">
+    <div class="section-title">RECENT DEALS</div>
+    <button class="btn btn-dark btn-sm" onclick="switchTab('deals',document.querySelectorAll('.tab-btn')[1])">VIEW ALL →</button>
+  </div>
+  <div style="overflow-x:auto;margin-bottom:24px">
+    <table class="deal-table" id="recent-deal-table">
+      <thead><tr>
+        <th>DATE</th><th>CUSTOMER</th><th>VEHICLE</th>
+        <th>BUCKET</th><th>FRONT</th><th>BACK</th><th>EVL FEE</th><th>TOTAL GROSS</th>
+      </tr></thead>
+      <tbody id="recent-deal-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ══ DEAL LOG TAB ══ -->
+<div id="tab-deals" class="tab-content">
+  <div class="section-hdr">
+    <div class="section-title">COMPLETE DEAL LOG</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <select class="form-input" id="filter-bucket" style="width:auto;padding:8px 12px;font-size:13px" onchange="renderDealLog()">
+        <option value="">ALL BUCKETS</option>
+        <option>Vehicle Find</option><option>Trade-In</option><option>Leasing</option>
+        <option>F&I</option><option>Advisory Fee</option><option>Wholesale</option>
+      </select>
+      <select class="form-input" id="filter-month" style="width:auto;padding:8px 12px;font-size:13px" onchange="renderDealLog()">
+        <option value="">ALL TIME</option>
+      </select>
+      <button class="btn btn-green btn-sm" onclick="switchTab('add',document.querySelectorAll('.tab-btn')[5])">➕ LOG DEAL</button>
+    </div>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="deal-table" id="full-deal-table">
+      <thead><tr>
+        <th>DATE</th><th>CUSTOMER</th><th>VEHICLE</th>
+        <th>BUCKET</th><th>FRONT</th><th>BACK</th><th>EVL FEE</th><th>TOTAL</th><th>ACTIONS</th>
+      </tr></thead>
+      <tbody id="full-deal-tbody"></tbody>
+    </table>
+  </div>
+  <div id="deal-log-empty" style="display:none;text-align:center;padding:60px;color:var(--muted);font-size:16px;font-weight:700">No deals logged yet — click LOG DEAL to add your first deal</div>
+</div>
+
+<!-- ══ REVENUE BUCKETS TAB ══ -->
+<div id="tab-buckets" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">REVENUE BUCKETS</div>
+  <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px">EVL's 6 revenue streams — all tracked separately for business intelligence</div>
+
+  <div class="buckets-grid" id="buckets-detail-grid"></div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-title">💰 GROSS BY BUCKET — ALL TIME</div></div>
+      <div class="chart-body" id="bucket-all-time-chart"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-title">📊 DEAL COUNT BY BUCKET</div></div>
+      <div class="chart-body" id="bucket-count-chart"></div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-top:16px">
+    <div class="chart-card-header">
+      <div class="chart-title">📋 BUCKET DEFINITIONS & EVL LEGAL FRAMEWORK</div>
+    </div>
+    <div class="chart-body">
+      ${[
+        {icon:'🔍',name:'VEHICLE FIND FEE',desc:'Customer advisory fee for vehicle research, market intelligence, and dealer connection. Flat consulting fee — not contingent on transaction.',legal:'✅ Advisory service — no dealer license required'},
+        {icon:'🚗',name:'TRADE-IN INTELLIGENCE',desc:'Certified appraisal service fee. EVL provides market analysis and competitive bid strategy. Customer receives appraisal report.',legal:'✅ Consulting/research service — no dealer license required'},
+        {icon:'📋',name:'LEASING ADVISORY',desc:'Lease intelligence report, money factor analysis, negotiation strategy. EVL advises — dealer executes the lease.',legal:'✅ Advisory only — no Lease Facilitator license required (attorney review pending)'},
+        {icon:'💎',name:'F&I ADVISORY',desc:'Finance & Insurance product education and review. EVL advises customers on F&I products — does not sell them.',legal:'✅ Education/advisory — no license required'},
+        {icon:'💰',name:'ADVISORY / CONSULTING FEE',desc:'General consulting services. Platform access fee from dealer partners. Marketing service fee for qualified customer introductions.',legal:'✅ Consulting/marketing — platform access fee from dealers'},
+        {icon:'⚡',name:'WHOLESALE / B2B',desc:'Platform access fees from dealer network partners. Market intelligence subscriptions for dealer partners.',legal:'✅ B2B SaaS/marketing — no dealer license required'},
+      ].map(b=>`<div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #0d0d1a">
+        <span style="font-size:24px;flex-shrink:0">${b.icon}</span>
+        <div>
+          <div style="font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">${b.name}</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:6px">${b.desc}</div>
+          <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px">${b.legal}</div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>
+</div>
+
+<!-- ══ F&I PENETRATION TAB ══ -->
+<div id="tab-fi" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">F&I PENETRATION RATES</div>
+  <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px">How often advisory services are added to each deal. Industry benchmark shown for reference.</div>
+
+  <div class="fi-grid" id="fi-grid"></div>
+
+  <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:20px;margin-top:24px">
+    <div style="font-size:14px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">F&I BEST PRACTICES — EVL ADVISORY</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+      ${[
+        {title:'GAP ADVISORY',tip:'Recommend GAP on every financed deal. High protection value, low cost to customer. Avg add: $400-800.'},
+        {title:'EXTENDED WARRANTY',tip:'Discuss on all CPO and used vehicles. Manufacturer-backed preferred. Avg add: $1,200-2,500.'},
+        {title:'PAINT PROTECTION',tip:'Best on new and near-new vehicles. Ceramic coat, PPF, paint sealant. Avg add: $500-1,500.'},
+        {title:'TIRE & WHEEL',tip:'High close rate — customers understand tire costs. Avg add: $400-700.'},
+        {title:'LEASE-END ADVISORY',tip:'Pre-position lease customers on end-of-lease options. Creates next-deal opportunity.'},
+        {title:'CREDIT LIFE/DISABILITY',tip:'Discuss on financed deals with significant balance. Customer protection focus.'},
+      ].map(p=>`<div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:14px">
+        <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:6px">${p.title}</div>
+        <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5">${p.tip}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+</div>
+
+<!-- ══ GOALS & PACE TAB ══ -->
+<div id="tab-goals" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">GOALS & PERFORMANCE PACE</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+    <div class="pace-card">
+      <div class="pace-title">MONTHLY GROSS — ON PACE FOR</div>
+      <div class="pace-number" id="pace-monthly" style="color:var(--green)">$0</div>
+      <div class="pace-sub">Based on current month's performance</div>
+    </div>
+    <div class="pace-card">
+      <div class="pace-title">ANNUAL GROSS — ON PACE FOR</div>
+      <div class="pace-number" id="pace-annual" style="color:var(--blue)">$0</div>
+      <div class="pace-sub">Annualized from year-to-date</div>
+    </div>
+  </div>
+
+  <!-- GOALS -->
+  <div class="chart-card" style="margin-bottom:16px">
+    <div class="chart-card-header">
+      <div class="chart-title">🎯 MONTHLY GOALS — EDIT ANYTIME</div>
+      <button class="btn btn-dark btn-sm" onclick="saveGoals()">💾 SAVE GOALS</button>
+    </div>
+    <div class="chart-body">
+      <div id="goals-grid"></div>
+    </div>
+  </div>
+
+  <!-- MILESTONES -->
+  <div class="chart-card">
+    <div class="chart-card-header"><div class="chart-title">🏆 MILESTONE TRACKER</div></div>
+    <div class="chart-body" id="milestones"></div>
+  </div>
+</div>
+
+<!-- ══ ADD DEAL TAB ══ -->
+<div id="tab-add" class="tab-content">
+  <div style="max-width:700px">
+    <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">➕ LOG NEW DEAL</div>
+    <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:24px">
+
+      <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL INFO</div>
+      <div class="form-grid" style="margin-bottom:20px">
+        <div class="form-group"><label class="form-label">Customer Name</label><input class="form-input" id="log-customer" placeholder="Full Name"/></div>
+        <div class="form-group"><label class="form-label">Deal Date</label><input class="form-input" type="date" id="log-date"/></div>
+        <div class="form-group"><label class="form-label">Vehicle (YMM)</label><input class="form-input" id="log-vehicle" placeholder="2023 Toyota Tundra TRD Pro"/></div>
+        <div class="form-group"><label class="form-label">VIN</label><input class="form-input" id="log-vin" placeholder="17-digit VIN (optional)"/></div>
+        <div class="form-group"><label class="form-label">Revenue Bucket</label>
+          <select class="form-input" id="log-bucket">
+            <option value="Vehicle Find">🔍 Vehicle Find Fee</option>
+            <option value="Trade-In">🚗 Trade-In Intelligence</option>
+            <option value="Leasing">📋 Leasing Advisory</option>
+            <option value="F&I">💎 F&I Advisory</option>
+            <option value="Advisory Fee">💰 Advisory / Consulting Fee</option>
+            <option value="Wholesale">⚡ Wholesale / B2B</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Lead Source</label>
+          <select class="form-input" id="log-source">
+            <option>Website — Trade-In Form</option>
+            <option>Website — Vehicle Finder</option>
+            <option>Referral</option>
+            <option>Direct Call</option>
+            <option>Walk-In</option>
+            <option>Wholesale Network</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL GROSS BREAKDOWN</div>
+      <div class="form-grid" style="margin-bottom:20px">
+        <div class="form-group"><label class="form-label">Front-End Gross ($)</label><input class="form-input" id="log-front" type="number" placeholder="0" oninput="calcLogTotal()"/></div>
+        <div class="form-group"><label class="form-label">Back-End / F&I Gross ($)</label><input class="form-input" id="log-back" type="number" placeholder="0" oninput="calcLogTotal()"/></div>
+        <div class="form-group"><label class="form-label">EVL Advisory Fee ($)</label><input class="form-input" id="log-fee" type="number" placeholder="0" oninput="calcLogTotal()"/></div>
+        <div class="form-group"><label class="form-label">Trade-In Uplift ($)</label><input class="form-input" id="log-trade" type="number" placeholder="0" oninput="calcLogTotal()"/></div>
+      </div>
+
+      <!-- LIVE TOTAL -->
+      <div style="background:#020a02;border:2px solid var(--green);border-radius:10px;padding:16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">TOTAL DEAL GROSS</div>
+          <div style="font-size:38px;font-weight:900;color:var(--green)" id="log-total-display">$0</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:4px">FRONT</div>
+          <div style="font-size:16px;font-weight:900;color:var(--dim)" id="log-front-display">$0</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-top:6px;margin-bottom:4px">BACK + FEE</div>
+          <div style="font-size:16px;font-weight:900;color:var(--dim)" id="log-back-display">$0</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:20px">
+        <label class="form-label">Deal Notes</label>
+        <textarea class="form-input" id="log-notes" rows="3" placeholder="Deal summary, special circumstances, customer feedback..." style="resize:none;line-height:1.5;font-family:var(--body)"></textarea>
+      </div>
+
+      <!-- F&I PRODUCTS -->
+      <div style="font-size:12px;font-weight:900;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">F&I PRODUCTS ADVISED</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px" id="fi-checkboxes"></div>
+
+      <button class="btn btn-green" onclick="logDeal()" style="width:100%;font-size:15px;padding:14px">✅ LOG THIS DEAL</button>
+      <div id="log-success" style="display:none;text-align:center;color:var(--green);font-weight:900;font-size:15px;margin-top:12px;letter-spacing:1px">✅ DEAL LOGGED SUCCESSFULLY!</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /evl-wrap -->
+</div><!-- /app -->
+
+<script>
+const CORRECT_PIN = '1027';
+const DEALS_KEY = 'evl_revenue_deals';
+const GOALS_KEY = 'evl_revenue_goals';
+
+// ── AUTH ──
+function checkPin(){
+  if(document.getElementById('pin-input').value===CORRECT_PIN){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    sessionStorage.setItem('evl-rr-auth','1027');
+    initApp();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pin-input').value='';
+    document.getElementById('pin-input').focus();
+  }
+}
+function logout(){sessionStorage.removeItem('evl-rr-auth');location.reload();}
+document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
+if(sessionStorage.getItem('evl-rr-auth')==='1027'){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+}
+
+// ── DATA ──
+function loadDeals(){try{return JSON.parse(localStorage.getItem(DEALS_KEY)||'[]')}catch(e){return[]}}
+function saveDeals(d){localStorage.setItem(DEALS_KEY,JSON.stringify(d))}
+function loadGoals(){try{return JSON.parse(localStorage.getItem(GOALS_KEY)||'{}')}catch(e){return{}}}
+function saveGoals(){
+  const g={};
+  document.querySelectorAll('.goal-input').forEach(el=>{g[el.dataset.key]=parseFloat(el.value)||0;});
+  localStorage.setItem(GOALS_KEY,JSON.stringify(g));
+  renderGoals();
+  alert('✅ Goals saved!');
+}
+
+const BUCKET_CONFIG = {
+  'Vehicle Find': {color:'var(--blue)',icon:'🔍',tag:'bucket-find'},
+  'Trade-In':     {color:'var(--green)',icon:'🚗',tag:'bucket-trade'},
+  'Leasing':      {color:'var(--gold)',icon:'📋',tag:'bucket-lease'},
+  'F&I':          {color:'var(--purple)',icon:'💎',tag:'bucket-fi'},
+  'Advisory Fee': {color:'var(--cyan)',icon:'💰',tag:'bucket-advisory'},
+  'Wholesale':    {color:'var(--orange)',icon:'⚡',tag:'bucket-ws'},
+};
+
+const FI_PRODUCTS = ['GAP Insurance','Extended Warranty','Paint Protection','Tire & Wheel','Credit Life/Disability','Lease-End Advisory','Maintenance Plan'];
+
+// ── SEED SAMPLE DATA ──
+function seedSampleDeals(){
+  const existing = loadDeals();
+  if(existing.length>0) return;
+  const now = new Date();
+  const ago = d=>{ const x=new Date(now); x.setDate(x.getDate()-d); return x.toISOString().split('T')[0]; };
+  const samples = [
+    {id:'RR-001',customer:'David Chen',vehicle:'2021 Tesla Model Y LR',date:ago(3),bucket:'Vehicle Find',front:1500,back:0,fee:599,trade:750,total:2849,source:'Referral',notes:'Smooth deal. Trade-in Camry moved through WS network.',fi:['GAP Insurance','Extended Warranty']},
+    {id:'RR-002',customer:'Amanda Rodriguez',vehicle:'2022 Honda Pilot Elite',date:ago(27),bucket:'Trade-In',front:0,back:0,fee:299,trade:2100,total:2399,source:'Website — Trade-In Form',notes:'Trade uplift from competitive bidding — got $2,100 more than dealer offer.',fi:['GAP Insurance']},
+    {id:'RR-003',customer:'Jennifer Thompson',vehicle:'2022 BMW X5 xDrive40i',date:ago(1),bucket:'Vehicle Find',front:2200,back:0,fee:599,trade:1800,total:4599,source:'Referral',notes:'Deposit received. Delivery next week.',fi:['GAP Insurance','Paint Protection','Tire & Wheel']},
+    {id:'RR-004',customer:'Marcus Johnson',vehicle:'2023 GMC Yukon Denali',date:ago(45),bucket:'Vehicle Find',front:1800,back:0,fee:599,trade:0,total:2399,source:'Website — Vehicle Finder',notes:'Cash buyer. No trade. Found unit in Dallas 3 days after search start.',fi:['Extended Warranty']},
+    {id:'RR-005',customer:'Sarah Williams',vehicle:'Lease Advisory — 2024 Bronco',date:ago(60),bucket:'Leasing',front:0,back:0,fee:199,trade:0,total:199,source:'Website — Trade-In Form',notes:'Lease intelligence report delivered. Customer went to dealer armed with money factor data.',fi:[]},
+    {id:'RR-006',customer:'Toyota McKinney — BD',vehicle:'WS Network — Monthly Access',date:ago(5),bucket:'Wholesale',front:0,back:0,fee:299,trade:0,total:299,source:'Wholesale Network',notes:'Monthly platform access fee from dealer partner.',fi:[]},
+    {id:'RR-007',customer:'Robert Martinez',vehicle:'2023 Toyota Tundra TRD Pro',date:ago(10),bucket:'Vehicle Find',front:2500,back:0,fee:599,trade:3200,total:6299,source:'Website — Vehicle Finder',notes:'Best deal of the month. Competitive trade bid exceeded dealer offer by $3,200.',fi:['GAP Insurance','Extended Warranty','Paint Protection']},
+  ];
+  saveDeals(samples);
+}
+
+// ── COMPUTED METRICS ──
+function getMetrics(){
+  const deals = loadDeals();
+  const now = new Date();
+  const thisMonth = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  const lastMonth = new Date(now.getFullYear(),now.getMonth()-1,1);
+  const lastMonthStr = `${lastMonth.getFullYear()}-${String(lastMonth.getMonth()+1).padStart(2,'0')}`;
+
+  const thisMonthDeals = deals.filter(d=>d.date?.startsWith(thisMonth));
+  const lastMonthDeals = deals.filter(d=>d.date?.startsWith(lastMonthStr));
+
+  const sum = arr=>arr.reduce((s,d)=>s+(d.total||0),0);
+  const avgGross = deals.length ? Math.round(sum(deals)/deals.length) : 0;
+  const thisMonthGross = sum(thisMonthDeals);
+  const lastMonthGross = sum(lastMonthDeals);
+  const trend = lastMonthGross ? Math.round(((thisMonthGross-lastMonthGross)/lastMonthGross)*100) : 0;
+
+  // Pace calculation
+  const dayOfMonth = now.getDate();
+  const daysInMonth = new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const monthPace = dayOfMonth > 0 ? Math.round((thisMonthGross/dayOfMonth)*daysInMonth) : 0;
+  const ytd = deals.filter(d=>d.date?.startsWith(now.getFullYear().toString()));
+  const ytdGross = sum(ytd);
+  const dayOfYear = Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
+  const annualPace = dayOfYear > 0 ? Math.round((ytdGross/dayOfYear)*365) : 0;
+
+  // Bucket breakdown
+  const byBucket = {};
+  Object.keys(BUCKET_CONFIG).forEach(b=>{byBucket[b]={gross:0,count:0};});
+  deals.forEach(d=>{
+    if(byBucket[d.bucket]){byBucket[d.bucket].gross+=d.total||0;byBucket[d.bucket].count++;}
+  });
+
+  // F&I penetration
+  const fiPen = {};
+  FI_PRODUCTS.forEach(p=>{
+    const count = deals.filter(d=>d.fi?.includes(p)).length;
+    fiPen[p] = deals.length ? Math.round((count/deals.length)*100) : 0;
+  });
+
+  // DOW breakdown
+  const dowCounts = [0,0,0,0,0,0,0];
+  deals.forEach(d=>{ if(d.date){ const dow=new Date(d.date+'T12:00:00').getDay(); dowCounts[dow]++; }});
+
+  return {
+    deals, thisMonthDeals, lastMonthDeals,
+    totalGross: sum(deals), thisMonthGross, lastMonthGross, trend,
+    avgGross, totalDeals: deals.length, thisMonthCount: thisMonthDeals.length,
+    monthPace, annualPace, ytdGross,
+    byBucket, fiPen, dowCounts
+  };
+}
+
+// ── INIT ──
+function initApp(){
+  seedSampleDeals();
+  const now = new Date();
+  document.getElementById('log-date').value = now.toISOString().split('T')[0];
+  // Populate month filter
+  const deals = loadDeals();
+  const months = [...new Set(deals.map(d=>d.date?.slice(0,7)))].sort().reverse();
+  const sel = document.getElementById('filter-month');
+  months.forEach(m=>{ const opt=document.createElement('option'); opt.value=m; opt.textContent=new Date(m+'-15').toLocaleDateString('en-US',{month:'long',year:'numeric'}); sel.appendChild(opt); });
+  // F&I checkboxes
+  document.getElementById('fi-checkboxes').innerHTML = FI_PRODUCTS.map(p=>`
+    <label style="display:flex;align-items:center;gap:6px;cursor:pointer;background:var(--bg);border:1px solid #2a2a4e;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:700;transition:border-color .2s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='#2a2a4e'">
+      <input type="checkbox" value="${p}" style="accent-color:var(--purple);width:14px;height:14px"/> ${p}
+    </label>`).join('');
+  renderAll();
+}
+if(sessionStorage.getItem('evl-rr-auth')==='1027') initApp();
+
+function renderAll(){
+  renderKPIs();
+  renderMonthlyChart();
+  renderGlanceStats();
+  renderBucketChart();
+  renderClosingChart();
+  renderDOWChart();
+  renderRecentDeals();
+  renderDealLog();
+  renderBucketsDetail();
+  renderFIPenetration();
+  renderGoals();
+}
+
+// ── KPIs ──
+function renderKPIs(){
+  const m = getMetrics();
+  const fmt = n=>'$'+Math.round(n).toLocaleString();
+  const kpis = [
+    {val:fmt(m.totalGross),lbl:'Total Gross (All Time)',trend:'',color:'green'},
+    {val:fmt(m.thisMonthGross),lbl:'This Month Gross',trend:m.trend>0?`↑ ${m.trend}% vs last mo`:m.trend<0?`↓ ${Math.abs(m.trend)}% vs last mo`:'Same as last mo',trendDir:m.trend>0?'up':m.trend<0?'down':'flat',color:'blue'},
+    {val:m.totalDeals,lbl:'Total Deals',trend:'',color:'gold'},
+    {val:m.thisMonthCount,lbl:'Deals This Month',trend:'',color:'cyan'},
+    {val:fmt(m.avgGross),lbl:'Avg Gross / Deal',trend:'',color:'purple'},
+    {val:fmt(m.monthPace),lbl:'Monthly Pace',trend:'Projected at current rate',color:'orange'},
+    {val:fmt(m.annualPace),lbl:'Annual Pace',trend:'YTD annualized',color:'green'},
+    {val:fmt(m.ytdGross),lbl:'Year-to-Date Gross',trend:'',color:'blue'},
+  ];
+  document.getElementById('kpi-grid').innerHTML = kpis.map(k=>`<div class="kpi-card ${k.color}">
+    <span class="kpi-lbl">${k.lbl}</span>
+    <span class="kpi-val" style="color:var(--${k.color})">${k.val}</span>
+    ${k.trend?`<div class="kpi-trend ${k.trendDir||'flat'}">${k.trend}</div>`:''}
+  </div>`).join('');
+}
+
+// ── MONTHLY CHART ──
+function renderMonthlyChart(){
+  const deals = loadDeals();
+  const now = new Date();
+  const months = [];
+  for(let i=5;i>=0;i--){
+    const d = new Date(now.getFullYear(),now.getMonth()-i,1);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const label = d.toLocaleDateString('en-US',{month:'short'});
+    const gross = deals.filter(x=>x.date?.startsWith(key)).reduce((s,x)=>s+(x.total||0),0);
+    months.push({key,label,gross});
+  }
+  const maxGross = Math.max(...months.map(m=>m.gross),1);
+  document.getElementById('monthly-chart').innerHTML = months.map(m=>`
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted)">${m.gross>0?'$'+Math.round(m.gross/1000)+'k':''}</div>
+      <div style="width:100%;background:${m.gross>0?'var(--green)':'#1a1a2e'};border-radius:4px 4px 0 0;height:${Math.max(4,(m.gross/maxGross)*100)}px;transition:height .3s"></div>
+    </div>`).join('');
+  document.getElementById('monthly-labels').innerHTML = months.map(m=>`<div style="flex:1;text-align:center;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px">${m.label}</div>`).join('');
+}
+
+// ── GLANCE STATS ──
+function renderGlanceStats(){
+  const m = getMetrics();
+  const goals = loadGoals();
+  const goalGross = goals.monthlyGross||5000;
+  const pct = Math.min(100,Math.round((m.thisMonthGross/goalGross)*100));
+  document.getElementById('glance-stats').innerHTML = `
+    <div style="margin-bottom:14px">
+      <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">GOAL PROGRESS — ${pct}%</div>
+      <div style="background:#1a1a2e;border-radius:6px;height:12px;overflow:hidden;margin-bottom:4px">
+        <div style="height:100%;background:${pct>=100?'var(--green)':pct>=70?'var(--gold)':'var(--blue)'};width:${pct}%;border-radius:6px;transition:width .5s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700">
+        <span>$${Math.round(m.thisMonthGross).toLocaleString()} earned</span>
+        <span>$${Math.round(goalGross).toLocaleString()} goal</span>
+      </div>
+    </div>
+    ${[
+      ['Deals Closed',m.thisMonthCount],
+      ['Best Deal','$'+Math.round(Math.max(0,...m.thisMonthDeals.map(d=>d.total||0))).toLocaleString()],
+      ['Avg This Month',m.thisMonthCount?'$'+Math.round(m.thisMonthGross/m.thisMonthCount).toLocaleString():'—'],
+      ['Lead Source #1',m.thisMonthDeals.length?m.thisMonthDeals.sort((a,b)=>b.total-a.total)[0]?.source?.split(' — ')[0]||'—':'—'],
+    ].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body)">
+      <span style="font-size:13px;color:var(--muted);font-weight:700">${l}</span>
+      <span style="font-size:14px;font-weight:900;color:var(--white)">${v}</span>
+    </div>`).join('')}`;
+}
+
+// ── BUCKET CHART ──
+function renderBucketChart(){
+  const {byBucket} = getMetrics();
+  const total = Object.values(byBucket).reduce((s,b)=>s+b.gross,0)||1;
+  document.getElementById('bucket-chart').innerHTML = Object.entries(byBucket).map(([name,data])=>{
+    const cfg = BUCKET_CONFIG[name]||{color:'var(--muted)',icon:'📋'};
+    const pct = Math.round((data.gross/total)*100);
+    return `<div class="bar-row">
+      <div class="bar-label">${cfg.icon} ${name}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${pct}%;background:${cfg.color}">
+          ${pct>10?`<span class="bar-fill-label">${pct}%</span>`:''}
+        </div>
+      </div>
+      <div class="bar-val" style="color:${cfg.color}">$${data.gross.toLocaleString()}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── CLOSING RATIO CHART ──
+function renderClosingChart(){
+  const deals = loadDeals();
+  // Simulated leads by source vs deals closed
+  const sources = {'Website — Vehicle Finder':12,'Website — Trade-In Form':8,'Referral':5,'Direct Call':7,'Wholesale Network':4};
+  const closedBySource = {};
+  deals.forEach(d=>{ const s=d.source||'Other'; closedBySource[s]=(closedBySource[s]||0)+1; });
+  document.getElementById('closing-chart').innerHTML = Object.entries(sources).map(([src,leads])=>{
+    const closed = closedBySource[src]||0;
+    const ratio = Math.round((closed/leads)*100);
+    return `<div class="bar-row">
+      <div class="bar-label">${src.split(' — ')[1]||src}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${ratio}%;background:${ratio>=50?'var(--green)':ratio>=30?'var(--gold)':'var(--red)'}">
+          ${ratio>15?`<span class="bar-fill-label">${ratio}%</span>`:''}
+        </div>
+      </div>
+      <div class="bar-val">${closed}/${leads}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── DOW CHART ──
+function renderDOWChart(){
+  const {dowCounts} = getMetrics();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const maxCount = Math.max(...dowCounts,1);
+  document.getElementById('dow-chart').innerHTML = `<div style="display:flex;align-items:flex-end;gap:8px;height:80px;margin-bottom:8px">
+    ${dowCounts.map((c,i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted)">${c||''}</div>
+      <div style="width:100%;background:${c>0?'var(--blue)':'#1a1a2e'};border-radius:3px 3px 0 0;height:${Math.max(4,(c/maxCount)*70)}px"></div>
+    </div>`).join('')}
+  </div>
+  <div style="display:flex;gap:8px">${days.map(d=>`<div style="flex:1;text-align:center;font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px">${d}</div>`).join('')}</div>`;
+}
+
+// ── RECENT DEALS ──
+function renderRecentDeals(){
+  const deals = loadDeals().slice(0,8);
+  renderDealRows('recent-deal-tbody', deals, false);
+}
+
+function renderDealLog(){
+  const bucket = document.getElementById('filter-bucket')?.value||'';
+  const month = document.getElementById('filter-month')?.value||'';
+  let deals = loadDeals();
+  if(bucket) deals = deals.filter(d=>d.bucket===bucket);
+  if(month) deals = deals.filter(d=>d.date?.startsWith(month));
+  const empty = document.getElementById('deal-log-empty');
+  if(deals.length===0){ if(empty) empty.style.display='block'; document.getElementById('full-deal-tbody').innerHTML=''; return; }
+  if(empty) empty.style.display='none';
+  renderDealRows('full-deal-tbody', deals, true);
+}
+
+function renderDealRows(tbodyId, deals, showDelete){
+  const tbody = document.getElementById(tbodyId);
+  if(!tbody) return;
+  tbody.innerHTML = deals.map(d=>{
+    const cfg = BUCKET_CONFIG[d.bucket]||{color:'var(--muted)',icon:'📋',tag:''};
+    const dateStr = d.date ? new Date(d.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+    return `<tr>
+      <td style="font-size:13px;color:var(--muted);white-space:nowrap">${dateStr}</td>
+      <td><strong style="color:var(--white)">${d.customer||'—'}</strong></td>
+      <td style="max-width:180px;font-size:13px">${d.vehicle||'—'}</td>
+      <td><span class="bucket-tag ${cfg.tag}">${cfg.icon} ${d.bucket}</span></td>
+      <td style="color:var(--dim);font-weight:700">$${(d.front||0).toLocaleString()}</td>
+      <td style="color:var(--dim);font-weight:700">$${(d.back||0).toLocaleString()}</td>
+      <td style="color:var(--gold);font-weight:700">$${(d.fee||0).toLocaleString()}</td>
+      <td style="color:var(--green);font-weight:900;font-size:16px">$${(d.total||0).toLocaleString()}</td>
+      ${showDelete?`<td><button class="btn btn-dark btn-sm" onclick="deleteDeal('${d.id}')">🗑</button></td>`:''}
+    </tr>`;
+  }).join('');
+}
+
+// ── BUCKETS DETAIL ──
+function renderBucketsDetail(){
+  const {byBucket} = getMetrics();
+  document.getElementById('buckets-detail-grid').innerHTML = Object.entries(byBucket).map(([name,data])=>{
+    const cfg = BUCKET_CONFIG[name]||{color:'var(--muted)',icon:'📋'};
+    return `<div class="bucket-card">
+      <span class="bucket-icon">${cfg.icon}</span>
+      <div class="bucket-name">${name}</div>
+      <span class="bucket-amount" style="color:${cfg.color}">$${data.gross.toLocaleString()}</span>
+      <div class="bucket-count">${data.count} deal${data.count!==1?'s':''}</div>
+    </div>`;
+  }).join('');
+
+  // All-time chart
+  const total = Object.values(byBucket).reduce((s,b)=>s+b.gross,0)||1;
+  document.getElementById('bucket-all-time-chart').innerHTML = Object.entries(byBucket).map(([name,data])=>{
+    const cfg = BUCKET_CONFIG[name];
+    const pct = Math.round((data.gross/total)*100);
+    return `<div class="bar-row">
+      <div class="bar-label">${cfg.icon} ${name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cfg.color}"></div></div>
+      <div class="bar-val" style="color:${cfg.color}">$${data.gross.toLocaleString()}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('bucket-count-chart').innerHTML = Object.entries(byBucket).map(([name,data])=>{
+    const cfg = BUCKET_CONFIG[name];
+    const max = Math.max(...Object.values(byBucket).map(b=>b.count),1);
+    const pct = Math.round((data.count/max)*100);
+    return `<div class="bar-row">
+      <div class="bar-label">${cfg.icon} ${name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cfg.color}"></div></div>
+      <div class="bar-val">${data.count} deals</div>
+    </div>`;
+  }).join('');
+}
+
+// ── F&I PENETRATION ──
+const FI_BENCHMARKS = {'GAP Insurance':65,'Extended Warranty':45,'Paint Protection':30,'Tire & Wheel':35,'Credit Life/Disability':20,'Lease-End Advisory':25,'Maintenance Plan':20};
+function renderFIPenetration(){
+  const {fiPen} = getMetrics();
+  document.getElementById('fi-grid').innerHTML = FI_PRODUCTS.map(p=>{
+    const pct = fiPen[p]||0;
+    const bench = FI_BENCHMARKS[p]||40;
+    const color = pct>=bench?'var(--green)':pct>=bench*0.7?'var(--gold)':'var(--red)';
+    return `<div class="fi-card">
+      <div class="fi-label">${p}</div>
+      <div class="fi-pct" style="color:${color}">${pct}%</div>
+      <div class="fi-gauge"><div class="fi-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;font-family:var(--body)">Benchmark: ${bench}%</div>
+    </div>`;
+  }).join('');
+}
+
+// ── GOALS ──
+function renderGoals(){
+  const goals = loadGoals();
+  const m = getMetrics();
+  const goalFields = [
+    {key:'monthlyGross',label:'Monthly Gross Goal ($)',current:m.thisMonthGross,default:5000},
+    {key:'monthlyDeals',label:'Monthly Deal Count Goal',current:m.thisMonthCount,default:10},
+    {key:'avgDealGross',label:'Average Deal Gross Goal ($)',current:m.avgGross,default:2500},
+    {key:'fiPenetration',label:'F&I Advisory Rate Goal (%)',current:Math.round(m.thisMonthDeals.filter(d=>d.fi?.length>0).length/(m.thisMonthCount||1)*100),default:60},
+  ];
+  document.getElementById('goals-grid').innerHTML = goalFields.map(f=>{
+    const goal = goals[f.key]||f.default;
+    const pct = Math.min(100,Math.round((f.current/goal)*100));
+    const color = pct>=100?'var(--green)':pct>=70?'var(--gold)':'var(--blue)';
+    return `<div class="goal-meter">
+      <div class="goal-header">
+        <span class="goal-label">${f.label}</span>
+        <span class="goal-pct" style="color:${color}">${pct}% of goal</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div class="goal-track" style="flex:1"><div class="goal-fill" style="width:${pct}%;background:${color}"></div></div>
+        <input type="number" class="goal-input form-input" data-key="${f.key}" value="${goal}" style="width:100px;padding:6px 10px;font-size:13px"/>
+      </div>
+      <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600">Current: ${f.current.toLocaleString()} · Goal: ${goal.toLocaleString()} · Gap: ${Math.max(0,goal-f.current).toLocaleString()}</div>
+    </div>`;
+  }).join('');
+
+  // Pace
+  document.getElementById('pace-monthly').textContent = '$'+m.monthPace.toLocaleString();
+  document.getElementById('pace-annual').textContent = '$'+m.annualPace.toLocaleString();
+
+  // Milestones
+  const milestones = [
+    {label:'First Deal',target:1,current:m.totalDeals},
+    {label:'5 Deals',target:5,current:m.totalDeals},
+    {label:'10 Deals',target:10,current:m.totalDeals},
+    {label:'$10k Gross',target:10000,current:m.totalGross},
+    {label:'$25k Gross',target:25000,current:m.totalGross},
+    {label:'$50k Gross',target:50000,current:m.totalGross},
+    {label:'$100k Gross',target:100000,current:m.totalGross},
+  ];
+  document.getElementById('milestones').innerHTML = milestones.map(ms=>{
+    const done = ms.current >= ms.target;
+    const pct = Math.min(100,Math.round((ms.current/ms.target)*100));
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #0d0d1a">
+      <span style="font-size:18px">${done?'🏆':'⬜'}</span>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:900;color:${done?'var(--gold)':'var(--white)'}">${ms.label}</div>
+        <div style="background:#1a1a2e;border-radius:4px;height:6px;overflow:hidden;margin-top:4px">
+          <div style="height:100%;background:${done?'var(--gold)':'var(--green)'};width:${pct}%;transition:width .5s;border-radius:4px"></div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:${done?'var(--gold)':'var(--muted)'};font-weight:700;text-align:right;white-space:nowrap">
+        ${done?'✅ ACHIEVED':pct+'%'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── LOG DEAL ──
+function calcLogTotal(){
+  const front = parseFloat(document.getElementById('log-front').value)||0;
+  const back = parseFloat(document.getElementById('log-back').value)||0;
+  const fee = parseFloat(document.getElementById('log-fee').value)||0;
+  const trade = parseFloat(document.getElementById('log-trade').value)||0;
+  const total = front+back+fee+trade;
+  document.getElementById('log-total-display').textContent = '$'+total.toLocaleString();
+  document.getElementById('log-front-display').textContent = '$'+front.toLocaleString();
+  document.getElementById('log-back-display').textContent = '$'+(back+fee).toLocaleString();
+}
+
+function logDeal(){
+  const customer = document.getElementById('log-customer').value.trim();
+  const vehicle = document.getElementById('log-vehicle').value.trim();
+  if(!customer||!vehicle){ alert('Please enter customer name and vehicle'); return; }
+  const front = parseFloat(document.getElementById('log-front').value)||0;
+  const back = parseFloat(document.getElementById('log-back').value)||0;
+  const fee = parseFloat(document.getElementById('log-fee').value)||0;
+  const trade = parseFloat(document.getElementById('log-trade').value)||0;
+  const fi = [...document.querySelectorAll('#fi-checkboxes input:checked')].map(cb=>cb.value);
+  const deals = loadDeals();
+  const newDeal = {
+    id: 'RR-'+String(Date.now()).slice(-6),
+    customer, vehicle,
+    date: document.getElementById('log-date').value,
+    bucket: document.getElementById('log-bucket').value,
+    source: document.getElementById('log-source').value,
+    front, back, fee, trade,
+    total: front+back+fee+trade,
+    notes: document.getElementById('log-notes').value.trim(),
+    fi, createdAt: new Date().toISOString()
+  };
+  deals.unshift(newDeal);
+  saveDeals(deals);
+  renderAll();
+  // Clear form
+  ['log-customer','log-vehicle','log-vin','log-front','log-back','log-fee','log-trade','log-notes'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.querySelectorAll('#fi-checkboxes input').forEach(cb=>cb.checked=false);
+  calcLogTotal();
+  document.getElementById('log-success').style.display='block';
+  setTimeout(()=>document.getElementById('log-success').style.display='none',3000);
+  // Update month filter
+  const sel = document.getElementById('filter-month');
+  const mo = newDeal.date?.slice(0,7);
+  if(mo && ![...sel.options].find(o=>o.value===mo)){
+    const opt=document.createElement('option'); opt.value=mo; opt.textContent=new Date(mo+'-15').toLocaleDateString('en-US',{month:'long',year:'numeric'}); sel.insertBefore(opt,sel.options[1]);
+  }
+}
+
+function deleteDeal(id){
+  if(!confirm('Delete this deal record?')) return;
+  saveDeals(loadDeals().filter(d=>d.id!==id));
+  renderAll();
+}
+
+// ── TABS ──
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') {} });
+</script>
+</body>
+</html>
