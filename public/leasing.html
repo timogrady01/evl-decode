@@ -194,11 +194,12 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
     <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
     <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link">FIND MY CAR</a>
     <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
-    <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link active">LEASING</a>
-    <a href="https://evl-decode-two.vercel.app/financing" class="evl-nav-link">FINANCING</a>
+    <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
+    <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link">COMPARE</a>
     <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
     <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
     <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
+    <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
     <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
   </div>
 </nav>
@@ -771,5 +772,251 @@ function calculateLease(){
   document.getElementById('calc-result').classList.add('show');
 }
 </script>
+
+<!-- MANUFACTURER PROGRAMS -->
+<div style="background:var(--s1);border-top:2px solid #1a1a2e;padding:48px 24px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">MANUFACTURER PROGRAMS</div>
+    <h2 style="font-size:36px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">WHERE THE REAL LEASE DEALS LIVE</h2>
+    <p style="font-size:16px;color:var(--dim);font-family:var(--body);max-width:700px;line-height:1.7;margin-bottom:28px">Every manufacturer has a captive finance arm. These companies set residual values and money factors — not the dealership. EVL tracks monthly program changes across all major brands so you always know where the best deals are right now.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:20px">
+      
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Toyota Financial Services</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">TFS</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Strong residuals on RAV4/Camry/Tundra. MF varies monthly by region.</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">BMW Financial Services</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">BMWFS</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">European Delivery Program. MF transparency varies — always convert to APR.</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Lexus Financial Services</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">LFS</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Often best loyalty incentives. Strong residuals on RX/NX models.</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Ford Motor Credit</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">FMCC</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Special rates on F-150/Bronco. Watch dealer MF markup on popular trims.</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">GM Financial</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">GMF</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">10-year powertrain warranty transfers. Strong residuals on Tahoe/Silverado.</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Honda Financial Services</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">HFS</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Competitive on CR-V/Pilot. MF tends to be lower than manufacturer avg.</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Chrysler Capital / Stellantis</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">CCAP</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">RAM/Jeep programs. Highly variable — check monthly. Loyalty bonuses available.</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Hyundai/Kia Finance</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">HMF</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">EV lease programs among best in market. Ioniq 5/EV6 federal credit eligible.</div>
+      </div>
+    </div>
+    <div style="background:#040e1a;border:1px solid var(--blue);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:14px">
+      <span style="font-size:22px;flex-shrink:0">⚡</span>
+      <div>
+        <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:1px;margin-bottom:6px">HOW EVL TRACKS MONTHLY PROGRAMS</div>
+        <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6">Residual values and money factors change on the 1st of every month. EVL pulls current program data from Edmunds, Leasehackr, and MarketCheck — so you always see real numbers, not last month's stale rates. When you request an EVL Lease Intelligence Report, we lock in the current month's official program data for your specific vehicle and ZIP code.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INCEPTION FEES -->
+<div style="background:var(--bg);border-top:2px solid #1a1a2e;padding:48px 24px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:inline-block;background:#1a0a00;border:1px solid var(--red);color:var(--red);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">WHAT YOU PAY AT SIGNING</div>
+    <h2 style="font-size:36px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">INCEPTION FEES — <span style="color:var(--red)">THE BLINDSIDE</span></h2>
+    <p style="font-size:16px;color:var(--dim);font-family:var(--body);max-width:700px;line-height:1.7;margin-bottom:28px">Most customers focus only on the monthly payment — then sit down at the finance desk and discover they owe thousands more at signing. EVL shows you every fee before you walk in.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px">
+      <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">First Month Payment</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">Your monthly payment amount</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Always required. Usually rolled into total drive-off cost.</div>
+      </div>
+      <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">Security Deposit</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#0d1a0d;border:1px solid var(--green);color:var(--green)">NEGOTIABLE</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$0 — $1,000+</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Many brands have eliminated this. Always negotiate to $0. MSDs can lower MF — EVL advises when this makes sense.</div>
+      </div>
+      <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">Acquisition Fee</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$595 — $1,095</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Charged by the captive finance company (TFS, BMWFS, etc.) — NOT negotiable. Can be rolled into cap cost vs. paid upfront.</div>
+      </div>
+      <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">Doc / Admin Fee</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$150 — $499</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Dealer charge. In Texas, capped by law. Negotiable on cap cost offset — EVL factors this in.</div>
+      </div>
+      <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">Registration & Title</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">~$150-250 (Texas)</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Must be paid upfront. Cannot be rolled into most leases. Texas is relatively low vs other states.</div>
+      </div>
+      <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">Sales Tax (Texas)</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">6.25% on monthly payment</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Texas taxes the monthly payment — not the full vehicle price. This is actually favorable vs buying outright.</div>
+      </div>
+      <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">Disposition Fee</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#0d1a0d;border:1px solid var(--green);color:var(--green)">NEGOTIABLE</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$300 — $500 (at lease end)</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Charged at turn-in if you don't buy or re-lease. EVL ALWAYS gets this waived in writing at signing. Most dealers agree — they just never volunteer it.</div>
+      </div>
+      <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+          <div style="font-size:13px;font-weight:900;color:var(--white)">Cap Cost Reduction</div>
+          <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#0d1a0d;border:1px solid var(--green);color:var(--green)">YOUR CHOICE</span>
+        </div>
+        <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">Optional down payment</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">EVL advises against large cap reductions — you lose that money if the car is totaled. Smaller is smarter on a lease.</div>
+      </div>
+    </div>
+    <div style="background:#1a0000;border:2px solid var(--red);border-radius:10px;padding:16px 20px">
+      <div style="font-size:13px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:8px">⚠️ THE DISPOSITION FEE TRAP</div>
+      <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6">At lease end, if you return the car and don't buy or re-lease with the same brand, dealers charge $300-500. EVL always secures a written waiver at signing. Most salespeople will agree — they just never volunteer it. This one conversation saves you hundreds at turn-in.</div>
+    </div>
+  </div>
+</div>
+
+<!-- EARLY TERMINATION & WEAR/TEAR -->
+<div style="background:var(--s1);border-top:2px solid #1a1a2e;padding:48px 24px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:inline-block;background:#1a1400;border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">LEASE END INTELLIGENCE</div>
+    <h2 style="font-size:36px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">EARLY EXIT & WEAR/TEAR — <span style="color:var(--gold)">KNOW BEFORE YOU SIGN</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px">
+      <div>
+        <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:14px">EARLY TERMINATION — THE TRAP</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
+            <span style="font-size:20px;flex-shrink:0">💸</span>
+            <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">You owe remaining payments PLUS fees</div>
+            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Unlike a car loan, you cannot simply return a lease early. You owe remaining payments, early termination fees, and the difference between residual value and current market value.</div></div>
+          </div>
+          <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
+            <span style="font-size:20px;flex-shrink:0">🔄</span>
+            <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">Lease transfer is your escape hatch</div>
+            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">SwapALease and Lease Trader let you transfer your lease to another qualified buyer. EVL coordinates this process — transfer fee of $300-500 beats thousands in termination penalties.</div></div>
+          </div>
+          <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
+            <span style="font-size:20px;flex-shrink:0">⚠️</span>
+            <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">GAP insurance is critical on leases</div>
+            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">If the car is totaled, your insurance may not cover the full remaining lease obligation. GAP bridges this gap. EVL always recommends GAP on leases — and finds it cheaper than dealer pricing.</div></div>
+          </div>
+          <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
+            <span style="font-size:20px;flex-shrink:0">📊</span>
+            <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">The 12-month breakeven rule</div>
+            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Never trade out of a lease more than 12 months early without running the full financial analysis. EVL calculates the exact breakeven point before you make any decision.</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:14px;font-weight:900;color:var(--blue);letter-spacing:1px;margin-bottom:14px">WEAR & TEAR — WHAT ACTUALLY GETS CHARGED</div>
+        <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:6px">✅ NORMAL — No charge</div>
+          <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.8">• Small door dings under 1/2 inch<br>• Minor scuffs on bumpers<br>• Light interior wear<br>• Small chips on windshield edges</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid #2a0000;border-radius:8px;padding:12px 14px;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:6px">🔴 EXCESS — You pay</div>
+          <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.8">• Dents larger than 1/2 inch<br>• Deep scratches through paint<br>• Torn or burned upholstery<br>• Missing components/features<br>• Tires below 2/32 tread depth</div>
+        </div>
+        <div style="background:#040e1a;border:1px solid var(--blue);border-radius:8px;padding:12px 14px">
+          <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:1px;margin-bottom:6px">⚡ EVL PRO TIPS</div>
+          <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.8">• Get wear/tear standards in writing before signing<br>• Professional detail before turn-in<br>• PDR (paintless dent repair) at lease end costs $100-200 and saves hundreds<br>• Document every ding with photos at delivery day</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MF TO APR + LEGAL FRAMEWORK -->
+<div style="background:var(--bg);border-top:2px solid #1a1a2e;padding:48px 24px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
+      <div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">THE MATH THEY DON'T SHOW YOU</div>
+        <h2 style="font-size:30px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">MONEY FACTOR → APR CONVERSION</h2>
+        <p style="font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:18px;line-height:1.6">Dealers quote money factors like 0.00225 because it sounds small. Here's how to convert any MF to a real APR — instantly.</p>
+        <div style="background:var(--s1);border:2px solid var(--blue);border-radius:12px;padding:20px;margin-bottom:16px;text-align:center">
+          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase">The Conversion Formula</div>
+          <div style="font-size:32px;font-weight:900;color:var(--white);margin-bottom:8px;letter-spacing:1px">MF × 2,400 = APR %</div>
+          <div style="font-size:14px;color:var(--muted);font-family:var(--body)">Example: 0.00225 × 2400 = <strong style="color:var(--gold)">5.4% APR</strong></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-radius:6px;font-size:13px"><span style="color:var(--muted);font-weight:700">MF: 0.00100</span><span style="color:var(--white);font-weight:900">2.4% APR</span><span style="color:var(--green);font-weight:700">🟢 EXCELLENT</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-radius:6px;font-size:13px"><span style="color:var(--muted);font-weight:700">MF: 0.00150</span><span style="color:var(--white);font-weight:900">3.6% APR</span><span style="color:var(--green);font-weight:700">🟢 STRONG</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-radius:6px;font-size:13px"><span style="color:var(--muted);font-weight:700">MF: 0.00200</span><span style="color:var(--white);font-weight:900">4.8% APR</span><span style="color:var(--gold);font-weight:700">🟡 FAIR</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-radius:6px;font-size:13px"><span style="color:var(--muted);font-weight:700">MF: 0.00225</span><span style="color:var(--white);font-weight:900">5.4% APR</span><span style="color:var(--gold);font-weight:700">🟡 AVERAGE</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-radius:6px;font-size:13px"><span style="color:var(--muted);font-weight:700">MF: 0.00280</span><span style="color:var(--white);font-weight:900">6.7% APR</span><span style="color:var(--red);font-weight:700">🔴 HIGH</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#1a0000;border:1px solid var(--red);border-radius:6px;font-size:13px"><span style="color:var(--red);font-weight:900">MF: 0.00350+</span><span style="color:var(--white);font-weight:900">8.4%+ APR</span><span style="color:var(--red);font-weight:700">🔴 DEALER MARKUP</span></div>
+        </div>
+        <div style="background:#1a0000;border:1px solid var(--red);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5">
+          <strong style="color:var(--red)">⚠️ DEALER MF MARKUP:</strong> Dealers can mark up the money factor by up to 0.0008 above the buy rate. On a $45,000 vehicle that's approximately $54/month extra — $1,944 over 36 months. EVL identifies and eliminates dealer MF markup before you sign.
+        </div>
+      </div>
+      <div>
+        <div style="display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">LEGAL FRAMEWORK</div>
+        <h2 style="font-size:30px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">EVL IS NOT A LEASE FACILITATOR</h2>
+        <div style="background:#020a02;border:2px solid var(--green);border-radius:12px;padding:20px;margin-bottom:14px">
+          <div style="font-size:13px;color:var(--green);font-weight:900;letter-spacing:1px;margin-bottom:10px">WHAT EVL DOES</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.9">
+            ✅ Provides market intelligence and lease education<br>
+            ✅ Calculates true monthly payments including ALL fees<br>
+            ✅ Tracks current manufacturer program data monthly<br>
+            ✅ Advises on negotiation strategy — you execute<br>
+            ✅ Secures disposition fee waivers in writing<br>
+            ✅ Coordinates lease transfers through SwapALease
+          </div>
+        </div>
+        <div style="background:#1a0000;border:2px solid var(--red);border-radius:12px;padding:20px;margin-bottom:14px">
+          <div style="font-size:13px;color:var(--red);font-weight:900;letter-spacing:1px;margin-bottom:10px">WHAT EVL DOES NOT DO</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.9">
+            ❌ Act as a lease facilitator or arranger<br>
+            ❌ Sign contracts on your behalf<br>
+            ❌ Take title to any vehicle<br>
+            ❌ Negotiate directly with the dealer in your name<br>
+            ❌ Receive commissions from manufacturers or dealers<br>
+            ❌ Act as a licensed lessor or lender
+          </div>
+        </div>
+        <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.6;font-style:italic">
+          EVL provides market research, data aggregation, and administrative consulting services. All lease transactions are executed directly between the client and the licensed dealer or lessor. EVL charges a flat advisory fee for data and consulting services only — never a transaction commission. — Express Vehicle Locators Service Agreement §1.1
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
