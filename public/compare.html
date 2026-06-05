@@ -376,7 +376,7 @@ IMPORTANT RULES:
 - Current year context: 2026. Reference 2022-2025 model years as recent.`;
 
   try{
-        const resp = await fetch('/api/compare',{
+        const resp = const resp = await fetch('/api/compare',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({prompt, systemPrompt:systemPrompt})
