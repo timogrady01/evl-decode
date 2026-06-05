@@ -179,7 +179,54 @@ button[onclick="selectAll()"] { font-size: 16px !important; padding: 8px 18px !i
 
   <div class="highlight-box">
     <strong>⚡ What This Is:</strong> This is the document that authorizes EVL to act as your agent. Once signed, EVL can negotiate, locate, and arrange delivery of your vehicle on your behalf. You remain in control — no deal is finalized without your explicit approval. This document is timestamped, stored securely, and legally binding under Texas law.
+  
+
+  <!-- NON-CIRCUMVENTION & LIQUIDATED DAMAGES — Added June 2026 -->
+  <div style="background:#1a0000;border:2px solid #FF3333;border-radius:12px;padding:22px 24px;margin-bottom:20px">
+    <div style="font-size:11px;font-weight:900;color:#FF3333;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px">⚖️ SECTION 4 — NON-CIRCUMVENTION & LIQUIDATED DAMAGES</div>
+
+    <div style="font-size:14px;color:#ccd6e0;font-family:sans-serif;line-height:1.8;margin-bottom:16px">
+      <strong style="color:#fff">4.1 Non-Circumvention Agreement.</strong> Client explicitly agrees that all vehicle introductions, dealer contacts, pricing intelligence, market data, VIN information, and negotiation strategies provided by Express Vehicle Locators ("EVL") constitute proprietary advisory services. Client agrees NOT to use information provided by EVL to circumvent, bypass, or exclude EVL from any vehicle transaction for a period of <strong style="color:#FFD700">twelve (12) months</strong> from the date of introduction or delivery of said information, whichever is later.
+    </div>
+
+    <div style="font-size:14px;color:#ccd6e0;font-family:sans-serif;line-height:1.8;margin-bottom:16px">
+      <strong style="color:#fff">4.2 Prohibited Conduct.</strong> The following actions constitute circumvention under this Agreement:
+      <ul style="margin:10px 0 10px 20px;display:flex;flex-direction:column;gap:6px">
+        <li>Contacting any dealer, seller, or vehicle source introduced or identified by EVL without EVL's involvement in the resulting transaction</li>
+        <li>Using EVL-provided VIN data, market reports, or pricing intelligence to negotiate directly with a dealer identified through EVL's advisory process</li>
+        <li>Referring a third party to a dealer, vehicle, or opportunity identified by EVL in lieu of completing the transaction through EVL</li>
+        <li>Completing a vehicle purchase, lease, or trade within 12 months of receiving EVL advisory services on a specific vehicle or dealer, without EVL's involvement in the final transaction</li>
+      </ul>
+    </div>
+
+    <div style="font-size:14px;color:#ccd6e0;font-family:sans-serif;line-height:1.8;margin-bottom:16px">
+      <strong style="color:#fff">4.3 Liquidated Damages.</strong> The Parties agree that the actual damages arising from a circumvention are difficult to ascertain with precision. Therefore, in the event of circumvention as defined in Section 4.2, Client agrees to pay EVL liquidated damages equal to <strong style="color:#FFD700">the full EVL advisory fee that would have applied to the transaction, plus one hundred percent (100%) of said fee as a penalty, plus all reasonable attorneys' fees and court costs</strong> incurred by EVL in enforcing this Agreement. This liquidated damages provision is not a penalty but a reasonable estimate of EVL's actual damages, including lost advisory revenue, market intelligence costs, and opportunity cost.
+    </div>
+
+    <div style="font-size:14px;color:#ccd6e0;font-family:sans-serif;line-height:1.8;margin-bottom:16px">
+      <strong style="color:#fff">4.4 Governing Law & Jurisdiction.</strong> This Agreement and any dispute arising hereunder shall be governed exclusively by the laws of the State of Texas, with exclusive jurisdiction and venue in <strong style="color:#FFD700">Collin County, Texas</strong>. Any party filing a legal action against EVL that is dismissed or decided in EVL's favor shall bear 100% of EVL's reasonable attorneys' fees and court costs.
+    </div>
+
+    <div style="font-size:14px;color:#ccd6e0;font-family:sans-serif;line-height:1.8;margin-bottom:16px">
+      <strong style="color:#fff">4.5 Mandatory Binding Arbitration.</strong> Prior to any litigation, the Parties agree to submit all disputes to binding arbitration in Collin County, Texas under the American Arbitration Association Commercial Rules. The arbitrator's decision shall be final and binding. This provision shall survive termination of this Agreement.
+    </div>
+
+    <div style="font-size:14px;color:#ccd6e0;font-family:sans-serif;line-height:1.8;margin-bottom:16px">
+      <strong style="color:#fff">4.6 EVL Platform Neutrality.</strong> EVL provides market intelligence, data aggregation, and administrative consulting services. EVL is NOT a motor vehicle dealer, broker, auctioneer, or licensed lessor as defined under Texas Occupations Code §2301. EVL does not take title to vehicles, does not guarantee sales, and does not represent the Client in the final execution of legal transfer documents. All vehicle transactions are independent transactions between Client and the licensed dealer or private seller. Fees paid to EVL are for market research, data analysis, and advisory strategy only — never a transaction commission.
+    </div>
+
+    <div style="background:rgba(255,51,51,0.1);border:1px solid #FF3333;border-radius:8px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:900;color:#FF3333;letter-spacing:2px;margin-bottom:8px">CLIENT INITIAL REQUIRED — SECTION 4</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <input type="text" id="nc-initials" maxlength="4" placeholder="Initials" style="background:#0a0a1a;border:2px solid #FF3333;color:#fff;padding:8px 12px;border-radius:6px;font-size:16px;font-weight:900;width:80px;text-align:center;outline:none;font-family:serif"/>
+        <div style="font-size:13px;color:#ccd6e0;font-family:sans-serif;line-height:1.5;flex:1">By initialing here, I confirm I have read and agree to Section 4: Non-Circumvention, Liquidated Damages, Governing Law, Mandatory Arbitration, and EVL Platform Neutrality. I understand that bypassing EVL on any introduced vehicle within 12 months will result in liquidated damages plus attorneys' fees.</div>
+      </div>
+    </div>
+
+    <div style="font-size:11px;color:#666;font-family:sans-serif;font-style:italic;line-height:1.5">This non-circumvention clause is standard practice for advisory and consulting engagements. EVL's advisory value — market data, dealer intelligence, negotiation strategy — represents proprietary work product that EVL has the legal right to protect. Questions about this section? Contact EVL before signing.</div>
   </div>
+
+</div><!-- /non-circ -->
 
   <!-- SUCCESS STATE -->
   <div class="success-box" id="successBox">
@@ -573,7 +620,7 @@ function submitAgreement(){
     'SIGNATURE\n'+
     'Method: '+(sigMode==='type'?'Typed':'Drawn')+'\n'+
     'Signature: '+sig+'\n\n'+
-    'AUTHORIZATIONS CONFIRMED:\n'+
+    'NON-CIRCUMVENTION INITIALS: '+ncInitials+'\n\n'+'AUTHORIZATIONS CONFIRMED:\n'+
     '✓ Agreement read and understood\n'+
     '✓ No deal final without explicit approval\n'+
     '✓ Terms of Service and Privacy Policy agreed\n\n'+
