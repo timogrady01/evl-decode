@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/auto-alert",
+      "destination": "auto-alert.html"
+    },
+    {
+      "source": "/auto-alert.html",
+      "destination": "auto-alert.html"
+    },
+    {
       "source": "/index",
       "destination": "index.html"
     },
