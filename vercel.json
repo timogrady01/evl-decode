@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/ws-intelligence",
+      "destination": "ws-intelligence.html"
+    },
+    {
+      "source": "/ws-intelligence.html",
+      "destination": "ws-intelligence.html"
+    },
+    {
+      "source": "/reviews",
+      "destination": "reviews.html"
+    },
+    {
+      "source": "/reviews.html",
+      "destination": "reviews.html"
+    },
+    {
       "source": "/auto-alert",
       "destination": "auto-alert.html"
     },
