@@ -478,14 +478,14 @@ FORMATTING RULES:
 - Never recommend specific dealerships or link to inventory`;
 
   try{
-    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+    const resp = await fetch('/api/compare',{
       method:'POST',
-      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,system:systemPrompt,messages:[{role:'user',content:prompt}]})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt, systemPrompt})
     });
     clearInterval(interval);
     const data = await resp.json();
-    const content = data.content?.[0]?.text||'Unable to retrieve information. Please try again.';
+    const content = data.content || buildSmartResponse(prompt, currentMode);
 
     document.getElementById('loading-view').style.display='none';
     document.getElementById('response-view').style.display='block';
