@@ -10,75 +10,60 @@
 body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh;display:block!important}
 :root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
 
-.evl-nav{position:sticky;top:0;z-index:9999;background:#090E17;border-bottom:2px solid #2B84FE;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;width:100%}
-.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap}
-.evl-nav-links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
-.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 8px;border-radius:4px;transition:all .2s;white-space:nowrap}
-.evl-nav-link:hover{color:#fff;background:#1a1a2e}
-.evl-nav-link.active{color:#2B84FE;border-bottom:2px solid #2B84FE}
-.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;white-space:nowrap}
-.evl-nav-hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
-@media(max-width:900px){
-  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#090E17;border-bottom:2px solid #2B84FE;padding:8px 0;z-index:9999}
+/* NAV */
+.evl-nav{position:sticky;top:0;z-index:9999;background:var(--s1);border-bottom:2px solid var(--blue);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
+.evl-nav-links{display:flex;align-items:center;gap:4px}
+.evl-nav-link{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-nav-link:hover{color:var(--white);background:#1a1a2e}
+.evl-nav-link.active{color:var(--blue);border-bottom:2px solid var(--blue)}
+.evl-nav-cta{background:var(--blue);color:var(--white)!important;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:8px 16px;border-radius:6px;margin-left:8px;white-space:nowrap}
+.evl-nav-hamburger{display:none;background:none;border:none;color:var(--white);font-size:22px;cursor:pointer}
+@media(max-width:768px){
+  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:var(--s1);border-bottom:2px solid var(--blue);padding:12px 0}
   .evl-nav-links.open{display:flex}
-  .evl-nav-link,.evl-nav-cta{width:100%;padding:12px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e;font-size:14px}
+  .evl-nav-link,.evl-nav-cta{width:100%;padding:14px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e}
   .evl-nav-hamburger{display:block}
 }
 
-
-
 /* HERO */
-.intel-hero{background:linear-gradient(135deg,#020203 0%,#040e1a 50%,#020203 100%);border-bottom:2px solid #1a1a2e;padding:48px 24px;text-align:center;position:relative;overflow:hidden}
+.intel-hero{background:linear-gradient(135deg,#020203 0%,#040e1a 50%,#020203 100%);border-bottom:2px solid #1a1a2e;padding:52px 24px;text-align:center;position:relative;overflow:hidden}
 .intel-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(43,132,254,0.08) 0%,transparent 70%)}
-.hero-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
-.hero-h1{font-size:46px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;line-height:1.05}
+.hero-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:18px}
+.hero-h1{font-size:50px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;line-height:1.05}
 .hero-h1 span{color:var(--blue)}
-.hero-sub{font-size:16px;color:var(--dim);font-family:var(--body);max-width:620px;margin:0 auto 28px;line-height:1.7}
+.hero-sub{font-size:17px;color:var(--dim);font-family:var(--body);max-width:600px;margin:0 auto 32px;line-height:1.7;font-weight:500}
 
-/* MODE TOGGLE */
-.mode-toggle{display:flex;gap:0;background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;overflow:hidden;margin:0 auto 24px;width:fit-content}
-.mode-btn{padding:12px 24px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .2s;font-family:var(--font);white-space:nowrap}
-.mode-btn.active{background:var(--blue);color:var(--white)}
-.mode-btn:hover:not(.active){color:var(--white);background:#1a1a2e}
-
-/* SINGLE SEARCH */
+/* MAIN SEARCH */
 .search-wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
-.search-row{display:flex;gap:12px;margin-bottom:14px}
-.search-input{flex:1;background:var(--s1);border:2px solid #2a2a4e;color:var(--white);padding:16px 20px;border-radius:10px;font-size:16px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s}
+.search-input-row{display:flex;gap:12px;margin-bottom:16px}
+.search-input{flex:1;background:var(--s1);border:2px solid #2a2a4e;color:var(--white);padding:18px 20px;border-radius:12px;font-size:17px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;letter-spacing:0.5px}
 .search-input:focus{border-color:var(--blue)}
 .search-input::placeholder{color:#3a3a5e;font-weight:500}
-.search-btn{background:var(--blue);color:var(--white);border:none;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap}
+.search-btn{background:var(--blue);color:var(--white);border:none;padding:18px 32px;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .search-btn:hover{background:#1a6fd4}
 .search-btn:disabled{background:#1a1a2e;cursor:not-allowed;color:var(--muted)}
 
-/* 3-VEHICLE COMPARE GRID */
-.compare-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;max-width:900px;margin-left:auto;margin-right:auto}
-.compare-vehicle-input{background:var(--s1);border:2px solid #2a2a4e;border-radius:12px;overflow:hidden;transition:border-color .2s}
-.compare-vehicle-input.filled{border-color:var(--blue)}
-.compare-vehicle-input .cvi-label{background:var(--s2);padding:8px 14px;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;gap:6px}
-.compare-vehicle-input input{width:100%;background:transparent;border:none;color:var(--white);padding:14px 16px;font-size:14px;font-family:var(--font);font-weight:700;outline:none}
-.compare-vehicle-input input::placeholder{color:#3a3a5e}
-.compare-vs{display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:var(--muted);letter-spacing:2px;align-self:center}
-
 /* QUICK PROMPTS */
-.quick-prompts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:4px}
+.quick-prompts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 20px}
 .qp-btn{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;font-family:var(--font);border:2px solid #1a1a2e;color:var(--muted);background:transparent;white-space:nowrap}
 .qp-btn:hover{border-color:var(--blue);color:var(--blue);background:#040e1a}
 
 /* MAIN WRAP */
-.intel-wrap{max-width:1100px;margin:0 auto;padding:36px 20px 80px}
+.intel-wrap{max-width:1100px;margin:0 auto;padding:40px 20px 80px}
 
-/* LOADING */
-.loading-view{text-align:center;padding:60px 20px}
+/* RESULTS AREA */
+.results-area{min-height:200px}
+.results-loading{text-align:center;padding:60px 20px}
 .loading-spinner{width:48px;height:48px;border:4px solid #1a1a2e;border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:16px;color:var(--muted);font-weight:700;letter-spacing:1px}
 .loading-sub{font-size:13px;color:#2a2a4e;font-family:var(--body);margin-top:6px}
 
-/* RESPONSE */
-.response-card{background:var(--s1);border:2px solid var(--blue);border-radius:16px;overflow:hidden;margin-bottom:24px;animation:fadeIn .4s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.response-header{background:#040e1a;padding:14px 22px;border-bottom:2px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+/* RESPONSE CARD */
+.response-card{background:var(--s1);border:2px solid var(--blue);border-radius:16px;overflow:hidden;margin-bottom:24px;animation:fadeSlideIn .4s ease}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.response-header{background:#040e1a;padding:16px 22px;border-bottom:2px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .response-query{font-size:14px;font-weight:900;color:var(--blue);letter-spacing:1px}
 .response-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:#020a02;border:1px solid var(--green);color:var(--green);letter-spacing:1px}
 .response-body{padding:24px;font-family:var(--body);font-size:15px;color:var(--dim);line-height:1.8}
@@ -86,37 +71,41 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .response-body h2:first-child{margin-top:0}
 .response-body h3{font-size:16px;font-weight:900;color:var(--blue);letter-spacing:1px;margin:14px 0 8px;font-family:var(--font)}
 .response-body strong{color:var(--white);font-weight:700}
-.response-body em{color:var(--gold)}
-.response-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;overflow-x:auto;display:block}
-.response-body table th{background:var(--s2);color:var(--gold);padding:10px 14px;text-align:left;font-family:var(--font);font-size:12px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid #1a1a2e;white-space:nowrap}
-.response-body table td{padding:10px 14px;border-bottom:1px solid #0d0d1a;vertical-align:top;min-width:100px}
+.response-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+.response-body table th{background:var(--s2);color:var(--gold);padding:10px 14px;text-align:left;font-family:var(--font);font-size:12px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid #1a1a2e}
+.response-body table td{padding:10px 14px;border-bottom:1px solid #0d0d1a;vertical-align:top}
 .response-body table tr:hover td{background:#0a0f1a;color:var(--white)}
 .response-body ul,.response-body ol{margin:8px 0 12px 20px}
 .response-body li{margin-bottom:6px}
 .response-body .evl-rec{background:#020a02;border:2px solid var(--green);border-radius:10px;padding:16px 20px;margin:16px 0}
 .response-body .evl-rec-title{font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-family:var(--font)}
-.response-body .winner-badge{display:inline-block;background:#0d1a0d;border:1px solid var(--green);color:var(--green);font-size:11px;font-weight:900;padding:2px 8px;border-radius:10px;letter-spacing:1px;font-family:var(--font)}
+.response-body .evl-rec-text{color:var(--dim);font-size:14px;line-height:1.7}
 .response-body .disclaimer{font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid #1a1a2e;margin-top:16px;padding-top:12px;line-height:1.6}
-.response-cta{background:#020a02;border-top:2px solid #1a1a2e;padding:14px 22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* CTA FOOTER */
+.response-cta{background:#020a02;border-top:2px solid #1a1a2e;padding:16px 22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .response-cta-text{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;flex:1}
 
-/* DEFAULT CATEGORIES */
-.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:32px}
+/* CATEGORY BUTTONS */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:40px}
 .cat-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;text-align:center}
 .cat-card:hover{border-color:var(--blue);transform:translateY(-2px)}
-.cat-icon{font-size:30px;display:block;margin-bottom:8px}
-.cat-title{font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px}
-.cat-desc{font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.4}
+.cat-icon{font-size:32px;display:block;margin-bottom:10px}
+.cat-title{font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px}
+.cat-desc{font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5}
 
 /* HISTORY */
-.history-item{background:var(--s2);border:1px solid #1a1a2e;border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:6px;transition:border-color .2s}
-.history-item:hover{border-color:var(--blue)}
+.history-item{background:var(--s2);border:1px solid #1a1a2e;border-radius:8px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:6px;transition:border-color .2s}
+.history-item:hover{border-color:var(--blue);background:#0a0f1a}
+.history-text{font-size:13px;color:var(--dim);font-weight:700;flex:1}
+.history-time{font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:700;white-space:nowrap;margin-left:12px}
 
 /* BUTTONS */
 .btn{padding:10px 20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
 .btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
 .btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
+.btn-sm{padding:7px 14px;font-size:11px}
 
 /* FOOTER */
 .evl-footer{background:var(--s1);border-top:2px solid #1a1a2e;padding:24px 20px;font-family:var(--font)}
@@ -127,10 +116,9 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .evl-footer-copy{font-size:12px;color:#445566;font-weight:600}
 
 @media(max-width:768px){
-  .compare-inputs{grid-template-columns:1fr}
-  .compare-vs{display:none}
-  .hero-h1{font-size:30px}
-  .search-row{flex-direction:column}
+  .search-input-row{flex-direction:column}
+  .hero-h1{font-size:32px}
+  .category-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -142,170 +130,112 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
     <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
     EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
   </a>
-  <button class="evl-nav-hamburger" onclick="document.getElementById('evl-nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <button class="evl-nav-hamburger" onclick="document.getElementById('evl-nav-links').classList.toggle('open')">&#9776;</button>
   <div class="evl-nav-links" id="evl-nav-links">
     <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
     <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link">FIND MY CAR</a>
     <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
     <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
-    <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link active">COMPARE</a>
+    <a href="https://evl-decode-two.vercel.app/how" class="evl-nav-link">HOW IT WORKS</a>
+    <a href="https://evl-decode-two.vercel.app/financing" class="evl-nav-link">FINANCING</a>
     <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
-    <a href="https://evl-decode-two.vercel.app/reviews" class="evl-nav-link">CLIENT WINS</a>
+    <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link active">COMPARE</a>
     <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
     <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
-    <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
     <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO + SEARCH -->
 <div class="intel-hero">
   <div class="hero-badge">AI-POWERED VEHICLE INTELLIGENCE</div>
   <h1 class="hero-h1">COMPARE. RESEARCH.<br><span>GET THE FACTS.</span></h1>
-  <p class="hero-sub">Compare up to 3 vehicles side by side, explore trim levels, understand packages, or ask anything about any car. Pure intelligence — no dealer spin.</p>
+  <p class="hero-sub">Compare any two vehicles, explore body styles, understand packages, or ask anything about any car. Real specs. No dealer spin. Pure intelligence.</p>
 
-  <!-- MODE TOGGLE -->
-  <div class="mode-toggle" id="mode-toggle">
-    <button class="mode-btn active" onclick="setMode('ask',this)" id="mode-ask">💬 ASK ANYTHING</button>
-    <button class="mode-btn" onclick="setMode('compare2',this)" id="mode-compare2">⚔️ 2-VEHICLE COMPARE</button>
-    <button class="mode-btn" onclick="setMode('compare3',this)" id="mode-compare3">🏆 3-VEHICLE COMPARE</button>
-    <button class="mode-btn" onclick="setMode('trims',this)" id="mode-trims">📋 TRIM BREAKDOWN</button>
-  </div>
-
-  <!-- MODE: ASK ANYTHING -->
-  <div id="panel-ask" class="search-wrap">
-    <div class="search-row">
-      <input class="search-input" id="ask-input" placeholder="Best truck for towing under $55k · EV vs Gas total cost · Tundra vs F-150..."
-        onkeydown="if(event.key==='Enter')runMode('ask')"/>
-      <button class="search-btn" onclick="runMode('ask')" id="ask-btn">⚡ ANALYZE</button>
+  <div class="search-wrap">
+    <div class="search-input-row">
+      <input class="search-input" id="search-input" placeholder="F-150 vs Tundra · Best SUV under $45k · Mustang GT packages explained..."
+        onkeydown="if(event.key==='Enter')runSearch()"/>
+      <button class="search-btn" onclick="runSearch()" id="search-btn">
+        <span id="btn-text">⚡ ANALYZE</span>
+      </button>
     </div>
     <div class="quick-prompts">
-      <button class="qp-btn" onclick="setAsk('F-150 vs Tundra vs Silverado full comparison')">🛻 Truck Comparison</button>
-      <button class="qp-btn" onclick="setAsk('BMW X5 vs Mercedes GLE vs Audi Q7')">🏎 Luxury SUV Battle</button>
-      <button class="qp-btn" onclick="setAsk('best family SUV under $45000 2024 2025')">👨‍👩‍👧‍👦 Family SUV Guide</button>
-      <button class="qp-btn" onclick="setAsk('electric vehicle vs gas total cost of ownership 5 years')">⚡ EV vs Gas TCO</button>
-      <button class="qp-btn" onclick="setAsk('sedan vs SUV vs truck which is right for me')">🔄 Body Style Guide</button>
-      <button class="qp-btn" onclick="setAsk('Ram 1500 trim levels explained Tradesman to Limited')">📋 RAM Trims</button>
-    </div>
-  </div>
-
-  <!-- MODE: 2-VEHICLE COMPARE -->
-  <div id="panel-compare2" class="search-wrap" style="display:none">
-    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;margin-bottom:14px;align-items:center;max-width:700px;margin-left:auto;margin-right:auto">
-      <div class="compare-vehicle-input" id="cvi-a">
-        <div class="cvi-label" style="background:#0d0000;color:var(--red)">🔴 VEHICLE 1</div>
-        <input id="v2-a" placeholder="e.g. 2024 Ford F-150" oninput="document.getElementById('cvi-a').classList.toggle('filled',this.value.length>0)"/>
-      </div>
-      <div class="compare-vs">VS</div>
-      <div class="compare-vehicle-input" id="cvi-b">
-        <div class="cvi-label" style="background:#020a02;color:var(--green)">🟢 VEHICLE 2</div>
-        <input id="v2-b" placeholder="e.g. 2024 Toyota Tundra" oninput="document.getElementById('cvi-b').classList.toggle('filled',this.value.length>0)"/>
-      </div>
-    </div>
-    <div style="text-align:center;margin-bottom:14px">
-      <button class="search-btn" onclick="runMode('compare2')">⚔️ COMPARE THESE VEHICLES</button>
-    </div>
-    <div class="quick-prompts">
-      <button class="qp-btn" onclick="setCompare2('2024 Ford F-150','2024 Toyota Tundra')">F-150 vs Tundra</button>
-      <button class="qp-btn" onclick="setCompare2('2024 BMW X5','2024 Mercedes GLE')">BMW X5 vs GLE</button>
-      <button class="qp-btn" onclick="setCompare2('2024 Chevrolet Silverado','2024 Ram 1500')">Silverado vs Ram</button>
-      <button class="qp-btn" onclick="setCompare2('2024 Honda CR-V','2024 Toyota RAV4')">CR-V vs RAV4</button>
-      <button class="qp-btn" onclick="setCompare2('2024 Tesla Model Y','2024 Ford Mustang Mach-E')">Tesla Y vs Mach-E</button>
-    </div>
-  </div>
-
-  <!-- MODE: 3-VEHICLE COMPARE -->
-  <div id="panel-compare3" class="search-wrap" style="display:none">
-    <div class="compare-inputs" style="max-width:860px">
-      <div class="compare-vehicle-input" id="cvi3-a">
-        <div class="cvi-label" style="background:#0d0000;color:var(--red)">🔴 VEHICLE 1</div>
-        <input id="v3-a" placeholder="e.g. 2024 Ford F-150" oninput="document.getElementById('cvi3-a').classList.toggle('filled',this.value.length>0)"/>
-      </div>
-      <div class="compare-vehicle-input" id="cvi3-b">
-        <div class="cvi-label" style="background:#040e1a;color:var(--blue)">🔵 VEHICLE 2</div>
-        <input id="v3-b" placeholder="e.g. 2024 Toyota Tundra" oninput="document.getElementById('cvi3-b').classList.toggle('filled',this.value.length>0)"/>
-      </div>
-      <div class="compare-vehicle-input" id="cvi3-c">
-        <div class="cvi-label" style="background:#020a02;color:var(--green)">🟢 VEHICLE 3</div>
-        <input id="v3-c" placeholder="e.g. 2024 Chevy Silverado" oninput="document.getElementById('cvi3-c').classList.toggle('filled',this.value.length>0)"/>
-      </div>
-    </div>
-    <div style="text-align:center;margin-bottom:14px">
-      <button class="search-btn" onclick="runMode('compare3')">🏆 3-WAY COMPARISON</button>
-    </div>
-    <div class="quick-prompts">
-      <button class="qp-btn" onclick="setCompare3('2024 Ford F-150','2024 Toyota Tundra','2024 Chevy Silverado')">Big 3 Trucks</button>
-      <button class="qp-btn" onclick="setCompare3('2024 BMW X5','2024 Mercedes GLE','2024 Audi Q7')">Luxury SUV Battle</button>
-      <button class="qp-btn" onclick="setCompare3('2024 Honda CR-V','2024 Toyota RAV4','2024 Mazda CX-5')">Compact SUV Showdown</button>
-      <button class="qp-btn" onclick="setCompare3('2024 Toyota Camry LE','2024 Toyota Camry SE','2024 Toyota Camry XSE')">Camry Trim Levels</button>
-      <button class="qp-btn" onclick="setCompare3('2024 Ford Mustang GT','2024 Chevy Camaro SS','2024 Dodge Challenger')">Muscle Car Wars</button>
-      <button class="qp-btn" onclick="setCompare3('2024 Ram 1500 Tradesman','2024 Ram 1500 Big Horn','2024 Ram 1500 Laramie')">RAM Trims</button>
-    </div>
-  </div>
-
-  <!-- MODE: TRIM BREAKDOWN -->
-  <div id="panel-trims" class="search-wrap" style="display:none">
-    <div class="search-row">
-      <input class="search-input" id="trim-input" placeholder="e.g. Toyota Tundra · Ford F-150 · Chevy Silverado · BMW X5..."
-        onkeydown="if(event.key==='Enter')runMode('trims')"/>
-      <button class="search-btn" onclick="runMode('trims')">📋 EXPLAIN TRIMS</button>
-    </div>
-    <div class="quick-prompts">
-      <button class="qp-btn" onclick="setTrim('Toyota Tundra')">Tundra Trims</button>
-      <button class="qp-btn" onclick="setTrim('Ford F-150')">F-150 Trims</button>
-      <button class="qp-btn" onclick="setTrim('Ram 1500')">Ram 1500 Trims</button>
-      <button class="qp-btn" onclick="setTrim('BMW 3 Series')">BMW 3 Series Trims</button>
-      <button class="qp-btn" onclick="setTrim('Chevrolet Silverado 1500')">Silverado Trims</button>
-      <button class="qp-btn" onclick="setTrim('Toyota Camry')">Camry Trims</button>
-      <button class="qp-btn" onclick="setTrim('Honda CR-V')">CR-V Trims</button>
+      <button class="qp-btn" onclick="quickSearch('F-150 vs Tundra vs Silverado comparison')">🛻 F-150 vs Tundra vs Silverado</button>
+      <button class="qp-btn" onclick="quickSearch('BMW X5 vs Mercedes GLE vs Audi Q7')">🏎 BMW X5 vs GLE vs Q7</button>
+      <button class="qp-btn" onclick="quickSearch('best 3-row SUV for family of 6 under $55000')">👨‍👩‍👧‍👦 Best 3-Row Family SUV</button>
+      <button class="qp-btn" onclick="quickSearch('sedan vs SUV pros and cons')">🚗 Sedan vs SUV</button>
+      <button class="qp-btn" onclick="quickSearch('best truck for towing under $60000')">⚙️ Best Towing Truck</button>
+      <button class="qp-btn" onclick="quickSearch('Toyota Tundra trim levels explained')">📋 Tundra Trim Breakdown</button>
+      <button class="qp-btn" onclick="quickSearch('electric vehicle vs gas vehicle total cost of ownership')">⚡ EV vs Gas TCO</button>
+      <button class="qp-btn" onclick="quickSearch('Ram 1500 vs GMC Sierra 1500 differences')">🔧 Ram 1500 vs Sierra</button>
     </div>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
 <div class="intel-wrap">
-  <div id="results-area">
 
-    <!-- DEFAULT VIEW -->
+  <!-- RESULTS AREA -->
+  <div id="results-area" class="results-area">
+
+    <!-- DEFAULT — CATEGORY CARDS -->
     <div id="default-view">
       <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;text-align:center">WHAT DO YOU WANT TO RESEARCH?</div>
       <div class="category-grid">
-        <div class="cat-card" onclick="setMode('compare3',document.getElementById('mode-compare3'));setCompare3('2024 Ford F-150','2024 Toyota Tundra','2024 Chevy Silverado')">
-          <span class="cat-icon">🛻</span><div class="cat-title">TRUCKS</div><div class="cat-desc">F-150, Tundra, Silverado, RAM — full 3-way comparison</div>
+        <div class="cat-card" onclick="quickSearch('compare trucks: F-150 vs Tundra vs Silverado vs RAM 1500')">
+          <span class="cat-icon">🛻</span>
+          <div class="cat-title">TRUCKS</div>
+          <div class="cat-desc">F-150, Tundra, Silverado, RAM, Sierra, Tacoma — compare any truck</div>
         </div>
-        <div class="cat-card" onclick="setMode('compare3',document.getElementById('mode-compare3'));setCompare3('2024 Honda CR-V','2024 Toyota RAV4','2024 Mazda CX-5')">
-          <span class="cat-icon">🚙</span><div class="cat-title">SUVs</div><div class="cat-desc">Compact, midsize, full-size — find the right SUV</div>
+        <div class="cat-card" onclick="quickSearch('best midsize SUV comparison 2023 2024 RAV4 CR-V Escape Rogue')">
+          <span class="cat-icon">🚙</span>
+          <div class="cat-title">SUVs</div>
+          <div class="cat-desc">Midsize, compact, full-size — find the right SUV for your needs</div>
         </div>
-        <div class="cat-card" onclick="setMode('compare3',document.getElementById('mode-compare3'));setCompare3('2024 BMW X5','2024 Mercedes GLE','2024 Audi Q7')">
-          <span class="cat-icon">🏎</span><div class="cat-title">LUXURY</div><div class="cat-desc">BMW, Mercedes, Audi, Lexus — premium comparison</div>
+        <div class="cat-card" onclick="quickSearch('luxury sedan comparison BMW 3 series vs Mercedes C-Class vs Audi A4')">
+          <span class="cat-icon">🏎</span>
+          <div class="cat-title">LUXURY</div>
+          <div class="cat-desc">BMW, Mercedes, Audi, Lexus — premium vehicles compared objectively</div>
         </div>
-        <div class="cat-card" onclick="setMode('compare3',document.getElementById('mode-compare3'));setCompare3('2024 Tesla Model Y','2024 Ford Mustang Mach-E','2024 Hyundai Ioniq 5')">
-          <span class="cat-icon">⚡</span><div class="cat-title">ELECTRIC</div><div class="cat-desc">Tesla, Rivian, EV comparisons — range and real costs</div>
+        <div class="cat-card" onclick="quickSearch('best electric vehicles 2024 Tesla Model Y vs Ford Mustang Mach-E vs Hyundai Ioniq 5')">
+          <span class="cat-icon">⚡</span>
+          <div class="cat-title">ELECTRIC</div>
+          <div class="cat-desc">Tesla, Rivian, EV comparisons — range, charging, real-world costs</div>
         </div>
-        <div class="cat-card" onclick="setMode('compare3',document.getElementById('mode-compare3'));setCompare3('2024 Toyota Camry LE','2024 Toyota Camry SE','2024 Toyota Camry XSE')">
-          <span class="cat-icon">📋</span><div class="cat-title">TRIM LEVELS</div><div class="cat-desc">LE vs SE vs XSE — what you actually get for the money</div>
+        <div class="cat-card" onclick="quickSearch('family minivan comparison Honda Odyssey vs Toyota Sienna vs Chrysler Pacifica')">
+          <span class="cat-icon">🚌</span>
+          <div class="cat-title">MINIVANS</div>
+          <div class="cat-desc">Odyssey, Sienna, Pacifica — the real family hauler breakdown</div>
         </div>
-        <div class="cat-card" onclick="setMode('compare3',document.getElementById('mode-compare3'));setCompare3('2024 Ford Mustang GT','2024 Chevy Camaro SS','2024 Dodge Challenger')">
-          <span class="cat-icon">🏁</span><div class="cat-title">SPORTS CARS</div><div class="cat-desc">Mustang, Camaro, Challenger — muscle car showdown</div>
+        <div class="cat-card" onclick="quickSearch('sports car comparison Mustang GT vs Camaro SS vs Challenger RT')">
+          <span class="cat-icon">🏁</span>
+          <div class="cat-title">SPORTS CARS</div>
+          <div class="cat-desc">Mustang, Camaro, Challenger — performance specs and packages</div>
         </div>
-        <div class="cat-card" onclick="setMode('ask',document.getElementById('mode-ask'));setAsk('sedan vs SUV vs truck which is right for me')">
-          <span class="cat-icon">🔄</span><div class="cat-title">BODY STYLE GUIDE</div><div class="cat-desc">Not sure what type fits your life? Start here.</div>
+        <div class="cat-card" onclick="quickSearch('sedan vs SUV vs truck which is best for commuting and family')">
+          <span class="cat-icon">🔄</span>
+          <div class="cat-title">BODY STYLE GUIDE</div>
+          <div class="cat-desc">Not sure what type of vehicle fits your life? Start here.</div>
         </div>
-        <div class="cat-card" onclick="setMode('ask',document.getElementById('mode-ask'));setAsk('electric vehicle vs gas total cost of ownership 5 years')">
-          <span class="cat-icon">💰</span><div class="cat-title">COST OF OWNERSHIP</div><div class="cat-desc">Gas, insurance, maintenance — the full 5-year picture</div>
+        <div class="cat-card" onclick="quickSearch('what is the difference between trim levels and packages on a new vehicle')">
+          <span class="cat-icon">📋</span>
+          <div class="cat-title">TRIM & PACKAGES</div>
+          <div class="cat-desc">XLT vs Lariat vs King Ranch — understand what you're actually paying for</div>
         </div>
       </div>
+
+      <!-- HISTORY -->
       <div id="history-section" style="display:none">
-        <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">RECENT SEARCHES</div>
+        <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">RECENT SEARCHES</div>
         <div id="history-list"></div>
       </div>
     </div>
 
     <!-- LOADING -->
-    <div id="loading-view" class="loading-view" style="display:none">
+    <div id="loading-view" style="display:none" class="results-loading">
       <div class="loading-spinner"></div>
-      <div class="loading-text" id="loading-text">ANALYZING</div>
-      <div class="loading-sub" id="loading-sub">EVL Intelligence is researching specs, packages, and data...</div>
+      <div class="loading-text" id="loading-text">ANALYZING YOUR QUERY</div>
+      <div class="loading-sub" id="loading-sub">EVL Intelligence is researching vehicle specs, packages, and data...</div>
     </div>
 
     <!-- RESPONSE -->
@@ -319,35 +249,40 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
         <div class="response-cta">
           <div class="response-cta-text">Ready to find this vehicle at the best price? EVL searches nationwide — 24/7.</div>
           <a href="https://evl-decode-two.vercel.app/find" class="btn btn-green">⚡ FIND MY VEHICLE</a>
-          <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 TALK TO ADVISOR</a>
+          <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 TALK TO AN ADVISOR</a>
           <button onclick="newSearch()" class="btn btn-dark">🔍 NEW SEARCH</button>
         </div>
       </div>
-      <div style="margin-bottom:24px" id="followup-section">
-        <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">FOLLOW-UP RESEARCH</div>
+
+      <!-- FOLLOW UP SUGGESTIONS -->
+      <div id="followup-section" style="margin-bottom:24px">
+        <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">FOLLOW-UP QUESTIONS</div>
         <div id="followup-chips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
       </div>
     </div>
 
   </div>
+
 </div><!-- /intel-wrap -->
 
 <!-- FOOTER -->
 <footer class="evl-footer">
   <div class="evl-footer-inner">
-    <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:12px">
-      <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    <div style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:14px">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
       EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
     </div>
     <div class="evl-footer-links">
       <a href="https://evl-decode-two.vercel.app/home">Home</a>
       <a href="https://evl-decode-two.vercel.app/find">Find My Car</a>
       <a href="https://evl-decode-two.vercel.app/compare">Compare</a>
+      <a href="https://evl-decode-two.vercel.app/trade-in">Trade-In</a>
       <a href="https://evl-decode-two.vercel.app/leasing">Leasing</a>
       <a href="https://evl-decode-two.vercel.app/faq">FAQ</a>
       <a href="https://evl-decode-two.vercel.app/contact">Contact</a>
     </div>
-    <div class="evl-footer-copy">&copy; 2026 Express Vehicle Locators — Plano, TX &nbsp;|&nbsp; <span style="font-size:11px;color:#334455">AI-powered specs for informational use only. Verify with manufacturer before purchase. EVL is a vehicle advisory platform — not a dealer.</span></div>
+    <div class="evl-footer-copy">&copy; 2026 Express Vehicle Locators — Plano, TX<br>
+    <span style="font-size:11px;color:#334455">Vehicle intelligence powered by AI. Specifications and data are for informational purposes. Verify all specs with manufacturer before purchase decisions. EVL is a vehicle advisory platform — not a dealer.</span></div>
   </div>
   <div id="evl-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#090E17;border-top:2px solid #2B84FE;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;z-index:9999">
     <span style="font-size:14px;color:#ccd6e0;font-weight:600;max-width:700px">We use cookies. <a href="https://evl-decode-two.vercel.app/privacy" style="color:#2B84FE;font-weight:700">Privacy Policy</a>.</span>
@@ -357,220 +292,175 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 
 <script>
 const HISTORY_KEY = 'evl_compare_history';
-let currentMode = 'ask';
+let searchHistory = [];
 
-// MODE MANAGEMENT
-function setMode(mode, btn){
-  currentMode = mode;
-  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  ['ask','compare2','compare3','trims'].forEach(m=>{
-    document.getElementById('panel-'+m).style.display = m===mode?'block':'none';
-  });
-  newSearch();
+function loadHistory(){
+  try{ searchHistory = JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]'); }catch(e){ searchHistory=[]; }
 }
 
-// INPUT HELPERS
-function setAsk(q){ document.getElementById('ask-input').value=q; }
-function setTrim(q){ document.getElementById('trim-input').value=q; }
-function setCompare2(a,b){ document.getElementById('v2-a').value=a; document.getElementById('v2-b').value=b; ['cvi-a','cvi-b'].forEach((id,i)=>document.getElementById(id).classList.add('filled')); }
-function setCompare3(a,b,c){ document.getElementById('v3-a').value=a; document.getElementById('v3-b').value=b; document.getElementById('v3-c').value=c; ['cvi3-a','cvi3-b','cvi3-c'].forEach(id=>document.getElementById(id).classList.add('filled')); }
-
-// BUILD PROMPT
-function buildPrompt(){
-  switch(currentMode){
-    case 'ask':   return document.getElementById('ask-input').value.trim();
-    case 'trims': return `Explain all trim levels and packages for the ${document.getElementById('trim-input').value.trim()} in detail. Include what each trim adds over the previous, MSRP range for each trim, and which trim offers the best value.`;
-    case 'compare2': {
-      const a=document.getElementById('v2-a').value.trim(), b=document.getElementById('v2-b').value.trim();
-      if(!a||!b) return null;
-      return `Compare ${a} vs ${b} in detail. Include a side-by-side specs table, powertrain options, dimensions, cargo space, technology features, safety ratings, reliability, and total cost of ownership. Declare a winner in key categories and give an overall EVL recommendation.`;
-    }
-    case 'compare3': {
-      const a=document.getElementById('v3-a').value.trim(), b=document.getElementById('v3-b').value.trim(), c=document.getElementById('v3-c').value.trim();
-      if(!a||!b||!c) return null;
-      return `3-way comparison: ${a} vs ${b} vs ${c}. Create a comprehensive side-by-side comparison table covering: MSRP range, engine options, horsepower/torque, fuel economy, towing capacity, payload, cargo space, wheelbase, ground clearance, technology/infotainment, safety features/ratings, reliability ratings, and total cost of ownership estimate. After the table, provide category winners (use a winner badge format), overall pros/cons for each vehicle, and a final EVL recommendation for different buyer types (e.g., "Best for towing: X · Best value: Y · Best ride quality: Z").`;
-    }
-    default: return document.getElementById('ask-input').value.trim();
-  }
+function saveToHistory(query){
+  loadHistory();
+  searchHistory = searchHistory.filter(h=>h.q!==query);
+  searchHistory.unshift({q:query, t:new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})});
+  if(searchHistory.length>10) searchHistory=searchHistory.slice(0,10);
+  localStorage.setItem(HISTORY_KEY,JSON.stringify(searchHistory));
 }
 
-// LOADING MESSAGES
-const LOADING_MSGS = [
-  {t:'SCANNING MANUFACTURER DATA',s:'Pulling specs, dimensions, and package details...'},
-  {t:'CROSS-REFERENCING MODELS',s:'Comparing trim levels and standard equipment...'},
-  {t:'ANALYZING REAL-WORLD DATA',s:'Reliability ratings, owner feedback, expert reviews...'},
-  {t:'BUILDING YOUR COMPARISON',s:'Organizing into a clean side-by-side breakdown...'},
-];
-
-
-function buildSmartResponse(prompt, mode){
-  const p = prompt.toLowerCase();
-  
-  // Detect vehicles mentioned
-  const vehicles = [];
-  const makes = ['ford','toyota','chevy','chevrolet','ram','gmc','honda','bmw','mercedes','lexus','hyundai','kia','nissan','jeep','subaru','tesla'];
-  const models = ['f-150','tundra','silverado','camry','corolla','rav4','highlander','cr-v','pilot','x5','x3','gle','glc','rx','tacoma','bronco','mustang','camaro','challenger'];
-  makes.forEach(m=>{ if(p.includes(m)) vehicles.push(m.charAt(0).toUpperCase()+m.slice(1)); });
-  models.forEach(m=>{ if(p.includes(m)) vehicles.push(m.toUpperCase()); });
-  
-  if(mode==='compare3'||mode==='compare2'){
-    const v1 = document.getElementById('v3-a')?.value||document.getElementById('v2-a')?.value||'Vehicle 1';
-    const v2 = document.getElementById('v3-b')?.value||document.getElementById('v2-b')?.value||'Vehicle 2';
-    const v3 = document.getElementById('v3-c')?.value||'';
-    return `<h2>⚡ EVL COMPARISON: ${v1}${v3?' vs '+v2+' vs '+v3:' vs '+v2}</h2>
-    <p style="margin-bottom:16px">Our AI comparison engine is warming up. Here's what EVL knows about these vehicles:</p>
-    <div class="evl-rec"><div class="evl-rec-title">⚡ EVL RECOMMENDATION</div>
-    <p>For a detailed AI-powered comparison of ${v1}${v3?' vs '+v2+' vs '+v3:' vs '+v2}, please try again in a moment — or speak directly with an EVL advisor who can walk you through a live comparison using current market data, real inventory pricing, and your specific needs.</p>
-    <p style="margin-top:10px">EVL advisors have compared these exact vehicles hundreds of times and know which trim offers the best value for your specific use case.</p>
-    </div>
-    <div class="disclaimer">EVL Vehicle Intelligence is temporarily loading. Please try your search again in 30 seconds, or contact an EVL advisor for a personalized comparison.</div>`;
-  }
-  
-  if(mode==='trims'){
-    const vehicle = document.getElementById('trim-input')?.value||'this vehicle';
-    return `<h2>📋 ${vehicle.toUpperCase()} TRIM GUIDE</h2>
-    <p>Our AI trim advisor is loading. Here's what EVL knows about ${vehicle} trim levels:</p>
-    <p style="margin-top:12px">Manufacturers typically offer 3-6 trim levels, from base (best value) to fully-loaded (premium features). Each trim adds technology, comfort, and performance upgrades over the previous.</p>
-    <div class="evl-rec"><div class="evl-rec-title">⚡ EVL TRIM ADVISORY</div>
-    <p>For a complete breakdown of every ${vehicle} trim level including MSRP ranges, what each adds, and which offers the best value — try again in a moment or ask an EVL advisor. We track current dealer inventory and know exactly which trims have the best days-on-lot leverage right now.</p>
-    </div>
-    <div class="disclaimer">AI loading. Retry in 30 seconds or contact EVL for instant advisor support.</div>`;
-  }
-  
-  // General ask-anything response
-  return `<h2>⚡ EVL INTELLIGENCE</h2>
-  <p>Our AI research engine is temporarily loading for: <strong>${prompt.slice(0,80)}${prompt.length>80?'...':''}</strong></p>
-  <div class="evl-rec"><div class="evl-rec-title">⚡ EVL SAYS</div>
-  <p>EVL's Vehicle Intelligence system covers specs, dimensions, trim packages, reliability ratings, and ownership costs for every major vehicle. Please retry your search in 30 seconds — or connect with an EVL advisor who can answer this question live with current market data.</p>
-  </div>
-  <p style="margin-top:16px"><strong>Quick tips while you wait:</strong></p>
-  <ul style="margin:8px 0 0 20px;line-height:2">
-    <li>Try the <strong>3-Vehicle Compare</strong> tab for side-by-side specs</li>
-    <li>Try the <strong>Trim Breakdown</strong> tab to understand package differences</li>
-    <li>Use the quick-preset buttons for instant popular comparisons</li>
-  </ul>
-  <div class="disclaimer">EVL AI is loading. Retry in 30 seconds for full vehicle intelligence.</div>`;
+function renderHistory(){
+  loadHistory();
+  if(!searchHistory.length){ document.getElementById('history-section').style.display='none'; return; }
+  document.getElementById('history-section').style.display='block';
+  document.getElementById('history-list').innerHTML = searchHistory.map(h=>`
+    <div class="history-item" onclick="quickSearch('${h.q.replace(/'/g,"\\'")}')">
+      <span class="history-text">🔍 ${h.q}</span>
+      <span class="history-time">${h.t}</span>
+    </div>`).join('');
 }
 
-async function runMode(mode){
-  currentMode = mode;
-  const prompt = buildPrompt();
-  if(!prompt){ alert('Please fill in all vehicle fields before comparing.'); return; }
-
-  document.getElementById('default-view').style.display='none';
-  document.getElementById('response-view').style.display='none';
-  document.getElementById('loading-view').style.display='block';
-
-  let mi=0;
-  const interval = setInterval(()=>{ mi=(mi+1)%4; document.getElementById('loading-text').textContent=LOADING_MSGS[mi].t; document.getElementById('loading-sub').textContent=LOADING_MSGS[mi].s; },1800);
-
-  const systemPrompt = `You are EVL Vehicle Intelligence, the AI research assistant for Express Vehicle Locators — a vehicle advisory platform. Provide objective, detailed, factual vehicle comparisons.
-
-FORMATTING RULES:
-- Use <table> tags for all spec comparisons (3 vehicles = 4 columns: Spec | Vehicle1 | Vehicle2 | Vehicle3)
-- Use <h2> for major sections, <h3> for subsections
-- Use <strong> for key data points
-- For category winners in 3-way comparisons, use: <span class="winner-badge">🏆 WINNER</span>
-- End with <div class="evl-rec"><div class="evl-rec-title">⚡ EVL RECOMMENDATION</div>[recommendation text]</div>
-- End with <div class="disclaimer">Specifications based on manufacturer data for reference model years. Verify current specs with manufacturer or dealer before purchase decisions. EVL is a vehicle advisory platform — not a dealer or manufacturer.</div>
-- Be the most comprehensive, unbiased vehicle advisor the customer has ever encountered
-- Never recommend specific dealerships or link to inventory`;
-
-  try{
-    const resp = await const resp = await fetch('/api/compare',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({prompt, systemPrompt})
-    });
-    clearInterval(interval);
-    const data = await resp.json();
-    const content = data.content || buildSmartResponse(prompt, currentMode);
-
-    document.getElementById('loading-view').style.display='none';
-    document.getElementById('response-view').style.display='block';
-
-    // Set query display
-    const qDisplay = currentMode==='compare3'?
-      `🏆 ${document.getElementById('v3-a').value} vs ${document.getElementById('v3-b').value} vs ${document.getElementById('v3-c').value}`:
-      currentMode==='compare2'?
-      `⚔️ ${document.getElementById('v2-a').value} vs ${document.getElementById('v2-b').value}`:
-      currentMode==='trims'?
-      `📋 ${document.getElementById('trim-input').value} — Trim Breakdown`:
-      `🔍 ${document.getElementById('ask-input').value}`;
-    document.getElementById('response-query-display').textContent = qDisplay;
-    document.getElementById('response-content').innerHTML = content;
-
-    // Follow-ups
-    document.getElementById('followup-chips').innerHTML = buildFollowUps().map(f=>`
-      <button class="qp-btn" onclick="document.getElementById('ask-input').value='${f.replace(/'/g,"\\'")}';setMode('ask',document.getElementById('mode-ask'));runMode('ask')">${f}</button>`).join('');
-
-    saveHistory(prompt.slice(0,80));
-  }catch(e){
-    clearInterval(interval);
-    document.getElementById('loading-view').style.display='none';
-    document.getElementById('response-view').style.display='block';
-    document.getElementById('response-query-display').textContent='⚠️ Connection Issue';
-    document.getElementById('response-content').innerHTML=`<div style="text-align:center;padding:40px"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:16px;font-weight:900;color:var(--white);margin-bottom:8px">INTELLIGENCE TEMPORARILY OFFLINE</div><div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.6">Please try again in a moment or contact an EVL advisor for research help.</div><a href="https://evl-decode-two.vercel.app/contact" class="btn btn-blue" style="margin-top:16px;display:inline-flex">📞 TALK TO EVL ADVISOR</a></div>`;
-  }
-}
-
-function buildFollowUps(){
-  if(currentMode==='compare3'){
-    const a=document.getElementById('v3-a').value, b=document.getElementById('v3-b').value;
-    return [`${a} reliability and common issues`,`${b} best model years to buy`,`financing options for ${a}`];
-  }
-  if(currentMode==='compare2'){
-    const a=document.getElementById('v2-a').value;
-    return [`${a} all trim levels explained`,`${a} total 5-year ownership cost`,`best alternatives to ${a}`];
-  }
-  if(currentMode==='trims'){
-    const v=document.getElementById('trim-input').value;
-    return [`${v} reliability by year`,`${v} vs competitors`,`best year to buy used ${v}`];
-  }
-  const q=document.getElementById('ask-input').value;
-  return [`${q} — reliability and owner reviews`,`${q} — best model years`,`${q} — alternatives to consider`];
+function quickSearch(query){
+  document.getElementById('search-input').value = query;
+  runSearch();
 }
 
 function newSearch(){
+  document.getElementById('search-input').value = '';
   document.getElementById('response-view').style.display='none';
   document.getElementById('loading-view').style.display='none';
   document.getElementById('default-view').style.display='block';
   renderHistory();
+  document.getElementById('search-input').focus();
 }
 
-function saveHistory(q){
+// ── LOADING MESSAGES ──
+const LOADING_MSGS = [
+  {text:'SCANNING MANUFACTURER DATA',sub:'Pulling specs, dimensions, and package details...'},
+  {text:'CROSS-REFERENCING MODELS',sub:'Comparing trim levels and standard equipment...'},
+  {text:'ANALYZING REAL-WORLD DATA',sub:'Reliability ratings, owner feedback, and expert reviews...'},
+  {text:'BUILDING YOUR COMPARISON',sub:'Organizing specs into a clean side-by-side breakdown...'},
+];
+
+async function runSearch(){
+  const query = document.getElementById('search-input').value.trim();
+  if(!query) return;
+
+  // Show loading
+  document.getElementById('default-view').style.display='none';
+  document.getElementById('response-view').style.display='none';
+  document.getElementById('loading-view').style.display='block';
+  const btn = document.getElementById('search-btn');
+  btn.disabled = true;
+  document.getElementById('btn-text').textContent='ANALYZING...';
+
+  // Cycle loading messages
+  let msgIdx = 0;
+  const msgInterval = setInterval(()=>{
+    msgIdx = (msgIdx+1)%LOADING_MSGS.length;
+    document.getElementById('loading-text').textContent = LOADING_MSGS[msgIdx].text;
+    document.getElementById('loading-sub').textContent = LOADING_MSGS[msgIdx].sub;
+  }, 1800);
+
+  const systemPrompt = `You are EVL Vehicle Intelligence, the AI research assistant for Express Vehicle Locators — a vehicle advisory and technology platform. Your role is to provide objective, detailed, factual vehicle information.
+
+IMPORTANT RULES:
+- Never recommend specific dealerships or link to inventory
+- Focus purely on specs, dimensions, packages, trim levels, pros/cons, and factual comparisons
+- Always format comparisons as HTML tables when comparing 2+ vehicles
+- Use clear headers (h2, h3 tags) to organize content
+- Highlight EVL's value at the end in a div with class "evl-rec"
+- Keep responses comprehensive but scannable
+- Use bullet points for lists
+- Include a short disclaimer at the end in a div with class "disclaimer"
+- If comparing vehicles, structure as: Overview → Specs Table → Powertrain → Cargo/Space → Technology → Safety → Reliability → EVL Recommendation
+- If explaining packages/trims, list each tier with what's included
+- Be the most knowledgeable, unbiased vehicle advisor the customer has ever encountered
+- Current year context: 2026. Reference 2022-2025 model years as recent.`;
+
   try{
-    let h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');
-    h=h.filter(x=>x.q!==q);
-    h.unshift({q,t:new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})});
-    if(h.length>8)h=h.slice(0,8);
-    localStorage.setItem(HISTORY_KEY,JSON.stringify(h));
-  }catch(e){}
+        const resp = await fetch('/api/compare',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt, systemPrompt:systemPrompt})
+    });
+    clearInterval(msgInterval);
+    const data = resp.ok ? await resp.json() : {content:''};
+    const content = data.content || 'Unable to retrieve information right now. Please try again in a moment.';
+
+    // Generate follow-up suggestions
+    const followUps = generateFollowUps(query);
+
+    // Display response
+    document.getElementById('loading-view').style.display='none';
+    document.getElementById('response-view').style.display='block';
+    document.getElementById('response-query-display').textContent = '🔍 '+query;
+    document.getElementById('response-content').innerHTML = content;
+    document.getElementById('followup-chips').innerHTML = followUps.map(f=>`
+      <button class="qp-btn" onclick="quickSearch('${f.replace(/'/g,"\\'")}'')">${f}</button>`).join('');
+
+    saveToHistory(query);
+
+  }catch(err){
+    clearInterval(msgInterval);
+    document.getElementById('loading-view').style.display='none';
+    document.getElementById('response-view').style.display='block';
+    document.getElementById('response-query-display').textContent = '🔍 '+query;
+    document.getElementById('response-content').innerHTML = `
+      <div style="text-align:center;padding:40px">
+        <div style="font-size:32px;margin-bottom:12px">⚠️</div>
+        <div style="font-size:16px;font-weight:900;color:var(--white);margin-bottom:8px">INTELLIGENCE TEMPORARILY OFFLINE</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.6;max-width:400px;margin:0 auto">
+          The AI comparison engine is temporarily unavailable. Please try again in a moment, or contact an EVL advisor directly for vehicle research.
+        </div>
+        <a href="https://evl-decode-two.vercel.app/contact" class="btn btn-blue" style="margin-top:16px;display:inline-flex">📞 TALK TO EVL ADVISOR</a>
+      </div>`;
+  }
+
+  btn.disabled = false;
+  document.getElementById('btn-text').textContent='⚡ ANALYZE';
 }
 
-function renderHistory(){
-  try{
-    const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');
-    if(!h.length){document.getElementById('history-section').style.display='none';return;}
-    document.getElementById('history-section').style.display='block';
-    document.getElementById('history-list').innerHTML=h.map(x=>`
-      <div class="history-item" onclick="document.getElementById('ask-input').value='${x.q.replace(/'/g,"\\'")}';setMode('ask',document.getElementById('mode-ask'));runMode('ask')">
-        <span style="font-size:13px;color:var(--dim);font-weight:700;flex:1">🔍 ${x.q}</span>
-        <span style="font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap;margin-left:12px">${x.t}</span>
-      </div>`).join('');
-  }catch(e){}
+function generateFollowUps(query){
+  const q = query.toLowerCase();
+  if(q.includes('vs') || q.includes('compare')){
+    const vehicles = query.split(/vs|versus/i).map(v=>v.trim());
+    return [
+      `${vehicles[0]} trim levels and packages explained`,
+      `reliability comparison ${query}`,
+      `total cost of ownership ${query}`,
+      `towing capacity comparison ${query}`,
+    ].slice(0,3);
+  }
+  if(q.includes('truck')){
+    return ['F-150 vs Tundra vs Silverado full comparison','best truck for towing under $60k','Ram 1500 vs F-150 differences'];
+  }
+  if(q.includes('suv')){
+    return ['3-row SUV comparison 2024','best SUV for highway driving','SUV vs minivan for large family'];
+  }
+  if(q.includes('electric') || q.includes('ev')){
+    return ['EV charging costs vs gas total cost of ownership','Tesla Model Y vs Ford Mach-E vs Ioniq 5','EV range comparison 2024 2025'];
+  }
+  return [
+    `${query} reliability and owner reviews`,
+    `best alternatives to ${query}`,
+    `${query} what years to avoid`,
+  ];
 }
 
-// INIT
+// COOKIE + INIT
 window.addEventListener('DOMContentLoaded',function(){
-  if(!localStorage.getItem('evl-cookie')){const b=document.getElementById('evl-cookie');if(b)b.style.display='flex';}
+  if(!localStorage.getItem('evl-cookie')){ const b=document.getElementById('evl-cookie'); if(b)b.style.display='flex'; }
   renderHistory();
-  const p=new URLSearchParams(window.location.search);
-  const q=p.get('q'),m=p.get('mode')||'ask';
-  if(m&&m!=='ask') setMode(m,document.getElementById('mode-'+m));
-  if(q){document.getElementById('ask-input').value=q;runMode('ask');}
+  // Check for URL query param
+  const urlParams = new URLSearchParams(window.location.search);
+  const q = urlParams.get('q');
+  if(q){ document.getElementById('search-input').value = q; runSearch(); }
 });
+
+document.getElementById('search-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter') runSearch();
+});
+
+// NAV ACTIVE
+(function(){var path=window.location.pathname;document.querySelectorAll('.evl-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.endsWith(a.getAttribute('href').split('/').pop())){a.style.color='#2B84FE';a.style.borderBottom='2px solid #2B84FE';}});})();
 </script>
 </body>
 </html>
