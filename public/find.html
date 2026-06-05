@@ -11,20 +11,23 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 :root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
 
 /* NAV */
-.evl-nav{position:sticky;top:0;z-index:9999;background:var(--s1);border-bottom:2px solid var(--blue);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
-.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
-.evl-nav-links{display:flex;align-items:center;gap:4px}
-.evl-nav-link{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
-.evl-nav-link:hover{color:var(--white);background:#1a1a2e}
-.evl-nav-link.active{color:var(--blue);border-bottom:2px solid var(--blue)}
-.evl-nav-cta{background:var(--blue);color:var(--white)!important;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:8px 16px;border-radius:6px;margin-left:8px;white-space:nowrap}
-.evl-nav-hamburger{display:none;background:none;border:none;color:var(--white);font-size:22px;cursor:pointer}
-@media(max-width:768px){
-  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:var(--s1);border-bottom:2px solid var(--blue);padding:12px 0}
+
+.evl-nav{position:sticky;top:0;z-index:9999;background:#090E17;border-bottom:2px solid #2B84FE;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;width:100%}
+.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap}
+.evl-nav-links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
+.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 8px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-nav-link:hover{color:#fff;background:#1a1a2e}
+.evl-nav-link.active{color:#2B84FE;border-bottom:2px solid #2B84FE}
+.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;white-space:nowrap}
+.evl-nav-hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
+@media(max-width:900px){
+  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#090E17;border-bottom:2px solid #2B84FE;padding:8px 0;z-index:9999}
   .evl-nav-links.open{display:flex}
-  .evl-nav-link,.evl-nav-cta{width:100%;padding:14px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e}
+  .evl-nav-link,.evl-nav-cta{width:100%;padding:12px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e;font-size:14px}
   .evl-nav-hamburger{display:block}
 }
+
+
 
 /* SEARCH HERO */
 .search-hero{background:var(--s1);border-bottom:2px solid #1a1a2e;padding:20px 24px}
@@ -230,7 +233,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
     <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
     EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
   </a>
-  <button class="evl-nav-hamburger" onclick="document.getElementById('evl-nav-links').classList.toggle('open')">&#9776;</button>
+  <button class="evl-nav-hamburger" onclick="document.getElementById('evl-nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
   <div class="evl-nav-links" id="evl-nav-links">
     <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
     <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link active">FIND MY CAR</a>
@@ -238,6 +241,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
     <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
     <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link">COMPARE</a>
     <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
+    <a href="https://evl-decode-two.vercel.app/reviews" class="evl-nav-link">RESULTS</a>
     <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
     <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
     <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
