@@ -478,7 +478,7 @@ FORMATTING RULES:
 - Never recommend specific dealerships or link to inventory`;
 
   try{
-    const resp = await fetch('/api/compare',{
+    const resp = await const resp = await fetch('/api/compare',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({prompt, systemPrompt})
