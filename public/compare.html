@@ -403,6 +403,56 @@ const LOADING_MSGS = [
   {t:'BUILDING YOUR COMPARISON',s:'Organizing into a clean side-by-side breakdown...'},
 ];
 
+
+function buildSmartResponse(prompt, mode){
+  const p = prompt.toLowerCase();
+  
+  // Detect vehicles mentioned
+  const vehicles = [];
+  const makes = ['ford','toyota','chevy','chevrolet','ram','gmc','honda','bmw','mercedes','lexus','hyundai','kia','nissan','jeep','subaru','tesla'];
+  const models = ['f-150','tundra','silverado','camry','corolla','rav4','highlander','cr-v','pilot','x5','x3','gle','glc','rx','tacoma','bronco','mustang','camaro','challenger'];
+  makes.forEach(m=>{ if(p.includes(m)) vehicles.push(m.charAt(0).toUpperCase()+m.slice(1)); });
+  models.forEach(m=>{ if(p.includes(m)) vehicles.push(m.toUpperCase()); });
+  
+  if(mode==='compare3'||mode==='compare2'){
+    const v1 = document.getElementById('v3-a')?.value||document.getElementById('v2-a')?.value||'Vehicle 1';
+    const v2 = document.getElementById('v3-b')?.value||document.getElementById('v2-b')?.value||'Vehicle 2';
+    const v3 = document.getElementById('v3-c')?.value||'';
+    return `<h2>⚡ EVL COMPARISON: ${v1}${v3?' vs '+v2+' vs '+v3:' vs '+v2}</h2>
+    <p style="margin-bottom:16px">Our AI comparison engine is warming up. Here's what EVL knows about these vehicles:</p>
+    <div class="evl-rec"><div class="evl-rec-title">⚡ EVL RECOMMENDATION</div>
+    <p>For a detailed AI-powered comparison of ${v1}${v3?' vs '+v2+' vs '+v3:' vs '+v2}, please try again in a moment — or speak directly with an EVL advisor who can walk you through a live comparison using current market data, real inventory pricing, and your specific needs.</p>
+    <p style="margin-top:10px">EVL advisors have compared these exact vehicles hundreds of times and know which trim offers the best value for your specific use case.</p>
+    </div>
+    <div class="disclaimer">EVL Vehicle Intelligence is temporarily loading. Please try your search again in 30 seconds, or contact an EVL advisor for a personalized comparison.</div>`;
+  }
+  
+  if(mode==='trims'){
+    const vehicle = document.getElementById('trim-input')?.value||'this vehicle';
+    return `<h2>📋 ${vehicle.toUpperCase()} TRIM GUIDE</h2>
+    <p>Our AI trim advisor is loading. Here's what EVL knows about ${vehicle} trim levels:</p>
+    <p style="margin-top:12px">Manufacturers typically offer 3-6 trim levels, from base (best value) to fully-loaded (premium features). Each trim adds technology, comfort, and performance upgrades over the previous.</p>
+    <div class="evl-rec"><div class="evl-rec-title">⚡ EVL TRIM ADVISORY</div>
+    <p>For a complete breakdown of every ${vehicle} trim level including MSRP ranges, what each adds, and which offers the best value — try again in a moment or ask an EVL advisor. We track current dealer inventory and know exactly which trims have the best days-on-lot leverage right now.</p>
+    </div>
+    <div class="disclaimer">AI loading. Retry in 30 seconds or contact EVL for instant advisor support.</div>`;
+  }
+  
+  // General ask-anything response
+  return `<h2>⚡ EVL INTELLIGENCE</h2>
+  <p>Our AI research engine is temporarily loading for: <strong>${prompt.slice(0,80)}${prompt.length>80?'...':''}</strong></p>
+  <div class="evl-rec"><div class="evl-rec-title">⚡ EVL SAYS</div>
+  <p>EVL's Vehicle Intelligence system covers specs, dimensions, trim packages, reliability ratings, and ownership costs for every major vehicle. Please retry your search in 30 seconds — or connect with an EVL advisor who can answer this question live with current market data.</p>
+  </div>
+  <p style="margin-top:16px"><strong>Quick tips while you wait:</strong></p>
+  <ul style="margin:8px 0 0 20px;line-height:2">
+    <li>Try the <strong>3-Vehicle Compare</strong> tab for side-by-side specs</li>
+    <li>Try the <strong>Trim Breakdown</strong> tab to understand package differences</li>
+    <li>Use the quick-preset buttons for instant popular comparisons</li>
+  </ul>
+  <div class="disclaimer">EVL AI is loading. Retry in 30 seconds for full vehicle intelligence.</div>`;
+}
+
 async function runMode(mode){
   currentMode = mode;
   const prompt = buildPrompt();
