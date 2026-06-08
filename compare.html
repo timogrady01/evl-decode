@@ -134,6 +134,17 @@ body{font-size:20px!important}
   .hero-sub{font-size:18px!important}
   .mode-btn{font-size:14px!important;padding:12px 18px!important}
 }
+
+/* BUTTON SIZE FIX */
+.response-cta { padding: 24px 32px !important; gap: 16px !important; flex-wrap: wrap !important; }
+.response-cta .btn { font-size: 18px !important; padding: 16px 32px !important; border-radius: 10px !important; font-weight: 900 !important; letter-spacing: 1px !important; min-width: 200px !important; justify-content: center !important; }
+.btn-green { background: #00C853 !important; color: #020203 !important; }
+.btn-blue { background: #2B84FE !important; color: #fff !important; }
+.btn-dark { background: #1a1a2e !important; color: #fff !important; border: 2px solid #3a3a5e !important; }
+.response-cta-text { font-size: 17px !important; color: #ccd6e0 !important; width: 100% !important; margin-bottom: 8px !important; }
+.followup-chips-wrap .qp-btn { font-size: 15px !important; padding: 12px 20px !important; }
+#followup-chips .qp-btn { font-size: 15px !important; padding: 12px 20px !important; border-color: #3a3a5e !important; color: #dde4f0 !important; }
+
 </style>
 </head>
 <body>
@@ -376,25 +387,15 @@ async function go() {
   }, 1800);
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch('/api/compare', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt, systemPrompt: SYSTEM_PROMPT })
     });
 
     clearInterval(interval);
     const data = await resp.json();
-    const result = data.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
+    const result = data.content || data.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
 
     document.getElementById('loading-view').style.display = 'none';
     document.getElementById('response-view').style.display = 'block';
