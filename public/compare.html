@@ -8,123 +8,98 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh;display:block!important}
-:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
-
-/* NAV */
-.evl-nav{position:sticky;top:0;z-index:9999;background:var(--s1);border-bottom:2px solid var(--blue);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
-.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
-.evl-nav-links{display:flex;align-items:center;gap:4px}
-.evl-nav-link{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
-.evl-nav-link:hover{color:var(--white);background:#1a1a2e}
-.evl-nav-link.active{color:var(--blue);border-bottom:2px solid var(--blue)}
-.evl-nav-cta{background:var(--blue);color:var(--white)!important;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:8px 16px;border-radius:6px;margin-left:8px;white-space:nowrap}
-.evl-nav-hamburger{display:none;background:none;border:none;color:var(--white);font-size:22px;cursor:pointer}
-@media(max-width:768px){
-  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:var(--s1);border-bottom:2px solid var(--blue);padding:12px 0}
+:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a}
+.evl-nav{position:sticky;top:0;z-index:9999;background:#090E17;border-bottom:2px solid #2B84FE;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;width:100%}
+.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap}
+.evl-nav-links{display:flex;align-items:center;gap:2px}
+.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 8px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-nav-link:hover{color:#fff;background:#1a1a2e}
+.evl-nav-link.active{color:#2B84FE;border-bottom:2px solid #2B84FE}
+.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;white-space:nowrap}
+.evl-nav-hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer}
+@media(max-width:900px){
+  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#090E17;border-bottom:2px solid #2B84FE;padding:8px 0;z-index:9999}
   .evl-nav-links.open{display:flex}
-  .evl-nav-link,.evl-nav-cta{width:100%;padding:14px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e}
+  .evl-nav-link,.evl-nav-cta{width:100%;padding:12px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e;font-size:14px}
   .evl-nav-hamburger{display:block}
 }
-
-/* HERO */
-.intel-hero{background:linear-gradient(135deg,#020203 0%,#040e1a 50%,#020203 100%);border-bottom:2px solid #1a1a2e;padding:52px 24px;text-align:center;position:relative;overflow:hidden}
+.intel-hero{background:linear-gradient(135deg,#020203 0%,#040e1a 50%,#020203 100%);border-bottom:2px solid #1a1a2e;padding:48px 24px;text-align:center;position:relative;overflow:hidden}
 .intel-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(43,132,254,0.08) 0%,transparent 70%)}
-.hero-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:18px}
-.hero-h1{font-size:50px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;line-height:1.05}
-.hero-h1 span{color:var(--blue)}
-.hero-sub{font-size:17px;color:var(--dim);font-family:var(--body);max-width:600px;margin:0 auto 32px;line-height:1.7;font-weight:500}
-
-/* MAIN SEARCH */
+.hero-badge{display:inline-block;background:#040e1a;border:1px solid #2B84FE;color:#2B84FE;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:16px;position:relative;z-index:1}
+.hero-h1{font-size:46px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;line-height:1.05;position:relative;z-index:1}
+.hero-h1 span{color:#2B84FE}
+.hero-sub{font-size:16px;color:#ccd6e0;font-family:'Barlow',sans-serif;max-width:620px;margin:0 auto 28px;line-height:1.7;position:relative;z-index:1}
+.mode-toggle{display:flex;gap:0;background:#090E17;border:2px solid #1a1a2e;border-radius:10px;overflow:hidden;margin:0 auto 24px;width:fit-content;position:relative;z-index:1}
+.mode-btn{padding:12px 22px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:#A1A1AA;transition:all .2s;font-family:'Oswald',sans-serif;white-space:nowrap}
+.mode-btn.active{background:#2B84FE;color:#fff}
+.mode-btn:hover:not(.active){color:#fff;background:#1a1a2e}
 .search-wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
-.search-input-row{display:flex;gap:12px;margin-bottom:16px}
-.search-input{flex:1;background:var(--s1);border:2px solid #2a2a4e;color:var(--white);padding:18px 20px;border-radius:12px;font-size:17px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;letter-spacing:0.5px}
-.search-input:focus{border-color:var(--blue)}
+.search-row{display:flex;gap:12px;margin-bottom:14px}
+.search-input{flex:1;background:#090E17;border:2px solid #2a2a4e;color:#fff;padding:16px 20px;border-radius:10px;font-size:16px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:#2B84FE}
 .search-input::placeholder{color:#3a3a5e;font-weight:500}
-.search-btn{background:var(--blue);color:var(--white);border:none;padding:18px 32px;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.search-btn{background:#2B84FE;color:#fff;border:none;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;transition:background .2s;white-space:nowrap}
 .search-btn:hover{background:#1a6fd4}
-.search-btn:disabled{background:#1a1a2e;cursor:not-allowed;color:var(--muted)}
-
-/* QUICK PROMPTS */
-.quick-prompts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 20px}
-.qp-btn{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;font-family:var(--font);border:2px solid #1a1a2e;color:var(--muted);background:transparent;white-space:nowrap}
-.qp-btn:hover{border-color:var(--blue);color:var(--blue);background:#040e1a}
-
-/* MAIN WRAP */
-.intel-wrap{max-width:1100px;margin:0 auto;padding:40px 20px 80px}
-
-/* RESULTS AREA */
-.results-area{min-height:200px}
-.results-loading{text-align:center;padding:60px 20px}
-.loading-spinner{width:48px;height:48px;border:4px solid #1a1a2e;border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+.search-btn:disabled{background:#1a1a2e;cursor:not-allowed;color:#A1A1AA}
+.compare-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.cvi{background:#090E17;border:2px solid #2a2a4e;border-radius:10px;overflow:hidden;transition:border-color .2s}
+.cvi.filled{border-color:#2B84FE}
+.cvi-label{background:#0a0f1a;padding:7px 14px;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid #1a1a2e}
+.cvi input{width:100%;background:transparent;border:none;color:#fff;padding:12px 16px;font-size:13px;font-family:'Oswald',sans-serif;font-weight:700;outline:none}
+.cvi input::placeholder{color:#3a3a5e}
+.quick-prompts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:4px}
+.qp-btn{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;font-family:'Oswald',sans-serif;border:2px solid #1a1a2e;color:#A1A1AA;background:transparent;white-space:nowrap}
+.qp-btn:hover{border-color:#2B84FE;color:#2B84FE;background:#040e1a}
+.intel-wrap{max-width:1100px;margin:0 auto;padding:36px 20px 80px}
+.loading-view{text-align:center;padding:60px 20px}
+.loading-spinner{width:48px;height:48px;border:4px solid #1a1a2e;border-top-color:#2B84FE;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:16px;color:var(--muted);font-weight:700;letter-spacing:1px}
-.loading-sub{font-size:13px;color:#2a2a4e;font-family:var(--body);margin-top:6px}
-
-/* RESPONSE CARD */
-.response-card{background:var(--s1);border:2px solid var(--blue);border-radius:16px;overflow:hidden;margin-bottom:24px;animation:fadeSlideIn .4s ease}
-@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.response-header{background:#040e1a;padding:16px 22px;border-bottom:2px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.response-query{font-size:14px;font-weight:900;color:var(--blue);letter-spacing:1px}
-.response-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:#020a02;border:1px solid var(--green);color:var(--green);letter-spacing:1px}
-.response-body{padding:24px;font-family:var(--body);font-size:15px;color:var(--dim);line-height:1.8}
-.response-body h2{font-size:20px;font-weight:900;color:var(--white);letter-spacing:1px;text-transform:uppercase;margin:20px 0 10px;font-family:var(--font);border-bottom:1px solid #1a1a2e;padding-bottom:8px}
+.loading-text{font-size:16px;color:#A1A1AA;font-weight:700;letter-spacing:1px}
+.loading-sub{font-size:13px;color:#2a2a4e;font-family:'Barlow',sans-serif;margin-top:6px}
+.response-card{background:#090E17;border:2px solid #2B84FE;border-radius:16px;overflow:hidden;margin-bottom:24px;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.response-header{background:#040e1a;padding:14px 22px;border-bottom:2px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.response-query{font-size:14px;font-weight:900;color:#2B84FE;letter-spacing:1px}
+.response-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:#020a02;border:1px solid #00C853;color:#00C853;letter-spacing:1px}
+.response-body{padding:24px;font-family:'Barlow',sans-serif;font-size:15px;color:#ccd6e0;line-height:1.8}
+.response-body h2{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;margin:20px 0 10px;font-family:'Oswald',sans-serif;border-bottom:1px solid #1a1a2e;padding-bottom:8px}
 .response-body h2:first-child{margin-top:0}
-.response-body h3{font-size:16px;font-weight:900;color:var(--blue);letter-spacing:1px;margin:14px 0 8px;font-family:var(--font)}
-.response-body strong{color:var(--white);font-weight:700}
-.response-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
-.response-body table th{background:var(--s2);color:var(--gold);padding:10px 14px;text-align:left;font-family:var(--font);font-size:12px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid #1a1a2e}
-.response-body table td{padding:10px 14px;border-bottom:1px solid #0d0d1a;vertical-align:top}
-.response-body table tr:hover td{background:#0a0f1a;color:var(--white)}
+.response-body h3{font-size:16px;font-weight:900;color:#2B84FE;letter-spacing:1px;margin:14px 0 8px;font-family:'Oswald',sans-serif}
+.response-body strong{color:#fff;font-weight:700}
+.response-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;overflow-x:auto;display:block}
+.response-body table th{background:#0a0f1a;color:#FFD700;padding:10px 14px;text-align:left;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid #1a1a2e;white-space:nowrap}
+.response-body table td{padding:10px 14px;border-bottom:1px solid #0d0d1a;vertical-align:top;min-width:100px}
+.response-body table tr:hover td{background:#0a0f1a;color:#fff}
 .response-body ul,.response-body ol{margin:8px 0 12px 20px}
 .response-body li{margin-bottom:6px}
-.response-body .evl-rec{background:#020a02;border:2px solid var(--green);border-radius:10px;padding:16px 20px;margin:16px 0}
-.response-body .evl-rec-title{font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-family:var(--font)}
-.response-body .evl-rec-text{color:var(--dim);font-size:14px;line-height:1.7}
-.response-body .disclaimer{font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid #1a1a2e;margin-top:16px;padding-top:12px;line-height:1.6}
-
-/* CTA FOOTER */
-.response-cta{background:#020a02;border-top:2px solid #1a1a2e;padding:16px 22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.response-cta-text{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;flex:1}
-
-/* CATEGORY BUTTONS */
-.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:40px}
-.cat-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;text-align:center}
-.cat-card:hover{border-color:var(--blue);transform:translateY(-2px)}
-.cat-icon{font-size:32px;display:block;margin-bottom:10px}
-.cat-title{font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px}
-.cat-desc{font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5}
-
-/* HISTORY */
-.history-item{background:var(--s2);border:1px solid #1a1a2e;border-radius:8px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:6px;transition:border-color .2s}
-.history-item:hover{border-color:var(--blue);background:#0a0f1a}
-.history-text{font-size:13px;color:var(--dim);font-weight:700;flex:1}
-.history-time{font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:700;white-space:nowrap;margin-left:12px}
-
-/* BUTTONS */
-.btn{padding:10px 20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
-.btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
-.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
-.btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
-.btn-sm{padding:7px 14px;font-size:11px}
-
-/* FOOTER */
-.evl-footer{background:var(--s1);border-top:2px solid #1a1a2e;padding:24px 20px;font-family:var(--font)}
-.evl-footer-inner{max-width:1100px;margin:0 auto}
-.evl-footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:12px}
-.evl-footer-links a{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;transition:color .2s}
-.evl-footer-links a:hover{color:var(--blue)}
-.evl-footer-copy{font-size:12px;color:#445566;font-weight:600}
-
+.response-body .evl-rec{background:#020a02;border:2px solid #00C853;border-radius:10px;padding:16px 20px;margin:16px 0}
+.response-body .evl-rec-title{font-size:13px;font-weight:900;color:#00C853;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-family:'Oswald',sans-serif}
+.response-body .winner-badge{display:inline-block;background:#0d1a0d;border:1px solid #00C853;color:#00C853;font-size:11px;font-weight:900;padding:2px 8px;border-radius:10px;letter-spacing:1px;font-family:'Oswald',sans-serif}
+.response-body .disclaimer{font-size:12px;color:#A1A1AA;font-style:italic;border-top:1px solid #1a1a2e;margin-top:16px;padding-top:12px;line-height:1.6}
+.response-cta{background:#020a02;border-top:2px solid #1a1a2e;padding:14px 22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.response-cta-text{font-size:13px;color:#A1A1AA;font-family:'Barlow',sans-serif;font-weight:600;flex:1}
+.default-view .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:32px}
+.cat-card{background:#090E17;border:2px solid #1a1a2e;border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;text-align:center}
+.cat-card:hover{border-color:#2B84FE;transform:translateY(-2px)}
+.cat-icon{font-size:30px;display:block;margin-bottom:8px}
+.cat-title{font-size:13px;font-weight:900;color:#fff;letter-spacing:1px;margin-bottom:4px}
+.cat-desc{font-size:11px;color:#A1A1AA;font-family:'Barlow',sans-serif;line-height:1.4}
+.btn{padding:10px 20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:'Oswald',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn-blue{background:#2B84FE;color:#fff}.btn-blue:hover{background:#1a6fd4}
+.btn-green{background:#00C853;color:#020203}.btn-green:hover{background:#00a844}
+.btn-dark{background:#1a1a2e;color:#fff;border:1px solid #2a2a4e}.btn-dark:hover{border-color:#2B84FE}
+.history-item{background:#0a0f1a;border:1px solid #1a1a2e;border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:6px;transition:border-color .2s}
+.history-item:hover{border-color:#2B84FE}
 @media(max-width:768px){
-  .search-input-row{flex-direction:column}
-  .hero-h1{font-size:32px}
-  .category-grid{grid-template-columns:1fr 1fr}
+  .compare-inputs{grid-template-columns:1fr}
+  .hero-h1{font-size:30px}
+  .search-row{flex-direction:column}
+  .mode-toggle{flex-wrap:wrap}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="evl-nav">
   <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-logo">
     <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
@@ -136,331 +111,326 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
     <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link">FIND MY CAR</a>
     <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
     <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
-    <a href="https://evl-decode-two.vercel.app/how" class="evl-nav-link">HOW IT WORKS</a>
-    <a href="https://evl-decode-two.vercel.app/financing" class="evl-nav-link">FINANCING</a>
-    <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
     <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link active">COMPARE</a>
+    <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
+    <a href="https://evl-decode-two.vercel.app/reviews" class="evl-nav-link">CLIENT WINS</a>
     <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
     <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
+    <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
     <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
   </div>
 </nav>
 
-<!-- HERO + SEARCH -->
 <div class="intel-hero">
   <div class="hero-badge">AI-POWERED VEHICLE INTELLIGENCE</div>
   <h1 class="hero-h1">COMPARE. RESEARCH.<br><span>GET THE FACTS.</span></h1>
-  <p class="hero-sub">Compare any two vehicles, explore body styles, understand packages, or ask anything about any car. Real specs. No dealer spin. Pure intelligence.</p>
+  <p class="hero-sub">Compare up to 3 vehicles side by side, explore trim levels, understand packages, or ask anything about any car. Pure intelligence — no dealer spin.</p>
 
-  <div class="search-wrap">
-    <div class="search-input-row">
-      <input class="search-input" id="search-input" placeholder="F-150 vs Tundra · Best SUV under $45k · Mustang GT packages explained..."
-        onkeydown="if(event.key==='Enter')runSearch()"/>
-      <button class="search-btn" onclick="runSearch()" id="search-btn">
-        <span id="btn-text">⚡ ANALYZE</span>
-      </button>
+  <div class="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('ask',this)">💬 ASK ANYTHING</button>
+    <button class="mode-btn" onclick="setMode('compare2',this)">⚔️ 2-VEHICLE</button>
+    <button class="mode-btn" onclick="setMode('compare3',this)">🏆 3-VEHICLE</button>
+    <button class="mode-btn" onclick="setMode('trims',this)">📋 TRIM BREAKDOWN</button>
+  </div>
+
+  <!-- ASK ANYTHING -->
+  <div id="panel-ask" class="search-wrap">
+    <div class="search-row">
+      <input class="search-input" id="ask-input" placeholder="F-150 vs Tundra · Best SUV under $45k · Tundra trim levels explained..." onkeydown="if(event.key==='Enter')go()"/>
+      <button class="search-btn" id="search-btn" onclick="go()">⚡ ANALYZE</button>
     </div>
     <div class="quick-prompts">
-      <button class="qp-btn" onclick="quickSearch('F-150 vs Tundra vs Silverado comparison')">🛻 F-150 vs Tundra vs Silverado</button>
-      <button class="qp-btn" onclick="quickSearch('BMW X5 vs Mercedes GLE vs Audi Q7')">🏎 BMW X5 vs GLE vs Q7</button>
-      <button class="qp-btn" onclick="quickSearch('best 3-row SUV for family of 6 under $55000')">👨‍👩‍👧‍👦 Best 3-Row Family SUV</button>
-      <button class="qp-btn" onclick="quickSearch('sedan vs SUV pros and cons')">🚗 Sedan vs SUV</button>
-      <button class="qp-btn" onclick="quickSearch('best truck for towing under $60000')">⚙️ Best Towing Truck</button>
-      <button class="qp-btn" onclick="quickSearch('Toyota Tundra trim levels explained')">📋 Tundra Trim Breakdown</button>
-      <button class="qp-btn" onclick="quickSearch('electric vehicle vs gas vehicle total cost of ownership')">⚡ EV vs Gas TCO</button>
-      <button class="qp-btn" onclick="quickSearch('Ram 1500 vs GMC Sierra 1500 differences')">🔧 Ram 1500 vs Sierra</button>
+      <button class="qp-btn" onclick="ask('F-150 vs Tundra vs Silverado full comparison')">🛻 Truck Comparison</button>
+      <button class="qp-btn" onclick="ask('BMW X5 vs Mercedes GLE vs Audi Q7')">🏎 Luxury SUV Battle</button>
+      <button class="qp-btn" onclick="ask('best family SUV under $45000 2024 2025')">👨‍👩‍👧‍👦 Family SUV Guide</button>
+      <button class="qp-btn" onclick="ask('electric vehicle vs gas total cost of ownership 5 years')">⚡ EV vs Gas TCO</button>
+      <button class="qp-btn" onclick="ask('sedan vs SUV vs truck which is right for me')">🔄 Body Style Guide</button>
+      <button class="qp-btn" onclick="ask('Ram 1500 trim levels Tradesman to Limited explained')">📋 RAM Trims</button>
+    </div>
+  </div>
+
+  <!-- 2-VEHICLE -->
+  <div id="panel-compare2" class="search-wrap" style="display:none">
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;margin-bottom:14px;align-items:center;max-width:680px;margin-left:auto;margin-right:auto">
+      <div class="cvi" id="cvi2a"><div class="cvi-label" style="color:var(--red)">🔴 VEHICLE 1</div><input id="v2a" placeholder="e.g. 2024 Ford F-150" oninput="document.getElementById('cvi2a').classList.toggle('filled',this.value.length>0)"/></div>
+      <div style="font-size:16px;font-weight:900;color:var(--muted);text-align:center">VS</div>
+      <div class="cvi" id="cvi2b"><div class="cvi-label" style="color:var(--green)">🟢 VEHICLE 2</div><input id="v2b" placeholder="e.g. 2024 Toyota Tundra" oninput="document.getElementById('cvi2b').classList.toggle('filled',this.value.length>0)"/></div>
+    </div>
+    <div style="text-align:center;margin-bottom:14px"><button class="search-btn" onclick="go()">⚔️ COMPARE</button></div>
+    <div class="quick-prompts">
+      <button class="qp-btn" onclick="set2('2024 Ford F-150','2024 Toyota Tundra')">F-150 vs Tundra</button>
+      <button class="qp-btn" onclick="set2('2024 BMW X5','2024 Mercedes GLE')">BMW X5 vs GLE</button>
+      <button class="qp-btn" onclick="set2('2024 Honda CR-V','2024 Toyota RAV4')">CR-V vs RAV4</button>
+      <button class="qp-btn" onclick="set2('2024 Tesla Model Y','2024 Ford Mustang Mach-E')">Tesla Y vs Mach-E</button>
+    </div>
+  </div>
+
+  <!-- 3-VEHICLE -->
+  <div id="panel-compare3" class="search-wrap" style="display:none">
+    <div class="compare-inputs">
+      <div class="cvi" id="cvi3a"><div class="cvi-label" style="color:var(--red)">🔴 VEHICLE 1</div><input id="v3a" placeholder="e.g. 2024 Ford F-150" oninput="document.getElementById('cvi3a').classList.toggle('filled',this.value.length>0)"/></div>
+      <div class="cvi" id="cvi3b"><div class="cvi-label" style="color:var(--blue)">🔵 VEHICLE 2</div><input id="v3b" placeholder="e.g. 2024 Toyota Tundra" oninput="document.getElementById('cvi3b').classList.toggle('filled',this.value.length>0)"/></div>
+      <div class="cvi" id="cvi3c"><div class="cvi-label" style="color:var(--green)">🟢 VEHICLE 3</div><input id="v3c" placeholder="e.g. 2024 Chevy Silverado" oninput="document.getElementById('cvi3c').classList.toggle('filled',this.value.length>0)"/></div>
+    </div>
+    <div style="text-align:center;margin-bottom:14px"><button class="search-btn" onclick="go()">🏆 3-WAY COMPARISON</button></div>
+    <div class="quick-prompts">
+      <button class="qp-btn" onclick="set3('2024 Ford F-150','2024 Toyota Tundra','2024 Chevy Silverado')">Big 3 Trucks</button>
+      <button class="qp-btn" onclick="set3('2024 Toyota Camry LE','2024 Toyota Camry SE','2024 Toyota Camry XSE')">Camry Trims</button>
+      <button class="qp-btn" onclick="set3('2024 Ford Mustang GT','2024 Chevy Camaro SS','2024 Dodge Challenger')">Muscle Car Wars</button>
+      <button class="qp-btn" onclick="set3('2024 BMW X5','2024 Mercedes GLE','2024 Audi Q7')">Luxury SUV Battle</button>
+    </div>
+  </div>
+
+  <!-- TRIMS -->
+  <div id="panel-trims" class="search-wrap" style="display:none">
+    <div class="search-row">
+      <input class="search-input" id="trim-input" placeholder="e.g. Toyota Tundra · Ford F-150 · BMW X5..." onkeydown="if(event.key==='Enter')go()"/>
+      <button class="search-btn" onclick="go()">📋 EXPLAIN TRIMS</button>
+    </div>
+    <div class="quick-prompts">
+      <button class="qp-btn" onclick="setTrim('Toyota Tundra')">Tundra Trims</button>
+      <button class="qp-btn" onclick="setTrim('Ford F-150')">F-150 Trims</button>
+      <button class="qp-btn" onclick="setTrim('Ram 1500')">Ram 1500 Trims</button>
+      <button class="qp-btn" onclick="setTrim('BMW 3 Series')">BMW 3 Series</button>
+      <button class="qp-btn" onclick="setTrim('Toyota Camry')">Camry Trims</button>
+      <button class="qp-btn" onclick="setTrim('Chevrolet Silverado 1500')">Silverado Trims</button>
     </div>
   </div>
 </div>
 
 <div class="intel-wrap">
-
-  <!-- RESULTS AREA -->
-  <div id="results-area" class="results-area">
-
-    <!-- DEFAULT — CATEGORY CARDS -->
-    <div id="default-view">
-      <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;text-align:center">WHAT DO YOU WANT TO RESEARCH?</div>
-      <div class="category-grid">
-        <div class="cat-card" onclick="quickSearch('compare trucks: F-150 vs Tundra vs Silverado vs RAM 1500')">
-          <span class="cat-icon">🛻</span>
-          <div class="cat-title">TRUCKS</div>
-          <div class="cat-desc">F-150, Tundra, Silverado, RAM, Sierra, Tacoma — compare any truck</div>
-        </div>
-        <div class="cat-card" onclick="quickSearch('best midsize SUV comparison 2023 2024 RAV4 CR-V Escape Rogue')">
-          <span class="cat-icon">🚙</span>
-          <div class="cat-title">SUVs</div>
-          <div class="cat-desc">Midsize, compact, full-size — find the right SUV for your needs</div>
-        </div>
-        <div class="cat-card" onclick="quickSearch('luxury sedan comparison BMW 3 series vs Mercedes C-Class vs Audi A4')">
-          <span class="cat-icon">🏎</span>
-          <div class="cat-title">LUXURY</div>
-          <div class="cat-desc">BMW, Mercedes, Audi, Lexus — premium vehicles compared objectively</div>
-        </div>
-        <div class="cat-card" onclick="quickSearch('best electric vehicles 2024 Tesla Model Y vs Ford Mustang Mach-E vs Hyundai Ioniq 5')">
-          <span class="cat-icon">⚡</span>
-          <div class="cat-title">ELECTRIC</div>
-          <div class="cat-desc">Tesla, Rivian, EV comparisons — range, charging, real-world costs</div>
-        </div>
-        <div class="cat-card" onclick="quickSearch('family minivan comparison Honda Odyssey vs Toyota Sienna vs Chrysler Pacifica')">
-          <span class="cat-icon">🚌</span>
-          <div class="cat-title">MINIVANS</div>
-          <div class="cat-desc">Odyssey, Sienna, Pacifica — the real family hauler breakdown</div>
-        </div>
-        <div class="cat-card" onclick="quickSearch('sports car comparison Mustang GT vs Camaro SS vs Challenger RT')">
-          <span class="cat-icon">🏁</span>
-          <div class="cat-title">SPORTS CARS</div>
-          <div class="cat-desc">Mustang, Camaro, Challenger — performance specs and packages</div>
-        </div>
-        <div class="cat-card" onclick="quickSearch('sedan vs SUV vs truck which is best for commuting and family')">
-          <span class="cat-icon">🔄</span>
-          <div class="cat-title">BODY STYLE GUIDE</div>
-          <div class="cat-desc">Not sure what type of vehicle fits your life? Start here.</div>
-        </div>
-        <div class="cat-card" onclick="quickSearch('what is the difference between trim levels and packages on a new vehicle')">
-          <span class="cat-icon">📋</span>
-          <div class="cat-title">TRIM & PACKAGES</div>
-          <div class="cat-desc">XLT vs Lariat vs King Ranch — understand what you're actually paying for</div>
-        </div>
-      </div>
-
-      <!-- HISTORY -->
-      <div id="history-section" style="display:none">
-        <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">RECENT SEARCHES</div>
-        <div id="history-list"></div>
-      </div>
+  <!-- DEFAULT -->
+  <div id="default-view" class="default-view">
+    <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;text-align:center">WHAT DO YOU WANT TO RESEARCH?</div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="set3('2024 Ford F-150','2024 Toyota Tundra','2024 Chevy Silverado');setMode('compare3',document.querySelectorAll('.mode-btn')[2]);go()"><span class="cat-icon">🛻</span><div class="cat-title">TRUCKS</div><div class="cat-desc">F-150, Tundra, Silverado, RAM — full comparison</div></div>
+      <div class="cat-card" onclick="ask('best midsize SUV comparison RAV4 CR-V Rogue 2024 2025')"><span class="cat-icon">🚙</span><div class="cat-title">SUVs</div><div class="cat-desc">Compact, midsize, full-size — find the right one</div></div>
+      <div class="cat-card" onclick="set3('2024 BMW X5','2024 Mercedes GLE','2024 Audi Q7');setMode('compare3',document.querySelectorAll('.mode-btn')[2]);go()"><span class="cat-icon">🏎</span><div class="cat-title">LUXURY</div><div class="cat-desc">BMW, Mercedes, Audi, Lexus — objectively compared</div></div>
+      <div class="cat-card" onclick="ask('best electric vehicles 2024 Tesla Model Y vs Ford Mach-E vs Ioniq 5')"><span class="cat-icon">⚡</span><div class="cat-title">ELECTRIC</div><div class="cat-desc">Tesla, Rivian, EV comparisons — real costs</div></div>
+      <div class="cat-card" onclick="set3('2024 Toyota Camry LE','2024 Toyota Camry SE','2024 Toyota Camry XSE');setMode('compare3',document.querySelectorAll('.mode-btn')[2]);go()"><span class="cat-icon">📋</span><div class="cat-title">TRIM LEVELS</div><div class="cat-desc">LE vs SE vs XSE — what you actually get</div></div>
+      <div class="cat-card" onclick="set3('2024 Ford Mustang GT','2024 Chevy Camaro SS','2024 Dodge Challenger');setMode('compare3',document.querySelectorAll('.mode-btn')[2]);go()"><span class="cat-icon">🏁</span><div class="cat-title">SPORTS CARS</div><div class="cat-desc">Mustang, Camaro, Challenger — specs showdown</div></div>
+      <div class="cat-card" onclick="ask('sedan vs SUV vs truck which is right for me and my family')"><span class="cat-icon">🔄</span><div class="cat-title">BODY STYLE GUIDE</div><div class="cat-desc">Not sure what type fits your life? Start here.</div></div>
+      <div class="cat-card" onclick="ask('electric vehicle vs gas total cost of ownership 5 years insurance maintenance')"><span class="cat-icon">💰</span><div class="cat-title">COST OF OWNERSHIP</div><div class="cat-desc">Gas, insurance, maintenance — the full picture</div></div>
     </div>
-
-    <!-- LOADING -->
-    <div id="loading-view" style="display:none" class="results-loading">
-      <div class="loading-spinner"></div>
-      <div class="loading-text" id="loading-text">ANALYZING YOUR QUERY</div>
-      <div class="loading-sub" id="loading-sub">EVL Intelligence is researching vehicle specs, packages, and data...</div>
+    <div id="history-section" style="display:none;margin-top:8px">
+      <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">RECENT SEARCHES</div>
+      <div id="history-list"></div>
     </div>
-
-    <!-- RESPONSE -->
-    <div id="response-view" style="display:none">
-      <div class="response-card">
-        <div class="response-header">
-          <div class="response-query" id="response-query-display">Query</div>
-          <div class="response-badge">⚡ EVL INTELLIGENCE</div>
-        </div>
-        <div class="response-body" id="response-content"></div>
-        <div class="response-cta">
-          <div class="response-cta-text">Ready to find this vehicle at the best price? EVL searches nationwide — 24/7.</div>
-          <a href="https://evl-decode-two.vercel.app/find" class="btn btn-green">⚡ FIND MY VEHICLE</a>
-          <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 TALK TO AN ADVISOR</a>
-          <button onclick="newSearch()" class="btn btn-dark">🔍 NEW SEARCH</button>
-        </div>
-      </div>
-
-      <!-- FOLLOW UP SUGGESTIONS -->
-      <div id="followup-section" style="margin-bottom:24px">
-        <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">FOLLOW-UP QUESTIONS</div>
-        <div id="followup-chips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
-      </div>
-    </div>
-
   </div>
 
-</div><!-- /intel-wrap -->
+  <!-- LOADING -->
+  <div id="loading-view" class="loading-view" style="display:none">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loading-text">ANALYZING</div>
+    <div class="loading-sub" id="loading-sub">EVL Intelligence is researching vehicle data...</div>
+  </div>
 
-<!-- FOOTER -->
-<footer class="evl-footer">
-  <div class="evl-footer-inner">
-    <div style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:14px">
-      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+  <!-- RESPONSE -->
+  <div id="response-view" style="display:none">
+    <div class="response-card">
+      <div class="response-header">
+        <div class="response-query" id="response-query-label">Query</div>
+        <div class="response-badge">⚡ EVL INTELLIGENCE</div>
+      </div>
+      <div class="response-body" id="response-content"></div>
+      <div class="response-cta">
+        <div class="response-cta-text">Ready to find this vehicle at the best price? EVL searches nationwide — 24/7.</div>
+        <a href="https://evl-decode-two.vercel.app/find" class="btn btn-green">⚡ FIND MY VEHICLE</a>
+        <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 TALK TO ADVISOR</a>
+        <button onclick="newSearch()" class="btn btn-dark">🔍 NEW SEARCH</button>
+      </div>
+    </div>
+    <div id="followup-section" style="margin-bottom:24px;display:none">
+      <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">FOLLOW-UP RESEARCH</div>
+      <div id="followup-chips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#090E17;border-top:2px solid #1a1a2e;padding:20px;font-family:'Oswald',sans-serif">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:900;color:#fff;letter-spacing:1px">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
       EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
     </div>
-    <div class="evl-footer-links">
-      <a href="https://evl-decode-two.vercel.app/home">Home</a>
-      <a href="https://evl-decode-two.vercel.app/find">Find My Car</a>
-      <a href="https://evl-decode-two.vercel.app/compare">Compare</a>
-      <a href="https://evl-decode-two.vercel.app/trade-in">Trade-In</a>
-      <a href="https://evl-decode-two.vercel.app/leasing">Leasing</a>
-      <a href="https://evl-decode-two.vercel.app/faq">FAQ</a>
-      <a href="https://evl-decode-two.vercel.app/contact">Contact</a>
+    <div style="display:flex;flex-wrap:wrap;gap:8px 16px">
+      <a href="https://evl-decode-two.vercel.app/home" style="color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700">Home</a>
+      <a href="https://evl-decode-two.vercel.app/find" style="color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700">Find My Car</a>
+      <a href="https://evl-decode-two.vercel.app/leasing" style="color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700">Leasing</a>
+      <a href="https://evl-decode-two.vercel.app/faq" style="color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700">FAQ</a>
+      <a href="https://evl-decode-two.vercel.app/contact" style="color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700">Contact</a>
     </div>
-    <div class="evl-footer-copy">&copy; 2026 Express Vehicle Locators — Plano, TX<br>
-    <span style="font-size:11px;color:#334455">Vehicle intelligence powered by AI. Specifications and data are for informational purposes. Verify all specs with manufacturer before purchase decisions. EVL is a vehicle advisory platform — not a dealer.</span></div>
-  </div>
-  <div id="evl-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#090E17;border-top:2px solid #2B84FE;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;z-index:9999">
-    <span style="font-size:14px;color:#ccd6e0;font-weight:600;max-width:700px">We use cookies. <a href="https://evl-decode-two.vercel.app/privacy" style="color:#2B84FE;font-weight:700">Privacy Policy</a>.</span>
-    <button onclick="document.getElementById('evl-cookie').style.display='none';localStorage.setItem('evl-cookie','1')" style="background:#2B84FE;color:#fff;border:none;padding:10px 24px;font-size:14px;font-weight:900;border-radius:6px;cursor:pointer">ACCEPT</button>
+    <div style="font-size:11px;color:#334455;font-family:'Barlow',sans-serif">AI specs for informational use only. Verify with manufacturer. EVL is a vehicle advisory platform — not a dealer.</div>
   </div>
 </footer>
 
 <script>
+const API_KEY = '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';
 const HISTORY_KEY = 'evl_compare_history';
-let searchHistory = [];
+let currentMode = 'ask';
 
-function loadHistory(){
-  try{ searchHistory = JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]'); }catch(e){ searchHistory=[]; }
-}
-
-function saveToHistory(query){
-  loadHistory();
-  searchHistory = searchHistory.filter(h=>h.q!==query);
-  searchHistory.unshift({q:query, t:new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})});
-  if(searchHistory.length>10) searchHistory=searchHistory.slice(0,10);
-  localStorage.setItem(HISTORY_KEY,JSON.stringify(searchHistory));
-}
-
-function renderHistory(){
-  loadHistory();
-  if(!searchHistory.length){ document.getElementById('history-section').style.display='none'; return; }
-  document.getElementById('history-section').style.display='block';
-  document.getElementById('history-list').innerHTML = searchHistory.map(h=>`
-    <div class="history-item" onclick="quickSearch('${h.q.replace(/'/g,"\\'")}')">
-      <span class="history-text">🔍 ${h.q}</span>
-      <span class="history-time">${h.t}</span>
-    </div>`).join('');
-}
-
-function quickSearch(query){
-  document.getElementById('search-input').value = query;
-  runSearch();
-}
-
-function newSearch(){
-  document.getElementById('search-input').value = '';
-  document.getElementById('response-view').style.display='none';
-  document.getElementById('loading-view').style.display='none';
-  document.getElementById('default-view').style.display='block';
-  renderHistory();
-  document.getElementById('search-input').focus();
-}
-
-// ── LOADING MESSAGES ──
 const LOADING_MSGS = [
-  {text:'SCANNING MANUFACTURER DATA',sub:'Pulling specs, dimensions, and package details...'},
-  {text:'CROSS-REFERENCING MODELS',sub:'Comparing trim levels and standard equipment...'},
-  {text:'ANALYZING REAL-WORLD DATA',sub:'Reliability ratings, owner feedback, and expert reviews...'},
-  {text:'BUILDING YOUR COMPARISON',sub:'Organizing specs into a clean side-by-side breakdown...'},
+  {t:'SCANNING MANUFACTURER DATA',s:'Pulling specs, dimensions, and package details...'},
+  {t:'CROSS-REFERENCING MODELS',s:'Comparing trim levels and standard equipment...'},
+  {t:'ANALYZING REAL-WORLD DATA',s:'Reliability ratings, owner feedback, expert reviews...'},
+  {t:'BUILDING YOUR COMPARISON',s:'Organizing into a clean side-by-side breakdown...'},
 ];
 
-async function runSearch(){
-  const query = document.getElementById('search-input').value.trim();
-  if(!query) return;
+const SYSTEM_PROMPT = `You are EVL Vehicle Intelligence, the AI research assistant for Express Vehicle Locators.
+Provide objective, detailed, factual vehicle comparisons.
+Use HTML tables for specs comparisons.
+Use h2 for major sections, h3 for subsections.
+For 3-way comparisons add: <span class="winner-badge">🏆 WINNER</span> for category winners.
+End with: <div class="evl-rec"><div class="evl-rec-title">⚡ EVL RECOMMENDATION</div>recommendation here</div>
+End with: <div class="disclaimer">Specifications based on manufacturer data. Verify current specs before purchase. EVL is a vehicle advisory platform — not a dealer.</div>
+Never recommend specific dealerships. Be the most comprehensive unbiased vehicle advisor the customer has ever encountered.`;
 
-  // Show loading
-  document.getElementById('default-view').style.display='none';
-  document.getElementById('response-view').style.display='none';
-  document.getElementById('loading-view').style.display='block';
-  const btn = document.getElementById('search-btn');
-  btn.disabled = true;
-  document.getElementById('btn-text').textContent='ANALYZING...';
+function setMode(mode, btn) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  ['ask','compare2','compare3','trims'].forEach(m => {
+    document.getElementById('panel-'+m).style.display = m===mode ? 'block' : 'none';
+  });
+}
 
-  // Cycle loading messages
-  let msgIdx = 0;
-  const msgInterval = setInterval(()=>{
-    msgIdx = (msgIdx+1)%LOADING_MSGS.length;
-    document.getElementById('loading-text').textContent = LOADING_MSGS[msgIdx].text;
-    document.getElementById('loading-sub').textContent = LOADING_MSGS[msgIdx].sub;
+function ask(q) { document.getElementById('ask-input').value = q; setMode('ask', document.querySelectorAll('.mode-btn')[0]); go(); }
+function setTrim(q) { document.getElementById('trim-input').value = q; }
+function set2(a,b) { document.getElementById('v2a').value=a; document.getElementById('v2b').value=b; ['cvi2a','cvi2b'].forEach(id=>document.getElementById(id).classList.add('filled')); }
+function set3(a,b,c) { document.getElementById('v3a').value=a; document.getElementById('v3b').value=b; document.getElementById('v3c').value=c; ['cvi3a','cvi3b','cvi3c'].forEach(id=>document.getElementById(id).classList.add('filled')); }
+
+function buildPrompt() {
+  if (currentMode === 'ask') return document.getElementById('ask-input').value.trim();
+  if (currentMode === 'trims') {
+    const v = document.getElementById('trim-input').value.trim();
+    return `Explain ALL trim levels for the ${v}. For each trim: name, MSRP range, what it adds over previous trim, standout features. Which trim offers best value? Format with tables.`;
+  }
+  if (currentMode === 'compare2') {
+    const a = document.getElementById('v2a').value.trim();
+    const b = document.getElementById('v2b').value.trim();
+    if (!a||!b) return null;
+    return `Compare ${a} vs ${b}. Include: side-by-side specs table, powertrain, dimensions, cargo, technology, safety ratings, reliability, total cost of ownership. Declare category winners. Give overall EVL recommendation.`;
+  }
+  if (currentMode === 'compare3') {
+    const a = document.getElementById('v3a').value.trim();
+    const b = document.getElementById('v3b').value.trim();
+    const c = document.getElementById('v3c').value.trim();
+    if (!a||!b||!c) return null;
+    return `3-way comparison: ${a} vs ${b} vs ${c}. Create comprehensive table: MSRP, engine, horsepower, torque, MPG, towing, payload, cargo space, wheelbase, tech, safety, reliability. Category winners with winner-badge spans. Pros/cons each. Final EVL recommendation for different buyer types.`;
+  }
+  return null;
+}
+
+async function go() {
+  const prompt = buildPrompt();
+  if (!prompt) { alert('Please fill in vehicle fields first.'); return; }
+
+  document.getElementById('default-view').style.display = 'none';
+  document.getElementById('response-view').style.display = 'none';
+  document.getElementById('loading-view').style.display = 'block';
+  document.getElementById('search-btn').disabled = true;
+
+  let mi = 0;
+  const interval = setInterval(() => {
+    mi = (mi+1) % 4;
+    document.getElementById('loading-text').textContent = LOADING_MSGS[mi].t;
+    document.getElementById('loading-sub').textContent = LOADING_MSGS[mi].s;
   }, 1800);
 
-  const systemPrompt = `You are EVL Vehicle Intelligence, the AI research assistant for Express Vehicle Locators — a vehicle advisory and technology platform. Your role is to provide objective, detailed, factual vehicle information.
-
-IMPORTANT RULES:
-- Never recommend specific dealerships or link to inventory
-- Focus purely on specs, dimensions, packages, trim levels, pros/cons, and factual comparisons
-- Always format comparisons as HTML tables when comparing 2+ vehicles
-- Use clear headers (h2, h3 tags) to organize content
-- Highlight EVL's value at the end in a div with class "evl-rec"
-- Keep responses comprehensive but scannable
-- Use bullet points for lists
-- Include a short disclaimer at the end in a div with class "disclaimer"
-- If comparing vehicles, structure as: Overview → Specs Table → Powertrain → Cargo/Space → Technology → Safety → Reliability → EVL Recommendation
-- If explaining packages/trims, list each tier with what's included
-- Be the most knowledgeable, unbiased vehicle advisor the customer has ever encountered
-- Current year context: 2026. Reference 2022-2025 model years as recent.`;
-
-  try{
-        const resp = await fetch('/api/compare',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({prompt, systemPrompt:systemPrompt})
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: prompt }]
+      })
     });
-    clearInterval(msgInterval);
-    const data = resp.ok ? await resp.json() : {content:''};
-    const content = data.content || 'Unable to retrieve information right now. Please try again in a moment.';
 
-    // Generate follow-up suggestions
-    const followUps = generateFollowUps(query);
+    clearInterval(interval);
+    const data = await resp.json();
+    const result = data.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
 
-    // Display response
-    document.getElementById('loading-view').style.display='none';
-    document.getElementById('response-view').style.display='block';
-    document.getElementById('response-query-display').textContent = '🔍 '+query;
-    document.getElementById('response-content').innerHTML = content;
-    document.getElementById('followup-chips').innerHTML = followUps.map(f=>`
-      <button class="qp-btn" onclick="quickSearch('${f.replace(/'/g,"\\'")}'')">${f}</button>`).join('');
+    document.getElementById('loading-view').style.display = 'none';
+    document.getElementById('response-view').style.display = 'block';
 
-    saveToHistory(query);
+    let label = '🔍 ' + prompt.slice(0, 80) + (prompt.length > 80 ? '...' : '');
+    if (currentMode === 'compare3') label = `🏆 ${document.getElementById('v3a').value} vs ${document.getElementById('v3b').value} vs ${document.getElementById('v3c').value}`;
+    if (currentMode === 'compare2') label = `⚔️ ${document.getElementById('v2a').value} vs ${document.getElementById('v2b').value}`;
+    if (currentMode === 'trims') label = `📋 ${document.getElementById('trim-input').value} — Trim Breakdown`;
 
-  }catch(err){
-    clearInterval(msgInterval);
-    document.getElementById('loading-view').style.display='none';
-    document.getElementById('response-view').style.display='block';
-    document.getElementById('response-query-display').textContent = '🔍 '+query;
+    document.getElementById('response-query-label').textContent = label;
+    document.getElementById('response-content').innerHTML = result;
+
+    // Follow-ups
+    const v = document.getElementById('v3a')?.value || document.getElementById('ask-input')?.value || '';
+    const followups = [`${v} reliability and common issues`, `best ${v} model years to buy`, `${v} total 5-year ownership cost`];
+    document.getElementById('followup-chips').innerHTML = followups.map(f =>
+      `<button class="qp-btn" onclick="ask('${f.replace(/'/g,"\\'")}'">${f}</button>`).join('');
+    document.getElementById('followup-section').style.display = 'block';
+
+    saveHistory(prompt.slice(0, 80));
+
+  } catch (err) {
+    clearInterval(interval);
+    document.getElementById('loading-view').style.display = 'none';
+    document.getElementById('response-view').style.display = 'block';
+    document.getElementById('response-query-label').textContent = '⚠️ Connection Issue';
     document.getElementById('response-content').innerHTML = `
       <div style="text-align:center;padding:40px">
         <div style="font-size:32px;margin-bottom:12px">⚠️</div>
-        <div style="font-size:16px;font-weight:900;color:var(--white);margin-bottom:8px">INTELLIGENCE TEMPORARILY OFFLINE</div>
-        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.6;max-width:400px;margin:0 auto">
-          The AI comparison engine is temporarily unavailable. Please try again in a moment, or contact an EVL advisor directly for vehicle research.
-        </div>
+        <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:8px">INTELLIGENCE TEMPORARILY OFFLINE</div>
+        <div style="font-size:14px;color:#A1A1AA;font-family:'Barlow',sans-serif;line-height:1.6;max-width:400px;margin:0 auto">${err.message}</div>
         <a href="https://evl-decode-two.vercel.app/contact" class="btn btn-blue" style="margin-top:16px;display:inline-flex">📞 TALK TO EVL ADVISOR</a>
       </div>`;
   }
 
-  btn.disabled = false;
-  document.getElementById('btn-text').textContent='⚡ ANALYZE';
+  document.getElementById('search-btn').disabled = false;
 }
 
-function generateFollowUps(query){
-  const q = query.toLowerCase();
-  if(q.includes('vs') || q.includes('compare')){
-    const vehicles = query.split(/vs|versus/i).map(v=>v.trim());
-    return [
-      `${vehicles[0]} trim levels and packages explained`,
-      `reliability comparison ${query}`,
-      `total cost of ownership ${query}`,
-      `towing capacity comparison ${query}`,
-    ].slice(0,3);
-  }
-  if(q.includes('truck')){
-    return ['F-150 vs Tundra vs Silverado full comparison','best truck for towing under $60k','Ram 1500 vs F-150 differences'];
-  }
-  if(q.includes('suv')){
-    return ['3-row SUV comparison 2024','best SUV for highway driving','SUV vs minivan for large family'];
-  }
-  if(q.includes('electric') || q.includes('ev')){
-    return ['EV charging costs vs gas total cost of ownership','Tesla Model Y vs Ford Mach-E vs Ioniq 5','EV range comparison 2024 2025'];
-  }
-  return [
-    `${query} reliability and owner reviews`,
-    `best alternatives to ${query}`,
-    `${query} what years to avoid`,
-  ];
-}
-
-// COOKIE + INIT
-window.addEventListener('DOMContentLoaded',function(){
-  if(!localStorage.getItem('evl-cookie')){ const b=document.getElementById('evl-cookie'); if(b)b.style.display='flex'; }
+function newSearch() {
+  document.getElementById('response-view').style.display = 'none';
+  document.getElementById('loading-view').style.display = 'none';
+  document.getElementById('default-view').style.display = 'block';
   renderHistory();
-  // Check for URL query param
-  const urlParams = new URLSearchParams(window.location.search);
-  const q = urlParams.get('q');
-  if(q){ document.getElementById('search-input').value = q; runSearch(); }
-});
+}
 
-document.getElementById('search-input').addEventListener('keydown',function(e){
-  if(e.key==='Enter') runSearch();
-});
+function saveHistory(q) {
+  try {
+    let h = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    h = h.filter(x => x.q !== q);
+    h.unshift({ q, t: new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}) });
+    if (h.length > 8) h = h.slice(0, 8);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
+  } catch(e) {}
+}
 
-// NAV ACTIVE
-(function(){var path=window.location.pathname;document.querySelectorAll('.evl-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.endsWith(a.getAttribute('href').split('/').pop())){a.style.color='#2B84FE';a.style.borderBottom='2px solid #2B84FE';}});})();
+function renderHistory() {
+  try {
+    const h = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    if (!h.length) { document.getElementById('history-section').style.display = 'none'; return; }
+    document.getElementById('history-section').style.display = 'block';
+    document.getElementById('history-list').innerHTML = h.map(x =>
+      `<div class="history-item" onclick="ask('${x.q.replace(/'/g,"\\'")}')">
+        <span style="font-size:13px;color:#ccd6e0;font-weight:700;flex:1">🔍 ${x.q}</span>
+        <span style="font-size:11px;color:#A1A1AA;font-weight:700;white-space:nowrap;margin-left:12px">${x.t}</span>
+      </div>`).join('');
+  } catch(e) {}
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  renderHistory();
+  const p = new URLSearchParams(window.location.search);
+  const q = p.get('q');
+  if (q) { document.getElementById('ask-input').value = q; go(); }
+});
 </script>
 </body>
 </html>
