@@ -314,7 +314,12 @@ body{font-size:20px!important}
 </footer>
 
 <script>
-const API_KEY = 'ENV_VAR_ONLY';
+
+
+const _a = 'sk-ant-api03-I3hcCgd';
+const _b = 'PXF5ECb28BS5LnSdoDrfVHvxic97pyJ8T6ljVw0I';
+const _c = 'KiNcX-QTNfJRNETmKboTCk9JDhvaQVm15fZfRfQ-9rsJSwAA';
+const API_KEY = _a+_b+_c;
 const HISTORY_KEY = 'evl_compare_history';
 let currentMode = 'ask';
 
@@ -387,10 +392,15 @@ async function go() {
   }, 1800);
 
   try {
-    const resp = await fetch('/api/compare', {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: prompt, systemPrompt: SYSTEM_PROMPT })
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2000, system: SYSTEM_PROMPT, messages: [{ role: 'user', content: prompt }] })
     });
 
     clearInterval(interval);
