@@ -145,6 +145,29 @@ body{font-size:20px!important}
 .followup-chips-wrap .qp-btn { font-size: 15px !important; padding: 12px 20px !important; }
 #followup-chips .qp-btn { font-size: 15px !important; padding: 12px 20px !important; border-color: #3a3a5e !important; color: #dde4f0 !important; }
 
+
+/* BIGGER QUICK PROMPT BUTTONS */
+.qp-btn {
+  font-size: 18px !important;
+  padding: 16px 28px !important;
+  border-radius: 40px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+  border-width: 2px !important;
+  color: #e8eeff !important;
+  border-color: #4a4a6e !important;
+  margin: 4px !important;
+}
+.qp-btn:hover {
+  color: #fff !important;
+  border-color: #2B84FE !important;
+  background: #040e1a !important;
+}
+.quick-prompts {
+  gap: 12px !important;
+  margin-bottom: 8px !important;
+}
+
 </style>
 </head>
 <body>
@@ -405,7 +428,7 @@ async function go() {
 
     clearInterval(interval);
     const data = await resp.json();
-    const result = data.content || data.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
+    const result = data.content?.[0]?.text || 'Unable to retrieve information. Please try again.'; //fixed.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
 
     document.getElementById('loading-view').style.display = 'none';
     document.getElementById('response-view').style.display = 'block';
