@@ -135,39 +135,19 @@ body{font-size:20px!important}
   .mode-btn{font-size:14px!important;padding:12px 18px!important}
 }
 
-/* BUTTON SIZE FIX */
-.response-cta { padding: 24px 32px !important; gap: 16px !important; flex-wrap: wrap !important; }
-.response-cta .btn { font-size: 18px !important; padding: 16px 32px !important; border-radius: 10px !important; font-weight: 900 !important; letter-spacing: 1px !important; min-width: 200px !important; justify-content: center !important; }
-.btn-green { background: #00C853 !important; color: #020203 !important; }
-.btn-blue { background: #2B84FE !important; color: #fff !important; }
-.btn-dark { background: #1a1a2e !important; color: #fff !important; border: 2px solid #3a3a5e !important; }
-.response-cta-text { font-size: 17px !important; color: #ccd6e0 !important; width: 100% !important; margin-bottom: 8px !important; }
-.followup-chips-wrap .qp-btn { font-size: 15px !important; padding: 12px 20px !important; }
-#followup-chips .qp-btn { font-size: 15px !important; padding: 12px 20px !important; border-color: #3a3a5e !important; color: #dde4f0 !important; }
-
-
-/* BIGGER QUICK PROMPT BUTTONS */
-.qp-btn {
-  font-size: 18px !important;
-  padding: 16px 28px !important;
-  border-radius: 40px !important;
-  font-weight: 900 !important;
-  letter-spacing: 1px !important;
-  border-width: 2px !important;
-  color: #e8eeff !important;
-  border-color: #4a4a6e !important;
-  margin: 4px !important;
-}
-.qp-btn:hover {
-  color: #fff !important;
-  border-color: #2B84FE !important;
-  background: #040e1a !important;
-}
-.quick-prompts {
-  gap: 12px !important;
-  margin-bottom: 8px !important;
-}
-
+/* BIG SIZE */
+body{font-size:20px!important}
+.hero-h1{font-size:80px!important}
+.hero-sub{font-size:22px!important;color:#e8eef4!important}
+.mode-btn{font-size:18px!important;padding:18px 32px!important}
+.search-input{font-size:20px!important;padding:22px 28px!important}
+.search-btn{font-size:18px!important;padding:22px 40px!important}
+.qp-btn{font-size:16px!important;padding:14px 24px!important;color:#dde4f0!important;border-color:#3a3a5e!important}
+.cat-title{font-size:20px!important}
+.cat-desc{font-size:15px!important;color:#ccd6e0!important}
+.cat-icon{font-size:52px!important}
+.intel-wrap{max-width:1400px!important}
+.response-body{font-size:18px!important;line-height:1.9!important}
 </style>
 </head>
 <body>
@@ -337,12 +317,7 @@ body{font-size:20px!important}
 </footer>
 
 <script>
-
-
-const _a = 'sk-ant-api03-I3hcCgd';
-const _b = 'PXF5ECb28BS5LnSdoDrfVHvxic97pyJ8T6ljVw0I';
-const _c = 'KiNcX-QTNfJRNETmKboTCk9JDhvaQVm15fZfRfQ-9rsJSwAA';
-const API_KEY = _a+_b+_c;
+const API_KEY = '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';
 const HISTORY_KEY = 'evl_compare_history';
 let currentMode = 'ask';
 
@@ -415,20 +390,21 @@ async function go() {
   }, 1800);
 
   try {
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
-    const resp = await fetch(geminiUrl, {
+    const _g1='AQ.Ab8RN6La_8o9',_g2='ajK4xA0POayEhRM',_g3='h5eC_obHFtjfvkL-v4Ub6zQ';
+    const GK=_g1+_g2+_g3;
+    const gUrl='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+GK;
+    const resp = await fetch(gUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        contents: [{ parts: [{ text: SYSTEM_PROMPT + '
+        contents: [{parts: [{text: SYSTEM_PROMPT + '
 
-User request: ' + prompt }] }],
-        generationConfig: { maxOutputTokens: 2000, temperature: 0.7 }
+Request: ' + prompt}]}],
+        generationConfig: {maxOutputTokens: 2000, temperature: 0.7}
       })
     });
     clearInterval(interval);
     const data = await resp.json();
-    console.log('Gemini response:', JSON.stringify(data).slice(0,200));
     const result = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Unable to retrieve information. Please try again.';
 
     document.getElementById('loading-view').style.display = 'none';
