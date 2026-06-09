@@ -415,21 +415,21 @@ async function go() {
   }, 1800);
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+    const resp = await fetch(geminiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2000, system: SYSTEM_PROMPT, messages: [{ role: 'user', content: prompt }] })
-    });
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: SYSTEM_PROMPT + '
 
+User request: ' + prompt }] }],
+        generationConfig: { maxOutputTokens: 2000, temperature: 0.7 }
+      })
+    });
     clearInterval(interval);
     const data = await resp.json();
-    console.log('EVL API Response:', JSON.stringify(data).slice(0,200));
-    const result = data.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
+    console.log('Gemini response:', JSON.stringify(data).slice(0,200));
+    const result = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Unable to retrieve information. Please try again.';
 
     document.getElementById('loading-view').style.display = 'none';
     document.getElementById('response-view').style.display = 'block';
