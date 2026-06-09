@@ -203,6 +203,98 @@ body { font-size: 20px !important; }
 .btn-row { gap: 12px !important; margin-top: 24px !important; padding-top: 20px !important; }
 #step-success .section-body { padding: 60px 32px !important; }
 
+
+/* ── BOLD BRIGHT OVERRIDE ── */
+
+/* Base text — everything brighter */
+body { font-size: 20px !important; color: #f0f4ff !important; }
+
+/* All muted/dim text — much brighter */
+* { color: inherit; }
+.dealer-type-desc { color: #d0d8f0 !important; font-size: 16px !important; font-weight: 600 !important; }
+.section-sub { color: #d0d8f0 !important; font-size: 16px !important; font-weight: 600 !important; }
+
+/* What each role means box — all text bright white */
+.section-body div[style*="background:var(--bg)"] * { color: #f0f4ff !important; }
+.section-body div[style*="font-size:13px"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.9 !important; }
+.section-body div[style*="font-size:14px"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.9 !important; }
+
+/* All bullet point lines */
+.section-body div[style*="line-height:1.7"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; }
+.section-body div[style*="line-height:1.6"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; }
+
+/* ID and BD role label headers */
+.section-body div[style*="color:var(--gold)"] { font-size: 16px !important; font-weight: 900 !important; letter-spacing: 2px !important; }
+.section-body div[style*="color:var(--green)"] { font-size: 16px !important; font-weight: 900 !important; letter-spacing: 2px !important; }
+
+/* Legal doc — all body text full white */
+.legal-doc { color: #e8eeff !important; }
+.legal-doc p { color: #e8eeff !important; font-size: 16px !important; line-height: 2 !important; font-weight: 500 !important; }
+.legal-doc ul li { color: #e8eeff !important; font-size: 16px !important; font-weight: 500 !important; }
+.legal-doc .legal-highlight { color: #d8e8ff !important; font-size: 16px !important; font-weight: 600 !important; }
+.legal-doc .legal-warning { color: #ffcccc !important; font-size: 16px !important; font-weight: 600 !important; }
+.legal-doc strong { color: #ffffff !important; font-weight: 900 !important; }
+
+/* BBP cards */
+.bitpo-def { color: #d8e0f8 !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.8 !important; }
+.bitpo-item { color: #e0e8ff !important; font-size: 14px !important; font-weight: 600 !important; }
+
+/* Initials text */
+.initials-text { color: #c8d4f0 !important; font-size: 14px !important; font-weight: 600 !important; }
+
+/* Form labels */
+.form-label { color: #e0e8ff !important; font-size: 14px !important; font-weight: 900 !important; letter-spacing: 2px !important; }
+
+/* Sign block */
+.sign-label { color: #e0e8ff !important; font-size: 14px !important; font-weight: 900 !important; }
+
+/* Invoice text */
+.inv-party-detail { color: #444 !important; font-size: 15px !important; font-weight: 600 !important; }
+.inv-terms { color: #444 !important; font-size: 14px !important; font-weight: 600 !important; }
+.inv-table td { color: #222 !important; font-size: 16px !important; font-weight: 600 !important; }
+
+/* Progress labels */
+.prog-label { color: #c0c8e8 !important; font-size: 13px !important; font-weight: 700 !important; }
+.prog-label.active { color: var(--gold) !important; }
+.prog-label.done { color: var(--green) !important; }
+
+/* Nav links */
+.ws-nav-link { color: #f0d870 !important; font-size: 15px !important; font-weight: 900 !important; }
+
+/* Dealer type button descriptions */
+.dealer-type-btn { color: #c0c8e8 !important; }
+.dealer-type-btn:hover { color: #ffffff !important; }
+.dealer-type-btn.active.id .dealer-type-desc { color: #ffe87a !important; font-weight: 700 !important; }
+.dealer-type-btn.active.bd .dealer-type-desc { color: #80ff80 !important; font-weight: 700 !important; }
+
+/* Process steps */
+.section-body div[style*="font-family:var(--body)"] { color: #e0e8ff !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.8 !important; }
+
+/* Section body small labels */
+.section-body div[style*="letter-spacing:2px"] { color: #e0e8ff !important; }
+.section-body div[style*="letter-spacing:1px"] { color: #e0e8ff !important; }
+
+/* Contact protocol box */
+.section-body div[style*="font-family:var(--body);font-size:13px"] { color: #d8e4ff !important; font-size: 15px !important; font-weight: 600 !important; }
+
+/* What never happens box */
+.section-body div[style*="grid-template-columns:1fr 1fr"] div { color: #ffcccc !important; font-size: 15px !important; font-weight: 700 !important; }
+
+/* Success screen */
+#step-success .section-body div[style*="font-size:14px"] { color: #e0eeff !important; font-size: 16px !important; font-weight: 600 !important; line-height: 2 !important; }
+
+/* Checkmark/agreement text */
+.section-body label span { color: #d8e4ff !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.8 !important; }
+
+/* E-SIGN notice */
+.section-body div[style*="font-size:12px"] { color: #c0cce8 !important; font-size: 14px !important; }
+
+/* Make all muted vars brighter */
+:root {
+  --muted: #b8c4e0 !important;
+  --dim: #dce4f8 !important;
+}
+
 </style>
 </head>
 <body>
