@@ -428,7 +428,8 @@ async function go() {
 
     clearInterval(interval);
     const data = await resp.json();
-    const result = data.content?.[0]?.text || 'Unable to retrieve information. Please try again.'; //fixed.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
+    console.log('EVL API Response:', JSON.stringify(data).slice(0,200));
+    const result = data.content?.[0]?.text || 'Unable to retrieve information. Please try again.';
 
     document.getElementById('loading-view').style.display = 'none';
     document.getElementById('response-view').style.display = 'block';
