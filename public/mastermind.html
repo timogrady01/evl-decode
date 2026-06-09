@@ -195,6 +195,76 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   .evl-header{flex-wrap:wrap}
   .hdr-stat{display:none}
 }
+
+/* ── DEALERSOCKET-STYLE FEATURES ── */
+.ds-opportunity-header{background:var(--s2);border:2px solid var(--green);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ds-opp-vehicle{font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px}
+.ds-opp-meta{display:flex;gap:16px;flex-wrap:wrap}
+.ds-opp-stat{text-align:center}
+.ds-opp-stat-val{font-size:16px;font-weight:900;display:block;line-height:1}
+.ds-opp-stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.ds-action-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.ds-action-btn{padding:9px 16px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.ds-btn-blue{background:#2B84FE;color:#fff}.ds-btn-blue:hover{background:#1a6fd4}
+.ds-btn-green{background:#00C853;color:#020203}.ds-btn-green:hover{background:#00a844}
+.ds-btn-gold{background:#FFD700;color:#020203}.ds-btn-gold:hover{background:#e6c200}
+.ds-btn-red{background:#FF3333;color:#fff}.ds-btn-red:hover{background:#cc0000}
+.ds-btn-dark{background:#1a1a2e;color:#fff;border:1px solid #2a2a4e}.ds-btn-dark:hover{border-color:var(--blue)}
+.ds-btn-purple{background:#9B59B6;color:#fff}.ds-btn-purple:hover{background:#7d3c98}
+
+/* OPPORTUNITY TIMELINE */
+.opp-timeline{background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:20px;margin-bottom:16px}
+.opp-tl-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.opp-tl-stages{display:flex;align-items:center;overflow-x:auto;gap:0;padding-bottom:8px}
+.opp-tl-stage{display:flex;flex-direction:column;align-items:center;min-width:90px;position:relative}
+.opp-tl-stage::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:2px;background:#1a1a2e;z-index:0}
+.opp-tl-stage:last-child::after{display:none}
+.opp-tl-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;position:relative;z-index:1;margin-bottom:6px;border:2px solid #2a2a4e;background:var(--bg);font-weight:900}
+.opp-tl-dot.done{background:#0d1a0d;border-color:var(--green);color:var(--green)}
+.opp-tl-dot.current{background:#040e1a;border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(255,215,0,0.4);animation:tl-pulse 1.5s infinite}
+.opp-tl-dot.pending{background:var(--bg);border-color:#2a2a4e;color:var(--muted)}
+@keyframes tl-pulse{0%,100%{box-shadow:0 0 12px rgba(255,215,0,0.4)}50%{box-shadow:0 0 24px rgba(255,215,0,0.8)}}
+.opp-tl-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-align:center;color:var(--muted);line-height:1.3}
+.opp-tl-date{font-size:9px;color:#334455;font-family:var(--body);margin-top:2px;text-align:center}
+.opp-tl-stage.done .opp-tl-label,.opp-tl-stage.current .opp-tl-label{color:var(--white)}
+
+/* OPEN TASKS */
+.tasks-panel{background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:16px;margin-bottom:16px}
+.tasks-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.task-item{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px;transition:border-color .2s}
+.task-item:hover{border-color:var(--blue)}
+.task-checkbox{width:18px;height:18px;border-radius:4px;border:2px solid #2a2a4e;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.task-checkbox.done{background:var(--green);border-color:var(--green);color:#020203}
+.task-content{flex:1}
+.task-title-text{font-size:13px;font-weight:700;color:var(--white);margin-bottom:2px}
+.task-meta{font-size:11px;color:var(--muted);font-family:var(--body)}
+.task-due{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.task-due.overdue{background:#1a0000;border:1px solid var(--red);color:var(--red)}
+.task-due.today{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.task-due.upcoming{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+
+/* WHY NOT IN MARKET MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--s1);border:2px solid var(--gold);border-radius:14px;overflow:hidden;width:100%;max-width:520px;margin:20px}
+.modal-hdr{background:var(--s2);padding:14px 20px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:15px;font-weight:900;color:var(--white);letter-spacing:1px}
+.modal-close-btn{background:var(--red);color:#fff;border:none;padding:5px 12px;border-radius:4px;font-size:12px;font-weight:900;cursor:pointer;font-family:var(--font)}
+.modal-body{padding:20px}
+.modal-label{font-size:11px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.modal-select{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;margin-bottom:14px}
+.modal-select option{background:#0a0a1a}
+.modal-textarea{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:8px;font-size:14px;font-family:var(--body);outline:none;resize:vertical;min-height:80px;margin-bottom:14px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;padding:14px 20px;border-top:1px solid #1a1a2e;background:var(--s2)}
+
+/* LOG CALL MODAL */
+.call-result-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.call-result-btn{padding:10px;border-radius:8px;font-size:12px;font-weight:900;cursor:pointer;border:2px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s;text-align:center}
+.call-result-btn.selected,.call-result-btn:hover{border-color:var(--blue);color:var(--white);background:#040e1a}
+.call-result-btn.connected.selected{border-color:var(--green);background:#0d1a0d;color:var(--green)}
+.call-result-btn.voicemail.selected{border-color:var(--gold);background:#1a1400;color:var(--gold)}
+.call-result-btn.no-answer.selected{border-color:var(--red);background:#1a0000;color:var(--red)}
+
 </style>
 <style id="evl-admin-nav-css">
 /* ── EVL ADMIN NAV ── */
@@ -972,6 +1042,186 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.toggle('open');}}
 (function(){{var path=window.location.pathname;document.querySelectorAll('.evl-admin-link').forEach(function(a){{if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){{a.style.color='#00C853';a.style.borderBottom='2px solid #00C853';}}}});}} )();
 </script>
+
+<!-- WHY NOT IN MARKET MODAL -->
+<div class="modal-overlay" id="modal-not-in-market">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div class="modal-title">❓ WHY IS CUSTOMER NOT IN MARKET?</div>
+      <button class="modal-close-btn" onclick="closeModal('modal-not-in-market')">✕ CLOSE</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-label">Primary Reason</div>
+      <select class="modal-select" id="nim-reason">
+        <option value="">— Select Primary Reason —</option>
+        <option>No Documents</option>
+        <option>Negative Equity</option>
+        <option>Vehicle Unavailable</option>
+        <option>Waiting on Co-Buyer</option>
+        <option>Buying Car By Force</option>
+        <option>Bought Elsewhere</option>
+        <option>Bought Auction / Private Party</option>
+        <option>Lost — No Contact</option>
+        <option>Budget Constraints</option>
+        <option>Needs Time — Not Ready</option>
+        <option>Credit Issues</option>
+        <option>Insurance Issues</option>
+        <option>Family / Life Event</option>
+        <option>Waiting on Trade Payoff</option>
+        <option>Just Browsing</option>
+        <option>Other</option>
+      </select>
+      <div class="modal-label">Additional Details</div>
+      <select class="modal-select" id="nim-detail">
+        <option value="">— Select Details —</option>
+        <option>Will return in 30 days</option>
+        <option>Will return in 60 days</option>
+        <option>Will return in 90 days</option>
+        <option>Needs to sell current vehicle first</option>
+        <option>Waiting on tax return / bonus</option>
+        <option>Needs co-signer</option>
+        <option>Dispute on credit report</option>
+        <option>Do not contact</option>
+        <option>Refer to another EVL client</option>
+      </select>
+      <div class="modal-label">Notes</div>
+      <textarea class="modal-textarea" id="nim-notes" placeholder="Additional context..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="ds-action-btn ds-btn-dark" onclick="closeModal('modal-not-in-market')">CANCEL</button>
+      <button class="ds-action-btn ds-btn-gold" onclick="saveNotInMarket()">💾 SAVE DISPOSITION</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOG A CALL MODAL -->
+<div class="modal-overlay" id="modal-log-call">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr">
+      <div class="modal-title">📞 LOG A PHONE CALL</div>
+      <button class="modal-close-btn" onclick="closeModal('modal-log-call')">✕ CLOSE</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-label">Call Direction</div>
+      <div class="call-result-row" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
+        <button class="call-result-btn connected" id="call-dir-out" onclick="selectCallDir('outbound')" style="border-color:var(--blue);color:var(--blue);background:#040e1a">📤 OUTBOUND</button>
+        <button class="call-result-btn" id="call-dir-in" onclick="selectCallDir('inbound')">📥 INBOUND</button>
+      </div>
+      <div class="modal-label">Call Result</div>
+      <div class="call-result-row">
+        <button class="call-result-btn connected" id="cr-connected" onclick="selectCallResult('connected')">✅ CONNECTED</button>
+        <button class="call-result-btn voicemail" id="cr-voicemail" onclick="selectCallResult('voicemail')">📬 LEFT VOICEMAIL</button>
+        <button class="call-result-btn no-answer" id="cr-noanswer" onclick="selectCallResult('no-answer')">❌ NO ANSWER</button>
+        <button class="call-result-btn" id="cr-callback" onclick="selectCallResult('callback')">🔄 REQUESTED CALLBACK</button>
+      </div>
+      <div class="modal-label">Duration</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <select class="modal-select" id="call-min" style="margin-bottom:0"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select>
+        <div style="display:flex;align-items:center;font-size:13px;color:var(--muted)">minutes</div>
+      </div>
+      <div class="modal-label">Call Notes</div>
+      <textarea class="modal-textarea" id="call-notes" placeholder="What was discussed? Next steps? Customer sentiment?"></textarea>
+      <div class="modal-label">Next Action</div>
+      <select class="modal-select" id="call-next-action">
+        <option value="">— No follow-up needed —</option>
+        <option>Follow-up call in 24 hours</option>
+        <option>Follow-up call in 3 days</option>
+        <option>Follow-up call in 1 week</option>
+        <option>Send vehicle options via email</option>
+        <option>Schedule appointment</option>
+        <option>Send service agreement</option>
+        <option>Submit to wholesale pipeline</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="ds-action-btn ds-btn-dark" onclick="closeModal('modal-log-call')">CANCEL</button>
+      <button class="ds-action-btn ds-btn-green" onclick="saveCallLog()">📞 SAVE CALL LOG</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TASK MODAL -->
+<div class="modal-overlay" id="modal-add-task">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr">
+      <div class="modal-title">➕ ADD TASK</div>
+      <button class="modal-close-btn" onclick="closeModal('modal-add-task')">✕ CLOSE</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-label">Task Description</div>
+      <input class="modal-select" id="task-desc" placeholder="e.g. Follow up on F-150 quote" style="padding:10px 14px;font-family:var(--body)"/>
+      <div class="modal-label">Due Date</div>
+      <input type="date" class="modal-select" id="task-due" style="padding:10px 14px;color-scheme:dark"/>
+      <div class="modal-label">Priority</div>
+      <select class="modal-select" id="task-priority">
+        <option value="urgent">🔴 URGENT</option>
+        <option value="normal" selected>🟡 NORMAL</option>
+        <option value="low">🟢 LOW</option>
+      </select>
+      <div class="modal-label">Linked Customer (optional)</div>
+      <input class="modal-select" id="task-customer" placeholder="Customer name or EVL-ID" style="padding:10px 14px;font-family:var(--body)"/>
+    </div>
+    <div class="modal-footer">
+      <button class="ds-action-btn ds-btn-dark" onclick="closeModal('modal-add-task')">CANCEL</button>
+      <button class="ds-action-btn ds-btn-blue" onclick="saveTask()">✅ ADD TASK</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- DS OPPORTUNITY PANEL — injected into customer detail view -->
+<div id="ds-opportunity-panel" style="display:none;margin-top:0">
+
+  <!-- ACTION BUTTONS BAR -->
+  <div class="ds-action-btns" style="margin-bottom:20px;padding:16px 20px;background:var(--s2);border-bottom:2px solid #1a1a2e">
+    <button class="ds-action-btn ds-btn-blue" onclick="openModal('modal-log-call')">📞 LOG CALL</button>
+    <button class="ds-action-btn ds-btn-green" onclick="openModal('modal-add-task')">✅ ADD TASK</button>
+    <button class="ds-action-btn ds-btn-gold" onclick="openModal('modal-not-in-market')">❓ NOT IN MARKET</button>
+    <button class="ds-action-btn ds-btn-purple" onclick="alert('Print Forms — coming soon')">🖨️ PRINT FORMS</button>
+    <button class="ds-action-btn ds-btn-dark" onclick="alert('New Credit App — coming soon')">💳 CREDIT APP</button>
+    <button class="ds-action-btn ds-btn-dark" onclick="alert('New Deal — coming soon')">📋 NEW DEAL</button>
+  </div>
+
+  <!-- OPPORTUNITY TIMELINE -->
+  <div class="opp-timeline" style="margin:16px 20px">
+    <div class="opp-tl-title">
+      <span>📊 OPPORTUNITY TIMELINE</span>
+      <select onchange="renderOpportunityTimeline(this.value)" style="background:var(--bg);border:1px solid #2a2a4e;color:var(--white);padding:4px 10px;border-radius:6px;font-size:11px;font-family:var(--font)">
+        <option value="inquiry">Inquiry</option>
+        <option value="qualified">Qualified</option>
+        <option value="searching" selected>Searching</option>
+        <option value="found">Vehicle Found</option>
+        <option value="negotiating">Negotiating</option>
+        <option value="contracting">Contracting</option>
+        <option value="closed">Closed</option>
+      </select>
+    </div>
+    <div class="opp-tl-stages" id="opp-timeline-stages"></div>
+  </div>
+
+  <!-- OPEN TASKS -->
+  <div class="tasks-panel" style="margin:16px 20px">
+    <div class="tasks-title">
+      <span>✅ OPEN TASKS</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span id="tasks-count" style="font-size:11px;color:var(--green)">0 OPEN</span>
+        <button onclick="openModal('modal-add-task')" style="background:var(--blue);color:#fff;border:none;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:900;cursor:pointer;font-family:var(--font)">+ ADD</button>
+      </div>
+    </div>
+    <div id="tasks-list"></div>
+  </div>
+
+  <!-- CALL LOG -->
+  <div style="margin:16px 20px;background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:16px">
+    <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+      <span>📞 CALL HISTORY</span>
+      <button onclick="openModal('modal-log-call')" style="background:var(--green);color:#020203;border:none;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:900;cursor:pointer;font-family:var(--font)">+ LOG CALL</button>
+    </div>
+    <div id="call-log-ds-list"></div>
+  </div>
+
+</div>
+
 </body>
 </html>
 
@@ -2447,4 +2697,191 @@ window.renderCustomersV2 = function(){
 })();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMergeModal();closeDealDesk();}});
+
+// ── DEALERSOCKET-STYLE FEATURE JS ──
+const TASKS_KEY = 'evl_tasks';
+const NIM_KEY = 'evl_nim_log';
+const CALLS_KEY = 'evl_call_log_ds';
+let callDirection = 'outbound';
+let callResult = 'connected';
+
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+function selectCallDir(dir){
+  callDirection = dir;
+  document.getElementById('call-dir-out').style.borderColor = dir==='outbound'?'var(--blue)':'';
+  document.getElementById('call-dir-out').style.color = dir==='outbound'?'var(--blue)':'';
+  document.getElementById('call-dir-out').style.background = dir==='outbound'?'#040e1a':'';
+  document.getElementById('call-dir-in').style.borderColor = dir==='inbound'?'var(--blue)':'';
+  document.getElementById('call-dir-in').style.color = dir==='inbound'?'var(--blue)':'';
+  document.getElementById('call-dir-in').style.background = dir==='inbound'?'#040e1a':'';
+}
+
+function selectCallResult(r){
+  callResult = r;
+  ['connected','voicemail','noanswer','callback'].forEach(id=>{
+    const el = document.getElementById('cr-'+id);
+    if(el){ el.classList.remove('selected'); el.style.borderColor=''; el.style.background=''; }
+  });
+  const el = document.getElementById('cr-'+r.replace('-',''));
+  if(el) el.classList.add('selected');
+}
+
+function saveCallLog(){
+  const notes = document.getElementById('call-notes').value.trim();
+  const mins = document.getElementById('call-min').value;
+  const next = document.getElementById('call-next-action').value;
+  const entry = {
+    type: callDirection==='outbound'?'📤 Outbound Call':'📥 Inbound Call',
+    result: callResult, duration: mins+'m', notes, nextAction: next,
+    time: new Date().toLocaleString('en-US',{hour:'2-digit',minute:'2-digit',month:'short',day:'numeric'})
+  };
+  const log = JSON.parse(localStorage.getItem(CALLS_KEY)||'[]');
+  log.unshift(entry);
+  localStorage.setItem(CALLS_KEY, JSON.stringify(log.slice(0,50)));
+  closeModal('modal-log-call');
+  document.getElementById('call-notes').value='';
+  renderCallLogDS();
+  showToast('📞 Call logged successfully!');
+  if(next) showToast('📅 Follow-up scheduled: '+next);
+}
+
+function saveNotInMarket(){
+  const reason = document.getElementById('nim-reason').value;
+  const detail = document.getElementById('nim-detail').value;
+  const notes = document.getElementById('nim-notes').value;
+  if(!reason){ alert('Please select a reason.'); return; }
+  const log = JSON.parse(localStorage.getItem(NIM_KEY)||'[]');
+  log.unshift({ reason, detail, notes, time: new Date().toLocaleString() });
+  localStorage.setItem(NIM_KEY, JSON.stringify(log.slice(0,20)));
+  closeModal('modal-not-in-market');
+  showToast('💾 Disposition saved: '+reason);
+}
+
+function saveTask(){
+  const desc = document.getElementById('task-desc').value.trim();
+  const due = document.getElementById('task-due').value;
+  const priority = document.getElementById('task-priority').value;
+  const customer = document.getElementById('task-customer').value.trim();
+  if(!desc){ alert('Please enter a task description.'); return; }
+  const tasks = JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  tasks.unshift({ id:'T'+Date.now(), desc, due, priority, customer, done: false, created: new Date().toISOString() });
+  localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+  closeModal('modal-add-task');
+  document.getElementById('task-desc').value='';
+  renderTasks();
+  showToast('✅ Task added!');
+}
+
+function toggleTask(id){
+  const tasks = JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  const t = tasks.find(t=>t.id===id);
+  if(t) t.done = !t.done;
+  localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+  renderTasks();
+}
+
+function deleteTask(id){
+  const tasks = JSON.parse(localStorage.getItem(TASKS_KEY)||'[]').filter(t=>t.id!==id);
+  localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+  renderTasks();
+}
+
+function renderTasks(){
+  const el = document.getElementById('tasks-list');
+  if(!el) return;
+  const tasks = JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  const count = document.getElementById('tasks-count');
+  const open = tasks.filter(t=>!t.done).length;
+  if(count) count.textContent = open + ' OPEN';
+  
+  if(!tasks.length){
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No tasks. Click + to add one.</div>';
+    return;
+  }
+  
+  const today = new Date().toISOString().split('T')[0];
+  el.innerHTML = tasks.map(t=>{
+    const dueCls = !t.due?'upcoming':t.due<today?'overdue':t.due===today?'today':'upcoming';
+    const dueLabel = !t.due?'No due date':t.due<today?'OVERDUE':t.due===today?'DUE TODAY':t.due;
+    const priColor = t.priority==='urgent'?'var(--red)':t.priority==='normal'?'var(--gold)':'var(--green)';
+    return \`<div class="task-item" style="\${t.done?'opacity:0.5':''}">
+      <div class="task-checkbox \${t.done?'done':''}" onclick="toggleTask('\${t.id}')">\${t.done?'✓':''}</div>
+      <div class="task-content">
+        <div class="task-title-text" style="\${t.done?'text-decoration:line-through':''}">\${t.desc}</div>
+        <div class="task-meta">\${t.customer?'👤 '+t.customer+' · ':''}<span style="color:\${priColor}">\${t.priority.toUpperCase()}</span></div>
+      </div>
+      <span class="task-due \${dueCls}">\${dueLabel}</span>
+      <button onclick="deleteTask('\${t.id}')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 0 0 8px">✕</button>
+    </div>\`;
+  }).join('');
+}
+
+function renderCallLogDS(){
+  const el = document.getElementById('call-log-ds-list');
+  if(!el) return;
+  const log = JSON.parse(localStorage.getItem(CALLS_KEY)||'[]');
+  if(!log.length){
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No calls logged yet.</div>';
+    return;
+  }
+  const resultColors = { connected:'var(--green)', voicemail:'var(--gold)', 'no-answer':'var(--red)', callback:'var(--blue)' };
+  el.innerHTML = log.map(c=>\`
+    <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;margin-bottom:8px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:13px;font-weight:900;color:var(--white)">\${c.type}</span>
+        <span style="font-size:11px;color:var(--muted)">\${c.time}</span>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+        <span style="font-size:11px;font-weight:900;padding:2px 8px;border-radius:10px;background:var(--s1);border:1px solid \${resultColors[c.result]||'#2a2a4e'};color:\${resultColors[c.result]||'var(--muted)'}">\${c.result.toUpperCase()}</span>
+        <span style="font-size:11px;color:var(--muted);font-family:var(--body)">⏱ \${c.duration}</span>
+        \${c.nextAction?\`<span style="font-size:11px;color:var(--blue);font-family:var(--body)">📅 \${c.nextAction}</span>\`:''}
+      </div>
+      \${c.notes?\`<div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5">\${c.notes}</div>\`:''}
+    </div>\`).join('');
+}
+
+function renderOpportunityTimeline(stage){
+  const el = document.getElementById('opp-timeline-stages');
+  if(!el) return;
+  const stages = [
+    {key:'inquiry',label:'INQUIRY',icon:'📋'},
+    {key:'qualified',label:'QUALIFIED',icon:'✅'},
+    {key:'searching',label:'SEARCHING',icon:'🔍'},
+    {key:'found',label:'FOUND',icon:'🚗'},
+    {key:'negotiating',label:'NEGOTIATING',icon:'⚡'},
+    {key:'contracting',label:'CONTRACTING',icon:'📝'},
+    {key:'closed',label:'CLOSED',icon:'🏁'},
+  ];
+  const currentIdx = stages.findIndex(s=>s.key===stage)||2;
+  el.innerHTML = stages.map((s,i)=>\`
+    <div class="opp-tl-stage \${i<currentIdx?'done':i===currentIdx?'current':'pending'}">
+      <div class="opp-tl-dot \${i<currentIdx?'done':i===currentIdx?'current':'pending'}">\${i<currentIdx?'✓':s.icon}</div>
+      <div class="opp-tl-label">\${s.label}</div>
+    </div>\`).join('');
+}
+
+// Show toast helper (reuse existing or define)
+function showToast(msg){
+  let t = document.getElementById('ds-toast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'ds-toast';
+    t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#0d1a0d;border:2px solid var(--green);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:900;color:var(--green);letter-spacing:1px;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s;font-family:var(--font)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.transform = 'translateY(0)';
+  t.style.opacity = '1';
+  setTimeout(()=>{ t.style.transform='translateY(100px)'; t.style.opacity='0'; }, 3000);
+}
+
+// Init DS features
+document.addEventListener('DOMContentLoaded', function(){
+  renderTasks();
+  renderCallLogDS();
+  renderOpportunityTimeline('searching');
+});
+
 </script>
