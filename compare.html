@@ -301,7 +301,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 
 <script>
 // ── GEMINI CONFIG ──
-var gk = ['AQ.Ab8RN6KhVe7L','xHHq5bn7btHvmMd','Ic5V_7rbOlupKieLM684X6g'];
+var gk = ['gsk_Dsnww2YtzEBo1sZ8','7JaaWGdyb3FYxjHHYREG','DQNph4hXVD6yLGDX'];
 var GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + gk.join('');
 
 var SYSTEM = 'You are EVL Vehicle Intelligence, the AI research engine for Express Vehicle Locators. Provide detailed, objective, factual vehicle comparisons. Use markdown: ## for sections, ### for subsections, **bold** for key specs. For comparisons create detailed tables. End with an EVL Recommendation section. Never recommend specific dealerships. Be the most comprehensive unbiased vehicle advisor the customer has ever used.';
@@ -395,16 +395,27 @@ function go() {
     generationConfig: { maxOutputTokens: 2000, temperature: 0.7 }
   });
 
-  fetch(GEMINI_URL, {
+  fetch(GROQ_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: body
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + gk.join('')
+    },
+    body: JSON.stringify({
+      model: 'llama3-70b-8192',
+      messages: [
+        {role: 'system', content: SYSTEM},
+        {role: 'user', content: prompt}
+      ],
+      max_tokens: 2000,
+      temperature: 0.7
+    })
   })
   .then(function(resp) { return resp.json(); })
   .then(function(data) {
     clearInterval(msgTimer);
-    console.log('Gemini OK:', JSON.stringify(data).slice(0, 100));
-    var text = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) ? data.candidates[0].content.parts[0].text : '';
+    console.log('Groq OK:', JSON.stringify(data).slice(0,100));
+    var text = (data.choices && data.choices[0]) ? data.choices[0].message.content : '';
     if (!text) text = 'Unable to retrieve information. Please try again.';
     showResult(prompt, text);
   })
