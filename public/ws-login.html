@@ -112,7 +112,7 @@ body { display:block !important; align-items:unset !important; justify-content:u
 <script>
 function doLogin(){
   var pw = document.getElementById('pwInput').value;
-  var codes = ['WSEVL2026','EVLWS2026','DEALER2026','WSADMIN'];
+  var codes = ['1027','WSEVL2026','EVLWS2026','DEALER2026','WSADMIN'];
   if(codes.indexOf(pw.toUpperCase()) > -1){
     window.location.href = '/ws-dashboard.html';
   } else {
