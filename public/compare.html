@@ -395,34 +395,25 @@ function go() {
     generationConfig: { maxOutputTokens: 2000, temperature: 0.7 }
   });
 
-  fetch(GROQ_URL, {
+  fetch('/api/compare', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + gk.join('')
-    },
-    body: JSON.stringify({
-      model: 'llama3-70b-8192',
-      messages: [
-        {role: 'system', content: SYSTEM},
-        {role: 'user', content: prompt}
-      ],
-      max_tokens: 2000,
-      temperature: 0.7
-    })
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({prompt: prompt, system: SYSTEM})
   })
-  .then(function(resp) { return resp.json(); })
+  .then(function(resp) {
+    return resp.json();
+  })
   .then(function(data) {
     clearInterval(msgTimer);
-    console.log('Groq OK:', JSON.stringify(data).slice(0,100));
-    var text = (data.choices && data.choices[0]) ? data.choices[0].message.content : '';
-    if (!text) text = 'Unable to retrieve information. Please try again.';
+    console.log('Proxy response:', JSON.stringify(data).slice(0,200));
+    var text = data.content || '';
+    if (!text) { text = 'Unable to retrieve information. Please try again.'; }
     showResult(prompt, text);
   })
   .catch(function(err) {
     clearInterval(msgTimer);
-    console.error('Gemini error:', err);
-    showResult(prompt, 'Connection error. Please try again in a moment.');
+    console.error('Error:', err.message);
+    showResult(prompt, 'Connection error: ' + err.message);
   });
 }
 
