@@ -1,57 +1,21 @@
-export const config = { runtime: 'edge' };
-
-export default async function handler(req) {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      }
-    });
-  }
-
-  if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') { res.status(200).end(); return; }
+  if (req.method !== 'POST') { res.status(405).json({error:'no'}); return; }
   try {
-    const { prompt, systemPrompt } = await req.json();
-    const apiKey = process.env.ANTHROPIC_API_KEY || '';
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const { prompt, system } = req.body;
+    const key = process.env.ANTHROPIC_API_KEY || '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';
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-        'x-api-key': apiKey
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body: JSON.stringify({model:'llama3-70b-8192',messages:[{role:'system',content:system||'You are EVL Vehicle Intelligence. Expert vehicle advisor. Use ## headers and tables.'},{role:'user',content:prompt}],max_tokens:2000})
     });
-
-    const data = await response.json();
-    const content = data.content?.[0]?.text || '';
-
-    return new Response(JSON.stringify({ content }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
-    });
-  } catch (error) {
-    return new Response(JSON.stringify({ content: '', error: error.message }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    const d = await r.json();
+    const content = d.choices?.[0]?.message?.content || '';
+    res.status(200).json({content});
+  } catch(e) {
+    res.status(500).json({content:'',error:e.message});
   }
 }
