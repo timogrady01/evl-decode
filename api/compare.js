@@ -9,12 +9,17 @@ export default async function handler(req) {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST',
       headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','x-api-key':k},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,system:b.system||'You are EVL Vehicle Intelligence. Expert unbiased vehicle advisor. Use ## headers and markdown tables.',messages:[{role:'user',content:b.prompt||''}]})
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:2000,
+        messages:[{role:'user',content:(b.system||'You are EVL Vehicle Intelligence expert.')+' '+( b.prompt||'')}]
+      })
     });
-    const d = await r.json();
-    const content = d.content?.[0]?.text || '';
+    const raw = await r.text();
+    const d = JSON.parse(raw);
+    const content = d.content?.[0]?.text || d.error?.message || raw.slice(0,200);
     return new Response(JSON.stringify({content}), {status:200,headers:h});
   } catch(e) {
-    return new Response(JSON.stringify({content:'',error:e.message}), {status:200,headers:h});
+    return new Response(JSON.stringify({content:'Error: '+e.message}), {status:200,headers:h});
   }
 }
