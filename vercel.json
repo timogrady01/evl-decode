@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/trade-in-exchange",
+      "destination": "trade-in-exchange.html"
+    },
+    {
+      "source": "/trade-in-exchange.html",
+      "destination": "trade-in-exchange.html"
+    },
+    {
       "source": "/ws-intelligence",
       "destination": "ws-intelligence.html"
     },
