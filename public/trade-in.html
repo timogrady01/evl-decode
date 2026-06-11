@@ -437,8 +437,78 @@ footer b { color: var(--blue); }
 
 <div class="wrap">
 
+<!-- ══ EVL ELIGIBILITY GATE ══ -->
+<div id="eligibilityGate" style="margin-bottom:24px;">
+
+  <!-- STEP A — LIEN CHECK -->
+  <div id="gateA" style="background:#0d1117;border:2px solid #2B84FE;border-radius:14px;padding:28px;margin-bottom:16px;">
+    <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ STEP 1 OF 2 — TITLE STATUS</div>
+    <div style="font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Is your vehicle currently financed?</div>
+    <div style="font-size:16px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;margin-bottom:20px;line-height:1.6;">This determines which selling paths are available to you. There is no wrong answer — EVL has a solution for every situation.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <button onclick="setLienStatus(true)" id="btnLienYes"
+        style="background:var(--s1);border:2px solid var(--border);color:#ffffff;padding:20px;border-radius:10px;font-size:17px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:left;transition:all .2s;">
+        <div style="font-size:28px;margin-bottom:8px;">🏦</div>
+        <div style="color:#ffffff;font-size:18px;margin-bottom:4px;">YES — I have a loan</div>
+        <div style="font-size:13px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;">Bank or lender holds my title</div>
+      </button>
+      <button onclick="setLienStatus(false)" id="btnLienNo"
+        style="background:var(--s1);border:2px solid var(--border);color:#ffffff;padding:20px;border-radius:10px;font-size:17px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:left;transition:all .2s;">
+        <div style="font-size:28px;margin-bottom:8px;">✅</div>
+        <div style="color:#ffffff;font-size:18px;margin-bottom:4px;">NO — Paid off</div>
+        <div style="font-size:13px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;">I have the title in my possession</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP B — STATE CHECK -->
+  <div id="gateB" style="display:none;background:#0d1117;border:2px solid #2B84FE;border-radius:14px;padding:28px;margin-bottom:16px;">
+    <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ STEP 2 OF 2 — YOUR STATE</div>
+    <div style="font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Where is your vehicle registered?</div>
+    <div style="font-size:16px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;margin-bottom:20px;line-height:1.6;">Title processing timelines vary significantly by state. We want to be upfront about what to expect in your state.</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <select id="stateSelect" onchange="setStateTier()"
+        style="flex:1;min-width:200px;background:#090E17;border:2px solid #1a2a3a;color:#ffffff;padding:14px 18px;border-radius:8px;font-size:18px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;">
+        <option value="">— Select Your State —</option>
+        <option value="TX,G">Texas</option>
+        <option value="GA,G">Georgia</option>
+        <option value="TN,G">Tennessee</option>
+        <option value="CO,G">Colorado</option>
+        <option value="AZ,G">Arizona</option>
+        <option value="WA,G">Washington</option>
+        <option value="MN,G">Minnesota</option>
+        <option value="NC,G">North Carolina</option>
+        <option value="MI,G">Michigan</option>
+        <option value="OH,G">Ohio</option>
+        <option value="FL,Y">Florida</option>
+        <option value="IL,Y">Illinois</option>
+        <option value="PA,Y">Pennsylvania</option>
+        <option value="MD,Y">Maryland</option>
+        <option value="VA,Y">Virginia</option>
+        <option value="MO,Y">Missouri</option>
+        <option value="IN,Y">Indiana</option>
+        <option value="SC,Y">South Carolina</option>
+        <option value="CA,R">California</option>
+        <option value="NY,R">New York</option>
+        <option value="NJ,R">New Jersey</option>
+        <option value="CT,R">Connecticut</option>
+        <option value="MA,R">Massachusetts</option>
+      </select>
+    </div>
+
+    <!-- STATE TIER RESULT -->
+    <div id="stateTierResult" style="display:none;margin-top:16px;"></div>
+  </div>
+
+  <!-- GATE RESULT — PATH RECOMMENDATION -->
+  <div id="gateResult" style="display:none;border-radius:14px;padding:24px;margin-bottom:16px;">
+  </div>
+
+</div>
+<!-- ══ END ELIGIBILITY GATE ══ -->
+
 <!-- ── DRAWER 1 ── -->
-<div class="drawer active" id="d1">
+<div class="drawer active" id="d1" style="display:none;">
   <div class="drawer-hdr" onclick="document.getElementById('d1').classList.contains('done')&&reopenStep(1)">
     <div class="drawer-hdr-left">
       <div class="step-num" id="sn1">1</div>
@@ -1008,6 +1078,239 @@ function toggleSub(hdr){
   arrow.style.transform=open?'':'rotate(180deg)';
 }
 function togglePhotoDrawer(){var body=document.getElementById('photo-body'),arrow=document.getElementById('photo-arrow');var open=body.style.display==='block';body.style.display=open?'none':'block';arrow.textContent=open?'▼ TAP TO ADD PHOTOS':'▲ CLOSE PHOTOS';}
+
+// ══ ELIGIBILITY GATE ══
+var evlHasLien = null;
+var evlState = null;
+var evlStateTier = null;
+
+var STATE_ISSUES = {
+  'CA': {
+    tier:'R', label:'🔴 CALIFORNIA — COMPLEX TITLE STATE',
+    color:'rgba(255,68,68,.08)', border:'rgba(255,68,68,.4)',
+    timeline:'15-60 days',
+    issues:[
+      '⚠️ Physical paper title required — most vehicles',
+      '⚠️ In-person DMV visit may be required if lender not in ELT program',
+      '⚠️ Smog certificate required — adds 1-2 weeks',
+      '⚠️ VIN verification required for out-of-state vehicles',
+      '⚠️ Title transfer must be reported within 10 days of sale',
+      '⚠️ REG 256 form required — seller AND buyer signatures',
+      '⚠️ Electronic release available ONLY if lender participates in CA ELT program',
+      '⚠️ New title arrives by mail in 15-60 days after submission'
+    ]
+  },
+  'NY': {
+    tier:'R', label:'🔴 NEW YORK — HIGH DELAY RISK',
+    color:'rgba(255,68,68,.08)', border:'rgba(255,68,68,.4)',
+    timeline:'3-6 weeks',
+    issues:[
+      '⚠️ Lien release delays widely reported — despite 3-day legal requirement',
+      '⚠️ MV-50 Retail Certificate of Sale required from dealer',
+      '⚠️ Cross-state deals (NJ dealer / NY buyer) create registration limbo',
+      '⚠️ Paper title standard — electronic limited',
+      '⚠️ NY Dept of Financial Services oversight — but enforcement slow',
+      '⚠️ Title delivery: 3-6 weeks typical'
+    ]
+  },
+  'NJ': {
+    tier:'R', label:'🔴 NEW JERSEY — HIGH FRAUD RISK',
+    color:'rgba(255,68,68,.08)', border:'rgba(255,68,68,.4)',
+    timeline:'3-5 weeks',
+    issues:[
+      '⚠️ HIGH FRAUD RISK — always verify full title chain before proceeding',
+      '⚠️ Dealers sometimes sell without clear title — verify first',
+      '⚠️ Cross-state transactions create legal limbo — NJ Motor Vehicle Commission oversight',
+      '⚠️ Registration and title processed separately — adds time',
+      '⚠️ Lien releases must match exactly or rejected',
+      '⚠️ Title delivery: 3-5 weeks typical'
+    ]
+  },
+  'CT': {
+    tier:'R', label:'🔴 CONNECTICUT — PAPER TITLE STATE',
+    color:'rgba(255,68,68,.08)', border:'rgba(255,68,68,.4)',
+    timeline:'3-5 weeks',
+    issues:[
+      '⚠️ Paper title process — limited electronic options',
+      '⚠️ DMV processing delays common',
+      '⚠️ Title delivery: 3-5 weeks typical'
+    ]
+  },
+  'MA': {
+    tier:'R', label:'🔴 MASSACHUSETTS — COMPLEX PROCESS',
+    color:'rgba(255,68,68,.08)', border:'rgba(255,68,68,.4)',
+    timeline:'3-6 weeks',
+    issues:[
+      '⚠️ RMV (Registry) known for processing delays',
+      '⚠️ Excise tax must be cleared before transfer',
+      '⚠️ Insurance must be confirmed before registration',
+      '⚠️ Title delivery: 3-6 weeks typical'
+    ]
+  },
+  'FL': {
+    tier:'Y', label:'🟡 FLORIDA — PROCEED WITH CAUTION',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'1-2 weeks',
+    issues:[
+      '⚠️ HIGH TITLE FRAUD / WASHING RISK — always run full title search',
+      '⚠️ High volume of out-of-state vehicles complicates transfers',
+      '⚠️ Lender ELT participation varies significantly',
+      '⚠️ Hurricane-related backlogs occasionally affect DMV',
+      '⚠️ Title delivery: 1-2 weeks generally'
+    ]
+  },
+  'IL': {
+    tier:'Y', label:'🟡 ILLINOIS — PROCESSING DELAYS',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'2-3 weeks',
+    issues:[
+      '⚠️ Vehicle title processing backlog well documented by IADA (2026)',
+      '⚠️ Manual paperwork errors common — double-check all documents',
+      '⚠️ Lien release timing varies significantly by lender',
+      '⚠️ Electronic system improving but not fully reliable',
+      '⚠️ Title delivery: 2-3 weeks typical'
+    ]
+  },
+  'PA': {
+    tier:'Y', label:'🟡 PENNSYLVANIA — NO TEMP TITLES',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'2-4 weeks',
+    issues:[
+      '⚠️ PENNSYLVANIA DOES NOT ISSUE TEMPORARY TITLES — ever',
+      '⚠️ Dealers have 20 days to submit title documents by law',
+      '⚠️ Out-of-state title from lienholder takes 2-8 weeks via third-party agents',
+      '⚠️ PennDOT requires original out-of-state title — no exceptions',
+      '⚠️ Title delivery: 2-4 weeks typical'
+    ]
+  },
+  'MD': {
+    tier:'Y', label:'🟡 MARYLAND — MODERATE DELAYS',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'2-3 weeks',
+    issues:[
+      '⚠️ MVA processing delays reported',
+      '⚠️ Paper titles still common',
+      '⚠️ Title delivery: 2-3 weeks typical'
+    ]
+  },
+  'VA': {
+    tier:'Y', label:'🟡 VIRGINIA — VERIFY LIEN RELEASE',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'2-3 weeks',
+    issues:[
+      '⚠️ Lien release must match title exactly or rejected',
+      '⚠️ DMV Select offices help but limited availability',
+      '⚠️ Title delivery: 2-3 weeks typical'
+    ]
+  },
+  'MO': {
+    tier:'Y', label:'🟡 MISSOURI — STANDARD CAUTION',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'2-3 weeks',
+    issues:['⚠️ Title delivery: 2-3 weeks typical','⚠️ Verify lien release before proceeding']
+  },
+  'IN': {
+    tier:'Y', label:'🟡 INDIANA — STANDARD CAUTION',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'2-3 weeks',
+    issues:['⚠️ Title delivery: 2-3 weeks typical']
+  },
+  'SC': {
+    tier:'Y', label:'🟡 SOUTH CAROLINA — STANDARD CAUTION',
+    color:'rgba(255,215,0,.06)', border:'rgba(255,215,0,.4)',
+    timeline:'1-2 weeks',
+    issues:['⚠️ Title delivery: 1-2 weeks typical']
+  }
+};
+
+function setLienStatus(hasLien) {
+  evlHasLien = hasLien;
+  // Highlight selected button
+  document.getElementById('btnLienYes').style.borderColor = hasLien ? '#2B84FE' : '#1a2a3a';
+  document.getElementById('btnLienNo').style.borderColor = !hasLien ? '#00C853' : '#1a2a3a';
+  document.getElementById('btnLienYes').style.background = hasLien ? 'rgba(43,132,254,.1)' : '#0d1117';
+  document.getElementById('btnLienNo').style.background = !hasLien ? 'rgba(0,200,83,.1)' : '#0d1117';
+  // Show state selector
+  document.getElementById('gateB').style.display = 'block';
+  document.getElementById('gateB').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function setStateTier() {
+  var val = document.getElementById('stateSelect').value;
+  if(!val) return;
+  var parts = val.split(',');
+  evlState = parts[0];
+  evlStateTier = parts[1];
+  var stateInfo = STATE_ISSUES[evlState];
+  var resultEl = document.getElementById('stateTierResult');
+
+  if(stateInfo) {
+    var issuesHTML = stateInfo.issues.map(i =>
+      `<div style="font-size:15px;color:#ffffff;font-family:'Barlow',sans-serif;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);">${i}</div>`
+    ).join('');
+    resultEl.innerHTML = `
+      <div style="background:${stateInfo.color};border:2px solid ${stateInfo.border};border-radius:10px;padding:18px;">
+        <div style="font-size:16px;font-weight:900;margin-bottom:12px;">${stateInfo.label}</div>
+        <div style="font-size:15px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:700;margin-bottom:10px;">⏱ Estimated title timeline: <span style="color:#FFD700;">${stateInfo.timeline}</span></div>
+        <div style="margin-bottom:12px;">${issuesHTML}</div>
+        ${evlStateTier==='R' ? `
+        <div style="background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.4);border-radius:8px;padding:14px;margin-top:12px;">
+          <div style="font-size:15px;font-weight:900;color:#FF4444;margin-bottom:8px;">⚠️ IMPORTANT — YOU MUST ACKNOWLEDGE:</div>
+          <div style="font-size:14px;color:#ffffff;font-family:'Barlow',sans-serif;line-height:1.7;">EVL cannot guarantee standard 48-72 hour timelines in your state. Title processing is controlled by your state DMV and lienholder — not EVL. You must be proactive in following up with your lender and DMV to ensure timely title release. By proceeding you acknowledge these conditions.</div>
+          <label style="display:flex;align-items:center;gap:10px;margin-top:12px;cursor:pointer;">
+            <input type="checkbox" id="redStateAck" style="width:20px;height:20px;accent-color:#2B84FE;" onchange="checkGateReady()"/>
+            <span style="font-size:15px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:700;">I understand and acknowledge the title timeline in my state</span>
+          </label>
+        </div>` : ''}
+        ${evlStateTier!=='R' ? `<div style="text-align:right;margin-top:8px;"><button onclick="openForm()" style="background:#2B84FE;color:#ffffff;border:none;padding:12px 28px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">CONTINUE →</button></div>` : ''}
+      </div>`;
+    resultEl.style.display = 'block';
+  } else {
+    // Green state — just continue
+    resultEl.innerHTML = `<div style="background:rgba(0,200,83,.08);border:2px solid rgba(0,200,83,.3);border-radius:10px;padding:18px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:16px;font-weight:900;color:#00C853;">🟢 ${evlState} — STANDARD TIMELINE</div>
+        <div style="font-size:14px;color:#ffffff;font-family:'Barlow',sans-serif;margin-top:4px;">Clean title state. Standard EVL 48-72 hour timeline applies.</div>
+      </div>
+      <button onclick="openForm()" style="background:#00C853;color:#020203;border:none;padding:12px 24px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">CONTINUE →</button>
+    </div>`;
+    resultEl.style.display = 'block';
+  }
+  showGateResult();
+}
+
+function checkGateReady() {
+  var ack = document.getElementById('redStateAck');
+  if(ack && ack.checked) {
+    var btn = document.createElement('div');
+    btn.style.cssText = 'text-align:right;margin-top:12px;';
+    btn.innerHTML = '<button onclick="openForm()" style="background:#2B84FE;color:#ffffff;border:none;padding:12px 28px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:\'Oswald\',sans-serif;letter-spacing:1px;">I UNDERSTAND — CONTINUE →</button>';
+    document.getElementById('redStateAck').closest('div[style]').appendChild(btn);
+  }
+}
+
+function showGateResult() {
+  var resultEl = document.getElementById('gateResult');
+  var lienMsg = evlHasLien
+    ? '🏦 <strong>Vehicle has a lien</strong> — BD Submit path (CarMax/Carvana/SMTV) + EVL Auction with escrow. 20-day payoff will be ordered.'
+    : '✅ <strong>Vehicle is paid off</strong> — All paths available. Full auction eligible once title is confirmed with EVL escrow partner.';
+
+  resultEl.style.background = evlHasLien ? 'rgba(43,132,254,.08)' : 'rgba(0,200,83,.08)';
+  resultEl.style.border = evlHasLien ? '2px solid rgba(43,132,254,.4)' : '2px solid rgba(0,200,83,.4)';
+  resultEl.innerHTML = `<div style="font-size:16px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;line-height:1.7;">${lienMsg}</div>`;
+  resultEl.style.display = 'block';
+}
+
+function openForm() {
+  document.getElementById('eligibilityGate').style.display = 'none';
+  var d1 = document.getElementById('d1');
+  d1.style.display = 'block';
+  d1.classList.add('active');
+  d1.scrollIntoView({behavior:'smooth', block:'start'});
+  // Store eligibility data for use in submission
+  window.evlEligibility = { hasLien: evlHasLien, state: evlState, tier: evlStateTier };
+}
+
 </script>
 </div><!-- /page-center -->
 <script id="evl-nav-js">
