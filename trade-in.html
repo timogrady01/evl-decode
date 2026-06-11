@@ -48,16 +48,16 @@ html, body {
   width: 100%;
 }
 .hdr-title { font-size: 24px; font-weight: 900; color: var(--white); letter-spacing: 1.5px; text-transform: uppercase; }
-.hdr-sub { font-size: 13px; color: var(--blue); font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+.hdr-sub { font-size: 18px; color: var(--blue); font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
 .hdr-right { display: flex; align-items: center; gap: 12px; }
-.secure-tag { background: var(--green); color: #020203; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; }
+.secure-tag { background: var(--green); color: #020203; font-size: 16px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; padding: 10px 22px; border-radius: 6px; }
 
 /* ── PROGRESS ── */
 .prog-row { display: flex; gap: 4px; padding: 5px 20px 2px; background: var(--bg); }
 .prog { flex: 1; height: 3px; background: #1a1a2e; transition: background 0.3s; }
 .prog.active { background: var(--blue); }
 .prog.done { background: var(--green); }
-.prog-labels { display: flex; padding: 2px 20px 4px; gap: 4px; }
+.prog-labels { display: flex; padding: 4px 20px 6px; gap: 4px; }
 .prog-lbl { flex: 1; font-size: 14px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-align: center; transition: color 0.3s; }
 .prog-lbl.active { color: var(--blue); }
 .prog-lbl.done { color: var(--green); }
@@ -95,7 +95,7 @@ html, body {
 .drawer.active .step-num { border-color: var(--blue); color: var(--blue); background: rgba(43,132,254,0.1); }
 .drawer.done .step-num { border-color: var(--green); color: #020203; background: var(--green); }
 
-.drawer-title { font-size: 19px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; }
+.drawer-title { font-size: 22px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; }
 .drawer.active .drawer-title { color: var(--white); }
 .drawer.done .drawer-title { color: var(--green); }
 
@@ -422,13 +422,13 @@ footer b { color: var(--blue); }
 </div>
 
 <!-- PROGRESS -->
-<div class="prog-row">
+<div class="prog-row" id="progressRow" style="display:none;">
   <div class="prog active" id="p1"></div>
   <div class="prog" id="p2"></div>
   <div class="prog" id="p3"></div>
   <div class="prog" id="p4"></div>
 </div>
-<div class="prog-labels">
+<div class="prog-labels" id="progressLabels" style="display:none;">
   <div class="prog-lbl active" id="pl1">Identify</div>
   <div class="prog-lbl" id="pl2">Condition</div>
   <div class="prog-lbl" id="pl3">Appraisal</div>
@@ -1303,11 +1303,12 @@ function showGateResult() {
 
 function openForm() {
   document.getElementById('eligibilityGate').style.display = 'none';
+  document.getElementById('progressRow').style.display = 'flex';
+  document.getElementById('progressLabels').style.display = 'flex';
   var d1 = document.getElementById('d1');
   d1.style.display = 'block';
   d1.classList.add('active');
   d1.scrollIntoView({behavior:'smooth', block:'start'});
-  // Store eligibility data for use in submission
   window.evlEligibility = { hasLien: evlHasLien, state: evlState, tier: evlStateTier };
 }
 
