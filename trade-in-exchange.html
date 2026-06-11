@@ -161,6 +161,15 @@
   .equity-detail-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; color:var(--dim); font-family:var(--body); font-weight:600; }
   .equity-detail-row:last-of-type { border-bottom:none; }
 
+  /* NEG EQUITY PATHS */
+  .neg-path { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:12px; }
+  .neg-path-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .neg-path-badge { font-size:11px; font-weight:900; padding:4px 10px; border-radius:12px; letter-spacing:1px; white-space:nowrap; }
+  .neg-path-title { font-size:15px; font-weight:900; letter-spacing:1px; text-transform:uppercase; }
+  .neg-path-body { }
+  .neg-detail-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--dim); font-family:var(--body); font-weight:600; }
+  .neg-detail-row:last-of-type { border-bottom:none; }
+
   /* FOOTER */
   footer { background:#090E17; border-top:2px solid var(--border); padding:32px 40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-top:60px; }
   .footer-brand { font-size:18px; font-weight:900; color:var(--white); letter-spacing:2px; }
@@ -417,24 +426,98 @@
         </div>
 
         <!-- NEGATIVE EQUITY WARNING -->
-        <div id="negEquityWarning" style="display:none;background:rgba(255,68,68,.08);border:2px solid rgba(255,68,68,.3);border-radius:10px;padding:16px;margin-top:16px;">
-          <div style="font-size:15px;font-weight:900;color:var(--red);margin-bottom:8px;">⚠️ NEGATIVE EQUITY DETECTED</div>
-          <p style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6;margin-bottom:10px;">Your payoff is higher than the current offer. Here are your options:</p>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border);">
-              <div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px;">Option A — Cover the Gap</div>
-              <div style="font-size:12px;color:var(--muted);font-family:var(--body);">Pay the difference out of pocket at closing. Clean transaction.</div>
+        <div id="negEquityWarning" style="display:none;background:rgba(255,68,68,.06);border:2px solid rgba(255,68,68,.3);border-radius:12px;padding:20px;margin-top:16px;">
+          
+          <div style="font-size:16px;font-weight:900;color:var(--red);margin-bottom:4px;">⚠️ NEGATIVE EQUITY DETECTED</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:16px;line-height:1.5;">Your payoff is higher than the current offer. Here's what EVL recommends based on your situation:</div>
+
+          <!-- LTV INPUTS -->
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:10px;">ENTER YOUR NEW VEHICLE DETAILS TO SEE YOUR OPTIONS:</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div>
+                <label style="font-size:11px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:4px;">NEW VEHICLE PRICE</label>
+                <input type="number" id="newVehiclePrice" placeholder="e.g. 45000"
+                  style="width:100%;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:10px 12px;border-radius:6px;font-size:15px;font-family:var(--font);font-weight:700;outline:none;"
+                  oninput="calcNegEquityPaths()" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
+              </div>
+              <div>
+                <label style="font-size:11px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:4px;">NEW VEHICLE BOOK VALUE</label>
+                <input type="number" id="newVehicleBook" placeholder="e.g. 43000"
+                  style="width:100%;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:10px 12px;border-radius:6px;font-size:15px;font-family:var(--font);font-weight:700;outline:none;"
+                  oninput="calcNegEquityPaths()" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
+              </div>
             </div>
-            <div style="background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border);">
-              <div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px;">Option B — Roll Into New Loan</div>
-              <div style="font-size:12px;color:var(--muted);font-family:var(--body);">Add the negative equity to your new vehicle loan. Higher monthly payment but zero out of pocket today.</div>
-            </div>
-            <div style="background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border);">
-              <div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px;">Option C — Wait for Higher Bid</div>
-              <div style="font-size:12px;color:var(--muted);font-family:var(--body);">Your auction is still live. More bids may close the gap before the auction ends.</div>
-            </div>
+            <p style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:8px;">Book value = KBB or NADA lending value. Your EVL advisor can provide this. Most lenders cap at 125-130% of book.</p>
           </div>
-          <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:12px;">Your EVL advisor will walk through the best path for your situation. <a href="/contact" style="color:var(--blue);">Contact EVL now →</a></p>
+
+          <!-- SMART PATHS — populated by JS -->
+          <div id="negEquityPaths">
+
+            <!-- PATH A — ROLL INTO DEAL (shown if LTV allows) -->
+            <div class="neg-path" id="pathA" style="display:none;">
+              <div class="neg-path-header">
+                <div class="neg-path-badge" style="background:rgba(0,200,83,.15);color:var(--green);border:1px solid rgba(0,200,83,.3);">✅ RECOMMENDED</div>
+                <div class="neg-path-title">PATH A — ROLL INTO NEW VEHICLE LOAN</div>
+              </div>
+              <div class="neg-path-body">
+                <div class="neg-detail-row"><span>Negative Equity Gap</span><span id="pathAGap" style="color:var(--red);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>New Vehicle Price</span><span id="pathAPrice" style="color:var(--white);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>Total Amount Financed</span><span id="pathATotal" style="color:var(--white);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>LTV Ratio</span><span id="pathALTV" style="font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>Lender Max (125% book)</span><span id="pathAMax" style="color:var(--muted);font-weight:900;">$0</span></div>
+                <div id="pathAStatus" style="margin-top:10px;padding:10px;border-radius:6px;font-size:13px;font-weight:900;font-family:var(--body);"></div>
+                <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:10px;line-height:1.5;">The negative equity is rolled into your new vehicle loan. No cash out of pocket today. Monthly payment increases slightly based on the gap amount.</p>
+              </div>
+            </div>
+
+            <!-- PATH B — COVER THE GAP -->
+            <div class="neg-path" id="pathB" style="display:none;">
+              <div class="neg-path-header">
+                <div class="neg-path-badge" style="background:rgba(43,132,254,.15);color:var(--blue);border:1px solid rgba(43,132,254,.3);">💡 CLEANEST DEAL</div>
+                <div class="neg-path-title">PATH B — COVER THE GAP</div>
+              </div>
+              <div class="neg-path-body">
+                <div class="neg-detail-row"><span>Gap to Cover</span><span id="pathBGap" style="color:var(--red);font-weight:900;">$0</span></div>
+                <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                  <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+                    <div style="font-size:18px;margin-bottom:6px;">💳</div>
+                    <div style="font-size:12px;font-weight:900;color:var(--white);margin-bottom:4px;">CREDIT CARD</div>
+                    <div style="font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.4;">Pay gap today. Funds incoming from auction cover it.</div>
+                  </div>
+                  <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+                    <div style="font-size:18px;margin-bottom:6px;">🏦</div>
+                    <div style="font-size:12px;font-weight:900;color:var(--white);margin-bottom:4px;">BRIDGE LOAN</div>
+                    <div style="font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.4;">30-day CU loan. Minimal interest. Paid off at closing.</div>
+                  </div>
+                  <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+                    <div style="font-size:18px;margin-bottom:6px;">✍️</div>
+                    <div style="font-size:12px;font-weight:900;color:var(--white);margin-bottom:4px;">PERSONAL CHECK</div>
+                    <div style="font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.4;">Pay gap at closing. Cleanest transaction possible.</div>
+                  </div>
+                </div>
+                <div style="background:rgba(43,132,254,.08);border-radius:6px;padding:10px;margin-top:10px;">
+                  <div style="font-size:12px;color:var(--blue);font-family:var(--body);font-weight:700;line-height:1.5;">⚡ WHY THIS WORKS: Your auction bid money is already confirmed. Covering the gap now is temporary — the funds are coming. Clean title → clean deal → lowest rate on new loan.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PATH C — WAIT FOR HIGHER BID -->
+            <div class="neg-path" id="pathC" style="display:none;">
+              <div class="neg-path-header">
+                <div class="neg-path-badge" style="background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.3);">⏳ STILL POSSIBLE</div>
+                <div class="neg-path-title">PATH C — WAIT FOR HIGHER BID</div>
+              </div>
+              <div class="neg-path-body">
+                <div class="neg-detail-row"><span>Current Gap</span><span id="pathCGap" style="color:var(--red);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>Bid Needed to Break Even</span><span id="pathCTarget" style="color:var(--gold);font-weight:900;">$0</span></div>
+                <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:10px;line-height:1.5;">Your auction is still live. Additional bids may close or eliminate the gap before the auction ends. EVL will notify you immediately if a higher bid comes in.</p>
+              </div>
+            </div>
+
+          </div><!-- /negEquityPaths -->
+
+          <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:16px;line-height:1.5;text-align:center;">Your EVL advisor will walk through the best path for your exact situation. <a href="/contact" style="color:var(--blue);">Contact EVL now →</a></p>
         </div>
 
         <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:16px;line-height:1.6;text-align:center;">These are estimates only. Your EVL advisor will confirm exact figures at closing. You are under no obligation until you sign.</p>
@@ -738,7 +821,53 @@ window.selectEquityOption = function(num) {
   });
 }
 
-window.updateSplit = function() {
+window.calcNegEquityPaths = function() {
+  const bid = parseInt(document.getElementById('highBid').textContent.replace(/[^0-9]/g,'')) || 0;
+  const payoff = parseInt(document.getElementById('payoffInput').value) || 0;
+  const gap = Math.abs(bid - payoff - 495); // negative equity gap
+  const newPrice = parseInt(document.getElementById('newVehiclePrice').value) || 0;
+  const bookVal = parseInt(document.getElementById('newVehicleBook').value) || 0;
+
+  if(!newPrice || !bookVal) return;
+
+  const totalFinanced = newPrice + gap;
+  const ltv = Math.round((totalFinanced / bookVal) * 100);
+  const maxLTV = 125;
+  const maxLoan = Math.round(bookVal * maxLTV / 100);
+  const ltvOK = ltv <= maxLTV;
+  const payoffBreakEven = payoff + 495;
+
+  // Show all paths
+  ['pathA','pathB','pathC'].forEach(p => document.getElementById(p).style.display = 'block');
+
+  // PATH A — Roll in
+  document.getElementById('pathAGap').textContent = '$' + gap.toLocaleString();
+  document.getElementById('pathAPrice').textContent = '$' + newPrice.toLocaleString();
+  document.getElementById('pathATotal').textContent = '$' + totalFinanced.toLocaleString();
+  document.getElementById('pathALTV').textContent = ltv + '%';
+  document.getElementById('pathAMax').textContent = '$' + maxLoan.toLocaleString() + ' (' + maxLTV + '% of book)';
+  const statusEl = document.getElementById('pathAStatus');
+  if(ltvOK) {
+    statusEl.style.background = 'rgba(0,200,83,.1)';
+    statusEl.style.color = 'var(--green)';
+    statusEl.style.border = '1px solid rgba(0,200,83,.3)';
+    statusEl.textContent = '✅ LTV IS ' + ltv + '% — WITHIN LENDER LIMITS. Rolling in is viable.';
+  } else {
+    statusEl.style.background = 'rgba(255,68,68,.1)';
+    statusEl.style.color = 'var(--red)';
+    statusEl.style.border = '1px solid rgba(255,68,68,.3)';
+    statusEl.textContent = '❌ LTV IS ' + ltv + '% — EXCEEDS ' + maxLTV + '% LENDER LIMIT. Cannot roll in full gap. See Path B.';
+  }
+
+  // PATH B — Cover gap
+  document.getElementById('pathBGap').textContent = '$' + gap.toLocaleString();
+
+  // PATH C — Wait
+  document.getElementById('pathCGap').textContent = '-$' + gap.toLocaleString();
+  document.getElementById('pathCTarget').textContent = '$' + payoffBreakEven.toLocaleString();
+}
+
+ = function() {
   const net = parseInt(document.getElementById('netEquity').textContent.replace(/[^0-9]/g,'')) || 0;
   const pct = parseInt(document.getElementById('splitSlider').value) / 100;
   const applied = Math.round(net * pct);
