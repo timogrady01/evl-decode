@@ -442,33 +442,33 @@ footer b { color: var(--blue); }
 
   <!-- STEP A — LIEN CHECK -->
   <div id="gateA" style="background:#0d1117;border:2px solid #2B84FE;border-radius:14px;padding:28px;margin-bottom:16px;">
-    <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ STEP 1 OF 2 — TITLE STATUS</div>
-    <div style="font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Is your vehicle currently financed?</div>
-    <div style="font-size:16px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;margin-bottom:20px;line-height:1.6;">This determines which selling paths are available to you. There is no wrong answer — EVL has a solution for every situation.</div>
+    <div style="font-size:16px;font-weight:900;color:#2B84FE;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ STEP 1 OF 2 — TITLE STATUS</div>
+    <div style="font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Is your vehicle currently financed?</div>
+    <div style="font-size:19px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;margin-bottom:20px;line-height:1.6;">This determines which selling paths are available to you. There is no wrong answer — EVL has a solution for every situation.</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <button onclick="setLienStatus(true)" id="btnLienYes"
-        style="background:var(--s1);border:2px solid var(--border);color:#ffffff;padding:20px;border-radius:10px;font-size:17px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:left;transition:all .2s;">
-        <div style="font-size:28px;margin-bottom:8px;">🏦</div>
-        <div style="color:#ffffff;font-size:18px;margin-bottom:4px;">YES — I have a loan</div>
-        <div style="font-size:13px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;">Bank or lender holds my title</div>
+        style="background:var(--s1);border:2px solid var(--border);color:#ffffff;padding:20px;border-radius:10px;font-size:20px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:left;transition:all .2s;">
+        <div style="font-size:34px;margin-bottom:8px;">🏦</div>
+        <div style="color:#ffffff;font-size:22px;margin-bottom:4px;">YES — I have a loan</div>
+        <div style="font-size:16px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;">Bank or lender holds my title</div>
       </button>
       <button onclick="setLienStatus(false)" id="btnLienNo"
-        style="background:var(--s1);border:2px solid var(--border);color:#ffffff;padding:20px;border-radius:10px;font-size:17px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:left;transition:all .2s;">
-        <div style="font-size:28px;margin-bottom:8px;">✅</div>
-        <div style="color:#ffffff;font-size:18px;margin-bottom:4px;">NO — Paid off</div>
-        <div style="font-size:13px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;">I have the title in my possession</div>
+        style="background:var(--s1);border:2px solid var(--border);color:#ffffff;padding:20px;border-radius:10px;font-size:20px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:left;transition:all .2s;">
+        <div style="font-size:34px;margin-bottom:8px;">✅</div>
+        <div style="color:#ffffff;font-size:22px;margin-bottom:4px;">NO — Paid off</div>
+        <div style="font-size:16px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;">I have the title in my possession</div>
       </button>
     </div>
   </div>
 
   <!-- STEP B — STATE CHECK -->
   <div id="gateB" style="display:none;background:#0d1117;border:2px solid #2B84FE;border-radius:14px;padding:28px;margin-bottom:16px;">
-    <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ STEP 2 OF 2 — YOUR STATE</div>
-    <div style="font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Where is your vehicle registered?</div>
-    <div style="font-size:16px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;margin-bottom:20px;line-height:1.6;">Title processing timelines vary significantly by state. We want to be upfront about what to expect in your state.</div>
+    <div style="font-size:16px;font-weight:900;color:#2B84FE;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ STEP 2 OF 2 — YOUR STATE</div>
+    <div style="font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Where is your vehicle registered?</div>
+    <div style="font-size:19px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:600;margin-bottom:20px;line-height:1.6;">Title processing timelines vary significantly by state. We want to be upfront about what to expect in your state.</div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <select id="stateSelect" onchange="setStateTier()"
-        style="flex:1;min-width:200px;background:#090E17;border:2px solid #1a2a3a;color:#ffffff;padding:14px 18px;border-radius:8px;font-size:18px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;">
+        style="flex:1;min-width:200px;background:#090E17;border:2px solid #1a2a3a;color:#ffffff;padding:14px 18px;border-radius:8px;font-size:22px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;">
         <option value="">— Select Your State —</option>
         <option value="TX,G">Texas</option>
         <option value="GA,G">Georgia</option>
@@ -1246,20 +1246,20 @@ function setStateTier() {
 
   if(stateInfo) {
     var issuesHTML = stateInfo.issues.map(i =>
-      `<div style="font-size:15px;color:#ffffff;font-family:'Barlow',sans-serif;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);">${i}</div>`
+      `<div style="font-size:18px;color:#ffffff;font-family:'Barlow',sans-serif;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);">${i}</div>`
     ).join('');
     resultEl.innerHTML = `
       <div style="background:${stateInfo.color};border:2px solid ${stateInfo.border};border-radius:10px;padding:18px;">
         <div style="font-size:16px;font-weight:900;margin-bottom:12px;">${stateInfo.label}</div>
-        <div style="font-size:15px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:700;margin-bottom:10px;">⏱ Estimated title timeline: <span style="color:#FFD700;">${stateInfo.timeline}</span></div>
+        <div style="font-size:18px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:700;margin-bottom:10px;">⏱ Estimated title timeline: <span style="color:#FFD700;">${stateInfo.timeline}</span></div>
         <div style="margin-bottom:12px;">${issuesHTML}</div>
         ${evlStateTier==='R' ? `
         <div style="background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.4);border-radius:8px;padding:14px;margin-top:12px;">
-          <div style="font-size:15px;font-weight:900;color:#FF4444;margin-bottom:8px;">⚠️ IMPORTANT — YOU MUST ACKNOWLEDGE:</div>
-          <div style="font-size:14px;color:#ffffff;font-family:'Barlow',sans-serif;line-height:1.7;">EVL cannot guarantee standard 48-72 hour timelines in your state. Title processing is controlled by your state DMV and lienholder — not EVL. You must be proactive in following up with your lender and DMV to ensure timely title release. By proceeding you acknowledge these conditions.</div>
+          <div style="font-size:18px;font-weight:900;color:#FF4444;margin-bottom:8px;">⚠️ IMPORTANT — YOU MUST ACKNOWLEDGE:</div>
+          <div style="font-size:17px;color:#ffffff;font-family:'Barlow',sans-serif;line-height:1.7;">EVL cannot guarantee standard 48-72 hour timelines in your state. Title processing is controlled by your state DMV and lienholder — not EVL. You must be proactive in following up with your lender and DMV to ensure timely title release. By proceeding you acknowledge these conditions.</div>
           <label style="display:flex;align-items:center;gap:10px;margin-top:12px;cursor:pointer;">
             <input type="checkbox" id="redStateAck" style="width:20px;height:20px;accent-color:#2B84FE;" onchange="checkGateReady()"/>
-            <span style="font-size:15px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:700;">I understand and acknowledge the title timeline in my state</span>
+            <span style="font-size:18px;color:#ffffff;font-family:'Barlow',sans-serif;font-weight:700;">I understand and acknowledge the title timeline in my state</span>
           </label>
         </div>` : ''}
         ${evlStateTier!=='R' ? `<div style="text-align:right;margin-top:8px;"><button onclick="openForm()" style="background:#2B84FE;color:#ffffff;border:none;padding:12px 28px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">CONTINUE →</button></div>` : ''}
@@ -1270,7 +1270,7 @@ function setStateTier() {
     resultEl.innerHTML = `<div style="background:rgba(0,200,83,.08);border:2px solid rgba(0,200,83,.3);border-radius:10px;padding:18px;display:flex;justify-content:space-between;align-items:center;">
       <div>
         <div style="font-size:16px;font-weight:900;color:#00C853;">🟢 ${evlState} — STANDARD TIMELINE</div>
-        <div style="font-size:14px;color:#ffffff;font-family:'Barlow',sans-serif;margin-top:4px;">Clean title state. Standard EVL 48-72 hour timeline applies.</div>
+        <div style="font-size:17px;color:#ffffff;font-family:'Barlow',sans-serif;margin-top:4px;">Clean title state. Standard EVL 48-72 hour timeline applies.</div>
       </div>
       <button onclick="openForm()" style="background:#00C853;color:#020203;border:none;padding:12px 24px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">CONTINUE →</button>
     </div>`;
