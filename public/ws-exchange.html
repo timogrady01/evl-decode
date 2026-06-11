@@ -64,7 +64,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .auction-body{padding:18px}
 .auction-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
 .auction-vehicle-section{grid-column:1/2}
-.auction-floor-section{grid-column:2/3}
+.auction-reserve-section{grid-column:2/3}
 .auction-bid-section{grid-column:3/4}
 .auction-vehicle-name{font-size:18px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:6px}
 .auction-vin{font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:10px;font-weight:700;letter-spacing:1px}
@@ -83,16 +83,16 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .badge-1owner{background:#1a0a00;border:1px solid var(--gold);color:var(--gold)}
 .badge-no-accident{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 
-/* CORPORATE FLOOR */
-.floor-card{background:var(--bg);border:2px solid var(--blue);border-radius:10px;padding:14px}
-.floor-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
-.floor-amount{font-size:28px;font-weight:900;color:var(--blue);margin-bottom:4px}
-.floor-source{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600;margin-bottom:10px}
-.floor-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;border-bottom:1px solid #0d0d1a;font-family:var(--body)}
-.floor-row:last-child{border-bottom:none}
-.floor-row-label{color:var(--muted)}
-.floor-row-val{font-weight:700;color:var(--dim)}
-.floor-row-val.best{color:var(--green);font-weight:900}
+/* RESERVE */
+.reserve-card{background:var(--bg);border:2px solid var(--blue);border-radius:10px;padding:14px}
+.reserve-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.reserve-amount{font-size:28px;font-weight:900;color:var(--blue);margin-bottom:4px}
+.reserve-source{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600;margin-bottom:10px}
+.reserve-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;border-bottom:1px solid #0d0d1a;font-family:var(--body)}
+.reserve-row:last-child{border-bottom:none}
+.reserve-row-label{color:var(--muted)}
+.reserve-row-val{font-weight:700;color:var(--dim)}
+.reserve-row-val.best{color:var(--green);font-weight:900}
 
 /* BID INPUT */
 .bid-card{background:var(--bg);border:2px solid var(--gold);border-radius:10px;padding:14px}
@@ -207,7 +207,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 @media(max-width:900px){
   .auction-grid{grid-template-columns:1fr}
-  .auction-vehicle-section,.auction-floor-section,.auction-bid-section{grid-column:1}
+  .auction-vehicle-section,.auction-reserve-section,.auction-bid-section{grid-column:1}
   .form-grid{grid-template-columns:1fr}
   .photo-upload-grid{grid-template-columns:1fr 1fr}
   .phase-flow{flex-direction:column}
@@ -254,7 +254,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div class="stat-card"><span class="stat-val" style="color:var(--blue)">3</span><div class="stat-lbl">Phase 1 (ID Hold)</div></div>
   <div class="stat-card"><span class="stat-val" style="color:var(--green)">4</span><div class="stat-lbl">Phase 2 (Live Bids)</div></div>
   <div class="stat-card"><span class="stat-val" style="color:var(--cyan)">23</span><div class="stat-lbl">Active BD Bidders</div></div>
-  <div class="stat-card"><span class="stat-val" style="color:var(--gold)">$284k</div><div class="stat-lbl">Floor Value Locked</div></div>
+  <div class="stat-card"><span class="stat-val" style="color:var(--gold)">$284k</div><div class="stat-lbl">Reserve Locked</div></div>
   <div class="stat-card"><span class="stat-val" style="color:var(--green)">$312k</span><div class="stat-lbl">Current High Bids</div></div>
 </div>
 
@@ -271,7 +271,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div class="section-hdr">
     <div class="section-title">⚡ LIVE AUCTION BOARD — LICENSED DEALERS ONLY</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <span style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:700;align-self:center">All bids are sealed and blind. Corporate floors verified by EVL.</span>
+      <span style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:700;align-self:center">All bids are sealed and blind. Reserve set by EVL.</span>
       <button class="btn btn-gold btn-sm" onclick="switchTab('intake',document.querySelectorAll('.tab-btn')[1])">➕ SUBMIT VEHICLE</button>
     </div>
   </div>
@@ -283,7 +283,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 <!-- ══ VEHICLE INTAKE TAB ══ -->
 <div id="tab-intake" class="tab-content">
   <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">➕ SUBMIT YOUR VEHICLE</div>
-  <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px;line-height:1.6">Complete the EVL certification process. Takes 10-15 minutes. Corporate floor locked within 2 hours. Auction launches automatically once certified.</div>
+  <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px;line-height:1.6">Complete the EVL certification process. Takes 10-15 minutes. Reserve locked within 2 hours. Auction launches automatically once certified.</div>
 
   <div class="intake-form">
     <div class="intake-header">
@@ -383,7 +383,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <div class="phase-timing" style="color:var(--blue)">⏱ 0-48 HOURS</div>
       <div class="phase-steps">
         1. EVL Cert process complete<br>
-        2. Corporate floor locked (CarMax/Carvana/SMTV)<br>
+        2. Reserve locked (CarMax/Carvana/SMTV)<br>
         3. Floor sent to In-Store Dealer (ID)<br>
         4. ID has <strong style="color:var(--white)">48 hrs</strong> to match<br>
         5. If matched → Local trade complete<br>
@@ -398,7 +398,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         ID gets first right of refusal<br>
         Must match tax-adjusted target<br>
         <strong style="color:var(--white)">Formula:</strong><br>
-        Top Floor<br>
+        Reserve<br>
         − TX Tax Credit (6.25%)<br>
         − 3% Logistics Allowance<br>
         = <strong style="color:var(--gold)">ID Match Target</strong>
@@ -410,7 +410,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <div class="phase-timing" style="color:var(--gold)">⏱ 2-4 HOUR WINDOW</div>
       <div class="phase-steps">
         ID declines → vehicle goes live<br>
-        Corporate floor = opening bid<br>
+        Reserve = opening bid<br>
         Licensed BDs submit sealed bids<br>
         Highest bid at close = WINNER<br>
         <strong style="color:var(--white)">No takebacks. No exceptions.</strong><br>
@@ -500,13 +500,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <span class="revenue-icon">🏪</span>
       <div class="revenue-title">IN-STORE DEALER (ID) SUBSCRIPTION</div>
       <span class="revenue-amount">$299/mo</span>
-      <div class="revenue-desc">Access to local consumer vehicle stream. Phase 1 first-right-of-refusal on all nearby trade-ins. PITPO cert + corporate floor data included. Unlocks local tax-credit calculation tool.</div>
+      <div class="revenue-desc">Access to local consumer vehicle stream. Phase 1 first-right-of-refusal on all nearby trade-ins. PITPO cert + reserve data included. Unlocks local tax-credit calculation tool.</div>
     </div>
     <div class="revenue-card">
       <span class="revenue-icon">🌐</span>
       <div class="revenue-title">BIDDING DEALER (BD) SUBSCRIPTION</div>
       <span class="revenue-amount">$499/mo</span>
-      <div class="revenue-desc">Access to nationwide wholesale auction board. Phase 2 bidding on all EVL-certified vehicles. Real-time bid notifications. Corporate floor displayed. Sealed blind bid system.</div>
+      <div class="revenue-desc">Access to nationwide wholesale auction board. Phase 2 bidding on all EVL-certified vehicles. Real-time bid notifications. Reserve displayed. Sealed blind bid system.</div>
     </div>
     <div class="revenue-card" style="border-color:var(--gold)">
       <span class="revenue-icon">⭐</span>
@@ -518,7 +518,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <span class="revenue-icon">💰</span>
       <div class="revenue-title">CONSUMER COORDINATION FEE</div>
       <span class="revenue-amount">$199</span>
-      <div class="revenue-desc">Deducted from escrow payout at settlement. Covers: PITPO certification, corporate floor API pulls, auction management, document generation, escrow coordination, porter dispatch.</div>
+      <div class="revenue-desc">Deducted from escrow payout at settlement. Covers: PITPO certification, reserve data, auction management, document generation, escrow coordination, porter dispatch.</div>
     </div>
     <div class="revenue-card">
       <span class="revenue-icon">🏆</span>
@@ -559,7 +559,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         {name:'Federal Odometer Disclosure',desc:'Locks mileage at point of sale. Federal requirement. Pre-populated from intake.',parties:'Seller signs',status:'AUTO'},
         {name:'O&O / POA Form',desc:'Ownership & Odometer Assignment. Corrects minor signing errors without title re-application.',parties:'Seller signs',status:'AUTO'},
         {name:'PITPO Certification Report',desc:'Full title verification output — API results, lien check, name match, badge assignment.',parties:'Platform generated',status:'AUTO'},
-        {name:'Corporate Floor Data Sheet',desc:'Official CarMax/Carvana/SMTV offer with timestamp, offer code, and expiration.',parties:'Provided to ID + BD',status:'AUTO'},
+        {name:'Reserve Data Sheet',desc:'Official EVL verified reserve with timestamp and expiration.',parties:'Provided to ID + BD',status:'AUTO'},
         {name:'Auction Terms & As-Is Agreement',desc:'Buyer acknowledges AS-IS condition, arbitration rules, and mechanical risk acceptance.',parties:'BD signs',status:'REQUIRED'},
         {name:'Escrow Hold Agreement',desc:'Required when title is in transit. 30-day clock, $250 penalty clause.',parties:'Seller signs',status:'CONDITIONAL'},
         {name:'Bill of Lading (BOL)',desc:'Off-Ramping Protocol — driver photo inspection including external lights, all glass panes, panels, odometer, VIN. Both porters sign. Burden shifts to BD at signature. Documentation is final.',parties:'Driver + Seller',status:'REQUIRED'},
@@ -814,11 +814,11 @@ function showDealMath(carmaxBid, vehicle, auctionId) {
 
 // ── LIVE AUCTION DATA ──
 const LIVE_AUCTIONS = [
-  {id:'EVL-AUC-001',phase:1,vehicle:'2023 Toyota Tundra TRD Pro',vin:'5TFLA5AB7PX123456',miles:'22,400 mi',color:'White Pearl',badges:['PITPO','GOLD','1OWNER','NO_ACCIDENT'],corporateFloor:43200,carmax:42800,carvana:43200,smtv:41900,idTarget:40000,currentBid:null,timer:1800,timerLabel:'48:00:00',phaseLabel:'PHASE 1 — ID HOLD WINDOW',description:'ID has 48 hours to match $41,364 tax-adjusted target or vehicle moves to live auction.'},
-  {id:'EVL-AUC-002',phase:2,vehicle:'2022 BMW X5 xDrive40i',vin:'5UXCR6C08N9L23456',miles:'31,800 mi',color:'Alpine White',badges:['PITPO','SILVER','1OWNER'],corporateFloor:52400,carmax:51900,carvana:52400,smtv:51200,idTarget:null,currentBid:54200,timer:3600,timerLabel:'1:42:18',phaseLabel:'PHASE 2 — LIVE BIDDING',description:'Corporate floor verified at $52,400. Bidding above floor. Sealed blind bids only.'},
-  {id:'EVL-AUC-003',phase:2,vehicle:'2021 Ford F-150 Lariat SuperCrew',vin:'1FTFW1E85MFC34567',miles:'44,200 mi',color:'Iconic Silver',badges:['PITPO','SILVER'],corporateFloor:34800,carmax:34200,carvana:34800,smtv:33900,idTarget:null,currentBid:35600,timer:7200,timerLabel:'2:01:44',phaseLabel:'PHASE 2 — LIVE BIDDING',description:'Corporate floor $34,800. Current high bid $35,600. 90+ days on market at previous dealer — motivated seller.'},
-  {id:'EVL-AUC-004',phase:1,vehicle:'2024 Honda CR-V Hybrid EX-L',vin:'2HKRW2H8XRH456789',miles:'8,100 mi',color:'Radiant Red',badges:['PITPO','GOLD','NO_ACCIDENT'],corporateFloor:31200,carmax:30800,carvana:31200,smtv:30500,idTarget:29300,currentBid:null,timer:86400,timerLabel:'23:14:32',phaseLabel:'PHASE 1 — ID HOLD WINDOW',description:'Near-new. Full Gold warranty badge — under 3yr/36k. ID first refusal active.'},
-  {id:'EVL-AUC-005',phase:2,vehicle:'2019 Jeep Grand Cherokee Limited 4x4',vin:'1C4RJFBG7KC567890',miles:'67,300 mi',color:'Granite Crystal',badges:['PITPO','BRONZE'],corporateFloor:24500,carmax:24100,carvana:24500,smtv:23800,idTarget:null,currentBid:24500,timer:1800,timerLabel:'0:28:52',phaseLabel:'PHASE 2 — CLOSING SOON',description:'Bronze badge — AS-IS certified. Clean PITPO title. High mileage all warranties expired. Starting bid at corporate floor.'},
+  {id:'EVL-AUC-001',phase:1,vehicle:'2023 Toyota Tundra TRD Pro',vin:'5TFLA5AB7PX123456',miles:'22,400 mi',color:'White Pearl',badges:['PITPO','GOLD','1OWNER','NO_ACCIDENT'],reserve:43200,carmax:42800,carvana:43200,smtv:41900,idTarget:40000,currentBid:null,timer:1800,timerLabel:'48:00:00',phaseLabel:'PHASE 1 — ID HOLD WINDOW',description:'ID has 48 hours to exercise first right of refusal before vehicle moves to Phase 2.'},
+  {id:'EVL-AUC-002',phase:2,vehicle:'2022 BMW X5 xDrive40i',vin:'5UXCR6C08N9L23456',miles:'31,800 mi',color:'Alpine White',badges:['PITPO','SILVER','1OWNER'],reserve:52400,carmax:51900,carvana:52400,smtv:51200,idTarget:null,currentBid:54200,timer:3600,timerLabel:'1:42:18',phaseLabel:'PHASE 2 — LIVE BIDDING',description:'Reserve verified at $52,400. Bidding above floor. Sealed blind bids only.'},
+  {id:'EVL-AUC-003',phase:2,vehicle:'2021 Ford F-150 Lariat SuperCrew',vin:'1FTFW1E85MFC34567',miles:'44,200 mi',color:'Iconic Silver',badges:['PITPO','SILVER'],reserve:34800,carmax:34200,carvana:34800,smtv:33900,idTarget:null,currentBid:35600,timer:7200,timerLabel:'2:01:44',phaseLabel:'PHASE 2 — LIVE BIDDING',description:'Corporate floor $34,800. Current high bid $35,600. 90+ days on market at previous dealer — motivated seller.'},
+  {id:'EVL-AUC-004',phase:1,vehicle:'2024 Honda CR-V Hybrid EX-L',vin:'2HKRW2H8XRH456789',miles:'8,100 mi',color:'Radiant Red',badges:['PITPO','GOLD','NO_ACCIDENT'],reserve:31200,carmax:30800,carvana:31200,smtv:30500,idTarget:29300,currentBid:null,timer:86400,timerLabel:'23:14:32',phaseLabel:'PHASE 1 — ID HOLD WINDOW',description:'Near-new. Full Gold warranty badge — under 3yr/36k. ID first refusal active.'},
+  {id:'EVL-AUC-005',phase:2,vehicle:'2019 Jeep Grand Cherokee Limited 4x4',vin:'1C4RJFBG7KC567890',miles:'67,300 mi',color:'Granite Crystal',badges:['PITPO','BRONZE'],reserve:24500,carmax:24100,carvana:24500,smtv:23800,idTarget:null,currentBid:24500,timer:1800,timerLabel:'0:28:52',phaseLabel:'PHASE 2 — CLOSING SOON',description:'Bronze badge — AS-IS certified. Clean PITPO title. High mileage all warranties expired. Starting bid at reserve.'},
 ];
 
 const BADGE_CONFIG = {
@@ -833,8 +833,8 @@ const BADGE_CONFIG = {
 function renderAuctions(){
   const container = document.getElementById('auction-list');
   container.innerHTML = LIVE_AUCTIONS.map(a=>{
-    const phaseClass = a.phase===1?'phase-1':a.currentBid>a.corporateFloor?'floor-beat':'phase-2';
-    const phaseBadgeClass = a.phase===1?'phase-1-badge':a.currentBid>a.corporateFloor?'phase-floor-badge':'phase-2-badge';
+    const phaseClass = a.phase===1?'phase-1':a.currentBid>a.reserve?'floor-beat':'phase-2';
+    const phaseBadgeClass = a.phase===1?'phase-1-badge':a.currentBid>a.reserve?'phase-floor-badge':'phase-2-badge';
     const timerClass = a.timer<3600?'bid-timer':'bid-timer phase1';
     const floorSrc = Object.entries({CarMax:a.carmax,Carvana:a.carvana,'SMTV':a.smtv}).sort((x,y)=>y[1]-x[1]);
     const bestFloor = floorSrc[0];
@@ -861,15 +861,15 @@ function renderAuctions(){
             <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">${a.description}</div>
           </div>
 
-          <!-- CORPORATE FLOOR -->
-          <div class="auction-floor-section">
-            <div class="floor-card">
-              <div class="floor-label">🔒 VERIFIED CORPORATE FLOOR</div>
-              <div class="floor-amount">$${a.corporateFloor.toLocaleString()}</div>
-              <div class="floor-source">Best offer: ${bestFloor[0]} — $${bestFloor[1].toLocaleString()}</div>
-              ${floorSrc.map(([src,amt])=>`<div class="floor-row">
-                <span class="floor-row-label">${src}</span>
-                <span class="floor-row-val ${amt===bestFloor[1]?'best':''}">$${amt.toLocaleString()}${amt===bestFloor[1]?' ⭐':''}</span>
+          <!-- RESERVE -->
+          <div class="auction-reserve-section">
+            <div class="reserve-card">
+              <div class="reserve-label">🔒 VERIFIED RESERVE</div>
+              <div class="reserve-amount">$${a.reserve.toLocaleString()}</div>
+              <div class="reserve-source">Best offer: ${bestFloor[0]} — $${bestFloor[1].toLocaleString()}</div>
+              ${floorSrc.map(([src,amt])=>`<div class="reserve-row">
+                <span class="reserve-row-label">${src}</span>
+                <span class="reserve-row-val ${amt===bestFloor[1]?'best':''}">$${amt.toLocaleString()}${amt===bestFloor[1]?' ⭐':''}</span>
               </div>`).join('')}
               ${a.phase===1&&a.idTarget?`<div style="margin-top:10px;background:#040e1a;border:1px solid var(--blue);border-radius:6px;padding:8px 10px;font-size:12px;color:var(--blue);font-weight:700;line-height:1.5">ID MATCH TARGET: <strong style="font-size:15px;color:var(--white)">$${a.idTarget.toLocaleString()}</strong><br><span style="font-size:11px;color:var(--muted)">(Floor − 6.25% TX tax credit − 3% logistics allowance)</span></div>`:''}
             </div>
@@ -882,10 +882,10 @@ function renderAuctions(){
               <div class="${timerClass}" id="timer-${a.id}">${a.timerLabel}</div>
               ${a.currentBid?`<div class="bid-current">🏆 CURRENT HIGH BID: <strong style="color:var(--green);font-size:16px">$${a.currentBid.toLocaleString()}</strong></div>`:``}
               ${a.phase===2?`<div class="bid-input-wrap" style="margin-top:10px">
-                <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.currentBid||(a.corporateFloor+100)).toLocaleString()}" min="${a.corporateFloor}"/>
+                <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.currentBid||(a.reserve+100)).toLocaleString()}" min="${a.reserve}"/>
                 <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
               </div>
-              <div class="bid-floor-note">🔒 Floor: $${a.corporateFloor.toLocaleString()} — All bids sealed & blind</div>
+              <div class="bid-floor-note">🔒 RESERVE: $${a.reserve.toLocaleString()} — All bids sealed & blind</div>
               <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>`
               :`<div class="phase-1-note">This vehicle is in Phase 1 — the local In-Store Dealer has first right of refusal. If the ID does not match the target within the hold window, this vehicle moves to Phase 2 live bidding automatically.</div>`}
               <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
@@ -907,7 +907,7 @@ function submitBid(auctionId){
   const val = parseFloat(input?.value);
   const auction = LIVE_AUCTIONS.find(a=>a.id===auctionId);
   if(!val){ alert('Please enter your bid amount'); return; }
-  if(val < auction?.corporateFloor){ alert(`Bid must be at or above the corporate floor of $${auction.corporateFloor.toLocaleString()}`); return; }
+  if(val < auction?.reserve){ alert(`Bid must be at or above the reserve of $${auction.reserve.toLocaleString()}`); return; }
   if(confirm(`Submit SEALED blind bid of $${val.toLocaleString()} on ${auctionId}?\n\nThis bid is binding. You will be contacted within 30 minutes of auction close if you are the highest bidder.\n\nBy bidding you agree to the EVL AS-IS platform terms and NAAA arbitration rules (title defects only, 24-hour window).`)){
     const dealerEmail = sessionStorage.getItem('evl_dealer') || 'dealer@unknown.com';
     submitBidToFirebase(auctionId, val, dealerEmail).then(success => {
