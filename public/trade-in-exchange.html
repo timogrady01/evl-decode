@@ -147,6 +147,20 @@
   .how-card-title { font-size:15px; font-weight:900; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
   .how-card-desc { font-size:13px; color:var(--muted); font-family:var(--body); font-weight:600; line-height:1.6; }
 
+  /* EQUITY OPTIONS */
+  .equity-option { background:var(--bg); border:2px solid var(--border); border-radius:10px; padding:16px; margin-bottom:12px; cursor:pointer; transition:border-color .2s; }
+  .equity-option:hover { border-color:var(--blue); }
+  .equity-option.selected { border-color:var(--gold); background:rgba(255,215,0,.05); }
+  .equity-opt-header { display:flex; align-items:center; gap:14px; }
+  .equity-opt-icon { font-size:24px; flex-shrink:0; }
+  .equity-opt-title { font-size:16px; font-weight:900; letter-spacing:1px; text-transform:uppercase; }
+  .equity-opt-sub { font-size:13px; color:var(--muted); font-family:var(--body); font-weight:600; margin-top:3px; }
+  .equity-opt-check { font-size:20px; color:var(--muted); margin-left:auto; flex-shrink:0; }
+  .equity-option.selected .equity-opt-check { color:var(--gold); }
+  .equity-opt-detail { margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
+  .equity-detail-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; color:var(--dim); font-family:var(--body); font-weight:600; }
+  .equity-detail-row:last-of-type { border-bottom:none; }
+
   /* FOOTER */
   footer { background:#090E17; border-top:2px solid var(--border); padding:32px 40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-top:60px; }
   .footer-brand { font-size:18px; font-weight:900; color:var(--white); letter-spacing:2px; }
@@ -283,13 +297,15 @@
     <!-- YOUR EQUITY -->
     <div class="equity-card">
       <div class="auction-title">💰 YOUR ESTIMATED EQUITY</div>
+
+      <!-- MATH ROWS -->
       <div class="equity-row">
         <span class="equity-lbl">Current Highest Offer</span>
         <span class="equity-val" style="color:var(--white);" id="equityBid">$43,200</span>
       </div>
       <div class="equity-row">
-        <span class="equity-lbl">Estimated Payoff (if any)</span>
-        <span class="equity-val" style="color:var(--red);">Enter below</span>
+        <span class="equity-lbl">Your Payoff (if any)</span>
+        <span class="equity-val" style="color:var(--red);" id="equityPayoffDisplay">—</span>
       </div>
       <div class="equity-row">
         <span class="equity-lbl">EVL Platform Fee</span>
@@ -299,12 +315,131 @@
         <span class="equity-total-lbl">YOUR NET EQUITY</span>
         <span class="equity-total-val" id="netEquity">TBD</span>
       </div>
-      <div style="margin-top:16px;display:flex;gap:8px;align-items:center;">
-        <input type="number" id="payoffInput" placeholder="Enter your payoff amount (0 if none)" 
-          style="flex:1;background:var(--bg);border:2px solid var(--border);color:var(--white);padding:12px 16px;border-radius:8px;font-size:16px;font-family:var(--font);font-weight:700;outline:none;"
+
+      <!-- PAYOFF INPUT -->
+      <div style="margin-top:16px;">
+        <input type="number" id="payoffInput" placeholder="Enter your payoff amount (enter 0 if paid off)" 
+          style="width:100%;background:var(--bg);border:2px solid var(--border);color:var(--white);padding:12px 16px;border-radius:8px;font-size:16px;font-family:var(--font);font-weight:700;outline:none;"
           oninput="calcEquity()" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
+        <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:8px;">Enter $0 if your vehicle is fully paid off. Your exact equity is confirmed at closing.</p>
       </div>
-      <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:8px;">Enter $0 if your vehicle is paid off. Your actual equity is calculated at closing.</p>
+
+      <!-- EQUITY OPTIONS — shown after payoff entered -->
+      <div id="equityOptions" style="display:none;margin-top:24px;">
+
+        <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">⚡ WHAT WOULD YOU LIKE TO DO WITH YOUR EQUITY?</div>
+        <p style="font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:20px;line-height:1.6;">This is YOUR money — you decide how to use it. Here are your three options:</p>
+
+        <!-- OPTION 1 — KEEP ALL -->
+        <div class="equity-option" id="opt1" onclick="selectEquityOption(1)">
+          <div class="equity-opt-header">
+            <div class="equity-opt-icon">💰</div>
+            <div>
+              <div class="equity-opt-title">KEEP ALL EQUITY</div>
+              <div class="equity-opt-sub">Take the full amount as cash in your pocket</div>
+            </div>
+            <div class="equity-opt-check" id="check1">○</div>
+          </div>
+          <div class="equity-opt-detail" id="detail1" style="display:none;">
+            <div class="equity-detail-row">
+              <span>Your Net Equity</span>
+              <span id="opt1Amount" style="color:var(--green);font-weight:900;">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Applied to New Vehicle</span>
+              <span style="color:var(--muted);">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Cash to You at Closing</span>
+              <span id="opt1Cash" style="color:var(--green);font-weight:900;">$0</span>
+            </div>
+            <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:10px;line-height:1.5;">✅ Best if you have a down payment already or want to keep the cash separate. Your new vehicle purchase is financed independently.</p>
+          </div>
+        </div>
+
+        <!-- OPTION 2 — SPLIT -->
+        <div class="equity-option" id="opt2" onclick="selectEquityOption(2)">
+          <div class="equity-opt-header">
+            <div class="equity-opt-icon">✂️</div>
+            <div>
+              <div class="equity-opt-title">SPLIT YOUR EQUITY</div>
+              <div class="equity-opt-sub">Use some toward your new vehicle — keep the rest</div>
+            </div>
+            <div class="equity-opt-check" id="check2">○</div>
+          </div>
+          <div class="equity-opt-detail" id="detail2" style="display:none;">
+            <div style="margin-bottom:12px;">
+              <label style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:6px;">HOW MUCH TOWARD NEW VEHICLE?</label>
+              <input type="range" id="splitSlider" min="0" max="100" value="50"
+                style="width:100%;accent-color:var(--blue);"
+                oninput="updateSplit()"/>
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-family:var(--body);margin-top:4px;">
+                <span>0%</span><span>50%</span><span>100%</span>
+              </div>
+            </div>
+            <div class="equity-detail-row">
+              <span>Applied to New Vehicle</span>
+              <span id="opt2Applied" style="color:var(--blue);font-weight:900;">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Cash to You at Closing</span>
+              <span id="opt2Cash" style="color:var(--green);font-weight:900;">$0</span>
+            </div>
+            <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:10px;line-height:1.5;">✅ Best of both worlds — reduce your monthly payment AND walk away with cash.</p>
+          </div>
+        </div>
+
+        <!-- OPTION 3 — ALL IN -->
+        <div class="equity-option" id="opt3" onclick="selectEquityOption(3)">
+          <div class="equity-opt-header">
+            <div class="equity-opt-icon">🚗</div>
+            <div>
+              <div class="equity-opt-title">ALL EQUITY TO NEW VEHICLE</div>
+              <div class="equity-opt-sub">Maximize your down payment — lowest monthly payment</div>
+            </div>
+            <div class="equity-opt-check" id="check3">○</div>
+          </div>
+          <div class="equity-opt-detail" id="detail3" style="display:none;">
+            <div class="equity-detail-row">
+              <span>Applied to New Vehicle</span>
+              <span id="opt3Applied" style="color:var(--blue);font-weight:900;">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Cash to You</span>
+              <span style="color:var(--muted);">$0</span>
+            </div>
+            <div class="equity-detail-row" id="opt3Payment" style="display:none;">
+              <span>Est. Monthly Savings</span>
+              <span id="opt3Savings" style="color:var(--green);font-weight:900;">$0/mo</span>
+            </div>
+            <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:10px;line-height:1.5;">✅ Best if you want the lowest possible monthly payment on your new vehicle. Every dollar reduces what you finance.</p>
+          </div>
+        </div>
+
+        <!-- NEGATIVE EQUITY WARNING -->
+        <div id="negEquityWarning" style="display:none;background:rgba(255,68,68,.08);border:2px solid rgba(255,68,68,.3);border-radius:10px;padding:16px;margin-top:16px;">
+          <div style="font-size:15px;font-weight:900;color:var(--red);margin-bottom:8px;">⚠️ NEGATIVE EQUITY DETECTED</div>
+          <p style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6;margin-bottom:10px;">Your payoff is higher than the current offer. Here are your options:</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border);">
+              <div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px;">Option A — Cover the Gap</div>
+              <div style="font-size:12px;color:var(--muted);font-family:var(--body);">Pay the difference out of pocket at closing. Clean transaction.</div>
+            </div>
+            <div style="background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border);">
+              <div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px;">Option B — Roll Into New Loan</div>
+              <div style="font-size:12px;color:var(--muted);font-family:var(--body);">Add the negative equity to your new vehicle loan. Higher monthly payment but zero out of pocket today.</div>
+            </div>
+            <div style="background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border);">
+              <div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px;">Option C — Wait for Higher Bid</div>
+              <div style="font-size:12px;color:var(--muted);font-family:var(--body);">Your auction is still live. More bids may close the gap before the auction ends.</div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:12px;">Your EVL advisor will walk through the best path for your situation. <a href="/contact" style="color:var(--blue);">Contact EVL now →</a></p>
+        </div>
+
+        <p style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:16px;line-height:1.6;text-align:center;">These are estimates only. Your EVL advisor will confirm exact figures at closing. You are under no obligation until you sign.</p>
+      </div>
+
     </div>
 
     <!-- TIMELINE -->
@@ -550,13 +685,66 @@ window.calcEquity = function() {
   const payoff = parseInt(document.getElementById('payoffInput').value) || 0;
   const net = bid - payoff - 495;
   const el = document.getElementById('netEquity');
-  if(payoff > 0) {
-    el.textContent = net > 0 ? '$' + net.toLocaleString() : '-$' + Math.abs(net).toLocaleString();
-    el.style.color = net > 0 ? 'var(--green)' : 'var(--red)';
-  } else {
-    el.textContent = '$' + (bid - 495).toLocaleString();
-    el.style.color = 'var(--green)';
+  const payoffDisplay = document.getElementById('equityPayoffDisplay');
+  const optionsDiv = document.getElementById('equityOptions');
+  const negWarning = document.getElementById('negEquityWarning');
+
+  if(payoff >= 0 && document.getElementById('payoffInput').value !== '') {
+    payoffDisplay.textContent = payoff > 0 ? '-$' + payoff.toLocaleString() : '$0';
+    el.textContent = (net >= 0 ? '$' : '-$') + Math.abs(net).toLocaleString();
+    el.style.color = net >= 0 ? 'var(--green)' : 'var(--red)';
+
+    // Show options
+    optionsDiv.style.display = 'block';
+
+    if(net < 0) {
+      // Negative equity
+      document.getElementById('opt1').style.display = 'none';
+      document.getElementById('opt2').style.display = 'none';
+      document.getElementById('opt3').style.display = 'none';
+      negWarning.style.display = 'block';
+    } else {
+      // Positive equity
+      document.getElementById('opt1').style.display = 'block';
+      document.getElementById('opt2').style.display = 'block';
+      document.getElementById('opt3').style.display = 'block';
+      negWarning.style.display = 'none';
+
+      // Update option amounts
+      document.getElementById('opt1Amount').textContent = '$' + net.toLocaleString();
+      document.getElementById('opt1Cash').textContent = '$' + net.toLocaleString();
+      document.getElementById('opt3Applied').textContent = '$' + net.toLocaleString();
+      document.getElementById('opt3Savings').textContent = '$' + Math.round(net/72).toLocaleString() + '/mo';
+      document.getElementById('opt3Payment').style.display = 'flex';
+      updateSplit();
+    }
   }
+}
+
+window.selectEquityOption = function(num) {
+  [1,2,3].forEach(n => {
+    const opt = document.getElementById('opt'+n);
+    const detail = document.getElementById('detail'+n);
+    const check = document.getElementById('check'+n);
+    if(n === num) {
+      opt.classList.add('selected');
+      detail.style.display = 'block';
+      check.textContent = '✅';
+    } else {
+      opt.classList.remove('selected');
+      detail.style.display = 'none';
+      check.textContent = '○';
+    }
+  });
+}
+
+window.updateSplit = function() {
+  const net = parseInt(document.getElementById('netEquity').textContent.replace(/[^0-9]/g,'')) || 0;
+  const pct = parseInt(document.getElementById('splitSlider').value) / 100;
+  const applied = Math.round(net * pct);
+  const cash = net - applied;
+  document.getElementById('opt2Applied').textContent = '$' + applied.toLocaleString();
+  document.getElementById('opt2Cash').textContent = '$' + cash.toLocaleString();
 }
 
 // Auto-lookup from URL param
