@@ -153,7 +153,9 @@ body { display:block !important; align-items:unset !important; justify-content:u
         <tr><td><strong>MarketCheck</strong></td><td style="font-family:monospace;font-size:13px;">FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU</td><td>VIN decode, market values</td></tr>
         <tr><td><strong>Cloudinary Preset</strong></td><td style="font-family:monospace;font-size:13px;">evl_photos</td><td>Photo uploads — trade-in flow</td></tr>
         <tr><td><strong>EmailJS Template</strong></td><td style="font-family:monospace;font-size:13px;">service_rvscjt3</td><td>Trade submission notifications</td></tr>
-        <tr><td><strong>Anthropic / Claude</strong></td><td style="font-family:monospace;font-size:13px;">Via Vercel API route — api/compare.js</td><td>AI vehicle intelligence — Compare page</td></tr>
+        <tr><td><strong>Firebase Project</strong></td><td style="font-family:monospace;font-size:13px;">evl-acquisition-radar</td><td>Firestore live bids, dealer data, auction engine</td></tr>
+        <tr><td><strong>Firebase API Key</strong></td><td style="font-family:monospace;font-size:13px;">AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho</td><td>Web app config — EVL-RADAR-WEB</td></tr>
+        <tr><td><strong>Firebase App ID</strong></td><td style="font-family:monospace;font-size:13px;">1:84195145348:web:b10f837bee92ce2e4674d1</td><td>EVL-RADAR-WEB app identifier</td></tr>
       </tbody>
     </table>
   </div>
@@ -180,7 +182,7 @@ body { display:block !important; align-items:unset !important; justify-content:u
         <tr><td><strong>WS Vault</strong></td><td><a href="https://evl-decode-two.vercel.app/ws-vault" target="_blank" style="color:#8899aa;text-decoration:none;">evl-decode-two.vercel.app/ws-vault</a></td><td><a href="https://evl-decode-two.vercel.app/ws-vault" target="_blank" style="background:rgba(0,200,83,.15);color:#00C853;border:1px solid rgba(0,200,83,.3);padding:4px 12px;border-radius:4px;font-size:12px;font-weight:900;text-decoration:none;letter-spacing:1px;">↗ LIVE</a></td></tr>
         <tr><td><strong>WS Dealers</strong></td><td><a href="https://evl-decode-two.vercel.app/ws-dealers" target="_blank" style="color:#8899aa;text-decoration:none;">evl-decode-two.vercel.app/ws-dealers</a></td><td><a href="https://evl-decode-two.vercel.app/ws-dealers" target="_blank" style="background:rgba(0,200,83,.15);color:#00C853;border:1px solid rgba(0,200,83,.3);padding:4px 12px;border-radius:4px;font-size:12px;font-weight:900;text-decoration:none;letter-spacing:1px;">↗ LIVE</a></td></tr>
         <tr><td><strong>WS Intelligence</strong></td><td><a href="https://evl-decode-two.vercel.app/ws-intelligence" target="_blank" style="color:#8899aa;text-decoration:none;">evl-decode-two.vercel.app/ws-intelligence</a></td><td><a href="https://evl-decode-two.vercel.app/ws-intelligence" target="_blank" style="background:rgba(0,200,83,.15);color:#00C853;border:1px solid rgba(0,200,83,.3);padding:4px 12px;border-radius:4px;font-size:12px;font-weight:900;text-decoration:none;letter-spacing:1px;">↗ LIVE</a></td></tr>
-        <tr><td><strong>WS Onboarding</strong></td><td><a href="https://evl-decode-two.vercel.app/ws-onboarding" target="_blank" style="color:#8899aa;text-decoration:none;">evl-decode-two.vercel.app/ws-onboarding</a></td><td><a href="https://evl-decode-two.vercel.app/ws-onboarding" target="_blank" style="background:rgba(0,200,83,.15);color:#00C853;border:1px solid rgba(0,200,83,.3);padding:4px 12px;border-radius:4px;font-size:12px;font-weight:900;text-decoration:none;letter-spacing:1px;">↗ LIVE</a></td></tr>
+        <tr><td><strong>Trade-In Exchange</strong></td><td><a href="https://evl-decode-two.vercel.app/trade-in-exchange" target="_blank" style="color:#8899aa;text-decoration:none;">evl-decode-two.vercel.app/trade-in-exchange</a></td><td><a href="https://evl-decode-two.vercel.app/trade-in-exchange" target="_blank" style="background:rgba(0,200,83,.15);color:#00C853;border:1px solid rgba(0,200,83,.3);padding:4px 12px;border-radius:4px;font-size:12px;font-weight:900;text-decoration:none;letter-spacing:1px;">↗ LIVE</a></td></tr>
       </tbody>
     </table>
   </div>
@@ -229,7 +231,11 @@ body { display:block !important; align-items:unset !important; justify-content:u
     <table>
       <thead><tr><th>Date</th><th>What Was Built / Changed</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td>Jun 9, 2026</td><td>Compare page — full readability overhaul, footer fixed, search bar brightened, disclaimer white across all pages</td><td><span class="badge badge-green">DONE</span></td></tr>
+        <tr><td>Jun 10, 2026</td><td>Firebase integrated — EVL-ACQUISITION-RADAR project wired to WS Exchange. Live bids save to Firestore in real time.</td><td><span class="badge badge-green">DONE</span></td></tr>
+        <tr><td>Jun 10, 2026</td><td>WS Exchange — Deal Math + Tax Credit Calculator built in. All "Corporate Floor" language replaced with clean "RESERVE" throughout.</td><td><span class="badge badge-green">DONE</span></td></tr>
+        <tr><td>Jun 10, 2026</td><td>Trade-In Exchange (/trade-in-exchange) — NEW retail customer-facing page. Live auction tracker, equity options drawer (keep all / split / all in), negative equity paths with LTV calculator (125-130% rule), EVL Finance Advantage savings bubble, Full Lifecycle services section. SaaS badge — "Digital Live Auction — Not a Dealer".</td><td><span class="badge badge-green">DONE</span></td></tr>
+        <tr><td>Jun 10, 2026</td><td>WS Vault Master Library — all passwords unified to 1027, LIVE badges made clickable, Firebase config keys documented, Claude AI integration documented (P&P + BBP/BITOP).</td><td><span class="badge badge-green">DONE</span></td></tr>
+        <tr><td>Jun 10, 2026</td><td>P&P / BBP / BITOP session — full deal math engine locked in. CarMax as reserve floor. Tax credit arbitrage. Bridge loan timing solution. LTV neg equity paths. EVL Finance advantage (2pt markup elimination). Full lifecycle services activated.</td><td><span class="badge badge-green">DONE</span></td></tr>
         <tr><td>Jun 9, 2026</td><td>WS Vault — Master Library section added</td><td><span class="badge badge-green">DONE</span></td></tr>
         <tr><td>May 31, 2026</td><td>Cloudinary photo upload — 8 slots, odometer required, trade-in flow Step 3</td><td><span class="badge badge-green">DONE</span></td></tr>
         <tr><td>May 27, 2026</td><td>Admin dashboard — password protected, VIN lookup, offer sheet generator</td><td><span class="badge badge-green">DONE</span></td></tr>
