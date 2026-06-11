@@ -641,13 +641,175 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 </div><!-- /ws-wrap -->
 
-<script>
+<script type="module">
 // ── TAB SWITCH ──
 function switchTab(tab, btn){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   if(btn) btn.classList.add('active');
+}
+
+// ── FIREBASE INTEGRATION ──
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, doc, onSnapshot, updateDoc, addDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain: "evl-acquisition-radar.firebaseapp.com",
+  projectId: "evl-acquisition-radar",
+  storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId: "84195145348",
+  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
+// ── TAX CREDIT BY STATE ──
+const TAX_RATES = {
+  'TX':6.25,'CA':7.25,'FL':6.00,'NY':4.00,'IL':6.25,
+  'OH':5.75,'GA':4.00,'NC':3.00,'MI':6.00,'NJ':6.625,
+  'VA':4.15,'WA':6.50,'AZ':5.60,'TN':7.00,'IN':7.00,
+  'MO':4.225,'MD':6.00,'CO':2.90,'AL':2.00,'SC':5.00
+};
+
+// ── DEAL MATH CALCULATOR ──
+function calcDealMath(carmaxBid, payoff, state='TX', loanAmount=0, loanMonths=72, loanRate=7.0) {
+  const taxRate = (TAX_RATES[state] || 6.25) / 100;
+  const taxCredit = carmaxBid * taxRate;
+  const grossEquity = carmaxBid - payoff;
+  const evlFee = 495;
+  const netEquity = grossEquity - evlFee;
+  const idTrueCost = carmaxBid - taxCredit;
+  const idProfit = carmaxBid - idTrueCost; // tax credit arbitrage
+  
+  // Bridge loan interest (30 day)
+  const bridgeInterest = payoff * 0.08 / 12;
+  
+  // If rolled into car loan
+  const monthlyRate = loanRate / 100 / 12;
+  const rollCost = payoff * (monthlyRate * Math.pow(1+monthlyRate, loanMonths)) / 
+                   (Math.pow(1+monthlyRate, loanMonths) - 1) * loanMonths - payoff;
+
+  return { taxRate: taxRate*100, taxCredit, grossEquity, evlFee, netEquity, 
+           idTrueCost, idProfit, bridgeInterest, rollCost };
+}
+
+// ── SUBMIT BID TO FIREBASE ──
+async function submitBidToFirebase(auctionId, bidAmount, dealerEmail) {
+  try {
+    const auctionRef = doc(db, 'evl_auctions', auctionId);
+    const snap = await getDoc(auctionRef);
+    
+    if (snap.exists()) {
+      const current = snap.data().currentBid || 0;
+      if (bidAmount <= current) {
+        alert(`Bid must be higher than current bid of $${current.toLocaleString()}`);
+        return false;
+      }
+      await updateDoc(auctionRef, {
+        currentBid: bidAmount,
+        highBidder: dealerEmail,
+        lastBidTime: serverTimestamp(),
+        bidHistory: [...(snap.data().bidHistory || []), {
+          amount: bidAmount, dealer: dealerEmail, time: new Date().toISOString()
+        }]
+      });
+    } else {
+      await addDoc(collection(db, 'evl_auctions'), {
+        auctionId, currentBid: bidAmount,
+        highBidder: dealerEmail,
+        lastBidTime: serverTimestamp(),
+        bidHistory: [{ amount: bidAmount, dealer: dealerEmail, time: new Date().toISOString() }]
+      });
+    }
+    return true;
+  } catch(e) {
+    console.error('Firebase bid error:', e);
+    return false;
+  }
+}
+
+// ── LISTEN FOR REAL-TIME BID UPDATES ──
+function listenToAuction(auctionId, callback) {
+  const auctionRef = doc(db, 'evl_auctions', auctionId);
+  return onSnapshot(auctionRef, (snap) => {
+    if (snap.exists()) callback(snap.data());
+  });
+}
+
+// ── SHOW DEAL MATH MODAL ──
+function showDealMath(carmaxBid, vehicle, auctionId) {
+  const payoff = parseInt(prompt(`Enter customer's current payoff amount for ${vehicle}:`, '10000')) || 0;
+  const state = prompt('Customer state (e.g. TX, CA, FL):', 'TX').toUpperCase();
+  const math = calcDealMath(carmaxBid, payoff, state);
+  
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  modal.innerHTML = `
+    <div style="background:#0d1117;border:2px solid #c9a227;border-radius:16px;padding:32px;max-width:560px;width:90%;font-family:'Oswald',sans-serif;">
+      <div style="font-size:22px;font-weight:900;color:#c9a227;margin-bottom:4px;">⚡ DEAL MATH CALCULATOR</div>
+      <div style="font-size:14px;color:#8899aa;margin-bottom:24px;">${vehicle} — ${state} (${math.taxRate}% tax rate)</div>
+      
+      <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+        <tr style="border-bottom:1px solid #1a1a2e;">
+          <td style="padding:10px 0;color:#ccd6e0;font-size:15px;">CarMax Published Bid</td>
+          <td style="padding:10px 0;color:#ffffff;font-size:15px;font-weight:900;text-align:right;">$${carmaxBid.toLocaleString()}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1a2e;">
+          <td style="padding:10px 0;color:#ccd6e0;font-size:15px;">Customer Payoff</td>
+          <td style="padding:10px 0;color:#ff4444;font-size:15px;font-weight:900;text-align:right;">-$${payoff.toLocaleString()}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1a2e;">
+          <td style="padding:10px 0;color:#ccd6e0;font-size:15px;">Gross Equity</td>
+          <td style="padding:10px 0;color:#ffffff;font-size:15px;font-weight:900;text-align:right;">$${math.grossEquity.toLocaleString()}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1a2e;">
+          <td style="padding:10px 0;color:#ccd6e0;font-size:15px;">EVL Platform Fee</td>
+          <td style="padding:10px 0;color:#ff4444;font-size:15px;font-weight:900;text-align:right;">-$${math.evlFee}</td>
+        </tr>
+        <tr style="border-bottom:2px solid #c9a227;">
+          <td style="padding:10px 0;color:#ffffff;font-size:16px;font-weight:900;">Net Equity to Customer</td>
+          <td style="padding:10px 0;color:#00C853;font-size:16px;font-weight:900;text-align:right;">$${math.netEquity.toLocaleString()}</td>
+        </tr>
+      </table>
+
+      <div style="background:#0a0f1a;border:1px solid #c9a227;border-radius:10px;padding:16px;margin-bottom:16px;">
+        <div style="font-size:13px;color:#c9a227;font-weight:900;margin-bottom:10px;">⚡ ID TAX CREDIT ARBITRAGE (${state})</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:#ccd6e0;font-size:14px;">Tax Credit Value</span>
+          <span style="color:#00C853;font-size:14px;font-weight:900;">+$${Math.round(math.taxCredit).toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:#ccd6e0;font-size:14px;">ID True Net Cost</span>
+          <span style="color:#ffffff;font-size:14px;font-weight:900;">$${Math.round(math.idTrueCost).toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;">
+          <span style="color:#c9a227;font-size:15px;font-weight:900;">ID Profit (flip to CarMax)</span>
+          <span style="color:#c9a227;font-size:15px;font-weight:900;">$${Math.round(math.idProfit).toLocaleString()}</span>
+        </div>
+      </div>
+
+      <div style="background:#0a0f1a;border:1px solid #2a3a6e;border-radius:10px;padding:16px;margin-bottom:20px;">
+        <div style="font-size:13px;color:#8899aa;font-weight:900;margin-bottom:10px;">🏦 BRIDGE OPTIONS (if payoff needed)</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:#ccd6e0;font-size:13px;">Bridge Loan (30 days)</span>
+          <span style="color:#ffffff;font-size:13px;font-weight:900;">~$${Math.round(math.bridgeInterest)} interest</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;">
+          <span style="color:#ccd6e0;font-size:13px;">Roll into car loan (72mo @ 7%)</span>
+          <span style="color:#ff4444;font-size:13px;font-weight:900;">~$${Math.round(math.rollCost).toLocaleString()} interest</span>
+        </div>
+      </div>
+
+      <button onclick="this.closest('div[style*=fixed]').remove()" 
+        style="width:100%;background:#c9a227;color:#020203;border:none;padding:14px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">
+        CLOSE CALCULATOR
+      </button>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
 }
 
 // ── LIVE AUCTION DATA ──
@@ -723,7 +885,8 @@ function renderAuctions(){
                 <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.currentBid||(a.corporateFloor+100)).toLocaleString()}" min="${a.corporateFloor}"/>
                 <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
               </div>
-              <div class="bid-floor-note">🔒 Floor: $${a.corporateFloor.toLocaleString()} — All bids sealed & blind</div>`
+              <div class="bid-floor-note">🔒 Floor: $${a.corporateFloor.toLocaleString()} — All bids sealed & blind</div>
+              <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>`
               :`<div class="phase-1-note">This vehicle is in Phase 1 — the local In-Store Dealer has first right of refusal. If the ID does not match the target within the hold window, this vehicle moves to Phase 2 live bidding automatically.</div>`}
               <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
                 <button class="btn btn-dark btn-sm">📋 PITPO REPORT</button>
@@ -746,6 +909,16 @@ function submitBid(auctionId){
   if(!val){ alert('Please enter your bid amount'); return; }
   if(val < auction?.corporateFloor){ alert(`Bid must be at or above the corporate floor of $${auction.corporateFloor.toLocaleString()}`); return; }
   if(confirm(`Submit SEALED blind bid of $${val.toLocaleString()} on ${auctionId}?\n\nThis bid is binding. You will be contacted within 30 minutes of auction close if you are the highest bidder.\n\nBy bidding you agree to the EVL AS-IS platform terms and NAAA arbitration rules (title defects only, 24-hour window).`)){
+    const dealerEmail = sessionStorage.getItem('evl_dealer') || 'dealer@unknown.com';
+    submitBidToFirebase(auctionId, val, dealerEmail).then(success => {
+      if(success){
+        alert(`✅ Bid of $${val.toLocaleString()} submitted and recorded!\n\nYou will be notified if you are the winning bidder.`);
+        input.value = '';
+      } else {
+        alert('Bid could not be submitted. Please try again.');
+      }
+    });
+  }
     alert(`✅ Bid submitted — $${val.toLocaleString()} on ${auctionId}\n\nYour bid is sealed and confidential. EVL will contact you within 30 minutes of auction close.\n\nRemember: All sales are AS-IS. PITPO certification guarantees clean title only.`);
     if(input) input.value='';
   }
