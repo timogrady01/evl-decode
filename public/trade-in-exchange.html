@@ -580,6 +580,192 @@
       </div>
     </div>
 
+    <!-- BCS COMPARISON CALCULATOR -->
+    <div style="background:var(--s1);border:2px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px;">
+
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ YOUR BEST MOVE — SEE THE NUMBERS</div>
+        <div style="font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">WHICH PATH IS RIGHT FOR YOU?</div>
+        <div style="font-size:17px;color:#ffffff;font-family:var(--body);font-weight:600;max-width:560px;margin:0 auto;line-height:1.6;">No matter which way you go — EVL makes sure you get the most for your vehicle. See exactly how each path compares.</div>
+      </div>
+
+      <!-- VEHICLE VALUE INPUT -->
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:12px;">ENTER YOUR VEHICLE'S ESTIMATED VALUE:</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <input type="number" id="bcsValue" placeholder="e.g. 13000"
+            style="flex:1;min-width:200px;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:14px 18px;border-radius:8px;font-size:18px;font-family:var(--font);font-weight:700;outline:none;"
+            oninput="calcBCS()" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"/>
+          <button onclick="calcBCS()" style="background:var(--gold);color:#020203;border:none;padding:14px 28px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;">SEE MY OPTIONS →</button>
+        </div>
+      </div>
+
+      <!-- BCS RESULTS -->
+      <div id="bcsResults" style="display:none;">
+
+        <!-- OPTION CARDS -->
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;">
+
+          <!-- OPTION 1 — CARMAX/BD SUBMIT -->
+          <div style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:20px;position:relative;">
+            <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:2px;margin-bottom:8px;">OPTION 1</div>
+            <div style="font-size:18px;font-weight:900;color:#ffffff;text-transform:uppercase;margin-bottom:4px;">EVL BD Submit</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">CarMax · Carvana · SMTV</div>
+            <div style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. offer</span>
+                <span style="color:#ffffff;font-weight:900;" id="bcs1Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">EVL submit fee</span>
+                <span style="color:var(--red);font-weight:900;">-$199</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid var(--border);padding-top:10px;">
+                <span style="color:#ffffff;font-weight:900;">Your net</span>
+                <span style="color:#ffffff;font-weight:900;" id="bcs1Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ✅ Same day offer<br>
+                ✅ EVL submits to all BDs<br>
+                ✅ Zero hassle<br>
+                ⚠️ Lowest net value
+              </div>
+              <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:1px;text-align:center;">⏱ SAME DAY</div>
+            </div>
+          </div>
+
+          <!-- OPTION 2 — EVL AUCTION ← HIGHLIGHTED -->
+          <div style="background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,215,0,.05));border:3px solid var(--gold);border-radius:12px;padding:20px;position:relative;">
+            <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#020203;font-size:11px;font-weight:900;padding:4px 16px;border-radius:12px;letter-spacing:1px;white-space:nowrap;">⚡ BEST VALUE + SPEED</div>
+            <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:8px;">OPTION 2</div>
+            <div style="font-size:18px;font-weight:900;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">EVL Live Auction</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">Dealers compete for your vehicle</div>
+            <div style="border-top:1px solid rgba(255,215,0,.3);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. winning bid</span>
+                <span style="color:var(--green);font-weight:900;" id="bcs2Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">EVL platform fee</span>
+                <span style="color:var(--red);font-weight:900;">-$495</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Escrow (your half)</span>
+                <span style="color:var(--red);font-weight:900;">-$75</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid rgba(255,215,0,.3);padding-top:10px;">
+                <span style="color:var(--gold);font-weight:900;">Your net</span>
+                <span style="color:var(--gold);font-weight:900;" id="bcs2Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ✅ Dealers compete = higher price<br>
+                ✅ Reserve protects your value<br>
+                ✅ 24-48 hour close<br>
+                ✅ EVL handles everything<br>
+                ✅ Safest transaction
+              </div>
+              <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">⏱ 24-48 HOURS</div>
+            </div>
+          </div>
+
+          <!-- OPTION 3 — EVL PRIVATE SALE -->
+          <div style="background:var(--bg);border:2px solid var(--blue);border-radius:12px;padding:20px;">
+            <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-bottom:8px;">OPTION 3</div>
+            <div style="font-size:18px;font-weight:900;color:#ffffff;text-transform:uppercase;margin-bottom:4px;">EVL Private Sale</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">Full concierge — highest net potential</div>
+            <div style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. private sale price</span>
+                <span style="color:var(--green);font-weight:900;" id="bcs3Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">EVL concierge fee</span>
+                <span style="color:var(--red);font-weight:900;">-$299</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid var(--border);padding-top:10px;">
+                <span style="color:#ffffff;font-weight:900;">Your net</span>
+                <span style="color:var(--green);font-weight:900;" id="bcs3Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ✅ Highest potential net<br>
+                ✅ EVL lists, screens, protects<br>
+                ✅ Safe exchange coordinated<br>
+                ✅ Title + paperwork handled<br>
+                ⚠️ Takes 7-14 days
+              </div>
+              <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:1px;text-align:center;">⏱ 7-14 DAYS</div>
+            </div>
+          </div>
+
+          <!-- OPTION 4 — DO IT YOURSELF -->
+          <div style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:20px;opacity:0.75;">
+            <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:2px;margin-bottom:8px;">OPTION 4</div>
+            <div style="font-size:18px;font-weight:900;color:#ffffff;text-transform:uppercase;margin-bottom:4px;">On Your Own</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">Private sale without EVL</div>
+            <div style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. private sale price</span>
+                <span style="color:#ffffff;font-weight:900;" id="bcs4Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Listing costs</span>
+                <span style="color:var(--red);font-weight:900;">-$150</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Price loss (no EVL optimization)</span>
+                <span style="color:var(--red);font-weight:900;" id="bcs4Loss">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid var(--border);padding-top:10px;">
+                <span style="color:#ffffff;font-weight:900;">Your net</span>
+                <span style="color:var(--red);font-weight:900;" id="bcs4Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ❌ 30-90 days average<br>
+                ❌ Strangers at your home<br>
+                ❌ Scam risk<br>
+                ❌ Title mistakes common<br>
+                ❌ Undersell by $500-1,500
+              </div>
+              <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:1px;text-align:center;">⏱ 30-90 DAYS</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- EVL ADVANTAGE STATEMENT -->
+        <div style="background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,215,0,.05));border:2px solid var(--gold);border-radius:12px;padding:24px;text-align:center;margin-bottom:20px;">
+          <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">⚡ THE EVL ADVANTAGE — NO MATTER WHICH PATH YOU CHOOSE</div>
+          <div style="font-size:19px;font-weight:700;color:#ffffff;font-family:var(--body);line-height:1.7;max-width:600px;margin:0 auto;">
+            Every EVL path beats going it alone. Whether you want <span style="color:var(--gold);font-weight:900;">speed</span>, <span style="color:var(--gold);font-weight:900;">maximum value</span>, or <span style="color:var(--gold);font-weight:900;">complete hands-off convenience</span> — EVL delivers more than any alternative. We are not a dealer. We work for <span style="color:var(--gold);font-weight:900;">you</span>.
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;">
+            <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;">
+              <div style="font-size:26px;font-weight:900;color:var(--gold);" id="bcsMaxSaving">$0</div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:4px;">More vs. going alone</div>
+            </div>
+            <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;">
+              <div style="font-size:26px;font-weight:900;color:var(--green);">24-48 hrs</div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:4px;">vs. 30-90 days alone</div>
+            </div>
+            <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;">
+              <div style="font-size:26px;font-weight:900;color:var(--blue);">100%</div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:4px;">Transparent. No dealer games.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PATH SELECTION CTA -->
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+          <a href="/contact?path=bd-submit" style="background:var(--s1);color:#ffffff;border:2px solid var(--border);padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">BD SUBMIT — $199 →</a>
+          <a href="/trade-in?path=auction" style="background:var(--gold);color:#020203;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">⚡ START EVL AUCTION →</a>
+          <a href="/contact?path=private-sale" style="background:var(--blue);color:#ffffff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">PRIVATE SALE ASSIST →</a>
+          <a href="/contact" style="background:transparent;color:#ffffff;border:2px solid var(--border);padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">TALK TO EVL ADVISOR →</a>
+        </div>
+
+      </div><!-- /bcsResults -->
+
+    </div>
+
     <!-- EVL FINANCE ADVANTAGE -->
     <div style="background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,215,0,.03));border:2px solid rgba(255,215,0,.3);border-radius:14px;padding:28px;margin-bottom:24px;">
       
@@ -1028,7 +1214,44 @@ window.selectEquityOption = function(num) {
   });
 }
 
-window.calcSavings = function() {
+// ── BCS CALCULATOR ──
+window.calcBCS = function() {
+  const val = parseFloat(document.getElementById('bcsValue').value) || 0;
+  if(!val) return;
+
+  // Estimates based on typical market data
+  const carmaxOffer   = Math.round(val * 0.88);  // BDs typically 88% of market
+  const auctionOffer  = Math.round(val * 0.96);  // Competition gets 96%
+  const privateOffer  = Math.round(val * 1.04);  // Private sale 4% premium
+  const diyOffer      = Math.round(val * 0.97);  // DIY undersells by ~3%
+  const diyLoss       = Math.round(val * 0.07);  // Optimization gap + listing costs
+
+  // Net calculations
+  const bcs1Net = carmaxOffer - 199;
+  const bcs2Net = auctionOffer - 495 - 75;
+  const bcs3Net = privateOffer - 299;
+  const bcs4Net = diyOffer - 150 - diyLoss;
+
+  // Update display
+  document.getElementById('bcs1Offer').textContent = '$' + carmaxOffer.toLocaleString();
+  document.getElementById('bcs1Net').textContent = '$' + bcs1Net.toLocaleString();
+  document.getElementById('bcs2Offer').textContent = '$' + auctionOffer.toLocaleString();
+  document.getElementById('bcs2Net').textContent = '$' + bcs2Net.toLocaleString();
+  document.getElementById('bcs3Offer').textContent = '$' + privateOffer.toLocaleString();
+  document.getElementById('bcs3Net').textContent = '$' + bcs3Net.toLocaleString();
+  document.getElementById('bcs4Offer').textContent = '$' + diyOffer.toLocaleString();
+  document.getElementById('bcs4Loss').textContent = '-$' + diyLoss.toLocaleString();
+  document.getElementById('bcs4Net').textContent = '$' + bcs4Net.toLocaleString();
+
+  // EVL max saving vs DIY
+  const maxEVL = Math.max(bcs1Net, bcs2Net, bcs3Net);
+  const saving = maxEVL - bcs4Net;
+  document.getElementById('bcsMaxSaving').textContent = '+$' + saving.toLocaleString();
+
+  document.getElementById('bcsResults').style.display = 'block';
+}
+
+ = function() {
   const amount = parseFloat(document.getElementById('financeAmount').value) || 0;
   const dealerRatePct = parseFloat(document.getElementById('dealerRate').value) || 0;
   if(!amount || !dealerRatePct) return;
