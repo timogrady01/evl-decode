@@ -142,6 +142,60 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .mds-med{color:var(--gold)}
 .mds-slow{color:var(--red)}
 
+
+/* DEALER NETWORK */
+.dn-filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+.dn-filter-btn{background:var(--s2);border:1px solid #1a1a2e;color:var(--muted);padding:7px 16px;
+  border-radius:6px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;font-family:var(--font);transition:all .2s;}
+.dn-filter-btn:hover{border-color:var(--gold);color:var(--gold);}
+.dn-filter-btn.active{background:#1a1400;border-color:var(--gold);color:var(--gold);}
+.dn-filter-input{background:var(--s2);border:1px solid #1a1a2e;color:var(--white);padding:7px 14px;
+  border-radius:6px;font-size:13px;font-family:var(--body);font-weight:600;outline:none;flex:1;min-width:200px;}
+.dn-filter-input:focus{border-color:var(--gold);}
+.dn-mfg-group{margin-bottom:28px;}
+.dn-mfg-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:10px;
+  border-bottom:2px solid #1a1a2e;}
+.dn-mfg-name{font-size:18px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;}
+.dn-mfg-count{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;
+  background:var(--s2);padding:3px 10px;border-radius:10px;}
+.dn-dealer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;}
+.dn-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;overflow:hidden;
+  transition:border-color .2s;}
+.dn-card:hover{border-color:var(--gold);}
+.dn-card.active-partner{border-color:var(--green);}
+.dn-card.contacted{border-color:var(--blue);}
+.dn-card-header{background:rgba(0,0,0,.2);padding:12px 16px;border-bottom:1px solid #1a1a2e;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.dn-dealer-name{font-size:15px;font-weight:900;color:var(--white);letter-spacing:.5px;line-height:1.3;}
+.dn-dealer-metro{font-size:11px;color:var(--muted);font-family:var(--body);font-weight:600;
+  text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.dn-status-badge{font-size:10px;font-weight:900;padding:3px 8px;border-radius:10px;
+  letter-spacing:1px;text-transform:uppercase;white-space:nowrap;font-family:var(--font);flex-shrink:0;}
+.dn-status-prospect{background:#0a0a0a;border:1px solid var(--muted);color:var(--muted);}
+.dn-status-contacted{background:#040e1a;border:1px solid var(--blue);color:var(--blue);}
+.dn-status-active{background:#001a00;border:1px solid var(--green);color:var(--green);}
+.dn-card-body{padding:14px 16px;}
+.dn-contact-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;}
+.dn-contact-role{font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase;
+  letter-spacing:1px;width:28px;flex-shrink:0;padding-top:2px;font-family:var(--font);}
+.dn-contact-info{flex:1;}
+.dn-contact-name{font-size:14px;font-weight:900;color:var(--white);}
+.dn-contact-detail{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+  line-height:1.5;margin-top:1px;}
+.dn-card-footer{padding:10px 16px;border-top:1px solid #1a1a2e;display:flex;gap:6px;flex-wrap:wrap;}
+.dn-vol-bar{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.dn-vol-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;flex-shrink:0;font-family:var(--font);}
+.dn-vol-track{flex:1;height:6px;background:#1a1a2e;border-radius:3px;overflow:hidden;}
+.dn-vol-fill{height:100%;background:var(--gold);border-radius:3px;}
+.dn-vol-num{font-size:12px;font-weight:900;color:var(--gold);flex-shrink:0;}
+.dn-tier{display:inline-block;font-size:10px;font-weight:900;padding:2px 8px;border-radius:8px;
+  letter-spacing:1px;text-transform:uppercase;font-family:var(--font);margin-bottom:8px;}
+.dn-tier-green{background:rgba(0,200,83,.1);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+.dn-tier-yellow{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
+.dn-tier-red{background:rgba(255,51,51,.1);color:var(--red);border:1px solid rgba(255,51,51,.3);}
+
 /* BUTTONS */
 .btn{padding:8px 16px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
@@ -189,6 +243,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <button class="tab-btn" onclick="switchTab('pipeline',this)">⚡ DEAL PIPELINE</button>
   <button class="tab-btn" onclick="switchTab('bids',this)">🏷️ BID SYSTEM</button>
   <button class="tab-btn" onclick="switchTab('porter',this)">🚐 PORTER DISPATCH</button>
+  <button class="tab-btn" onclick="switchTab('dealers',this)">🏪 DEALER NETWORK</button>
   <button class="tab-btn" onclick="switchTab('aged',this)">📊 AGED UNIT RADAR</button>
   <button class="tab-btn" onclick="switchTab('pricing',this)">💰 WS PRICING CALC</button>
 </div>
@@ -372,6 +427,33 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 </div>
 
 <!-- ══ AGED UNIT RADAR TAB ══ -->
+<div id="tab-dealers" class="tab-content">
+<div class="section-hdr">
+  <div class="section-title" style="font-size:20px;font-weight:900;color:var(--white);">🏪 DEALER NETWORK — WS BUYER DIRECTORY</div>
+  <button class="btn btn-gold btn-sm" onclick="exportDealers()">📋 EXPORT LIST</button>
+</div>
+
+<!-- FILTER BAR -->
+<div class="dn-filter-bar">
+  <input class="dn-filter-input" type="text" id="dnSearch" placeholder="Search dealer name, metro, contact..." oninput="filterDealers()">
+  <button class="dn-filter-btn active" onclick="filterByHub('all',this)">All Metros</button>
+  <button class="dn-filter-btn" onclick="filterByHub('dfw',this)">DFW</button>
+  <button class="dn-filter-btn" onclick="filterByHub('houston',this)">Houston</button>
+  <button class="dn-filter-btn" onclick="filterByHub('atlanta',this)">Atlanta</button>
+  <button class="dn-filter-btn" onclick="filterByHub('dallas',this)">Dallas</button>
+</div>
+<div class="dn-filter-bar" style="margin-top:-10px;">
+  <button class="dn-filter-btn active" id="statusAll" onclick="filterByStatus('all',this)">All Status</button>
+  <button class="dn-filter-btn" id="statusProspect" onclick="filterByStatus('prospect',this)">Prospect</button>
+  <button class="dn-filter-btn" id="statusContacted" onclick="filterByStatus('contacted',this)">Contacted</button>
+  <button class="dn-filter-btn" id="statusActive" onclick="filterByStatus('active',this)">Active Partner</button>
+</div>
+
+<!-- DEALER NETWORK CONTENT -->
+<div id="dealerNetworkContent"></div>
+
+</div>
+
 <div id="tab-aged" class="tab-content">
   <div class="section-hdr">
     <div class="section-title">📊 AGED UNIT ACQUISITION RADAR</div>
@@ -734,12 +816,326 @@ function calcPricing(){
   document.getElementById('pc-strategy').textContent = strategy;
 }
 
+
+// ══════════════════════════════════════════════════
+// DEALER NETWORK DATA + RENDER
+// ══════════════════════════════════════════════════
+
+const DEALER_DATA = [
+  // ── TOYOTA ──
+  { mfg:'Toyota', name:'AutoNation Toyota Plano', metro:'DFW', hub:'dfw', vol:180, tier:'green',
+    status:'active', addr:'4241 W Plano Pkwy, Plano TX 75093',
+    phone:'(972) 867-4900',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 867-4900', email:'info@antoyotaplano.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 867-4911', cell:'(972) 555-0101', email:'ucd@antoyotaplano.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 867-4912', cell:'(972) 555-0102', ext:'412', email:'ucm@antoyotaplano.com' },
+    ]},
+  { mfg:'Toyota', name:'Toyota of Rockwall', metro:'DFW', hub:'dfw', vol:140, tier:'green',
+    status:'contacted', addr:'1521 I-30, Rockwall TX 75087',
+    phone:'(972) 771-2200',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 771-2200', email:'info@toyotaofrockwall.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 771-2211', cell:'(972) 555-0103', email:'ucd@toyotaofrockwall.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 771-2212', cell:'(972) 555-0104', ext:'212', email:'ucm@toyotaofrockwall.com' },
+    ]},
+  { mfg:'Toyota', name:'Park Place Lexus Plano', metro:'DFW', hub:'dfw', vol:120, tier:'green',
+    status:'prospect', addr:'5910 Dallas Pkwy, Plano TX 75093',
+    phone:'(972) 867-5700',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 867-5700', email:'info@parklexusplano.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 867-5711', cell:'', email:'ucd@parklexusplano.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 867-5712', cell:'', ext:'512', email:'ucm@parklexusplano.com' },
+    ]},
+  { mfg:'Toyota', name:'Sterling McCall Toyota', metro:'Houston', hub:'houston', vol:220, tier:'yellow',
+    status:'prospect', addr:'9400 Southwest Fwy, Houston TX 77074',
+    phone:'(713) 981-9400',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(713) 981-9400', email:'info@smtoyota.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(713) 981-9411', cell:'', email:'ucd@smtoyota.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(713) 981-9412', cell:'', ext:'312', email:'ucm@smtoyota.com' },
+    ]},
+
+  // ── FORD ──
+  { mfg:'Ford', name:'Randall Reed's Planet Ford', metro:'DFW', hub:'dfw', vol:200, tier:'green',
+    status:'active', addr:'1800 E Central Expy, Plano TX 75074',
+    phone:'(972) 424-4600',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 424-4600', email:'info@planetford.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 424-4611', cell:'(972) 555-0201', email:'ucd@planetford.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 424-4612', cell:'(972) 555-0202', ext:'212', email:'ucm@planetford.com' },
+    ]},
+  { mfg:'Ford', name:'Courtesy Ford', metro:'DFW', hub:'dfw', vol:165, tier:'green',
+    status:'contacted', addr:'5000 W Plano Pkwy, Plano TX 75093',
+    phone:'(972) 599-3600',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 599-3600', email:'info@courtesyfordplano.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 599-3611', cell:'(972) 555-0203', email:'ucd@courtesyfordplano.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 599-3612', cell:'', ext:'312', email:'ucm@courtesyfordplano.com' },
+    ]},
+  { mfg:'Ford', name:'Westway Ford', metro:'DFW', hub:'dfw', vol:150, tier:'green',
+    status:'prospect', addr:'801 E Airport Fwy, Irving TX 75062',
+    phone:'(972) 790-6000',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 790-6000', email:'info@westwayfordinc.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 790-6011', cell:'', email:'ucd@westwayfordinc.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 790-6012', cell:'', ext:'412', email:'ucm@westwayfordinc.com' },
+    ]},
+  { mfg:'Ford', name:'Mac Haik Ford', metro:'Houston', hub:'houston', vol:190, tier:'yellow',
+    status:'prospect', addr:'11811 Katy Fwy, Houston TX 77079',
+    phone:'(281) 497-6500',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(281) 497-6500', email:'info@machaikford.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(281) 497-6511', cell:'', email:'ucd@machaikford.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(281) 497-6512', cell:'', ext:'512', email:'ucm@machaikford.com' },
+    ]},
+
+  // ── CHEVROLET ──
+  { mfg:'Chevrolet', name:'Huffines Chevrolet Plano', metro:'DFW', hub:'dfw', vol:175, tier:'green',
+    status:'active', addr:'900 N Central Expy, Plano TX 75074',
+    phone:'(972) 881-8000',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 881-8000', email:'info@huffineschevrolet.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 881-8011', cell:'(972) 555-0301', email:'ucd@huffineschevrolet.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 881-8012', cell:'(972) 555-0302', ext:'212', email:'ucm@huffineschevrolet.com' },
+    ]},
+  { mfg:'Chevrolet', name:'Classic Chevrolet', metro:'DFW', hub:'dfw', vol:160, tier:'green',
+    status:'contacted', addr:'1901 S Stemmons Fwy, Lewisville TX 75067',
+    phone:'(972) 436-5200',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 436-5200', email:'info@classicchevy.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 436-5211', cell:'', email:'ucd@classicchevy.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 436-5212', cell:'', ext:'312', email:'ucm@classicchevy.com' },
+    ]},
+  { mfg:'Chevrolet', name:'Ben Terry Chevrolet', metro:'Atlanta', hub:'atlanta', vol:130, tier:'green',
+    status:'prospect', addr:'3205 N Druid Hills Rd, Decatur GA 30033',
+    phone:'(404) 636-1500',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(404) 636-1500', email:'info@benterrychevy.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(404) 636-1511', cell:'', email:'ucd@benterrychevy.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(404) 636-1512', cell:'', ext:'212', email:'ucm@benterrychevy.com' },
+    ]},
+
+  // ── HONDA ──
+  { mfg:'Honda', name:'Hendrick Honda Frisco', metro:'DFW', hub:'dfw', vol:145, tier:'green',
+    status:'contacted', addr:'9135 John W Elliott Dr, Frisco TX 75033',
+    phone:'(972) 731-3600',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 731-3600', email:'info@hendrickhondafrisco.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 731-3611', cell:'(972) 555-0401', email:'ucd@hendrickhondafrisco.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 731-3612', cell:'', ext:'412', email:'ucm@hendrickhondafrisco.com' },
+    ]},
+  { mfg:'Honda', name:'AutoNation Honda Katy', metro:'Houston', hub:'houston', vol:155, tier:'yellow',
+    status:'prospect', addr:'20777 Katy Fwy, Katy TX 77450',
+    phone:'(281) 644-1000',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(281) 644-1000', email:'info@anhondakaty.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(281) 644-1011', cell:'', email:'ucd@anhondakaty.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(281) 644-1012', cell:'', ext:'512', email:'ucm@anhondakaty.com' },
+    ]},
+
+  // ── NISSAN ──
+  { mfg:'Nissan', name:'AutoNation Nissan Plano', metro:'DFW', hub:'dfw', vol:125, tier:'green',
+    status:'prospect', addr:'3760 W 15th St, Plano TX 75075',
+    phone:'(972) 423-7300',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 423-7300', email:'info@annissanplano.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 423-7311', cell:'', email:'ucd@annissanplano.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 423-7312', cell:'', ext:'312', email:'ucm@annissanplano.com' },
+    ]},
+  { mfg:'Nissan', name:'Nalley Nissan of Atlanta', metro:'Atlanta', hub:'atlanta', vol:110, tier:'green',
+    status:'prospect', addr:'1500 Cobb Pkwy SE, Marietta GA 30060',
+    phone:'(770) 423-9800',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(770) 423-9800', email:'info@nalleynissan.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(770) 423-9811', cell:'', email:'ucd@nalleynissan.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(770) 423-9812', cell:'', ext:'212', email:'ucm@nalleynissan.com' },
+    ]},
+
+  // ── JEEP / RAM / DODGE ──
+  { mfg:'Jeep/RAM/Dodge', name:'Huffines CDJR Plano', metro:'DFW', hub:'dfw', vol:160, tier:'green',
+    status:'active', addr:'1000 N Central Expy, Plano TX 75074',
+    phone:'(972) 881-8100',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(972) 881-8100', email:'info@huffinescdjr.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(972) 881-8111', cell:'(972) 555-0601', email:'ucd@huffinescdjr.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(972) 881-8112', cell:'(972) 555-0602', ext:'312', email:'ucm@huffinescdjr.com' },
+    ]},
+  { mfg:'Jeep/RAM/Dodge', name:'Stevens Jersey Village CDJR', metro:'Houston', hub:'houston', vol:140, tier:'yellow',
+    status:'prospect', addr:'13300 FM 529, Houston TX 77041',
+    phone:'(713) 466-2000',
+    contacts:[
+      { role:'REC', name:'Front Desk', phone:'(713) 466-2000', email:'info@stevenscdjr.com' },
+      { role:'UCD', name:'Used Car Director', phone:'(713) 466-2011', cell:'', email:'ucd@stevenscdjr.com' },
+      { role:'UCM', name:'Used Car Manager', phone:'(713) 466-2012', cell:'', ext:'412', email:'ucm@stevenscdjr.com' },
+    ]},
+];
+
+let dnFilterHub = 'all';
+let dnFilterStatus = 'all';
+
+function renderDealerNetwork() {
+  const search = (document.getElementById('dnSearch')||{value:''}).value.toLowerCase();
+  
+  // Filter dealers
+  let filtered = DEALER_DATA.filter(d => {
+    const matchHub    = dnFilterHub === 'all' || d.hub === dnFilterHub;
+    const matchStatus = dnFilterStatus === 'all' || d.status === dnFilterStatus;
+    const matchSearch = !search || 
+      d.name.toLowerCase().includes(search) ||
+      d.metro.toLowerCase().includes(search) ||
+      d.mfg.toLowerCase().includes(search) ||
+      d.contacts.some(c => c.name.toLowerCase().includes(search));
+    return matchHub && matchStatus && matchSearch;
+  });
+
+  // Group by manufacturer
+  const mfgOrder = ['Toyota','Ford','Chevrolet','Honda','Nissan','Jeep/RAM/Dodge'];
+  const grouped = {};
+  filtered.forEach(d => {
+    if (!grouped[d.mfg]) grouped[d.mfg] = [];
+    grouped[d.mfg].push(d);
+  });
+
+  const container = document.getElementById('dealerNetworkContent');
+  if (!container) return;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--muted);"><div style="font-size:40px;margin-bottom:12px;">🔍</div><div style="font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">No dealers match your filters</div></div>';
+    return;
+  }
+
+  const mfgsToShow = mfgOrder.filter(m => grouped[m] && grouped[m].length > 0);
+  
+  container.innerHTML = mfgsToShow.map(mfg => {
+    const dealers = grouped[mfg].sort((a,b) => b.vol - a.vol);
+    const maxVol = Math.max(...dealers.map(d => d.vol));
+    
+    return `
+    <div class="dn-mfg-group">
+      <div class="dn-mfg-header">
+        <div class="dn-mfg-name">${mfg}</div>
+        <div class="dn-mfg-count">${dealers.length} dealer${dealers.length>1?'s':''}</div>
+      </div>
+      <div class="dn-dealer-grid">
+        ${dealers.map(d => renderDealerCard(d, maxVol)).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderDealerCard(d, maxVol) {
+  const statusClass = d.status === 'active' ? 'active-partner' : d.status === 'contacted' ? 'contacted' : '';
+  const statusBadgeClass = d.status === 'active' ? 'dn-status-active' : d.status === 'contacted' ? 'dn-status-contacted' : 'dn-status-prospect';
+  const statusLabel = d.status === 'active' ? '✅ ACTIVE PARTNER' : d.status === 'contacted' ? '📞 CONTACTED' : '🔵 PROSPECT';
+  const tierClass = d.tier === 'green' ? 'dn-tier-green' : d.tier === 'yellow' ? 'dn-tier-yellow' : 'dn-tier-red';
+  const tierLabel = d.tier === 'green' ? '🟢 GREEN STATE' : d.tier === 'yellow' ? '🟡 YELLOW STATE' : '🔴 RED STATE';
+  const volPct = Math.round((d.vol / maxVol) * 100);
+
+  const contactsHtml = d.contacts.map(c => `
+    <div class="dn-contact-row">
+      <div class="dn-contact-role">${c.role}</div>
+      <div class="dn-contact-info">
+        <div class="dn-contact-name">${c.name}</div>
+        <div class="dn-contact-detail">
+          ${c.phone ? c.phone : ''}
+          ${c.cell ? ` · Cell: ${c.cell}` : ''}
+          ${c.ext ? ` · Ext: ${c.ext}` : ''}
+          ${c.email ? `<br>${c.email}` : ''}
+        </div>
+      </div>
+    </div>`).join('');
+
+  return `
+  <div class="dn-card ${statusClass}">
+    <div class="dn-card-header">
+      <div>
+        <div class="dn-dealer-name">${d.name}</div>
+        <div class="dn-dealer-metro">${d.metro} · ${d.addr}</div>
+      </div>
+      <span class="dn-status-badge ${statusBadgeClass}">${statusLabel}</span>
+    </div>
+    <div class="dn-card-body">
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+        <span class="dn-tier ${tierClass}">${tierLabel}</span>
+      </div>
+      <div class="dn-vol-bar">
+        <div class="dn-vol-label">VOL</div>
+        <div class="dn-vol-track"><div class="dn-vol-fill" style="width:${volPct}%"></div></div>
+        <div class="dn-vol-num">${d.vol}/mo</div>
+      </div>
+      ${contactsHtml}
+    </div>
+    <div class="dn-card-footer">
+      <button class="btn btn-gold btn-sm" onclick="dnOutreach('${d.name.replace(/'/g,"\'")}')">📧 OUTREACH</button>
+      <button class="btn btn-dark btn-sm" onclick="dnAddToAuction('${d.name.replace(/'/g,"\'")}')">⚡ ADD TO NETWORK</button>
+      <button class="btn btn-dark btn-sm" onclick="dnViewAged('${d.hub}')">📊 AGED UNITS</button>
+    </div>
+  </div>`;
+}
+
+function filterDealers() { renderDealerNetwork(); }
+
+function filterByHub(hub, btn) {
+  dnFilterHub = hub;
+  document.querySelectorAll('.dn-filter-btn').forEach(b => {
+    if (['All Metros','DFW','Houston','Atlanta','Dallas'].some(t => b.textContent.includes(t))) {
+      b.classList.remove('active');
+    }
+  });
+  btn.classList.add('active');
+  renderDealerNetwork();
+}
+
+function filterByStatus(status, btn) {
+  dnFilterStatus = status;
+  ['statusAll','statusProspect','statusContacted','statusActive'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  btn.classList.add('active');
+  renderDealerNetwork();
+}
+
+function dnOutreach(name) {
+  alert('📧 Outreach template queued for:\n' + name + '\n\nTemplate: EVL WS BUYER NETWORK INVITATION\nWill route through EVL Communications Platform.');
+}
+
+function dnAddToAuction(name) {
+  alert('⚡ ' + name + ' added to EVL Auction Buyer Network.\n\nThey will receive bid notifications when vehicles in their metro and price range go to auction.');
+}
+
+function dnViewAged(hub) {
+  switchTab('aged', document.querySelector('.tab-btn[onclick*="aged"]'));
+  setTimeout(() => {
+    const hubFilter = document.querySelector('[data-hub="' + hub + '"]');
+    if (hubFilter) hubFilter.click();
+  }, 200);
+}
+
+function exportDealers() {
+  const rows = ['Manufacturer,Dealer Name,Metro,Phone,Volume/mo,Status,Title State,UCM Name,UCM Phone,UCM Email'];
+  DEALER_DATA.forEach(d => {
+    const ucm = d.contacts.find(c => c.role === 'UCM') || {};
+    rows.push([
+      d.mfg, d.name, d.metro, d.phone, d.vol, d.status, d.tier,
+      ucm.name||'', ucm.phone||'', ucm.email||''
+    ].map(v => '"'+String(v).replace(/"/g,'""')+'"').join(','));
+  });
+  const blob = new Blob([rows.join('\n')], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'EVL-Dealer-Network-' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+}
+
 // ── INIT ──
 window.addEventListener('DOMContentLoaded',function(){
   renderPipeline();
   renderBids();
   renderPorters();
   renderAgedUnits();
+  renderDealerNetwork();
 });
 
 function openNewDeal(){ alert('New WS Deal form — coming in next build!'); }
