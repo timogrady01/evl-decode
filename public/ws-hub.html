@@ -455,37 +455,95 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 </div>
 
 <div id="tab-aged" class="tab-content">
-  <div class="section-hdr">
-    <div class="section-title">📊 AGED UNIT ACQUISITION RADAR</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <select class="form-input" id="aged-filter" style="width:auto;padding:8px 12px;font-size:13px;border-color:var(--gold)" onchange="renderAgedUnits()">
-        <option value="">ALL DAYS ON LOT</option>
-        <option value="120">120+ Days (CRITICAL)</option>
-        <option value="90">90+ Days (HOT)</option>
-        <option value="60">60+ Days (WARM)</option>
-      </select>
-      <select class="form-input" id="aged-hub" style="width:auto;padding:8px 12px;font-size:13px;border-color:var(--gold)" onchange="renderAgedUnits()">
-        <option value="">ALL HUBS</option>
-        <option>DFW / Plano</option>
-        <option>Houston</option>
-        <option>Atlanta</option>
-        <option>Chicago</option>
-        <option>Denver</option>
-      </select>
+
+  <!-- HEADER -->
+  <div class="section-hdr" style="margin-bottom:16px;">
+    <div>
+      <div class="section-title">📊 ORPHAN UNIT RADAR — AGED ACQUISITION INTELLIGENCE</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;margin-top:4px;">
+        Off-brand units sitting 60+ days at franchise dealers · DFW 100-mile radius · MarketCheck live data
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <button class="btn btn-gold btn-sm" onclick="fetchLiveAgedUnits()" id="fetchBtn">
+        ⚡ PULL LIVE DATA
+      </button>
+      <button class="btn btn-dark btn-sm" onclick="exportOrphanCSV()">📋 EXPORT</button>
     </div>
   </div>
-  <div style="overflow-x:auto">
-    <table class="aged-unit-table" id="aged-table">
-      <thead><tr>
-        <th>VEHICLE</th><th>VIN</th><th>DEALER / ROOFTOP</th>
-        <th>HUB</th><th>DAYS ON LOT</th><th>MDS</th><th>EST. ACV</th><th>EVL STRATEGY</th><th>ACTIONS</th>
-      </tr></thead>
-      <tbody id="aged-tbody"></tbody>
-    </table>
+
+  <!-- FILTERS -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
+    <select class="form-input" id="aged-filter" style="width:auto;padding:8px 12px;font-size:13px;border-color:var(--gold)" onchange="applyAgedFilters()">
+      <option value="">ALL DAYS ON LOT</option>
+      <option value="120">120+ Days (CRITICAL)</option>
+      <option value="90">90+ Days (HOT)</option>
+      <option value="60">60+ Days (WARM)</option>
+    </select>
+    <select class="form-input" id="aged-orphan" style="width:auto;padding:8px 12px;font-size:13px;border-color:var(--gold)" onchange="applyAgedFilters()">
+      <option value="">ALL UNITS</option>
+      <option value="orphan">ORPHAN UNITS ONLY</option>
+      <option value="native">NATIVE BRAND ONLY</option>
+    </select>
+    <select class="form-input" id="aged-make-filter" style="width:auto;padding:8px 12px;font-size:13px;" onchange="applyAgedFilters()">
+      <option value="">ALL MAKES</option>
+      <option>Ford</option><option>Chevrolet</option><option>GMC</option>
+      <option>RAM</option><option>Toyota</option><option>Honda</option>
+      <option>Nissan</option><option>Jeep</option><option>Dodge</option>
+    </select>
+    <div id="agedStatus" style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;"></div>
   </div>
+
+  <!-- SUMMARY STATS -->
+  <div id="agedSummaryStats" style="display:none;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;">
+    <div class="stat-card" style="border-color:var(--red);">
+      <span class="stat-val" id="statCritical" style="color:var(--red);">0</span>
+      <span class="stat-lbl">120+ Days Critical</span>
+    </div>
+    <div class="stat-card" style="border-color:var(--gold);">
+      <span class="stat-val" id="statHot" style="color:var(--gold);">0</span>
+      <span class="stat-lbl">90+ Days Hot</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val" id="statOrphan" style="color:var(--blue);">0</span>
+      <span class="stat-lbl">Orphan Units</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val" id="statTotalPain" style="color:var(--red);">$0</span>
+      <span class="stat-lbl">Total Dealer Pain</span>
+    </div>
+    <div class="stat-card" style="border-color:var(--green);">
+      <span class="stat-val" id="statOpportunity" style="color:var(--green);">$0</span>
+      <span class="stat-lbl">EVL Opportunity</span>
+    </div>
+  </div>
+
+  <!-- UNIT CARDS -->
+  <div id="agedUnitCards"></div>
+
+  <!-- LEGACY TABLE (static demo data) - shown until live pull -->
+  <div id="agedLegacyTable">
+    <div style="background:rgba(43,132,254,.06);border:1px solid rgba(43,132,254,.25);border-radius:8px;
+      padding:14px 18px;margin-bottom:16px;font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;">
+      📡 <strong style="color:var(--blue);">Demo data shown below.</strong> Click
+      <strong style="color:var(--gold);">⚡ PULL LIVE DATA</strong> above to replace with real-time
+      MarketCheck inventory from DFW 100-mile radius dealers.
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="aged-unit-table" id="aged-table">
+        <thead><tr>
+          <th>VEHICLE</th><th>VIN</th><th>DEALER / ROOFTOP</th>
+          <th>ORPHAN?</th><th>DAYS ON LOT</th><th>MDS</th>
+          <th>RETAIL VALUE</th><th>WHOLESALE</th><th>FLOOR PLAN PAIN</th>
+          <th>TOP BUYER MATCH</th><th>ACTIONS</th>
+        </tr></thead>
+        <tbody id="aged-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
-<!-- ══ PRICING CALCULATOR TAB ══ -->
 <div id="tab-pricing" class="tab-content">
   <div style="max-width:700px">
     <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">💰 WS PRICING CALCULATOR</div>
@@ -730,43 +788,372 @@ function renderPorters(){
 
 // ── AGED UNITS ──
 const AGED_UNITS = [
-  {vehicle:'2021 GMC Yukon Denali',vin:'1GKS2BKL5MR123456',dealer:'Hendrick GMC Buford',hub:'Atlanta',days:142,mds:38,acv:48500,strategy:'AGED UNIT OUTREACH — Send trade card immediately. Price is likely negotiable.'},
-  {vehicle:'2020 Porsche Cayenne S',vin:'WP1AB2AY0LDA23456',dealer:'Park Place Porsche Dallas',hub:'DFW / Plano',days:128,mds:55,acv:61200,strategy:'SPECIALTY UNIT — High ACV, slow mover. Target luxury buyer network.'},
-  {vehicle:'2022 Ford Bronco Wildtrak',vin:'1FMEE5DP3NLB34567',dealer:'AutoNation Ford Katy',hub:'Houston',days:97,mds:24,acv:42100,strategy:'HOT UNIT — MDS is low. Multiple buyers waiting. Move immediately.'},
-  {vehicle:'2021 Chevrolet Silverado 1500 High Country',vin:'1GCUYHEL0MZ45678',dealer:'Sterling McCall Chevy',hub:'Houston',days:91,mds:31,acv:38700,strategy:'WARM UNIT — Competitive segment. Competitive bid likely to close quickly.'},
-  {vehicle:'2019 Mercedes-Benz GLE 350',vin:'4JGFB4KE1KA56789',dealer:'Park Place MB Dallas',hub:'DFW / Plano',days:88,mds:42,acv:34500,strategy:'AGED LUXURY — Aging fast. UC Mgr should be motivated. Push for ACV.'},
-  {vehicle:'2022 Kia Telluride SX Prestige',vin:'5XYP5DHC0NG67890',dealer:'Nalley Kia Lithonia',hub:'Atlanta',days:74,mds:19,acv:36100,strategy:'FAST MOVER — Only 19 MDS. Multiple buyers want this unit. Bid close to ACV.'},
-  {vehicle:'2021 Lexus RX 350 F-Sport',vin:'2T2BZMDA3MC78901',dealer:'Sewell Lexus Dallas',hub:'DFW / Plano',days:72,mds:28,acv:39800,strategy:'PREMIUM UNIT — F-Sport demand strong. Target BMW/MB dealers looking for competitive cert.'},
-  {vehicle:'2020 Ram 2500 Laramie Power Wagon',vin:'3C6TR5EJ4LG89012',dealer:'Dodge Country of Conroe',hub:'Houston',days:67,mds:33,acv:44200,strategy:'SPECIALTY TRUCK — Power Wagon is sought after. Check WS Exchange for buyers.'},
+  {vehicle:'2021 GMC Yukon Denali',vin:'1GKS2BKL5MR123456',dealer:'Hendrick Honda Frisco',dealerMfg:'Honda',unitMfg:'GMC',hub:'DFW',days:142,mds:38,retail:51200,wholesale:44800,acv:44800,strategy:'CRITICAL ORPHAN — Honda dealer cannot move this. GMC/Buick dealers in DFW need Yukons. Move immediately.',recalls:0},
+  {vehicle:'2022 Ford F-150 Lariat',vin:'1FTFW1E50NKD12345',dealer:'AutoNation Toyota Plano',dealerMfg:'Toyota',unitMfg:'Ford',hub:'DFW',days:97,mds:18,retail:44500,wholesale:38200,acv:38200,strategy:'HOT ORPHAN — Toyota dealer, Ford F-150. MDS only 18 days. Ford dealers in DFW are hungry for this unit.',recalls:1},
+  {vehicle:'2020 Ram 1500 Laramie',vin:'1C6SRFJTXLN123456',dealer:'Hendrick Honda Frisco',dealerMfg:'Honda',unitMfg:'RAM',hub:'DFW',days:88,mds:24,retail:38100,wholesale:32400,acv:32400,strategy:'WARM ORPHAN — Ram sits at Honda. CDJR dealers within 50 miles have strong demand. Good acquisition target.',recalls:0},
+  {vehicle:'2021 Chevrolet Silverado 1500 High Country',vin:'1GCUYHEL0MZ45678',dealer:'AutoNation Nissan Plano',dealerMfg:'Nissan',unitMfg:'Chevrolet',hub:'DFW',days:91,mds:31,retail:41200,wholesale:35800,acv:35800,strategy:'ORPHAN TRUCK — Nissan dealer carrying Silverado 91 days. Chevy dealers are the right buyer. Competitive segment.',recalls:0},
+  {vehicle:'2022 Kia Telluride SX',vin:'5XYP5DHC0NG67890',dealer:'Randall Reed Planet Ford',dealerMfg:'Ford',unitMfg:'Kia',hub:'DFW',days:74,mds:19,retail:38800,wholesale:33200,acv:33200,strategy:'FAST MOVER ORPHAN — Ford dealer has Kia Telluride. MDS 19 days. Kia/Hyundai dealers want this.',recalls:0},
+  {vehicle:'2020 Porsche Cayenne S',vin:'WP1AB2AY0LDA23456',dealer:'Park Place Lexus Plano',dealerMfg:'Lexus',unitMfg:'Porsche',hub:'DFW',days:128,mds:55,retail:64200,wholesale:55100,acv:55100,strategy:'SPECIALTY ORPHAN — Lexus dealer cannot move Porsche. High ACV, slow mover. Target Porsche/luxury dealers.',recalls:0},
+  {vehicle:'2021 Lexus RX 350 F-Sport',vin:'2T2BZMDA3MC78901',dealer:'Courtesy Ford Plano',dealerMfg:'Ford',unitMfg:'Lexus',hub:'DFW',days:72,mds:28,retail:42100,wholesale:36500,acv:36500,strategy:'PREMIUM ORPHAN — Ford dealer carrying Lexus F-Sport. Luxury dealers and Lexus-certified path available.',recalls:0},
+  {vehicle:'2022 Ford Bronco Wildtrak',vin:'1FMEE5DP3NLB34567',dealer:'Huffines Chevrolet Plano',dealerMfg:'Chevrolet',unitMfg:'Ford',hub:'DFW',days:97,mds:22,retail:45300,wholesale:39100,acv:39100,strategy:'HOT ORPHAN — Chevy dealer has Bronco. Bronco demand still strong. Ford dealers in DFW want this unit.',recalls:2},
 ];
 
-function renderAgedUnits(){
-  const dayFilter = parseInt(document.getElementById('aged-filter')?.value)||0;
-  const hubFilter = document.getElementById('aged-hub')?.value||'';
-  let units = AGED_UNITS;
-  if(dayFilter) units = units.filter(u=>u.days>=dayFilter);
-  if(hubFilter) units = units.filter(u=>u.hub.toLowerCase().includes(hubFilter.split('/')[0].trim().toLowerCase()));
-  const tbody = document.getElementById('aged-tbody');
-  tbody.innerHTML = units.map(u=>{
-    const daysCls = u.days>=120?'days-hot':u.days>=90?'days-warm':'days-cool';
-    const mdsCls = u.mds<=20?'mds-fast':u.mds<=35?'mds-med':'mds-slow';
-    return `<tr>
-      <td><strong style="color:var(--white)">${u.vehicle}</strong></td>
-      <td style="font-family:monospace;font-size:12px">${u.vin}</td>
-      <td>${u.dealer}</td>
-      <td style="color:var(--gold);font-weight:700">${u.hub}</td>
-      <td><span class="days-badge ${daysCls}">${u.days} days</span></td>
-      <td><span class="mds-val ${mdsCls}">${u.mds}d</span></td>
-      <td style="color:var(--gold);font-weight:900">$${u.acv.toLocaleString()}</td>
-      <td style="font-size:12px;color:var(--dim);font-family:var(--body);max-width:200px;line-height:1.4">${u.strategy}</td>
-      <td>
-        <div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button class="btn btn-gold btn-sm" onclick="sendOutreach('${u.vin}')">📧 OUTREACH</button>
-          <button class="btn btn-dark btn-sm">🏷️ BID</button>
+// Dealer match data for ranking
+const BUYER_NETWORK = {
+  'GMC':       [{name:'AutoNation GMC Frisco',vol:140,turn:22,stock:4,need:8,status:'active'},{name:'Classic GMC Lewisville',vol:120,turn:28,stock:3,need:7,status:'contacted'},{name:'Sewell Buick GMC',vol:110,turn:31,stock:5,need:8,status:'prospect'}],
+  'Ford':      [{name:'Randall Reed Planet Ford',vol:200,turn:18,stock:12,need:18,status:'active'},{name:'Courtesy Ford Plano',vol:165,turn:21,stock:9,need:15,status:'contacted'},{name:'Westway Ford Irving',vol:150,turn:24,stock:8,need:12,status:'prospect'}],
+  'RAM':       [{name:'Huffines CDJR Plano',vol:160,turn:20,stock:8,need:14,status:'active'},{name:'Classic CDJR Denton',vol:130,turn:25,stock:6,need:11,status:'prospect'}],
+  'Chevrolet': [{name:'Huffines Chevrolet Plano',vol:175,turn:19,stock:11,need:16,status:'active'},{name:'Classic Chevrolet Lewisville',vol:160,turn:22,stock:9,need:14,status:'contacted'}],
+  'Kia':       [{name:'Huffines Kia Corinth',vol:110,turn:17,stock:6,need:12,status:'prospect'},{name:'AutoNation Kia Plano',vol:95,turn:20,stock:5,need:10,status:'prospect'}],
+  'Porsche':   [{name:'Park Place Porsche Dallas',vol:60,turn:45,stock:3,need:5,status:'prospect'}],
+  'Lexus':     [{name:'Park Place Lexus Plano',vol:120,turn:25,stock:7,need:12,status:'active'},{name:'Sewell Lexus Dallas',vol:110,turn:28,stock:6,need:10,status:'prospect'}],
+  'Jeep':      [{name:'Huffines CDJR Plano',vol:160,turn:20,stock:7,need:12,status:'active'}],
+};
+
+function calcDealerMatchScore(buyer, unit) {
+  let score = 0;
+  // Turn rate — lower is better (max 30 pts)
+  score += buyer.turn <= 20 ? 30 : buyer.turn <= 30 ? 20 : 10;
+  // Inventory need — more need = better (max 30 pts)
+  const gap = buyer.need - buyer.stock;
+  score += gap >= 8 ? 30 : gap >= 4 ? 20 : gap >= 1 ? 10 : 0;
+  // Volume — higher = better (max 20 pts)
+  score += buyer.vol >= 150 ? 20 : buyer.vol >= 100 ? 14 : 8;
+  // Relationship status (max 20 pts)
+  score += buyer.status === 'active' ? 20 : buyer.status === 'contacted' ? 12 : 6;
+  return Math.min(score, 100);
+}
+
+function calcFloorPlanPain(days, wholesale) {
+  const dailyRate = 0.00068; // avg floor plan rate ~25% APR / 365
+  return Math.round(wholesale * dailyRate * days);
+}
+
+function calcDepreciation30(retail, days) {
+  // avg used car depreciates ~1% of value per month
+  const monthlyRate = retail * 0.008;
+  return Math.round(monthlyRate);
+}
+
+let currentAgedUnits = [...AGED_UNITS];
+let liveDataLoaded = false;
+
+function renderAgedUnits() { applyAgedFilters(); }
+
+function applyAgedFilters() {
+  const dayFilter   = parseInt(document.getElementById('aged-filter')?.value)||0;
+  const orphanFilter = document.getElementById('aged-orphan')?.value||'';
+  const makeFilter  = document.getElementById('aged-make-filter')?.value||'';
+
+  let units = currentAgedUnits;
+  if (dayFilter)   units = units.filter(u => u.days >= dayFilter);
+  if (orphanFilter === 'orphan') units = units.filter(u => u.dealerMfg !== u.unitMfg);
+  if (orphanFilter === 'native') units = units.filter(u => u.dealerMfg === u.unitMfg);
+  if (makeFilter)  units = units.filter(u => u.unitMfg === makeFilter);
+
+  renderAgedUnitCards(units);
+  updateAgedSummaryStats(units);
+}
+
+function updateAgedSummaryStats(units) {
+  const statsEl = document.getElementById('agedSummaryStats');
+  if (statsEl) {
+    statsEl.style.display = 'grid';
+    document.getElementById('statCritical').textContent = units.filter(u=>u.days>=120).length;
+    document.getElementById('statHot').textContent = units.filter(u=>u.days>=90).length;
+    document.getElementById('statOrphan').textContent = units.filter(u=>u.dealerMfg!==u.unitMfg).length;
+    const totalPain = units.reduce((sum,u) => sum + calcFloorPlanPain(u.days, u.wholesale), 0);
+    const totalOpp  = units.reduce((sum,u) => sum + Math.round(u.wholesale * 0.04), 0);
+    document.getElementById('statTotalPain').textContent = '$' + Math.round(totalPain/1000) + 'K';
+    document.getElementById('statOpportunity').textContent = '$' + Math.round(totalOpp/1000) + 'K';
+  }
+}
+
+function renderAgedUnitCards(units) {
+  const container = document.getElementById('agedUnitCards');
+  if (!container) return;
+
+  if (units.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--muted);"><div style="font-size:40px;margin-bottom:12px;">🔍</div><div style="font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">No units match filters</div></div>';
+    return;
+  }
+
+  container.innerHTML = units.map(u => {
+    const isOrphan   = u.dealerMfg !== u.unitMfg;
+    const daysCls    = u.days>=120?'days-hot':u.days>=90?'days-warm':'days-cool';
+    const floorPain  = calcFloorPlanPain(u.days, u.wholesale);
+    const depr30     = calcDepreciation30(u.retail, u.days);
+    const totalPain  = floorPain + depr30;
+    const buyers     = (BUYER_NETWORK[u.unitMfg]||[]).map(b => ({...b, score: calcDealerMatchScore(b, u)})).sort((a,b)=>b.score-a.score).slice(0,3);
+    const topBuyer   = buyers[0];
+    const marginOpp  = Math.round(u.wholesale * 0.04);
+
+    return `
+    <div style="background:var(--s1);border:2px solid ${isOrphan?'var(--blue)':'#1a1a2e'};border-radius:14px;
+      overflow:hidden;margin-bottom:16px;transition:border-color .2s;"
+      onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='${isOrphan?'var(--blue)':'#1a1a2e'}'">
+
+      <!-- CARD HEADER -->
+      <div style="background:rgba(0,0,0,.3);padding:14px 20px;border-bottom:1px solid #1a1a2e;
+        display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
+            <span style="font-size:18px;font-weight:900;color:var(--white);letter-spacing:.5px;">${u.vehicle}</span>
+            ${isOrphan ? `<span style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.4);color:var(--blue);
+              font-size:11px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px;
+              font-family:var(--font);">🔀 ORPHAN UNIT</span>` : ''}
+            ${u.recalls > 0 ? `<span style="background:rgba(255,51,51,.15);border:1px solid rgba(255,51,51,.4);color:var(--red);
+              font-size:11px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px;
+              font-family:var(--font);">⚠️ ${u.recalls} OPEN RECALL${u.recalls>1?'S':''}</span>` : ''}
+          </div>
+          <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;">
+            VIN: <span style="font-family:monospace;color:var(--dim);">${u.vin}</span>
+            &nbsp;·&nbsp; <span style="color:var(--gold);">${u.dealer}</span>
+            &nbsp;·&nbsp; Dealer brand: <strong style="color:var(--white);">${u.dealerMfg}</strong>
+            &nbsp;·&nbsp; Unit brand: <strong style="color:${isOrphan?'var(--blue)':'var(--green)'};">${u.unitMfg}</strong>
+          </div>
         </div>
-      </td>
-    </tr>`;
+        <span class="days-badge ${daysCls}" style="font-size:14px;padding:6px 16px;">${u.days} DAYS ON LOT</span>
+      </div>
+
+      <!-- INTELLIGENCE GRID -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid #1a1a2e;">
+        <div style="padding:14px 16px;border-right:1px solid #1a1a2e;text-align:center;">
+          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Retail Value</div>
+          <div style="font-size:22px;font-weight:900;color:var(--white);">$${u.retail.toLocaleString()}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">MarketCheck</div>
+        </div>
+        <div style="padding:14px 16px;border-right:1px solid #1a1a2e;text-align:center;">
+          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Wholesale ACV</div>
+          <div style="font-size:22px;font-weight:900;color:var(--gold);">$${u.wholesale.toLocaleString()}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">MarketCheck</div>
+        </div>
+        <div style="padding:14px 16px;border-right:1px solid #1a1a2e;text-align:center;">
+          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Dealer Pain</div>
+          <div style="font-size:22px;font-weight:900;color:var(--red);">$${totalPain.toLocaleString()}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">Floor plan + depr.</div>
+        </div>
+        <div style="padding:14px 16px;text-align:center;">
+          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">EVL Margin Opp.</div>
+          <div style="font-size:22px;font-weight:900;color:var(--green);">$${marginOpp.toLocaleString()}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">Est. broker fee</div>
+        </div>
+      </div>
+
+      <!-- PAIN BREAKDOWN + BUYER MATCH -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+
+        <!-- LEFT: PAIN BREAKDOWN -->
+        <div style="padding:14px 16px;border-right:1px solid #1a1a2e;">
+          <div style="font-size:11px;color:var(--muted);font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">💸 DEALER PAIN BREAKDOWN</div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body);font-size:13px;">
+            <span style="color:var(--muted);">Floor plan cost (${u.days} days)</span>
+            <span style="color:var(--red);font-weight:900;">−$${floorPain.toLocaleString()}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body);font-size:13px;">
+            <span style="color:var(--muted);">30-day depreciation ahead</span>
+            <span style="color:var(--red);font-weight:900;">−$${depr30.toLocaleString()}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0 0;font-family:var(--body);font-size:14px;font-weight:900;">
+            <span style="color:var(--white);">Total pressure</span>
+            <span style="color:var(--red);">$${totalPain.toLocaleString()}</span>
+          </div>
+          <div style="margin-top:12px;background:rgba(0,200,83,.06);border:1px solid rgba(0,200,83,.2);border-radius:6px;padding:10px 12px;">
+            <div style="font-size:12px;color:var(--green);font-weight:700;font-family:var(--body);line-height:1.5;">${u.strategy}</div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:8px;align-items:center;font-family:var(--body);font-size:12px;">
+            <span style="color:var(--muted);">KBB Trade-In:</span>
+            <span style="color:#3d4460;font-weight:700;border:1px solid #1a1a2e;padding:2px 8px;border-radius:4px;">ADD KBB SUB</span>
+            <span style="color:var(--muted);">NADA:</span>
+            <span style="color:#3d4460;font-weight:700;border:1px solid #1a1a2e;padding:2px 8px;border-radius:4px;">ADD NADA SUB</span>
+          </div>
+        </div>
+
+        <!-- RIGHT: TOP BUYER MATCHES -->
+        <div style="padding:14px 16px;">
+          <div style="font-size:11px;color:var(--muted);font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🎯 TOP BUYER MATCHES — ${u.unitMfg} DEALERS</div>
+          ${buyers.length > 0 ? buyers.map((b,i) => `
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #0d0d1a;">
+            <div style="width:28px;height:28px;border-radius:50%;background:${b.score>=80?'rgba(0,200,83,.15)':b.score>=60?'rgba(255,215,0,.1)':'rgba(255,255,255,.05)'};
+              border:2px solid ${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'#3d4460'};
+              display:flex;align-items:center;justify-content:center;
+              font-size:13px;font-weight:900;color:${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'var(--muted)'};
+              flex-shrink:0;">#${i+1}</div>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:900;color:var(--white);">${b.name}</div>
+              <div style="font-size:11px;color:var(--muted);font-family:var(--body);font-weight:600;">
+                Turn: ${b.turn}d · Stock: ${b.stock} · Need: ${b.need} · ${b.status.toUpperCase()}
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div style="font-size:16px;font-weight:900;color:${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'var(--muted)'};">${b.score}</div>
+              <div style="font-size:10px;color:var(--muted);font-family:var(--body);">MATCH</div>
+            </div>
+          </div>`).join('') : `<div style="color:var(--muted);font-size:13px;font-family:var(--body);padding:10px 0;">No matched buyers in network yet. Add ${u.unitMfg} dealers to expand reach.</div>`}
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div style="padding:12px 16px;border-top:1px solid #1a1a2e;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <button class="btn btn-gold btn-sm" onclick="agedOutreach('${u.vin}','${u.vehicle.replace(/'/g,"\'")}','${u.dealer.replace(/'/g,"\'")}','${totalPain}')">📧 CALL SCRIPT</button>
+        <button class="btn btn-green btn-sm" onclick="agedMatchBuyer('${u.unitMfg}','${u.vehicle.replace(/'/g,"\'")}')">⚡ NOTIFY BUYERS</button>
+        <button class="btn btn-dark btn-sm" onclick="agedPricingCalc('${u.retail}','${u.wholesale}','${u.days}')">💰 PRICING CALC</button>
+        <button class="btn btn-dark btn-sm" onclick="checkRecalls('${u.vin}','${u.vehicle.replace(/'/g,"\'")}')">🔍 NHTSA CHECK</button>
+        <div style="margin-left:auto;font-size:12px;color:var(--muted);font-family:var(--body);">
+          MDS: <strong style="color:${u.mds<=20?'var(--green)':u.mds<=35?'var(--gold)':'var(--red)'};">${u.mds}d</strong>
+        </div>
+      </div>
+    </div>`;
   }).join('');
+}
+
+// ── LIVE MARKETCHECK PULL ──
+async function fetchLiveAgedUnits() {
+  const btn = document.getElementById('fetchBtn');
+  const statusEl = document.getElementById('agedStatus');
+  btn.textContent = '⏳ PULLING DATA...';
+  btn.disabled = true;
+  statusEl.textContent = 'Querying MarketCheck — DFW 100-mile radius...';
+
+  try {
+    // DFW hub center: Plano TX 33.0198, -96.6989
+    const url = `https://api.marketcheck.com/v2/search/car/active?api_key=FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU&latitude=33.0198&longitude=-96.6989&radius=100&days_on_market_min=60&rows=50&sort_by=days_on_market&sort_order=desc&car_type=used&seller_type=dealer`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    const listings = data.listings || [];
+
+    if (listings.length === 0) {
+      statusEl.textContent = 'No results returned — check API key or try again.';
+      btn.textContent = '⚡ PULL LIVE DATA';
+      btn.disabled = false;
+      return;
+    }
+
+    // Convert MarketCheck listings to our unit format
+    const liveUnits = listings.map(l => {
+      const dealerName = l.dealer?.name || 'Unknown Dealer';
+      // Detect dealer brand from name
+      const dealerMfg = detectDealerBrand(dealerName);
+      const unitMfg   = l.make || '';
+      const days      = l.dom || l.days_on_market || 60;
+      const retail    = l.price || l.msrp || 0;
+      const wholesale = Math.round(retail * 0.84);
+      return {
+        vehicle: `${l.year} ${l.make} ${l.model} ${l.trim||''}`.trim(),
+        vin:     l.vin || '',
+        dealer:  dealerName,
+        dealerMfg,
+        unitMfg,
+        hub:     'DFW',
+        days,
+        mds:     l.market_days_supply || 30,
+        retail,
+        wholesale,
+        acv:     wholesale,
+        strategy: generateStrategy(unitMfg, dealerMfg, days, l.market_days_supply||30),
+        recalls: 0
+      };
+    }).filter(u => u.retail > 0);
+
+    currentAgedUnits = liveUnits;
+    liveDataLoaded = true;
+
+    // Hide legacy table, show live cards
+    document.getElementById('agedLegacyTable').style.display = 'none';
+
+    statusEl.textContent = `✅ ${liveUnits.length} units loaded — ${liveUnits.filter(u=>u.dealerMfg!==u.unitMfg).length} orphan units identified`;
+    statusEl.style.color = 'var(--green)';
+    btn.textContent = '🔄 REFRESH DATA';
+    btn.disabled = false;
+
+    applyAgedFilters();
+
+  } catch(e) {
+    console.error(e);
+    statusEl.textContent = '❌ API error — showing demo data';
+    btn.textContent = '⚡ PULL LIVE DATA';
+    btn.disabled = false;
+    applyAgedFilters();
+  }
+}
+
+function detectDealerBrand(name) {
+  name = name.toLowerCase();
+  if (name.includes('toyota') || name.includes('lexus')) return 'Toyota';
+  if (name.includes('ford') || name.includes('lincoln')) return 'Ford';
+  if (name.includes('chevrolet') || name.includes('chevy') || name.includes('buick') || name.includes('gmc') || name.includes('cadillac')) return 'Chevrolet';
+  if (name.includes('honda') || name.includes('acura')) return 'Honda';
+  if (name.includes('nissan') || name.includes('infiniti')) return 'Nissan';
+  if (name.includes('dodge') || name.includes('chrysler') || name.includes('jeep') || name.includes('ram') || name.includes('cdjr')) return 'Jeep/RAM';
+  if (name.includes('hyundai') || name.includes('genesis')) return 'Hyundai';
+  if (name.includes('kia')) return 'Kia';
+  if (name.includes('bmw')) return 'BMW';
+  if (name.includes('mercedes') || name.includes('mb ')) return 'Mercedes';
+  return 'Independent';
+}
+
+function generateStrategy(unitMfg, dealerMfg, days, mds) {
+  const isOrphan = unitMfg !== dealerMfg;
+  const urgency  = days >= 120 ? 'CRITICAL' : days >= 90 ? 'HOT' : 'WARM';
+  const mdsLabel = mds <= 20 ? 'Fast market' : mds <= 35 ? 'Active market' : 'Slow market';
+  if (isOrphan) return `${urgency} ORPHAN — ${dealerMfg} dealer carrying ${unitMfg}. ${mdsLabel} for ${unitMfg}. Match to ${unitMfg} dealers in network immediately.`;
+  return `${urgency} — ${days} days on lot at native dealer. ${mdsLabel}. Consider auction path if not moved in 14 days.`;
+}
+
+function agedOutreach(vin, vehicle, dealer, pain) {
+  const script = `CALL SCRIPT — AGED UNIT ACQUISITION\n\n"Hi, this is [NAME] with Express Vehicle Locators.\nI am reaching out about a ${vehicle} you currently have in your used inventory — VIN ${vin}.\n\nBased on our market data, that unit has been on your lot for quite a while and with floor plan costs you are looking at real carrying pressure.\n\nWe have a verified wholesale buyer in your market who is actively looking for this exact unit. We can facilitate a same-week transaction.\n\nWould it make sense to have a 5-minute conversation with your UC Manager about getting that unit moved at a fair wholesale number?\n\nThis costs you nothing — EVL handles the coordination."`;
+  alert(script);
+}
+
+function agedMatchBuyer(unitMfg, vehicle) {
+  const buyers = BUYER_NETWORK[unitMfg] || [];
+  if (buyers.length === 0) { alert('No matched buyers in network for ' + unitMfg + ' yet. Add dealers to expand.'); return; }
+  alert('⚡ BUYER NOTIFICATION QUEUED\n\n' + vehicle + '\n\nNotifying top ' + buyers.length + ' matched ' + unitMfg + ' dealers:\n' + buyers.map((b,i) => (i+1)+'. '+b.name+' (Match: '+calcDealerMatchScore(b,{})+')').join('\n') + '\n\nDealers will receive EVL acquisition opportunity alert via Communications Platform.');
+}
+
+function agedPricingCalc(retail, wholesale, days) {
+  switchTab('pricing', document.querySelector('.tab-btn[onclick*="pricing"]'));
+  setTimeout(() => {
+    document.getElementById('pc-retail').value = retail;
+    document.getElementById('pc-book').value = wholesale;
+    document.getElementById('pc-days').value = days;
+    document.getElementById('pc-holding').value = 25;
+    calcPricing();
+  }, 300);
+}
+
+async function checkRecalls(vin, vehicle) {
+  try {
+    const make  = vehicle.split(' ')[1] || '';
+    const model = vehicle.split(' ')[2] || '';
+    const year  = vehicle.split(' ')[0] || '';
+    const url   = `https://api.nhtsa.gov/recalls/recallsByVehicle?make=${make}&model=${model}&modelYear=${year}`;
+    const resp  = await fetch(url);
+    const data  = await resp.json();
+    const count = data.Count || 0;
+    if (count === 0) {
+      alert('✅ NHTSA CHECK — ' + vehicle + '\n\nNo open recalls found.');
+    } else {
+      const recalls = (data.results||[]).slice(0,3).map(r => '• ' + r.Component + ': ' + r.Summary?.substring(0,100)+'...').join('\n');
+      alert('⚠️ NHTSA CHECK — ' + vehicle + '\n\n' + count + ' recall(s) found:\n\n' + recalls + '\n\nFull data: api.nhtsa.gov');
+    }
+  } catch(e) {
+    alert('NHTSA check failed — check connection.');
+  }
+}
+
+function exportOrphanCSV() {
+  const units = currentAgedUnits.filter(u => u.dealerMfg !== u.unitMfg);
+  const rows  = ['Vehicle,VIN,Dealer,Dealer Brand,Unit Brand,Days,MDS,Retail,Wholesale,Floor Plan Pain,Strategy'];
+  units.forEach(u => {
+    const pain = calcFloorPlanPain(u.days, u.wholesale);
+    rows.push([u.vehicle,u.vin,u.dealer,u.dealerMfg,u.unitMfg,u.days,u.mds,u.retail,u.wholesale,pain,u.strategy].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(','));
+  });
+  const blob = new Blob([rows.join('\n')],{type:'text/csv'});
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'EVL-Orphan-Units-DFW-'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
 }
 
 function sendOutreach(vin){
@@ -1135,6 +1522,7 @@ window.addEventListener('DOMContentLoaded',function(){
   renderBids();
   renderPorters();
   renderAgedUnits();
+  applyAgedFilters();
   renderDealerNetwork();
 });
 
