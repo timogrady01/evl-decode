@@ -710,15 +710,12 @@ async function testSMS() {
 
 // Load saved config on page open
 window.addEventListener('DOMContentLoaded', () => {
-  // Pre-populate Twilio credentials into localStorage if not already saved
-  // These are entered once and persist — never stored in code
+  // Pre-populate known safe config into localStorage on first load
   const existing = JSON.parse(localStorage.getItem('evl_notif_config')||'{}');
-  if (!existing.twilioSid) {
-    // existing.twilioSid   = 'ENTER-IN-CONFIG-PAGE';
-    // existing.twilioPhone = 'ENTER-IN-CONFIG-PAGE';
-    // Auth token entered manually by operator — not pre-stored in code
-    localStorage.setItem('evl_notif_config', JSON.stringify(existing));
-  }
+  let changed = false;
+  if (!existing.publicKey)   { existing.publicKey   = 's98wRRFqrd1Mc3cxiHLde'; changed = true; }
+  if (!existing.ejsServiceId){ existing.ejsServiceId = 'service_xua01ed';        changed = true; }
+  if (changed) localStorage.setItem('evl_notif_config', JSON.stringify(existing));
   loadConfig();
   EVL_NOTIF.init();
 });
