@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Live Bid Board — WS Auction</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#090E17;--s1:#0d1117;--s2:#111820;--blue:#2B84FE;--gold:#FFD700;
+    --green:#00C853;--red:#FF4444;--white:#ffffff;--muted:#8899aa;
+    --border:#1a2a3a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
+
+  /* NAV */
+  nav{background:#090E17;border-bottom:2px solid var(--blue);padding:0 24px;height:64px;
+    display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-size:22px;font-weight:900;letter-spacing:2px;color:var(--white);text-decoration:none;}
+  .nav-brand span{color:var(--blue);}
+  .nav-live{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:900;
+    color:var(--green);letter-spacing:2px;text-transform:uppercase;}
+  .live-dot{width:10px;height:10px;border-radius:50%;background:var(--green);
+    animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+
+  /* WRAP */
+  .wrap{max-width:1000px;margin:0 auto;padding:24px 16px 80px;}
+
+  /* UNIT BANNER */
+  .unit-banner{background:var(--s1);border:2px solid var(--gold);border-radius:14px;
+    padding:20px 24px;margin-bottom:20px;display:flex;justify-content:space-between;
+    align-items:center;flex-wrap:wrap;gap:12px;}
+  .unit-name{font-size:28px;font-weight:900;color:var(--white);letter-spacing:1px;}
+  .unit-meta{font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:4px;}
+  .unit-right{display:flex;gap:14px;flex-wrap:wrap;}
+  .unit-stat{background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:10px 16px;text-align:center;}
+  .unit-stat-val{font-size:22px;font-weight:900;}
+  .unit-stat-lbl{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+    letter-spacing:1px;margin-top:2px;font-family:var(--body);}
+
+  /* AUCTION STATUS */
+  .auction-status{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+  .status-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
+    padding:18px;text-align:center;}
+  .status-card.highlight{border-color:var(--gold);}
+  .status-val{font-size:36px;font-weight:900;}
+  .status-lbl{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+    letter-spacing:1px;margin-top:4px;font-family:var(--body);}
+
+  /* COUNTDOWN */
+  .countdown{font-size:48px;font-weight:900;color:var(--gold);letter-spacing:4px;
+    font-variant-numeric:tabular-nums;}
+  .countdown.urgent{color:var(--red);animation:blink .8s infinite;}
+  @keyframes blink{50%{opacity:.5;}}
+
+  /* BID TABLE */
+  .bid-table-wrap{background:var(--s1);border:2px solid var(--border);border-radius:14px;
+    overflow:hidden;margin-bottom:20px;}
+  .bid-table-head{background:var(--s2);padding:14px 20px;display:flex;justify-content:space-between;
+    align-items:center;border-bottom:1px solid var(--border);}
+  .bid-table-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:2px;
+    text-transform:uppercase;}
+  table{width:100%;border-collapse:collapse;}
+  th{background:rgba(0,0,0,.3);color:var(--muted);font-family:var(--body);font-size:13px;
+    font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:10px 16px;
+    text-align:left;border-bottom:1px solid var(--border);}
+  td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:15px;
+    color:var(--white);font-weight:600;vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tr.high-bid td{background:rgba(0,200,83,.04);}
+  .bid-rank{font-family:var(--font);font-size:18px;font-weight:900;}
+  .bid-id{font-family:monospace;font-size:15px;font-weight:900;color:var(--blue);
+    letter-spacing:2px;}
+  .bid-id.winner{color:var(--gold);}
+  .bid-amount{font-size:20px;font-weight:900;}
+  .bid-time{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:600;}
+  .spread-pill{font-size:12px;font-weight:900;padding:3px 10px;border-radius:10px;
+    letter-spacing:1px;font-family:var(--font);}
+  .spread-high{background:rgba(0,200,83,.12);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+  .spread-low{background:rgba(255,68,68,.1);color:var(--red);border:1px solid rgba(255,68,68,.3);}
+
+  /* BID ENTRY */
+  .bid-entry{background:var(--s1);border:2px solid var(--blue);border-radius:14px;
+    padding:24px;margin-bottom:20px;}
+  .bid-entry-title{font-size:16px;font-weight:900;color:var(--blue);letter-spacing:2px;
+    text-transform:uppercase;margin-bottom:16px;}
+  .bid-entry-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;}
+  .bid-input-wrap{flex:1;min-width:200px;}
+  .bid-label{font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;
+    letter-spacing:1px;margin-bottom:6px;font-family:var(--body);}
+  .bid-input{background:var(--bg);border:2px solid var(--border);color:var(--white);
+    padding:14px 18px;border-radius:8px;font-size:24px;font-family:var(--font);
+    font-weight:900;outline:none;width:100%;letter-spacing:1px;}
+  .bid-input:focus{border-color:var(--blue);}
+  .dealer-id-display{background:var(--bg);border:2px solid var(--border);border-radius:8px;
+    padding:14px 18px;font-size:18px;font-family:monospace;font-weight:900;
+    color:var(--blue);letter-spacing:3px;white-space:nowrap;}
+  .submit-bid-btn{background:var(--green);color:#000;border:none;padding:14px 32px;
+    border-radius:8px;font-size:20px;font-weight:900;cursor:pointer;font-family:var(--font);
+    letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
+  .submit-bid-btn:hover{opacity:.9;}
+  .submit-bid-btn:disabled{opacity:.4;cursor:not-allowed;}
+  .bid-floor-note{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:600;
+    margin-top:8px;}
+
+  /* AUCTION SELECTOR */
+  .auction-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+  .auction-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
+    padding:16px;cursor:pointer;transition:border-color .2s;}
+  .auction-card:hover{border-color:var(--blue);}
+  .auction-card.active{border-color:var(--gold);background:rgba(255,215,0,.03);}
+  .auction-card-name{font-size:15px;font-weight:900;color:var(--white);margin-bottom:4px;}
+  .auction-card-meta{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;}
+  .auction-card-status{margin-top:8px;}
+
+  /* DEALER ID ENTRY */
+  .id-gate{background:var(--s1);border:2px solid var(--gold);border-radius:14px;
+    padding:28px;margin-bottom:20px;text-align:center;}
+
+  /* FLOOR INDICATOR */
+  .floor-bar{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2);
+    border-radius:8px;padding:12px 16px;margin-bottom:14px;display:flex;
+    justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .floor-label{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:600;}
+  .floor-val{font-size:16px;font-weight:900;color:var(--gold);}
+
+  @media(max-width:600px){
+    .auction-status{grid-template-columns:repeat(2,1fr);}
+    .auction-selector{grid-template-columns:1fr;}
+    .bid-entry-row{flex-direction:column;}
+    .unit-right{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/ws-exchange" class="nav-brand">EXPRESS <span>VEHICLE</span> LOCATORS</a>
+  <div class="nav-live"><div class="live-dot"></div> LIVE AUCTION</div>
+  <div style="font-size:14px;color:var(--muted);font-family:var(--body);font-weight:700;
+    letter-spacing:1px;">WS DEALER NETWORK</div>
+</nav>
+
+<!-- DEALER ID GATE -->
+<div id="idGate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--s1);border:2px solid var(--gold);border-radius:14px;
+    padding:40px;width:100%;max-width:400px;text-align:center;">
+    <div style="font-size:42px;margin-bottom:12px;">⚡</div>
+    <div style="font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:2px;
+      margin-bottom:6px;">EVL BID BOARD</div>
+    <div style="font-family:var(--body);font-size:15px;color:var(--muted);font-weight:600;
+      margin-bottom:28px;line-height:1.5;">
+      Enter your EVL Dealer Network ID to access live auctions
+    </div>
+    <div id="gateError" style="display:none;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);
+      border-radius:6px;padding:10px;font-family:var(--body);font-size:14px;color:var(--red);
+      font-weight:700;margin-bottom:12px;">Invalid dealer ID</div>
+    <input type="text" id="dealerIdInput" placeholder="EVL-WS-XXXXXX"
+      style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+      padding:14px 18px;border-radius:8px;font-size:20px;font-family:monospace;
+      font-weight:900;outline:none;width:100%;text-align:center;letter-spacing:3px;
+      text-transform:uppercase;margin-bottom:14px;"
+      maxlength="12" oninput="this.value=this.value.toUpperCase()"
+      onkeydown="if(event.key==='Enter')enterBidBoard()">
+    <button onclick="enterBidBoard()" style="width:100%;background:var(--gold);color:#000;
+      border:none;padding:14px;border-radius:8px;font-family:var(--font);font-size:20px;
+      font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">
+      ACCESS BID BOARD →
+    </button>
+    <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
+      margin-top:14px;line-height:1.5;">
+      Don't have a dealer ID? 
+      <a href="/dealer-onboard" style="color:var(--blue);font-weight:700;">Join the EVL Network →</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN BID BOARD (hidden until ID entered) -->
+<div id="bidBoard" style="display:none;">
+  <div class="wrap">
+
+    <!-- YOUR ID BADGE -->
+    <div style="display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <div style="font-family:var(--body);font-size:14px;color:var(--muted);font-weight:600;">
+        Your Dealer ID: <span id="myIdDisplay" style="font-family:monospace;font-weight:900;
+        color:var(--blue);letter-spacing:2px;font-size:16px;"></span>
+      </div>
+      <div style="font-family:var(--body);font-size:13px;color:var(--muted);font-weight:600;">
+        ⚠️ All bids are anonymous. Your identity is never shared with other bidders.
+      </div>
+    </div>
+
+    <!-- ACTIVE AUCTIONS -->
+    <div style="font-size:14px;font-weight:900;color:var(--muted);letter-spacing:3px;
+      text-transform:uppercase;margin-bottom:12px;font-family:var(--body);">
+      ACTIVE AUCTIONS — DFW HUB
+    </div>
+    <div class="auction-selector" id="auctionSelector"></div>
+
+    <!-- SELECTED AUCTION DETAILS -->
+    <div id="auctionDetail" style="display:none;">
+
+      <!-- UNIT BANNER -->
+      <div class="unit-banner">
+        <div>
+          <div class="unit-name" id="unitNameDisplay"></div>
+          <div class="unit-meta" id="unitMetaDisplay"></div>
+        </div>
+        <div class="unit-right">
+          <div class="unit-stat">
+            <div class="unit-stat-val" id="unitRetailDisplay" style="color:var(--white);">$—</div>
+            <div class="unit-stat-lbl">Retail Est.</div>
+          </div>
+          <div class="unit-stat" style="border-color:var(--gold);">
+            <div class="unit-stat-val" id="unitFloorDisplay" style="color:var(--gold);">$—</div>
+            <div class="unit-stat-lbl">WS Floor</div>
+          </div>
+          <div class="unit-stat">
+            <div class="unit-stat-val" id="unitDaysDisplay" style="color:var(--muted);">—</div>
+            <div class="unit-stat-lbl">Days on Lot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUCTION STATUS -->
+      <div class="auction-status">
+        <div class="status-card highlight">
+          <div class="status-val" id="highBidDisplay" style="color:var(--green);">$—</div>
+          <div class="status-lbl">Current High Bid</div>
+        </div>
+        <div class="status-card">
+          <div class="countdown" id="countdownDisplay">--:--:--</div>
+          <div class="status-lbl">Time Remaining</div>
+        </div>
+        <div class="status-card">
+          <div class="status-val" id="bidCountDisplay" style="color:var(--blue);">0</div>
+          <div class="status-lbl">Total Bids</div>
+        </div>
+        <div class="status-card">
+          <div class="status-val" id="biddersDisplay" style="color:var(--muted);">—</div>
+          <div class="status-lbl">Active Bidders</div>
+        </div>
+      </div>
+
+      <!-- MY STATUS -->
+      <div id="myStatusBar" style="display:none;border-radius:8px;padding:12px 16px;
+        margin-bottom:16px;font-family:var(--body);font-size:14px;font-weight:700;"></div>
+
+      <!-- FLOOR BAR -->
+      <div class="floor-bar">
+        <div>
+          <div class="floor-label">WS Reserve Floor (MC Wholesale) — Minimum acceptable bid</div>
+          <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+            margin-top:2px;">Bids below this amount are not accepted</div>
+        </div>
+        <div id="floorDisplay" class="floor-val">$—</div>
+      </div>
+
+      <!-- BID ENTRY -->
+      <div class="bid-entry">
+        <div class="bid-entry-title">⚡ PLACE YOUR BID</div>
+        <div class="bid-entry-row">
+          <div class="bid-input-wrap">
+            <div class="bid-label">Your Bid Amount ($)</div>
+            <input class="bid-input" type="number" id="bidAmount"
+              placeholder="Enter bid amount" oninput="checkBidAmount()">
+            <div class="bid-floor-note" id="bidNote">Must be above the WS Floor and current high bid</div>
+          </div>
+          <div>
+            <div class="bid-label">Your Dealer ID</div>
+            <div class="dealer-id-display" id="myIdBid"></div>
+          </div>
+          <button class="submit-bid-btn" id="submitBidBtn" onclick="submitBid()" disabled>
+            BID NOW →
+          </button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+          margin-top:10px;line-height:1.5;">
+          🔒 Your identity is never visible to other bidders — only your Dealer ID and bid amount appear.
+          EVL reveals winner identity only to the selling dealer after auction closes.
+        </div>
+      </div>
+
+      <!-- BID HISTORY TABLE -->
+      <div class="bid-table-wrap">
+        <div class="bid-table-head">
+          <div class="bid-table-title">📋 Live Bid History</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;">
+            All times CST · Anonymous · Real-time
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Bid ID</th>
+              <th>Time Submitted</th>
+              <th>Bid Amount</th>
+              <th>vs Floor</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="bidTableBody"></tbody>
+        </table>
+      </div>
+
+    </div><!-- /auctionDetail -->
+  </div><!-- /wrap -->
+</div><!-- /bidBoard -->
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot,
+         query, orderBy, serverTimestamp, doc, getDoc, getDocs }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain:"evl-acquisition-radar.firebaseapp.com",
+  projectId:"evl-acquisition-radar",
+  storageBucket:"evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId:"84195145348",
+  appId:"1:84195145348:web:b10f837bee92ce2e4674d1"
+});
+const db = getFirestore(app);
+
+// ── DEMO AUCTIONS (until live units are pushed from Deal Card) ──
+const DEMO_AUCTIONS = [
+  {
+    id: 'AUC-2026-001',
+    vehicle: '2021 GMC Yukon Denali',
+    vin: '1GKS2BKL5MR123456',
+    meta: 'VIN: 1GKS2BKL5MR123456 · 47,200 mi · Excellent · Hendrick Honda Frisco · 142 days',
+    retail: 51200, floor: 44800, days: 142,
+    deadline: new Date(Date.now() + 4 * 3600 * 1000), // 4 hours from now
+    status: 'active',
+    make: 'GMC'
+  },
+  {
+    id: 'AUC-2026-002',
+    vehicle: '2022 Ford F-150 Lariat',
+    vin: '1FTFW1E50NKD12345',
+    meta: 'VIN: 1FTFW1E50NKD12345 · 31,400 mi · Good · AutoNation Toyota Plano · 97 days',
+    retail: 44500, floor: 38200, days: 97,
+    deadline: new Date(Date.now() + 11 * 3600 * 1000), // 11 hours
+    status: 'active',
+    make: 'Ford'
+  },
+  {
+    id: 'AUC-2026-003',
+    vehicle: '2022 Chevrolet Tahoe LT',
+    vin: '1GNSCPKD3NR123456',
+    meta: 'VIN: 1GNSCPKD3NR123456 · 22,100 mi · Excellent · Classic Chevrolet · 112 days',
+    retail: 52100, floor: 44800, days: 112,
+    deadline: new Date(Date.now() + 22 * 3600 * 1000), // 22 hours
+    status: 'active',
+    make: 'Chevrolet'
+  },
+];
+
+// DEMO BIDS per auction (bid ID + amount + timestamp — NO dealer names)
+const DEMO_BIDS = {
+  'AUC-2026-001': [
+    {bidId:'EVL-WS-847291',amount:47200,ts:'9:14:22 AM',tsRaw: Date.now()-7200000},
+    {bidId:'EVL-WS-331058',amount:46800,ts:'9:31:47 AM',tsRaw: Date.now()-6300000},
+    {bidId:'EVL-WS-512744',amount:46500,ts:'10:02:11 AM',tsRaw: Date.now()-5400000},
+    {bidId:'EVL-WS-228901',amount:45900,ts:'10:45:33 AM',tsRaw: Date.now()-3600000},
+  ],
+  'AUC-2026-002': [
+    {bidId:'EVL-WS-331058',amount:41200,ts:'8:55:01 AM',tsRaw: Date.now()-9000000},
+    {bidId:'EVL-WS-774612',amount:40800,ts:'9:22:14 AM',tsRaw: Date.now()-7800000},
+  ],
+  'AUC-2026-003': [
+    {bidId:'EVL-WS-512744',amount:46000,ts:'7:30:05 AM',tsRaw: Date.now()-14400000},
+  ],
+};
+
+let myDealerId = '';
+let currentAuction = null;
+let countdownInterval = null;
+
+// ── ID GATE ──
+window.enterBidBoard = function() {
+  const id = document.getElementById('dealerIdInput').value.trim().toUpperCase();
+  if (!id || id.length < 8) {
+    document.getElementById('gateError').style.display = 'block';
+    return;
+  }
+  myDealerId = id;
+  document.getElementById('idGate').style.display = 'none';
+  document.getElementById('bidBoard').style.display = 'block';
+  document.getElementById('myIdDisplay').textContent = myDealerId;
+  document.getElementById('myIdBid').textContent = myDealerId;
+  renderAuctionSelector();
+};
+
+// ── RENDER AUCTION SELECTOR ──
+function renderAuctionSelector() {
+  const container = document.getElementById('auctionSelector');
+  container.innerHTML = DEMO_AUCTIONS.map(a => {
+    const bids   = DEMO_BIDS[a.id] || [];
+    const high   = bids.length > 0 ? Math.max(...bids.map(b=>b.amount)) : a.floor;
+    const myBid  = bids.find(b => b.bidId === myDealerId);
+    const imHigh = myBid && myBid.amount === high;
+    const mins   = Math.round((a.deadline - Date.now()) / 60000);
+    const hrs    = Math.floor(mins / 60);
+    const timeLeft = hrs > 1 ? hrs + 'h remaining' : mins + 'm remaining';
+
+    return `<div class="auction-card${currentAuction?.id===a.id?' active':''}"
+      onclick="selectAuction('${a.id}')">
+      <div class="auction-card-name">${a.vehicle}</div>
+      <div class="auction-card-meta">${a.make} · ${a.days}d on lot · ${bids.length} bid${bids.length!==1?'s':''}</div>
+      <div class="auction-card-status">
+        <span style="font-family:var(--font);font-size:16px;font-weight:900;
+          color:var(--green);">$${high.toLocaleString()}</span>
+        <span style="font-size:12px;color:var(--muted);font-family:var(--body);
+          font-weight:600;margin-left:8px;">${timeLeft}</span>
+        ${imHigh ? '<span style="font-size:11px;font-weight:900;color:var(--gold);margin-left:6px;font-family:var(--font);">★ YOU\'RE WINNING</span>' : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── SELECT AUCTION ──
+window.selectAuction = function(id) {
+  currentAuction = DEMO_AUCTIONS.find(a => a.id === id);
+  if (!currentAuction) return;
+
+  document.getElementById('auctionDetail').style.display = 'block';
+  renderAuctionSelector();
+  renderAuctionDetail();
+
+  // Start live updates from Firebase (or use demo data)
+  startBidListener(id);
+  startCountdown();
+  document.getElementById('auctionDetail').scrollIntoView({behavior:'smooth'});
+};
+
+function renderAuctionDetail() {
+  const a    = currentAuction;
+  const bids = [...(DEMO_BIDS[a.id]||[])].sort((x,y) => y.amount - x.amount);
+  const high = bids[0]?.amount || a.floor;
+  const uniqueBidders = new Set(bids.map(b=>b.bidId)).size;
+
+  document.getElementById('unitNameDisplay').textContent = a.vehicle;
+  document.getElementById('unitMetaDisplay').textContent = a.meta;
+  document.getElementById('unitRetailDisplay').textContent = '$' + a.retail.toLocaleString();
+  document.getElementById('unitFloorDisplay').textContent = '$' + a.floor.toLocaleString();
+  document.getElementById('unitDaysDisplay').textContent = a.days + 'd';
+  document.getElementById('highBidDisplay').textContent = '$' + high.toLocaleString();
+  document.getElementById('bidCountDisplay').textContent = bids.length;
+  document.getElementById('biddersDisplay').textContent = uniqueBidders;
+  document.getElementById('floorDisplay').textContent = '$' + a.floor.toLocaleString();
+
+  // My status
+  const myBid  = bids.find(b => b.bidId === myDealerId);
+  const myBar  = document.getElementById('myStatusBar');
+  if (myBid) {
+    const imHigh = myBid.amount === high;
+    myBar.style.display = 'block';
+    myBar.style.background = imHigh ? 'rgba(0,200,83,.08)' : 'rgba(255,68,68,.08)';
+    myBar.style.border = imHigh ? '1px solid rgba(0,200,83,.3)' : '1px solid rgba(255,68,68,.3)';
+    myBar.style.color = imHigh ? 'var(--green)' : 'var(--red)';
+    myBar.innerHTML = imHigh
+      ? `★ YOU ARE THE HIGH BIDDER — $${myBid.amount.toLocaleString()} — Hold your position until the deadline.`
+      : `⚠️ YOU HAVE BEEN OUTBID — Your last bid: $${myBid.amount.toLocaleString()} — Current high: $${high.toLocaleString()} — Counter now.`;
+  } else {
+    myBar.style.display = 'none';
+  }
+
+  // Bid table
+  renderBidTable(bids, a.floor, high);
+}
+
+function renderBidTable(bids, floor, high) {
+  const tbody = document.getElementById('bidTableBody');
+  if (bids.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;
+      color:var(--muted);font-family:var(--body);font-size:15px;">
+      No bids yet — be the first bidder
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = bids.map((b, i) => {
+    const isHigh   = b.amount === high;
+    const isMine   = b.bidId === myDealerId;
+    const vs       = b.amount - floor;
+    const vsClass  = vs >= 500 ? 'spread-high' : 'spread-low';
+    const vsLabel  = (vs >= 0 ? '+' : '') + '$' + vs.toLocaleString();
+    const rank     = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
+
+    return `<tr class="${isHigh ? 'high-bid' : ''}">
+      <td><span class="bid-rank">${rank}</span></td>
+      <td>
+        <span class="bid-id${isHigh?' winner':''}">${b.bidId}</span>
+        ${isMine ? '<span style="font-size:11px;font-weight:900;color:var(--gold);margin-left:6px;font-family:var(--font);">← YOU</span>' : ''}
+      </td>
+      <td><span class="bid-time">${b.ts}</span></td>
+      <td><span class="bid-amount" style="color:${isHigh?'var(--green)':'var(--white)'};">
+        $${b.amount.toLocaleString()}
+      </span></td>
+      <td><span class="spread-pill ${vsClass}">${vsLabel} vs floor</span></td>
+      <td>${isHigh
+        ? '<span style="color:var(--green);font-weight:900;font-size:13px;font-family:var(--font);">⭐ HIGH BID</span>'
+        : '<span style="color:var(--muted);font-size:13px;font-family:var(--body);">Outbid</span>'
+      }</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── COUNTDOWN ──
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  countdownInterval = setInterval(() => {
+    if (!currentAuction) return;
+    const remaining = currentAuction.deadline - Date.now();
+    const el = document.getElementById('countdownDisplay');
+    if (remaining <= 0) {
+      el.textContent = 'CLOSED';
+      el.className = 'countdown urgent';
+      clearInterval(countdownInterval);
+      return;
+    }
+    const h  = Math.floor(remaining / 3600000);
+    const m  = Math.floor((remaining % 3600000) / 60000);
+    const s  = Math.floor((remaining % 60000) / 1000);
+    el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className = remaining < 3600000 ? 'countdown urgent' : 'countdown';
+  }, 1000);
+}
+
+// ── BID VALIDATION ──
+window.checkBidAmount = function() {
+  const a      = currentAuction;
+  if (!a) return;
+  const amount = parseInt(document.getElementById('bidAmount').value) || 0;
+  const bids   = DEMO_BIDS[a.id] || [];
+  const high   = bids.length > 0 ? Math.max(...bids.map(b=>b.amount)) : a.floor;
+  const minBid = Math.max(a.floor, high + 100);
+  const noteEl = document.getElementById('bidNote');
+  const btnEl  = document.getElementById('submitBidBtn');
+
+  if (amount < a.floor) {
+    noteEl.textContent = `⚠️ Bid must be at or above WS Floor: $${a.floor.toLocaleString()}`;
+    noteEl.style.color = 'var(--red)';
+    btnEl.disabled = true;
+  } else if (amount <= high && bids.length > 0) {
+    noteEl.textContent = `⚠️ Must beat current high bid: $${high.toLocaleString()} — minimum next bid: $${(high+100).toLocaleString()}`;
+    noteEl.style.color = 'var(--red)';
+    btnEl.disabled = true;
+  } else {
+    noteEl.textContent = `✅ Valid bid — $${(amount - a.floor).toLocaleString()} above WS Floor`;
+    noteEl.style.color = 'var(--green)';
+    btnEl.disabled = false;
+  }
+};
+
+// ── SUBMIT BID ──
+window.submitBid = async function() {
+  const a      = currentAuction;
+  if (!a) return;
+  const amount = parseInt(document.getElementById('bidAmount').value);
+  if (!amount || amount < a.floor) return;
+
+  const now = new Date();
+  const ts  = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
+
+  // Add to demo bids array (and Firebase in production)
+  const newBid = { bidId: myDealerId, amount, ts, tsRaw: now.getTime() };
+  if (!DEMO_BIDS[a.id]) DEMO_BIDS[a.id] = [];
+  DEMO_BIDS[a.id].push(newBid);
+  DEMO_BIDS[a.id].sort((x,y) => y.amount - x.amount);
+
+  // Save to Firebase
+  try {
+    await addDoc(collection(db, 'evl_bids'), {
+      auctionId: a.id,
+      bidId: myDealerId,  // anonymous ID — no dealer name
+      amount,
+      timestamp: serverTimestamp(),
+      vehicle: a.vehicle,
+      vin: a.vin
+    });
+  } catch(e) { console.log('Firebase write:', e.message); }
+
+  // Clear input and refresh
+  document.getElementById('bidAmount').value = '';
+  document.getElementById('submitBidBtn').disabled = true;
+  document.getElementById('bidNote').textContent = 'Must be above the WS Floor and current high bid';
+  document.getElementById('bidNote').style.color = 'var(--muted)';
+
+  renderAuctionDetail();
+  renderAuctionSelector();
+
+  // Flash confirmation
+  const bar = document.getElementById('myStatusBar');
+  bar.style.background = 'rgba(0,200,83,.15)';
+  bar.style.border = '1px solid rgba(0,200,83,.5)';
+  bar.style.color = 'var(--green)';
+  bar.style.display = 'block';
+  bar.innerHTML = `✅ BID SUBMITTED — $${amount.toLocaleString()} · ${ts} · ID: ${myDealerId}`;
+  setTimeout(() => renderAuctionDetail(), 1500);
+};
+
+// ── FIREBASE LISTENER (for live bids from other dealers) ──
+function startBidListener(auctionId) {
+  const q = query(
+    collection(db, 'evl_bids'),
+    orderBy('timestamp', 'desc')
+  );
+  onSnapshot(q, (snap) => {
+    // Merge any live Firebase bids into demo data
+    snap.forEach(d => {
+      const bid = d.data();
+      if (bid.auctionId !== auctionId) return;
+      if (!bid.bidId || !bid.amount) return;
+      const ts = bid.timestamp?.toDate?.()?.toLocaleTimeString('en-US',
+        {hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}) || 'Live';
+      if (!DEMO_BIDS[auctionId]) DEMO_BIDS[auctionId] = [];
+      const exists = DEMO_BIDS[auctionId].some(b => b.bidId===bid.bidId && b.amount===bid.amount);
+      if (!exists) {
+        DEMO_BIDS[auctionId].push({bidId:bid.bidId, amount:bid.amount, ts, tsRaw: Date.now()});
+        DEMO_BIDS[auctionId].sort((x,y) => y.amount - x.amount);
+        if (currentAuction?.id === auctionId) renderAuctionDetail();
+      }
+    });
+  });
+}
+</script>
+</body>
+</html>
