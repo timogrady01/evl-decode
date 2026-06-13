@@ -113,7 +113,7 @@
       </div>
       <div class="field">
         <label class="label">Twilio Phone Number</label>
-        <input type="text" id="twilioPhone" placeholder="+12145550100"
+        <input type="text" id="twilioPhone" placeholder="+1XXXXXXXXXX"
           onchange="saveConfig()">
       </div>
     </div>
@@ -364,9 +364,9 @@ const EVL_NOTIF = {
     }
   },
   twilio: {
-    accountSid:  '',   // ACxxxxxxxxxxxxxxxxxx
-    authToken:   '',   // your_auth_token
-    fromNumber:  '',   // +12145550100
+    accountSid:  localStorage.getItem('evl_twilio_sid') || '',
+    authToken:   localStorage.getItem('evl_twilio_token') || '',
+    fromNumber:  localStorage.getItem('evl_twilio_phone') || '',
   },
   bidBoardUrl: 'https://evl-decode-two.vercel.app/live-bid-board',
 
@@ -397,18 +397,40 @@ const EVL_NOTIF = {
   },
 
   // ── SEND SMS via Twilio (requires server-side proxy in production) ──
-  // Note: Twilio cannot be called directly from browser due to CORS
-  // In production: use Firebase Cloud Function as the proxy
+  // Twilio SMS via Firebase Cloud Function proxy
+  // Direct browser → Twilio calls blocked by CORS — must go through server
   async sendSMS(to, message) {
-    if (!this.twilio.accountSid || !this.twilio.authToken) {
-      this.log(`⚠️ SMS queued (Twilio not configured): ${to} — "${message.substring(0,60)}..."`);
+    if (!to || !this.twilio.accountSid) {
+      this.log(`⚠️ SMS skipped — missing phone or credentials`);
       return false;
     }
-    // In production this calls a Firebase Cloud Function:
-    // POST /sendSMS { to, message, from: this.twilio.fromNumber }
-    this.log(`📱 SMS QUEUED → ${to}: "${message.substring(0,80)}..."`);
-    this.log('   [Wire Firebase Cloud Function to activate Twilio SMS]');
-    return true;
+
+    // Try Firebase Cloud Function proxy first (production path)
+    try {
+      const resp = await fetch('https://us-central1-evl-acquisition-radar.cloudfunctions.net/sendSMS', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          to,
+          from: this.twilio.fromNumber,
+          body: message,
+          accountSid: this.twilio.accountSid,
+          authToken:  this.twilio.authToken
+        })
+      });
+      if (resp.ok) {
+        this.log(`✅ SMS SENT → ${to}: "${message.substring(0,60)}..."`);
+        return true;
+      }
+    } catch(e) {
+      // Cloud function not yet deployed — log and queue
+    }
+
+    // Fallback: log for manual send until Cloud Function is deployed
+    this.log(`📱 SMS QUEUED → ${to}`);
+    this.log(`   Message: "${message.substring(0,80)}..."`);
+    this.log(`   [Deploy Firebase Cloud Function to activate live SMS]`);
+    return false;
   },
 
   // ── NOTIFICATION: UNIT CARD (fires when auction launches) ──
@@ -688,6 +710,15 @@ async function testSMS() {
 
 // Load saved config on page open
 window.addEventListener('DOMContentLoaded', () => {
+  // Pre-populate Twilio credentials into localStorage if not already saved
+  // These are entered once and persist — never stored in code
+  const existing = JSON.parse(localStorage.getItem('evl_notif_config')||'{}');
+  if (!existing.twilioSid) {
+    // existing.twilioSid   = 'ENTER-IN-CONFIG-PAGE';
+    // existing.twilioPhone = 'ENTER-IN-CONFIG-PAGE';
+    // Auth token entered manually by operator — not pre-stored in code
+    localStorage.setItem('evl_notif_config', JSON.stringify(existing));
+  }
   loadConfig();
   EVL_NOTIF.init();
 });
