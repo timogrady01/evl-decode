@@ -459,9 +459,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <!-- HEADER -->
   <div class="section-hdr" style="margin-bottom:16px;">
     <div>
-      <div class="section-title">📊 ORPHAN UNIT RADAR — AGED ACQUISITION INTELLIGENCE</div>
+      <div class="section-title">📊 AGED UNIT ACQUISITION RADAR — ALL BRANDS · ALL TARGETS</div>
       <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;margin-top:4px;">
-        Off-brand units sitting 60+ days at franchise dealers · DFW 100-mile radius · MarketCheck live data
+        All units 60+ days on lot — orphan AND native brand · DFW 100-mile radius · MarketCheck live data
       </div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
@@ -482,7 +482,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     </select>
     <select class="form-input" id="aged-orphan" style="width:auto;padding:8px 12px;font-size:13px;border-color:var(--gold)" onchange="applyAgedFilters()">
       <option value="">ALL UNITS</option>
-      <option value="orphan">ORPHAN UNITS ONLY</option>
+      <option value="orphan">ORPHAN UNITS FIRST</option>
       <option value="native">NATIVE BRAND ONLY</option>
     </select>
     <select class="form-input" id="aged-make-filter" style="width:auto;padding:8px 12px;font-size:13px;" onchange="applyAgedFilters()">
@@ -506,7 +506,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     </div>
     <div class="stat-card">
       <span class="stat-val" id="statOrphan" style="color:var(--blue);">0</span>
-      <span class="stat-lbl">Orphan Units</span>
+      <span class="stat-lbl">Cross-Brand (Orphan)</span>
     </div>
     <div class="stat-card">
       <span class="stat-val" id="statTotalPain" style="color:var(--red);">$0</span>
@@ -796,6 +796,11 @@ const AGED_UNITS = [
   {vehicle:'2020 Porsche Cayenne S',vin:'WP1AB2AY0LDA23456',dealer:'Park Place Lexus Plano',dealerMfg:'Lexus',unitMfg:'Porsche',hub:'DFW',days:128,mds:55,retail:64200,wholesale:55100,acv:55100,strategy:'SPECIALTY ORPHAN — Lexus dealer cannot move Porsche. High ACV, slow mover. Target Porsche/luxury dealers.',recalls:0},
   {vehicle:'2021 Lexus RX 350 F-Sport',vin:'2T2BZMDA3MC78901',dealer:'Courtesy Ford Plano',dealerMfg:'Ford',unitMfg:'Lexus',hub:'DFW',days:72,mds:28,retail:42100,wholesale:36500,acv:36500,strategy:'PREMIUM ORPHAN — Ford dealer carrying Lexus F-Sport. Luxury dealers and Lexus-certified path available.',recalls:0},
   {vehicle:'2022 Ford Bronco Wildtrak',vin:'1FMEE5DP3NLB34567',dealer:'Huffines Chevrolet Plano',dealerMfg:'Chevrolet',unitMfg:'Ford',hub:'DFW',days:97,mds:22,retail:45300,wholesale:39100,acv:39100,strategy:'HOT ORPHAN — Chevy dealer has Bronco. Bronco demand still strong. Ford dealers in DFW want this unit.',recalls:2},
+  // ── NATIVE AGED UNITS — same brand, aged out ──
+  {vehicle:'2021 Toyota Camry XSE',vin:'4T1G11AK9MU123456',dealer:'AutoNation Toyota Plano',dealerMfg:'Toyota',unitMfg:'Toyota',hub:'DFW',days:78,mds:29,retail:28400,wholesale:24200,acv:24200,strategy:'WARM AGED NATIVE — Toyota dealer carrying own Camry 78 days. Find undersupplied Toyota dealer in hub or independent with Camry demand. EVL auction path if no match in 14 days.',recalls:0},
+  {vehicle:'2020 Honda CR-V EX-L',vin:'2HKRW2H85LH123456',dealer:'Hendrick Honda Frisco',dealerMfg:'Honda',unitMfg:'Honda',hub:'DFW',days:92,mds:34,retail:26800,wholesale:22900,acv:22900,strategy:'HOT AGED NATIVE — Honda dealer carrying own CR-V 92 days. Route to undersupplied Honda dealer or competitor (Toyota, Nissan) who needs crossover inventory.',recalls:1},
+  {vehicle:'2022 Chevrolet Tahoe LT',vin:'1GNSCPKD3NR123456',dealer:'Classic Chevrolet Lewisville',dealerMfg:'Chevrolet',unitMfg:'Chevrolet',hub:'DFW',days:112,mds:41,retail:52100,wholesale:44800,acv:44800,strategy:'CRITICAL AGED NATIVE — Chevy dealer carrying own Tahoe 112 days. High ACV. Find undersupplied Chevy dealer or luxury/independent with SUV demand. Competitor play — Ford, GMC dealers want Tahoe alternatives.',recalls:0},
+  {vehicle:'2021 Nissan Altima SR',vin:'1N4BL4DV5MN123456',dealer:'AutoNation Nissan Plano',dealerMfg:'Nissan',unitMfg:'Nissan',hub:'DFW',days:84,mds:38,retail:22400,wholesale:18900,acv:18900,strategy:'WARM AGED NATIVE — Nissan dealer carrying own Altima 84 days. High MDS suggests slow segment. Route to independent or competitor (Honda, Toyota) who moves sedans faster.',recalls:0},
 ];
 
 // Dealer match data for ranking
@@ -808,6 +813,12 @@ const BUYER_NETWORK = {
   'Porsche':   [{name:'Park Place Porsche Dallas',vol:60,turn:45,stock:3,need:5,status:'prospect'}],
   'Lexus':     [{name:'Park Place Lexus Plano',vol:120,turn:25,stock:7,need:12,status:'active'},{name:'Sewell Lexus Dallas',vol:110,turn:28,stock:6,need:10,status:'prospect'}],
   'Jeep':      [{name:'Huffines CDJR Plano',vol:160,turn:20,stock:7,need:12,status:'active'}],
+  // Independents — catch-all buyers for native aged or specialty units
+  'Independent':[
+    {name:'DFW Auto Exchange',vol:80,turn:14,stock:20,need:40,status:'active'},
+    {name:'Texas Auto Direct',vol:65,turn:16,stock:15,need:30,status:'contacted'},
+    {name:'Lone Star Pre-Owned',vol:55,turn:18,stock:12,need:25,status:'prospect'},
+  ],
 };
 
 function calcDealerMatchScore(buyer, unit) {
@@ -884,7 +895,11 @@ function renderAgedUnitCards(units) {
     const floorPain  = calcFloorPlanPain(u.days, u.wholesale);
     const depr30     = calcDepreciation30(u.retail, u.days);
     const totalPain  = floorPain + depr30;
-    const buyers     = (BUYER_NETWORK[u.unitMfg]||[]).map(b => ({...b, score: calcDealerMatchScore(b, u)})).sort((a,b)=>b.score-a.score).slice(0,3);
+    // Get brand-matched buyers first, then add independents as fallback
+    const brandBuyers = (BUYER_NETWORK[u.unitMfg]||[]);
+    const indBuyers   = u.unitMfg !== 'Independent' ? (BUYER_NETWORK['Independent']||[]) : [];
+    const allBuyers   = [...brandBuyers, ...indBuyers];
+    const buyers      = allBuyers.map(b => ({...b, score: calcDealerMatchScore(b, u)})).sort((a,b)=>b.score-a.score).slice(0,3);
     const topBuyer   = buyers[0];
     const marginOpp  = Math.round(u.wholesale * 0.04);
 
@@ -1013,7 +1028,7 @@ async function fetchLiveAgedUnits() {
   const statusEl = document.getElementById('agedStatus');
   btn.textContent = '⏳ PULLING DATA...';
   btn.disabled = true;
-  statusEl.textContent = 'Querying MarketCheck — DFW 100-mile radius...';
+  statusEl.textContent = 'Querying MarketCheck — DFW 100-mile radius · ALL units 60+ days...';
 
   try {
     // DFW hub center: Plano TX 33.0198, -96.6989
@@ -1023,7 +1038,7 @@ async function fetchLiveAgedUnits() {
     const listings = data.listings || [];
 
     if (listings.length === 0) {
-      statusEl.textContent = 'No results returned — check API key or try again.';
+      statusEl.textContent = 'No results returned — check API key or try again. Demo data still active below.';
       btn.textContent = '⚡ PULL LIVE DATA';
       btn.disabled = false;
       return;
@@ -1061,7 +1076,7 @@ async function fetchLiveAgedUnits() {
     // Hide legacy table, show live cards
     document.getElementById('agedLegacyTable').style.display = 'none';
 
-    statusEl.textContent = `✅ ${liveUnits.length} units loaded — ${liveUnits.filter(u=>u.dealerMfg!==u.unitMfg).length} orphan units identified`;
+    statusEl.textContent = `✅ ${liveUnits.length} aged units loaded — ${liveUnits.filter(u=>u.dealerMfg!==u.unitMfg).length} orphan · ${liveUnits.filter(u=>u.dealerMfg===u.unitMfg).length} native aged`;
     statusEl.style.color = 'var(--green)';
     btn.textContent = '🔄 REFRESH DATA';
     btn.disabled = false;
@@ -1095,9 +1110,12 @@ function detectDealerBrand(name) {
 function generateStrategy(unitMfg, dealerMfg, days, mds) {
   const isOrphan = unitMfg !== dealerMfg;
   const urgency  = days >= 120 ? 'CRITICAL' : days >= 90 ? 'HOT' : 'WARM';
-  const mdsLabel = mds <= 20 ? 'Fast market' : mds <= 35 ? 'Active market' : 'Slow market';
-  if (isOrphan) return `${urgency} ORPHAN — ${dealerMfg} dealer carrying ${unitMfg}. ${mdsLabel} for ${unitMfg}. Match to ${unitMfg} dealers in network immediately.`;
-  return `${urgency} — ${days} days on lot at native dealer. ${mdsLabel}. Consider auction path if not moved in 14 days.`;
+  const mdsLabel = mds <= 20 ? 'Fast market — buyers are active' : mds <= 35 ? 'Active market' : 'Slow market — price to move';
+  if (isOrphan) {
+    return `${urgency} ORPHAN — ${dealerMfg} dealer carrying ${unitMfg}. ${mdsLabel}. Match to ${unitMfg} dealers in network first. If none available, route to independents or EVL auction.`;
+  }
+  // Native brand but aged — find undersupplied same-brand dealers or competitors
+  return `${urgency} AGED NATIVE — ${dealerMfg} dealer carrying own brand ${days} days. ${mdsLabel}. Find undersupplied ${unitMfg} dealers in hub OR route to competitor who needs this model. EVL auction if no direct match.`;
 }
 
 function agedOutreach(vin, vehicle, dealer, pain) {
@@ -1152,7 +1170,7 @@ function exportOrphanCSV() {
   const blob = new Blob([rows.join('\n')],{type:'text/csv'});
   const a    = document.createElement('a');
   a.href     = URL.createObjectURL(blob);
-  a.download = 'EVL-Orphan-Units-DFW-'+new Date().toISOString().split('T')[0]+'.csv';
+  a.download = 'EVL-Aged-Units-DFW-'+new Date().toISOString().split('T')[0]+'.csv';
   a.click();
 }
 
