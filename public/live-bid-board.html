@@ -295,10 +295,10 @@
           <thead>
             <tr>
               <th>Rank</th>
-              <th>Bid ID</th>
+              <th>Bid ID (Anonymous)</th>
               <th>Time Submitted</th>
-              <th>Bid Amount</th>
-              <th>vs Floor</th>
+              <th>Bid Amount ↓ Highest First</th>
+              <th>vs WS Floor</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -363,14 +363,14 @@ const DEMO_AUCTIONS = [
 // DEMO BIDS per auction (bid ID + amount + timestamp — NO dealer names)
 const DEMO_BIDS = {
   'AUC-2026-001': [
-    {bidId:'EVL-WS-847291',amount:47200,ts:'9:14:22 AM',tsRaw: Date.now()-7200000},
-    {bidId:'EVL-WS-331058',amount:46800,ts:'9:31:47 AM',tsRaw: Date.now()-6300000},
+    {bidId:'EVL-WS-847291',amount:47200,ts:'10:45:33 AM',tsRaw: Date.now()-3600000},
     {bidId:'EVL-WS-512744',amount:46500,ts:'10:02:11 AM',tsRaw: Date.now()-5400000},
-    {bidId:'EVL-WS-228901',amount:45900,ts:'10:45:33 AM',tsRaw: Date.now()-3600000},
+    {bidId:'EVL-WS-331058',amount:46100,ts:'9:31:47 AM',tsRaw: Date.now()-6300000},
+    {bidId:'EVL-WS-228901',amount:45200,ts:'9:14:22 AM',tsRaw: Date.now()-7200000},
   ],
   'AUC-2026-002': [
-    {bidId:'EVL-WS-331058',amount:41200,ts:'8:55:01 AM',tsRaw: Date.now()-9000000},
-    {bidId:'EVL-WS-774612',amount:40800,ts:'9:22:14 AM',tsRaw: Date.now()-7800000},
+    {bidId:'EVL-WS-331058',amount:41200,ts:'9:22:14 AM',tsRaw: Date.now()-7800000},
+    {bidId:'EVL-WS-774612',amount:40500,ts:'8:55:01 AM',tsRaw: Date.now()-9000000},
   ],
   'AUC-2026-003': [
     {bidId:'EVL-WS-512744',amount:46000,ts:'7:30:05 AM',tsRaw: Date.now()-14400000},
@@ -440,6 +440,7 @@ window.selectAuction = function(id) {
 
 function renderAuctionDetail() {
   const a    = currentAuction;
+  // Sort by amount DESC — highest bid is always rank 1 regardless of submission time
   const bids = [...(DEMO_BIDS[a.id]||[])].sort((x,y) => y.amount - x.amount);
   const high = bids[0]?.amount || a.floor;
   const uniqueBidders = new Set(bids.map(b=>b.bidId)).size;
@@ -623,6 +624,7 @@ function startBidListener(auctionId) {
       const exists = DEMO_BIDS[auctionId].some(b => b.bidId===bid.bidId && b.amount===bid.amount);
       if (!exists) {
         DEMO_BIDS[auctionId].push({bidId:bid.bidId, amount:bid.amount, ts, tsRaw: Date.now()});
+        // Always keep highest amount at top
         DEMO_BIDS[auctionId].sort((x,y) => y.amount - x.amount);
         if (currentAuction?.id === auctionId) renderAuctionDetail();
       }
