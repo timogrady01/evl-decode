@@ -722,6 +722,92 @@ body { display:block !important; align-items:unset !important; justify-content:u
   </div>
 </div>
 
+
+<!-- JUN 12 2026 BUILD LOG -->
+<div class="card" style="margin-top:32px;">
+  <div class="card-title">📋 Build Log — Jun 12, 2026 Session</div>
+  <p style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:20px;">
+    Full day session. Major infrastructure built across EVL WS platform, ESS, and the real-time auction engine.
+  </p>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">① Pages Built Today</div>
+  <table>
+    <thead><tr><th>Page</th><th>URL</th><th>What It Does</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>BD Submit</td><td>/bd-submit</td><td>Dedicated BD flow — CarMax/Carvana/SMTV partner selection, fee breakdown, acknowledgment, success screen</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Private Sale Assist</td><td>/private-sale</td><td>3-tier ($149/$299/$499) + EVL vs Alone comparison, net math, state warnings, eBay Motors as Tier 3 differentiator</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Dealer Onboarding</td><td>/dealer-onboard</td><td>4-step dealer network signup — MarketCheck + Google Places + OSM dual-source auto-populate, full contact profile UCM1+UCM2, buying prefs, notification setup, Firebase save</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Live Bid Board</td><td>/live-bid-board</td><td>Dealer-facing anonymous auction board — EVL-WS-XXXXXX bid IDs only, real-time countdown, Firebase sync, bid validation, sort by amount DESC</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Admin Bid Board</td><td>/admin-bid-board</td><td>Internal EVL operator view — dealer identities revealed behind bid IDs, winner box, nudge controls, transaction coordinator, dealer directory, new auction launcher</td><td><span class="badge badge-green">LIVE · PIN: 1027EVL</span></td></tr>
+      <tr><td>ESS Login (Front Door)</td><td>expresssalessystem.com/login.html</td><td>ESS marketing page — hero, features, tools, pricing ($299/$599/$999), dealer login gate via Firebase access codes, demo request modal</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>ESS Admin Subscriptions</td><td>expresssalessystem.com/admin-sub.html</td><td>ESS subscription admin — active dealers, MRR calc, demo requests, add/edit/pause dealers, Firebase — PIN: 1027ESS</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>ESS Demo Sandbox</td><td>expresssalessystem.com/demo.html</td><td>Interactive ESS sandbox — Prestige Ford McKinney pre-loaded, all 7 tools, real data, no login required</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>ESS Walkthrough</td><td>expresssalessystem.com/walkthrough.html</td><td>Video walkthrough page — 7 chapters, key moments, shareable link, sandbox CTA, video placeholder ready for Loom recording</td><td><span class="badge badge-green">LIVE</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">② WS Hub Expansions (ws-hub.html — now 9 tabs)</div>
+  <table>
+    <thead><tr><th>Tab</th><th>What Was Added</th></tr></thead>
+    <tbody>
+      <tr><td>🏪 Dealer Network</td><td>Manufacturer-grouped dealer cards, contact profiles UCM1+UCM2, metro filter, status filter, outreach buttons, CSV export</td></tr>
+      <tr><td>📊 Aged Unit Radar</td><td>ALL aged units (not just orphans), live MarketCheck pull, orphan detection, buyer match score algorithm, dealer pain calc (floor plan + depreciation), NHTSA recall check, staircase recommendation, CSV export</td></tr>
+      <tr><td>📋 WS Deal Card</td><td>Unit approval gate — VIN decode, MarketCheck pricing, math gate (MC wholesale vs dealer minimum), APPROVE/REVIEW/PASS decision, staircase recommendation, matched buyers, dealer conversation script</td></tr>
+      <tr><td>📺 Channel Launcher</td><td>6-channel simultaneous deployment — eBay Motors, FB Marketplace, CarGurus, Craigslist, Cars.com, EVL WS Exchange. EVL algorithm timing per channel. Pricing auto-calc. Legal note embedded.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">③ Key Decisions Locked In Today</div>
+  <table>
+    <thead><tr><th>Decision</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--gold);font-weight:900;">Bid Anonymity</td><td>ALL bids identified by EVL-WS-XXXXXX dealer network ID only. Zero dealer names visible to other bidders. EVL internal only sees identity mapping. Winner identity revealed to source dealer ONLY after auction closes.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Channel Staircase</td><td>Hub Network first (free) → FB/CL → CarGurus/Cars.com → eBay Motors → WS Exchange fallback. Escalate only when necessary. Never pay for a channel before the free channels are exhausted.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Math Gate</td><td>MC wholesale = the floor. Dealer minimum must be at or below MC wholesale before EVL accepts any listing. Non-negotiable. Protects EVL close rate metrics which are the foundation of BD provider negotiations.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Dual Notification</td><td>Email (EmailJS) + SMS (Twilio) for all bid notifications. UCM #1 primary. UCM #2 backup after 2 hours no response. Both configured at onboarding.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">All Aged Units</td><td>EVL targets ALL units 60+ days — orphan and native brand. Orphan flag just tells us who to call first. Native aged units routed to undersupplied same-brand dealers, competitors, or independents.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Auto-Population</td><td>Maximum auto-fill on every form. MarketCheck + OpenStreetMap + NHTSA + EVL logic. Receptionist call script auto-generated for missing UCM contact data.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">No Dealer License</td><td>Confirmed via Liquid Motors precedent. Same DFW market, same model, 15+ years, zero dealer license. EVL is a technology platform. See Legal Framework section.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">④ Next Session Priorities</div>
+  <table>
+    <thead><tr><th>Priority</th><th>Item</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--green);font-weight:900;">#1</td><td>EmailJS + Twilio notification engine — wire hourly nudge, unit card distribution, outbid alerts, winner notification</td><td><span class="badge badge-blue">NEXT</span></td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">#2</td><td>Marketing outreach templates — 13 metro hub dealer acquisition campaign, call scripts, one-page EVL pitch deck</td><td><span class="badge badge-blue">QUEUED</span></td></tr>
+      <tr><td>#3</td><td>Firebase evl_units collection — full auction schema for live Deal Card → Bid Board pipeline</td><td><span class="badge badge-blue">QUEUED</span></td></tr>
+      <tr><td>#4</td><td>Twilio account setup + SMS template configuration</td><td><span class="badge badge-blue">QUEUED</span></td></tr>
+      <tr><td>#5</td><td>ESS video walkthrough recording — Loom screen record for walkthrough.html embed</td><td><span class="badge badge-blue">QUEUED</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">⑤ URLs Reference — All Live Pages</div>
+  <table>
+    <thead><tr><th>Platform</th><th>URL</th><th>PIN/Access</th></tr></thead>
+    <tbody>
+      <tr><td>EVL Consumer</td><td>www.expressvehiclelocators.com</td><td>Public</td></tr>
+      <tr><td>EVL WS Platform</td><td>evl-decode-two.vercel.app/ws-dashboard</td><td>1027</td></tr>
+      <tr><td>WS Hub (9 tabs)</td><td>evl-decode-two.vercel.app/ws-hub</td><td>1027</td></tr>
+      <tr><td>WS Vault</td><td>evl-decode-two.vercel.app/ws-vault</td><td>1027</td></tr>
+      <tr><td>Dealer Onboarding</td><td>evl-decode-two.vercel.app/dealer-onboard</td><td>Public (dealer fills out)</td></tr>
+      <tr><td>Live Bid Board (Dealer)</td><td>evl-decode-two.vercel.app/live-bid-board</td><td>EVL-WS-XXXXXX dealer ID</td></tr>
+      <tr><td>Admin Bid Board (EVL)</td><td>evl-decode-two.vercel.app/admin-bid-board</td><td>1027EVL</td></tr>
+      <tr><td>BD Submit</td><td>evl-decode-two.vercel.app/bd-submit</td><td>Public</td></tr>
+      <tr><td>Private Sale Assist</td><td>evl-decode-two.vercel.app/private-sale</td><td>Public</td></tr>
+      <tr><td>ESS Platform</td><td>www.expresssalessystem.com</td><td>Dealer access code</td></tr>
+      <tr><td>ESS Front Door</td><td>expresssalessystem.com/login.html</td><td>Public</td></tr>
+      <tr><td>ESS Admin Subs</td><td>expresssalessystem.com/admin-sub.html</td><td>1027ESS</td></tr>
+      <tr><td>ESS Sandbox Demo</td><td>expresssalessystem.com/demo.html</td><td>Public</td></tr>
+      <tr><td>ESS Walkthrough</td><td>expresssalessystem.com/walkthrough.html</td><td>Public</td></tr>
+      <tr><td>Firebase Project</td><td>evl-acquisition-radar (Blaze plan)</td><td>See credentials</td></tr>
+      <tr><td>GitHub Repo</td><td>github.com/timogrady01/evl-decode</td><td>See credentials</td></tr>
+      <tr><td>ESS GitHub Repo</td><td>github.com/timogrady01/express-sales-system</td><td>See credentials</td></tr>
+    </tbody>
+  </table>
+</div>
+
 </div>
 <script id="evl-ws-nav-js">
 function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.toggle('open');}
