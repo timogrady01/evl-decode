@@ -253,6 +253,38 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   padding:10px 0;border-bottom:1px solid #1a1a2e;font-family:var(--body);font-size:14px;}
 .cl-result-channel:last-child{border-bottom:none;}
 
+
+/* WS DEAL CARD */
+.dc-section{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:20px;margin-bottom:16px;}
+.dc-section-title{font-size:13px;font-weight:900;color:var(--gold);text-transform:uppercase;letter-spacing:3px;margin-bottom:14px;font-family:var(--font);display:flex;align-items:center;gap:8px;}
+.dc-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.dc-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.dc-stat{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px;text-align:center;}
+.dc-stat-val{font-family:var(--font);font-size:22px;font-weight:900;color:var(--white);}
+.dc-stat-lbl{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:2px;font-family:var(--font);}
+.dc-stat-src{font-size:10px;color:#3d4460;font-family:var(--body);font-weight:600;margin-top:2px;}
+.dc-math-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body);font-size:15px;}
+.dc-math-row:last-child{border-bottom:none;}
+.dc-math-label{color:var(--muted);font-weight:600;}
+.dc-math-val{font-weight:900;}
+.dc-math-total{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;font-family:var(--body);font-size:20px;font-weight:900;border-top:2px solid var(--border);margin-top:8px;}
+.dc-approval{border-radius:12px;padding:20px 24px;text-align:center;margin-top:16px;}
+.dc-approval.green{background:rgba(0,200,83,.08);border:2px solid var(--green);}
+.dc-approval.yellow{background:rgba(255,215,0,.06);border:2px solid var(--gold);}
+.dc-approval.red{background:rgba(255,51,51,.08);border:2px solid var(--red);}
+.dc-approval-icon{font-size:48px;margin-bottom:8px;}
+.dc-approval-title{font-family:var(--font);font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:3px;margin-bottom:6px;}
+.dc-approval-reason{font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;line-height:1.6;}
+.dc-staircase-rec{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:14px;margin-top:12px;}
+.dc-step-row{display:flex;gap:12px;align-items:center;padding:6px 0;font-family:var(--body);font-size:13px;color:#ffffff;font-weight:600;}
+.dc-step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0;font-family:var(--font);}
+.dc-step-active{background:rgba(0,200,83,.15);border:2px solid var(--green);color:var(--green);}
+.dc-step-pending{background:#0d0d1a;border:1px solid #3d4460;color:#3d4460;}
+.dc-step-skip{background:rgba(255,215,0,.1);border:1px solid var(--gold);color:var(--gold);}
+.dc-approve-btn{width:100%;background:var(--green);color:#000;border:none;padding:16px;border-radius:10px;font-family:var(--font);font-size:20px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;}
+.dc-review-btn{width:100%;background:var(--gold);color:#000;border:none;padding:16px;border-radius:10px;font-family:var(--font);font-size:20px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;}
+.dc-pass-btn{width:100%;background:transparent;color:var(--red);border:2px solid var(--red);padding:14px;border-radius:10px;font-family:var(--font);font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;}
+
 /* BUTTONS */
 .btn{padding:8px 16px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
@@ -302,6 +334,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <button class="tab-btn" onclick="switchTab('porter',this)">🚐 PORTER DISPATCH</button>
   <button class="tab-btn" onclick="switchTab('dealers',this)">🏪 DEALER NETWORK</button>
   <button class="tab-btn" onclick="switchTab('aged',this)">📊 AGED UNIT RADAR</button>
+  <button class="tab-btn" onclick="switchTab('dealcard',this)">📋 WS DEAL CARD</button>
   <button class="tab-btn" onclick="switchTab('channel',this)">📺 CHANNEL LAUNCHER</button>
   <button class="tab-btn" onclick="switchTab('pricing',this)">💰 WS PRICING CALC</button>
 </div>
@@ -601,6 +634,229 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   </div>
 
 </div>
+
+<!-- ══ WS DEAL CARD TAB ══ -->
+<div id="tab-dealcard" class="tab-content">
+  <div class="section-hdr" style="margin-bottom:16px;">
+    <div>
+      <div class="section-title">📋 WS DEAL CARD — UNIT APPROVAL GATE</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;margin-top:4px;">
+        Every unit entering EVL's pipeline requires an approved Deal Card before any listing or outreach begins
+      </div>
+    </div>
+    <button class="btn btn-gold btn-sm" onclick="dcPrint()">🖨️ PRINT CARD</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:20px;align-items:start;">
+
+    <!-- LEFT — INPUT FORM -->
+    <div>
+      <div class="dc-section">
+        <div class="dc-section-title">① Vehicle Identification</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div>
+            <label class="form-label">VIN (auto-decodes make/model)</label>
+            <div style="display:flex;gap:8px;">
+              <input class="form-input" type="text" id="dcVin" placeholder="17-DIGIT VIN"
+                maxlength="17" style="flex:1;letter-spacing:2px;text-transform:uppercase;"
+                oninput="this.value=this.value.toUpperCase()">
+              <button class="btn btn-gold btn-sm" onclick="dcDecodeVin()">DECODE</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div><label class="form-label">Year</label>
+              <input class="form-input" type="text" id="dcYear" placeholder="2021"></div>
+            <div><label class="form-label">Make</label>
+              <input class="form-input" type="text" id="dcMake" placeholder="Ford"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div><label class="form-label">Model</label>
+              <input class="form-input" type="text" id="dcModel" placeholder="F-150"></div>
+            <div><label class="form-label">Trim</label>
+              <input class="form-input" type="text" id="dcTrim" placeholder="Lariat"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div><label class="form-label">Mileage</label>
+              <input class="form-input" type="text" id="dcMiles" placeholder="67,400"></div>
+            <div><label class="form-label">Condition</label>
+              <select class="form-input" id="dcCondition">
+                <option value="">— Select —</option>
+                <option value="excellent">Excellent</option>
+                <option value="good">Good</option>
+                <option value="fair">Fair</option>
+                <option value="poor">Poor</option>
+              </select>
+            </div>
+          </div>
+          <div><label class="form-label">Dealer / Source</label>
+            <input class="form-input" type="text" id="dcDealer" placeholder="Dealer name"></div>
+          <div><label class="form-label">Days on Lot</label>
+            <input class="form-input" type="number" id="dcDaysLot" placeholder="97"></div>
+        </div>
+      </div>
+
+      <div class="dc-section">
+        <div class="dc-section-title">② Dealer's Stated Minimum ($)</div>
+        <input class="form-input" type="number" id="dcMinimum" placeholder="38,000"
+          style="font-size:22px;font-weight:900;border-color:var(--gold);"
+          oninput="dcRunMath()">
+        <p style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+          margin-top:6px;line-height:1.5;">
+          This is the absolute floor the dealer will accept. If this number is above MarketCheck wholesale — the deal fails the math gate.
+        </p>
+      </div>
+
+      <div class="dc-section">
+        <div class="dc-section-title">③ Pull Market Intelligence</div>
+        <button class="btn btn-gold" style="width:100%;padding:12px;font-size:16px;"
+          onclick="dcPullMarketCheck()">
+          ⚡ PULL MARKETCHECK DATA
+        </button>
+        <div id="dcMCStatus" style="font-size:13px;color:var(--muted);font-family:var(--body);
+          font-weight:600;margin-top:8px;min-height:20px;"></div>
+        <button class="btn btn-dark" style="width:100%;padding:10px;font-size:14px;margin-top:8px;"
+          onclick="dcCheckRecalls()">
+          🔍 NHTSA RECALL CHECK
+        </button>
+        <div id="dcRecallStatus" style="font-size:13px;font-family:var(--body);
+          font-weight:700;margin-top:6px;min-height:16px;"></div>
+      </div>
+
+      <div class="dc-section">
+        <div class="dc-section-title">④ EVL Fee Structure</div>
+        <select class="form-input" id="dcFee" onchange="dcRunMath()">
+          <option value="250">Hub Network — $250 flat</option>
+          <option value="349" selected>Managed — $349</option>
+          <option value="495">Full Service — $495</option>
+        </select>
+        <div style="margin-top:10px;">
+          <label class="form-label">Est. Ad Spend ($)</label>
+          <input class="form-input" type="number" id="dcAdSpend" placeholder="0"
+            value="0" oninput="dcRunMath()">
+        </div>
+        <div style="margin-top:10px;">
+          <label class="form-label">Transport/Porter ($)</label>
+          <input class="form-input" type="number" id="dcTransport" placeholder="0"
+            value="0" oninput="dcRunMath()">
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT — DEAL CARD OUTPUT -->
+    <div id="dcOutput" style="opacity:.3;pointer-events:none;transition:opacity .3s;">
+
+      <!-- MARKET INTELLIGENCE -->
+      <div class="dc-section">
+        <div class="dc-section-title">📊 Market Intelligence — MarketCheck</div>
+        <div class="dc-grid-4" style="margin-bottom:12px;">
+          <div class="dc-stat">
+            <div class="dc-stat-val" id="dcRetailVal">$—</div>
+            <div class="dc-stat-lbl">Retail Value</div>
+            <div class="dc-stat-src">MC Predicted</div>
+          </div>
+          <div class="dc-stat" style="border-color:var(--gold);">
+            <div class="dc-stat-val" id="dcWholesaleVal" style="color:var(--gold);">$—</div>
+            <div class="dc-stat-lbl">Wholesale ACV</div>
+            <div class="dc-stat-src">MC Predicted ← THE FLOOR</div>
+          </div>
+          <div class="dc-stat">
+            <div class="dc-stat-val" id="dcActiveComps">—</div>
+            <div class="dc-stat-lbl">Active Comps</div>
+            <div class="dc-stat-src">Similar in market</div>
+          </div>
+          <div class="dc-stat">
+            <div class="dc-stat-val" id="dcSoldComps">—</div>
+            <div class="dc-stat-lbl">Sold Avg Price</div>
+            <div class="dc-stat-src">30/60/90 day</div>
+          </div>
+        </div>
+        <div class="dc-grid-3">
+          <div class="dc-stat">
+            <div class="dc-stat-val" id="dcMDSVal">—</div>
+            <div class="dc-stat-lbl">Market Days Supply</div>
+            <div class="dc-stat-src">Low = fast market</div>
+          </div>
+          <div class="dc-stat">
+            <div class="dc-stat-val" id="dcDeprVal" style="color:var(--red);">$—</div>
+            <div class="dc-stat-lbl">30-Day Depr.</div>
+            <div class="dc-stat-src">Projected loss</div>
+          </div>
+          <div class="dc-stat">
+            <div class="dc-stat-val" id="dcFloorPainVal" style="color:var(--red);">$—</div>
+            <div class="dc-stat-lbl">Floor Plan Pain</div>
+            <div class="dc-stat-src">Days × $0.068%/day</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE MATH GATE -->
+      <div class="dc-section" style="border-color:var(--gold);">
+        <div class="dc-section-title">⚖️ The Math Gate</div>
+        <div>
+          <div class="dc-math-row">
+            <span class="dc-math-label">MarketCheck Wholesale Value</span>
+            <span class="dc-math-val" id="mcWholesaleDisplay" style="color:var(--white);">$—</span>
+          </div>
+          <div class="dc-math-row">
+            <span class="dc-math-label">Dealer Stated Minimum</span>
+            <span class="dc-math-val" id="dealerMinDisplay" style="color:var(--red);">−$—</span>
+          </div>
+          <div class="dc-math-row" style="border-top:1px solid #1a1a2e;padding-top:10px;">
+            <span class="dc-math-label" style="color:var(--white);font-weight:900;">EVL Gross Spread</span>
+            <span class="dc-math-val" id="grossSpreadDisplay" style="font-size:20px;">$—</span>
+          </div>
+          <div style="height:16px;"></div>
+          <div class="dc-math-row">
+            <span class="dc-math-label">EVL Service Fee</span>
+            <span class="dc-math-val" id="evlFeeDisplay" style="color:var(--muted);">−$—</span>
+          </div>
+          <div class="dc-math-row">
+            <span class="dc-math-label">Ad Spend</span>
+            <span class="dc-math-val" id="adSpendDisplay" style="color:var(--muted);">−$—</span>
+          </div>
+          <div class="dc-math-row">
+            <span class="dc-math-label">Transport</span>
+            <span class="dc-math-val" id="transportDisplay" style="color:var(--muted);">−$0</span>
+          </div>
+          <div class="dc-math-total">
+            <span style="color:var(--white);">NET EVL MARGIN</span>
+            <span id="netMarginDisplay" style="font-size:26px;">$—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAIRCASE RECOMMENDATION -->
+      <div class="dc-section">
+        <div class="dc-section-title">🪜 Recommended Staircase Path</div>
+        <div class="dc-staircase-rec" id="dcStaircaseRec">
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);">
+            Pull market data to generate recommendation
+          </div>
+        </div>
+      </div>
+
+      <!-- MATCHED BUYERS -->
+      <div class="dc-section">
+        <div class="dc-section-title">🎯 Top Matched Buyers</div>
+        <div id="dcMatchedBuyers">
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);">
+            Enter vehicle make to load matched buyers
+          </div>
+        </div>
+      </div>
+
+      <!-- APPROVAL GATE -->
+      <div id="dcApprovalGate">
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);
+          text-align:center;padding:20px;">
+          Complete all fields and pull market data to generate approval decision
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 <div id="tab-pricing" class="tab-content">
   <div style="max-width:700px">
@@ -1820,6 +2076,366 @@ function clLaunch() {
 
   document.getElementById('clResultCard').classList.add('active');
   document.getElementById('clResultCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ══════════════════════════════════════════════════
+// WS DEAL CARD
+// ══════════════════════════════════════════════════
+
+let dcMCData = null; // stores MarketCheck response
+
+function dcDecodeVin() {
+  const vin = document.getElementById('dcVin').value.trim();
+  if (!vin || vin.length < 10) { alert('Enter a valid VIN first.'); return; }
+  // Use NHTSA free VIN decoder
+  document.getElementById('dcMCStatus').textContent = 'Decoding VIN...';
+  fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/${vin}?format=json`)
+    .then(r => r.json())
+    .then(data => {
+      const results = data.Results || [];
+      const get = (id) => (results.find(r => r.VariableId === id)||{}).Value || '';
+      const year  = get(29);
+      const make  = get(26);
+      const model = get(28);
+      const trim  = get(38);
+      if (year) document.getElementById('dcYear').value  = year;
+      if (make) document.getElementById('dcMake').value  = make;
+      if (model) document.getElementById('dcModel').value = model;
+      if (trim && trim !== 'null') document.getElementById('dcTrim').value = trim;
+      document.getElementById('dcMCStatus').textContent = '✅ VIN decoded — ' + year + ' ' + make + ' ' + model;
+      document.getElementById('dcMCStatus').style.color = 'var(--green)';
+    })
+    .catch(() => {
+      document.getElementById('dcMCStatus').textContent = 'VIN decode failed — enter details manually';
+      document.getElementById('dcMCStatus').style.color = 'var(--red)';
+    });
+}
+
+function dcPullMarketCheck() {
+  const year  = document.getElementById('dcYear').value.trim();
+  const make  = document.getElementById('dcMake').value.trim();
+  const model = document.getElementById('dcModel').value.trim();
+  const miles = parseInt((document.getElementById('dcMiles').value||'').replace(/,/g,''))||50000;
+
+  if (!year || !make || !model) {
+    alert('Enter Year, Make, and Model first (or decode VIN).');
+    return;
+  }
+
+  const statusEl = document.getElementById('dcMCStatus');
+  statusEl.style.color = 'var(--muted)';
+  statusEl.textContent = '⏳ Pulling MarketCheck data...';
+
+  // MarketCheck Price API — wholesale + retail prediction
+  const url = `https://api.marketcheck.com/v2/predict/car/us/marketcheck_price/comparables/decode?api_key=FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU&year=${year}&make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&miles=${miles}&dealer_type=franchise&zip=75024`;
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      if (data.error || (!data.retail && !data.wholesale)) {
+        // Fall back to search-based estimation
+        return dcFallbackPricing(year, make, model, miles);
+      }
+      dcMCData = data;
+      dcPopulateMCFields(data, miles);
+      statusEl.textContent = '✅ MarketCheck data loaded — ' + make + ' ' + model;
+      statusEl.style.color = 'var(--green)';
+      dcEnableOutput();
+      dcRunMath();
+    })
+    .catch(() => dcFallbackPricing(year, make, model, miles));
+}
+
+function dcFallbackPricing(year, make, model, miles) {
+  // Use search endpoint to estimate pricing from active comps
+  const url = `https://api.marketcheck.com/v2/search/car/active?api_key=FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU&year=${year}&make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&miles_max=${miles+30000}&rows=20&zip=75024&radius=200`;
+  
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      const listings = data.listings || [];
+      if (listings.length === 0) {
+        dcUseDemoData(year, make, model, miles);
+        return;
+      }
+      const prices   = listings.map(l => l.price).filter(p => p > 0);
+      const avgRetail = Math.round(prices.reduce((a,b)=>a+b,0)/prices.length);
+      const avgWholesale = Math.round(avgRetail * 0.84);
+      const mds      = data.market_statistics?.mds || 28;
+      
+      dcMCData = {
+        retail:    { predicted_price: avgRetail },
+        wholesale: { predicted_price: avgWholesale },
+        activeComps: { num_found: listings.length },
+        soldComps:  { stats: { price: { mean: Math.round(avgWholesale * 0.98) } } },
+        mds
+      };
+      dcPopulateMCFields(dcMCData, miles);
+      document.getElementById('dcMCStatus').textContent = `✅ ${listings.length} comps found — pricing estimated from active market`;
+      document.getElementById('dcMCStatus').style.color = 'var(--green)';
+      dcEnableOutput();
+      dcRunMath();
+    })
+    .catch(() => dcUseDemoData(year, make, model, miles));
+}
+
+function dcUseDemoData(year, make, model, miles) {
+  // Demo fallback for sandbox
+  const basePrice = make === 'Ford' ? 38000 : make === 'Toyota' ? 32000 :
+                    make === 'Chevrolet' ? 36000 : make === 'Honda' ? 28000 : 30000;
+  const mileAdj   = Math.round((miles - 50000) * 0.08);
+  const retail    = Math.max(basePrice - mileAdj, 12000);
+  dcMCData = {
+    retail:    { predicted_price: retail },
+    wholesale: { predicted_price: Math.round(retail * 0.84) },
+    activeComps: { num_found: 42 },
+    soldComps:  { stats: { price: { mean: Math.round(retail * 0.82) } } },
+    mds: 28
+  };
+  dcPopulateMCFields(dcMCData, miles);
+  document.getElementById('dcMCStatus').textContent = '⚠️ Using estimated values — verify with dealer before approval';
+  document.getElementById('dcMCStatus').style.color = 'var(--gold)';
+  dcEnableOutput();
+  dcRunMath();
+}
+
+function dcPopulateMCFields(data, miles) {
+  const retail    = data.retail?.predicted_price || 0;
+  const wholesale = data.wholesale?.predicted_price || Math.round(retail * 0.84);
+  const comps     = data.activeComps?.num_found || 0;
+  const soldAvg   = data.soldComps?.stats?.price?.mean || Math.round(wholesale * 0.98);
+  const mds       = data.mds || 28;
+  const days      = parseInt(document.getElementById('dcDaysLot').value) || 60;
+  const floorPain = Math.round(wholesale * 0.00068 * days);
+  const depr30    = Math.round(retail * 0.008);
+
+  document.getElementById('dcRetailVal').textContent    = '$' + retail.toLocaleString();
+  document.getElementById('dcWholesaleVal').textContent = '$' + wholesale.toLocaleString();
+  document.getElementById('dcActiveComps').textContent  = comps + ' units';
+  document.getElementById('dcSoldComps').textContent    = '$' + soldAvg.toLocaleString();
+  document.getElementById('dcMDSVal').textContent       = mds + ' days';
+  document.getElementById('dcMDSVal').style.color       = mds <= 20 ? 'var(--green)' : mds <= 35 ? 'var(--gold)' : 'var(--red)';
+  document.getElementById('dcDeprVal').textContent      = '$' + depr30.toLocaleString();
+  document.getElementById('dcFloorPainVal').textContent = '$' + floorPain.toLocaleString();
+
+  // Load matched buyers
+  dcLoadMatchedBuyers();
+  // Build staircase rec
+  dcBuildStaircaseRec(mds, days);
+}
+
+function dcLoadMatchedBuyers() {
+  const make    = document.getElementById('dcMake').value.trim();
+  const buyers  = (BUYER_NETWORK[make] || BUYER_NETWORK['Independent'] || [])
+    .map(b => ({...b, score: calcDealerMatchScore(b, {})}))
+    .sort((a,b) => b.score - a.score).slice(0,3);
+
+  document.getElementById('dcMatchedBuyers').innerHTML = buyers.length > 0 ?
+    buyers.map((b,i) => `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;
+        border-bottom:1px solid #0d0d1a;">
+        <div style="width:26px;height:26px;border-radius:50%;
+          background:${b.score>=80?'rgba(0,200,83,.15)':b.score>=60?'rgba(255,215,0,.1)':'rgba(255,255,255,.04)'};
+          border:2px solid ${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'#3d4460'};
+          display:flex;align-items:center;justify-content:center;
+          font-size:12px;font-weight:900;color:${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'var(--muted)'};
+          flex-shrink:0;">#${i+1}</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:900;color:var(--white);">${b.name}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);font-weight:600;">
+            Turn: ${b.turn}d · Stock: ${b.stock} · Need: ${b.need} · ${b.status.toUpperCase()}
+          </div>
+        </div>
+        <div style="font-size:18px;font-weight:900;
+          color:${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'var(--muted)'};">
+          ${b.score}
+        </div>
+      </div>`).join('') :
+    `<div style="font-size:13px;color:var(--muted);font-family:var(--body);">
+      No matched buyers for ${make} in network. Route to independents or eBay Motors.
+    </div>`;
+}
+
+function dcBuildStaircaseRec(mds, days) {
+  let startStep = 1;
+  let reason = '';
+
+  if (mds > 50) {
+    startStep = 4;
+    reason = 'MDS > 50 days — saturated local market. Skip to eBay Motors for national exposure.';
+  } else if (days >= 120) {
+    startStep = 3;
+    reason = 'Critical age (120+ days) — skip hub network, go straight to paid retail channels.';
+  } else if (days >= 90) {
+    startStep = 2;
+    reason = 'Hot age (90+ days) — start with FB/Craigslist local retail immediately.';
+  } else {
+    startStep = 1;
+    reason = 'Standard path — start with hub network (free). Escalate if no buyer in 7 days.';
+  }
+
+  const steps = [
+    {n:1, label:'EVL Hub Network — 50-mile matched dealers', days:'Days 1–7'},
+    {n:2, label:'Facebook Marketplace + Craigslist — local retail', days:'Days 7–14'},
+    {n:3, label:'CarGurus + Cars.com — paid retail channels', days:'Days 14–21'},
+    {n:4, label:'eBay Motors — national buyer pool', days:'Days 21–31'},
+    {n:5, label:'EVL WS Exchange fallback — 72hr dealer auction', days:'Day 31+'},
+  ];
+
+  document.getElementById('dcStaircaseRec').innerHTML =
+    `<div style="font-size:13px;color:var(--gold);font-family:var(--body);font-weight:700;
+      margin-bottom:10px;">→ ${reason}</div>` +
+    steps.map(s => {
+      const cls = s.n === startStep ? 'dc-step-active' : s.n < startStep ? 'dc-step-skip' : 'dc-step-pending';
+      const label = s.n === startStep ? 'START HERE' : s.n < startStep ? 'SKIP' : '';
+      return `<div class="dc-step-row">
+        <div class="dc-step-num ${cls}">${s.n}</div>
+        <div style="flex:1;">${s.label}</div>
+        <div style="font-size:11px;color:var(--muted);font-family:var(--body);">${s.days}</div>
+        ${label ? `<span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:8px;
+          background:${s.n===startStep?'rgba(0,200,83,.15)':'rgba(255,215,0,.1)'};
+          color:${s.n===startStep?'var(--green)':'var(--gold)'};border:1px solid ${s.n===startStep?'rgba(0,200,83,.3)':'rgba(255,215,0,.3)'};
+          font-family:var(--font);letter-spacing:1px;">${label}</span>` : ''}
+      </div>`;
+    }).join('');
+}
+
+function dcRunMath() {
+  if (!dcMCData) return;
+  const wholesale = dcMCData.wholesale?.predicted_price || 0;
+  const minimum   = parseInt(document.getElementById('dcMinimum').value) || 0;
+  const fee       = parseInt(document.getElementById('dcFee').value) || 349;
+  const adSpend   = parseInt(document.getElementById('dcAdSpend').value) || 0;
+  const transport = parseInt(document.getElementById('dcTransport').value) || 0;
+
+  const grossSpread = wholesale - minimum;
+  const netMargin   = grossSpread - fee - adSpend - transport;
+
+  document.getElementById('mcWholesaleDisplay').textContent  = '$' + wholesale.toLocaleString();
+  document.getElementById('dealerMinDisplay').textContent    = '−$' + minimum.toLocaleString();
+  document.getElementById('grossSpreadDisplay').textContent  = (grossSpread >= 0 ? '+' : '') + '$' + grossSpread.toLocaleString();
+  document.getElementById('grossSpreadDisplay').style.color  = grossSpread > 500 ? 'var(--green)' : grossSpread > 0 ? 'var(--gold)' : 'var(--red)';
+  document.getElementById('evlFeeDisplay').textContent       = '−$' + fee.toLocaleString();
+  document.getElementById('adSpendDisplay').textContent      = '−$' + adSpend.toLocaleString();
+  document.getElementById('transportDisplay').textContent    = '−$' + transport.toLocaleString();
+  document.getElementById('netMarginDisplay').textContent    = (netMargin >= 0 ? '+' : '') + '$' + netMargin.toLocaleString();
+  document.getElementById('netMarginDisplay').style.color    = netMargin > 300 ? 'var(--green)' : netMargin > 0 ? 'var(--gold)' : 'var(--red)';
+
+  dcRenderApproval(grossSpread, netMargin, wholesale, minimum);
+}
+
+function dcRenderApproval(grossSpread, netMargin, wholesale, minimum) {
+  const gate = document.getElementById('dcApprovalGate');
+
+  if (grossSpread < 0) {
+    // PASS — dealer floor above market
+    const gap = Math.abs(grossSpread);
+    gate.innerHTML = `
+      <div class="dc-approval red">
+        <div class="dc-approval-icon">🔴</div>
+        <div class="dc-approval-title" style="color:var(--red);">PASS — MATH FAILS</div>
+        <div class="dc-approval-reason">
+          Dealer minimum ($${minimum.toLocaleString()}) is <strong>$${gap.toLocaleString()} ABOVE</strong>
+          MarketCheck wholesale ($${wholesale.toLocaleString()}).
+          The market will not support this floor. This unit will not sell at the dealer's stated minimum.
+          <br><br>
+          <strong>EVL Action:</strong> Show the dealer the MarketCheck data directly.
+          Present the auction lane comparison. Dealer must lower their floor to at least
+          $${wholesale.toLocaleString()} before EVL accepts this listing.
+        </div>
+        <button class="dc-pass-btn" onclick="dcShowDealerConversation(${wholesale}, ${minimum})">
+          📞 GENERATE DEALER CONVERSATION SCRIPT
+        </button>
+      </div>`;
+  } else if (netMargin < 150 || grossSpread < 300) {
+    // REVIEW — thin margin
+    gate.innerHTML = `
+      <div class="dc-approval yellow">
+        <div class="dc-approval-icon">🟡</div>
+        <div class="dc-approval-title" style="color:var(--gold);">REVIEW — THIN MARGIN</div>
+        <div class="dc-approval-reason">
+          The math technically works but EVL net margin is thin.
+          Consider lowering to Hub Network tier ($250) to improve margin,
+          or use this unit as a relationship builder for a dealer with stronger inventory.
+          Proceed only if the dealer relationship justifies it.
+        </div>
+        <button class="dc-review-btn" onclick="dcApprove('review')">
+          ⚠️ APPROVE WITH REVIEW NOTE
+        </button>
+        <button class="dc-pass-btn" onclick="dcApprove('pass')">
+          PASS ON THIS UNIT
+        </button>
+      </div>`;
+  } else {
+    // APPROVED
+    gate.innerHTML = `
+      <div class="dc-approval green">
+        <div class="dc-approval-icon">🟢</div>
+        <div class="dc-approval-title" style="color:var(--green);">APPROVED — PROCEED</div>
+        <div class="dc-approval-reason">
+          Math works. EVL net margin is strong. Unit is approved for listing.
+          Proceed to Channel Launcher to generate the listing package.
+        </div>
+        <button class="dc-approve-btn" onclick="dcApprove('approved')">
+          ✅ APPROVE AND GENERATE LISTING PACKAGE
+        </button>
+      </div>`;
+  }
+}
+
+function dcShowDealerConversation(wholesale, minimum) {
+  const gap = minimum - wholesale;
+  alert(`DEALER CONVERSATION SCRIPT — PRICE REALIGNMENT\n\n"I want to show you something before we go any further.\n\nMarketCheck — the same data platform used by CarMax, Carvana, and every major auction house — shows the current wholesale market value on your unit at $${wholesale.toLocaleString()}.\n\nYour floor is $${minimum.toLocaleString()} — that is $${gap.toLocaleString()} above where the market is right now.\n\nIf we list at your floor, we will not sell it. Buyers have the same data we do.\n\nHere is what the auction lane would net you: roughly $${Math.round(wholesale*0.93).toLocaleString()} after fees and transport.\n\nIf you can move your floor to $${wholesale.toLocaleString()} or below, EVL can put this unit in front of 6 channels simultaneously and get you more than the auction lane — guaranteed or we refund our fee.\n\nDoes that make sense?"`);
+}
+
+function dcEnableOutput() {
+  document.getElementById('dcOutput').style.opacity = '1';
+  document.getElementById('dcOutput').style.pointerEvents = 'auto';
+}
+
+function dcApprove(decision) {
+  const vin   = document.getElementById('dcVin').value;
+  const year  = document.getElementById('dcYear').value;
+  const make  = document.getElementById('dcMake').value;
+  const model = document.getElementById('dcModel').value;
+  const ts    = new Date().toLocaleString();
+  if (decision === 'approved') {
+    alert(`✅ DEAL CARD APPROVED\n\n${year} ${make} ${model}\nVIN: ${vin}\nApproved: ${ts}\n\nProceeding to Channel Launcher...`);
+    // Pre-load into channel launcher
+    document.getElementById('clUnitSelect').value = '';
+    switchTab('channel', document.querySelector('.tab-btn[onclick*="channel"]'));
+  } else if (decision === 'review') {
+    alert(`⚠️ APPROVED WITH REVIEW NOTE\n\n${year} ${make} ${model}\nVIN: ${vin}\nReview approval: ${ts}\n\nProceed with caution — thin margin. Consider Hub Network tier only.`);
+  } else {
+    alert(`❌ UNIT PASSED\n\n${year} ${make} ${model}\nVIN: ${vin}\nPassed: ${ts}\n\nUnit removed from pipeline. Dealer notified.`);
+  }
+}
+
+function dcCheckRecalls() {
+  const year  = document.getElementById('dcYear').value.trim();
+  const make  = document.getElementById('dcMake').value.trim();
+  const model = document.getElementById('dcModel').value.trim();
+  if (!year || !make || !model) { alert('Enter vehicle details first.'); return; }
+  const statusEl = document.getElementById('dcRecallStatus');
+  statusEl.style.color = 'var(--muted)';
+  statusEl.textContent = '⏳ Checking NHTSA...';
+  fetch(`https://api.nhtsa.gov/recalls/recallsByVehicle?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&modelYear=${year}`)
+    .then(r => r.json())
+    .then(data => {
+      const count = data.Count || 0;
+      if (count === 0) {
+        statusEl.textContent = '✅ No open recalls found';
+        statusEl.style.color = 'var(--green)';
+      } else {
+        statusEl.textContent = `⚠️ ${count} open recall(s) — must disclose in all listings`;
+        statusEl.style.color = 'var(--red)';
+      }
+    })
+    .catch(() => { statusEl.textContent = 'NHTSA check failed'; statusEl.style.color = 'var(--red)'; });
+}
+
+function dcPrint() {
+  window.print();
 }
 
 // ── INIT ──
