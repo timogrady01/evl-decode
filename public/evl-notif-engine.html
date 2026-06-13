@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Notification Engine — Internal Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root{--bg:#090E17;--s1:#0d1117;--blue:#2B84FE;--gold:#FFD700;--green:#00C853;
+    --red:#FF4444;--white:#ffffff;--muted:#8899aa;--border:#1a2a3a;
+    --font:'Oswald',sans-serif;--body:'Barlow',sans-serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--white);font-family:var(--font);
+    min-height:100vh;padding:32px 20px;}
+  .wrap{max-width:800px;margin:0 auto;}
+  h1{font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:2px;
+    margin-bottom:6px;}
+  .sub{font-family:var(--body);font-size:15px;color:var(--muted);font-weight:600;
+    margin-bottom:32px;}
+  .card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
+    padding:24px;margin-bottom:20px;}
+  .card-title{font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:16px;}
+  .field{margin-bottom:14px;}
+  .label{font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;
+    letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;}
+  input,textarea{background:var(--bg);border:2px solid var(--border);color:var(--white);
+    padding:11px 14px;border-radius:8px;font-size:15px;font-family:var(--font);
+    font-weight:700;outline:none;width:100%;}
+  input:focus,textarea:focus{border-color:var(--blue);}
+  .btn{background:var(--blue);color:#fff;border:none;padding:12px 24px;border-radius:8px;
+    font-family:var(--font);font-size:17px;font-weight:900;letter-spacing:1px;
+    text-transform:uppercase;cursor:pointer;margin-right:8px;margin-top:4px;}
+  .btn:hover{opacity:.9;}
+  .btn.gold{background:var(--gold);color:#000;}
+  .btn.green{background:var(--green);color:#000;}
+  .btn.red{background:var(--red);}
+  .log{background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:14px;font-family:monospace;font-size:13px;color:var(--green);
+    line-height:1.8;min-height:80px;max-height:300px;overflow-y:auto;margin-top:12px;
+    white-space:pre-wrap;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:11px;
+    font-weight:900;font-family:var(--font);letter-spacing:1px;}
+  .badge-green{background:rgba(0,200,83,.12);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+  .badge-red{background:rgba(255,68,68,.12);color:var(--red);border:1px solid rgba(255,68,68,.3);}
+  .badge-gold{background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
+  .config-val{font-family:monospace;font-size:13px;color:var(--blue);letter-spacing:1px;}
+  .warning{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2);
+    border-radius:8px;padding:14px;font-family:var(--body);font-size:14px;
+    color:#ffffff;font-weight:600;line-height:1.6;margin-bottom:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>EVL Notification Engine</h1>
+  <div class="sub">EmailJS + Twilio — Internal test and configuration page · Not public-facing</div>
+
+  <div class="warning">
+    ⚠️ This page is for EVL internal use only. Drop in your EmailJS Public Key and Twilio credentials below to activate the notification engine across all bid board pages.
+  </div>
+
+  <!-- CREDENTIALS CONFIG -->
+  <div class="card">
+    <div class="card-title">🔑 Credentials — Enter Once, Used Everywhere</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="field">
+        <label class="label">EmailJS Public Key</label>
+        <input type="text" id="ejsPublicKey" placeholder="user_XXXXXXXXXXXXXXXXX"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">EmailJS Service ID</label>
+        <input type="text" id="ejsServiceId" value="service_rvscjt3" readonly
+          style="color:var(--green);border-color:var(--green);">
+      </div>
+      <div class="field">
+        <label class="label">Template: Unit Card</label>
+        <input type="text" id="tmplUnitCard" placeholder="template_XXXXXXX"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">Template: Hourly Nudge</label>
+        <input type="text" id="tmplNudge" placeholder="template_XXXXXXX"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">Template: Outbid Alert</label>
+        <input type="text" id="tmplOutbid" placeholder="template_XXXXXXX"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">Template: Final Call</label>
+        <input type="text" id="tmplFinal" placeholder="template_XXXXXXX"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">Template: Winner</label>
+        <input type="text" id="tmplWinner" placeholder="template_XXXXXXX"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">Twilio Account SID</label>
+        <input type="text" id="twilioSid" placeholder="ACxxxxxxxxxxxxxxxxxxxx"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">Twilio Auth Token</label>
+        <input type="password" id="twilioToken" placeholder="your_auth_token"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
+        <label class="label">Twilio Phone Number</label>
+        <input type="text" id="twilioPhone" placeholder="+12145550100"
+          onchange="saveConfig()">
+      </div>
+    </div>
+    <button class="btn green" onclick="saveConfig()">💾 SAVE CONFIG</button>
+    <button class="btn" onclick="loadConfig()">↺ LOAD SAVED</button>
+    <div id="configStatus" style="font-family:var(--body);font-size:13px;color:var(--muted);
+      margin-top:10px;"></div>
+  </div>
+
+  <!-- TEST PANEL -->
+  <div class="card">
+    <div class="card-title">🧪 Test Notifications</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <div class="field">
+        <label class="label">Test Recipient Email</label>
+        <input type="email" id="testEmail" placeholder="togradyevl@gmail.com">
+      </div>
+      <div class="field">
+        <label class="label">Test Recipient Cell</label>
+        <input type="tel" id="testPhone" placeholder="+12145550100">
+      </div>
+      <div class="field">
+        <label class="label">Test Vehicle</label>
+        <input type="text" id="testVehicle" value="2021 GMC Yukon Denali">
+      </div>
+      <div class="field">
+        <label class="label">Test Bid Amount</label>
+        <input type="text" id="testBid" value="$47,200">
+      </div>
+    </div>
+    <button class="btn gold" onclick="testUnitCard()">📧 SEND UNIT CARD</button>
+    <button class="btn" onclick="testNudge()">📡 SEND NUDGE</button>
+    <button class="btn" onclick="testOutbid()">⚠️ SEND OUTBID</button>
+    <button class="btn" onclick="testFinal()">🚨 SEND FINAL CALL</button>
+    <button class="btn green" onclick="testWinner()">✅ SEND WINNER</button>
+    <button class="btn" style="background:var(--s1);border:2px solid var(--border);"
+      onclick="testSMS()">📱 SEND TEST SMS</button>
+    <div class="log" id="testLog">// Notification log will appear here...</div>
+  </div>
+
+  <!-- EMAIL TEMPLATE BUILDER -->
+  <div class="card">
+    <div class="card-title">📄 Email Template Reference</div>
+    <p style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;
+      margin-bottom:16px;line-height:1.6;">
+      Copy these into your EmailJS template editor. Variables in {{curly braces}} are auto-filled by the notification engine.
+    </p>
+
+    <!-- TEMPLATE 1: UNIT CARD -->
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;
+      padding:16px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:900;color:var(--gold);text-transform:uppercase;
+        letter-spacing:1px;margin-bottom:10px;">Template 1: EVL-UNIT-CARD</div>
+      <div style="font-family:monospace;font-size:13px;color:#ffffff;line-height:1.8;
+        white-space:pre-wrap;">Subject: ⚡ EVL ACQUISITION OPPORTUNITY — {{vehicle}} — Auction Open
+
+⚡ NEW UNIT AVAILABLE — EVL WS DEALER NETWORK
+
+Vehicle: {{vehicle}}
+VIN: {{vin}}
+Mileage: {{miles}}
+Condition: {{condition}}
+Source Dealer: {{source_dealer}} ({{days}} days on lot)
+
+MARKET INTELLIGENCE
+Retail Value: {{retail_value}}
+WS Floor (MC Wholesale): {{ws_floor}}
+Open Recalls: {{recalls}}
+
+AUCTION DETAILS
+Auction ID: {{auction_id}}
+Opening Bid Floor: {{ws_floor}}
+Auction Closes: {{deadline}}
+Bid Board: {{bid_url}}
+
+You are receiving this because your dealership buys {{make}} vehicles in the DFW hub.
+All bids are anonymous — your identity is never visible to other bidders.
+
+→ ACCESS BID BOARD: {{bid_url}}
+
+EVL WS Dealer Network | expressvehiclelocators.com
+Questions: togradyevl@gmail.com</div>
+    </div>
+
+    <!-- TEMPLATE 2: HOURLY NUDGE -->
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;
+      padding:16px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:900;color:var(--blue);text-transform:uppercase;
+        letter-spacing:1px;margin-bottom:10px;">Template 2: EVL-HOURLY-NUDGE</div>
+      <div style="font-family:monospace;font-size:13px;color:#ffffff;line-height:1.8;
+        white-space:pre-wrap;">Subject: 📡 {{vehicle}} — Current High Bid: {{high_bid}} — {{time_remaining}} Left
+
+📡 AUCTION UPDATE — EVL WS DEALER NETWORK
+
+{{vehicle}} | Auction ID: {{auction_id}}
+
+CURRENT STATUS
+High Bid: {{high_bid}}
+Your Status: {{my_status}}
+Active Bidders: {{active_bidders}}
+Time Remaining: {{time_remaining}}
+
+{{nudge_message}}
+
+→ VIEW BID BOARD + PLACE BID: {{bid_url}}
+
+EVL WS Dealer Network</div>
+    </div>
+
+    <!-- TEMPLATE 3: OUTBID -->
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;
+      padding:16px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:900;color:var(--red);text-transform:uppercase;
+        letter-spacing:1px;margin-bottom:10px;">Template 3: EVL-OUTBID</div>
+      <div style="font-family:monospace;font-size:13px;color:#ffffff;line-height:1.8;
+        white-space:pre-wrap;">Subject: ⚠️ You've Been Outbid — {{vehicle}} — Counter Now
+
+⚠️ YOU HAVE BEEN OUTBID
+
+{{vehicle}} | Auction ID: {{auction_id}}
+
+Your Bid: {{your_bid}}
+New High Bid: {{high_bid}}
+Difference: {{difference}}
+Time Remaining: {{time_remaining}}
+
+Don't let this unit go. Counter now before the window closes.
+
+→ COUNTER BID NOW: {{bid_url}}
+
+EVL WS Dealer Network</div>
+    </div>
+
+    <!-- TEMPLATE 4: FINAL CALL -->
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;
+      padding:16px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:900;color:var(--red);text-transform:uppercase;
+        letter-spacing:1px;margin-bottom:10px;">Template 4: EVL-FINAL-CALL</div>
+      <div style="font-family:monospace;font-size:13px;color:#ffffff;line-height:1.8;
+        white-space:pre-wrap;">Subject: 🚨 FINAL HOUR — {{vehicle}} — Auction Closes in 60 Minutes
+
+🚨 FINAL CALL — AUCTION CLOSES IN 60 MINUTES
+
+{{vehicle}} | Auction ID: {{auction_id}}
+
+Current High Bid: {{high_bid}}
+Your Status: {{my_status}}
+CLOSES AT: {{deadline_time}}
+
+This is your last window to act.
+Highest bid at close wins. No extensions.
+
+→ FINAL BID: {{bid_url}}
+
+EVL WS Dealer Network</div>
+    </div>
+
+    <!-- TEMPLATE 5: WINNER -->
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;
+      padding:16px;">
+      <div style="font-size:13px;font-weight:900;color:var(--green);text-transform:uppercase;
+        letter-spacing:1px;margin-bottom:10px;">Template 5: EVL-WINNER</div>
+      <div style="font-family:monospace;font-size:13px;color:#ffffff;line-height:1.8;
+        white-space:pre-wrap;">Subject: ✅ CONGRATULATIONS — You Won {{vehicle}} — EVL Next Steps
+
+✅ YOU WON THE AUCTION
+
+{{vehicle}}
+Winning Bid: {{winning_bid}}
+Auction ID: {{auction_id}}
+Reference: {{ref_number}}
+
+NEXT STEPS
+1. EVL will contact you within 2 hours to coordinate
+2. Title confirmation — source dealer contacted
+3. Transport or pickup options reviewed
+4. Payment and title transfer coordinated
+5. Your EVL fee: {{evl_fee}}
+
+Your UCM on file: {{ucm_name}} — {{ucm_cell}}
+
+Questions? Reply to this email or call togradyevl@gmail.com
+
+Congratulations — EVL WS Dealer Network</div>
+    </div>
+  </div>
+
+  <!-- SMS TEMPLATES -->
+  <div class="card">
+    <div class="card-title">📱 SMS Templates (Twilio — 160 char limit)</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:12px;font-weight:900;color:var(--gold);text-transform:uppercase;
+          letter-spacing:1px;margin-bottom:6px;">Unit Card SMS</div>
+        <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
+          ⚡ EVL ALERT: {vehicle} now available. WS Floor: {floor}. {days}d on lot. Bid now: {url}
+        </div>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:12px;font-weight:900;color:var(--blue);text-transform:uppercase;
+          letter-spacing:1px;margin-bottom:6px;">Hourly Nudge SMS</div>
+        <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
+          📡 EVL: {vehicle} - High bid: {high_bid} - {time_left} left - Your status: {status} - {url}
+        </div>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:12px;font-weight:900;color:var(--red);text-transform:uppercase;
+          letter-spacing:1px;margin-bottom:6px;">Outbid SMS</div>
+        <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
+          ⚠️ EVL: You've been outbid on {vehicle}. New high: {high_bid}. Counter: {url}
+        </div>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:12px;font-weight:900;color:var(--red);text-transform:uppercase;
+          letter-spacing:1px;margin-bottom:6px;">Final Call SMS</div>
+        <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
+          🚨 EVL FINAL HOUR: {vehicle} closes in 60min. High bid: {high_bid}. Last chance: {url}
+        </div>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:12px;font-weight:900;color:var(--green);text-transform:uppercase;
+          letter-spacing:1px;margin-bottom:6px;">Winner SMS</div>
+        <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
+          ✅ EVL: You won {vehicle} at {winning_bid}! EVL will call you within 2hrs. Ref: {ref}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── EVL NOTIFICATION ENGINE ──
+// Central config — credentials stored in localStorage for dev use
+// In production these move to Firebase secure config
+
+const EVL_NOTIF = {
+  // ── CREDENTIALS (fill in from EmailJS + Twilio dashboards) ──
+  emailjs: {
+    publicKey:    '',  // From EmailJS → Account → Public Key
+    serviceId:    'service_rvscjt3',
+    templates: {
+      unitCard:   '',  // template_XXXXXXX
+      nudge:      '',  // template_XXXXXXX
+      outbid:     '',  // template_XXXXXXX
+      finalCall:  '',  // template_XXXXXXX
+      winner:     '',  // template_XXXXXXX
+    }
+  },
+  twilio: {
+    accountSid:  '',   // ACxxxxxxxxxxxxxxxxxx
+    authToken:   '',   // your_auth_token
+    fromNumber:  '',   // +12145550100
+  },
+  bidBoardUrl: 'https://evl-decode-two.vercel.app/live-bid-board',
+
+  // ── INITIALIZE EMAILJS ──
+  init() {
+    if (this.emailjs.publicKey) {
+      emailjs.init(this.emailjs.publicKey);
+      this.log('✅ EmailJS initialized — Public Key loaded');
+    } else {
+      this.log('⚠️ EmailJS not initialized — enter Public Key first');
+    }
+  },
+
+  // ── SEND EMAIL via EmailJS ──
+  async sendEmail(templateId, params) {
+    if (!this.emailjs.publicKey || !templateId) {
+      this.log('❌ Email skipped — missing Public Key or Template ID');
+      return false;
+    }
+    try {
+      await emailjs.send(this.emailjs.serviceId, templateId, params);
+      this.log(`✅ EMAIL SENT → ${params.to_email || 'recipient'} | Template: ${templateId}`);
+      return true;
+    } catch(e) {
+      this.log(`❌ EMAIL FAILED: ${e.text || e.message}`);
+      return false;
+    }
+  },
+
+  // ── SEND SMS via Twilio (requires server-side proxy in production) ──
+  // Note: Twilio cannot be called directly from browser due to CORS
+  // In production: use Firebase Cloud Function as the proxy
+  async sendSMS(to, message) {
+    if (!this.twilio.accountSid || !this.twilio.authToken) {
+      this.log(`⚠️ SMS queued (Twilio not configured): ${to} — "${message.substring(0,60)}..."`);
+      return false;
+    }
+    // In production this calls a Firebase Cloud Function:
+    // POST /sendSMS { to, message, from: this.twilio.fromNumber }
+    this.log(`📱 SMS QUEUED → ${to}: "${message.substring(0,80)}..."`);
+    this.log('   [Wire Firebase Cloud Function to activate Twilio SMS]');
+    return true;
+  },
+
+  // ── NOTIFICATION: UNIT CARD (fires when auction launches) ──
+  async sendUnitCard(dealer, auction) {
+    const params = {
+      to_email:     dealer.ucm1.email,
+      to_name:      dealer.ucm1.name,
+      dealer_name:  dealer.name,
+      vehicle:      auction.vehicle,
+      vin:          auction.vin,
+      miles:        auction.miles || '—',
+      condition:    auction.condition || '—',
+      source_dealer:auction.sourceDealer,
+      days:         auction.days,
+      retail_value: '$' + (auction.retail||0).toLocaleString(),
+      ws_floor:     '$' + (auction.floor||0).toLocaleString(),
+      recalls:      auction.recalls || '0 open recalls',
+      auction_id:   auction.id,
+      make:         auction.make,
+      deadline:     new Date(auction.deadline).toLocaleString(),
+      bid_url:      this.bidBoardUrl,
+    };
+
+    // Email UCM1
+    await this.sendEmail(this.emailjs.templates.unitCard, params);
+
+    // SMS UCM1
+    const sms = `⚡ EVL ALERT: ${auction.vehicle} now available. WS Floor: $${(auction.floor||0).toLocaleString()}. ${auction.days}d on lot. Bid: ${this.bidBoardUrl}`;
+    await this.sendSMS(dealer.ucm1.cell, sms);
+
+    // If UCM2 exists, notify them too
+    if (dealer.ucm2?.email) {
+      await this.sendEmail(this.emailjs.templates.unitCard, {...params, to_email: dealer.ucm2.email, to_name: dealer.ucm2.name});
+      if (dealer.ucm2.cell) await this.sendSMS(dealer.ucm2.cell, sms);
+    }
+  },
+
+  // ── NOTIFICATION: HOURLY NUDGE ──
+  async sendHourlyNudge(dealer, auction, myBid, highBid, timeRemaining) {
+    const amHigh  = myBid && myBid >= highBid;
+    const status  = myBid ? (amHigh ? '★ YOU ARE HIGH BIDDER' : `⚠️ OUTBID — Current high: $${highBid.toLocaleString()}`) : 'No bid placed yet';
+    const nudgeMsg = amHigh
+      ? `You are the high bidder at $${highBid.toLocaleString()}. Hold your position — ${timeRemaining} remaining.`
+      : myBid
+        ? `You have been outbid. Current high bid is $${highBid.toLocaleString()}. Counter now — ${timeRemaining} remaining.`
+        : `Unit still available. Bidders are active. Current high bid: $${highBid.toLocaleString()}. ${timeRemaining} remaining.`;
+
+    const params = {
+      to_email:       dealer.ucm1.email,
+      to_name:        dealer.ucm1.name,
+      vehicle:        auction.vehicle,
+      auction_id:     auction.id,
+      high_bid:       '$' + highBid.toLocaleString(),
+      my_status:      status,
+      active_bidders: auction.activeBidders || '—',
+      time_remaining: timeRemaining,
+      nudge_message:  nudgeMsg,
+      bid_url:        this.bidBoardUrl,
+    };
+
+    await this.sendEmail(this.emailjs.templates.nudge, params);
+
+    // SMS — short version
+    const sms = `📡 EVL: ${auction.vehicle} - High: $${highBid.toLocaleString()} - ${timeRemaining} left - ${status.substring(0,40)} - ${this.bidBoardUrl}`;
+    await this.sendSMS(dealer.ucm1.cell, sms);
+
+    // Backup to UCM2 if UCM1 hasn't responded in 2 hours
+    if (dealer.ucm2?.email && dealer.ucm2NudgeBackup) {
+      await this.sendEmail(this.emailjs.templates.nudge, {...params, to_email: dealer.ucm2.email, to_name: dealer.ucm2.name});
+      if (dealer.ucm2.cell) await this.sendSMS(dealer.ucm2.cell, sms);
+    }
+  },
+
+  // ── NOTIFICATION: OUTBID ALERT ──
+  async sendOutbidAlert(dealer, auction, yourBid, newHighBid) {
+    const diff = newHighBid - yourBid;
+    const params = {
+      to_email:     dealer.ucm1.email,
+      to_name:      dealer.ucm1.name,
+      vehicle:      auction.vehicle,
+      auction_id:   auction.id,
+      your_bid:     '$' + yourBid.toLocaleString(),
+      high_bid:     '$' + newHighBid.toLocaleString(),
+      difference:   '$' + diff.toLocaleString(),
+      time_remaining: auction.timeRemaining || '—',
+      bid_url:      this.bidBoardUrl,
+    };
+
+    await this.sendEmail(this.emailjs.templates.outbid, params);
+
+    const sms = `⚠️ EVL: Outbid on ${auction.vehicle}. New high: $${newHighBid.toLocaleString()}. Counter: ${this.bidBoardUrl}`;
+    await this.sendSMS(dealer.ucm1.cell, sms);
+    if (dealer.ucm2?.cell) await this.sendSMS(dealer.ucm2.cell, sms);
+  },
+
+  // ── NOTIFICATION: FINAL CALL (1 hour before close) ──
+  async sendFinalCall(dealer, auction, highBid, myStatus) {
+    const params = {
+      to_email:      dealer.ucm1.email,
+      to_name:       dealer.ucm1.name,
+      vehicle:       auction.vehicle,
+      auction_id:    auction.id,
+      high_bid:      '$' + highBid.toLocaleString(),
+      my_status:     myStatus,
+      deadline_time: new Date(auction.deadline).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}),
+      bid_url:       this.bidBoardUrl,
+    };
+
+    await this.sendEmail(this.emailjs.templates.finalCall, params);
+
+    const sms = `🚨 EVL FINAL HOUR: ${auction.vehicle} closes in 60min. High: $${highBid.toLocaleString()}. Last chance: ${this.bidBoardUrl}`;
+    await this.sendSMS(dealer.ucm1.cell, sms);
+    if (dealer.ucm2?.cell) await this.sendSMS(dealer.ucm2.cell, sms);
+  },
+
+  // ── NOTIFICATION: WINNER ──
+  async sendWinnerNotification(dealer, auction, winningBid) {
+    const ref = 'EVL-WIN-' + Math.floor(100000 + Math.random() * 900000);
+    const params = {
+      to_email:    dealer.ucm1.email,
+      to_name:     dealer.ucm1.name,
+      dealer_name: dealer.name,
+      vehicle:     auction.vehicle,
+      auction_id:  auction.id,
+      winning_bid: '$' + winningBid.toLocaleString(),
+      evl_fee:     '$250',
+      ucm_name:    dealer.ucm1.name,
+      ucm_cell:    dealer.ucm1.cell,
+      ref_number:  ref,
+    };
+
+    await this.sendEmail(this.emailjs.templates.winner, params);
+
+    const sms = `✅ EVL: You won ${auction.vehicle} at $${winningBid.toLocaleString()}! EVL will call you within 2hrs. Ref: ${ref}`;
+    await this.sendSMS(dealer.ucm1.cell, sms);
+    if (dealer.ucm2?.cell) await this.sendSMS(dealer.ucm2.cell, sms);
+
+    return ref;
+  },
+
+  // ── LOG ──
+  log(msg) {
+    const ts  = new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const el  = document.getElementById('testLog');
+    if (el) el.textContent += `\n[${ts}] ${msg}`;
+    console.log(`[EVL-NOTIF] ${msg}`);
+  }
+};
+
+// ── EXPOSE GLOBALLY for use in all bid board pages ──
+window.EVL_NOTIF = EVL_NOTIF;
+
+// ── CONFIG SAVE/LOAD ──
+function saveConfig() {
+  const cfg = {
+    publicKey:   document.getElementById('ejsPublicKey').value,
+    tmplUnitCard:document.getElementById('tmplUnitCard').value,
+    tmplNudge:   document.getElementById('tmplNudge').value,
+    tmplOutbid:  document.getElementById('tmplOutbid').value,
+    tmplFinal:   document.getElementById('tmplFinal').value,
+    tmplWinner:  document.getElementById('tmplWinner').value,
+    twilioSid:   document.getElementById('twilioSid').value,
+    twilioToken: document.getElementById('twilioToken').value,
+    twilioPhone: document.getElementById('twilioPhone').value,
+  };
+  localStorage.setItem('evl_notif_config', JSON.stringify(cfg));
+
+  // Apply to engine
+  EVL_NOTIF.emailjs.publicKey = cfg.publicKey;
+  EVL_NOTIF.emailjs.templates.unitCard  = cfg.tmplUnitCard;
+  EVL_NOTIF.emailjs.templates.nudge     = cfg.tmplNudge;
+  EVL_NOTIF.emailjs.templates.outbid    = cfg.tmplOutbid;
+  EVL_NOTIF.emailjs.templates.finalCall = cfg.tmplFinal;
+  EVL_NOTIF.emailjs.templates.winner    = cfg.tmplWinner;
+  EVL_NOTIF.twilio.accountSid  = cfg.twilioSid;
+  EVL_NOTIF.twilio.authToken   = cfg.twilioToken;
+  EVL_NOTIF.twilio.fromNumber  = cfg.twilioPhone;
+
+  EVL_NOTIF.init();
+  document.getElementById('configStatus').textContent = '✅ Config saved — ' + new Date().toLocaleTimeString();
+  document.getElementById('configStatus').style.color = 'var(--green)';
+}
+
+function loadConfig() {
+  const saved = localStorage.getItem('evl_notif_config');
+  if (!saved) {
+    document.getElementById('configStatus').textContent = 'No saved config found';
+    return;
+  }
+  const cfg = JSON.parse(saved);
+  document.getElementById('ejsPublicKey').value = cfg.publicKey || '';
+  document.getElementById('tmplUnitCard').value = cfg.tmplUnitCard || '';
+  document.getElementById('tmplNudge').value    = cfg.tmplNudge || '';
+  document.getElementById('tmplOutbid').value   = cfg.tmplOutbid || '';
+  document.getElementById('tmplFinal').value    = cfg.tmplFinal || '';
+  document.getElementById('tmplWinner').value   = cfg.tmplWinner || '';
+  document.getElementById('twilioSid').value    = cfg.twilioSid || '';
+  document.getElementById('twilioPhone').value  = cfg.twilioPhone || '';
+  saveConfig();
+  document.getElementById('configStatus').textContent = '✅ Config loaded from storage';
+}
+
+// ── TEST FUNCTIONS ──
+async function testUnitCard() {
+  const email = document.getElementById('testEmail').value;
+  const vehicle = document.getElementById('testVehicle').value;
+  if (!email) { alert('Enter test email first'); return; }
+  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.unitCard || 'template_test', {
+    to_email: email, to_name: 'UCM Test', dealer_name: 'Test Dealer',
+    vehicle, vin: '1GKS2BKL5MR123456', miles: '47,200', condition: 'Excellent',
+    source_dealer: 'Hendrick Honda Frisco', days: 142,
+    retail_value: '$51,200', ws_floor: '$44,800', recalls: '0 open recalls',
+    auction_id: 'AUC-2026-TEST', make: 'GMC',
+    deadline: 'Today 5:00 PM CST', bid_url: EVL_NOTIF.bidBoardUrl
+  });
+}
+
+async function testNudge() {
+  const email = document.getElementById('testEmail').value;
+  const vehicle = document.getElementById('testVehicle').value;
+  const bid = document.getElementById('testBid').value;
+  if (!email) { alert('Enter test email first'); return; }
+  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.nudge || 'template_test', {
+    to_email: email, to_name: 'UCM Test', vehicle,
+    auction_id: 'AUC-2026-TEST', high_bid: bid,
+    my_status: '⚠️ OUTBID — Counter now', active_bidders: '4',
+    time_remaining: '3h 22m',
+    nudge_message: 'You have been outbid. Counter now before the window closes.',
+    bid_url: EVL_NOTIF.bidBoardUrl
+  });
+}
+
+async function testOutbid() {
+  const email = document.getElementById('testEmail').value;
+  const vehicle = document.getElementById('testVehicle').value;
+  if (!email) { alert('Enter test email first'); return; }
+  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.outbid || 'template_test', {
+    to_email: email, to_name: 'UCM Test', vehicle,
+    auction_id: 'AUC-2026-TEST',
+    your_bid: '$46,500', high_bid: '$47,200', difference: '$700',
+    time_remaining: '2h 15m', bid_url: EVL_NOTIF.bidBoardUrl
+  });
+}
+
+async function testFinal() {
+  const email = document.getElementById('testEmail').value;
+  const vehicle = document.getElementById('testVehicle').value;
+  if (!email) { alert('Enter test email first'); return; }
+  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.finalCall || 'template_test', {
+    to_email: email, to_name: 'UCM Test', vehicle,
+    auction_id: 'AUC-2026-TEST', high_bid: '$47,200',
+    my_status: 'OUTBID', deadline_time: '5:00 PM CST',
+    bid_url: EVL_NOTIF.bidBoardUrl
+  });
+}
+
+async function testWinner() {
+  const email = document.getElementById('testEmail').value;
+  const vehicle = document.getElementById('testVehicle').value;
+  const bid = document.getElementById('testBid').value;
+  if (!email) { alert('Enter test email first'); return; }
+  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.winner || 'template_test', {
+    to_email: email, to_name: 'UCM Test', dealer_name: 'Test Dealer',
+    vehicle, auction_id: 'AUC-2026-TEST', winning_bid: bid,
+    evl_fee: '$250', ucm_name: 'UCM Test', ucm_cell: '(972) 555-0000',
+    ref_number: 'EVL-WIN-TEST001'
+  });
+}
+
+async function testSMS() {
+  const phone = document.getElementById('testPhone').value;
+  const vehicle = document.getElementById('testVehicle').value;
+  if (!phone) { alert('Enter test phone number first'); return; }
+  await EVL_NOTIF.sendSMS(phone,
+    `⚡ EVL TEST: ${vehicle} - WS Floor: $44,800 - Bid: ${EVL_NOTIF.bidBoardUrl}`);
+}
+
+// Load saved config on page open
+window.addEventListener('DOMContentLoaded', () => {
+  loadConfig();
+  EVL_NOTIF.init();
+});
+</script>
+</body>
+</html>
