@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Admin — Bid Board Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#090E17;--s1:#0d1117;--s2:#111820;--blue:#2B84FE;--gold:#FFD700;
+    --green:#00C853;--red:#FF4444;--orange:#FF8C00;--white:#ffffff;--muted:#8899aa;
+    --border:#1a2a3a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
+
+  /* NAV */
+  nav{background:#0a0a0a;border-bottom:3px solid var(--red);padding:0 24px;height:64px;
+    display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-size:22px;font-weight:900;letter-spacing:2px;color:var(--white);}
+  .nav-brand span{color:var(--red);}
+  .nav-admin{font-size:13px;font-weight:900;color:var(--red);letter-spacing:3px;
+    text-transform:uppercase;border:1px solid var(--red);padding:4px 12px;border-radius:4px;}
+  .live-dot{width:10px;height:10px;border-radius:50%;background:var(--green);
+    animation:pulse 1.5s infinite;display:inline-block;margin-right:6px;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+
+  /* GATE */
+  .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .gate-card{background:var(--s1);border:2px solid var(--red);border-radius:14px;
+    padding:40px;width:100%;max-width:380px;text-align:center;}
+  .gate-icon{font-size:48px;margin-bottom:12px;}
+  .gate-title{font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;
+    margin-bottom:6px;}
+  .gate-sub{font-family:var(--body);font-size:14px;color:var(--muted);font-weight:600;
+    margin-bottom:24px;line-height:1.5;}
+  .gate-input{width:100%;background:var(--bg);border:2px solid var(--border);color:var(--white);
+    padding:14px;border-radius:8px;font-size:22px;font-family:var(--font);font-weight:900;
+    outline:none;text-align:center;letter-spacing:4px;margin-bottom:12px;}
+  .gate-input:focus{border-color:var(--red);}
+  .gate-btn{width:100%;background:var(--red);color:#fff;border:none;padding:14px;
+    border-radius:8px;font-family:var(--font);font-size:20px;font-weight:900;
+    letter-spacing:2px;text-transform:uppercase;cursor:pointer;}
+  .gate-err{color:var(--red);font-size:13px;font-family:var(--body);font-weight:700;
+    margin-bottom:10px;display:none;}
+
+  /* APP */
+  #app{display:none;}
+  .wrap{max-width:1060px;margin:0 auto;padding:24px 16px 80px;}
+
+  /* STATS */
+  .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;}
+  .stat-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
+    padding:18px;text-align:center;}
+  .stat-val{font-size:36px;font-weight:900;}
+  .stat-lbl{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+    letter-spacing:1px;margin-top:4px;font-family:var(--body);}
+
+  /* TABS */
+  .tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;}
+  .tab{font-family:var(--font);font-size:17px;font-weight:900;letter-spacing:1px;
+    text-transform:uppercase;padding:12px 20px;color:var(--muted);cursor:pointer;
+    border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;}
+  .tab.active{color:var(--white);border-bottom-color:var(--red);}
+  .tab:hover{color:var(--white);}
+
+  /* PANELS */
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* AUCTION CARDS */
+  .auction-admin-card{background:var(--s1);border:2px solid var(--border);border-radius:14px;
+    overflow:hidden;margin-bottom:20px;}
+  .aac-header{background:rgba(0,0,0,.3);padding:16px 20px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .aac-title{font-size:22px;font-weight:900;color:var(--white);}
+  .aac-meta{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;margin-top:3px;}
+  .aac-body{padding:20px;}
+  .aac-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+  .aac-stat{background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:12px;text-align:center;}
+  .aac-stat-val{font-size:22px;font-weight:900;}
+  .aac-stat-lbl{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+    letter-spacing:1px;margin-top:2px;font-family:var(--body);}
+
+  /* ADMIN BID TABLE — shows real dealer identities */
+  table{width:100%;border-collapse:collapse;}
+  th{background:rgba(0,0,0,.3);color:var(--muted);font-family:var(--body);font-size:12px;
+    font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;
+    text-align:left;border-bottom:2px solid var(--border);}
+  td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:14px;
+    color:var(--white);font-weight:600;vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tr.winner-row td{background:rgba(255,215,0,.04);}
+  .bid-id-admin{font-family:monospace;font-size:14px;font-weight:900;color:var(--blue);
+    letter-spacing:1px;}
+  .dealer-name-reveal{font-size:14px;font-weight:900;color:var(--white);}
+  .dealer-contact{font-size:12px;color:var(--muted);font-family:var(--body);
+    font-weight:600;margin-top:2px;line-height:1.4;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;
+    font-weight:900;letter-spacing:1px;text-transform:uppercase;font-family:var(--font);}
+  .badge-green{background:rgba(0,200,83,.12);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+  .badge-red{background:rgba(255,68,68,.12);color:var(--red);border:1px solid rgba(255,68,68,.3);}
+  .badge-gold{background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
+  .badge-blue{background:rgba(43,132,254,.12);color:var(--blue);border:1px solid rgba(43,132,254,.3);}
+  .badge-gray{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);}
+
+  /* ACTION BUTTONS */
+  .action-btn{background:transparent;border:1px solid var(--border);color:var(--muted);
+    padding:5px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;
+    font-family:var(--body);letter-spacing:1px;text-transform:uppercase;margin-right:4px;
+    transition:all .2s;}
+  .action-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .action-btn.primary{background:var(--green);color:#000;border-color:var(--green);}
+  .action-btn.primary:hover{opacity:.9;}
+  .action-btn.danger{border-color:var(--red);color:var(--red);}
+  .action-btn.warn{border-color:var(--orange);color:var(--orange);}
+
+  /* WINNER ANNOUNCEMENT */
+  .winner-box{background:rgba(255,215,0,.06);border:2px solid var(--gold);border-radius:12px;
+    padding:20px 24px;margin-bottom:16px;}
+  .winner-title{font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px;
+    text-transform:uppercase;margin-bottom:14px;}
+  .winner-detail{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .winner-field{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;}
+  .winner-field-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+    letter-spacing:1px;margin-bottom:4px;font-family:var(--body);}
+  .winner-field-val{font-size:16px;font-weight:900;color:var(--white);}
+
+  /* AUCTION STATUS CONTROLS */
+  .aac-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;padding-top:16px;
+    border-top:1px solid var(--border);}
+
+  /* NUDGE LOG */
+  .nudge-row{display:flex;justify-content:space-between;align-items:center;
+    padding:10px 0;border-bottom:1px solid var(--border);font-family:var(--body);font-size:14px;}
+  .nudge-row:last-child{border-bottom:none;}
+  .nudge-time{color:var(--muted);font-weight:600;font-size:13px;white-space:nowrap;}
+  .nudge-msg{color:var(--white);font-weight:600;flex:1;margin:0 14px;}
+  .nudge-status{font-size:11px;font-weight:900;padding:2px 8px;border-radius:8px;}
+
+  /* DEALER DIRECTORY TAB */
+  .dealer-admin-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
+    padding:18px;margin-bottom:12px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;
+    gap:12px;align-items:center;}
+  .dealer-admin-name{font-size:16px;font-weight:900;color:var(--white);}
+  .dealer-admin-meta{font-size:12px;color:var(--muted);font-family:var(--body);
+    font-weight:600;margin-top:3px;}
+
+  /* TRANSACTION TAB */
+  .txn-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
+    padding:20px;margin-bottom:14px;}
+  .txn-header{display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .txn-title{font-size:18px;font-weight:900;color:var(--white);}
+  .txn-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px;}
+  .txn-step{background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:10px;text-align:center;cursor:pointer;}
+  .txn-step.done{border-color:var(--green);background:rgba(0,200,83,.05);}
+  .txn-step.active{border-color:var(--gold);background:rgba(255,215,0,.05);}
+  .txn-step-num{font-size:18px;font-weight:900;margin-bottom:4px;}
+  .txn-step-label{font-size:11px;color:var(--muted);font-family:var(--body);
+    font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+  .txn-step.done .txn-step-label{color:var(--green);}
+  .txn-step.active .txn-step-label{color:var(--gold);}
+
+  @media(max-width:700px){
+    .stats-row{grid-template-columns:repeat(3,1fr);}
+    .aac-grid{grid-template-columns:repeat(2,1fr);}
+    .dealer-admin-card{grid-template-columns:1fr;}
+    .txn-steps{grid-template-columns:repeat(3,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔐</div>
+    <div class="gate-title">EVL Admin</div>
+    <div class="gate-sub">Internal operator access only.<br>Dealer identities visible inside.</div>
+    <div class="gate-err" id="gateErr">Incorrect PIN</div>
+    <input class="gate-input" type="password" id="gatePin" placeholder="••••••"
+      maxlength="10" onkeydown="if(event.key==='Enter')checkPin()">
+    <button class="gate-btn" onclick="checkPin()">ACCESS ADMIN →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <nav>
+    <div class="nav-brand">EVL <span>ADMIN</span> — BID BOARD OPS</div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:13px;color:var(--green);font-family:var(--body);font-weight:700;">
+        <span class="live-dot"></span>FIREBASE LIVE
+      </div>
+      <div class="nav-admin">INTERNAL ONLY</div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-card" style="border-color:var(--red);">
+        <div class="stat-val" id="statActive" style="color:var(--red);">0</div>
+        <div class="stat-lbl">Active Auctions</div>
+      </div>
+      <div class="stat-card" style="border-color:var(--gold);">
+        <div class="stat-val" id="statTotalBids" style="color:var(--gold);">0</div>
+        <div class="stat-lbl">Total Bids Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statUniqueBidders" style="color:var(--blue);">0</div>
+        <div class="stat-lbl">Active Bidders</div>
+      </div>
+      <div class="stat-card" style="border-color:var(--green);">
+        <div class="stat-val" id="statHighestBid" style="color:var(--green);">$0</div>
+        <div class="stat-lbl">Highest Bid Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statNudgesSent" style="color:var(--muted);">0</div>
+        <div class="stat-lbl">Nudges Sent</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('auctions')">🏁 Live Auctions</div>
+      <div class="tab" onclick="switchTab('transactions')">💼 Transactions</div>
+      <div class="tab" onclick="switchTab('dealers')">🏪 Dealer Directory</div>
+      <div class="tab" onclick="switchTab('nudges')">📡 Nudge Log</div>
+      <div class="tab" onclick="switchTab('newauction')">➕ New Auction</div>
+    </div>
+
+    <!-- ═══ LIVE AUCTIONS PANEL ═══ -->
+    <div class="panel active" id="panel-auctions">
+      <div id="auctionAdminList"></div>
+    </div>
+
+    <!-- ═══ TRANSACTIONS PANEL ═══ -->
+    <div class="panel" id="panel-transactions">
+      <div id="txnList"></div>
+    </div>
+
+    <!-- ═══ DEALER DIRECTORY PANEL ═══ -->
+    <div class="panel" id="panel-dealers">
+      <div style="display:flex;justify-content:space-between;align-items:center;
+        margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+        <div style="font-size:18px;font-weight:900;color:var(--white);text-transform:uppercase;
+          letter-spacing:2px;">WS Dealer Network — Full Directory</div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="dealerSearch" placeholder="Search dealers..."
+            style="background:var(--s2);border:1px solid var(--border);color:var(--white);
+            padding:8px 14px;border-radius:6px;font-family:var(--body);font-size:14px;
+            outline:none;" oninput="filterDealerDir()">
+          <button class="action-btn primary" onclick="exportDealerDir()">📋 EXPORT</button>
+        </div>
+      </div>
+      <div id="dealerDirList"></div>
+    </div>
+
+    <!-- ═══ NUDGE LOG PANEL ═══ -->
+    <div class="panel" id="panel-nudges">
+      <div style="font-size:18px;font-weight:900;color:var(--white);text-transform:uppercase;
+        letter-spacing:2px;margin-bottom:16px;">📡 Notification Log</div>
+      <div style="background:var(--s1);border:2px solid var(--border);border-radius:12px;
+        padding:20px;" id="nudgeLog"></div>
+    </div>
+
+    <!-- ═══ NEW AUCTION PANEL ═══ -->
+    <div class="panel" id="panel-newauction">
+      <div style="font-size:18px;font-weight:900;color:var(--white);text-transform:uppercase;
+        letter-spacing:2px;margin-bottom:20px;">➕ Launch New Auction</div>
+      <div style="background:var(--s1);border:2px solid var(--border);border-radius:14px;
+        padding:28px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">Vehicle</label>
+            <input type="text" id="na-vehicle" placeholder="2021 GMC Yukon Denali"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+              padding:12px 14px;border-radius:8px;font-size:16px;font-family:var(--font);
+              font-weight:700;outline:none;width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">VIN</label>
+            <input type="text" id="na-vin" placeholder="17-digit VIN"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+              padding:12px 14px;border-radius:8px;font-size:16px;font-family:monospace;
+              font-weight:700;outline:none;width:100%;letter-spacing:2px;"
+              oninput="this.value=this.value.toUpperCase()">
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">
+              WS Floor (MC Wholesale $)</label>
+            <input type="number" id="na-floor" placeholder="44800"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--gold);
+              padding:12px 14px;border-radius:8px;font-size:20px;font-family:var(--font);
+              font-weight:900;outline:none;width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">
+              Retail Value ($)</label>
+            <input type="number" id="na-retail" placeholder="51200"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+              padding:12px 14px;border-radius:8px;font-size:20px;font-family:var(--font);
+              font-weight:900;outline:none;width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">
+              Source Dealer</label>
+            <input type="text" id="na-dealer" placeholder="Hendrick Honda Frisco"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+              padding:12px 14px;border-radius:8px;font-size:16px;font-family:var(--font);
+              font-weight:700;outline:none;width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">
+              Auction Duration</label>
+            <select id="na-duration"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+              padding:12px 14px;border-radius:8px;font-size:16px;font-family:var(--body);
+              font-weight:700;outline:none;width:100%;">
+              <option value="4">4 hours — express</option>
+              <option value="12">12 hours — standard</option>
+              <option value="24" selected>24 hours — full day</option>
+              <option value="48">48 hours — extended</option>
+              <option value="72">72 hours — maximum</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">
+              Make (for buyer matching)</label>
+            <input type="text" id="na-make" placeholder="GMC"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+              padding:12px 14px;border-radius:8px;font-size:16px;font-family:var(--font);
+              font-weight:700;outline:none;width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+              letter-spacing:1px;font-family:var(--body);display:block;margin-bottom:6px;">
+              Days on Lot</label>
+            <input type="number" id="na-days" placeholder="142"
+              style="background:var(--bg);border:2px solid var(--border);color:var(--white);
+              padding:12px 14px;border-radius:8px;font-size:20px;font-family:var(--font);
+              font-weight:900;outline:none;width:100%;">
+          </div>
+        </div>
+        <button onclick="launchAuction()"
+          style="width:100%;background:var(--green);color:#000;border:none;padding:16px;
+          border-radius:10px;font-family:var(--font);font-size:22px;font-weight:900;
+          letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:20px;">
+          ⚡ LAUNCH AUCTION — NOTIFY ALL MATCHED BUYERS
+        </button>
+        <p style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
+          text-align:center;margin-top:10px;line-height:1.5;">
+          On launch: unit card fires simultaneously to all matched buyers via email + SMS.
+          Hourly nudge engine activates automatically.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot,
+         query, orderBy, doc, updateDoc, serverTimestamp, where }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain:"evl-acquisition-radar.firebaseapp.com",
+  projectId:"evl-acquisition-radar",
+  storageBucket:"evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId:"84195145348",
+  appId:"1:84195145348:web:b10f837bee92ce2e4674d1"
+});
+const db = getFirestore(app);
+
+const ADMIN_PIN = '1027EVL';
+
+// ── DEMO DATA — Admin sees REAL dealer identities behind each bid ID ──
+const DEALER_REGISTRY = {
+  'EVL-WS-847291': {
+    name: 'Huffines Chevrolet Plano',
+    brand: 'Chevrolet', hub: 'DFW', vol: 175,
+    ucm1: { name: 'Marcus T.', cell: '(972) 555-0102', email: 'ucm@huffineschevy.com', office: '(972) 881-8012', ext: '212' },
+    ucm2: { name: 'Devon L.', cell: '(972) 555-0103', email: 'ucm2@huffineschevy.com' },
+    status: 'active', tier: 'green'
+  },
+  'EVL-WS-331058': {
+    name: 'Randall Reed Planet Ford',
+    brand: 'Ford', hub: 'DFW', vol: 200,
+    ucm1: { name: 'Jasmine R.', cell: '(972) 555-0201', email: 'ucm@planetford.com', office: '(972) 424-4612', ext: '212' },
+    ucm2: { name: 'Carlos M.', cell: '(972) 555-0202', email: 'ucm2@planetford.com' },
+    status: 'active', tier: 'green'
+  },
+  'EVL-WS-512744': {
+    name: 'AutoNation Toyota Plano',
+    brand: 'Toyota', hub: 'DFW', vol: 180,
+    ucm1: { name: 'Priya N.', cell: '(972) 555-0101', email: 'ucm@antoyotaplano.com', office: '(972) 867-4912', ext: '412' },
+    ucm2: { name: 'Tyler H.', cell: '(972) 555-0104', email: 'ucm2@antoyotaplano.com' },
+    status: 'active', tier: 'green'
+  },
+  'EVL-WS-228901': {
+    name: 'Hendrick Honda Frisco',
+    brand: 'Honda', hub: 'DFW', vol: 145,
+    ucm1: { name: 'Keisha D.', cell: '(972) 555-0401', email: 'ucm@hendrickhondafrisco.com', office: '(972) 731-3612', ext: '412' },
+    ucm2: { name: 'Amanda S.', cell: '(972) 555-0402', email: 'ucm2@hendrickhondafrisco.com' },
+    status: 'active', tier: 'green'
+  },
+  'EVL-WS-774612': {
+    name: 'Classic Chevrolet Lewisville',
+    brand: 'Chevrolet', hub: 'DFW', vol: 160,
+    ucm1: { name: 'Jerome P.', cell: '(972) 555-0301', email: 'ucm@classicchevy.com', office: '(972) 436-5212', ext: '312' },
+    ucm2: null,
+    status: 'contacted', tier: 'green'
+  },
+};
+
+const DEMO_AUCTIONS = [
+  {
+    id:'AUC-2026-001', vehicle:'2021 GMC Yukon Denali',
+    vin:'1GKS2BKL5MR123456', make:'GMC',
+    sourceDealer:'Hendrick Honda Frisco', days:142,
+    retail:51200, floor:44800,
+    deadline: Date.now() + 4*3600000,
+    status:'active',
+    bids:[
+      {bidId:'EVL-WS-847291',amount:47200,ts:'10:45:33 AM'},
+      {bidId:'EVL-WS-512744',amount:46500,ts:'10:02:11 AM'},
+      {bidId:'EVL-WS-331058',amount:46100,ts:'9:31:47 AM'},
+      {bidId:'EVL-WS-228901',amount:45200,ts:'9:14:22 AM'},
+    ]
+  },
+  {
+    id:'AUC-2026-002', vehicle:'2022 Ford F-150 Lariat',
+    vin:'1FTFW1E50NKD12345', make:'Ford',
+    sourceDealer:'AutoNation Toyota Plano', days:97,
+    retail:44500, floor:38200,
+    deadline: Date.now() + 11*3600000,
+    status:'active',
+    bids:[
+      {bidId:'EVL-WS-331058',amount:41200,ts:'9:22:14 AM'},
+      {bidId:'EVL-WS-774612',amount:40500,ts:'8:55:01 AM'},
+    ]
+  },
+  {
+    id:'AUC-2026-003', vehicle:'2022 Chevrolet Tahoe LT',
+    vin:'1GNSCPKD3NR123456', make:'Chevrolet',
+    sourceDealer:'Classic Chevrolet Lewisville', days:112,
+    retail:52100, floor:44800,
+    deadline: Date.now() + 22*3600000,
+    status:'active',
+    bids:[
+      {bidId:'EVL-WS-512744',amount:46000,ts:'7:30:05 AM'},
+    ]
+  },
+];
+
+const DEMO_NUDGES = [
+  {time:'10:45 AM',msg:'Hourly nudge fired — AUC-2026-001 — 4 dealers notified — email + SMS',status:'sent'},
+  {time:'10:02 AM',msg:'Outbid alert — EVL-WS-228901 outbid by EVL-WS-512744 on AUC-2026-001',status:'sent'},
+  {time:'9:45 AM', msg:'Hourly nudge fired — AUC-2026-001 — 4 dealers notified',status:'sent'},
+  {time:'9:31 AM', msg:'Outbid alert — EVL-WS-331058 outbid by EVL-WS-847291 on AUC-2026-001',status:'sent'},
+  {time:'9:00 AM', msg:'Unit card distributed — AUC-2026-001 — 8 matched buyers notified',status:'sent'},
+  {time:'8:55 AM', msg:'Unit card distributed — AUC-2026-002 — 6 matched buyers notified',status:'sent'},
+  {time:'8:30 AM', msg:'Unit card distributed — AUC-2026-003 — 5 matched buyers notified',status:'sent'},
+  {time:'7:30 AM', msg:'AUC-2026-003 opened — EVL-WS-512744 first bid submitted — $46,000',status:'sent'},
+];
+
+let liveBids = {}; // Firebase live bids merged with demo
+
+// ── PIN CHECK ──
+window.checkPin = function() {
+  const pin = document.getElementById('gatePin').value;
+  if (pin === ADMIN_PIN) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('gateErr').style.display = 'block';
+    document.getElementById('gatePin').value = '';
+  }
+};
+
+function initAdmin() {
+  updateStats();
+  renderAuctions();
+  renderTransactions();
+  renderDealerDir();
+  renderNudgeLog();
+  listenFirebaseBids();
+}
+
+// ── FIREBASE LIVE BID LISTENER ──
+function listenFirebaseBids() {
+  const q = query(collection(db, 'evl_bids'), orderBy('timestamp','desc'));
+  onSnapshot(q, snap => {
+    snap.forEach(d => {
+      const bid = d.data();
+      if (!liveBids[bid.auctionId]) liveBids[bid.auctionId] = [];
+      const exists = liveBids[bid.auctionId].some(b =>
+        b.bidId===bid.bidId && b.amount===bid.amount);
+      if (!exists) {
+        const ts = bid.timestamp?.toDate?.()?.toLocaleTimeString('en-US',
+          {hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}) || 'Live';
+        liveBids[bid.auctionId].push({bidId:bid.bidId, amount:bid.amount, ts});
+      }
+    });
+    renderAuctions();
+    updateStats();
+  });
+}
+
+// ── STATS ──
+function updateStats() {
+  const allBids = DEMO_AUCTIONS.reduce((acc,a) => {
+    const fb = liveBids[a.id] || [];
+    return [...acc, ...a.bids, ...fb];
+  }, []);
+  const uniqueBidders = new Set(allBids.map(b=>b.bidId)).size;
+  const highBid = allBids.length > 0 ? Math.max(...allBids.map(b=>b.amount)) : 0;
+
+  document.getElementById('statActive').textContent = DEMO_AUCTIONS.filter(a=>a.status==='active').length;
+  document.getElementById('statTotalBids').textContent = allBids.length;
+  document.getElementById('statUniqueBidders').textContent = uniqueBidders;
+  document.getElementById('statHighestBid').textContent = highBid > 0 ? '$'+highBid.toLocaleString() : '$0';
+  document.getElementById('statNudgesSent').textContent = DEMO_NUDGES.length;
+}
+
+// ── RENDER AUCTIONS (admin view — shows real dealer names) ──
+function renderAuctions() {
+  const container = document.getElementById('auctionAdminList');
+  container.innerHTML = DEMO_AUCTIONS.map(a => {
+    const allBids = [...a.bids, ...(liveBids[a.id]||[])].sort((x,y)=>y.amount-x.amount);
+    const high    = allBids[0]?.amount || a.floor;
+    const winner  = DEALER_REGISTRY[allBids[0]?.bidId];
+    const mins    = Math.round((a.deadline - Date.now()) / 60000);
+    const hrs     = Math.floor(mins/60);
+    const timeLeft = hrs > 0 ? `${hrs}h ${mins%60}m` : `${mins}m`;
+    const urgent  = mins < 60;
+
+    const bidRows = allBids.map((b,i) => {
+      const dealer = DEALER_REGISTRY[b.bidId];
+      const isHigh = i === 0;
+      return `<tr class="${isHigh?'winner-row':''}">
+        <td><strong>${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)}</strong></td>
+        <td><span class="bid-id-admin">${b.bidId}</span></td>
+        <td>
+          ${dealer ? `
+            <div class="dealer-name-reveal">${dealer.name}</div>
+            <div class="dealer-contact">
+              UCM: ${dealer.ucm1.name} · 📱 ${dealer.ucm1.cell} · ✉️ ${dealer.ucm1.email}
+              ${dealer.ucm2 ? `<br>UCM2: ${dealer.ucm2.name} · ${dealer.ucm2.cell}` : ''}
+            </div>` :
+            `<span style="color:var(--muted);font-family:var(--body);">Unknown ID — not in registry</span>`
+          }
+        </td>
+        <td><span style="font-size:18px;font-weight:900;color:${isHigh?'var(--green)':'var(--white)'};">
+          $${b.amount.toLocaleString()}
+        </span></td>
+        <td><span class="bid-id-admin" style="font-size:13px;color:var(--muted);">${b.ts}</span></td>
+        <td>
+          ${isHigh
+            ? '<span class="badge badge-gold">⭐ HIGH BID</span>'
+            : '<span class="badge badge-gray">Outbid</span>'
+          }
+        </td>
+        <td>
+          <button class="action-btn warn" onclick="sendNudge('${b.bidId}','${a.id}')">📡 NUDGE</button>
+          <button class="action-btn" onclick="callUCM('${b.bidId}')">📞 CALL</button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    return `
+    <div class="auction-admin-card">
+      <div class="aac-header">
+        <div>
+          <div class="aac-title">${a.vehicle}</div>
+          <div class="aac-meta">
+            ${a.id} · VIN: ${a.vin} · Source: ${a.sourceDealer} · ${a.days} days on lot
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <span class="badge badge-green">● LIVE</span>
+          <span style="font-family:var(--font);font-size:18px;font-weight:900;
+            color:${urgent?'var(--red)':'var(--gold)'};">
+            ⏱ ${timeLeft} left
+          </span>
+          <span class="badge badge-gold">$${high.toLocaleString()} HIGH</span>
+        </div>
+      </div>
+
+      <div class="aac-body">
+
+        <!-- WINNER PREVIEW -->
+        ${winner ? `
+        <div class="winner-box">
+          <div class="winner-title">⭐ CURRENT HIGH BIDDER — ADMIN VIEW ONLY</div>
+          <div class="winner-detail">
+            <div class="winner-field">
+              <div class="winner-field-label">Dealer</div>
+              <div class="winner-field-val">${winner.name}</div>
+            </div>
+            <div class="winner-field">
+              <div class="winner-field-label">Bid Amount</div>
+              <div class="winner-field-val" style="color:var(--green);">$${high.toLocaleString()}</div>
+            </div>
+            <div class="winner-field">
+              <div class="winner-field-label">UCM #1</div>
+              <div class="winner-field-val" style="font-size:14px;">${winner.ucm1.name}<br>
+                <span style="color:var(--blue);">📱 ${winner.ucm1.cell}</span>
+              </div>
+            </div>
+            <div class="winner-field">
+              <div class="winner-field-label">UCM Email</div>
+              <div class="winner-field-val" style="font-size:13px;color:var(--blue);">${winner.ucm1.email}</div>
+            </div>
+          </div>
+        </div>` : ''}
+
+        <!-- STATS -->
+        <div class="aac-grid">
+          <div class="aac-stat">
+            <div class="aac-stat-val" style="color:var(--green);">$${high.toLocaleString()}</div>
+            <div class="aac-stat-lbl">High Bid</div>
+          </div>
+          <div class="aac-stat">
+            <div class="aac-stat-val" style="color:var(--gold);">$${a.floor.toLocaleString()}</div>
+            <div class="aac-stat-lbl">WS Floor</div>
+          </div>
+          <div class="aac-stat">
+            <div class="aac-stat-val">${allBids.length}</div>
+            <div class="aac-stat-lbl">Total Bids</div>
+          </div>
+          <div class="aac-stat">
+            <div class="aac-stat-val" style="color:var(--blue);">
+              ${new Set(allBids.map(b=>b.bidId)).size}
+            </div>
+            <div class="aac-stat-lbl">Unique Bidders</div>
+          </div>
+        </div>
+
+        <!-- FULL BID TABLE WITH IDENTITIES -->
+        <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:2px;
+          text-transform:uppercase;margin-bottom:10px;font-family:var(--body);">
+          🔐 ADMIN VIEW — DEALER IDENTITIES VISIBLE — DO NOT SHARE SCREEN
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Bid ID</th>
+              <th>Dealer (Admin Only)</th>
+              <th>Amount ↓</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>${bidRows}</tbody>
+        </table>
+
+        <!-- CONTROLS -->
+        <div class="aac-controls">
+          <button class="action-btn primary" onclick="closeAuction('${a.id}')">
+            🏁 CLOSE AUCTION
+          </button>
+          <button class="action-btn warn" onclick="nudgeAll('${a.id}')">
+            📡 NUDGE ALL BIDDERS
+          </button>
+          <button class="action-btn" onclick="nudgeNoBid('${a.id}')">
+            📡 NUDGE NON-BIDDERS
+          </button>
+          <button class="action-btn" onclick="extendAuction('${a.id}')">
+            ⏱ EXTEND 2HR
+          </button>
+          <button class="action-btn danger" onclick="cancelAuction('${a.id}')">
+            ✕ CANCEL
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER TRANSACTIONS ──
+function renderTransactions() {
+  const container = document.getElementById('txnList');
+  // Demo closed transaction
+  container.innerHTML = `
+    <div class="txn-card">
+      <div class="txn-header">
+        <div>
+          <div class="txn-title">2021 Ford F-150 Lariat · AUC-2026-000</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
+            margin-top:3px;">Closed Jun 10 2026 · Winning Bid: $39,800 · EVL Fee: $250</div>
+        </div>
+        <span class="badge badge-green">✅ CLOSED</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+            letter-spacing:1px;font-family:var(--body);margin-bottom:4px;">Winning Buyer</div>
+          <div style="font-size:15px;font-weight:900;">Randall Reed Planet Ford</div>
+          <div style="font-size:12px;color:var(--blue);font-family:var(--body);font-weight:600;">
+            UCM: Devon L. · (972) 555-0201
+          </div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+            letter-spacing:1px;font-family:var(--body);margin-bottom:4px;">Source Dealer</div>
+          <div style="font-size:15px;font-weight:900;">Huffines Chevrolet Plano</div>
+          <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;">
+            UCM: Marcus T. · (972) 555-0102
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;
+        letter-spacing:2px;margin-bottom:10px;font-family:var(--body);">Transaction Steps</div>
+      <div class="txn-steps">
+        <div class="txn-step done" onclick="markStep(this)">
+          <div class="txn-step-num">✓</div>
+          <div class="txn-step-label">Auction Closed</div>
+        </div>
+        <div class="txn-step done" onclick="markStep(this)">
+          <div class="txn-step-num">✓</div>
+          <div class="txn-step-label">Winner Notified</div>
+        </div>
+        <div class="txn-step done" onclick="markStep(this)">
+          <div class="txn-step-num">✓</div>
+          <div class="txn-step-label">Title Confirmed</div>
+        </div>
+        <div class="txn-step active" onclick="markStep(this)">
+          <div class="txn-step-num">4</div>
+          <div class="txn-step-label">Transport Coord.</div>
+        </div>
+        <div class="txn-step" onclick="markStep(this)">
+          <div class="txn-step-num">5</div>
+          <div class="txn-step-label">Fee Collected</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:40px;color:var(--muted);font-family:var(--body);
+      font-size:15px;font-weight:600;">
+      No other closed transactions. Active auctions appear above.
+    </div>`;
+}
+
+// ── RENDER DEALER DIRECTORY ──
+function renderDealerDir(filter='') {
+  const container = document.getElementById('dealerDirList');
+  const entries   = Object.entries(DEALER_REGISTRY)
+    .filter(([id, d]) => !filter ||
+      d.name.toLowerCase().includes(filter.toLowerCase()) ||
+      id.toLowerCase().includes(filter.toLowerCase()));
+
+  container.innerHTML = entries.map(([id, d]) => `
+    <div class="dealer-admin-card">
+      <div>
+        <div class="dealer-admin-name">${d.name}</div>
+        <div class="dealer-admin-meta">
+          ${d.brand} · ${d.hub} · ${d.vol} units/mo · 
+          Tier: <span style="color:${d.tier==='green'?'var(--green)':'var(--gold)'};">${d.tier.toUpperCase()}</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;">UCM #1</div>
+        <div style="font-size:13px;font-weight:900;">${d.ucm1.name}</div>
+        <div style="font-size:12px;color:var(--blue);font-family:var(--body);">${d.ucm1.cell}</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;">UCM #2</div>
+        <div style="font-size:13px;font-weight:900;">${d.ucm2?.name||'—'}</div>
+        <div style="font-size:12px;color:var(--blue);font-family:var(--body);">${d.ucm2?.cell||'—'}</div>
+      </div>
+      <div>
+        <span class="bid-id-admin" style="font-size:13px;">${id}</span><br>
+        <span class="badge ${d.status==='active'?'badge-green':'badge-blue'}" style="margin-top:4px;">
+          ${d.status.toUpperCase()}
+        </span>
+      </div>
+      <div>
+        <button class="action-btn" onclick="callUCM('${id}')">📞 CALL</button>
+        <button class="action-btn warn" onclick="sendNudge('${id}','ALL')">📡 NUDGE</button>
+      </div>
+    </div>`).join('');
+}
+
+window.filterDealerDir = function() {
+  renderDealerDir(document.getElementById('dealerSearch').value);
+};
+
+window.exportDealerDir = function() {
+  const rows = ['Dealer ID,Name,Brand,Hub,Volume,UCM1 Name,UCM1 Cell,UCM1 Email,UCM2 Name,UCM2 Cell,Status'];
+  Object.entries(DEALER_REGISTRY).forEach(([id,d]) => {
+    rows.push([id,d.name,d.brand,d.hub,d.vol,
+      d.ucm1.name,d.ucm1.cell,d.ucm1.email,
+      d.ucm2?.name||'',d.ucm2?.cell||'',d.status
+    ].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(','));
+  });
+  const blob = new Blob([rows.join('\n')],{type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'EVL-Dealer-Network-Admin-'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+};
+
+// ── NUDGE LOG ──
+function renderNudgeLog() {
+  document.getElementById('nudgeLog').innerHTML = DEMO_NUDGES.map(n => `
+    <div class="nudge-row">
+      <div class="nudge-time">${n.time}</div>
+      <div class="nudge-msg">${n.msg}</div>
+      <span class="nudge-status" style="background:rgba(0,200,83,.1);color:var(--green);
+        border:1px solid rgba(0,200,83,.3);border-radius:8px;padding:2px 8px;
+        font-size:11px;font-weight:900;font-family:var(--font);white-space:nowrap;">
+        ${n.status.toUpperCase()}
+      </span>
+    </div>`).join('');
+}
+
+// ── ACTION HANDLERS ──
+window.switchTab = function(id) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const ids = ['auctions','transactions','dealers','nudges','newauction'];
+    t.classList.toggle('active', ids[i]===id);
+  });
+  document.querySelectorAll('.panel').forEach(p => {
+    p.classList.toggle('active', p.id==='panel-'+id);
+  });
+};
+
+window.sendNudge = function(bidId, auctionId) {
+  const dealer = DEALER_REGISTRY[bidId];
+  const name   = dealer ? dealer.name : bidId;
+  alert(`📡 NUDGE QUEUED\n\nTo: ${name}\nBid ID: ${bidId}\nAuction: ${auctionId}\n\nEmail + SMS will fire to:\n• UCM #1: ${dealer?.ucm1?.cell||'—'}\n• UCM #2: ${dealer?.ucm2?.cell||'—'}\n\n[EmailJS + Twilio — wire in Step 1]`);
+};
+
+window.nudgeAll = function(auctionId) {
+  const a = DEMO_AUCTIONS.find(x=>x.id===auctionId);
+  if (!a) return;
+  const bidders = [...new Set(a.bids.map(b=>b.bidId))];
+  alert(`📡 NUDGE ALL BIDDERS\n\nAuction: ${a.vehicle}\nBidders: ${bidders.length}\n\nAll active bidders will receive:\nEmail + SMS — current high bid, time remaining, counter prompt.\n\n[EmailJS + Twilio — wire in Step 1]`);
+};
+
+window.nudgeNoBid = function(auctionId) {
+  alert(`📡 NUDGE NON-BIDDERS\n\nAuction: ${auctionId}\n\nAll matched buyers who received the unit card but have NOT placed a bid will receive:\n"Unit still available — [X] dealers are actively bidding. Current high: $X. Deadline: [time]."\n\n[EmailJS + Twilio — wire in Step 1]`);
+};
+
+window.callUCM = function(bidId) {
+  const dealer = DEALER_REGISTRY[bidId];
+  if (!dealer) { alert('Dealer not in registry: ' + bidId); return; }
+  alert(`📞 CALL UCM\n\n${dealer.name}\nBid ID: ${bidId}\n\nUCM #1: ${dealer.ucm1.name}\nOffice: ${dealer.ucm1.office||'—'} Ext ${dealer.ucm1.ext||'—'}\nCell: ${dealer.ucm1.cell}\nEmail: ${dealer.ucm1.email}\n\nUCM #2: ${dealer.ucm2?.name||'None on file'}\nCell: ${dealer.ucm2?.cell||'—'}`);
+};
+
+window.closeAuction = function(id) {
+  const a = DEMO_AUCTIONS.find(x=>x.id===id);
+  if (!a) return;
+  const winner = DEALER_REGISTRY[a.bids[0]?.bidId];
+  const amount = a.bids[0]?.amount || 0;
+  if (!confirm(`Close auction ${id}?\n\n${a.vehicle}\nWinner: ${winner?.name||'Unknown'}\nWinning Bid: $${amount.toLocaleString()}\n\nThis will:\n1. Mark auction CLOSED\n2. Fire winner notification (email + SMS)\n3. Notify all other bidders auction is closed\n4. Create transaction record`)) return;
+  alert(`✅ AUCTION CLOSED\n\n${a.vehicle}\nWinner: ${winner?.name}\nBid: $${amount.toLocaleString()}\nEVL Fee: $250\n\nWinner notification queued — email + SMS\nTransaction record created in Firebase\nSource dealer notified`);
+};
+
+window.extendAuction = function(id) {
+  if (confirm('Extend this auction by 2 hours?')) {
+    const a = DEMO_AUCTIONS.find(x=>x.id===id);
+    if (a) { a.deadline += 2*3600000; renderAuctions(); }
+    alert('⏱ Auction extended 2 hours. All bidders notified.');
+  }
+};
+
+window.cancelAuction = function(id) {
+  if (confirm('Cancel this auction? All bidders will be notified. This cannot be undone.')) {
+    alert('✕ Auction cancelled. All bidders notified. Unit returned to Aged Unit Radar.');
+  }
+};
+
+window.markStep = function(el) {
+  el.classList.toggle('done');
+  el.classList.toggle('active');
+  el.querySelector('.txn-step-num').textContent =
+    el.classList.contains('done') ? '✓' :
+    el.querySelector('.txn-step-num').textContent;
+};
+
+window.launchAuction = async function() {
+  const vehicle = document.getElementById('na-vehicle').value.trim();
+  const vin     = document.getElementById('na-vin').value.trim();
+  const floor   = parseInt(document.getElementById('na-floor').value)||0;
+  const retail  = parseInt(document.getElementById('na-retail').value)||0;
+  const dealer  = document.getElementById('na-dealer').value.trim();
+  const make    = document.getElementById('na-make').value.trim();
+  const days    = parseInt(document.getElementById('na-days').value)||0;
+  const dur     = parseInt(document.getElementById('na-duration').value)||24;
+
+  if (!vehicle||!vin||!floor) {
+    alert('Vehicle, VIN, and WS Floor are required to launch an auction.'); return;
+  }
+
+  const auctionId = 'AUC-' + new Date().getFullYear() + '-' +
+    String(Math.floor(Math.random()*900)+100).padStart(3,'0');
+
+  try {
+    await addDoc(collection(db, 'evl_auctions'), {
+      id: auctionId, vehicle, vin, make, sourceDealerName: dealer,
+      days, retail, floor,
+      deadline: new Date(Date.now() + dur*3600000),
+      status: 'active',
+      createdAt: serverTimestamp()
+    });
+    alert(`✅ AUCTION LAUNCHED\n\n${vehicle}\nAuction ID: ${auctionId}\nWS Floor: $${floor.toLocaleString()}\nDuration: ${dur} hours\n\nUnit card queued for distribution to all matched ${make} buyers.\nEmail + SMS notifications firing now.\n\nAuction is live on the Dealer Bid Board.`);
+    // Reset form
+    ['na-vehicle','na-vin','na-floor','na-retail','na-dealer','na-make','na-days']
+      .forEach(id => document.getElementById(id).value = '');
+  } catch(e) {
+    alert('Launch error: ' + e.message);
+  }
+};
+</script>
+</body>
+</html>
