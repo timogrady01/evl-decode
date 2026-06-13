@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL Dealer Outreach — Marketing Campaign Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#090E17;--s1:#0d1117;--s2:#111820;--blue:#2B84FE;--gold:#FFD700;
+    --green:#00C853;--red:#FF4444;--white:#ffffff;--muted:#8899aa;
+    --border:#1a2a3a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
+
+  nav{background:#090E17;border-bottom:2px solid var(--blue);padding:0 24px;height:64px;
+    display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-size:22px;font-weight:900;letter-spacing:2px;color:var(--white);}
+  .nav-brand span{color:var(--blue);}
+
+  .hero{background:linear-gradient(135deg,#001428,#090E17);border-bottom:2px solid var(--blue);
+    padding:40px 20px 32px;text-align:center;}
+  .hero-h1{font-size:48px;font-weight:900;text-transform:uppercase;line-height:1.05;margin-bottom:8px;}
+  .hero-h1 span{color:var(--blue);}
+  .hero-sub{font-size:17px;color:#ffffff;font-family:var(--body);font-weight:600;
+    max-width:600px;margin:0 auto;line-height:1.6;}
+
+  .wrap{max-width:960px;margin:0 auto;padding:28px 16px 80px;}
+
+  /* TABS */
+  .tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;
+    flex-wrap:wrap;}
+  .tab{font-family:var(--font);font-size:16px;font-weight:900;letter-spacing:1px;
+    text-transform:uppercase;padding:12px 18px;color:var(--muted);cursor:pointer;
+    border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;}
+  .tab.active{color:var(--white);border-bottom-color:var(--gold);}
+  .tab:hover{color:var(--white);}
+
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* GENERATOR FORM */
+  .gen-form{background:var(--s1);border:2px solid var(--border);border-radius:14px;
+    padding:24px;margin-bottom:20px;}
+  .gen-title{font-size:17px;font-weight:900;letter-spacing:2px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:16px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .form-group{display:flex;flex-direction:column;gap:6px;}
+  .form-group.full{grid-column:1/-1;}
+  .form-label{font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;
+    letter-spacing:1px;font-family:var(--body);}
+  .form-input{background:var(--bg);border:2px solid var(--border);color:var(--white);
+    padding:11px 14px;border-radius:8px;font-size:16px;font-family:var(--font);
+    font-weight:700;outline:none;width:100%;}
+  .form-input:focus{border-color:var(--gold);}
+  .form-select{background:var(--bg);border:2px solid var(--border);color:var(--white);
+    padding:11px 14px;border-radius:8px;font-size:15px;font-family:var(--body);
+    font-weight:700;outline:none;width:100%;}
+  .gen-btn{background:var(--gold);color:#000;border:none;padding:12px 28px;
+    border-radius:8px;font-family:var(--font);font-size:18px;font-weight:900;
+    letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
+  .gen-btn:hover{opacity:.9;}
+
+  /* OUTPUT */
+  .output-card{background:var(--bg);border:2px solid var(--gold);border-radius:12px;
+    padding:20px;margin-bottom:16px;display:none;}
+  .output-card.active{display:block;}
+  .output-label{font-size:12px;font-weight:900;color:var(--gold);text-transform:uppercase;
+    letter-spacing:2px;margin-bottom:10px;font-family:var(--body);}
+  .output-text{font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;
+    line-height:1.9;white-space:pre-wrap;}
+  .copy-btn{background:var(--s2);color:var(--white);border:1px solid var(--border);
+    padding:7px 16px;border-radius:6px;font-family:var(--font);font-size:14px;
+    font-weight:900;cursor:pointer;letter-spacing:1px;float:right;margin-bottom:8px;}
+  .copy-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .copy-btn.copied{border-color:var(--green);color:var(--green);}
+
+  /* SCRIPT CARDS */
+  .script-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
+    overflow:hidden;margin-bottom:16px;}
+  .script-header{background:rgba(0,0,0,.3);padding:14px 18px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .script-title{font-size:17px;font-weight:900;color:var(--white);letter-spacing:1px;
+    text-transform:uppercase;}
+  .script-tag{font-size:11px;font-weight:900;padding:3px 10px;border-radius:10px;
+    letter-spacing:1px;text-transform:uppercase;font-family:var(--font);}
+  .tag-cold{background:rgba(43,132,254,.12);color:var(--blue);border:1px solid rgba(43,132,254,.3);}
+  .tag-warm{background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
+  .tag-hot{background:rgba(0,200,83,.12);color:var(--green);border:1px solid rgba(0,200,83,.3);}
+  .tag-email{background:rgba(255,140,0,.12);color:#FF8C00;border:1px solid rgba(255,140,0,.3);}
+  .script-body{padding:20px;}
+  .script-note{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:600;
+    margin-bottom:12px;padding:10px 12px;background:rgba(43,132,254,.05);
+    border-radius:6px;border-left:3px solid var(--blue);line-height:1.5;}
+  .script-text{font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;
+    line-height:1.9;white-space:pre-wrap;}
+  .objection-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:14px;margin-top:14px;}
+  .objection-q{font-size:13px;font-weight:900;color:var(--red);text-transform:uppercase;
+    letter-spacing:1px;margin-bottom:6px;font-family:var(--body);}
+  .objection-a{font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;
+    line-height:1.7;}
+
+  /* PITCH DECK PREVIEW */
+  .slide{background:var(--s1);border:2px solid var(--border);border-radius:14px;
+    padding:28px;margin-bottom:16px;}
+  .slide-num{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:3px;
+    text-transform:uppercase;margin-bottom:8px;font-family:var(--body);}
+  .slide-title{font-size:32px;font-weight:900;color:var(--white);text-transform:uppercase;
+    line-height:1.1;margin-bottom:12px;}
+  .slide-title span{color:var(--gold);}
+  .slide-body{font-family:var(--body);font-size:16px;color:#ffffff;font-weight:600;
+    line-height:1.8;}
+  .slide-stat{display:inline-block;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.25);
+    border-radius:8px;padding:10px 20px;margin:8px 8px 0 0;}
+  .slide-stat-num{font-size:32px;font-weight:900;color:var(--gold);display:block;}
+  .slide-stat-lbl{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+    letter-spacing:1px;font-family:var(--body);}
+
+  /* CAMPAIGN TRACKER */
+  .tracker-row{display:flex;justify-content:space-between;align-items:center;
+    padding:12px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;}
+  .tracker-row:last-child{border-bottom:none;}
+  .tracker-dealer{font-size:15px;font-weight:900;color:var(--white);}
+  .tracker-meta{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;}
+  .stage-dots{display:flex;gap:6px;}
+  .stage-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;
+    cursor:pointer;transition:all .2s;font-family:var(--font);}
+  .stage-dot.done{background:var(--green);border-color:var(--green);color:#000;}
+  .stage-dot.active{background:var(--gold);border-color:var(--gold);color:#000;}
+  .stage-dot:hover{border-color:var(--gold);}
+
+  @media(max-width:600px){
+    .hero-h1{font-size:34px;}
+    .form-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">EXPRESS <span>VEHICLE</span> LOCATORS</div>
+  <div style="font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;
+    text-transform:uppercase;font-family:var(--body);">Dealer Outreach Hub — Internal</div>
+</nav>
+
+<div class="hero">
+  <h1 class="hero-h1">DEALER <span>OUTREACH</span><br>CAMPAIGN HUB</h1>
+  <p class="hero-sub">Personalized call scripts, email templates, pitch deck, and campaign tracker — all in one place. DFW Hub first. 13 metros to follow.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('generator')">⚡ Generator</div>
+    <div class="tab" onclick="switchTab('scripts')">📞 Call Scripts</div>
+    <div class="tab" onclick="switchTab('emails')">📧 Email Templates</div>
+    <div class="tab" onclick="switchTab('pitch')">📊 Pitch Deck</div>
+    <div class="tab" onclick="switchTab('tracker')">📋 Campaign Tracker</div>
+    <div class="tab" onclick="switchTab('objections')">🛡️ Objection Handlers</div>
+  </div>
+
+  <!-- ═══ GENERATOR ═══ -->
+  <div class="panel active" id="panel-generator">
+    <div class="gen-form">
+      <div class="gen-title">⚡ Personalized Outreach Generator</div>
+      <p style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;
+        margin-bottom:18px;line-height:1.6;">
+        Enter the dealer details and EVL generates a fully personalized call script AND email — pre-loaded with their specific aged inventory pain points from MarketCheck data.
+      </p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Dealer Name</label>
+          <input class="form-input" type="text" id="gDealerName"
+            placeholder="Huffines Chevrolet Plano">
+        </div>
+        <div class="form-group">
+          <label class="form-label">UCM Name</label>
+          <input class="form-input" type="text" id="gUCMName" placeholder="Marcus">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Franchise Brand</label>
+          <select class="form-select" id="gBrand">
+            <option>Chevrolet</option><option>Ford</option><option>Toyota</option>
+            <option>Honda</option><option>Nissan</option><option>Jeep/RAM/Dodge</option>
+            <option>GMC/Buick</option><option>Hyundai/Kia</option><option>BMW/Mercedes/Audi</option>
+            <option>Independent</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contact Type</label>
+          <select class="form-select" id="gContactType">
+            <option value="cold">Cold — First contact, no prior relationship</option>
+            <option value="warm">Warm — Met before / referral / knows EVL</option>
+            <option value="followup">Follow-Up — Previously contacted, no response</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Aged Units on Their Lot (from Radar)</label>
+          <input class="form-input" type="number" id="gAgedCount"
+            placeholder="8" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Floor Plan Pressure ($)</label>
+          <input class="form-input" type="text" id="gFloorPain"
+            placeholder="$14,200">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Orphan Unit Example (if any)</label>
+          <input class="form-input" type="text" id="gOrphanUnit"
+            placeholder="2021 F-150 Lariat — 97 days">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Top Matched Buyer for Orphan</label>
+          <input class="form-input" type="text" id="gMatchedBuyer"
+            placeholder="Randall Reed Planet Ford">
+        </div>
+      </div>
+      <button class="gen-btn" onclick="generateOutreach()">
+        ⚡ GENERATE PERSONALIZED OUTREACH
+      </button>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output-card" id="outputCall">
+      <button class="copy-btn" onclick="copyOutput('callText')">📋 COPY</button>
+      <div class="output-label">📞 Personalized Call Script</div>
+      <div class="output-text" id="callText"></div>
+    </div>
+    <div class="output-card" id="outputEmail">
+      <button class="copy-btn" onclick="copyOutput('emailText')">📋 COPY</button>
+      <div class="output-label">📧 Personalized Email</div>
+      <div class="output-text" id="emailText"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CALL SCRIPTS ═══ -->
+  <div class="panel" id="panel-scripts">
+
+    <!-- COLD CALL -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📞 Cold Call — UCM Direct</div>
+        <span class="script-tag tag-cold">COLD · FIRST CONTACT</span>
+      </div>
+      <div class="script-body">
+        <div class="script-note">
+          Use when calling for the first time. You already have their aged inventory data pulled from MarketCheck BEFORE the call. Open with their specific pain — not a pitch about EVL.
+        </div>
+        <div class="script-text">OPENING — Get past the gatekeeper:
+"Hi, this is [YOUR NAME] calling for your Used Car Manager — is [UCM NAME] available?"
+
+[If asked what it's about:]
+"I have some information about [DEALER NAME]'s current used car inventory I wanted to share directly with them — it'll only take about 3 minutes."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHEN UCM PICKS UP:
+"Hi [UCM NAME], my name is [YOUR NAME] — I'm with Express Vehicle Locators, a wholesale vehicle advisory platform based in Plano.
+
+I'm not calling to sell you anything. I'm calling because I pulled your current used inventory this morning and I wanted to share something specific with you.
+
+You have [X] units sitting over 60 days right now. Combined floor plan pressure on those units is roughly $[AMOUNT] and climbing about $[DAILY RATE] every day they sit.
+
+[IF ORPHAN UNIT EXISTS:]
+You also have a [YEAR MAKE MODEL] that's been sitting [X] days — that's a [BRAND] vehicle on a [DEALER BRAND] lot. Your buyer traffic isn't looking for that. I have a [BRAND] dealer [X] miles from you who actively needs that exact unit right now.
+
+The question I wanted to ask you is simple — if I could move that unit this week at a fair wholesale number with zero auction fees and zero hassle, would that be worth a 5-minute conversation?"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IF THEY SAY YES:
+"Perfect. Here's how EVL works. We're a technology platform — not a dealer, not an auction house. We connect your aged units to a verified network of wholesale buyers in your market. When you have a unit that's aging, we run a silent auction — your floor is protected, your identity stays private, and the highest bidder wins.
+
+No auction fees, no transport coordination headaches, no surprises. Our fee is $250 flat per unit moved — you only pay when it sells.
+
+The [ORPHAN UNIT] I mentioned — I'd like to send you a deal card on that unit today. Takes me about 20 minutes to put together. You review it, tell me your floor, and if the math works we launch the auction tomorrow morning."
+
+CLOSE:
+"What's the best email to send that to? And is it okay if I follow up with a quick text when it's ready?"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IF THEY SAY NOT INTERESTED:
+"I completely understand — you've probably heard a hundred pitches this week.
+
+One last thing: we're not asking for a monthly commitment, a contract, or any upfront payment. I'm just asking for one unit — your oldest aged unit, the one that's costing you the most floor plan right now. Let us move it. If we don't get you more than the auction lane would have, you owe us nothing.
+
+Is one unit worth 20 minutes of your time?"</div>
+      </div>
+    </div>
+
+    <!-- WARM CALL -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📞 Warm Call — Referral or Prior Contact</div>
+        <span class="script-tag tag-warm">WARM · REFERRAL</span>
+      </div>
+      <div class="script-body">
+        <div class="script-note">
+          Use when the dealer knows you, was referred, or previously received EVL material. The pitch is shorter — they already have context.
+        </div>
+        <div class="script-text">OPENING:
+"Hi [UCM NAME], this is [YOUR NAME] from Express Vehicle Locators — [REFERRAL SOURCE] suggested I reach out to you directly.
+
+[OR: "We connected briefly at [EVENT/TIME] — I wanted to follow up."]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BODY:
+"I pulled your current inventory before calling. You have [X] units sitting 60-plus days — total floor plan pressure is roughly $[AMOUNT].
+
+I wanted to ask — are those units being actively marketed outside of your lot right now? eBay Motors, Facebook Marketplace, your WS network?
+
+[Pause — let them answer]
+
+That's actually what EVL does. We take your aged units — especially the off-brand ones that don't match your buyer traffic — and we deploy them simultaneously across six channels. eBay Motors, Facebook, CarGurus, your local WS buyer network. The unit goes wide instead of sitting.
+
+Our fee is $250 flat per unit moved. No monthly subscription. No auction fees. You only pay when it sells.
+
+Can I send you a one-page deal card on your oldest unit today? If the math works, we move it this week."</div>
+      </div>
+    </div>
+
+    <!-- FOLLOW-UP CALL -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📞 Follow-Up Call — No Response to Email</div>
+        <span class="script-tag tag-hot">FOLLOW-UP · DAY 3-5</span>
+      </div>
+      <div class="script-body">
+        <div class="script-note">
+          Use 3–5 days after sending the initial email with no response. Short, direct, no pitch repetition.
+        </div>
+        <div class="script-text">"Hi [UCM NAME] — [YOUR NAME] from Express Vehicle Locators.
+
+I sent you a note earlier this week about your aged inventory — specifically the [UNIT] that's been sitting [X] days.
+
+I know you're busy — I'm not going to repitch you. I just wanted to ask one question:
+
+Is that unit still available, or did you already move it?
+
+[If still available:]
+'Perfect — can I send you the one-page deal card today? Five minutes to review. If the numbers work, we can have it in front of buyers by tomorrow morning.'
+
+[If they moved it:]
+'Good for you — how'd it go? Did you go auction or did you find a private buyer?'
+[Listen — then:] 'That's actually what we're trying to improve for you on the next one. Less time, better net. Can I follow up when the next unit starts aging?'"</div>
+      </div>
+    </div>
+
+    <!-- SERVICE DRIVE CALL -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📞 UCM Voicemail Script</div>
+        <span class="script-tag tag-cold">VOICEMAIL · 30 SECONDS</span>
+      </div>
+      <div class="script-body">
+        <div class="script-note">
+          If UCM does not pick up. Keep it under 30 seconds. One specific data point. Clear callback ask.
+        </div>
+        <div class="script-text">"Hi [UCM NAME], this is [YOUR NAME] from Express Vehicle Locators in Plano.
+
+I pulled [DEALER NAME]'s inventory this morning — you have a [YEAR MAKE MODEL] that's been sitting [X] days. I have a [BRAND] buyer looking for that exact unit in your market right now.
+
+I'd like to send you a one-page deal card — takes about 20 minutes to put together and there's zero obligation.
+
+I'm at [YOUR CELL]. Text me back if it's easier. Talk soon."</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ EMAIL TEMPLATES ═══ -->
+  <div class="panel" id="panel-emails">
+
+    <!-- EMAIL 1: COLD OUTREACH -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📧 Cold Outreach Email — With Inventory Data</div>
+        <span class="script-tag tag-email">EMAIL · COLD · PERSONALIZED</span>
+      </div>
+      <div class="script-body">
+        <div class="script-note">
+          Send this AFTER pulling their inventory from MarketCheck. Every number is real. That is what makes it open. Subject line uses their specific unit to force the open.
+        </div>
+        <button class="copy-btn" onclick="copyScript('email1Text')">📋 COPY</button>
+        <div class="script-text" id="email1Text">Subject: Your [YEAR MAKE MODEL] — [X] days on lot — I have a buyer
+
+[UCM NAME],
+
+I pulled [DEALER NAME]'s used inventory this morning. You have [X] units sitting 60-plus days, which means roughly $[FLOOR PLAN COST] in carrying pressure right now.
+
+The unit that caught my attention: your [YEAR MAKE MODEL].
+
+It's been sitting [X] days on a [DEALER BRAND] lot — and that unit's buyer is not walking into a [DEALER BRAND] store. They're walking into a [UNIT BRAND] store. I have [MATCHED BUYER] — a [UNIT BRAND] dealer [X] miles from you — who is actively looking for this exact unit this week.
+
+Here's what I'd like to do:
+
+I want to send you a one-page EVL Deal Card on that unit — takes me about 20 minutes to put together. It shows you:
+  → Current MarketCheck wholesale value
+  → Your floor plan pressure to date
+  → The matched buyer ranked by turn rate and need
+  → EVL's recommended path to move it this week
+
+There's no cost to review it. If the math works, we move the unit through our buyer network. Our fee is $250 flat — you only pay when it sells.
+
+Reply with your floor on that unit and I'll have the deal card in your inbox within the hour.
+
+[YOUR NAME]
+Express Vehicle Locators — Plano TX
+[YOUR CELL]
+expressvehiclelocators.com
+
+P.S. EVL is a technology platform — not a dealer, not an auction house. We never take title. The transaction stays between you and the buyer. We just find the right buyer faster.</div>
+      </div>
+    </div>
+
+    <!-- EMAIL 2: FOLLOW UP -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📧 Follow-Up Email — Day 3 (No Response)</div>
+        <span class="script-tag tag-email">EMAIL · FOLLOW-UP · DAY 3</span>
+      </div>
+      <div class="script-body">
+        <button class="copy-btn" onclick="copyScript('email2Text')">📋 COPY</button>
+        <div class="script-text" id="email2Text">Subject: Re: [YEAR MAKE MODEL] — still available?
+
+[UCM NAME],
+
+Quick follow-up on my note from [DAY].
+
+Is the [YEAR MAKE MODEL] still on your lot?
+
+If it is — it's now [X+3] days. Floor plan pressure is up another $[3-DAY COST]. I still have the matched buyer in your market.
+
+If you already moved it — great. But when the next one starts aging, you'll want to know EVL exists.
+
+Either way — worth a 5-minute call?
+
+[YOUR NAME] · [YOUR CELL]</div>
+      </div>
+    </div>
+
+    <!-- EMAIL 3: PILOT OFFER -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📧 Pilot Offer Email — Zero Risk Close</div>
+        <span class="script-tag tag-warm">EMAIL · WARM · CLOSE</span>
+      </div>
+      <div class="script-body">
+        <div class="script-note">
+          Send this when a dealer is interested but hesitating. The pilot offer removes every objection.
+        </div>
+        <button class="copy-btn" onclick="copyScript('email3Text')">📋 COPY</button>
+        <div class="script-text" id="email3Text">Subject: One unit. No risk. Here's the offer.
+
+[UCM NAME],
+
+I know you're evaluating whether EVL is worth your time. Fair.
+
+Here's the offer that removes the risk entirely:
+
+Give us your one oldest aged unit. The unit that's been sitting the longest and costing you the most floor plan.
+
+We move it. You pay our $250 fee only when it sells. If we don't get you more than the auction lane would have netted — you owe us nothing.
+
+No monthly subscription. No contract. No commitment beyond one unit.
+
+If we move it — and we will — you'll have your answer about whether EVL belongs in your disposal process.
+
+Your oldest aged unit right now is the [YEAR MAKE MODEL] at [X] days. That's the one.
+
+Tell me your floor and I'll have a deal card ready within the hour.
+
+[YOUR NAME]
+Express Vehicle Locators
+[YOUR CELL]</div>
+      </div>
+    </div>
+
+    <!-- EMAIL 4: WINNER FOLLOW-UP -->
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">📧 Post-Transaction Follow-Up — Upsell</div>
+        <span class="script-tag tag-hot">EMAIL · POST-SALE · RELATIONSHIP</span>
+      </div>
+      <div class="script-body">
+        <button class="copy-btn" onclick="copyScript('email4Text')">📋 COPY</button>
+        <div class="script-text" id="email4Text">Subject: [VEHICLE] closed — and what's next
+
+[UCM NAME],
+
+The [YEAR MAKE MODEL] cleared [X] days ago. Net to you: $[AMOUNT] — vs an estimated $[AUCTION EST] at the auction lane.
+
+That's $[DIFFERENCE] recovered on one unit with zero auction fees, zero transport headache, and [X] days to close.
+
+You currently have [X] other units over 60 days. Combined floor plan pressure: $[AMOUNT].
+
+I'd like to put together deal cards on all of them.
+
+You already know the process works. The only question is how many units you want to move before the end of the month.
+
+Can I send you the full aged unit report for [DEALER NAME] this week?
+
+[YOUR NAME]
+Express Vehicle Locators
+[YOUR CELL]</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ PITCH DECK ═══ -->
+  <div class="panel" id="panel-pitch">
+
+    <div style="font-family:var(--body);font-size:14px;color:var(--muted);font-weight:600;
+      margin-bottom:20px;line-height:1.5;">
+      One-page verbal pitch deck — 5 slides, 8 minutes total. For in-person or Zoom presentations to GMs and dealer principals.
+    </div>
+
+    <div class="slide">
+      <div class="slide-num">SLIDE 1 OF 5 · OPENING</div>
+      <div class="slide-title">THE <span>PROBLEM</span><br>YOU ALREADY KNOW</div>
+      <div class="slide-body">
+        "Every month, your used car department has units that age past 60 days. Those units cost you money every single day — floor plan interest, depreciation, and the opportunity cost of that space on your lot.
+
+When they finally move, most of them go to auction. And at the auction lane, you're one of 200 units in the same row. You take what the market gives you. Usually $1,500 to $2,500 less than you would have gotten with the right buyer at the right time.
+
+That gap — between what you get and what you should get — is what EVL fixes."
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-num">SLIDE 2 OF 5 · WHAT EVL IS</div>
+      <div class="slide-title">EVL IS <span>NOT</span><br>A DEALER</div>
+      <div class="slide-body">
+        "EVL is a technology platform. We are not a dealer, not an auction house, and we never take title to any vehicle.
+
+What we are is a connection engine. We know which dealers in your market need what you have — before you know they need it. We know this because we pull live inventory data on every dealer within 100 miles of you every day.
+
+When you have a unit aging, we already know who the right buyer is. We go get them for you — simultaneously across every channel — before the unit bleeds any more floor plan."
+
+        <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;">
+          <div class="slide-stat"><span class="slide-stat-num">$250</span><span class="slide-stat-lbl">Flat Fee Per Unit</span></div>
+          <div class="slide-stat"><span class="slide-stat-num">$0</span><span class="slide-stat-lbl">Monthly Fee</span></div>
+          <div class="slide-stat"><span class="slide-stat-num">6</span><span class="slide-stat-lbl">Channels Simultaneously</span></div>
+          <div class="slide-stat"><span class="slide-stat-num">100mi</span><span class="slide-stat-lbl">Buyer Network Radius</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-num">SLIDE 3 OF 5 · THE ORPHAN UNIT PLAY</div>
+      <div class="slide-title">THE UNIT THAT<br><span>DOESN'T BELONG</span></div>
+      <div class="slide-body">
+        "Every dealer in this market has at least one. A unit that came in on a trade that doesn't match your buyer traffic. A Ford truck on a Honda lot. A Ram on a Toyota lot. A Kia on a Chevrolet lot.
+
+Your buyers aren't shopping for that unit. Your salespeople aren't excited about it. And every day it sits, it costs you more.
+
+EVL identifies every orphan unit in your inventory, matches it to the right franchise buyer in your market, and moves it direct — dealer to dealer — before it ever needs to see an auction lane.
+
+The math: a $38,000 F-150 sitting 97 days at a Toyota store has absorbed over $2,500 in floor plan and depreciation. EVL can move that unit this week for $250. The dealer nets $2,250 more than auction — on one unit."
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-num">SLIDE 4 OF 5 · THE CHANNEL APPROACH</div>
+      <div class="slide-title">SIX CHANNELS.<br><span>SIMULTANEOUSLY.</span></div>
+      <div class="slide-body">
+        "When a unit enters the EVL pipeline it gets deployed across six channels at once — not sequentially, not one at a time. All six. Simultaneously.
+
+Your WS buyer network gets it first — that's the cheapest and fastest path. If a buyer steps up in 7 days, you're done. No ad spend.
+
+If not, EVL moves to Facebook Marketplace and Craigslist — local retail exposure, both free to post. EVL manages all buyer inquiries, screens every buyer, coordinates the safe exchange.
+
+If still no sale in 14 days, CarGurus and Cars.com go live — paid retail with the right audience.
+
+And if the unit needs national exposure, eBay Motors. 180 million registered buyers. 10-day auction. Sunday night close — statistically the highest-bid window of the week.
+
+You pay $250 flat. We do all the work."
+
+        <div style="margin-top:14px;background:rgba(0,200,83,.05);border:1px solid rgba(0,200,83,.2);
+          border-radius:8px;padding:14px;font-family:var(--body);font-size:14px;color:#ffffff;
+          font-weight:700;line-height:1.6;">
+          One-liner close: "EVL starts where it costs the least and escalates only as far as necessary to get your vehicle sold at the right number. You never pay for a channel you don't need."
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-num">SLIDE 5 OF 5 · THE ASK</div>
+      <div class="slide-title">ONE UNIT.<br><span>NO RISK.</span></div>
+      <div class="slide-body">
+        "Here's the only ask I'm making today.
+
+Give us your one oldest aged unit. The unit sitting on your lot right now that's been there the longest. The one that's costing you the most.
+
+We move it. You pay $250 only when it sells. If we don't net you more than the auction lane would have — you owe us nothing.
+
+No monthly subscription. No contract. No commitment beyond one unit.
+
+That's the whole ask. One unit. Twenty minutes to review the deal card. If the math works, we launch the auction tomorrow morning."
+
+        <div style="margin-top:16px;background:rgba(255,215,0,.05);border:2px solid rgba(255,215,0,.25);
+          border-radius:8px;padding:16px;font-family:var(--body);font-size:15px;color:#ffffff;
+          font-weight:700;line-height:1.6;text-align:center;">
+          "We are not here to replace your auction relationship. We are here to make sure fewer units reach the auction lane — and when they do, you've already exhausted every better option."
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ CAMPAIGN TRACKER ═══ -->
+  <div class="panel" id="panel-tracker">
+    <div style="display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+      <div style="font-size:18px;font-weight:900;color:var(--white);text-transform:uppercase;
+        letter-spacing:2px;">DFW Hub — Campaign Tracker</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;">
+        Stage: 1=Called · 2=Emailed · 3=Card Sent · 4=In Review · 5=Active Partner
+      </div>
+    </div>
+    <div style="background:var(--s1);border:2px solid var(--border);border-radius:14px;padding:20px;">
+      <div id="trackerList"></div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="addTrackerDealer()" style="background:var(--blue);color:#fff;border:none;
+        padding:10px 20px;border-radius:8px;font-family:var(--font);font-size:16px;
+        font-weight:900;letter-spacing:1px;cursor:pointer;">+ ADD DEALER</button>
+      <button onclick="exportTracker()" style="background:var(--s2);color:var(--white);
+        border:2px solid var(--border);padding:10px 20px;border-radius:8px;font-family:var(--font);
+        font-size:16px;font-weight:900;letter-spacing:1px;cursor:pointer;">📋 EXPORT CSV</button>
+    </div>
+  </div>
+
+  <!-- ═══ OBJECTION HANDLERS ═══ -->
+  <div class="panel" id="panel-objections">
+    <div style="font-family:var(--body);font-size:14px;color:var(--muted);font-weight:600;
+      margin-bottom:20px;">
+      Every objection you will hear — and the exact response. Memorize these before any dealer call.
+    </div>
+    <div id="objectionList"></div>
+  </div>
+
+</div>
+
+<script>
+// ── TABS ──
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const ids = ['generator','scripts','emails','pitch','tracker','objections'];
+    t.classList.toggle('active', ids[i] === id);
+  });
+  document.querySelectorAll('.panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'panel-'+id);
+  });
+}
+
+// ── OUTREACH GENERATOR ──
+function generateOutreach() {
+  const dealer    = document.getElementById('gDealerName').value.trim() || '[DEALER NAME]';
+  const ucm       = document.getElementById('gUCMName').value.trim() || '[UCM NAME]';
+  const brand     = document.getElementById('gBrand').value;
+  const type      = document.getElementById('gContactType').value;
+  const aged      = document.getElementById('gAgedCount').value || 'X';
+  const pain      = document.getElementById('gFloorPain').value || '$[AMOUNT]';
+  const orphan    = document.getElementById('gOrphanUnit').value.trim();
+  const matched   = document.getElementById('gMatchedBuyer').value.trim();
+
+  const orphanLine = orphan
+    ? `\nYou also have a ${orphan} — that's an off-brand unit on your lot. Your buyer traffic won't buy it. I have ${matched||'a matched buyer'} in your market actively looking for that exact unit right now.`
+    : '';
+
+  // Generate call script
+  const callScript = type === 'cold'
+    ? `PERSONALIZED COLD CALL — ${dealer.toUpperCase()}
+
+OPENING:
+"Hi, this is [YOUR NAME] — could I speak with ${ucm} in used cars?"
+
+WHEN ${ucm.toUpperCase()} PICKS UP:
+"${ucm}, my name is [YOUR NAME] from Express Vehicle Locators in Plano.
+
+I'm not calling to sell you anything. I pulled ${dealer}'s inventory this morning and I want to share something specific.
+
+You have ${aged} units sitting over 60 days right now. Combined floor plan pressure is roughly ${pain} — and that number's growing every day.${orphanLine}
+
+If I could move your oldest aged unit this week — at a fair wholesale number, zero auction fees, no hassle — would that be worth 5 minutes of your time?"
+
+[IF YES → send deal card]
+"Perfect. What's the best email to send a one-page deal card to? And your floor on that unit?"
+
+[IF NO → pilot offer]
+"I hear you. Here's the ask: give us one unit — your oldest one. No monthly fee, no contract. $250 flat only when it sells. If we don't beat auction, you owe us nothing. One unit."
+
+CLOSE:
+"I'll have the deal card in your inbox within the hour. Look for it from togradyevl@gmail.com."`
+    : type === 'warm'
+    ? `PERSONALIZED WARM CALL — ${dealer.toUpperCase()}
+
+"${ucm}, [YOUR NAME] from Express Vehicle Locators.
+
+Quick call — I pulled ${dealer}'s inventory this morning. ${aged} units over 60 days. Floor plan pressure around ${pain}.${orphanLine}
+
+I'd like to send you a deal card on your oldest unit today. $250 flat when it sells — no other commitment.
+
+What's your floor on the ${orphan || 'oldest unit'}?"`
+    : `PERSONALIZED FOLLOW-UP — ${dealer.toUpperCase()}
+
+"${ucm}, [YOUR NAME] from EVL. Following up on my note about ${dealer}'s aged inventory.
+
+Is the ${orphan || 'unit we discussed'} still available?
+
+[If yes:] Can I send you the deal card today? If the math works we launch the auction tomorrow morning.
+
+[If no:] Good for you — how'd it go? And when the next one starts aging, that's exactly when I want to hear from you."`;
+
+  // Generate email
+  const emailScript = `Subject: ${orphan ? `Your ${orphan.split('—')[0].trim()} — ${orphan.split('—')[1]?.trim()||'aging unit'} — I have a buyer` : `${dealer} — ${aged} aged units — $${pain} in floor plan pressure`}
+
+${ucm},
+
+I pulled ${dealer}'s inventory this morning.
+
+You have ${aged} units sitting over 60 days — that's roughly ${pain} in combined floor plan pressure right now.${orphanLine ? '\n'+orphanLine : ''}
+
+I'd like to send you a one-page EVL Deal Card on your oldest unit. It takes me about 20 minutes to put together and shows you:
+  → Current MarketCheck wholesale value
+  → Floor plan pressure to date  
+  → Top matched buyers ranked by turn rate
+  → Recommended path to move it this week
+
+Our fee is $250 flat — only when it sells. No monthly commitment. No auction fees.
+
+Reply with your floor on that unit and I'll have the deal card in your inbox within the hour.
+
+[YOUR NAME]
+Express Vehicle Locators — Plano TX
+[YOUR CELL] · expressvehiclelocators.com
+
+P.S. EVL is a technology platform — not a dealer. We never take title. Transaction stays between you and the buyer. We find the right buyer faster.`;
+
+  document.getElementById('callText').textContent = callScript;
+  document.getElementById('emailText').textContent = emailScript;
+  document.getElementById('outputCall').classList.add('active');
+  document.getElementById('outputEmail').classList.add('active');
+  document.getElementById('outputCall').scrollIntoView({behavior:'smooth'});
+}
+
+// ── COPY FUNCTIONS ──
+function copyOutput(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    btn.textContent = '✅ COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 COPY'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyScript(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    btn.textContent = '✅ COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 COPY'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── CAMPAIGN TRACKER ──
+let trackerData = JSON.parse(localStorage.getItem('evl_campaign_tracker') || '[]');
+
+const DEFAULT_DEALERS = [
+  {name:'Huffines Chevrolet Plano',brand:'Chevrolet',ucm:'Marcus T.',cell:'(972) 881-8012',stage:3,notes:'Has 8 aged units. Orphan F-150 flagged.'},
+  {name:'Randall Reed Planet Ford',brand:'Ford',ucm:'Jasmine R.',cell:'(972) 424-4611',stage:2,notes:'Interest expressed. Follow up Fri.'},
+  {name:'AutoNation Toyota Plano',brand:'Toyota',ucm:'Priya N.',cell:'(972) 867-4912',stage:1,notes:'Cold — pull inventory before call.'},
+  {name:'Hendrick Honda Frisco',brand:'Honda',ucm:'Keisha D.',cell:'(972) 731-3612',stage:4,notes:'Deal card sent. Waiting on floor.'},
+  {name:'Westway Ford Irving',brand:'Ford',ucm:'—',cell:'(972) 790-6011',stage:1,notes:'UCM contact needed — call receptionist.'},
+  {name:'AutoNation Nissan Plano',brand:'Nissan',ucm:'—',cell:'(972) 423-7311',stage:0,notes:'Prospect — not yet contacted.'},
+];
+
+if (trackerData.length === 0) trackerData = DEFAULT_DEALERS;
+
+function saveTracker() {
+  localStorage.setItem('evl_campaign_tracker', JSON.stringify(trackerData));
+}
+
+function renderTracker() {
+  const container = document.getElementById('trackerList');
+  const stageLabels = ['Prospect','Called','Emailed','Card Sent','In Review','Active ✅'];
+  const stageColors = ['var(--muted)','var(--blue)','#FF8C00','var(--gold)','var(--red)','var(--green)'];
+
+  container.innerHTML = trackerData.map((d,i) => `
+    <div class="tracker-row">
+      <div style="flex:2;min-width:200px;">
+        <div class="tracker-dealer">${d.name}</div>
+        <div class="tracker-meta">${d.brand} · UCM: ${d.ucm} · ${d.cell}</div>
+        ${d.notes ? `<div class="tracker-meta" style="color:var(--gold);margin-top:2px;">📝 ${d.notes}</div>` : ''}
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div style="font-size:12px;font-weight:900;color:${stageColors[d.stage]};
+          font-family:var(--body);white-space:nowrap;">
+          ${stageLabels[d.stage]}
+        </div>
+        <div class="stage-dots">
+          ${[1,2,3,4,5].map(s => `
+            <div class="stage-dot ${d.stage>=s?'done':d.stage===s-1?'active':''}"
+              onclick="advanceStage(${i},${s})" title="${stageLabels[s]}">
+              ${d.stage>=s?'✓':s}
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function advanceStage(idx, stage) {
+  trackerData[idx].stage = stage;
+  saveTracker();
+  renderTracker();
+}
+
+function addTrackerDealer() {
+  const name = prompt('Dealer name:');
+  if (!name) return;
+  const brand = prompt('Brand:') || '—';
+  const ucm   = prompt('UCM name (or leave blank):') || '—';
+  const notes = prompt('Notes:') || '';
+  trackerData.push({name, brand, ucm, cell:'—', stage:0, notes});
+  saveTracker();
+  renderTracker();
+}
+
+function exportTracker() {
+  const stageLabels = ['Prospect','Called','Emailed','Card Sent','In Review','Active'];
+  const rows = ['Dealer,Brand,UCM,Cell,Stage,Notes'];
+  trackerData.forEach(d => {
+    rows.push([d.name,d.brand,d.ucm,d.cell,stageLabels[d.stage],d.notes]
+      .map(v=>`"${String(v).replace(/"/g,'""')}"`)
+      .join(','));
+  });
+  const blob = new Blob([rows.join('\n')],{type:'text/csv'});
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'EVL-Campaign-DFW-'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+}
+
+// ── OBJECTION HANDLERS ──
+const OBJECTIONS = [
+  {
+    q:'We already have an auction relationship.',
+    a:`"I completely understand — and I'm not asking you to replace it. The auction lane is the right answer for a lot of units. What EVL does is make sure fewer units REACH the auction lane — because we move them first, for more, with less hassle. Your auction relationship stays exactly where it is. We just give you a better first option."`
+  },
+  {
+    q:'We don\'t have time to deal with another vendor.',
+    a:`"That's exactly why EVL exists — to take time OFF your plate, not add to it. You tell me your floor and I do everything else. You don't talk to buyers. You don't manage listings. You don't coordinate pickup. You get a call when someone wants to pay your number. That's it."`
+  },
+  {
+    q:'What\'s your fee?',
+    a:`"$250 flat per unit — only when it sells. No monthly subscription. No setup fee. No contract. If we don't move it, you owe us nothing. The math on your oldest aged unit right now: floor plan pressure already absorbed, plus depreciation going forward — $250 is not the number that matters."`
+  },
+  {
+    q:'How are you different from the auction?',
+    a:`"Three differences. One — we move BEFORE auction, which means you avoid the auction lane entirely on the right units. Two — you keep more money. No auction fees, no transport, no arbitration. Three — for your orphan units — the off-brand trades — we match them directly to the franchise dealer who actually wants that unit. Auction doesn't do that. They just take whatever shows up."`
+  },
+  {
+    q:'How do you find buyers?',
+    a:`"We pull live inventory data on every dealer within 100 miles of you every day. We know who's undersupplied on which models, which dealers turn F-150s in 18 days vs 45 days, who has buying budget this month. When you have an aged F-150, I already know the right Ford dealer to call — before I pick up the phone."`
+  },
+  {
+    q:'I\'ve never heard of EVL.',
+    a:`"We're building our network right now — which is actually why this is the right time to connect. The dealers who join early get unit card access before the network is full. Right now if I have an orphan F-150, there are two Ford dealers in your market. In six months there will be eight. The earlier you're in, the more you see first."`
+  },
+  {
+    q:'What if the unit doesn\'t sell?',
+    a:`"Two options. One — if we go through the full staircase and the unit doesn't move, we reopen the floor conversation. Sometimes the market has moved and the dealer's minimum needs to adjust. Two — if nothing works, it goes to auction exactly where it would have gone anyway. You've lost nothing. You've actually gained — because we tried six channels first and ruled out every better option before conceding to auction."`
+  },
+  {
+    q:'I don\'t want my deals going through a third party.',
+    a:`"Understood. EVL is not a third party in the transaction — we're a technology coordinator. The deal is between you and the buyer directly. We never touch money, never hold title, never appear on any paperwork. Think of us as the connection that found the buyer — the way a recruiter finds a candidate but doesn't sign the employment contract. The relationship is yours. We just found the right person."`
+  },
+];
+
+function renderObjections() {
+  document.getElementById('objectionList').innerHTML = OBJECTIONS.map((o,i) => `
+    <div class="script-card" style="margin-bottom:14px;">
+      <div class="script-header">
+        <div class="script-title" style="font-size:16px;">Objection #${i+1}</div>
+      </div>
+      <div class="script-body">
+        <div class="objection-q">"${o.q}"</div>
+        <div class="objection-a">${o.a}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── INIT ──
+renderTracker();
+renderObjections();
+</script>
+</body>
+</html>
