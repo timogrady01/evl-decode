@@ -150,11 +150,11 @@ body { display:block !important; align-items:unset !important; justify-content:u
     <table>
       <thead><tr><th>Service</th><th>Key / ID</th><th>Purpose</th></tr></thead>
       <tbody>
-        <tr><td><strong>MarketCheck</strong></td><td style="font-family:monospace;font-size:13px;">FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU</td><td>VIN decode, market values</td></tr>
+        <tr><td><strong>MarketCheck</strong></td><td style="font-family:monospace;font-size:13px;">MC-****SEE MARKETCHECK DASHBOARD****</td><td>VIN decode, market values</td></tr>
         <tr><td><strong>Cloudinary Preset</strong></td><td style="font-family:monospace;font-size:13px;">evl_photos</td><td>Photo uploads — trade-in flow</td></tr>
         <tr><td><strong>EmailJS Template</strong></td><td style="font-family:monospace;font-size:13px;">service_rvscjt3</td><td>Trade submission notifications</td></tr>
         <tr><td><strong>Firebase Project</strong></td><td style="font-family:monospace;font-size:13px;">evl-acquisition-radar</td><td>Firestore live bids, dealer data, auction engine</td></tr>
-        <tr><td><strong>Firebase API Key</strong></td><td style="font-family:monospace;font-size:13px;">AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho</td><td>Web app config — EVL-RADAR-WEB</td></tr>
+        <tr><td><strong>Firebase API Key</strong></td><td style="font-family:monospace;font-size:13px;">FB-EVL-****SEE FIREBASE CONSOLE****</td><td>Web app config — EVL-RADAR-WEB</td></tr>
         <tr><td><strong>Firebase App ID</strong></td><td style="font-family:monospace;font-size:13px;">1:84195145348:web:b10f837bee92ce2e4674d1</td><td>EVL-RADAR-WEB app identifier</td></tr>
       </tbody>
     </table>
@@ -806,6 +806,196 @@ body { display:block !important; align-items:unset !important; justify-content:u
       <tr><td>ESS GitHub Repo</td><td>github.com/timogrady01/express-sales-system</td><td>See credentials</td></tr>
     </tbody>
   </table>
+</div>
+
+
+<!-- MASTER CREDENTIALS + PAGE DIRECTORY -->
+<div class="card" style="margin-top:32px;">
+  <div class="card-title">🔐 Master Credentials — All Keys, All Pages</div>
+  <p style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:8px;">
+    Last updated: Jun 13, 2026 — Confidential. Internal use only. Never share publicly.
+  </p>
+
+  <!-- API KEYS -->
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">① API Keys & Credentials</div>
+  <table>
+    <thead><tr><th>Service</th><th>Key / ID</th><th>Purpose</th><th>Date Added</th><th>Where to Find</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">GitHub Token</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">ghp_****SEE GITHUB SETTINGS****</td>
+        <td>Allows Claude to read/write all files in the EVL GitHub repo directly. Used in every build session.</td>
+        <td>Jun 2026</td>
+        <td>github.com → Settings → Developer Settings → Personal Access Tokens</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">MarketCheck API</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">MC-****SEE MARKETCHECK DASHBOARD****</td>
+        <td>Vehicle inventory data, wholesale/retail pricing, days on lot, market comps. Used in Aged Unit Radar, WS Deal Card, Channel Launcher, Dealer Onboarding auto-populate.</td>
+        <td>Jun 2026</td>
+        <td>marketcheck.com → Dashboard → API Keys. Current plan: DFW 100-mile radius. Upgrade for national.</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">Firebase — EVL</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">FB-EVL-****SEE FIREBASE CONSOLE****</td>
+        <td>Real-time database for all EVL WS platform data — bids, auctions, dealer profiles, WS exchange submissions. Project: evl-acquisition-radar. Blaze plan.</td>
+        <td>Jun 2026</td>
+        <td>console.firebase.google.com → evl-acquisition-radar → Project Settings</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">Firebase — ESS</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">FB-ESS-****SEE FIREBASE CONSOLE****</td>
+        <td>Real-time database for ESS platform — Big Board, CVE submissions, SP scorecards, dealer subscriptions. Project: express-sales-system.</td>
+        <td>Jun 2026</td>
+        <td>console.firebase.google.com → express-sales-system → Project Settings</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">Twilio Account SID</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">TWILIO-SID-****SEE TWILIO CONSOLE****</td>
+        <td>SMS notification engine identifier. Required for all Twilio API calls. Combined with Auth Token to send bid alerts, nudges, winner notifications to dealer UCMs.</td>
+        <td>Jun 13, 2026</td>
+        <td>console.twilio.com → Account Dashboard → Account Info</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">Twilio Auth Token</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--red);">TWILIO-TOKEN-****SEE TWILIO CONSOLE****</td>
+        <td>Private auth key for Twilio SMS API. NEVER store in code files — GitHub will reject. Enter via evl-notif-engine config page only. Stored in browser localStorage.</td>
+        <td>Jun 13, 2026</td>
+        <td>console.twilio.com → Account Dashboard → Auth Token → Show</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">Twilio Phone Number</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">+18444675644 · (844) 467-5644</td>
+        <td>Toll-free number SMS sends FROM. Verification submitted Jun 13 2026 — pending approval 1-3 business days. Until approved: SMS restricted to verified numbers only.</td>
+        <td>Jun 13, 2026</td>
+        <td>console.twilio.com → Phone Numbers → Active Numbers</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">EmailJS Service ID</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">service_rvscjt3</td>
+        <td>EmailJS service connected to togradyevl@gmail.com. Sends all bid notification emails — unit cards, nudges, outbid alerts, final calls, winner notifications.</td>
+        <td>Jun 2026</td>
+        <td>dashboard.emailjs.com → Email Services</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">EmailJS Public Key</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--red);">⚠️ NOT YET ENTERED — NEEDED</td>
+        <td>Required to initialize EmailJS SDK. Without this, no emails fire. Get from dashboard.emailjs.com → Account → Public Key. Enter in evl-notif-engine config page.</td>
+        <td>Pending</td>
+        <td>dashboard.emailjs.com → Account (left nav) → Public Key field</td>
+      </tr>
+      <tr>
+        <td style="color:var(--white);font-weight:900;">Cloudinary</td>
+        <td style="font-family:monospace;font-size:12px;color:var(--blue);">Cloud: dv8cpebgp · Preset: evl_photos</td>
+        <td>Photo uploads for trade-in flow. Customer vehicle photos stored and served via Cloudinary CDN.</td>
+        <td>Jun 2026</td>
+        <td>console.cloudinary.com</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ALL PINS -->
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">② All PINs & Access Codes</div>
+  <table>
+    <thead><tr><th>Page / System</th><th>PIN / Code</th><th>Who Uses It</th></tr></thead>
+    <tbody>
+      <tr><td>All WS Platform pages</td><td style="font-family:monospace;color:var(--gold);font-weight:900;">1027</td><td>EVL operators — WS Dashboard, Vault, Hub, Exchange, Intelligence</td></tr>
+      <tr><td>Admin Bid Board</td><td style="font-family:monospace;color:var(--gold);font-weight:900;">1027EVL</td><td>EVL internal only — reveals dealer identities behind anonymous bid IDs</td></tr>
+      <tr><td>ESS Admin Subscriptions</td><td style="font-family:monospace;color:var(--gold);font-weight:900;">1027ESS</td><td>EVL internal only — manage ESS dealer accounts, MRR, demo requests</td></tr>
+      <tr><td>Live Bid Board (dealers)</td><td style="font-family:monospace;color:var(--blue);font-weight:900;">EVL-WS-XXXXXX</td><td>Each dealer gets their own unique network ID at onboarding</td></tr>
+    </tbody>
+  </table>
+
+  <!-- COMPLETE PAGE DIRECTORY -->
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">③ Complete Page Directory — Every Page Explained</div>
+  <p style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;margin-bottom:14px;line-height:1.6;">
+    Every page on the EVL platform — what it is, who uses it, when it was built, and why it exists.
+  </p>
+  <table>
+    <thead><tr><th>URL</th><th>Page Name</th><th>Who Uses It</th><th>What It Does</th><th>Built</th></tr></thead>
+    <tbody>
+      <tr><td colspan="5" style="color:var(--gold);font-weight:900;background:rgba(255,215,0,.04);padding:8px 14px;font-size:13px;letter-spacing:2px;text-transform:uppercase;">EVL CONSUMER SIDE — expressvehiclelocators.com</td></tr>
+      <tr><td>/home</td><td>Home Page</td><td>Public</td><td>EVL main landing page — hero, category cards (Trucks/SUVs/Luxury/Electric), search bar, nav</td><td>Jun 2026</td></tr>
+      <tr><td>/find</td><td>Find My Car</td><td>Customers</td><td>Customer vehicle search and advisory tool</td><td>Jun 2026</td></tr>
+      <tr><td>/trade-in</td><td>Trade-In Gate</td><td>Customers</td><td>Pre-qualification gate — lien check, state tier (R/Y/G), routes to Exchange</td><td>Jun 2026</td></tr>
+      <tr><td>/trade-in-exchange</td><td>Trade-In Exchange</td><td>Customers</td><td>Live bid display, equity options (keep/split/all-in), LTV calc, BCS 4-option comparison calculator, EVL Finance Advantage bubble</td><td>Jun 2026</td></tr>
+      <tr><td>/bd-submit</td><td>BD Submit</td><td>Customers</td><td>Dedicated BD flow — customer selects CarMax/Carvana/SMTV partners, fee breakdown, acknowledgment, confirmation. Built Jun 11 2026.</td><td>Jun 11, 2026</td></tr>
+      <tr><td>/private-sale</td><td>Private Sale Assist</td><td>Customers</td><td>3-tier selling service ($149/$299/$499). EVL vs Alone comparison, net math calculator, state R/Y/G warnings, eBay Motors as Tier 3 national channel. Built Jun 11 2026.</td><td>Jun 11, 2026</td></tr>
+      <tr><td>/compare</td><td>Research / Compare</td><td>Customers</td><td>AI-powered vehicle comparison tool using Claude API</td><td>Jun 2026</td></tr>
+      <tr><td>/leasing</td><td>Leasing</td><td>Customers</td><td>Leasing advisory page</td><td>Jun 2026</td></tr>
+      <tr><td>/contact</td><td>Contact</td><td>Customers</td><td>Contact form</td><td>Jun 2026</td></tr>
+      <tr><td>/financing</td><td>Financing</td><td>Customers</td><td>EVL Finance Advantage — eliminates 2-point dealer markup</td><td>Jun 2026</td></tr>
+
+      <tr><td colspan="5" style="color:var(--gold);font-weight:900;background:rgba(255,215,0,.04);padding:8px 14px;font-size:13px;letter-spacing:2px;text-transform:uppercase;">EVL WHOLESALE SIDE — evl-decode-two.vercel.app/ws-*</td></tr>
+      <tr><td>/ws-dashboard</td><td>WS Dashboard</td><td>EVL operators · PIN: 1027</td><td>Main WS control panel — deal flow overview, active units, stats</td><td>Jun 2026</td></tr>
+      <tr><td>/ws-exchange</td><td>WS Exchange</td><td>EVL operators · PIN: 1027</td><td>Live wholesale auction — dealer bids, deal math, tax credit calculator, Firebase real-time</td><td>Jun 2026</td></tr>
+      <tr><td>/ws-hub</td><td>WS Hub (9 tabs)</td><td>EVL operators · PIN: 1027</td><td>Hub Map · Deal Pipeline · Bid System · Porter · Dealer Network · Aged Unit Radar · WS Deal Card · Channel Launcher · Pricing Calc. Built incrementally Jun 11-12 2026.</td><td>Jun 11-12, 2026</td></tr>
+      <tr><td>/ws-vault</td><td>WS Vault</td><td>EVL operators · PIN: 1027</td><td>THIS PAGE — master documentation, all credentials, P&P, build log, revenue model, legal framework, Smart Path roadmap</td><td>Jun 2026</td></tr>
+      <tr><td>/ws-dealers</td><td>WS Dealers</td><td>EVL operators · PIN: 1027</td><td>Dealer management — WS network dealer directory</td><td>Jun 2026</td></tr>
+      <tr><td>/ws-intelligence</td><td>WS Intelligence</td><td>EVL operators · PIN: 1027</td><td>Market intelligence dashboard</td><td>Jun 2026</td></tr>
+      <tr><td>/ws-login</td><td>WS Login</td><td>EVL operators</td><td>WS platform login gate</td><td>Jun 2026</td></tr>
+
+      <tr><td colspan="5" style="color:var(--blue);font-weight:900;background:rgba(43,132,254,.04);padding:8px 14px;font-size:13px;letter-spacing:2px;text-transform:uppercase;">EVL AUCTION SYSTEM — Built Jun 12, 2026</td></tr>
+      <tr><td>/dealer-onboard</td><td>Dealer Onboarding</td><td>WS dealers (public)</td><td>4-step dealer network signup. MarketCheck + OpenStreetMap auto-populate address/phone/brand. Full contact profile — Receptionist, UCD, UCM #1, UCM #2 (name/office/ext/cell/email). Buying preferences, notification setup. Saves to Firebase evl_ws_dealers. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+      <tr><td>/live-bid-board</td><td>Live Bid Board</td><td>WS dealers (their network ID)</td><td>Anonymous real-time auction board for dealers. Enter EVL-WS-XXXXXX dealer ID to access. See active auctions, current high bids, time remaining. Place bids — sorted by amount DESC, highest wins. Bid IDs only — zero dealer names visible to other bidders. Firebase live sync. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+      <tr><td>/admin-bid-board</td><td>Admin Bid Board</td><td>EVL internal only · PIN: 1027EVL</td><td>Internal operator view — REVEALS real dealer identities behind every bid ID. Winner box shows dealer name, UCM name, cell, email. Nudge controls, transaction coordinator (5-step checklist), dealer directory, new auction launcher. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+      <tr><td>/evl-notif-engine</td><td>Notification Engine</td><td>EVL internal only</td><td>EmailJS + Twilio configuration and test page. Enter API keys once — saves to browser localStorage. 5 email templates documented (unit card, hourly nudge, outbid, final call, winner). 5 SMS templates. Test buttons for every notification type. Credentials NEVER stored in code — localStorage only. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+
+      <tr><td colspan="5" style="color:var(--green);font-weight:900;background:rgba(0,200,83,.04);padding:8px 14px;font-size:13px;letter-spacing:2px;text-transform:uppercase;">EVL MARKETING — Built Jun 12, 2026</td></tr>
+      <tr><td>/dealer-outreach-hub</td><td>Dealer Outreach Hub</td><td>EVL internal only</td><td>Complete marketing campaign toolkit. 6 tabs: Personalized Outreach Generator (enter dealer data → get custom call script + email), Call Scripts (cold/warm/followup/voicemail), Email Templates (4 templates), Pitch Deck (5 slides), Campaign Tracker (stage tracking per dealer, localStorage), Objection Handlers (8 objections + exact responses). Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+
+      <tr><td colspan="5" style="color:var(--gold);font-weight:900;background:rgba(255,215,0,.04);padding:8px 14px;font-size:13px;letter-spacing:2px;text-transform:uppercase;">ESS PLATFORM — expresssalessystem.com</td></tr>
+      <tr><td>/login.html</td><td>ESS Front Door</td><td>Prospective dealer clients (public)</td><td>ESS marketing landing page — hero, 6 feature cards, 8 tool descriptions, 3-tier pricing ($299/$599/$999), dealer login gate (checks Firebase for access code), 3-step demo request modal with 5 W qualification. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+      <tr><td>/admin-sub.html</td><td>ESS Subscription Admin</td><td>EVL internal · PIN: 1027ESS</td><td>Manage all ESS dealer subscriptions. Active dealers tab (add/edit/pause), MRR auto-calculated, demo requests tab (convert to dealer), inactive tab. Firebase connected. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+      <tr><td>/demo.html</td><td>ESS Live Sandbox</td><td>Prospective clients (public)</td><td>Full interactive ESS demo pre-loaded with Prestige Ford McKinney. All 7 tools — Big Board, FM Floor, Greeter, CVE, PP Scripts, EOD, UCM Dashboard. Real data, no login. Demo banner at bottom. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+      <tr><td>/walkthrough.html</td><td>ESS Video Walkthrough</td><td>Prospective clients (public)</td><td>7-chapter video walkthrough page. Key moments highlighted. Shareable link. Video placeholder — ready for Loom recording embed. Links to sandbox. Built Jun 12 2026.</td><td>Jun 12, 2026</td></tr>
+      <tr><td>/big-board.html</td><td>Big Board</td><td>Dealership SPs + managers</td><td>Live store scoreboard — MTD units, projected EOM, avg FE gross, SP performance table, walk reasons, benchmark calculator. Firebase connected. Pat Lobb Toyota McKinney deployment (dealer name is dynamic).</td><td>Pre-Jun 2026</td></tr>
+      <tr><td>/cve.html</td><td>CVE</td><td>Dealership SPs</td><td>5-step customer vehicle evaluation — VIN lookup, customer Q&A, 13-point walk-around, PP hooks with scripts, commitment close. Submits to Firebase. On-site and site-unseen modes.</td><td>Pre-Jun 2026</td></tr>
+      <tr><td>/ucm-dashboard.html</td><td>UCM Dashboard</td><td>Used Car Managers · PIN protected</td><td>Manager view of all CVE submissions live. PP temperature counts (YES/SOMEWHAT/HESITANT). Real-time Firebase refresh.</td><td>Pre-Jun 2026</td></tr>
+    </tbody>
+  </table>
+
+  <!-- NOTIFICATION ENGINE STATUS -->
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">④ Notification Engine Status — Jun 13, 2026</div>
+  <table>
+    <thead><tr><th>Component</th><th>Status</th><th>What Is Needed</th></tr></thead>
+    <tbody>
+      <tr><td>Twilio Account</td><td><span class="badge badge-green">✅ ACTIVE</span></td><td>Account: AC6a3a61... · Auth Token saved in localStorage via /evl-notif-engine</td></tr>
+      <tr><td>Twilio Phone Number</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:orange;border:1px solid rgba(255,140,0,.3);">⏳ PENDING</span></td><td>+18444675644 · Toll-free verification submitted Jun 13 · Approves in 1-3 business days</td></tr>
+      <tr><td>EmailJS Service</td><td><span class="badge badge-green">✅ ACTIVE</span></td><td>service_rvscjt3 connected to togradyevl@gmail.com</td></tr>
+      <tr><td>EmailJS Public Key</td><td><span class="badge badge-red">❌ NEEDED</span></td><td>Get from dashboard.emailjs.com → Account → Public Key. Enter in /evl-notif-engine config page.</td></tr>
+      <tr><td>EmailJS Templates</td><td><span class="badge badge-red">❌ NEEDED</span></td><td>5 templates to create in EmailJS dashboard. Template text is on /evl-notif-engine page. Copy-paste each one.</td></tr>
+      <tr><td>Unit Card Email</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires when auction launches — all matched buyers notified simultaneously</td></tr>
+      <tr><td>Hourly Nudge Email</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires every hour — current high bid, time remaining, personalized status</td></tr>
+      <tr><td>Outbid Alert</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires instantly when a dealer is outbid</td></tr>
+      <tr><td>Final Call</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires 1 hour before auction close</td></tr>
+      <tr><td>Winner Notification</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires at auction close to winning dealer</td></tr>
+      <tr><td>SMS Layer</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:orange;border:1px solid rgba(255,140,0,.3);">⏳ PENDING TWILIO APPROVAL</span></td><td>All 5 SMS versions ready. Fires when Twilio toll-free verification approves.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- TO ACTIVATE -->
+  <div style="background:rgba(0,200,83,.05);border:2px solid rgba(0,200,83,.25);border-radius:10px;padding:18px;margin-top:16px;">
+    <div style="font-size:15px;font-weight:900;color:var(--green);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">TO ACTIVATE FULL NOTIFICATION ENGINE — TWO STEPS</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;display:flex;gap:12px;line-height:1.5;">
+        <span style="color:var(--green);font-weight:900;flex-shrink:0;">Step 1</span>
+        Go to dashboard.emailjs.com → Account → copy Public Key → go to /evl-notif-engine → paste in Public Key field → click Save Config
+      </div>
+      <div style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;display:flex;gap:12px;line-height:1.5;">
+        <span style="color:var(--green);font-weight:900;flex-shrink:0;">Step 2</span>
+        In EmailJS → Email Templates → create 5 templates using the text on /evl-notif-engine → paste each Template ID into the config page → Save Config
+      </div>
+      <div style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;display:flex;gap:12px;line-height:1.5;">
+        <span style="color:var(--gold);font-weight:900;flex-shrink:0;">Step 3</span>
+        On /evl-notif-engine → enter test email → click each test button → confirm emails arrive → Email layer is LIVE
+      </div>
+      <div style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;display:flex;gap:12px;line-height:1.5;">
+        <span style="color:var(--muted);font-weight:900;flex-shrink:0;">Step 4</span>
+        Wait 1-3 days for Twilio toll-free verification → SMS layer activates automatically
+      </div>
+    </div>
+  </div>
 </div>
 
 </div>
