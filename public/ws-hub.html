@@ -196,6 +196,63 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .dn-tier-yellow{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
 .dn-tier-red{background:rgba(255,51,51,.1);color:var(--red);border:1px solid rgba(255,51,51,.3);}
 
+
+/* CHANNEL LAUNCHER */
+.cl-unit-selector{background:var(--s1);border:2px solid var(--gold);border-radius:12px;
+  padding:20px;margin-bottom:24px;}
+.cl-unit-name{font-size:22px;font-weight:900;color:var(--white);letter-spacing:.5px;margin-bottom:4px;}
+.cl-unit-meta{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;}
+.cl-channel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px;}
+.cl-channel-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;
+  overflow:hidden;transition:border-color .2s;}
+.cl-channel-card.selected{border-color:var(--gold);}
+.cl-channel-card:hover{border-color:var(--blue);}
+.cl-channel-header{padding:14px 16px;display:flex;justify-content:space-between;
+  align-items:center;border-bottom:1px solid #1a1a2e;cursor:pointer;}
+.cl-channel-name{font-size:17px;font-weight:900;color:var(--white);letter-spacing:1px;
+  text-transform:uppercase;display:flex;align-items:center;gap:10px;}
+.cl-channel-toggle{width:44px;height:24px;border-radius:12px;background:#1a1a2e;
+  border:2px solid #3d4460;position:relative;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.cl-channel-toggle.on{background:rgba(255,215,0,.2);border-color:var(--gold);}
+.cl-channel-toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;
+  height:16px;border-radius:50%;background:#3d4460;transition:all .2s;}
+.cl-channel-toggle.on::after{left:22px;background:var(--gold);}
+.cl-channel-body{padding:14px 16px;}
+.cl-channel-detail{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
+  line-height:1.6;margin-bottom:10px;}
+.cl-channel-setting{display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body);font-size:13px;}
+.cl-channel-setting:last-child{border-bottom:none;}
+.cl-setting-label{color:var(--muted);font-weight:600;}
+.cl-setting-val{color:var(--white);font-weight:900;}
+.cl-setting-val.gold{color:var(--gold);}
+.cl-setting-val.green{color:var(--green);}
+.cl-algo-box{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.2);
+  border-radius:8px;padding:12px 14px;margin-top:10px;}
+.cl-algo-title{font-size:11px;font-weight:900;color:var(--gold);text-transform:uppercase;
+  letter-spacing:2px;margin-bottom:6px;font-family:var(--font);}
+.cl-algo-item{font-size:12px;color:#ffffff;font-family:var(--body);font-weight:600;
+  line-height:1.6;display:flex;gap:8px;}
+.cl-algo-item::before{content:'→';color:var(--gold);flex-shrink:0;}
+.cl-pricing-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.cl-price-box{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px;}
+.cl-price-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:4px;font-family:var(--font);}
+.cl-price-val{font-size:20px;font-weight:900;color:var(--white);}
+.cl-launch-btn{width:100%;background:var(--gold);color:#020203;border:none;padding:18px;
+  border-radius:10px;font-size:22px;font-weight:900;cursor:pointer;font-family:var(--font);
+  letter-spacing:2px;text-transform:uppercase;margin-top:8px;transition:opacity .2s;}
+.cl-launch-btn:hover{opacity:.9;}
+.cl-launch-btn:disabled{opacity:.3;cursor:not-allowed;}
+.cl-result-card{background:var(--s1);border:2px solid var(--green);border-radius:12px;
+  padding:24px;margin-top:20px;display:none;}
+.cl-result-card.active{display:block;}
+.cl-result-title{font-size:20px;font-weight:900;color:var(--green);text-transform:uppercase;
+  letter-spacing:2px;margin-bottom:16px;}
+.cl-result-channel{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid #1a1a2e;font-family:var(--body);font-size:14px;}
+.cl-result-channel:last-child{border-bottom:none;}
+
 /* BUTTONS */
 .btn{padding:8px 16px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
@@ -245,6 +302,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <button class="tab-btn" onclick="switchTab('porter',this)">🚐 PORTER DISPATCH</button>
   <button class="tab-btn" onclick="switchTab('dealers',this)">🏪 DEALER NETWORK</button>
   <button class="tab-btn" onclick="switchTab('aged',this)">📊 AGED UNIT RADAR</button>
+  <button class="tab-btn" onclick="switchTab('channel',this)">📺 CHANNEL LAUNCHER</button>
   <button class="tab-btn" onclick="switchTab('pricing',this)">💰 WS PRICING CALC</button>
 </div>
 
@@ -1013,6 +1071,7 @@ function renderAgedUnitCards(units) {
         <button class="btn btn-gold btn-sm" onclick="agedOutreach('${u.vin}','${u.vehicle.replace(/'/g,"\'")}','${u.dealer.replace(/'/g,"\'")}','${totalPain}')">📧 CALL SCRIPT</button>
         <button class="btn btn-green btn-sm" onclick="agedMatchBuyer('${u.unitMfg}','${u.vehicle.replace(/'/g,"\'")}')">⚡ NOTIFY BUYERS</button>
         <button class="btn btn-dark btn-sm" onclick="agedPricingCalc('${u.retail}','${u.wholesale}','${u.days}')">💰 PRICING CALC</button>
+        <button class="btn btn-dark btn-sm" style="border-color:var(--gold);" onclick="clLoadFromRadarUnit(${AGED_UNITS.indexOf(u)})">📺 LAUNCH</button>
         <button class="btn btn-dark btn-sm" onclick="checkRecalls('${u.vin}','${u.vehicle.replace(/'/g,"\'")}')">🔍 NHTSA CHECK</button>
         <div style="margin-left:auto;font-size:12px;color:var(--muted);font-family:var(--body);">
           MDS: <strong style="color:${u.mds<=20?'var(--green)':u.mds<=35?'var(--gold)':'var(--red)'};">${u.mds}d</strong>
@@ -1127,6 +1186,14 @@ function agedMatchBuyer(unitMfg, vehicle) {
   const buyers = BUYER_NETWORK[unitMfg] || [];
   if (buyers.length === 0) { alert('No matched buyers in network for ' + unitMfg + ' yet. Add dealers to expand.'); return; }
   alert('⚡ BUYER NOTIFICATION QUEUED\n\n' + vehicle + '\n\nNotifying top ' + buyers.length + ' matched ' + unitMfg + ' dealers:\n' + buyers.map((b,i) => (i+1)+'. '+b.name+' (Match: '+calcDealerMatchScore(b,{})+')').join('\n') + '\n\nDealers will receive EVL acquisition opportunity alert via Communications Platform.');
+}
+
+function agedLaunchChannel(idx) {
+  switchTab('channel', document.querySelector('.tab-btn[onclick*=\"channel\"]'));
+  setTimeout(() => {
+    document.getElementById('clUnitSelect').value = idx;
+    clLoadUnit();
+  }, 300);
 }
 
 function agedPricingCalc(retail, wholesale, days) {
@@ -1532,6 +1599,227 @@ function exportDealers() {
   a.href = URL.createObjectURL(blob);
   a.download = 'EVL-Dealer-Network-' + new Date().toISOString().split('T')[0] + '.csv';
   a.click();
+}
+
+
+// ══════════════════════════════════════════════════
+// CHANNEL LAUNCHER
+// ══════════════════════════════════════════════════
+
+const CL_UNITS = [
+  {vehicle:'2021 GMC Yukon Denali',vin:'1GKS2BKL5MR123456',retail:51200,wholesale:44800,days:142,make:'GMC'},
+  {vehicle:'2022 Ford F-150 Lariat',vin:'1FTFW1E50NKD12345',retail:44500,wholesale:38200,days:97,make:'Ford'},
+  {vehicle:'2020 Ram 1500 Laramie',vin:'1C6SRFJTXLN123456',retail:38100,wholesale:32400,days:88,make:'RAM'},
+  {vehicle:'2021 Chevrolet Silverado 1500',vin:'1GCUYHEL0MZ45678',retail:41200,wholesale:35800,days:91,make:'Chevrolet'},
+  {vehicle:'2022 Kia Telluride SX',vin:'5XYP5DHC0NG67890',retail:38800,wholesale:33200,days:74,make:'Kia'},
+  {vehicle:'2021 Toyota Camry XSE',vin:'4T1G11AK9MU123456',retail:28400,wholesale:24200,days:78,make:'Toyota'},
+  {vehicle:'2020 Honda CR-V EX-L',vin:'2HKRW2H85LH123456',retail:26800,wholesale:22900,days:92,make:'Honda'},
+  {vehicle:'2022 Chevrolet Tahoe LT',vin:'1GNSCPKD3NR123456',retail:52100,wholesale:44800,days:112,make:'Chevrolet'},
+];
+
+let clSelectedChannels = new Set(['ebay','facebook']);
+let clCurrentUnit = null;
+
+function clLoadUnit() {
+  const idx = document.getElementById('clUnitSelect').value;
+  if (idx === '') { clCurrentUnit = null; clUpdatePricing(); return; }
+  clCurrentUnit = CL_UNITS[parseInt(idx)];
+  document.getElementById('clUnitDisplay').style.display = 'block';
+  document.getElementById('clRetail').textContent    = '$' + clCurrentUnit.retail.toLocaleString();
+  document.getElementById('clWholesale').textContent = '$' + clCurrentUnit.wholesale.toLocaleString();
+  document.getElementById('clDays').textContent      = clCurrentUnit.days + 'd';
+  document.getElementById('clMake').textContent      = clCurrentUnit.make;
+  clUpdatePricing();
+}
+
+function clLoadFromRadar() {
+  // If aged units are loaded, pull the first orphan into the selector
+  const firstAged = currentAgedUnits && currentAgedUnits[0];
+  if (!firstAged) {
+    alert('No units loaded in Aged Unit Radar. Click the Aged Unit Radar tab and pull live data first.');
+    return;
+  }
+  // Match to CL_UNITS or create dynamic unit
+  clCurrentUnit = {
+    vehicle: firstAged.vehicle,
+    vin: firstAged.vin,
+    retail: firstAged.retail || firstAged.acv * 1.18,
+    wholesale: firstAged.wholesale || firstAged.acv,
+    days: firstAged.days,
+    make: firstAged.unitMfg
+  };
+  document.getElementById('clUnitDisplay').style.display = 'block';
+  document.getElementById('clRetail').textContent    = '$' + Math.round(clCurrentUnit.retail).toLocaleString();
+  document.getElementById('clWholesale').textContent = '$' + Math.round(clCurrentUnit.wholesale).toLocaleString();
+  document.getElementById('clDays').textContent      = clCurrentUnit.days + 'd';
+  document.getElementById('clMake').textContent      = clCurrentUnit.make;
+  alert('✅ Unit loaded from Aged Unit Radar:\n' + clCurrentUnit.vehicle + '\nVIN: ' + clCurrentUnit.vin);
+  switchTab('channel', document.querySelector('.tab-btn[onclick*="channel"]'));
+  clUpdatePricing();
+}
+
+function clToggleChannel(ch) {
+  if (clSelectedChannels.has(ch)) {
+    clSelectedChannels.delete(ch);
+    document.getElementById('cl-'+ch).classList.remove('selected');
+    document.getElementById('toggle-'+ch).classList.remove('on');
+  } else {
+    clSelectedChannels.add(ch);
+    document.getElementById('cl-'+ch).classList.add('selected');
+    document.getElementById('toggle-'+ch).classList.add('on');
+  }
+  clUpdatePricing();
+}
+
+function clUpdatePricing() {
+  const u = clCurrentUnit;
+  const count = clSelectedChannels.size;
+
+  document.getElementById('clChannelCount').textContent = count + ' of 6';
+
+  if (!u) {
+    ['clBIN','clReserve','clFBPrice','clWSBid','clServiceFee'].forEach(id => {
+      document.getElementById(id).textContent = '—';
+    });
+    document.getElementById('clLaunchBtn').disabled = true;
+    return;
+  }
+
+  const bin      = u.retail;
+  const reserve  = u.wholesale;
+  const fbPrice  = Math.round(u.retail * 0.98);
+  const wsBid    = Math.round(u.wholesale * 0.95);
+
+  document.getElementById('clBIN').textContent      = '$' + bin.toLocaleString();
+  document.getElementById('clReserve').textContent  = '$' + reserve.toLocaleString();
+  document.getElementById('clFBPrice').textContent  = '$' + fbPrice.toLocaleString();
+  document.getElementById('clWSBid').textContent    = '$' + wsBid.toLocaleString();
+
+  // Service fee based on channels
+  const hasEbay = clSelectedChannels.has('ebay');
+  const fee = hasEbay && count >= 3 ? '$495 Full Service' :
+              hasEbay ? '$349 Managed' :
+              count >= 2 ? '$199 Basic' : '$149';
+  document.getElementById('clServiceFee').textContent = fee;
+
+  // Next optimal launch window
+  const now   = new Date();
+  const day   = now.getDay(); // 0=Sun, 5=Fri
+  const hour  = now.getHours();
+  let launchWindow = '';
+  if (clSelectedChannels.has('ebay')) {
+    // Want to end on Sunday 8-9PM CST — so start 10 days before
+    // Next Friday 6PM is ideal start for Sunday end
+    const daysToFriday = (5 - day + 7) % 7 || 7;
+    launchWindow = 'This Friday 6PM CST (ends Sunday ' + new Date(now.getTime() + (daysToFriday + 10) * 86400000).toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ~8PM)';
+  } else {
+    launchWindow = day === 0 || day === 6 ? 'Tonight 6–8PM CST' : 'Thursday 6PM or Sunday 10AM';
+  }
+  document.getElementById('clLaunchTime').textContent = launchWindow;
+  document.getElementById('clLaunchBtn').disabled = count === 0;
+}
+
+function clLaunch() {
+  if (!clCurrentUnit) { alert('Select a unit first.'); return; }
+  if (clSelectedChannels.size === 0) { alert('Select at least one channel.'); return; }
+
+  const u = clCurrentUnit;
+  const channelDetails = [];
+  const nextSteps = [];
+
+  if (clSelectedChannels.has('ebay')) {
+    const now = new Date();
+    const daysToFriday = (5 - now.getDay() + 7) % 7 || 7;
+    const endDate = new Date(now.getTime() + (daysToFriday + 10) * 86400000);
+    channelDetails.push({
+      channel: '🏷️ eBay Motors',
+      status: 'LISTING READY',
+      detail: 'Title: ' + u.vehicle + ' — Clean Title | VIN: ' + u.vin,
+      pricing: 'BIN: $' + u.retail.toLocaleString() + ' · Reserve: $' + u.wholesale.toLocaleString(),
+      timing: 'Start: This Friday 6PM CST · End: ' + endDate.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) + ' 8PM CST',
+      color: 'var(--gold)'
+    });
+    nextSteps.push('1. eBay Motors: Log into dealer eBay account → create listing → schedule for Friday 6PM CST · 10-day duration · Sunday 8PM end');
+  }
+  if (clSelectedChannels.has('facebook')) {
+    channelDetails.push({
+      channel: '📘 Facebook Marketplace',
+      status: 'LISTING READY',
+      detail: u.vehicle + ' · ' + u.vin,
+      pricing: 'Price: $' + Math.round(u.retail * 0.98).toLocaleString() + ' (OBO)',
+      timing: 'Post: Thursday 6PM or Sunday 10AM CST · Relist every 48 hours',
+      color: 'var(--blue)'
+    });
+    nextSteps.push('2. Facebook Marketplace: Schedule post for Thursday 6PM CST · Set relist reminder for Saturday 6PM');
+  }
+  if (clSelectedChannels.has('cargurus')) {
+    channelDetails.push({
+      channel: '🚗 CarGurus',
+      status: 'LISTING READY',
+      detail: u.vehicle,
+      pricing: 'Price: $' + u.retail.toLocaleString() + ' (target Good Deal rating)',
+      timing: 'List: Monday AM · Review deal rating after 48 hours',
+      color: 'var(--green)'
+    });
+    nextSteps.push('3. CarGurus: Post Monday AM · Check deal rating badge — adjust price -$300 if needed to hit Good Deal');
+  }
+  if (clSelectedChannels.has('craigslist')) {
+    channelDetails.push({
+      channel: '📰 Craigslist DFW',
+      status: 'LISTING READY',
+      detail: u.vehicle + ' — ' + u.make,
+      pricing: 'Price: $' + (Math.round(u.retail * 0.97)).toLocaleString(),
+      timing: 'Post: Thursday PM or Sunday AM · Relist every 48 hours ($5/post)',
+      color: 'var(--muted)'
+    });
+    nextSteps.push('4. Craigslist: Post Thursday PM · Relist every 48 hours · Budget ~$15–$20 for 2-week run');
+  }
+  if (clSelectedChannels.has('wsexchange')) {
+    channelDetails.push({
+      channel: '⚡ EVL WS Exchange',
+      status: 'DAY 14 FALLBACK SET',
+      detail: 'Activates automatically if no retail sale in 14 days',
+      pricing: 'Start bid: $' + Math.round(u.wholesale * 0.95).toLocaleString() + ' · Reserve: $' + u.wholesale.toLocaleString(),
+      timing: '72-hour auction · EVL dealer network notified at activation',
+      color: 'var(--green)'
+    });
+    nextSteps.push('5. WS Exchange: Automatically activates Day 14 if no retail close — EVL will notify dealer network');
+  }
+  if (clSelectedChannels.has('carsdotcom')) {
+    channelDetails.push({
+      channel: '🚘 Cars.com',
+      status: 'LISTING READY',
+      detail: u.vehicle,
+      pricing: 'Price: $' + u.retail.toLocaleString(),
+      timing: 'List: Monday or Tuesday AM',
+      color: 'var(--blue)'
+    });
+    nextSteps.push('6. Cars.com: Post Monday AM · Include full vehicle history · Monitor leads in dealer account');
+  }
+
+  // Render result
+  document.getElementById('clResultChannels').innerHTML = channelDetails.map(c => `
+    <div class="cl-result-channel">
+      <div>
+        <div style="font-family:var(--font);font-size:15px;font-weight:900;color:var(--white);
+          margin-bottom:2px;">${c.channel}</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+          line-height:1.4;">${c.detail} · ${c.pricing}</div>
+        <div style="font-size:12px;color:${c.color};font-family:var(--body);font-weight:700;
+          margin-top:2px;">${c.timing}</div>
+      </div>
+      <span style="background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.3);
+        color:var(--green);font-size:11px;font-weight:900;padding:4px 10px;border-radius:8px;
+        letter-spacing:1px;white-space:nowrap;font-family:var(--font);">${c.status}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('clNextSteps').innerHTML = nextSteps.map(s =>
+    '<div style="padding:2px 0;">✅ ' + s + '</div>'
+  ).join('');
+
+  document.getElementById('clResultCard').classList.add('active');
+  document.getElementById('clResultCard').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ── INIT ──
