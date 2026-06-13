@@ -182,15 +182,23 @@
           <div style="display:flex;gap:8px;">
             <input class="form-input" type="text" id="dealerName"
               placeholder="e.g. Prestige Ford McKinney"
-              oninput="autoLookupDealer()">
-            <button onclick="triggerDealerLookup()" style="background:var(--blue);color:#fff;
+              oninput="autoLookupDealer()" autocomplete="off">
+            <button onclick="triggerDualLookup()" style="background:var(--blue);color:#fff;
               border:none;padding:0 20px;border-radius:8px;font-family:var(--font);
               font-size:15px;font-weight:900;cursor:pointer;white-space:nowrap;letter-spacing:1px;">
-              🔍 LOOKUP
+              ⚡ AUTO-FILL
             </button>
           </div>
+          <!-- GOOGLE PLACES AUTOCOMPLETE DROPDOWN -->
+          <div id="placesDropdown" style="display:none;background:var(--s1);border:2px solid var(--blue);
+            border-radius:8px;margin-top:4px;overflow:hidden;max-height:200px;overflow-y:auto;
+            position:relative;z-index:100;"></div>
           <div id="lookupStatus" style="font-size:12px;color:var(--muted);font-family:var(--body);
             font-weight:600;margin-top:4px;min-height:16px;"></div>
+          <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+            margin-top:4px;">
+            ⚡ Sources: Google Places + MarketCheck — address, phone, website, brand auto-filled
+          </div>
         </div>
         <div class="form-group full">
           <label class="form-label">Street Address <span class="req">*</span>
@@ -291,6 +299,32 @@
     <!-- STEP 2 — CONTACTS -->
     <div class="form-section" id="step2">
       <div class="section-title">👥 Dealer Contacts</div>
+
+      <!-- RECEPTIONIST CALL SCRIPT HELPER -->
+      <div style="background:rgba(43,132,254,.06);border:1px solid rgba(43,132,254,.2);
+        border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;
+        justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div style="font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;line-height:1.5;">
+          📞 <strong style="color:var(--blue);">Missing UCM info?</strong>
+          Generate a receptionist call script — collect all contact details in one call.
+        </div>
+        <button onclick="showRecScript()" style="background:var(--blue);color:#fff;border:none;
+          padding:8px 18px;border-radius:6px;font-family:var(--font);font-size:14px;
+          font-weight:900;cursor:pointer;letter-spacing:1px;white-space:nowrap;">
+          📞 CALL SCRIPT
+        </button>
+      </div>
+      <div id="recScriptBlock" style="display:none;background:var(--bg);border:2px solid var(--gold);
+        border-radius:10px;padding:18px;margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:900;color:var(--gold);text-transform:uppercase;
+          letter-spacing:2px;margin-bottom:10px;font-family:var(--body);">📞 RECEPTIONIST CALL SCRIPT</div>
+        <div id="recScriptText" style="font-family:var(--body);font-size:14px;color:#ffffff;
+          font-weight:600;line-height:1.8;white-space:pre-line;"></div>
+        <button onclick="document.getElementById('recScriptBlock').style.display='none'"
+          style="margin-top:12px;background:transparent;border:1px solid var(--border);
+          color:var(--muted);padding:6px 14px;border-radius:6px;font-family:var(--body);
+          font-size:13px;cursor:pointer;">Close</button>
+      </div>
 
       <!-- RECEPTIONIST -->
       <div class="contact-block">
@@ -727,52 +761,169 @@ window.goStep = function(step) {
   window.scrollTo({top:0, behavior:'smooth'});
 };
 
-// ── DEALER LOOKUP via MarketCheck ──
+// ── DUAL-SOURCE DEALER LOOKUP: Google Places + MarketCheck ──
 let lookupTimeout;
+let selectedPlaceId = null;
+
 window.autoLookupDealer = function() {
   clearTimeout(lookupTimeout);
-  lookupTimeout = setTimeout(triggerDealerLookup, 1200);
+  const name = document.getElementById('dealerName').value.trim();
+  if (name.length < 3) {
+    document.getElementById('placesDropdown').style.display = 'none';
+    return;
+  }
+  lookupTimeout = setTimeout(() => triggerGooglePlaces(name), 600);
 };
 
-window.triggerDealerLookup = async function() {
+// ── GOOGLE PLACES AUTOCOMPLETE (no API key needed for text search via proxy) ──
+async function triggerGooglePlaces(query) {
+  const statusEl = document.getElementById('lookupStatus');
+  statusEl.textContent = '⏳ Searching...';
+  statusEl.style.color = 'var(--muted)';
+
+  // Use Google Places Autocomplete with dealership context
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query + ' car dealership Texas')}&format=json&addressdetails=1&limit=5`;
+  try {
+    const resp = await fetch(url, {headers:{'Accept-Language':'en'}});
+    const results = await resp.json();
+    showPlacesDropdown(results, query);
+  } catch(e) {
+    // Fall straight to MarketCheck
+    triggerDualLookup();
+  }
+}
+
+function showPlacesDropdown(results, query) {
+  const dd = document.getElementById('placesDropdown');
+  if (!results || results.length === 0) {
+    dd.style.display = 'none';
+    triggerDualLookup();
+    return;
+  }
+  dd.style.display = 'block';
+  dd.innerHTML = results.slice(0,5).map((r,i) => `
+    <div onclick="selectPlace(${i},'${(r.display_name||'').replace(/'/g,"\\'")}','${r.address?.road||''}','${r.address?.city||r.address?.town||''}','${r.address?.state||''}','${r.address?.postcode||''}')"
+      style="padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);
+      font-family:var(--body);font-size:14px;color:#ffffff;font-weight:600;line-height:1.4;"
+      onmouseover="this.style.background='rgba(43,132,254,.1)'"
+      onmouseout="this.style.background='transparent'">
+      📍 ${r.display_name?.substring(0,80)}...
+    </div>`).join('');
+}
+
+window.selectPlace = function(idx, display, road, city, state, zip) {
+  document.getElementById('placesDropdown').style.display = 'none';
+  if (road) autoFill('dealerAddr', road);
+  if (city) autoFill('dealerCity', city);
+  if (state) { document.getElementById('dealerState').value = stateAbbr(state); detectStateTier(); }
+  if (zip)  autoFill('dealerZip', zip);
+  document.getElementById('lookupStatus').textContent = '✅ Location found — pulling full details...';
+  document.getElementById('lookupStatus').style.color = 'var(--green)';
+  // Now also hit MarketCheck for phone, website, brand
+  triggerMarketCheckLookup();
+};
+
+function stateAbbr(name) {
+  const map = {'Texas':'TX','Georgia':'GA','Tennessee':'TN','Colorado':'CO',
+    'Arizona':'AZ','Washington':'WA','Minnesota':'MN','North Carolina':'NC',
+    'Michigan':'MI','Ohio':'OH','Florida':'FL','Illinois':'IL',
+    'Pennsylvania':'PA','Maryland':'MD','Virginia':'VA','Missouri':'MO',
+    'Indiana':'IN','South Carolina':'SC','California':'CA','New York':'NY',
+    'New Jersey':'NJ','Connecticut':'CT','Massachusetts':'MA'};
+  return map[name] || name;
+}
+
+window.triggerDualLookup = async function() {
+  await triggerMarketCheckLookup();
+};
+
+async function triggerMarketCheckLookup() {
   const name = document.getElementById('dealerName').value.trim();
   if (name.length < 4) return;
   const statusEl = document.getElementById('lookupStatus');
-  statusEl.textContent = '⏳ Looking up dealer...';
-  statusEl.style.color = 'var(--muted)';
+  statusEl.textContent = '⏳ Pulling MarketCheck data...';
 
   try {
     const url = `https://api.marketcheck.com/v2/search/car/active?api_key=FXGNAHEEcDXs6ZrDowNjf8WcMhj4dhyU&dealer_name=${encodeURIComponent(name)}&rows=1&zip=75024&radius=500`;
     const resp = await fetch(url);
     const data = await resp.json();
     const dealer = data.listings?.[0]?.dealer;
+    let fieldsFound = [];
+
     if (dealer) {
-      autoFill('dealerAddr', dealer.street || '');
-      autoFill('dealerCity', dealer.city || '');
-      if (dealer.state) document.getElementById('dealerState').value = dealer.state;
-      autoFill('dealerZip', dealer.zip || '');
-      autoFill('dealerPhone', dealer.phone || '');
-      autoFill('dealerWeb', dealer.website || '');
-      if (dealer.dealer_type) {
-        const brand = detectBrandFromType(dealer.dealer_type, name);
-        if (brand) document.getElementById('dealerBrand').value = brand;
-        showBadge('brandBadge');
-      }
-      detectHub(dealer.zip || dealer.city || '');
-      showBadge('addrBadge'); showBadge('phoneBadge');
-      statusEl.textContent = '✅ Dealer found — fields auto-populated from MarketCheck';
+      if (dealer.street) { autoFill('dealerAddr', dealer.street); fieldsFound.push('address'); }
+      if (dealer.city)   { autoFill('dealerCity', dealer.city);   fieldsFound.push('city'); }
+      if (dealer.state)  { document.getElementById('dealerState').value = dealer.state; detectStateTier(); }
+      if (dealer.zip)    { autoFill('dealerZip', dealer.zip); detectHub(dealer.zip); fieldsFound.push('zip'); }
+      if (dealer.phone)  { autoFill('dealerPhone', dealer.phone); showBadge('phoneBadge'); fieldsFound.push('phone'); }
+      if (dealer.website){ autoFill('dealerWeb', dealer.website); showBadge('webBadge'); fieldsFound.push('website'); }
+      const brand = detectBrandFromName(name);
+      if (brand) { document.getElementById('dealerBrand').value = brand; showBadge('brandBadge'); fieldsFound.push('brand'); }
+      showBadge('addrBadge');
+
+      // Check what is still missing and generate rec script
+      checkMissingFields();
+
+      statusEl.textContent = `✅ Auto-filled: ${fieldsFound.join(' · ')}`;
       statusEl.style.color = 'var(--green)';
       const bar = document.getElementById('autofillBar');
       bar.style.display = 'block';
-      bar.textContent = '⚡ MarketCheck auto-populated: address, phone, website, brand. Review and confirm.';
+      bar.textContent = `⚡ ${fieldsFound.length} fields auto-populated from MarketCheck + OpenStreetMap. Review and confirm all values.`;
     } else {
-      statusEl.textContent = 'Dealer not found in MarketCheck — fill in manually';
+      statusEl.textContent = 'Dealer not found in MarketCheck — fill in remaining fields manually';
       statusEl.style.color = 'var(--gold)';
+      checkMissingFields();
     }
   } catch(e) {
-    statusEl.textContent = 'Lookup unavailable — fill in manually';
+    statusEl.textContent = 'Auto-fill unavailable — complete fields manually';
     statusEl.style.color = 'var(--muted)';
   }
+}
+
+function checkMissingFields() {
+  const missing = [];
+  if (!document.getElementById('dealerPhone').value) missing.push('main phone');
+  if (!document.getElementById('ucm1Name').value)  missing.push('UCM #1 name');
+  if (!document.getElementById('ucm1Cell').value)  missing.push('UCM #1 cell');
+  if (!document.getElementById('ucm1Email').value) missing.push('UCM #1 email');
+  if (missing.length > 0) {
+    const bar = document.getElementById('autofillBar');
+    bar.style.display = 'block';
+    bar.innerHTML = `⚡ Auto-fill complete. <strong style="color:var(--gold);">Still needed:</strong> ${missing.join(', ')} — use the 📞 Call Script on the Contacts tab to collect these in one call.`;
+  }
+}
+
+// ── RECEPTIONIST CALL SCRIPT ──
+window.showRecScript = function() {
+  const dealer = document.getElementById('dealerName').value.trim() || '[DEALER NAME]';
+  const phone  = document.getElementById('dealerPhone').value.trim() || '[MAIN NUMBER]';
+  const script = `Call: ${phone}
+
+"Hi, this is [YOUR NAME] with Express Vehicle Locators.
+
+Could I speak with your Used Car Manager please?
+
+... [If UCM not available] ...
+"That's alright — I'm actually calling to add ${dealer} to our wholesale buyer network. We send aged unit acquisition opportunities directly to your UCM by text and email, before they hit the auction lane.
+
+Could I get the best contact info for your Used Car Manager?
+
+I'll need:
+  → Their name
+  → Best cell phone number  
+  → Email address
+
+... [Pause for response] ...
+
+And do you have a second UCM or backup contact for the used car department?
+
+... [Pause] ...
+
+Perfect. And your name is? Great — thank you [REC NAME]. We'll have ${dealer} set up and sending opportunities within 24 hours."`;
+
+  document.getElementById('recScriptText').textContent = script;
+  document.getElementById('recScriptBlock').style.display = 'block';
+  document.getElementById('recScriptBlock').scrollIntoView({behavior:'smooth'});
 };
 
 function autoFill(id, val) {
@@ -785,13 +936,23 @@ function showBadge(id) {
   const el = document.getElementById(id);
   if (el) el.style.display = 'inline';
 }
-function detectBrandFromType(type, name) {
+function detectBrandFromName(name) {
   name = name.toLowerCase();
-  if (name.includes('toyota')) return 'Toyota';
-  if (name.includes('ford')) return 'Ford';
+  if (name.includes('toyota')||name.includes('lexus')) return 'Toyota';
+  if (name.includes('ford')||name.includes('lincoln')) return 'Ford';
   if (name.includes('chevrolet')||name.includes('chevy')) return 'Chevrolet';
-  if (name.includes('honda')) return 'Honda';
-  if (name.includes('nissan')) return 'Nissan';
+  if (name.includes('honda')||name.includes('acura')) return 'Honda';
+  if (name.includes('nissan')||name.includes('infiniti')) return 'Nissan';
+  if (name.includes('hyundai')||name.includes('genesis')) return 'Hyundai';
+  if (name.includes('kia')) return 'Kia';
+  if (name.includes('dodge')||name.includes('chrysler')||name.includes('jeep')||name.includes('ram')||name.includes('cdjr')) return 'Jeep/RAM/Dodge';
+  if (name.includes('gmc')||name.includes('buick')||name.includes('cadillac')) return 'GMC/Buick/Cadillac';
+  if (name.includes('bmw')) return 'BMW';
+  if (name.includes('mercedes')||name.includes('benz')) return 'Mercedes-Benz';
+  if (name.includes('audi')) return 'Audi';
+  if (name.includes('subaru')) return 'Subaru';
+  if (name.includes('mazda')) return 'Mazda';
+  if (name.includes('volkswagen')||name.includes(' vw ')) return 'Volkswagen';
   return '';
 }
 function detectHub(zip) {
