@@ -177,9 +177,9 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge">⚡ BD SUBMIT — BULK DEALER NETWORK</div>
+    <div class="hero-badge">⚡ BD = BIDDING DEALER NETWORK</div>
     <h1 class="hero-h1">SUBMIT YOUR<br><span>TRADE-IN</span></h1>
-    <p class="hero-sub">EVL submits your vehicle to our verified Bulk Dealer network — CarMax, Carvana, and SMTV — simultaneously. Best offer wins. You decide.</p>
+    <p class="hero-sub">EVL submits your vehicle to our verified Bidding Dealer (BD) network — CarMax, Carvana, and SMTV, each an <strong>independently licensed dealership</strong> — simultaneously. Best offer wins. You decide.</p>
   </div>
 
   <!-- PROGRESS -->
@@ -251,6 +251,7 @@
         </div>
       </div>
       <div class="bd-all-note">💡 EVL submits to all selected partners simultaneously. No obligation until you accept an offer.</div>
+      <div class="bd-all-note" style="margin-top:8px;">⚖️ CarMax, Carvana, and SMTV are each independently licensed dealerships — separate businesses from EVL. EVL is an advisory platform that coordinates the submission on your behalf; the purchase itself is made by the licensed dealer you select.</div>
     </div>
 
     <!-- STEP 2 — FEE BREAKDOWN -->
@@ -349,6 +350,22 @@
       <div id="stateWarning" style="display:none;background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.3);border-radius:8px;padding:14px;margin-bottom:16px;font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;"></div>
       <div class="form-row">
         <div class="form-group full">
+          <label class="form-label">Whose Name Is On The Title?</label>
+          <select class="form-select" id="titleStatus">
+            <option value="">— SELECT —</option>
+            <option value="my_name">I have the title, in my name only</option>
+            <option value="not_with_me">I have it, but it's not with me right now</option>
+            <option value="lender">Title is held by my lender (active loan)</option>
+            <option value="joint">Title lists me + a spouse or co-owner</option>
+            <option value="lost">My title is lost or was never received</option>
+            <option value="estate">Vehicle belongs to an estate (owner passed away)</option>
+            <option value="other">Other / not sure</option>
+          </select>
+        </div>
+      </div>
+      <div id="titleWarning" style="display:none;background:rgba(43,132,254,.08);border:1px solid rgba(43,132,254,.3);border-radius:8px;padding:14px;margin-bottom:16px;font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;"></div>
+      <div class="form-row">
+        <div class="form-group full">
           <label class="form-label">Vehicle VIN (if not pre-filled)</label>
           <input class="form-input" type="text" id="vinInput" placeholder="17-DIGIT VIN" maxlength="17" style="letter-spacing:3px;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
         </div>
@@ -371,7 +388,7 @@
     <div class="ack-box">
       <div class="ack-title">⚠️ BEFORE YOU SUBMIT — PLEASE CONFIRM</div>
       <ul class="ack-list">
-        <li>I understand EVL is a vehicle advisory platform — not a dealer — and does not purchase vehicles directly.</li>
+        <li style="font-size:19px;font-weight:900;color:var(--gold);background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.25);border-radius:8px;padding:12px 14px;">I understand EVL is a vehicle advisory platform — NOT a dealer — and does not purchase vehicles, hold title, or handle funds directly. CarMax, Carvana, and SMTV are the licensed dealerships that make and fund the actual offer.</li>
         <li>The $199 EVL BD Submit Fee covers research, submission, and coordination with all selected BD partners.</li>
         <li>Final offer is provided by the BD partner (CarMax, Carvana, SMTV) — EVL coordinates but does not guarantee any specific amount.</li>
         <li>My vehicle title is in my name, free of undisclosed liens, and I am authorized to sell.</li>
@@ -586,6 +603,28 @@
       warn.style.display = 'none';
     }
   });
+
+  // --- TITLE STATUS NOTE ---
+  const titleNotes = {
+    my_name: '',
+    not_with_me: "👍 <strong>No problem</strong> — you don't need the physical title in hand to get an offer. Just have it ready when your selected BD partner finalizes the purchase.",
+    lender: "✅ <strong>This is the most common scenario</strong> and already covered by the payoff process above — your lender releases the title directly to the winning BD partner once payoff is received.",
+    joint: "👥 <strong>Most BD partners require all listed owners to sign at transfer</strong>, or a notarized power of attorney from the absent owner. EVL will confirm the exact requirement with your selected partner.",
+    lost: "📄 <strong>You'll apply for a duplicate title through the DMV that issued it</strong> (not necessarily your current state, if you've moved) — typically 1–4 weeks. Some BD partners can complete the purchase now and hold a portion of funds until the duplicate arrives. EVL will confirm which partners offer this.",
+    estate: "⚖️ <strong>You'll need documentation showing your authority to sell</strong> (Letters of Testamentary/Administration, or a state small-estate affidavit). EVL will walk you through exactly what your state requires. This typically adds 2–6 weeks depending on probate status.",
+    other: "💬 <strong>No problem</strong> — EVL will follow up to sort out the details before anything moves forward."
+  };
+  document.getElementById('titleStatus').addEventListener('change', function() {
+    const warn = document.getElementById('titleWarning');
+    const note = titleNotes[this.value] || '';
+    if (note) {
+      warn.style.display = 'block';
+      warn.innerHTML = note;
+    } else {
+      warn.style.display = 'none';
+    }
+  });
+
   function toggleAck() {
     ackChecked = !ackChecked;
     const el = document.getElementById('ackCheck');
@@ -611,6 +650,7 @@
     const zipVal    = document.getElementById('zipCode').value.trim();
     const condVal   = document.getElementById('condSelect').value;
     const bestTime  = document.getElementById('bestTime').value;
+    const titleVal  = document.getElementById('titleStatus').value;
 
     if (!firstName || !lastName || !phone || !email) {
       alert('Please complete all contact information fields before submitting.');
@@ -622,6 +662,10 @@
     }
     if (!stateVal) {
       alert('Please select your state before submitting.');
+      return;
+    }
+    if (!titleVal) {
+      alert('Please select your title status before submitting.');
       return;
     }
 
@@ -637,7 +681,7 @@
       type: 'bd_submit',
       ref,
       firstName, lastName, phone, email,
-      bestTime, zipCode: zipVal, state: stateVal,
+      bestTime, zipCode: zipVal, state: stateVal, titleStatus: titleVal,
       vin: vinVal, condition: condVal,
       bdPartners: [...selected],
       avgOffer: document.getElementById('avgOffer').textContent,
