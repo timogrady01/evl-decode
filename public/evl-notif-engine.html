@@ -102,6 +102,11 @@
           onchange="saveConfig()">
       </div>
       <div class="field">
+        <label class="label">Template: Unit Sold (to ID)</label>
+        <input type="text" id="tmplUnitSold" placeholder="template_XXXXXXX — create in EmailJS"
+          onchange="saveConfig()">
+      </div>
+      <div class="field">
         <label class="label">Twilio Account SID</label>
         <input type="text" id="twilioSid" placeholder="ACxxxxxxxxxxxxxxxxxxxx"
           onchange="saveConfig()">
@@ -149,6 +154,7 @@
     <button class="btn" onclick="testOutbid()">⚠️ SEND OUTBID</button>
     <button class="btn" onclick="testFinal()">🚨 SEND FINAL CALL</button>
     <button class="btn green" onclick="testWinner()">✅ SEND WINNER</button>
+    <button class="btn gold" onclick="testUnitSold()">📦 SEND UNIT SOLD</button>
     <button class="btn" style="background:var(--s1);border:2px solid var(--border);"
       onclick="testSMS()">📱 SEND TEST SMS</button>
     <div class="log" id="testLog">// Notification log will appear here...</div>
@@ -361,6 +367,7 @@ const EVL_NOTIF = {
       outbid:     'template_bjy763u',  // EVL-OUTBID
       finalCall:  'template_8k0u7bw',  // EVL-FINAL-CALL
       winner:     'template_4w8mvtm',  // EVL-WINNER
+      unitSold:   '',                  // EVL-UNIT-SOLD (create in EmailJS dashboard)
     }
   },
   twilio: {
@@ -592,6 +599,7 @@ function saveConfig() {
     tmplOutbid:  document.getElementById('tmplOutbid').value,
     tmplFinal:   document.getElementById('tmplFinal').value,
     tmplWinner:  document.getElementById('tmplWinner').value,
+    tmplUnitSold:document.getElementById('tmplUnitSold').value,
     twilioSid:   document.getElementById('twilioSid').value,
     twilioToken: document.getElementById('twilioToken').value,
     twilioPhone: document.getElementById('twilioPhone').value,
@@ -605,6 +613,7 @@ function saveConfig() {
   EVL_NOTIF.emailjs.templates.outbid    = cfg.tmplOutbid;
   EVL_NOTIF.emailjs.templates.finalCall = cfg.tmplFinal;
   EVL_NOTIF.emailjs.templates.winner    = cfg.tmplWinner;
+  EVL_NOTIF.emailjs.templates.unitSold  = cfg.tmplUnitSold;
   EVL_NOTIF.twilio.accountSid  = cfg.twilioSid;
   EVL_NOTIF.twilio.authToken   = cfg.twilioToken;
   EVL_NOTIF.twilio.fromNumber  = cfg.twilioPhone;
@@ -627,6 +636,7 @@ function loadConfig() {
   document.getElementById('tmplOutbid').value   = cfg.tmplOutbid || '';
   document.getElementById('tmplFinal').value    = cfg.tmplFinal || '';
   document.getElementById('tmplWinner').value   = cfg.tmplWinner || '';
+  document.getElementById('tmplUnitSold').value = cfg.tmplUnitSold || '';
   document.getElementById('twilioSid').value    = cfg.twilioSid || '';
   document.getElementById('twilioPhone').value  = cfg.twilioPhone || '';
   saveConfig();
@@ -697,6 +707,24 @@ async function testWinner() {
     vehicle, auction_id: 'AUC-2026-TEST', winning_bid: bid,
     evl_fee: '$250', ucm_name: 'UCM Test', ucm_cell: '(972) 555-0000',
     ref_number: 'EVL-WIN-TEST001'
+  });
+}
+
+async function testUnitSold() {
+  const email = document.getElementById('testEmail').value;
+  const vehicle = document.getElementById('testVehicle').value;
+  const bid = document.getElementById('testBid').value;
+  if (!email) { alert('Enter test email first'); return; }
+  if (!EVL_NOTIF.emailjs.templates.unitSold) {
+    alert('Enter the Unit Sold template ID in Credentials first — create it in EmailJS dashboard.');
+    return;
+  }
+  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.unitSold, {
+    to_email: email, to_name: 'UCM Test',
+    vehicle, vin: '1GKS2BKL5MR123456',
+    winning_bid: bid, ref_number: 'EVL-WIN-TEST001',
+    bd_name: 'Test Bidding Dealer',
+    pickup_window: 'Within 6 hours (no later than 12)'
   });
 }
 
