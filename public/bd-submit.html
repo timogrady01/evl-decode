@@ -230,6 +230,23 @@
       </div>
     </div>
 
+    <!-- WHY THE FEE PAYS FOR ITSELF -->
+    <div class="card" style="border-color:rgba(0,200,83,.35);">
+      <div class="card-title" style="color:var(--green);">📊 WHY THE $199 FEE TYPICALLY PAYS FOR ITSELF</div>
+      <p style="font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;margin-bottom:10px;line-height:1.6;">
+        Bidding Dealer offers vary more than most people expect — the gap between the lowest and highest offer on the same vehicle is often well above $199. Submitting to all three at once means EVL surfaces that gap for you instead of you settling for whichever single offer you happen to get.
+      </p>
+      <div class="fee-row"><span class="fee-label">Example: single offer (no competition)</span><span class="fee-val">$41,000</span></div>
+      <div class="fee-row"><span class="fee-label">Example: best of 3 Bidding Dealer offers</span><span class="fee-val positive">$44,000</span></div>
+      <div class="fee-row"><span class="fee-label">Competitive uplift</span><span class="fee-val positive">+$3,000</span></div>
+      <div class="fee-row"><span class="fee-label">EVL Bidding Dealer Submission Fee</span><span class="fee-val deduct">−$199</span></div>
+      <div class="fee-total">
+        <span class="fee-total-label">NET GAIN FROM USING EVL</span>
+        <span class="fee-total-val">+$2,801</span>
+      </div>
+      <p style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:10px;">* Illustrative example. Your actual spread depends on your specific vehicle and current market conditions — EVL shows you every offer received before you decide anything.</p>
+    </div>
+
     <!-- STEP 1 — BIDDING DEALER PARTNER SELECTION -->
     <div class="card">
       <div class="card-title">① SELECT YOUR BIDDING DEALER PARTNERS</div>
@@ -256,7 +273,7 @@
 
     <!-- STEP 2 — FEE BREAKDOWN -->
     <div class="card">
-      <div class="card-title">② FEE & OFFER BREAKDOWN</div>
+      <div class="card-title">② FEE & OFFER BREAKDOWN <span style="color:var(--green);font-size:14px;">(no charge today)</span></div>
       <div class="fee-row">
         <span class="fee-label">Est. Bidding Dealer Market Offer (avg)</span>
         <span class="fee-val positive" id="avgOffer">$—</span>
@@ -393,7 +410,7 @@
       <div class="ack-title">⚠️ BEFORE YOU SUBMIT — PLEASE CONFIRM</div>
       <ul class="ack-list">
         <li style="font-size:19px;font-weight:900;color:var(--gold);background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.25);border-radius:8px;padding:12px 14px;">I understand EVL is a vehicle advisory platform — NOT a dealer — and does not purchase vehicles, hold title, or handle funds directly. CarMax, Carvana, and SMTV are the licensed dealerships that make and fund the actual offer.</li>
-        <li>The $199 EVL Bidding Dealer Submission Fee covers research, submission, and coordination with all selected Bidding Dealer partners.</li>
+        <li>The $199 EVL Bidding Dealer Submission Fee covers research, submission, and coordination with all selected Bidding Dealer partners. <strong>No charge today</strong> — if you accept an offer, EVL sends a secure payment link for the $199 fee at that time. Nothing is charged before then.</li>
         <li>Final offer is provided by the Bidding Dealer (CarMax, Carvana, SMTV) — EVL coordinates but does not guarantee any specific amount.</li>
         <li>My vehicle title is in my name, free of undisclosed liens, and I am authorized to sell.</li>
         <li>I understand EVL will contact me within 24 hours to confirm submission details.</li>
@@ -406,8 +423,9 @@
 
     <!-- SUBMIT BUTTON -->
     <button class="submit-btn" id="submitBtn" disabled onclick="handleSubmit()">
-      ⚡ SUBMIT TO BIDDING DEALER NETWORK — $199
+      ⚡ SUBMIT TO BIDDING DEALER NETWORK — NO CHARGE TODAY
     </button>
+    <p style="text-align:center;font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:8px;">$199 only applies if you accept an offer — billed via secure link at that time.</p>
 
     <!-- WHAT HAPPENS NEXT -->
     <div style="margin-top:48px;">
@@ -439,7 +457,7 @@
   <div class="wrap">
     <div class="success-icon">🎉</div>
     <h1 class="success-h1">YOU'RE <span>SUBMITTED!</span></h1>
-    <p class="success-sub">Your vehicle has been queued for Bidding Dealer Network submission. EVL will reach out within 24 hours to confirm everything and get your vehicle in front of buyers.</p>
+    <p class="success-sub">Your vehicle has been queued for Bidding Dealer Network submission — no charge today. EVL will reach out within 24 hours to confirm everything and get your vehicle in front of buyers. If you accept an offer, EVL will send a secure link for the $199 service fee at that time.</p>
     <div class="success-ref" id="refNum">EVL-BD-000000</div>
     <div class="success-steps">
       <div class="success-step">
