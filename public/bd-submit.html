@@ -279,6 +279,20 @@
       <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:12px;">* Offer estimates based on current market data. Final offer confirmed by each BD partner within 24–48 hours of submission.</p>
     </div>
 
+    <!-- PAYOFF / PER DIEM DISCLOSURE -->
+    <div class="card" style="border-color:rgba(255,215,0,.3);">
+      <div class="card-title" style="color:var(--gold);">💰 IF YOU HAVE A LOAN — HOW PAYOFF WORKS</div>
+      <p style="font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;line-height:1.7;margin-bottom:10px;">
+        Most vehicles submitted to the BD Network still have an active loan — that's completely normal and BD partners handle this every day.
+      </p>
+      <ul style="font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;line-height:1.9;padding-left:22px;">
+        <li>Once you accept an offer, EVL orders a <strong>20-day payoff quote</strong> directly from your lender.</li>
+        <li>Your loan continues to accrue <strong>per diem interest</strong> (daily interest) until payoff is received — this is standard and already factored into your final numbers.</li>
+        <li>The winning BD partner pays your lender <strong>directly</strong> — you never handle the payoff yourself.</li>
+        <li>Any difference between the offer amount and your payoff (equity or shortfall) is settled with you directly once the payoff clears.</li>
+      </ul>
+    </div>
+
     <!-- STEP 3 — CONTACT INFO -->
     <div class="card">
       <div class="card-title">③ YOUR CONTACT INFORMATION</div>
@@ -318,6 +332,21 @@
           <input class="form-input" type="text" id="zipCode" placeholder="ZIP CODE" maxlength="5">
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group full">
+          <label class="form-label">Your State</label>
+          <select class="form-select" id="state">
+            <option value="">— SELECT STATE —</option>
+            <option>TX</option><option>GA</option><option>TN</option><option>CO</option>
+            <option>AZ</option><option>WA</option><option>MN</option><option>NC</option>
+            <option>MI</option><option>OH</option><option>FL</option><option>IL</option>
+            <option>PA</option><option>MD</option><option>VA</option><option>MO</option>
+            <option>IN</option><option>SC</option><option>CA</option><option>NY</option>
+            <option>NJ</option><option>CT</option><option>MA</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div id="stateWarning" style="display:none;background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.3);border-radius:8px;padding:14px;margin-bottom:16px;font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;"></div>
       <div class="form-row">
         <div class="form-group full">
           <label class="form-label">Vehicle VIN (if not pre-filled)</label>
@@ -438,6 +467,36 @@
   <div class="footer-disclaimer">AI specs for informational use only. EVL is a vehicle advisory platform — not a dealer.</div>
 </footer>
 
+<script type="module">
+  // ── FIREBASE INTEGRATION ──
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    messagingSenderId: "84195145348",
+    appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+  };
+  const fbApp = initializeApp(firebaseConfig);
+  const db = getFirestore(fbApp);
+
+  window.saveLeadToFirebase = async function(leadData) {
+    try {
+      await addDoc(collection(db, 'evl_leads'), {
+        ...leadData,
+        createdAt: serverTimestamp()
+      });
+      return true;
+    } catch(e) {
+      console.error('Firebase lead save error:', e);
+      return false;
+    }
+  };
+</script>
+
 <script>
   // --- URL PARAMS — pre-fill from trade-in exchange ---
   const params = new URLSearchParams(window.location.search);
@@ -511,6 +570,22 @@
 
   // --- ACKNOWLEDGMENT ---
   let ackChecked = false;
+
+  // --- STATE TIER WARNING ---
+  document.getElementById('state').addEventListener('change', function() {
+    const red = ['CA','NY','NJ','CT','MA'];
+    const yellow = ['FL','IL','PA','MD','VA','MO','IN','SC'];
+    const warn = document.getElementById('stateWarning');
+    if (red.includes(this.value)) {
+      warn.style.display = 'block';
+      warn.innerHTML = '🔴 <strong>' + this.value + ' is a complex title state.</strong> Payoff and lien release in ' + this.value + ' can take longer than average. EVL will walk you through every step and keep you updated — this may extend your timeline by 2–4 weeks.';
+    } else if (yellow.includes(this.value)) {
+      warn.style.display = 'block';
+      warn.innerHTML = '🟡 <strong>' + this.value + ' has some title processing considerations.</strong> EVL will confirm payoff and title details with you during onboarding. Timeline may be slightly extended.';
+    } else if (this.value) {
+      warn.style.display = 'none';
+    }
+  });
   function toggleAck() {
     ackChecked = !ackChecked;
     const el = document.getElementById('ackCheck');
@@ -526,12 +601,16 @@
   }
 
   // --- SUBMIT HANDLER ---
-  function handleSubmit() {
+  async function handleSubmit() {
     const firstName = document.getElementById('firstName').value.trim();
     const lastName  = document.getElementById('lastName').value.trim();
     const phone     = document.getElementById('phone').value.trim();
     const email     = document.getElementById('email').value.trim();
     const vinVal    = document.getElementById('vinInput').value.trim();
+    const stateVal  = document.getElementById('state').value;
+    const zipVal    = document.getElementById('zipCode').value.trim();
+    const condVal   = document.getElementById('condSelect').value;
+    const bestTime  = document.getElementById('bestTime').value;
 
     if (!firstName || !lastName || !phone || !email) {
       alert('Please complete all contact information fields before submitting.');
@@ -541,10 +620,31 @@
       alert('Please enter a valid VIN before submitting.');
       return;
     }
+    if (!stateVal) {
+      alert('Please select your state before submitting.');
+      return;
+    }
 
     // Generate reference number
     const ref = 'EVL-BD-' + Math.floor(100000 + Math.random() * 900000);
     document.getElementById('refNum').textContent = ref;
+
+    // Save lead to Firebase
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'SUBMITTING...';
+    await window.saveLeadToFirebase({
+      type: 'bd_submit',
+      ref,
+      firstName, lastName, phone, email,
+      bestTime, zipCode: zipVal, state: stateVal,
+      vin: vinVal, condition: condVal,
+      bdPartners: [...selected],
+      avgOffer: document.getElementById('avgOffer').textContent,
+      netTotal: document.getElementById('netTotal').textContent,
+      vehicle: document.getElementById('vehName').textContent,
+      status: 'new'
+    });
 
     // Show success
     document.getElementById('formState').style.display = 'none';
