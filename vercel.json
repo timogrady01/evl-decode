@@ -329,6 +329,46 @@
       "destination": "service-agreement.html"
     },
     {
+      "source": "/evl-notif-engine",
+      "destination": "evl-notif-engine.html"
+    },
+    {
+      "source": "/evl-notif-engine.html",
+      "destination": "evl-notif-engine.html"
+    },
+    {
+      "source": "/dealer-onboard",
+      "destination": "dealer-onboard.html"
+    },
+    {
+      "source": "/dealer-onboard.html",
+      "destination": "dealer-onboard.html"
+    },
+    {
+      "source": "/live-bid-board",
+      "destination": "live-bid-board.html"
+    },
+    {
+      "source": "/live-bid-board.html",
+      "destination": "live-bid-board.html"
+    },
+    {
+      "source": "/admin-bid-board",
+      "destination": "admin-bid-board.html"
+    },
+    {
+      "source": "/admin-bid-board.html",
+      "destination": "admin-bid-board.html"
+    },
+    {
+      "source": "/dealer-outreach-hub",
+      "destination": "dealer-outreach-hub.html"
+    },
+    {
+      "source": "/dealer-outreach-hub.html",
+      "destination": "dealer-outreach-hub.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
