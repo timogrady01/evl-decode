@@ -369,6 +369,22 @@
       "destination": "dealer-outreach-hub.html"
     },
     {
+      "source": "/bd-submit",
+      "destination": "bd-submit.html"
+    },
+    {
+      "source": "/bd-submit.html",
+      "destination": "bd-submit.html"
+    },
+    {
+      "source": "/private-sale",
+      "destination": "private-sale.html"
+    },
+    {
+      "source": "/private-sale.html",
+      "destination": "private-sale.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
