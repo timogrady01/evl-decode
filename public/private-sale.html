@@ -403,6 +403,10 @@
     <h1 class="success-h1">YOU'RE <span>ALL SET!</span></h1>
     <p class="success-sub">Your Private Sale Assist request is in. EVL will reach out within 2 hours to confirm your vehicle details and get everything moving.</p>
     <div class="success-ref" id="refNum">EVL-PS-000000</div>
+    <div style="margin-top:8px;">
+      <button onclick="copyRefNum()" id="copyBtn" style="background:transparent;border:1px solid var(--green);color:var(--green);padding:8px 18px;border-radius:6px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;">📋 Copy Reference Number</button>
+    </div>
+    <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:6px;">Save this number — you'll need it if you contact EVL about this request.</p>
     <div class="next-steps">
       <div class="next-step">
         <div class="next-step-num">1</div>
@@ -548,6 +552,19 @@
     document.getElementById('formState').style.display = 'none';
     document.getElementById('successScreen').classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  // --- COPY REFERENCE NUMBER ---
+  function copyRefNum() {
+    const ref = document.getElementById('refNum').textContent;
+    const btn = document.getElementById('copyBtn');
+    navigator.clipboard.writeText(ref).then(() => {
+      const original = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => { btn.textContent = original; }, 2000);
+    }).catch(() => {
+      btn.textContent = '⚠️ Copy failed — write it down: ' + ref;
+    });
   }
 </script>
 </body>
