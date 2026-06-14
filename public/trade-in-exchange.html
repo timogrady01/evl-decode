@@ -1251,7 +1251,7 @@ window.calcBCS = function() {
   document.getElementById('bcsResults').style.display = 'block';
 }
 
- = function() {
+window.calcSavings = function() {
   const amount = parseFloat(document.getElementById('financeAmount').value) || 0;
   const dealerRatePct = parseFloat(document.getElementById('dealerRate').value) || 0;
   if(!amount || !dealerRatePct) return;
@@ -1286,7 +1286,7 @@ window.calcBCS = function() {
   document.getElementById('savingsResults').style.display = 'block';
 }
 
- = function() {
+window.calcNegEquityPaths = function() {
   const bid = parseInt(document.getElementById('highBid').textContent.replace(/[^0-9]/g,'')) || 0;
   const payoff = parseInt(document.getElementById('payoffInput').value) || 0;
   const gap = Math.abs(bid - payoff - 495); // negative equity gap
@@ -1332,7 +1332,7 @@ window.calcBCS = function() {
   document.getElementById('pathCTarget').textContent = '$' + payoffBreakEven.toLocaleString();
 }
 
- = function() {
+window.updateSplit = function() {
   const net = parseInt(document.getElementById('netEquity').textContent.replace(/[^0-9]/g,'')) || 0;
   const pct = parseInt(document.getElementById('splitSlider').value) / 100;
   const applied = Math.round(net * pct);
