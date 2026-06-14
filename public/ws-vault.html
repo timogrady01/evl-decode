@@ -999,8 +999,62 @@ body { display:block !important; align-items:unset !important; justify-content:u
 </div>
 
 
-<!-- EMAILJS TEMPLATES -->
+<!-- WS DEALER-TO-DEALER SETTLEMENT P&P -->
 <div class="card" style="margin-top:32px;">
+  <div class="card-title">🤝 WS Dealer-to-Dealer Settlement P&P — No Escrow (Locked Jun 14, 2026)</div>
+  <p style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:14px;line-height:1.6;">
+    Replaces the old $150 escrow / $75-$75 split model for WS auction winners. "Express" = speed. Direct dealer-to-dealer settlement, standard wholesale paperwork, no third-party holding funds or title. EVL's platform fee is invoiced separately (same pattern as the $199 BD Submit fee) — never part of the vehicle transaction.
+  </p>
+
+  <div style="font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">TERMINOLOGY NOTE</div>
+  <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:16px;line-height:1.6;">
+    On the WS Exchange side: <strong style="color:var(--gold);">ID</strong> = the dealer who currently holds the unit being auctioned (source/seller — same role as <span style="font-family:monospace;">{{source_dealer}}</span> in templates). <strong style="color:var(--gold);">BD</strong> = Bidding Dealer, the winning buyer. <em>Note: this differs from the retail-side definition of ID (Issuing Dealer = delivers a replacement vehicle to the customer) — same letters, different context, kept separate intentionally.</em>
+  </p>
+
+  <div style="font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">THE 9-STAGE FLOW</div>
+  <table>
+    <thead><tr><th>Stage</th><th>What Happens</th><th>Who's Involved</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--gold);font-weight:900;">1. Listing</td><td>ID lists unit on WS Exchange, checks box agreeing to EVL Minimum Condition Standard as a condition of listing.</td><td>ID</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">2. Sold Notice</td><td>Auction closes → "EVL-UNIT-SOLD" notice fires to 3 people at the ID: porter/UC rep (prep checklist + pickup window), title clerk (heads-up: scan-and-send same-day), business office (heads-up: incoming wire/check).</td><td>ID (3 roles)</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">3. Pickup Window</td><td>BD notified via EVL-WINNER email. BD and ID agree on pickup time — target 6 business hours, cap 12 business hours.</td><td>BD + ID</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">4. Prep</td><td>ID's porter/UC rep brings vehicle to Minimum Condition Standard: washed, vacuumed, 1/4 tank fuel, lens/windshield/dash-light check.</td><td>ID porter/UC rep</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">4.5 Proactive Disclosure</td><td>If prep inspection finds an undisclosed issue (e.g. windshield chip), ID flags it to EVL/BD <strong>before</strong> pickup with a proposed resolution from the standardized credit table. BD acknowledges — resolved before anyone's on the lot.</td><td>ID → EVL → BD</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">5. Pickup / BOL</td><td>BD's porter arrives at agreed time. 8-exterior + 8-interior photo walkaround + 70mph test drive (steering shimmy, noises, brake pull). Both reps digitally sign BOL. Vehicle is now BD's.</td><td>BD porter + ID porter/rep</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">6. Digital Paperwork</td><td>ID's title clerk scans signed Title w/ Dealer Reassignment + Odometer Disclosure Statement + Bill of Sale → emails to BD's business office same-day.</td><td>ID title clerk</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">7. Funds Release</td><td>BD's business office wires or company-checks payment to ID based on the digital packet — same day, no waiting on mail. Wire instructions verified against EVL platform record (fraud control — see below).</td><td>BD business office</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">8. Physical Originals</td><td>ID mails physical Title/ODS/Bill of Sale to BD — non-blocking, for the file. If not received within a set window, EVL facilitates a duplicate.</td><td>ID title clerk</td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-top:20px;margin-bottom:10px;">MINIMUM CONDITION STANDARD (ONE RULE SET, NATIONWIDE)</div>
+  <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.7;">
+    <strong style="color:var(--gold);">Windshield:</strong> any crack/chip inside the wiper-swept area = flagged. Outside that area, chips under ~1" = acceptable.<br>
+    <strong style="color:var(--gold);">Lenses (head/tail/brake/turn):</strong> must be uncracked and intact. Light color must match position (red rear/brake, amber turn, white front) — clear housings with correctly-colored LEDs are fine.<br>
+    <strong style="color:var(--gold);">Dash:</strong> photo with engine running; any illuminated warning light flagged/disclosed on BOL, doesn't auto-fail.<br>
+    <em style="color:#8FA3C8;">Conservative enough to pass inspection in the strictest state in the network — removes "well my state allows it" disputes entirely.</em>
+  </p>
+
+  <div style="margin-top:18px;background:#1A0F00;border:2px solid var(--red);border-radius:10px;padding:16px 18px;">
+    <div style="font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px;">⚠️ WIRE FRAUD MITIGATION — BUILD FROM DAY ONE</div>
+    <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;">
+      BD and ID often meet for the first time via EVL — classic Business Email Compromise target (fraudulent wire instructions sent via intercepted email). Mitigation: EVL displays each dealer's <strong>verified banking/wire info</strong> directly on the platform (captured at onboarding), so BD's business office confirms wire details against EVL's record — never solely from an emailed packet.
+    </p>
+  </div>
+
+  <div style="margin-top:18px;background:rgba(43,132,254,.05);border:1px solid rgba(43,132,254,.2);border-radius:8px;padding:16px;">
+    <div style="font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">OPEN BUILD ITEMS (NOT YET BUILT)</div>
+    <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.7;">
+      1. Minimum Condition Standard acknowledgment checkbox on ws-exchange.html listing flow<br>
+      2. New EmailJS template "EVL-UNIT-SOLD" — fires to ID's porter/UC rep, title clerk, and business office at auction close<br>
+      3. Standardized minor-defect credit table (for Stage 4.5 Proactive Disclosure)<br>
+      4. Remove $75/$75 escrow references from trade-in-exchange.html BCS calculator and the Legal Framework table (Escrow Company row) — no longer applicable<br>
+      5. EVL-WINNER template updated Jun 14 (template_4w8mvtm) — wire-first sequence, dealer-to-dealer settlement, no escrow language — LIVE
+    </p>
+  </div>
+</div>
+
+
   <div class="card-title">📧 EmailJS Templates — All 5 Bid Notification Templates</div>
   <p style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:8px;">
     Last updated: Jun 13, 2026 · ALL 5 TEMPLATES LIVE & TEST-CONFIRMED ✅ · Service ID: service_xua01ed · Gmail: togradyevl@gmail.com · Personal Plan ($15/mo) · 5,000 emails/month
