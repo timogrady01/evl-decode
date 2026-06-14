@@ -586,7 +586,7 @@ window.EVL_NOTIF = EVL_NOTIF;
 // ── CONFIG SAVE/LOAD ──
 function saveConfig() {
   const cfg = {
-    publicKey:   document.getElementById('ejsPublicKey').value,
+    publicKey:   document.getElementById('ejsPublicKey').value.trim(),
     tmplUnitCard:document.getElementById('tmplUnitCard').value,
     tmplNudge:   document.getElementById('tmplNudge').value,
     tmplOutbid:  document.getElementById('tmplOutbid').value,
