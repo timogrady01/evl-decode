@@ -459,6 +459,10 @@
     <h1 class="success-h1">YOU'RE <span>SUBMITTED!</span></h1>
     <p class="success-sub">Your vehicle has been queued for Bidding Dealer Network submission — no charge today. EVL will reach out within 24 hours to confirm everything and get your vehicle in front of buyers. If you accept an offer, EVL will send a secure link for the $199 service fee at that time.</p>
     <div class="success-ref" id="refNum">EVL-BD-000000</div>
+    <div style="margin-top:8px;">
+      <button onclick="copyRefNum()" id="copyBtn" style="background:transparent;border:1px solid var(--blue);color:var(--blue);padding:8px 18px;border-radius:6px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;">📋 Copy Reference Number</button>
+    </div>
+    <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:6px;">Save this number — you'll need it if you contact EVL about this submission.</p>
     <div class="success-steps">
       <div class="success-step">
         <div class="success-step-num">1</div>
@@ -718,6 +722,19 @@
     document.getElementById('formState').style.display = 'none';
     document.getElementById('successScreen').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // --- COPY REFERENCE NUMBER ---
+  function copyRefNum() {
+    const ref = document.getElementById('refNum').textContent;
+    const btn = document.getElementById('copyBtn');
+    navigator.clipboard.writeText(ref).then(() => {
+      const original = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => { btn.textContent = original; }, 2000);
+    }).catch(() => {
+      btn.textContent = '⚠️ Copy failed — write it down: ' + ref;
+    });
   }
 </script>
 </body>
