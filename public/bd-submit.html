@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BD Submit — Express Vehicle Locators</title>
+<title>Bidding Dealer Submit — Express Vehicle Locators</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -177,9 +177,9 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge">⚡ BD = BIDDING DEALER NETWORK</div>
+    <div class="hero-badge">⚡ BIDDING DEALER NETWORK</div>
     <h1 class="hero-h1">SUBMIT YOUR<br><span>TRADE-IN</span></h1>
-    <p class="hero-sub">EVL submits your vehicle to our verified Bidding Dealer (BD) network — CarMax, Carvana, and SMTV, each an <strong>independently licensed dealership</strong> — simultaneously. Best offer wins. You decide.</p>
+    <p class="hero-sub">EVL submits your vehicle to our verified Bidding Dealer network — CarMax, Carvana, and SMTV, each an <strong>independently licensed dealership</strong> — simultaneously. Best offer wins. You decide.</p>
   </div>
 
   <!-- PROGRESS -->
@@ -198,7 +198,7 @@
     </div>
     <div class="step">
       <div class="step-dot active">4</div>
-      <div class="step-label active">BD Submit</div>
+      <div class="step-label active">Bidding Dealer</div>
     </div>
     <div class="step">
       <div class="step-dot pending">5</div>
@@ -230,9 +230,9 @@
       </div>
     </div>
 
-    <!-- STEP 1 — BD PARTNER SELECTION -->
+    <!-- STEP 1 — BIDDING DEALER PARTNER SELECTION -->
     <div class="card">
-      <div class="card-title">① SELECT YOUR BD PARTNERS</div>
+      <div class="card-title">① SELECT YOUR BIDDING DEALER PARTNERS</div>
       <div class="bd-grid">
         <div class="bd-card" id="bdCarmax" onclick="toggleBD('CarMax')">
           <div class="bd-logo">🏢 CarMax</div>
@@ -258,11 +258,11 @@
     <div class="card">
       <div class="card-title">② FEE & OFFER BREAKDOWN</div>
       <div class="fee-row">
-        <span class="fee-label">Est. BD Market Offer (avg)</span>
+        <span class="fee-label">Est. Bidding Dealer Market Offer (avg)</span>
         <span class="fee-val positive" id="avgOffer">$—</span>
       </div>
       <div class="fee-row">
-        <span class="fee-label">EVL BD Submit Fee</span>
+        <span class="fee-label">EVL Bidding Dealer Submission Fee</span>
         <span class="fee-val deduct">−$199</span>
       </div>
       <div class="fee-row">
@@ -277,19 +277,19 @@
         <span class="fee-total-label">EST. NET TO YOU</span>
         <span class="fee-total-val" id="netTotal">$—</span>
       </div>
-      <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:12px;">* Offer estimates based on current market data. Final offer confirmed by each BD partner within 24–48 hours of submission.</p>
+      <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:12px;">* Offer estimates based on current market data. Final offer confirmed by each Bidding Dealer partner within 24–48 hours of submission.</p>
     </div>
 
     <!-- PAYOFF / PER DIEM DISCLOSURE -->
     <div class="card" style="border-color:rgba(255,215,0,.3);">
       <div class="card-title" style="color:var(--gold);">💰 IF YOU HAVE A LOAN — HOW PAYOFF WORKS</div>
       <p style="font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;line-height:1.7;margin-bottom:10px;">
-        Most vehicles submitted to the BD Network still have an active loan — that's completely normal and BD partners handle this every day.
+        Most vehicles submitted to the Bidding Dealer network still have an active loan — that's completely normal and Bidding Dealer partners handle this every day.
       </p>
       <ul style="font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;line-height:1.9;padding-left:22px;">
         <li>Once you accept an offer, EVL orders a <strong>20-day payoff quote</strong> directly from your lender.</li>
         <li>Your loan continues to accrue <strong>per diem interest</strong> (daily interest) until payoff is received — this is standard and already factored into your final numbers.</li>
-        <li>The winning BD partner pays your lender <strong>directly</strong> — you never handle the payoff yourself.</li>
+        <li>The winning Bidding Dealer partner pays your lender <strong>directly</strong> — you never handle the payoff yourself.</li>
         <li>Any difference between the offer amount and your payoff (equity or shortfall) is settled with you directly once the payoff clears.</li>
       </ul>
     </div>
@@ -371,7 +371,11 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group full">
+        <div class="form-group">
+          <label class="form-label">Current Mileage</label>
+          <input class="form-input" type="text" id="milesInput" placeholder="e.g. 47,200" inputmode="numeric">
+        </div>
+        <div class="form-group">
           <label class="form-label">Vehicle Condition</label>
           <select class="form-select" id="condSelect">
             <option value="">— SELECT CONDITION —</option>
@@ -389,20 +393,20 @@
       <div class="ack-title">⚠️ BEFORE YOU SUBMIT — PLEASE CONFIRM</div>
       <ul class="ack-list">
         <li style="font-size:19px;font-weight:900;color:var(--gold);background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.25);border-radius:8px;padding:12px 14px;">I understand EVL is a vehicle advisory platform — NOT a dealer — and does not purchase vehicles, hold title, or handle funds directly. CarMax, Carvana, and SMTV are the licensed dealerships that make and fund the actual offer.</li>
-        <li>The $199 EVL BD Submit Fee covers research, submission, and coordination with all selected BD partners.</li>
-        <li>Final offer is provided by the BD partner (CarMax, Carvana, SMTV) — EVL coordinates but does not guarantee any specific amount.</li>
+        <li>The $199 EVL Bidding Dealer Submission Fee covers research, submission, and coordination with all selected Bidding Dealer partners.</li>
+        <li>Final offer is provided by the Bidding Dealer (CarMax, Carvana, SMTV) — EVL coordinates but does not guarantee any specific amount.</li>
         <li>My vehicle title is in my name, free of undisclosed liens, and I am authorized to sell.</li>
         <li>I understand EVL will contact me within 24 hours to confirm submission details.</li>
       </ul>
       <div class="ack-check-row" onclick="toggleAck()">
         <div class="ack-check" id="ackCheck"></div>
-        <div class="ack-check-label">I have read and agree to the above terms. I am ready to proceed with BD Submit.</div>
+        <div class="ack-check-label">I have read and agree to the above terms. I am ready to proceed with Bidding Dealer Submission.</div>
       </div>
     </div>
 
     <!-- SUBMIT BUTTON -->
     <button class="submit-btn" id="submitBtn" disabled onclick="handleSubmit()">
-      ⚡ SUBMIT TO BD NETWORK — $199
+      ⚡ SUBMIT TO BIDDING DEALER NETWORK — $199
     </button>
 
     <!-- WHAT HAPPENS NEXT -->
@@ -417,12 +421,12 @@
         <div class="next-card">
           <div class="next-icon">📡</div>
           <div class="next-time">Within 24 Hours</div>
-          <div class="next-desc">EVL submits your vehicle profile to all selected BD partners simultaneously.</div>
+          <div class="next-desc">EVL submits your vehicle profile to all selected Bidding Dealer partners simultaneously.</div>
         </div>
         <div class="next-card">
           <div class="next-icon">💰</div>
           <div class="next-time">24–48 Hours</div>
-          <div class="next-desc">BD partners respond with firm offers. EVL presents you the best offer — you decide.</div>
+          <div class="next-desc">Bidding Dealer partners respond with firm offers. EVL presents you the best offer — you decide.</div>
         </div>
       </div>
     </div>
@@ -435,7 +439,7 @@
   <div class="wrap">
     <div class="success-icon">🎉</div>
     <h1 class="success-h1">YOU'RE <span>SUBMITTED!</span></h1>
-    <p class="success-sub">Your vehicle has been queued for BD Network submission. EVL will reach out within 24 hours to confirm everything and get your vehicle in front of buyers.</p>
+    <p class="success-sub">Your vehicle has been queued for Bidding Dealer Network submission. EVL will reach out within 24 hours to confirm everything and get your vehicle in front of buyers.</p>
     <div class="success-ref" id="refNum">EVL-BD-000000</div>
     <div class="success-steps">
       <div class="success-step">
@@ -449,7 +453,7 @@
         <div class="success-step-num">2</div>
         <div class="success-step-text">
           <div class="success-step-time">Within 24 Hours</div>
-          Your vehicle is submitted to all selected BD partners simultaneously
+          Your vehicle is submitted to all selected Bidding Dealer partners simultaneously
         </div>
       </div>
       <div class="success-step">
@@ -533,6 +537,7 @@
   }
   if (miles) {
     document.getElementById('vehMiles').textContent = parseInt(miles).toLocaleString();
+    document.getElementById('milesInput').value = parseInt(miles).toLocaleString();
   }
   if (market) {
     const mkt = parseInt(market);
@@ -607,10 +612,10 @@
   // --- TITLE STATUS NOTE ---
   const titleNotes = {
     my_name: '',
-    not_with_me: "👍 <strong>No problem</strong> — you don't need the physical title in hand to get an offer. Just have it ready when your selected BD partner finalizes the purchase.",
-    lender: "✅ <strong>This is the most common scenario</strong> and already covered by the payoff process above — your lender releases the title directly to the winning BD partner once payoff is received.",
-    joint: "👥 <strong>Most BD partners require all listed owners to sign at transfer</strong>, or a notarized power of attorney from the absent owner. EVL will confirm the exact requirement with your selected partner.",
-    lost: "📄 <strong>You'll apply for a duplicate title through the DMV that issued it</strong> (not necessarily your current state, if you've moved) — typically 1–4 weeks. Some BD partners can complete the purchase now and hold a portion of funds until the duplicate arrives. EVL will confirm which partners offer this.",
+    not_with_me: "👍 <strong>No problem</strong> — you don't need the physical title in hand to get an offer. Just have it ready when your selected Bidding Dealer partner finalizes the purchase.",
+    lender: "✅ <strong>This is the most common scenario</strong> and already covered by the payoff process above — your lender releases the title directly to the winning Bidding Dealer partner once payoff is received.",
+    joint: "👥 <strong>Most Bidding Dealer partners require all listed owners to sign at transfer</strong>, or a notarized power of attorney from the absent owner. EVL will confirm the exact requirement with your selected partner.",
+    lost: "📄 <strong>You'll apply for a duplicate title through the DMV that issued it</strong> (not necessarily your current state, if you've moved) — typically 1–4 weeks. Some Bidding Dealer partners can complete the purchase now and hold a portion of funds until the duplicate arrives. EVL will confirm which partners offer this.",
     estate: "⚖️ <strong>You'll need documentation showing your authority to sell</strong> (Letters of Testamentary/Administration, or a state small-estate affidavit). EVL will walk you through exactly what your state requires. This typically adds 2–6 weeks depending on probate status.",
     other: "💬 <strong>No problem</strong> — EVL will follow up to sort out the details before anything moves forward."
   };
@@ -649,6 +654,7 @@
     const stateVal  = document.getElementById('state').value;
     const zipVal    = document.getElementById('zipCode').value.trim();
     const condVal   = document.getElementById('condSelect').value;
+    const milesVal  = document.getElementById('milesInput').value.trim();
     const bestTime  = document.getElementById('bestTime').value;
     const titleVal  = document.getElementById('titleStatus').value;
 
@@ -682,7 +688,7 @@
       ref,
       firstName, lastName, phone, email,
       bestTime, zipCode: zipVal, state: stateVal, titleStatus: titleVal,
-      vin: vinVal, condition: condVal,
+      vin: vinVal, condition: condVal, miles: milesVal,
       bdPartners: [...selected],
       avgOffer: document.getElementById('avgOffer').textContent,
       netTotal: document.getElementById('netTotal').textContent,
