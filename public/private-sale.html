@@ -448,6 +448,36 @@
   <div class="footer-disclaimer">AI specs for informational use only. EVL is a vehicle advisory platform — not a dealer.</div>
 </footer>
 
+<script type="module">
+  // ── FIREBASE INTEGRATION ──
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    messagingSenderId: "84195145348",
+    appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+  };
+  const fbApp = initializeApp(firebaseConfig);
+  const db = getFirestore(fbApp);
+
+  window.saveLeadToFirebase = async function(leadData) {
+    try {
+      await addDoc(collection(db, 'evl_leads'), {
+        ...leadData,
+        createdAt: serverTimestamp()
+      });
+      return true;
+    } catch(e) {
+      console.error('Firebase lead save error:', e);
+      return false;
+    }
+  };
+</script>
+
 <script>
   let selectedTier = 3;
 
@@ -481,11 +511,19 @@
     }
   });
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const first = document.getElementById('firstName').value.trim();
     const last  = document.getElementById('lastName').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
+    const vin   = document.getElementById('vin').value.trim();
+    const year  = document.getElementById('year').value.trim();
+    const make  = document.getElementById('make').value.trim();
+    const model = document.getElementById('model').value.trim();
+    const miles = document.getElementById('miles').value.trim();
+    const condition = document.getElementById('condition').value;
+    const state = document.getElementById('state').value;
+    const notes = document.getElementById('notes').value.trim();
 
     if (!first || !last || !phone || !email) {
       alert('Please complete all contact information fields before submitting.');
@@ -494,6 +532,19 @@
 
     const ref = 'EVL-PS-' + Math.floor(100000 + Math.random() * 900000);
     document.getElementById('refNum').textContent = ref;
+
+    const btn = document.querySelector('.submit-btn');
+    if (btn) { btn.disabled = true; btn.textContent = 'SUBMITTING...'; }
+
+    await window.saveLeadToFirebase({
+      type: 'private_sale',
+      tier: selectedTier,
+      ref,
+      firstName: first, lastName: last, phone, email,
+      vin, year, make, model, miles, condition, state, notes,
+      status: 'new'
+    });
+
     document.getElementById('formState').style.display = 'none';
     document.getElementById('successScreen').classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});
