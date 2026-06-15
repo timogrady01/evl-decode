@@ -225,12 +225,50 @@ body { display:block !important; align-items:unset !important; justify-content:u
     </table>
   </div>
 
+  <!-- DEALER HUB CARD SCHEMA & ROADMAP -->
+  <div class="card">
+    <div class="card-title">🏢 Dealer Hub — Locked Card Schema & 13-Metro Roadmap (Jun 15, 2026)</div>
+    <p style="font-size:18px; line-height:1.6;">
+      Every dealer card in ws-hub.html's DEALER_DATA array follows this <strong>9-role contact roster</strong>, locked in to avoid a retrofit pass later. New entries start with all 9 slots (placeholder phone/cell/ext where real names aren't yet known); existing entries get retrofitted as we touch them.
+    </p>
+    <table>
+      <thead><tr><th>Role Code</th><th>Title</th><th>Purpose / P&P Stage</th></tr></thead>
+      <tbody>
+        <tr><td><strong>GM</strong></td><td>General Manager</td><td>Dealership-level escalation &amp; authority</td></tr>
+        <tr><td><strong>GSM</strong></td><td>General Sales Manager</td><td>Oversees new &amp; used sales depts</td></tr>
+        <tr><td><strong>UCD</strong></td><td>Used Car Director</td><td>1st in command, Used dept — bid/sale decisions (Stages 1-3)</td></tr>
+        <tr><td><strong>UCM</strong></td><td>Used Car Manager</td><td>2nd in command, Used dept — bid/sale decisions, prep oversight (Stages 1-4)</td></tr>
+        <tr><td><strong>BOM</strong></td><td>Business Office Manager</td><td>Funds release / wire confirmation (Stage 7)</td></tr>
+        <tr><td><strong>TC-NEW</strong></td><td>New Car Title Clerk</td><td>Title paperwork — new-car side</td></tr>
+        <tr><td><strong>TC-USED</strong></td><td>Used Car Title Clerk</td><td>Title scan/send — Title, Reassignment, ODS, BOS (Stage 6)</td></tr>
+        <tr><td><strong>REC</strong></td><td>Receptionist</td><td>Front door / first point of contact (Stage 2 routing)</td></tr>
+        <tr><td><strong>OTHER</strong></td><td>Flexible / Catch-all</td><td>Any role not covered above (e.g. Porter Lead, IT contact)</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:18px; line-height:1.6; margin-top:14px;">
+      Each role carries: <strong>name</strong> (placeholder generic title until real name known), <strong>direct phone + ext</strong>, <strong>cell</strong>, <strong>email</strong>.
+    </p>
+
+    <p style="font-size:18px; line-height:1.6; margin-top:18px;"><strong>13-Metro Build Roadmap:</strong></p>
+    <table>
+      <thead><tr><th>Phase</th><th>Scope</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1</td><td>All 13 major metros seeded with R/Y/G title-tier flags (lien/payoff complexity for trade-in flow). Includes CA and NY metros.</td><td>In progress — DFW, Houston, Atlanta seeded</td></tr>
+        <tr><td>Phase 2</td><td>Per metro, drill down to <strong>all dealers within 50mi radius</strong> for each of the 12 manufacturers, each card built to the 9-role schema above</td><td>Reference benchmark: DFW Hyundai = 7 dealers (Jun 15)</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:16px; line-height:1.6; margin-top:10px; color:#94a3b8;">
+      Note: 9-role expansion is primarily a <em>template/schema change</em> — placeholder slots for GM/GSM/BOM/Title Clerks added alongside existing REC/UCD/UCM, not 9x research per dealer. Differentiated research (dealer name, address, main phone) stays the same per dealer; placeholder org-chart slots get filled in during actual onboarding.
+    </p>
+  </div>
+
   <!-- BUILD LOG -->
   <div class="card">
     <div class="card-title">📖 Build Log</div>
     <table>
       <thead><tr><th>Date</th><th>What Was Built / Changed</th><th>Status</th></tr></thead>
       <tbody>
+        <tr><td>Jun 15, 2026</td><td>Dealer Hub: DFW expanded to all 12 mfgs (31 entries). Hyundai/DFW completed as full 50mi-radius reference (7 dealers). Locked 9-role dealer card schema (GM/GSM/UCD/UCM/BOM/TC-New/TC-Used/REC/Other) + 13-metro roadmap.</td><td>Next: Toyota/DFW full 50mi pass + Hyundai/DFW retrofit to 9-role schema</td></tr>
         <tr><td>Jun 14, 2026</td><td>Dealer Hub: fixed critical syntax error in ws-hub.html (unescaped apostrophe in "Randall Reed's Planet Ford" broke entire script — Dealer Network/Aged Radar/Porter Dispatch were all dead). Houston now complete with all 6 original mfgs (added Mac Haik Chevrolet, South Houston Nissan, both real dealers with verified addr/phone). <strong>Standard expanded 6→12 manufacturers</strong>: Toyota, Ford, Chevrolet, Honda, Nissan, Jeep/RAM/Dodge, Hyundai, Kia, Subaru, GMC/Buick/Cadillac, Volkswagen, Mazda. <strong>REMAINING:</strong> DFW + Houston + Atlanta each need a follow-up pass for the new 6 mfgs (Hyundai/Kia/Subaru/GMC-Buick-Cadillac/VW/Mazda). 10 of 13 metros not yet started (need all 12 mfgs each). Also built EVL-UNIT-SOLD template (live, tested ✅) and full WS Dealer-to-Dealer Settlement P&P (no-escrow model) — see dedicated section above.</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:orange;border:1px solid rgba(255,140,0,.3);">IN PROGRESS</span></td></tr>
         <tr><td>Jun 10, 2026</td><td>Firebase integrated — EVL-ACQUISITION-RADAR project wired to WS Exchange. Live bids save to Firestore in real time.</td><td><span class="badge badge-green">DONE</span></td></tr>
         <tr><td>Jun 10, 2026</td><td>WS Exchange — Deal Math + Tax Credit Calculator built in. All "Corporate Floor" language replaced with clean "RESERVE" throughout.</td><td><span class="badge badge-green">DONE</span></td></tr>
