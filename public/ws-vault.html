@@ -262,6 +262,26 @@ body { display:block !important; align-items:unset !important; justify-content:u
     </p>
   </div>
 
+  <!-- TABLED FOR LATER -->
+  <div class="card">
+    <div class="card-title">🗂️ Tabled for Later — TOL Concerns (Jun 16, 2026)</div>
+    <p style="font-size:16px; line-height:1.6; color:#94a3b8; margin-bottom:14px;">
+      Captured so the thread isn't lost, but intentionally not being built right now — current focus stays on Dealer Hub / Texas template completion. Revisit after core build is stable.
+    </p>
+    <table>
+      <thead><tr><th>Topic</th><th>Core Idea</th><th>Why Tabled</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Proactive Customer FAQ / Command &amp; Control</strong></td><td>AI-driven (not static database) help system, segmented by category (Title/Payoff, Trade-In Items, Registration, Payments, Tech, Status). AI generalizes to the specific deal's ID/BD contact info pulled from the 9-role schema, rather than EVL acting as a call center.</td><td>Needs the "SaaS not dealership" framing locked first, plus escalation-chain logic (REC → topic role → fallback) before this is buildable correctly.</td></tr>
+        <tr><td><strong>"We Are SaaS, Not a Dealership" Framing</strong></td><td>Explicit customer-facing statement that EVL doesn't hold inventory/title/funds, so most day-to-day deal questions are fastest resolved by the issuing/bidding dealer directly — stated BEFORE routing, not as an after-the-fact brush-off.</td><td>Load-bearing piece underneath the FAQ system above — needs to be written and approved before the FAQ routing logic is finalized.</td></tr>
+        <tr><td><strong>Escalation Chain Protocol</strong></td><td>Receptionist (REC) as first stop always → topic-matched role (TC-NEW/TC-USED for title, UCM for trade items, BOM for payments, UCD for disputes, GSM for general) → fallback to UCD/GM if no response within X hours → OTHER (porter) as live-body fallback. Proactively sets expectation that sales/UC managers are often busy with floor customers.</td><td>Open question never resolved: does REC-first apply to every category, or should "gone silent for days" issues skip straight to GM/UCD as an escalation signal?</td></tr>
+        <tr><td><strong>Review Funnel / Avoiding "Keyboard Warriors"</strong></td><td>Ask for review only at confirmed positive outcome (vehicle delivered, deal closed clean) — soft-gate with "how was your experience?" first; route happy responses to public review link (Google + one other major platform, name TBD), route unhappy responses to private internal feedback instead of public posting.</td><td>Needs the delivery-confirmation trigger point nailed down first (ties to Firebase + EmailJS already wired) — should be quick to build once prioritized.</td></tr>
+        <tr><td><strong>Automated Review Requests</strong></td><td>Firestore trigger on "deal marked delivered" fires EmailJS/text with direct review link after a set delay.</td><td>Buildable now with existing infra — just not yet sequenced into the build order.</td></tr>
+        <tr><td><strong>Social Media / Guerrilla Marketing (Retail)</strong></td><td>Free/low-cost social push to drive customer-facing page traffic — content calendars, captions, posting scripts.</td><td>Different skillset than current build (content/growth strategy vs. code/data) — Tim flagged wanting to upgrade to other Claude products to help execute this at scale.</td></tr>
+        <tr><td><strong>D2D Marketing (Wholesale Side)</strong></td><td>Door-to-door / direct dealer outreach strategy to recruit independent dealers (IDs/BDs) into the WS Exchange network.</td><td>Same as above — strategy/outreach thread, separate from current Dealer Hub data-build work.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- BUILD LOG -->
   <div class="card">
     <div class="card-title">📖 Build Log</div>
