@@ -214,6 +214,14 @@ textarea.inp { resize: none; height: 70px; line-height: 1.5; }
 .cond-btn.selected { border-color: var(--blue); border-left: 4px solid var(--blue); background: rgba(43,132,254,0.15); }
 .cond-btn.selected .c-main { color: var(--blue); }
 .cond-btn.selected .c-sub { color: var(--white); }
+.tier-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:14px; }
+.tier-card { background:var(--s1, #11162a); border:2px solid var(--border); border-radius:10px; padding:16px 14px; text-align:center; transition:border-color .2s,transform .2s; }
+.tier-card.tier-recommended { border-color:var(--gold); transform:scale(1.03); box-shadow:0 0 0 1px var(--gold), 0 8px 20px rgba(255,215,0,.12); }
+.tier-recommended-flag { font-size:12px; font-weight:900; color:var(--gold); letter-spacing:1px; margin-bottom:8px; min-height:14px; }
+.tier-name { font-size:14px; font-weight:900; color:#ffffff; letter-spacing:1px; margin-bottom:4px; }
+.tier-price { font-size:26px; font-weight:900; color:var(--white); margin-bottom:10px; }
+.tier-feature-list { font-size:13px; color:#ffffff; font-family:var(--body); line-height:1.5; text-align:left; padding-left:16px; margin:0; }
+@media (max-width:760px) { .tier-grid { grid-template-columns:1fr; } .tier-card.tier-recommended { transform:none; } }
 
 /* ── VALUE DISPLAY ── */
 .value-panel {
@@ -558,7 +566,7 @@ footer b { color: var(--blue); }
         </div>
         <div class="decoded-lbl">Decoded Specifications</div>
         <div class="specs-box" id="res-specs">—</div>
-        <button class="btn-primary" onclick="confirmStep(1)">✓ Confirm Vehicle — Continue</button>
+        <button class="btn-primary" onclick="revealIntentGate('vin')">✓ Confirm Vehicle — Continue</button>
       </div>
     </div>
 
@@ -620,7 +628,25 @@ footer b { color: var(--blue); }
         <label class="lbl">Additional Equipment / Special Packages</label>
         <input type="text" class="inp" id="ymm-addl" placeholder="e.g. M Sport, Premium Sound, Executive Pkg, Panoramic Roof...">
       </div>
-      <button class="btn-primary" type="button" onclick="confirmYMM()">✓ Confirm Vehicle — Continue</button>
+      <button class="btn-primary" type="button" onclick="revealIntentGate('ymm')">✓ Confirm Vehicle — Continue</button>
+    </div>
+
+    <!-- INTENT + PAYOFF GATE — shown after vehicle is identified, before condition/appraisal -->
+    <div id="intent-gate" style="display:none;margin-top:18px;border-top:2px solid var(--border);padding-top:18px;">
+      <label class="lbl" style="margin-bottom:10px;font-size:15px;color:#ffffff">One quick question before we estimate your value:</label>
+      <div class="cond-grid" style="grid-template-columns:1fr 1fr;">
+        <button class="cond-btn" id="intent-replace" onclick="selectIntent('replace')">
+          <span class="c-icon">🔄</span><span class="c-main">Replacing It</span><span class="c-sub">Buying another vehicle</span>
+        </button>
+        <button class="cond-btn" id="intent-sell" onclick="selectIntent('sell')">
+          <span class="c-icon">💰</span><span class="c-main">Just Selling It</span><span class="c-sub">Not buying right now</span>
+        </button>
+      </div>
+      <div id="payoff-wrap" style="display:none;margin-top:14px;">
+        <label class="lbl" style="font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#fff">💳 Do you have a loan payoff on this vehicle?</label>
+        <input type="number" class="inp" id="intent-payoff" placeholder="Enter payoff amount, or 0 if paid off" oninput="document.getElementById('intent-continue').style.display='block'">
+      </div>
+      <button class="btn-primary" id="intent-continue" type="button" style="display:none;margin-top:14px;" onclick="confirmIntentGate()">✓ Continue to Condition &amp; Value</button>
     </div>
   </div>
 </div>
@@ -663,6 +689,13 @@ footer b { color: var(--blue); }
       </div>
       <div class="value-note" style="margin-top:8px">Based on live market data · Final offer determined after certified appraisal</div>
       <div class="value-cta" id="value-cta">✓ Value estimated — continue below to strengthen your offer</div>
+    </div>
+
+    <!-- EQUITY FIT GATE — only shown if negative equity or "just selling" intent -->
+    <div id="equity-fit-gate" style="display:none;background:rgba(255,68,68,.06);border:2px solid rgba(255,68,68,.3);border-radius:12px;padding:20px;margin-top:16px;">
+      <div id="eqfit-header" style="font-size:18px;font-weight:900;color:var(--red);margin-bottom:14px;"></div>
+      <div id="eqfit-body"></div>
+      <p style="font-size:14px;color:#ffffff;font-family:var(--body);margin-top:16px;text-align:center;">Pick any option — this is guidance based on your situation, not a requirement. Your EVL advisor will confirm exact figures.</p>
     </div>
     <div id="miles-wrap2" style="display:block;margin-top:10px">
       <label class="lbl" style="font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#fff">📍 Current Mileage <span style="color:var(--gold)">— REQUIRED</span></label>
@@ -979,7 +1012,88 @@ function updateValue(){
   if(mileEl&&miles)mileEl.textContent=parseInt(miles).toLocaleString()+' mi';
   var b2=vinData.build||vinData;
   if(vehEl&&b2.year)vehEl.textContent=(b2.year||'')+' '+(b2.make||'')+' '+(b2.model||'');
-  var b=vinData.build||vinData,msrp=b.msrp||b.base_price||0,year=b.year||new Date().getFullYear(),age=new Date().getFullYear()-year,base=msrp||28000,dep=Math.max(0.25,1-(age*0.11)),avg=Math.round(base*dep*condMult),lo=Math.round(avg*0.95),hi=Math.round(avg*1.05);document.getElementById('value-num').textContent='$'+lo.toLocaleString()+' — $'+hi.toLocaleString();}
+  var b=vinData.build||vinData,msrp=b.msrp||b.base_price||0,year=b.year||new Date().getFullYear(),age=new Date().getFullYear()-year,base=msrp||28000,dep=Math.max(0.25,1-(age*0.11)),avg=Math.round(base*dep*condMult),lo=Math.round(avg*0.95),hi=Math.round(avg*1.05);document.getElementById('value-num').textContent='$'+lo.toLocaleString()+' — $'+hi.toLocaleString();
+  checkEquityFit(avg);
+}
+
+// ── VETTING GATE: is the live BD auction even a fit for this unit? ──
+// Runs on the REAL estimated value from this step, not a live auction bid (no auction
+// exists yet at this point in the funnel). If the gap between estimated value and the
+// customer's payoff is too large, or the customer never intended to buy again, route
+// them to an offramp here instead of letting them invest time in Step 3's appraisal
+// for a path that was never going to fit.
+function checkEquityFit(estimatedValue){
+  var payoff = (typeof window.customerPayoff === 'number') ? window.customerPayoff : 0;
+  var gap = payoff - estimatedValue; // positive = underwater
+  var gateEl = document.getElementById('equity-fit-gate');
+  if(!gateEl) return;
+
+  if(customerIntent === 'sell' || gap > 0){
+    gateEl.style.display = 'block';
+    renderEquityFitGate(gap, estimatedValue);
+  } else {
+    gateEl.style.display = 'none';
+  }
+}
+
+function renderEquityFitGate(gap, estimatedValue){
+  var sellOnly = (customerIntent === 'sell');
+  var header = document.getElementById('eqfit-header');
+  var body = document.getElementById('eqfit-body');
+
+  if(sellOnly){
+    header.textContent = "You're not buying another vehicle — let's get you the most for this one.";
+    body.innerHTML = renderPrivateSaleTiers(Math.max(gap, 0), estimatedValue, false);
+  } else if(gap > 0){
+    header.textContent = '⚠️ This unit shows negative equity — here are your real options.';
+    body.innerHTML =
+      '<p style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.6;">' +
+      'Your estimated value is $' + estimatedValue.toLocaleString() + ' against a payoff of $' +
+      (estimatedValue + gap).toLocaleString() + ' — a gap of <strong style="color:var(--red);">$' +
+      gap.toLocaleString() + '</strong>. This is common right now and does not mean this deal is dead. ' +
+      'Here is what EVL recommends:</p>' +
+      '<div class="g2" style="margin-top:14px;">' +
+        '<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">' +
+          '<div style="font-weight:900;color:var(--white);margin-bottom:6px;">Roll the gap into your new loan</div>' +
+          '<div style="font-size:14px;color:#ffffff;font-family:var(--body);">If your new vehicle\'s LTV allows it, the gap can be financed forward. Your EVL advisor will confirm.</div>' +
+        '</div>' +
+        '<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">' +
+          '<div style="font-weight:900;color:var(--white);margin-bottom:6px;">Cover the gap directly</div>' +
+          '<div style="font-size:14px;color:#ffffff;font-family:var(--body);">Card, bridge loan, or check at closing — cleanest deal, no rolled debt.</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">' +
+        '<div style="font-weight:900;color:var(--gold);margin-bottom:8px;">Or — sell it outright instead</div>' +
+        '<p style="font-size:15px;color:#ffffff;font-family:var(--body);line-height:1.6;">Selling on the open market can net 15–25% more than a quick trade-in. That\'s real — but it costs you the pricing, the buyer vetting, the paperwork, and the risk. EVL can do that part for you:</p>' +
+        renderPrivateSaleTiers(gap, estimatedValue, true) +
+      '</div>';
+  }
+}
+
+function renderPrivateSaleTiers(gap, estimatedValue, isOfframp){
+  var recommended = '149';
+  if(gap >= 1500 && gap < 4000) recommended = '299';
+  else if(gap >= 4000) recommended = '499';
+
+  var tiers = [
+    {id:'149', name:'LISTING ASSIST', price:'$149', feats:['Market-correct pricing','Professional listing written for you','You field buyer inquiries']},
+    {id:'299', name:'VETTED SALE', price:'$299', feats:['Everything in Listing Assist','Buyer vetting &amp; scam screening','EVL coordinates safe exchange']},
+    {id:'499', name:'FULL SERVICE', price:'$499', feats:['Everything in Vetted Sale','EVL manages the entire sale','Paperwork &amp; title handled for you','Virtually hands-off']}
+  ];
+
+  var html = '<div class="tier-grid">';
+  tiers.forEach(function(t){
+    var isRec = (t.id === recommended);
+    html += '<div class="tier-card' + (isRec ? ' tier-recommended' : '') + '">' +
+      '<div class="tier-recommended-flag">' + (isRec ? '★ MOST CHOSEN FOR YOUR SITUATION' : '') + '</div>' +
+      '<div class="tier-name">' + t.name + '</div>' +
+      '<div class="tier-price">' + t.price + '</div>' +
+      '<ul class="tier-feature-list">' + t.feats.map(function(f){return '<li>'+f+'</li>';}).join('') + '</ul>' +
+    '</div>';
+  });
+  html += '</div>';
+  return html;
+}
 
 function toggleCheck(btn){btn.classList.toggle('selected');btn.querySelector('.chk').textContent=btn.classList.contains('selected')?'✓':'';var g=btn.dataset.group,v=btn.dataset.val;if(!checks[g])checks[g]=[];if(btn.classList.contains('selected')){if(checks[g].indexOf(v)<0)checks[g].push(v);}else{checks[g]=checks[g].filter(function(x){return x!==v;});}updateCert();}
 
@@ -1054,7 +1168,41 @@ function reopenStep(n){
   setTimeout(function(){target.scrollIntoView({behavior:'smooth',block:'start'});},100);
 }
 
-function confirmYMM(){var year=document.getElementById('ymm-year').value,make=document.getElementById('ymm-make').value,model=document.getElementById('ymm-model').value,miles=document.getElementById('ymm-miles').value;if(!year||!make||!model){alert('Please select Year, Make and Model.');return;}if(!miles){alert('Please enter current mileage.');return;}var body=document.getElementById('ymm-body').value,trim=document.getElementById('ymm-trim').value,drive=document.getElementById('ymm-drive').value,color=document.getElementById('ymm-color').value,intColor=document.getElementById('ymm-int-color').value,zip=document.getElementById('ymm-zip').value,keys=document.getElementById('ymm-keys').value;var selOpts=[];document.querySelectorAll('#ymm-opts-grid .check-btn.selected').forEach(function(b){selOpts.push(b.getAttribute('data-val'));});ymmData={year:year,make:make,model:model,body:body,trim:trim,drive:drive,color:color,intColor:intColor,miles:miles,zip:zip,keys:keys,options:selOpts.join(', ')};vinData={year:parseInt(year),make:make,model:model,trim:trim,msrp:0,build:{year:parseInt(year),make:make,model:model,trim:trim}};confirmStep(1);}
+function confirmYMM(){var year=document.getElementById('ymm-year').value,make=document.getElementById('ymm-make').value,model=document.getElementById('ymm-model').value,miles=document.getElementById('ymm-miles').value;if(!year||!make||!model){alert('Please select Year, Make and Model.');return false;}if(!miles){alert('Please enter current mileage.');return false;}var body=document.getElementById('ymm-body').value,trim=document.getElementById('ymm-trim').value,drive=document.getElementById('ymm-drive').value,color=document.getElementById('ymm-color').value,intColor=document.getElementById('ymm-int-color').value,zip=document.getElementById('ymm-zip').value,keys=document.getElementById('ymm-keys').value;var selOpts=[];document.querySelectorAll('#ymm-opts-grid .check-btn.selected').forEach(function(b){selOpts.push(b.getAttribute('data-val'));});ymmData={year:year,make:make,model:model,body:body,trim:trim,drive:drive,color:color,intColor:intColor,miles:miles,zip:zip,keys:keys,options:selOpts.join(', ')};vinData={year:parseInt(year),make:make,model:model,trim:trim,msrp:0,build:{year:parseInt(year),make:make,model:model,trim:trim}};return true;}
+
+// ── INTENT + PAYOFF GATE ──
+// Fires once, after either lookup path (VIN or YMM) confirms the vehicle, and before
+// Drawer 2's condition/value step. Determines whether this customer is replacing the
+// vehicle (loan-gap math applies) or just selling it (skip straight to Private Sale
+// Assist later — no reason to show them roll-into-loan language that doesn't apply).
+var customerIntent = null;
+
+function revealIntentGate(mode){
+  if(mode === 'vin'){
+    if(!vinData){ alert('Please decode a VIN first.'); return; }
+  } else {
+    if(!confirmYMM()) return; // validation + data build happens inside confirmYMM
+  }
+  document.getElementById('intent-gate').style.display = 'block';
+  document.getElementById('intent-gate').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function selectIntent(choice){
+  customerIntent = choice;
+  document.getElementById('intent-replace').classList.toggle('selected', choice === 'replace');
+  document.getElementById('intent-sell').classList.toggle('selected', choice === 'sell');
+  document.getElementById('payoff-wrap').style.display = 'block';
+  // "just selling" customers may still have a payoff (still financed), so we still ask —
+  // the difference is what we DO with the gap later, not whether we collect it.
+}
+
+function confirmIntentGate(){
+  var payoffVal = document.getElementById('intent-payoff').value;
+  if(payoffVal === ''){ alert('Please enter your payoff amount (enter 0 if paid off).'); return; }
+  window.customerPayoff = parseInt(payoffVal) || 0;
+  confirmStep(1);
+}
+
 function closeModal(id){document.getElementById(id).classList.remove('open');if(id==='estimator-modal')document.getElementById('estimator-frame').src='';}
 
 function waitAndSubmit(){
