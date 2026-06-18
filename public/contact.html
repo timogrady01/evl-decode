@@ -832,6 +832,15 @@ function acceptCookie(){document.getElementById('evl-cookie').style.display='non
 window.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem('evl-cookie')){var b=document.getElementById('evl-cookie');if(b)b.style.display='flex';}});
 // Highlight active page
 (function(){var path=window.location.pathname;document.querySelectorAll('.evl-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.endsWith(a.getAttribute('href').split('/').pop())){a.style.color='#2B84FE';a.style.borderBottom='2px solid #2B84FE';}});})();
+// Pre-fill context when arriving from a flagged flow (e.g. trade-in negative equity offramp)
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var reason = params.get('reason');
+  var notesEl = document.getElementById('vNotes');
+  if(reason === 'no-trade' && notesEl){
+    notesEl.value = "I'd like to purchase a vehicle without trading in my current one — my trade-in didn't qualify for financing based on negative equity, and I'd rather buy on my own credit instead.";
+  }
+})();
 </script>
 </body>
 </html>
