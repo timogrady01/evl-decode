@@ -205,6 +205,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .doc-optional{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
 .doc-auto{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 
+@keyframes pulse-red {
+  0%,100%{opacity:1}
+  50%{opacity:.3}
+}
 @media(max-width:900px){
   .auction-grid{grid-template-columns:1fr}
   .auction-vehicle-section,.auction-reserve-section,.auction-bid-section{grid-column:1}
@@ -847,7 +851,7 @@ function renderAuctions(auctions){
     const floorSrc = Object.entries({CarMax:a.carmax,Carvana:a.carvana,'SMTV':a.smtv}).sort((x,y)=>y[1]-x[1]);
     const bestFloor = floorSrc[0];
 
-    return `<div class="auction-card ${phaseClass}">
+    return `<div class="auction-card ${phaseClass}" data-auction-id="${a.id}">
       <div class="auction-header">
         <div>
           <div class="auction-id">${a.id}</div>
@@ -1049,7 +1053,7 @@ function updateStatsBar(auctions) {
   });
 }
 
-// ── COUNTDOWN TIMERS ──
+// ── COUNTDOWN TIMERS WITH PHASE TRANSITION + AUCTION CLOSE ──
 function startTimers(auctions) {
   setInterval(() => {
     auctions.forEach(a => {
@@ -1060,9 +1064,125 @@ function startTimers(auctions) {
         const s = a.timer % 60;
         const el = document.getElementById('timer-' + a.id);
         if (el) el.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+
+        // Flash red in final 60 seconds
+        if (el && a.timer <= 60) {
+          el.style.animation = 'pulse-red 1s infinite';
+        }
+
+      } else if (!a._transitioned) {
+        a._transitioned = true;
+
+        if (a.phase === 1) {
+          // ── PHASE 1 EXPIRED → FLIP TO PHASE 2 ──
+          transitionToPhase2(a);
+        } else if (a.phase === 2) {
+          // ── PHASE 2 EXPIRED → AUCTION CLOSED ──
+          closeAuction(a);
+        }
       }
     });
   }, 1000);
+}
+
+// ── PHASE 1 → PHASE 2 TRANSITION ──
+async function transitionToPhase2(a) {
+  try {
+    // Update Firestore
+    await updateDoc(doc(db, 'evl_auctions', a.id), {
+      phase: 2,
+      timer: 3600,  // 1 hour Phase 2 window
+      timerLabel: '01:00:00',
+      phaseLabel: 'PHASE 2 — LIVE BIDDING',
+      phaseTransitionTime: serverTimestamp()
+    });
+
+    // Update local state
+    a.phase = 2;
+    a.timer = 3600;
+
+    // Update the card visually without full re-render
+    const card = document.querySelector('[data-auction-id="' + a.id + '"]');
+    if (card) {
+      card.className = 'auction-card phase-2';
+      const badge = card.querySelector('.auction-phase-badge');
+      if (badge) { badge.className = 'auction-phase-badge phase-2-badge'; badge.textContent = '⚡ PHASE 2'; }
+      const phaseLabel = card.querySelector('.auction-id + div');
+      if (phaseLabel) phaseLabel.textContent = 'PHASE 2 — LIVE BIDDING';
+
+      // Swap Phase 1 message for bid input
+      const bidCard = card.querySelector('.bid-card');
+      if (bidCard) {
+        bidCard.innerHTML = `
+          <div class="bid-label">AUCTION CLOSES IN</div>
+          <div class="bid-timer" id="timer-${a.id}">01:00:00</div>
+          <div id="current-bid-${a.id}" class="bid-current"></div>
+          <div class="bid-input-wrap" style="margin-top:10px">
+            <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.reserve + 100).toLocaleString()}" min="${a.reserve}"/>
+            <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
+          </div>
+          <div class="bid-floor-note">🔒 RESERVE: $${a.reserve.toLocaleString()} — All bids sealed & blind</div>
+          <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>
+          <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+            <button class="btn btn-dark btn-sm">📋 PITPO REPORT</button>
+            <button class="btn btn-dark btn-sm">📸 VIEW PHOTOS</button>
+            <button class="btn btn-gold btn-sm" onclick="submitBid('${a.id}')">⚡ SUBMIT BID</button>
+          </div>`;
+      }
+    }
+
+    showToast('🚨 ' + a.id + ' — PHASE 1 EXPIRED · NOW LIVE BIDDING', 'gold');
+    updateStatsBar(auctions);
+
+  } catch(e) {
+    console.error('Phase transition error:', e);
+  }
+}
+
+// ── PHASE 2 AUCTION CLOSE ──
+async function closeAuction(a) {
+  try {
+    const winner = a.currentBid ? true : false;
+
+    await updateDoc(doc(db, 'evl_auctions', a.id), {
+      phase: 99,
+      status: 'CLOSED',
+      closedAt: serverTimestamp(),
+      winningBid: a.currentBid || null,
+      result: winner ? 'SOLD' : 'NO_SALE'
+    });
+
+    a.phase = 99;
+
+    const card = document.querySelector('[data-auction-id="' + a.id + '"]');
+    if (card) {
+      card.className = 'auction-card expired';
+      const badge = card.querySelector('.auction-phase-badge');
+      if (badge) {
+        badge.className = 'auction-phase-badge';
+        badge.style.cssText = 'background:#1a0000;border:1px solid var(--red);color:var(--red)';
+        badge.textContent = winner ? '🔴 SOLD — AUCTION CLOSED' : '🔴 NO SALE — CLOSED';
+      }
+      const bidCard = card.querySelector('.bid-card');
+      if (bidCard) {
+        bidCard.style.borderColor = 'var(--red)';
+        bidCard.innerHTML = `
+          <div style="text-align:center;padding:20px 0">
+            <div style="font-size:28px;margin-bottom:10px">${winner ? '🏆' : '❌'}</div>
+            <div style="font-size:16px;font-weight:900;color:${winner ? 'var(--green)' : 'var(--red)'};letter-spacing:1px;margin-bottom:8px">
+              ${winner ? 'AUCTION CLOSED — SOLD' : 'AUCTION CLOSED — NO SALE'}
+            </div>
+            ${winner ? '<div style="font-size:24px;font-weight:900;color:var(--gold)">WINNING BID: $' + a.currentBid.toLocaleString() + '</div><div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:8px">Winning dealer will be contacted within 30 minutes.</div>' : '<div style="font-size:13px;color:var(--muted);font-family:var(--body)">No bids met the reserve. Vehicle returned to seller.</div>'}
+          </div>`;
+      }
+    }
+
+    showToast(winner ? '🏆 ' + a.id + ' SOLD — $' + a.currentBid.toLocaleString() : '❌ ' + a.id + ' — NO SALE', winner ? 'green' : 'red');
+    updateStatsBar(auctions);
+
+  } catch(e) {
+    console.error('Auction close error:', e);
+  }
 }
 
 // ── EXPOSE FUNCTIONS TO GLOBAL SCOPE (required for onclick handlers in module scripts) ──
