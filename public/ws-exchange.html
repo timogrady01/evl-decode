@@ -250,12 +250,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-card"><span class="stat-val" style="color:var(--gold)">7</span><div class="stat-lbl">Live Auctions</div></div>
-  <div class="stat-card"><span class="stat-val" style="color:var(--blue)">3</span><div class="stat-lbl">Phase 1 (ID Hold)</div></div>
-  <div class="stat-card"><span class="stat-val" style="color:var(--green)">4</span><div class="stat-lbl">Phase 2 (Live Bids)</div></div>
-  <div class="stat-card"><span class="stat-val" style="color:var(--cyan)">23</span><div class="stat-lbl">Active BD Bidders</div></div>
-  <div class="stat-card"><span class="stat-val" style="color:var(--gold)">$284k</div><div class="stat-lbl">Reserve Locked</div></div>
-  <div class="stat-card"><span class="stat-val" style="color:var(--green)">$312k</span><div class="stat-lbl">Current High Bids</div></div>
+  <div class="stat-card"><span class="stat-val" id="stat-live" style="color:var(--gold)">—</span><div class="stat-lbl">Live Auctions</div></div>
+  <div class="stat-card"><span class="stat-val" id="stat-phase1" style="color:var(--blue)">—</span><div class="stat-lbl">Phase 1 (ID Hold)</div></div>
+  <div class="stat-card"><span class="stat-val" id="stat-phase2" style="color:var(--green)">—</span><div class="stat-lbl">Phase 2 (Live Bids)</div></div>
+  <div class="stat-card"><span class="stat-val" style="color:var(--cyan)">LIVE</span><div class="stat-lbl">Firestore Connected</div></div>
+  <div class="stat-card"><span class="stat-val" id="stat-reserve" style="color:var(--gold)">—</span><div class="stat-lbl">Reserve Locked</div></div>
+  <div class="stat-card"><span class="stat-val" id="stat-bids" style="color:var(--green)">—</span><div class="stat-lbl">Current High Bids</div></div>
 </div>
 
 <!-- PLATFORM DISCLAIMER -->
@@ -652,7 +652,7 @@ function switchTab(tab, btn){
 
 // ── FIREBASE INTEGRATION ──
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getFirestore, collection, doc, onSnapshot, updateDoc, addDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getFirestore, collection, doc, onSnapshot, updateDoc, setDoc, serverTimestamp, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
@@ -701,34 +701,42 @@ async function submitBidToFirebase(auctionId, bidAmount, dealerEmail) {
   try {
     const auctionRef = doc(db, 'evl_auctions', auctionId);
     const snap = await getDoc(auctionRef);
-    
-    if (snap.exists()) {
-      const current = snap.data().currentBid || 0;
-      if (bidAmount <= current) {
-        alert(`Bid must be higher than current bid of $${current.toLocaleString()}`);
-        return false;
-      }
-      await updateDoc(auctionRef, {
-        currentBid: bidAmount,
-        highBidder: dealerEmail,
-        lastBidTime: serverTimestamp(),
-        bidHistory: [...(snap.data().bidHistory || []), {
-          amount: bidAmount, dealer: dealerEmail, time: new Date().toISOString()
-        }]
-      });
-    } else {
-      await addDoc(collection(db, 'evl_auctions'), {
-        auctionId, currentBid: bidAmount,
-        highBidder: dealerEmail,
-        lastBidTime: serverTimestamp(),
-        bidHistory: [{ amount: bidAmount, dealer: dealerEmail, time: new Date().toISOString() }]
-      });
+    if (!snap.exists()) {
+      alert('Auction not found. Please refresh the page.');
+      return false;
     }
+    const current = snap.data().currentBid || 0;
+    if (bidAmount <= current) {
+      alert('Bid must be higher than current bid of $' + current.toLocaleString());
+      return false;
+    }
+    await updateDoc(auctionRef, {
+      currentBid: bidAmount,
+      highBidder: dealerEmail,
+      lastBidTime: serverTimestamp(),
+      bidHistory: [...(snap.data().bidHistory || []), {
+        amount: bidAmount, dealer: dealerEmail, time: new Date().toISOString()
+      }]
+    });
     return true;
   } catch(e) {
     console.error('Firebase bid error:', e);
     return false;
   }
+}
+
+// ── SEED AUCTIONS TO FIRESTORE (first run only) ──
+async function seedAuctionsIfEmpty() {
+  const snap = await getDocs(collection(db, 'evl_auctions'));
+  if (!snap.empty) return;
+  console.log('Seeding auctions to Firestore...');
+  for (const a of LIVE_AUCTIONS) {
+    await setDoc(doc(db, 'evl_auctions', a.id), {
+      ...a,
+      seededAt: serverTimestamp()
+    });
+  }
+  console.log('Seed complete — 5 auctions written to Firestore.');
 }
 
 // ── LISTEN FOR REAL-TIME BID UPDATES ──
@@ -830,9 +838,9 @@ const BADGE_CONFIG = {
   'NO_ACCIDENT':{label:'✅ NO ACCIDENTS',cls:'badge-no-accident'},
 };
 
-function renderAuctions(){
+function renderAuctions(auctions){
   const container = document.getElementById('auction-list');
-  container.innerHTML = LIVE_AUCTIONS.map(a=>{
+  container.innerHTML = auctions.map(a=>{
     const phaseClass = a.phase===1?'phase-1':a.currentBid>a.reserve?'floor-beat':'phase-2';
     const phaseBadgeClass = a.phase===1?'phase-1-badge':a.currentBid>a.reserve?'phase-floor-badge':'phase-2-badge';
     const timerClass = a.timer<3600?'bid-timer':'bid-timer phase1';
@@ -880,7 +888,7 @@ function renderAuctions(){
             <div class="bid-card">
               <div class="bid-label">${a.phase===1?'ID HOLD TIMER':'AUCTION CLOSES IN'}</div>
               <div class="${timerClass}" id="timer-${a.id}">${a.timerLabel}</div>
-              ${a.currentBid?`<div class="bid-current">🏆 CURRENT HIGH BID: <strong style="color:var(--green);font-size:16px">$${a.currentBid.toLocaleString()}</strong></div>`:``}
+              <div id="current-bid-${a.id}" class="bid-current">${a.currentBid?`🏆 CURRENT HIGH BID: <strong style="color:var(--green);font-size:16px">$${a.currentBid.toLocaleString()}</strong>`:``}</div>
               ${a.phase===2?`<div class="bid-input-wrap" style="margin-top:10px">
                 <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.currentBid||(a.reserve+100)).toLocaleString()}" min="${a.reserve}"/>
                 <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
@@ -952,22 +960,87 @@ function submitIntake(){
   alert(`✅ VEHICLE SUBMITTED FOR EVL CERTIFICATION\n\nVIN: ${vin}\n\nNext steps:\n1. PITPO title API verification running\n2. Corporate floor API pull (CarMax/Carvana/SMTV) — est. 2 hours\n3. Warranty badge assignment based on VIN build data\n4. Phase 1 notification sent to local ID dealers\n\nYou will receive a text and email confirmation within 30 minutes.`);
 }
 
-// ── INIT ──
-window.addEventListener('DOMContentLoaded',function(){
-  renderAuctions();
-  // Simulate countdown timers
-  setInterval(()=>{
-    LIVE_AUCTIONS.forEach(a=>{
-      if(a.timer>0){
+// ── LIVE LOAD FROM FIRESTORE ──
+async function loadAndRenderAuctions() {
+  const container = document.getElementById('auction-list');
+  container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);font-size:14px;font-family:var(--body)">⚡ Loading live auction data...</div>';
+
+  await seedAuctionsIfEmpty();
+
+  const snap = await getDocs(collection(db, 'evl_auctions'));
+  const auctions = [];
+  snap.forEach(d => auctions.push({ id: d.id, ...d.data() }));
+
+  if (auctions.length === 0) {
+    container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted)">No active auctions found.</div>';
+    return;
+  }
+
+  // Render all cards
+  renderAuctions(auctions);
+  updateStatsBar(auctions);
+
+  // Wire real-time listeners for bid updates on each auction
+  auctions.forEach(a => {
+    const auctionRef = doc(db, 'evl_auctions', a.id);
+    onSnapshot(auctionRef, (snap) => {
+      if (!snap.exists()) return;
+      const live = snap.data();
+      // Update current bid display
+      const bidDisplay = document.getElementById('current-bid-' + a.id);
+      if (bidDisplay && live.currentBid) {
+        bidDisplay.innerHTML = '&#127942; CURRENT HIGH BID: <strong style="color:var(--green);font-size:16px">$' + live.currentBid.toLocaleString() + '</strong>';
+      }
+      // Update stats bar live
+      auctions.forEach(x => { if (x.id === a.id) x.currentBid = live.currentBid; });
+      updateStatsBar(auctions);
+    });
+  });
+
+  // Start countdown timers
+  startTimers(auctions);
+}
+
+// ── UPDATE STATS BAR ──
+function updateStatsBar(auctions) {
+  const live = auctions.length;
+  const phase1 = auctions.filter(a => a.phase === 1).length;
+  const phase2 = auctions.filter(a => a.phase === 2).length;
+  const totalReserve = auctions.reduce((s, a) => s + (a.reserve || 0), 0);
+  const totalBids = auctions.reduce((s, a) => s + (a.currentBid || 0), 0);
+
+  const els = {
+    'stat-live': live,
+    'stat-phase1': phase1,
+    'stat-phase2': phase2,
+    'stat-reserve': '$' + Math.round(totalReserve / 1000) + 'k',
+    'stat-bids': '$' + Math.round(totalBids / 1000) + 'k'
+  };
+  Object.entries(els).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  });
+}
+
+// ── COUNTDOWN TIMERS ──
+function startTimers(auctions) {
+  setInterval(() => {
+    auctions.forEach(a => {
+      if (a.timer > 0) {
         a.timer--;
-        const h=Math.floor(a.timer/3600);
-        const m=Math.floor((a.timer%3600)/60);
-        const s=a.timer%60;
-        const el=document.getElementById('timer-'+a.id);
-        if(el) el.textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        const h = Math.floor(a.timer / 3600);
+        const m = Math.floor((a.timer % 3600) / 60);
+        const s = a.timer % 60;
+        const el = document.getElementById('timer-' + a.id);
+        if (el) el.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
       }
     });
-  },1000);
+  }, 1000);
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', function() {
+  loadAndRenderAuctions();
 });
 </script>
 </body>
