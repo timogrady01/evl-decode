@@ -370,7 +370,16 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <div class="intake-section-title" style="color:var(--red)"><span>4️⃣</span> AUTOMATIC DISQUALIFICATION RULES</div>
       <div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:12px">EVL reserves the right to refuse any submission. The following trigger automatic rejection:</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        ${['Salvage / Rebuilt / Junk Title','Flood or Fire Damage History','VIN Mismatch or Error','Name Mismatch (title ≠ account)','Vehicle Over 20 Years Old (Federal Odometer Exemption)','Active Lien Detected (not payoff coordinated)','Restricted State Registration (CA, NY, NJ, IL)','Lost Title (no path to delivery within 30 days)','Vehicles with open recalls affecting safety','Commercial fleet vehicles without proper paperwork'].map(r=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">${r}</span></div>`).join('')}
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Salvage / Rebuilt / Junk Title</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Flood or Fire Damage History</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">VIN Mismatch or Error</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Name Mismatch (title ≠ account)</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Vehicle Over 20 Years Old (Federal Odometer Exemption)</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Active Lien Not Payoff Coordinated</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Restricted State — CA, NY, NJ, IL</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Lost Title — No Delivery Path Within 30 Days</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Open Recalls Affecting Safety</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Commercial Fleet Without Proper Paperwork</span></div>
       </div>
     </div>
 
@@ -1099,7 +1108,12 @@ async function submitIntake() {
 
   // ── DISABLE BUTTON DURING WRITE ──
   const submitBtn = document.querySelector('[onclick="submitIntake()"]');
-  if (submitBtn) { submitBtn.textContent = 'SUBMITTING...'; submitBtn.disabled = true; }
+  if (submitBtn) {
+    submitBtn.textContent = '⏳ SUBMITTING TO FIRESTORE...';
+    submitBtn.disabled = true;
+    submitBtn.style.background = '#1a1400';
+    submitBtn.style.color = 'var(--gold)';
+  }
 
   try {
     // ── BUILD IDs ──
