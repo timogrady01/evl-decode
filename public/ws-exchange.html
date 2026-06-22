@@ -299,7 +299,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div class="intake-section">
       <div class="intake-section-title" style="color:var(--blue)"><span>1️⃣</span> VEHICLE INFORMATION</div>
       <div class="form-grid">
-        <div class="form-group"><label class="form-label">VIN (17-Digit)</label><input class="form-input" id="intake-vin" placeholder="Enter VIN — auto-decodes" maxlength="17"/></div>
+        <div class="form-group" style="grid-column:1/-1"><label class="form-label">VIN (17-Digit) — Press Enter or Tab to auto-decode</label>
+              <div style="display:flex;gap:8px">
+                <input class="form-input" id="intake-vin" placeholder="Enter 17-digit VIN" maxlength="17" style="flex:1;text-transform:uppercase" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter'){event.preventDefault();decodeIntakeVin()}" onblur="decodeIntakeVin()"/>
+                <button type="button" class="btn btn-blue" onclick="decodeIntakeVin()" style="white-space:nowrap;padding:0 16px">🔍 DECODE</button>
+              </div>
+              <div id="vin-decode-status" style="font-size:12px;font-family:var(--body);margin-top:6px;min-height:18px"></div>
+            </div>
         <div class="form-group"><label class="form-label">Current Odometer</label><input class="form-input" id="intake-miles" type="number" placeholder="e.g. 44200"/></div>
         <div class="form-group"><label class="form-label">Year</label><input class="form-input" id="intake-year" type="number" placeholder="2023"/></div>
         <div class="form-group"><label class="form-label">Make</label><input class="form-input" id="intake-make" placeholder="Toyota"/></div>
@@ -985,6 +991,53 @@ document.getElementById('intake-state')?.addEventListener('change',function(){
   if(alert) alert.style.display = restricted.includes(this.value)?'block':'none';
 });
 
+// ── VIN DECODE FOR INTAKE FORM ──
+async function decodeIntakeVin() {
+  const vinEl  = document.getElementById('intake-vin');
+  const status = document.getElementById('vin-decode-status');
+  const vin    = vinEl?.value?.trim().toUpperCase();
+
+  if (!vin || vin.length !== 17) {
+    if (status) status.innerHTML = '<span style="color:var(--red)">⚠️ VIN must be exactly 17 characters</span>';
+    return;
+  }
+
+  if (status) status.innerHTML = '<span style="color:var(--blue)">🔄 Decoding VIN...</span>';
+
+  try {
+    const res  = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/' + vin + '?format=json');
+    const data = await res.json();
+    const v    = data?.Results?.[0];
+
+    if (!v || v.ErrorCode !== '0') {
+      status.innerHTML = '<span style="color:var(--red)">❌ VIN not found — check and re-enter</span>';
+      return;
+    }
+
+    // Auto-fill fields
+    const year  = v.ModelYear  || '';
+    const make  = v.Make       || '';
+    const model = v.Model      || '';
+    const trim  = v.Trim       || v.Series || '';
+    const body  = v.BodyClass  || '';
+
+    const set = (id, val) => { const el = document.getElementById(id); if(el && val) el.value = val; };
+    set('intake-year',  year);
+    set('intake-make',  make.charAt(0).toUpperCase() + make.slice(1).toLowerCase());
+    set('intake-model', model);
+    set('intake-trim',  trim);
+
+    status.innerHTML = '<span style="color:var(--green)">✅ Decoded: ' + year + ' ' + make + ' ' + model + (trim ? ' ' + trim : '') + (body ? ' — ' + body : '') + '</span>';
+
+    // Focus miles field next
+    document.getElementById('intake-miles')?.focus();
+
+  } catch(e) {
+    if (status) status.innerHTML = '<span style="color:var(--red)">❌ Decode failed — check connection</span>';
+    console.error('VIN decode error:', e);
+  }
+}
+
 async function submitIntake() {
   // ── COLLECT ALL FIELDS ──
   const vin   = document.getElementById('intake-vin')?.value?.trim().toUpperCase();
@@ -1319,6 +1372,7 @@ async function closeAuction(a) {
 
 // ── EXPOSE FUNCTIONS TO GLOBAL SCOPE (required for onclick handlers in module scripts) ──
 window.switchTab       = switchTab;
+window.decodeIntakeVin = decodeIntakeVin;
 window.submitBid       = submitBid;
 window.showDealMath    = showDealMath;
 window.setTitleStatus  = setTitleStatus;
