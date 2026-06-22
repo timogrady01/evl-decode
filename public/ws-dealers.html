@@ -3,127 +3,413 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>EVL WS — Dealer Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#0A0A08;--s1:#111110;--s2:#1A1A16;--s3:#222220;
-  --gold:#F5C842;--gold2:#D4A820;--gold3:#FFE580;
-  --green:#00C853;--red:#FF3333;--orange:#FF8C00;--blue:#2B84FE;
-  --muted:#C8C4A8;--border:rgba(245,200,66,0.2);--border2:rgba(245,200,66,0.35);
-}
-body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;-webkit-font-smoothing:antialiased;min-height:100vh;}
-nav{background:rgba(10,10,8,0.98);border-bottom:2px solid var(--border2);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
-.nav-logo{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;text-decoration:none;}
-.nav-logo span{color:#fff;}
-.nav-links{display:flex;gap:24px;align-items:center;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;padding:6px 0;}
-.nav-links a:hover,.nav-links a.active{color:var(--gold);}
-.nav-badge{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;text-decoration:none;}
-.page-header{background:linear-gradient(160deg,#1A1600,var(--bg));border-bottom:2px solid var(--border);padding:32px 40px;}
-.ph-dealer{font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
-.ph-title{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1;}
-.ph-sub{color:var(--muted);font-size:16px;margin-top:6px;}
-.wrap{padding:40px;}
-.sec-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:20px;}
-.card{background:var(--s1);border:1px solid var(--border);padding:28px;margin-bottom:20px;}
-.card-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
-table{width:100%;border-collapse:collapse;}
-th{background:var(--s2);color:var(--muted);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;text-align:left;border-bottom:2px solid var(--border);}
-td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:15px;color:#fff;}
-tr:hover td{background:var(--s2);}
-.badge{display:inline-block;padding:4px 10px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
-.badge-green{background:rgba(0,200,83,.15);color:var(--green);border:1px solid rgba(0,200,83,.3);}
-.badge-gold{background:rgba(245,200,66,.15);color:var(--gold);border:1px solid var(--border2);}
-.badge-blue{background:rgba(43,132,254,.15);color:var(--blue);border:1px solid rgba(43,132,254,.3);}
-.badge-red{background:rgba(255,51,51,.15);color:var(--red);border:1px solid rgba(255,51,51,.3);}
-.btn{background:var(--gold);color:#000;font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
-.btn:hover{background:var(--gold3);}
-.btn-outline{background:none;border:2px solid var(--border2);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:10px 22px;cursor:pointer;text-decoration:none;display:inline-block;}
-.inp{background:var(--s2);border:1px solid var(--border2);color:#fff;font-family:"Barlow",sans-serif;font-size:15px;padding:12px 16px;width:100%;outline:none;}
-.inp:focus{border-color:var(--gold);}
-label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
-.form-row{margin-bottom:18px;}
-.stat-box{background:var(--s1);border:1px solid var(--border);padding:24px 28px;}
-.stat-lbl{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.stat-num{font-family:"Barlow Condensed",sans-serif;font-size:44px;font-weight:900;line-height:1;color:var(--gold);}
-.divider{border:none;border-top:1px solid var(--border);margin:24px 0;}
-</style>
-<style id="evl-ws-nav-css">
-/* ── EVL WHOLESALE NAV ── */
-.evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid #FFD700;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
-.evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
-.evl-ws-nav-links{display:flex;align-items:center;gap:4px;}
-.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
-.evl-ws-nav-link:hover{color:#FFD700;background:#1a1400;}
-.evl-ws-nav-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;margin-left:8px;border:1px solid #2a2a2e;}
-.evl-ws-nav-retail:hover{color:#fff;border-color:#fff;}
-.evl-ws-nav-logout{background:#1a1400;border:1px solid #FFD700;color:#FFD700;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;transition:all .2s;white-space:nowrap;}
-.evl-ws-nav-logout:hover{background:#FFD700;color:#000;}
-.evl-ws-hamburger{display:none;background:none;border:none;color:#FFD700;font-size:22px;cursor:pointer;padding:4px 8px;}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--gold:#FFD700;--green:#00C853;--red:#FF3333;--blue:#2B84FE;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh}
+
+/* NAV */
+.ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;flex-wrap:wrap;gap:8px}
+.ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
+.ws-nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.ws-nav-link{color:#e8d88a;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.ws-nav-link:hover{color:var(--gold);background:#1a1400}
+.ws-nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold)}
+
+/* PAGE HEADER */
+.page-hdr{background:linear-gradient(135deg,#0a0800,var(--bg));border-bottom:2px solid #1a1400;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.page-hdr-title{font-size:26px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.page-hdr-sub{font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px}
+
+/* ROLE LEGEND */
+.role-legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.role-pill{font-size:12px;font-weight:900;padding:6px 14px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.id-pill{background:#040e1a;border:2px solid var(--blue);color:var(--blue)}
+.bd-pill{background:#1a1400;border:2px solid var(--gold);color:var(--gold)}
+
+/* STATS */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid #1a1400}
+.stat-box{padding:20px 24px;border-right:1px solid #1a1400;text-align:center}
+.stat-box:last-child{border-right:none}
+.stat-val{font-size:36px;font-weight:900;line-height:1;display:block;margin-bottom:4px}
+.stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;font-family:var(--body)}
+
+/* FILTERS */
+.filter-bar{padding:16px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #0d0d1a;background:var(--s1)}
+.filter-btn{padding:7px 16px;font-size:12px;font-weight:900;letter-spacing:1px;border:1px solid #2a2a4e;border-radius:20px;cursor:pointer;font-family:var(--font);background:transparent;color:var(--muted);transition:all .2s;text-transform:uppercase}
+.filter-btn:hover{border-color:var(--gold);color:var(--gold)}
+.filter-btn.active{background:var(--gold);color:#020203;border-color:var(--gold)}
+.filter-btn.active-blue{background:var(--blue);color:var(--white);border-color:var(--blue)}
+.search-input{background:var(--s2);border:1px solid #2a2a4e;color:var(--white);padding:8px 14px;border-radius:8px;font-size:13px;font-family:var(--body);outline:none;min-width:200px}
+.search-input::placeholder{color:var(--muted)}
+.search-input:focus{border-color:var(--gold)}
+
+/* DEALER GRID */
+.dealer-wrap{padding:24px 32px}
+.hub-section{margin-bottom:32px}
+.hub-title{font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #0d0d1a;display:flex;align-items:center;gap:10px}
+.hub-count{font-size:11px;color:var(--muted);background:var(--s1);padding:2px 8px;border-radius:10px}
+
+.dealer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+
+/* DEALER CARD */
+.dealer-card{background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:16px 18px;transition:border-color .2s;position:relative}
+.dealer-card:hover{border-color:var(--gold)}
+.dealer-card.role-id{border-left:3px solid var(--blue)}
+.dealer-card.role-bd{border-left:3px solid var(--gold)}
+.dealer-card.role-both{border-left:3px solid var(--green)}
+
+.dc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
+.dc-name{font-size:15px;font-weight:900;color:var(--white);line-height:1.2}
+.dc-brand{font-size:11px;color:var(--muted);font-family:var(--body);margin-top:3px}
+.dc-roles{display:flex;gap:5px;flex-shrink:0}
+.role-tag{font-size:10px;font-weight:900;padding:3px 8px;border-radius:10px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.tag-id{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+.tag-bd{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+
+.dc-meta{font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.8}
+.dc-meta span{color:var(--dim);font-weight:600}
+
+.dc-actions{display:flex;gap:6px;margin-top:12px}
+.btn-xs{padding:6px 12px;font-size:11px;font-weight:900;letter-spacing:1px;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);text-transform:uppercase;transition:all .2s}
+.btn-blue-xs{background:transparent;border:1px solid var(--blue);color:var(--blue)}
+.btn-blue-xs:hover{background:var(--blue);color:var(--white)}
+.btn-gold-xs{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.btn-gold-xs:hover{background:var(--gold);color:#020203}
+.btn-green-xs{background:var(--green);color:#020203}
+
+/* ADD DEALER MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:none;align-items:center;justify-content:center}
+.modal-box{background:#0a0f1a;border:2px solid var(--gold);border-radius:16px;padding:32px;max-width:560px;width:90%;font-family:var(--font);max-height:90vh;overflow-y:auto}
+.modal-title{font-size:18px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:20px}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.modal-field{margin-bottom:12px}
+.modal-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
+.modal-input{background:#020203;border:1px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:6px;font-size:13px;font-family:var(--body);font-weight:600;width:100%;outline:none;transition:border-color .2s}
+.modal-input:focus{border-color:var(--gold)}
+.modal-input option{background:#020203}
+.role-toggle{display:flex;gap:10px}
+.role-toggle-btn{flex:1;padding:10px;border-radius:8px;font-size:12px;font-weight:900;cursor:pointer;border:1px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s;text-transform:uppercase}
+.role-toggle-btn.sel-id{border-color:var(--blue);color:var(--blue);background:#040e1a}
+.role-toggle-btn.sel-bd{border-color:var(--gold);color:var(--gold);background:#1a1400}
+.role-toggle-btn.sel-both{border-color:var(--green);color:var(--green);background:#020a02}
+.modal-btns{display:flex;gap:10px;margin-top:20px}
+
+/* EMPTY */
+.empty{padding:48px;text-align:center;color:var(--muted);font-family:var(--body);font-size:14px}
+
 @media(max-width:768px){
-  .evl-ws-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#0a0800;border-bottom:2px solid #FFD700;padding:12px 0;gap:0;}
-  .evl-ws-nav-links.open{display:flex;}
-  .evl-ws-nav-link,.evl-ws-nav-retail,.evl-ws-nav-logout{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1400;}
-  .evl-ws-hamburger{display:block;}
+  .dealer-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .modal-row{grid-template-columns:1fr}
 }
-</style>
-<style id="evl-nav-body-fix">
-/* Fix body flex centering that pushes nav down */
-body { display:block !important; align-items:unset !important; justify-content:unset !important; }
-.evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
 </style>
 </head>
-<body><nav class="evl-ws-nav">
-  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
+<body>
+
+<nav class="ws-nav">
+  <a href="https://evl-decode-two.vercel.app/ws" class="ws-nav-logo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
-    <span>EVL <span style="color:#FFD700">WHOLESALE</span></span>
+    EVL <span style="color:var(--gold);margin-left:4px">WHOLESALE</span>
   </a>
-  <button class="evl-ws-hamburger" onclick="toggleWsNav()" aria-label="Menu">&#9776;</button>
-  <div class="evl-ws-nav-links" id="evl-ws-nav-links">
-    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
-    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link">EXCHANGE</a>
-    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
-    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
-    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
-    <a href="https://evl-decode-two.vercel.app/home" class="evl-ws-nav-retail">⬅ RETAIL SITE</a>
-    <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logout">🔒 LOGOUT</a>
+  <div class="ws-nav-links">
+    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="ws-nav-link">DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/ws-hub" class="ws-nav-link">HUB MAP</a>
+    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="ws-nav-link">EXCHANGE</a>
+    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="ws-nav-link active">DEALERS</a>
+    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="ws-nav-link">ONBOARDING</a>
+    <a href="https://evl-decode-two.vercel.app/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px">⬅ RETAIL</a>
+    <a href="https://evl-decode-two.vercel.app/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px">🔒 LOGOUT</a>
   </div>
 </nav>
-<div class="page-header">
-  <div class="ph-dealer">⚡ WS-EVL Wholesale</div>
-  <div class="ph-title">Dealer Network</div>
-  <div class="ph-sub">Authorized WS-EVL wholesale partners and operators</div>
-</div>
-<div class="wrap">
-  <div class="grid3" style="margin-bottom:32px;">
-    <div class="stat-box"><div class="stat-lbl">Active Dealers</div><div class="stat-num">34</div></div>
-    <div class="stat-box"><div class="stat-lbl">Gold Partners</div><div class="stat-num" style="color:var(--gold);">8</div></div>
-    <div class="stat-box"><div class="stat-lbl">States Covered</div><div class="stat-num" style="color:var(--green);">12</div></div>
+
+<!-- PAGE HEADER -->
+<div class="page-hdr">
+  <div>
+    <div class="page-hdr-title">🏢 FRANCHISED DEALER NETWORK</div>
+    <div class="page-hdr-sub">New car franchise dealers only — no independents. ID = In-Store Dealer (Phase 1 first right of refusal). BD = Buying Dealer (Phase 2 auction bidder).</div>
   </div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-    <div class="sec-title">Dealer Roster</div>
-    <input class="inp" style="width:280px;" placeholder="🔍  Search dealers...">
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <div class="role-legend">
+      <span class="role-pill id-pill">🔵 ID — IN-STORE DEALER</span>
+      <span class="role-pill bd-pill">⚡ BD — BUYING DEALER</span>
+    </div>
+    <button onclick="openModal()" style="background:var(--gold);color:#020203;border:none;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">+ ADD DEALER</button>
   </div>
-  <table>
-    <thead><tr>
-      <th>Dealership</th><th>Contact</th><th>State</th><th>Tier</th><th>Units/Mo</th><th>Status</th><th>Action</th>
-    </tr></thead>
-    <tbody>
-      <tr><td><strong>Premier Auto Group</strong></td><td>James R. — james@premierauto.com</td><td>TX</td><td><span class="badge badge-gold">⭐ GOLD</span></td><td>42</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
-      <tr><td><strong>DFW Motor Exchange</strong></td><td>Maria S. — maria@dfwmotors.com</td><td>TX</td><td><span class="badge badge-gold">⭐ GOLD</span></td><td>38</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
-      <tr><td><strong>Lone Star Wholesale</strong></td><td>Bob K. — bob@lonestarws.com</td><td>TX</td><td><span class="badge badge-blue">◈ SILVER</span></td><td>18</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
-      <tr><td><strong>Sunshine Auto LLC</strong></td><td>Carlos M. — carlos@sunshineauto.com</td><td>FL</td><td><span class="badge badge-blue">◈ SILVER</span></td><td>14</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
-      <tr><td><strong>Coastal Motors</strong></td><td>Lisa T. — lisa@coastalmotors.com</td><td>CA</td><td><span class="badge badge-gold">⭐ GOLD</span></td><td>55</td><td><span class="badge badge-green">ACTIVE</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
-      <tr><td><strong>Highway Auto Sales</strong></td><td>Tom W. — tom@highwayauto.com</td><td>NY</td><td><span class="badge" style="background:rgba(200,196,168,.1);color:var(--muted);border:1px solid rgba(200,196,168,.2);">◇ STANDARD</span></td><td>4</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:var(--orange);border:1px solid rgba(255,140,0,.3);">PENDING</span></td><td><button class="btn-outline" style="padding:6px 14px;font-size:13px;">VIEW</button></td></tr>
-    </tbody>
-  </table>
 </div>
-<script id="evl-ws-nav-js">
-function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.toggle('open');}
-(function(){var path=window.location.pathname;document.querySelectorAll('.evl-ws-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){a.style.color='#FFD700';a.style.borderBottom='2px solid #FFD700';}});})();
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-box"><span class="stat-val" id="st-total" style="color:var(--gold)">—</span><div class="stat-lbl">Total Dealers</div></div>
+  <div class="stat-box"><span class="stat-val" id="st-id" style="color:var(--blue)">—</span><div class="stat-lbl">ID Network</div></div>
+  <div class="stat-box"><span class="stat-val" id="st-bd" style="color:var(--gold)">—</span><div class="stat-lbl">BD Bidders</div></div>
+  <div class="stat-box"><span class="stat-val" id="st-hubs" style="color:var(--green)">—</span><div class="stat-lbl">Hubs Covered</div></div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="setFilter('all',this)">ALL</button>
+  <button class="filter-btn" onclick="setFilter('ID',this)">🔵 ID ONLY</button>
+  <button class="filter-btn" onclick="setFilter('BD',this)">⚡ BD ONLY</button>
+  <button class="filter-btn" onclick="setFilter('BOTH',this)">✅ ID + BD</button>
+  <div style="flex:1"></div>
+  <input class="search-input" id="search-input" placeholder="Search dealer or brand..." oninput="renderDealers()"/>
+</div>
+
+<!-- DEALER GRID -->
+<div class="dealer-wrap" id="dealer-wrap">
+  <div class="empty">Loading dealer network...</div>
+</div>
+
+<!-- ADD DEALER MODAL -->
+<div id="add-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">+ ADD FRANCHISED DEALER</div>
+
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">Dealership Name</label>
+        <input class="modal-input" id="d-name" placeholder="Toyota of McKinney"/>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">OEM Brand</label>
+        <select class="modal-input" id="d-brand">
+          <option value="">Select brand</option>
+          <option>Toyota</option><option>Ford</option><option>Chevrolet</option>
+          <option>Honda</option><option>Nissan</option><option>Hyundai</option>
+          <option>Kia</option><option>Jeep / RAM / CDJR</option><option>GMC</option>
+          <option>Volkswagen</option><option>Subaru</option><option>Mazda</option>
+          <option>Lexus</option><option>BMW</option><option>Mercedes-Benz</option>
+          <option>Audi</option><option>Cadillac</option><option>Lincoln</option>
+          <option>Buick</option><option>Acura</option><option>Infiniti</option>
+          <option>Multi-Brand Group</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">Hub Market</label>
+        <select class="modal-input" id="d-hub">
+          <option value="">Select hub</option>
+          <option>DFW / Plano</option><option>Houston</option><option>Atlanta</option>
+          <option>Chicago</option><option>Denver</option><option>Phoenix</option>
+          <option>Los Angeles</option><option>NYC / NJ</option><option>Miami</option>
+          <option>Nashville</option><option>Seattle</option><option>Minneapolis</option>
+          <option>Charlotte</option><option>Columbus</option><option>Philadelphia</option>
+          <option>Detroit</option><option>Richmond</option><option>Indianapolis</option>
+          <option>St. Louis</option><option>Milwaukee</option><option>Baltimore</option>
+          <option>Las Vegas</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">State</label>
+        <input class="modal-input" id="d-state" placeholder="TX" maxlength="2" style="text-transform:uppercase"/>
+      </div>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">Contact Name</label>
+        <input class="modal-input" id="d-contact" placeholder="Sales Manager name"/>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">Contact Email</label>
+        <input class="modal-input" id="d-email" placeholder="manager@dealer.com" type="email"/>
+      </div>
+    </div>
+
+    <div class="modal-field">
+      <label class="modal-label">Dealer Role</label>
+      <div class="role-toggle">
+        <button class="role-toggle-btn" id="role-id-btn" onclick="selectRole('ID')">🔵 ID — IN-STORE DEALER</button>
+        <button class="role-toggle-btn" id="role-bd-btn" onclick="selectRole('BD')">⚡ BD — BUYING DEALER</button>
+        <button class="role-toggle-btn" id="role-both-btn" onclick="selectRole('BOTH')">✅ BOTH</button>
+      </div>
+      <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:8px;line-height:1.5">
+        <strong style="color:var(--blue)">ID:</strong> Gets Phase 1 first right of refusal. Must be within 50mi of hub. Tax credit arbitrage applies. &nbsp;|&nbsp;
+        <strong style="color:var(--gold)">BD:</strong> Participates in Phase 2 sealed auction bidding only.
+      </div>
+    </div>
+
+    <div class="modal-btns">
+      <button class="btn-xs btn-green-xs" onclick="saveDealer()" style="flex:1;padding:12px;font-size:13px">✅ ADD DEALER</button>
+      <button class="btn-xs" onclick="closeModal()" style="padding:12px 20px;font-size:13px;border:1px solid #2a2a4e;color:var(--muted);background:transparent;border-radius:6px;cursor:pointer;font-family:var(--font)">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, getDocs, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain: "evl-acquisition-radar.firebaseapp.com",
+  projectId: "evl-acquisition-radar",
+  storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId: "84195145348",
+  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+let allDealers   = [];
+let activeFilter = 'all';
+let selectedRole = '';
+
+// ── LOAD DEALERS ──
+async function loadDealers() {
+  try {
+    const snap = await getDocs(collection(db, 'evl_dealers'));
+    allDealers = [];
+    snap.forEach(d => allDealers.push({ id: d.id, ...d.data() }));
+    renderDealers();
+    updateStats();
+  } catch(e) {
+    document.getElementById('dealer-wrap').innerHTML = '<div class="empty">Could not load dealers — check Firestore rules.</div>';
+    console.error(e);
+  }
+}
+
+// ── RENDER ──
+window.renderDealers = function() {
+  const search = document.getElementById('search-input')?.value?.toLowerCase() || '';
+  let filtered = allDealers.filter(d => {
+    const matchRole = activeFilter === 'all' || d.role === activeFilter;
+    const matchSearch = !search ||
+      d.name?.toLowerCase().includes(search) ||
+      d.brand?.toLowerCase().includes(search) ||
+      d.hub?.toLowerCase().includes(search);
+    return matchRole && matchSearch;
+  });
+
+  if (!filtered.length) {
+    document.getElementById('dealer-wrap').innerHTML =
+      '<div class="empty">No dealers found.<br><br><button class="filter-btn" onclick="openModal()" style="margin:0 auto;display:block">+ Add First Dealer</button></div>';
+    return;
+  }
+
+  // Group by hub
+  const byHub = {};
+  filtered.forEach(d => {
+    const hub = d.hub || 'Unassigned';
+    if (!byHub[hub]) byHub[hub] = [];
+    byHub[hub].push(d);
+  });
+
+  const wrap = document.getElementById('dealer-wrap');
+  wrap.innerHTML = Object.entries(byHub).sort().map(([hub, dealers]) => `
+    <div class="hub-section">
+      <div class="hub-title">
+        📍 ${hub}
+        <span class="hub-count">${dealers.length} dealer${dealers.length!==1?'s':''}</span>
+      </div>
+      <div class="dealer-grid">
+        ${dealers.map(d => dealerCard(d)).join('')}
+      </div>
+    </div>`).join('');
+};
+
+function dealerCard(d) {
+  const roleClass = d.role === 'ID' ? 'role-id' : d.role === 'BD' ? 'role-bd' : 'role-both';
+  const idTag  = (d.role === 'ID'   || d.role === 'BOTH') ? '<span class="role-tag tag-id">🔵 ID</span>' : '';
+  const bdTag  = (d.role === 'BD'   || d.role === 'BOTH') ? '<span class="role-tag tag-bd">⚡ BD</span>' : '';
+
+  return `<div class="dealer-card ${roleClass}">
+    <div class="dc-top">
+      <div>
+        <div class="dc-name">${d.name || 'Unknown Dealer'}</div>
+        <div class="dc-brand">${d.brand || '—'} · ${d.state || '—'}</div>
+      </div>
+      <div class="dc-roles">${idTag}${bdTag}</div>
+    </div>
+    <div class="dc-meta">
+      ${d.contact ? `👤 <span>${d.contact}</span><br>` : ''}
+      ${d.email   ? `✉️ <span>${d.email}</span><br>` : ''}
+      📍 <span>${d.hub || '—'}</span>
+    </div>
+    <div class="dc-actions">
+      ${d.role === 'ID' || d.role === 'BOTH' ? `<button class="btn-xs btn-blue-xs">🔵 SEND ID OFFER</button>` : ''}
+      ${d.role === 'BD' || d.role === 'BOTH' ? `<button class="btn-xs btn-gold-xs">⚡ INVITE TO BID</button>` : ''}
+    </div>
+  </div>`;
+}
+
+// ── STATS ──
+function updateStats() {
+  const ids   = allDealers.filter(d => d.role === 'ID'   || d.role === 'BOTH').length;
+  const bds   = allDealers.filter(d => d.role === 'BD'   || d.role === 'BOTH').length;
+  const hubs  = new Set(allDealers.map(d => d.hub).filter(Boolean)).size;
+  document.getElementById('st-total').textContent = allDealers.length;
+  document.getElementById('st-id').textContent    = ids;
+  document.getElementById('st-bd').textContent    = bds;
+  document.getElementById('st-hubs').textContent  = hubs;
+}
+
+// ── FILTER ──
+window.setFilter = function(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active','active-blue'));
+  btn.classList.add('active');
+  renderDealers();
+};
+
+// ── ROLE SELECT ──
+window.selectRole = function(role) {
+  selectedRole = role;
+  document.querySelectorAll('.role-toggle-btn').forEach(b => b.classList.remove('sel-id','sel-bd','sel-both'));
+  if (role === 'ID')   document.getElementById('role-id-btn').classList.add('sel-id');
+  if (role === 'BD')   document.getElementById('role-bd-btn').classList.add('sel-bd');
+  if (role === 'BOTH') document.getElementById('role-both-btn').classList.add('sel-both');
+};
+
+// ── SAVE DEALER ──
+window.saveDealer = async function() {
+  const name    = document.getElementById('d-name')?.value?.trim();
+  const brand   = document.getElementById('d-brand')?.value;
+  const hub     = document.getElementById('d-hub')?.value;
+  const state   = document.getElementById('d-state')?.value?.trim().toUpperCase();
+  const contact = document.getElementById('d-contact')?.value?.trim();
+  const email   = document.getElementById('d-email')?.value?.trim();
+
+  if (!name)         { alert('Dealership name required'); return; }
+  if (!brand)        { alert('OEM brand required'); return; }
+  if (!hub)          { alert('Hub market required'); return; }
+  if (!selectedRole) { alert('Select dealer role — ID, BD, or Both'); return; }
+
+  const dealerId = 'DEALER-' + Date.now();
+  try {
+    await setDoc(doc(db, 'evl_dealers', dealerId), {
+      dealerId, name, brand, hub, state, contact, email,
+      role: selectedRole,
+      status: 'ACTIVE',
+      addedAt: serverTimestamp()
+    });
+    closeModal();
+    await loadDealers();
+  } catch(e) {
+    console.error('Save dealer error:', e);
+    alert('Save failed — check Firestore rules include evl_dealers collection.');
+  }
+};
+
+// ── MODAL ──
+window.openModal  = function() {
+  selectedRole = '';
+  document.querySelectorAll('.role-toggle-btn').forEach(b => b.classList.remove('sel-id','sel-bd','sel-both'));
+  ['d-name','d-brand','d-hub','d-state','d-contact','d-email'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('add-modal').style.display = 'flex';
+};
+window.closeModal = function() { document.getElementById('add-modal').style.display = 'none'; };
+
+window.addEventListener('DOMContentLoaded', loadDealers);
 </script>
-</body></html>
+</body>
+</html>
