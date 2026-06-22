@@ -289,7 +289,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">➕ SUBMIT YOUR VEHICLE</div>
   <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px;line-height:1.6">Complete the EVL certification process. Takes 10-15 minutes. Reserve locked within 2 hours. Auction launches automatically once certified.</div>
 
-  <div class="intake-form">
+  <div class="intake-form" id="intake-form-wrap">
     <div class="intake-header">
       <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px">EVL CERTIFICATION INTAKE</div>
       <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:4px">PITPO-Powered · Licensed Dealer Auction · SaaS Platform</div>
@@ -985,10 +985,142 @@ document.getElementById('intake-state')?.addEventListener('change',function(){
   if(alert) alert.style.display = restricted.includes(this.value)?'block':'none';
 });
 
-function submitIntake(){
-  const vin = document.getElementById('intake-vin')?.value?.trim();
-  if(!vin||vin.length!==17){ alert('Please enter a valid 17-digit VIN'); return; }
-  alert(`✅ VEHICLE SUBMITTED FOR EVL CERTIFICATION\n\nVIN: ${vin}\n\nNext steps:\n1. PITPO title API verification running\n2. Corporate floor API pull (CarMax/Carvana/SMTV) — est. 2 hours\n3. Warranty badge assignment based on VIN build data\n4. Phase 1 notification sent to local ID dealers\n\nYou will receive a text and email confirmation within 30 minutes.`);
+async function submitIntake() {
+  // ── COLLECT ALL FIELDS ──
+  const vin   = document.getElementById('intake-vin')?.value?.trim().toUpperCase();
+  const miles = document.getElementById('intake-miles')?.value;
+  const year  = document.getElementById('intake-year')?.value;
+  const make  = document.getElementById('intake-make')?.value?.trim();
+  const model = document.getElementById('intake-model')?.value?.trim();
+  const trim  = document.getElementById('intake-trim')?.value?.trim();
+  const color = document.getElementById('intake-color')?.value?.trim();
+  const state = document.getElementById('intake-state')?.value;
+
+  // ── VALIDATE ──
+  if (!vin || vin.length !== 17)  { showToast('Valid 17-digit VIN required', 'red'); return; }
+  if (!miles || miles <= 0)        { showToast('Odometer reading required', 'red'); return; }
+  if (!year || year < 2004)        { showToast('Vehicle year required (2004 or newer)', 'red'); return; }
+  if (!make)                       { showToast('Make required', 'red'); return; }
+  if (!model)                      { showToast('Model required', 'red'); return; }
+  if (!state)                      { showToast('State of registration required', 'red'); return; }
+  if (state.includes('RESTRICTED')){ showToast('Restricted state — cannot accept this vehicle', 'red'); return; }
+
+  // ── TITLE STATUS CHECK ──
+  const titleLost    = document.getElementById('title-lost-btn')?.classList.contains('active-title-hand') ||
+                       document.getElementById('title-lost-notice')?.style.display === 'block';
+  if (titleLost) { showToast('Cannot proceed — lost title. Obtain duplicate title first.', 'red'); return; }
+
+  // ── DISABLE BUTTON DURING WRITE ──
+  const submitBtn = document.querySelector('[onclick="submitIntake()"]');
+  if (submitBtn) { submitBtn.textContent = 'SUBMITTING...'; submitBtn.disabled = true; }
+
+  try {
+    // ── BUILD IDs ──
+    const ts       = Date.now();
+    const leadId   = 'EVL-LEAD-' + ts;
+    const auctionId = 'EVL-AUC-' + String(ts).slice(-6);
+    const vehicle  = year + ' ' + make + ' ' + model + (trim ? ' ' + trim : '');
+
+    const titleInHand = document.getElementById('title-hand-btn')?.classList.contains('active-title-hand');
+    const titleStatus = titleInHand ? 'IN_HAND' : 'IN_TRANSIT';
+
+    // ── WRITE LEAD TO FIRESTORE ──
+    await setDoc(doc(db, 'evl_wholesale_leads', leadId), {
+      leadId,
+      auctionId,
+      vin,
+      vehicle,
+      year: parseInt(year),
+      make,
+      model,
+      trim:  trim  || '',
+      color: color || '',
+      miles: parseInt(miles),
+      state,
+      titleStatus,
+      submittedAt: serverTimestamp(),
+      status: 'PENDING_CERT',
+      source: 'ws-exchange-intake',
+      submittedBy: sessionStorage.getItem('evl_dealer') || 'seller@evl.platform'
+    });
+
+    // ── CREATE PENDING AUCTION RECORD ──
+    await setDoc(doc(db, 'evl_auctions', auctionId), {
+      id:         auctionId,
+      leadId,
+      vehicle,
+      vin,
+      miles:      parseInt(miles).toLocaleString() + ' mi',
+      color:      color || 'TBD',
+      state,
+      phase:      0,
+      status:     'PENDING_CERT',
+      badges:     ['PITPO'],
+      reserve:    null,
+      currentBid: null,
+      timer:      0,
+      timerLabel: '--:--:--',
+      phaseLabel: 'PENDING EVL CERTIFICATION',
+      submittedAt: serverTimestamp()
+    });
+
+    // ── SHOW SUCCESS SCREEN ──
+    const form = document.getElementById('intake-form-wrap');
+    if (form) {
+      form.innerHTML = `
+        <div style="padding:40px;text-align:center;max-width:600px;margin:0 auto">
+          <div style="font-size:56px;margin-bottom:16px">✅</div>
+          <div style="font-size:22px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:8px">VEHICLE SUBMITTED</div>
+          <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:32px">EVL certification process has begun. You will be contacted within 30 minutes.</div>
+
+          <div style="background:var(--s1);border:2px solid var(--gold);border-radius:12px;padding:24px;text-align:left;margin-bottom:24px">
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1a1a2e;font-family:var(--body)">
+              <span style="color:var(--muted);font-size:13px">Lead ID</span>
+              <span style="color:var(--gold);font-weight:900;font-size:13px">${leadId}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1a1a2e;font-family:var(--body)">
+              <span style="color:var(--muted);font-size:13px">Auction ID</span>
+              <span style="color:var(--white);font-weight:900;font-size:13px">${auctionId}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1a1a2e;font-family:var(--body)">
+              <span style="color:var(--muted);font-size:13px">Vehicle</span>
+              <span style="color:var(--white);font-weight:900;font-size:13px">${vehicle}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1a1a2e;font-family:var(--body)">
+              <span style="color:var(--muted);font-size:13px">VIN</span>
+              <span style="color:var(--white);font-weight:900;font-size:13px">${vin}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;font-family:var(--body)">
+              <span style="color:var(--muted);font-size:13px">Status</span>
+              <span style="color:var(--blue);font-weight:900;font-size:13px">🔵 PENDING EVL CERTIFICATION</span>
+            </div>
+          </div>
+
+          <div style="background:#020a02;border:2px solid var(--green);border-radius:12px;padding:20px;text-align:left;margin-bottom:24px">
+            <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;margin-bottom:14px">WHAT HAPPENS NEXT</div>
+            <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:2">
+              <span style="color:var(--green)">1.</span> BITOP title verification running now<br>
+              <span style="color:var(--green)">2.</span> Corporate floor pull — CarMax / Carvana / SMTV (~2 hrs)<br>
+              <span style="color:var(--green)">3.</span> Warranty badge assigned from VIN build data<br>
+              <span style="color:var(--green)">4.</span> Reserve locked — you will be notified by text + email<br>
+              <span style="color:var(--green)">5.</span> Phase 1 opens — local In-Store Dealer gets first look<br>
+              <span style="color:var(--green)">6.</span> If ID passes → Phase 2 live auction launches automatically
+            </div>
+          </div>
+
+          <button class="btn btn-gold" onclick="switchTab('live', document.querySelector('.tab-btn'))" style="font-size:14px;padding:14px 32px">
+            ⚡ VIEW LIVE AUCTION BOARD
+          </button>
+        </div>`;
+    }
+
+    showToast('✅ ' + vehicle + ' submitted — Lead ID: ' + leadId, 'green');
+
+  } catch(e) {
+    console.error('Intake submit error:', e);
+    showToast('Submission failed — please try again', 'red');
+    if (submitBtn) { submitBtn.textContent = '⚡ SUBMIT FOR EVL CERTIFICATION'; submitBtn.disabled = false; }
+  }
 }
 
 // ── LIVE LOAD FROM FIRESTORE ──
