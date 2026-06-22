@@ -917,19 +917,36 @@ function switchTab(tab,btn){
 }
 
 // ── HUB DATA ──
+// ── 22 CONFIRMED HUB MARKETS ──
+// lat/lng are real, verified city coordinates (used for the 50-mile radius pipeline).
+// dealers/activeDeals/porters/deals30/units below for the ORIGINAL 12 are LEGACY PLACEHOLDER
+// numbers from early mockups — NOT live data yet. They are kept temporarily so the page doesn't
+// break, but must be replaced once the Firestore hub-dealer pipeline goes live.
+// The 10 NEW hubs are intentionally left with status "PENDING DATA PULL" and no invented stats —
+// honest placeholder, not fake numbers, until the real pipeline populates them.
 const HUBS = {
-  plano: {name:'PLANO / DFW — EVL HQ',dealers:14,activeDeals:3,porters:2,deals30:'$47,200',units:'28 units available',status:'🟢 FULLY ACTIVE'},
-  houston: {name:'HOUSTON, TX',dealers:8,activeDeals:1,porters:1,deals30:'$18,500',units:'12 units available',status:'🟡 MODERATE'},
-  atlanta: {name:'ATLANTA, GA',dealers:6,activeDeals:2,porters:1,deals30:'$31,000',units:'19 units',status:'🔵 PORTER ACTIVE'},
-  chicago: {name:'CHICAGO, IL',dealers:9,activeDeals:1,porters:0,deals30:'$22,100',units:'24 units',status:'🔵 DEAL ACTIVE'},
-  denver: {name:'DENVER, CO',dealers:5,activeDeals:0,porters:0,deals30:'$8,400',units:'11 units',status:'⚪ STANDBY'},
-  phoenix: {name:'PHOENIX, AZ',dealers:7,activeDeals:1,porters:0,deals30:'$14,700',units:'16 units',status:'🟡 MODERATE'},
-  la: {name:'LOS ANGELES, CA',dealers:11,activeDeals:0,porters:0,deals30:'$5,200',units:'33 units',status:'⚪ STANDBY'},
-  nyc: {name:'NEW YORK / NJ',dealers:8,activeDeals:1,porters:0,deals30:'$19,800',units:'21 units',status:'🟡 MODERATE'},
-  miami: {name:'MIAMI, FL',dealers:6,activeDeals:0,porters:0,deals30:'$11,200',units:'15 units',status:'⚪ STANDBY'},
-  nashville: {name:'NASHVILLE, TN',dealers:4,activeDeals:0,porters:0,deals30:'$7,600',units:'9 units',status:'⚪ STANDBY'},
-  seattle: {name:'SEATTLE, WA',dealers:5,activeDeals:0,porters:0,deals30:'$4,100',units:'13 units',status:'⚪ STANDBY'},
-  minneapolis: {name:'MINNEAPOLIS, MN',dealers:4,activeDeals:0,porters:0,deals30:'$6,800',units:'8 units',status:'⚪ STANDBY'},
+  plano: {name:'PLANO / DFW — EVL HQ',state:'TX',lat:33.0198,lng:-96.6989,dealers:14,activeDeals:3,porters:2,deals30:'$47,200',units:'28 units available',status:'🟢 FULLY ACTIVE (legacy placeholder data)'},
+  houston: {name:'HOUSTON, TX',state:'TX',lat:29.7604,lng:-95.3698,dealers:8,activeDeals:1,porters:1,deals30:'$18,500',units:'12 units available',status:'🟡 MODERATE (legacy placeholder data)'},
+  atlanta: {name:'ATLANTA, GA',state:'GA',lat:33.7490,lng:-84.3880,dealers:6,activeDeals:2,porters:1,deals30:'$31,000',units:'19 units',status:'🔵 PORTER ACTIVE (legacy placeholder data)'},
+  chicago: {name:'CHICAGO, IL',state:'IL',lat:41.8781,lng:-87.6298,dealers:9,activeDeals:1,porters:0,deals30:'$22,100',units:'24 units',status:'🔵 DEAL ACTIVE (legacy placeholder data)'},
+  denver: {name:'DENVER, CO',state:'CO',lat:39.7392,lng:-104.9903,dealers:5,activeDeals:0,porters:0,deals30:'$8,400',units:'11 units',status:'⚪ STANDBY (legacy placeholder data)'},
+  phoenix: {name:'PHOENIX, AZ',state:'AZ',lat:33.4484,lng:-112.0740,dealers:7,activeDeals:1,porters:0,deals30:'$14,700',units:'16 units',status:'🟡 MODERATE (legacy placeholder data)'},
+  la: {name:'LOS ANGELES, CA',state:'CA',lat:34.0522,lng:-118.2437,dealers:11,activeDeals:0,porters:0,deals30:'$5,200',units:'33 units',status:'⚪ STANDBY (legacy placeholder data)'},
+  nyc: {name:'NEW YORK / NJ',state:'NY',lat:40.7128,lng:-74.0060,dealers:8,activeDeals:1,porters:0,deals30:'$19,800',units:'21 units',status:'🟡 MODERATE (legacy placeholder data)'},
+  miami: {name:'MIAMI, FL',state:'FL',lat:25.7617,lng:-80.1918,dealers:6,activeDeals:0,porters:0,deals30:'$11,200',units:'15 units',status:'⚪ STANDBY (legacy placeholder data)'},
+  nashville: {name:'NASHVILLE, TN',state:'TN',lat:36.1627,lng:-86.7816,dealers:4,activeDeals:0,porters:0,deals30:'$7,600',units:'9 units',status:'⚪ STANDBY (legacy placeholder data)'},
+  seattle: {name:'SEATTLE, WA',state:'WA',lat:47.6062,lng:-122.3321,dealers:5,activeDeals:0,porters:0,deals30:'$4,100',units:'13 units',status:'⚪ STANDBY (legacy placeholder data)'},
+  minneapolis: {name:'MINNEAPOLIS, MN',state:'MN',lat:44.9778,lng:-93.2650,dealers:4,activeDeals:0,porters:0,deals30:'$6,800',units:'8 units',status:'⚪ STANDBY (legacy placeholder data)'},
+  charlotte: {name:'CHARLOTTE, NC',state:'NC',lat:35.2271,lng:-80.8431,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  columbus: {name:'COLUMBUS, OH',state:'OH',lat:39.9612,lng:-82.9988,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  philadelphia: {name:'PHILADELPHIA, PA',state:'PA',lat:39.9526,lng:-75.1652,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  detroit: {name:'DETROIT, MI',state:'MI',lat:42.3314,lng:-83.0458,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  richmond: {name:'RICHMOND, VA',state:'VA',lat:37.5407,lng:-77.4360,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  indianapolis: {name:'INDIANAPOLIS, IN',state:'IN',lat:39.7684,lng:-86.1581,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  stlouis: {name:'ST. LOUIS, MO',state:'MO',lat:38.6270,lng:-90.1994,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  milwaukee: {name:'MILWAUKEE, WI',state:'WI',lat:43.0389,lng:-87.9065,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  baltimore: {name:'BALTIMORE, MD',state:'MD',lat:39.2904,lng:-76.6122,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
+  lasvegas: {name:'LAS VEGAS, NV',state:'NV',lat:36.1699,lng:-115.1398,dealers:'—',activeDeals:'—',porters:'—',deals30:'—',units:'⏳ pending data pull',status:'⏳ PENDING DATA PULL'},
 };
 
 function showHub(key){
