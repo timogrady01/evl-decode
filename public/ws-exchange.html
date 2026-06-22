@@ -1038,6 +1038,14 @@ function startTimers(auctions) {
   }, 1000);
 }
 
+// ── EXPOSE FUNCTIONS TO GLOBAL SCOPE (required for onclick handlers in module scripts) ──
+window.switchTab       = switchTab;
+window.submitBid       = submitBid;
+window.showDealMath    = showDealMath;
+window.setTitleStatus  = setTitleStatus;
+window.simulateUpload  = simulateUpload;
+window.submitIntake    = submitIntake;
+
 // ── INIT ──
 window.addEventListener('DOMContentLoaded', function() {
   loadAndRenderAuctions();
