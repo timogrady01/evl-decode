@@ -873,7 +873,7 @@ function renderAuctions(auctions){
           <div class="auction-reserve-section">
             <div class="reserve-card">
               <div class="reserve-label">🔒 VERIFIED RESERVE</div>
-              <div class="reserve-amount">$${a.reserve.toLocaleString()}</div>
+              <div class="reserve-amount" id="reserve-val-${a.id}" data-reserve="${a.reserve}">$${a.reserve.toLocaleString()}</div>
               <div class="reserve-source">Best offer: ${bestFloor[0]} — $${bestFloor[1].toLocaleString()}</div>
               ${floorSrc.map(([src,amt])=>`<div class="reserve-row">
                 <span class="reserve-row-label">${src}</span>
@@ -885,7 +885,7 @@ function renderAuctions(auctions){
 
           <!-- BID INPUT -->
           <div class="auction-bid-section">
-            <div class="bid-card">
+            <div class="bid-card" id="bid-card-${a.id}">
               <div class="bid-label">${a.phase===1?'ID HOLD TIMER':'AUCTION CLOSES IN'}</div>
               <div class="${timerClass}" id="timer-${a.id}">${a.timerLabel}</div>
               <div id="current-bid-${a.id}" class="bid-current">${a.currentBid?`🏆 CURRENT HIGH BID: <strong style="color:var(--green);font-size:16px">$${a.currentBid.toLocaleString()}</strong>`:``}</div>
@@ -913,20 +913,47 @@ function renderAuctions(auctions){
 function submitBid(auctionId){
   const input = document.getElementById('bid-'+auctionId);
   const val = parseFloat(input?.value);
-  const auction = LIVE_AUCTIONS.find(a=>a.id===auctionId);
-  if(!val){ alert('Please enter your bid amount'); return; }
-  if(val < auction?.reserve){ alert(`Bid must be at or above the reserve of $${auction.reserve.toLocaleString()}`); return; }
-  if(confirm(`Submit SEALED blind bid of $${val.toLocaleString()} on ${auctionId}?\n\nThis bid is binding. You will be contacted within 30 minutes of auction close if you are the highest bidder.\n\nBy bidding you agree to the EVL AS-IS platform terms and NAAA arbitration rules (title defects only, 24-hour window).`)){
-    const dealerEmail = sessionStorage.getItem('evl_dealer') || 'dealer@unknown.com';
-    submitBidToFirebase(auctionId, val, dealerEmail).then(success => {
-      if(success){
-        alert(`✅ Bid of $${val.toLocaleString()} submitted and recorded!\n\nYou will be notified if you are the winning bidder.`);
-        input.value = '';
-      } else {
-        alert('Bid could not be submitted. Please try again.');
-      }
-    });
+  if(!val || val <= 0){ showToast('Please enter your bid amount','red'); return; }
+
+  // Find reserve from Firestore data (stored on card)
+  const reserveEl = document.getElementById('reserve-val-'+auctionId);
+  const reserve = reserveEl ? parseFloat(reserveEl.dataset.reserve) : 0;
+  if(reserve && val < reserve){
+    showToast('Bid must be at or above reserve of $'+reserve.toLocaleString(),'red');
+    return;
   }
+
+  if(!confirm('Submit SEALED blind bid of $'+val.toLocaleString()+' on '+auctionId+'?\n\nThis bid is binding. You will be contacted within 30 minutes of auction close if you are the highest bidder.\n\nBy bidding you agree to EVL AS-IS platform terms and NAAA arbitration rules (title defects only, 24-hour window).')){
+    return;
+  }
+
+  const btn = document.querySelector('#bid-card-'+auctionId+' .bid-submit');
+  if(btn){ btn.textContent='SUBMITTING...'; btn.disabled=true; }
+
+  const dealerEmail = sessionStorage.getItem('evl_dealer') || 'dealer@testdrive.com';
+  submitBidToFirebase(auctionId, val, dealerEmail).then(success => {
+    if(btn){ btn.textContent='BID'; btn.disabled=false; }
+    if(success){
+      input.value = '';
+      showToast('✅ BID SUBMITTED — $'+val.toLocaleString()+' recorded on '+auctionId,'green');
+    } else {
+      showToast('Bid failed — please try again','red');
+    }
+  });
+}
+
+// ── TOAST NOTIFICATION ──
+function showToast(msg, color='green'){
+  const existing = document.getElementById('evl-toast');
+  if(existing) existing.remove();
+  const t = document.createElement('div');
+  t.id = 'evl-toast';
+  const bg = color==='green'?'#00C853':color==='red'?'#FF3333':'#FFD700';
+  const tc = color==='green'||color==='red'?'#fff':'#020203';
+  t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:'+bg+';color:'+tc+';padding:14px 28px;border-radius:10px;font-size:15px;font-weight:900;font-family:Oswald,sans-serif;letter-spacing:1px;z-index:9999;box-shadow:0 4px 24px rgba(0,0,0,.5);transition:opacity .4s';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),400); }, 3500);
 }
 
 // ── INTAKE HANDLERS ──
