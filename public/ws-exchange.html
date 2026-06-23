@@ -752,6 +752,52 @@ async function sendEVLEmail(templateKey, toEmail, params) {
   }
 }
 
+// ── FETCH DEALERS FROM FIRESTORE BY HUB ──
+// Returns array of {ucm1Email, ucm2Email, dealerName} for all dealers in a given hub
+async function getDealersByHub(hub) {
+  try {
+    const snap = await getDocs(collection(db, 'evl_ws_dealers'));
+    const dealers = [];
+    snap.forEach(d => {
+      const data = d.data();
+      if (data.hub && data.hub === hub) {
+        dealers.push({
+          dealerName : data.dealerName || 'Unknown Dealer',
+          ucm1Email  : data.ucm1?.email || null,
+          ucm2Email  : data.ucm2?.email || null,
+          ucm1Name   : data.ucm1?.name  || 'UCM',
+          ucm2Name   : data.ucm2?.name  || null,
+        });
+      }
+    });
+    console.log(`[EVL] Found ${dealers.length} dealers in hub: ${hub}`);
+    return dealers;
+  } catch(e) {
+    console.error('[EVL] Dealer lookup error:', e);
+    return [];
+  }
+}
+
+// ── SEND EMAIL TO ALL DEALERS IN A HUB ──
+async function notifyHubDealers(templateKey, hub, params) {
+  const dealers = await getDealersByHub(hub);
+  if (dealers.length === 0) {
+    // Fallback to admin if no dealers registered yet
+    console.warn(`[EVL] No dealers found for hub: ${hub} — sending to admin`);
+    sendEVLEmail(templateKey, 'togradyevl@gmail.com', { ...params, dealer_name: 'Admin' });
+    return;
+  }
+  dealers.forEach(dealer => {
+    if (dealer.ucm1Email) {
+      sendEVLEmail(templateKey, dealer.ucm1Email, {
+        ...params,
+        dealer_name: dealer.dealerName,
+        ucm_name   : dealer.ucm1Name
+      });
+    }
+  });
+}
+
 // ── TAX CREDIT BY STATE ──
 const TAX_RATES = {
   'TX':6.25,'CA':7.25,'FL':6.00,'NY':4.00,'IL':6.25,
@@ -1398,15 +1444,13 @@ function startTimers(auctions) {
         // ── EMAIL: FINAL-CALL — fires once at 2 hours (7200s) remaining ──
         if (a.phase === 2 && a.timer === 7200 && !a._finalCallSent) {
           a._finalCallSent = true;
-          const bidders = (a.bidHistory || []).map(b => b.dealer).filter((v,i,arr) => arr.indexOf(v)===i);
-          bidders.forEach(email => {
-            sendEVLEmail('FINAL_CALL', email, {
-              auction_id  : a.id,
-              vehicle     : a.vehicle || a.id,
-              time_left   : '2 hours',
-              current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
-              auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
-            });
+          // Notify all registered hub dealers — FINAL CALL
+          notifyHubDealers('FINAL_CALL', a.hub || 'DFW — Plano TX', {
+            auction_id  : a.id,
+            vehicle     : a.vehicle || a.id,
+            time_left   : '2 hours',
+            current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
+            auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
           });
         }
 
@@ -1414,15 +1458,13 @@ function startTimers(auctions) {
         if (a.phase === 2 && a.timer > 0 && a.timer % 14400 === 0 && !a._nudgeSentAt?.[a.timer]) {
           if (!a._nudgeSentAt) a._nudgeSentAt = {};
           a._nudgeSentAt[a.timer] = true;
-          const bidders = (a.bidHistory || []).map(b => b.dealer).filter((v,i,arr) => arr.indexOf(v)===i);
-          bidders.forEach(email => {
-            sendEVLEmail('HOURLY_NUDGE', email, {
-              auction_id  : a.id,
-              vehicle     : a.vehicle || a.id,
-              current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
-              time_left   : Math.floor(a.timer / 3600) + ' hours',
-              auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
-            });
+          // Notify all registered hub dealers — HOURLY NUDGE (every 4hrs)
+          notifyHubDealers('HOURLY_NUDGE', a.hub || 'DFW — Plano TX', {
+            auction_id  : a.id,
+            vehicle     : a.vehicle || a.id,
+            current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
+            time_left   : Math.floor(a.timer / 3600) + ' hours',
+            auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
           });
         }
 
@@ -1490,10 +1532,8 @@ async function transitionToPhase2(a) {
     showToast('🚨 ' + a.id + ' — PHASE 1 EXPIRED · NOW LIVE BIDDING', 'gold');
     updateStatsBar(auctions);
 
-    // ── EMAIL: UNIT-CARD → all hub dealers when Phase 2 opens ──
-    // In production, loop through registered BD dealer emails from Firestore
-    // For now fires to admin as placeholder until dealer DB is populated
-    sendEVLEmail('UNIT_CARD', 'togradyevl@gmail.com', {
+    // ── EMAIL: UNIT-CARD → all dealers in this auction's hub ──
+    notifyHubDealers('UNIT_CARD', a.hub || 'DFW — Plano TX', {
       auction_id  : a.id,
       vehicle     : a.vehicle || a.id,
       reserve     : '$' + (a.reserve || 0).toLocaleString(),
