@@ -383,7 +383,25 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       </div>
     </div>
 
-    <div style="padding:20px;display:flex;gap:10px;flex-wrap:wrap">
+    <!-- FEE DISCLOSURE -->
+    <div style="padding:20px 20px 0">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <div style="background:#020a02;border:2px solid var(--green);border-radius:8px;padding:14px;text-align:center">
+          <div style="font-size:10px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px">YOUR FEE AS ID</div>
+          <div style="font-size:28px;font-weight:900;color:var(--green)">$295</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:4px;line-height:1.4">Flat platform fee · Only if unit sells<br><strong style="color:var(--green)">Waived if no sale</strong></div>
+        </div>
+        <div style="background:#0a0600;border:2px solid var(--gold);border-radius:8px;padding:14px;text-align:center">
+          <div style="font-size:10px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px">WINNING BD PAYS</div>
+          <div style="font-size:28px;font-weight:900;color:var(--gold)">$395</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:4px;line-height:1.4">Flat platform fee · Paid by buyer<br><strong style="color:var(--gold)">You pay nothing extra</strong></div>
+        </div>
+      </div>
+      <div style="background:#020203;border:1px solid #1a1a2e;border-radius:8px;padding:12px;margin-bottom:16px;text-align:center;font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.6">
+        <strong style="color:var(--white)">CarMax ICO = Your guaranteed floor.</strong> If no BD beats your reserve — CarMax buys at their standing offer. EVL fee waived. You never walk away with less than CarMax.
+      </div>
+    </div>
+    <div style="padding:0 20px 20px;display:flex;gap:10px;flex-wrap:wrap">
       <button class="btn btn-gold" onclick="submitIntake()" style="font-size:15px;padding:14px 32px">⚡ SUBMIT FOR EVL CERTIFICATION</button>
       <button class="btn btn-dark">SAVE DRAFT</button>
     </div>
@@ -913,6 +931,18 @@ function renderAuctions(auctions){
                 <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
               </div>
               <div class="bid-floor-note">🔒 RESERVE: $${a.reserve.toLocaleString()} — All bids sealed & blind</div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <div style="flex:1;background:#020a02;border:1px solid #1a3a1a;border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:10px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:3px">BD PLATFORM FEE</div>
+              <div style="font-size:16px;font-weight:900;color:var(--green)">$395</div>
+              <div style="font-size:9px;color:var(--muted);font-family:var(--body)">Due only if you win</div>
+            </div>
+            <div style="flex:1;background:#0a0600;border:1px solid #2a1a00;border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:10px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:3px">ID PLATFORM FEE</div>
+              <div style="font-size:16px;font-weight:900;color:var(--gold)">$295</div>
+              <div style="font-size:9px;color:var(--muted);font-family:var(--body)">Waived if no sale</div>
+            </div>
+          </div>
               <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>`
               :`<div class="phase-1-note">This vehicle is in Phase 1 — the local In-Store Dealer has first right of refusal. If the ID does not match the target within the hold window, this vehicle moves to Phase 2 live bidding automatically.</div>`}
               <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
