@@ -313,14 +313,34 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <div class="form-group"><label class="form-label">Trim</label><input class="form-input" id="intake-trim" placeholder="TRD Pro"/></div>
         <div class="form-group"><label class="form-label">Exterior Color</label><input class="form-input" id="intake-color" placeholder="White"/></div>
         <div class="form-group"><label class="form-label">State of Registration</label>
+            <div style="background:#020a02;border:1px solid var(--green);border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:11px;font-family:var(--body);color:var(--green);font-weight:700">
+              🤠 Currently operating in <strong>Texas only</strong>. Additional states coming as licensing is secured.
+            </div>
           <select class="form-input" id="intake-state">
-            <option value="">Select State</option>
-            <option>TX</option><option>FL</option><option>GA</option><option>NC</option><option>TN</option><option>AZ</option><option>CO</option><option>WA</option><option>OR</option><option>NV</option><option>IL</option><option>OH</option><option>MI</option><option>PA</option><option>VA</option>
-            <option disabled style="color:var(--red)">── RESTRICTED STATES ──</option>
-            <option value="CA_RESTRICTED" style="color:#ff6666">CA — Processing Exceeds 30 Days</option>
-            <option value="NY_RESTRICTED" style="color:#ff6666">NY — In-Person Required</option>
-            <option value="NJ_RESTRICTED" style="color:#ff6666">NJ — Extended Backlog</option>
-            <option value="IL_RESTRICTED" style="color:#ff6666">IL — 4-8 Week Processing</option>
+            <option value="">— Select State —</option>
+            <option value="TX">✅ Texas — LIVE</option>
+            <option disabled>── Coming Soon ──</option>
+            <option disabled>Tennessee</option>
+            <option disabled>Colorado</option>
+            <option disabled>Washington</option>
+            <option disabled>Minnesota</option>
+            <option disabled>North Carolina</option>
+            <option disabled>Ohio</option>
+            <option disabled>Michigan</option>
+            <option disabled>Nevada</option>
+            <option disabled>── Licensing Required ──</option>
+            <option disabled>Florida</option>
+            <option disabled>Illinois</option>
+            <option disabled>Pennsylvania</option>
+            <option disabled>Maryland</option>
+            <option disabled>Virginia</option>
+            <option disabled>Missouri</option>
+            <option disabled>Indiana</option>
+            <option disabled>Wisconsin</option>
+            <option disabled>── Not Available ──</option>
+            <option disabled>California</option>
+            <option disabled>Georgia</option>
+            <option disabled>New Jersey</option>
           </select>
         </div>
       </div>
