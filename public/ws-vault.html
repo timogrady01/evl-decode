@@ -1044,12 +1044,13 @@ body { display:block !important; align-items:unset !important; justify-content:u
       <tr><td>Twilio Phone Number</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:orange;border:1px solid rgba(255,140,0,.3);">⏳ PENDING</span></td><td>+18444675644 · Toll-free verification submitted Jun 13 · Approves in 1-3 business days</td></tr>
       <tr><td>EmailJS Service</td><td><span class="badge badge-green">✅ ACTIVE</span></td><td>service_rvscjt3 connected to togradyevl@gmail.com</td></tr>
       <tr><td>EmailJS Public Key</td><td><span class="badge badge-red">❌ NEEDED</span></td><td>Get from dashboard.emailjs.com → Account → Public Key. Enter in /evl-notif-engine config page.</td></tr>
-      <tr><td>EmailJS Templates</td><td><span class="badge badge-red">❌ NEEDED</span></td><td>5 templates to create in EmailJS dashboard. Template text is on /evl-notif-engine page. Copy-paste each one.</td></tr>
-      <tr><td>Unit Card Email</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires when auction launches — all matched buyers notified simultaneously</td></tr>
-      <tr><td>Hourly Nudge Email</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires every hour — current high bid, time remaining, personalized status</td></tr>
-      <tr><td>Outbid Alert</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires instantly when a dealer is outbid</td></tr>
-      <tr><td>Final Call</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires 1 hour before auction close</td></tr>
-      <tr><td>Winner Notification</td><td><span class="badge badge-red">❌ PENDING TEMPLATES</span></td><td>Fires at auction close to winning dealer</td></tr>
+      <tr><td>EmailJS Templates</td><td><span class="badge badge-green">✅ ALL 6 LIVE</span></td><td>6 templates active in EmailJS dashboard — confirmed Jun 23 2026. 4,985 requests remaining. Personal Plan ($15/mo) · 5,000 emails/month.</td></tr>
+      <tr><td>Unit Card Email</td><td><span class="badge badge-green">✅ LIVE</span></td><td>template_5xxsm0m — Fires when auction launches — all matched buyers notified simultaneously</td></tr>
+      <tr><td>Hourly Nudge Email</td><td><span class="badge badge-green">✅ LIVE</span></td><td>template_h8ka8lx — Fires every hour — current high bid, time remaining, personalized status</td></tr>
+      <tr><td>Outbid Alert</td><td><span class="badge badge-green">✅ LIVE</span></td><td>template_bjy763u — Fires instantly when a dealer is outbid</td></tr>
+      <tr><td>Final Call</td><td><span class="badge badge-green">✅ LIVE</span></td><td>template_8k0u7bw — Fires 1 hour before auction close</td></tr>
+      <tr><td>Winner Notification</td><td><span class="badge badge-green">✅ LIVE</span></td><td>template_4w8mvtm — Fires at auction close to winning dealer</td></tr>
+      <tr><td>Unit Sold Notice</td><td><span class="badge badge-green">✅ LIVE</span></td><td>template_ze974sd — Fires to ID's porter/UC rep, title clerk, and business office at auction close</td></tr>
       <tr><td>SMS Layer</td><td><span class="badge badge-orange" style="background:rgba(255,140,0,.15);color:orange;border:1px solid rgba(255,140,0,.3);">⏳ PENDING TWILIO APPROVAL</span></td><td>All 5 SMS versions ready. Fires when Twilio toll-free verification approves.</td></tr>
     </tbody>
   </table>
@@ -1211,10 +1212,10 @@ body { display:block !important; align-items:unset !important; justify-content:u
       </tr>
       <tr>
         <td style="color:var(--gold);font-weight:900;">EVL-UNIT-SOLD</td>
-        <td style="font-family:monospace;color:var(--orange);">⏳ NOT YET CREATED</td>
+        <td style="font-family:monospace;color:var(--blue);">template_ze974sd</td>
         <td style="font-family:var(--body);font-size:12px;">
-          Create at <a href="https://dashboard.emailjs.com/admin/templates" 
-             style="color:var(--blue);">dashboard.emailjs.com/admin/templates</a> → New Template → paste evl-unit-sold-template.html → copy new template_XXXXXXX into "Template: Unit Sold" field on /evl-notif-engine
+          <a href="https://dashboard.emailjs.com/admin/templates/template_ze974sd" 
+             style="color:var(--blue);">Edit in EmailJS ↗</a>
         </td>
         <td style="font-family:var(--body);font-size:13px;">✅ UNIT SOLD — {{vehicle}} — Action Needed</td>
         <td style="font-family:var(--body);font-size:13px;">At auction close — fires to ID's UCM, contains 3 sections: Porter/UC prep checklist, Title Clerk scan-and-send, Business Office payment heads-up. Code wired Jun 14 — template HTML pending creation in EmailJS.</td>
