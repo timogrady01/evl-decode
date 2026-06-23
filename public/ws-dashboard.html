@@ -203,6 +203,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <div style="display:flex;flex-direction:column;gap:8px">
         <a href="https://evl-decode-two.vercel.app/ws-exchange" style="display:block;background:var(--gold);color:#020203;text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px">⚡ OPEN EXCHANGE</a>
         <button onclick="openCertifyModal()" style="background:var(--blue);color:var(--white);border:none;padding:12px;border-radius:6px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;width:100%">🛡️ CERTIFY VEHICLE</button>
+        <button onclick="openMatchModal()" style="background:var(--green);color:#020203;border:none;padding:12px;border-radius:6px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;width:100%">🎯 RUN BRAND MATCH</button>
         <a href="https://evl-decode-two.vercel.app/ws-hub" style="display:block;background:#1a1a2e;color:var(--dim);text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;border:1px solid #2a2a4e">🗺️ HUB MAP</a>
         <a href="https://console.firebase.google.com/project/evl-acquisition-radar/firestore" target="_blank" style="display:block;background:#1a1a2e;color:var(--muted);text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;border:1px solid #2a2a4e">🔥 FIRESTORE CONSOLE</a>
       </div>
@@ -593,6 +594,115 @@ function updateTimestamp() {
 
 async function refreshAll() { await loadAll(); }
 
+// ── KNOWN MEGA-GROUPS ──
+const MEGA_GROUPS = [
+  'autonation','hendrick','rick hendrick','sonic','lithia','penske',
+  'group 1','asbury','larry h. miller','ken garff','holman','jm family',
+  'ed morse','berkshire hathaway','bha','sewell','park place','earnhardt',
+  'david taylor','van tuyl','lhm'
+];
+
+function getMegaGroup(name) {
+  const n = (name||'').toLowerCase();
+  return MEGA_GROUPS.find(g => n.includes(g)) || null;
+}
+
+// ── BRAND MATCH ENGINE ──
+window.openMatchModal  = function() { document.getElementById('match-modal').style.display='flex'; };
+window.closeMatchModal = function() { document.getElementById('match-modal').style.display='none'; };
+
+window.runBrandMatch = async function() {
+  const brand  = document.getElementById('match-brand')?.value;
+  const hub    = document.getElementById('match-hub')?.value;
+  const seller = document.getElementById('match-seller')?.value?.trim();
+
+  if (!brand) { dashToast('Select a vehicle brand','red'); return; }
+  if (!hub)   { dashToast('Select a hub market','red'); return; }
+
+  const resultsEl = document.getElementById('match-results');
+  resultsEl.style.display = 'block';
+  document.getElementById('id-list').innerHTML   = '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">Loading...</div>';
+  document.getElementById('bd-list').innerHTML   = '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">Loading...</div>';
+  document.getElementById('excl-list').innerHTML = '';
+
+  // Load all dealers for this hub
+  const snap = await getDocs(collection(db, 'evl_dealers'));
+  const hubDealers = [];
+  snap.forEach(d => {
+    const data = { id: d.id, ...d.data() };
+    if (data.hub === hub) hubDealers.push(data);
+  });
+
+  // Identify seller's corporate group (if any)
+  const sellerGroup = seller ? getMegaGroup(seller) : null;
+
+  // Categorize each dealer
+  const idDealers   = []; // same brand, not sister store
+  const exclDealers = []; // same brand, IS sister store
+  const bdDealers   = []; // different brand — Phase 2 only
+
+  hubDealers.forEach(d => {
+    const dealerGroup = getMegaGroup(d.name);
+    const isSister    = sellerGroup && dealerGroup && dealerGroup === sellerGroup;
+    const sameBrand   = (d.brand||'').toLowerCase().includes(brand.toLowerCase()) ||
+                        brand.toLowerCase().includes((d.brand||'').toLowerCase());
+
+    if (sameBrand && isSister)  exclDealers.push(d);
+    else if (sameBrand)         idDealers.push(d);
+    else                        bdDealers.push(d);
+  });
+
+  // Render summary
+  document.getElementById('match-summary').innerHTML = `
+    <div style="background:var(--bg);border:1px solid var(--blue);border-radius:8px;padding:14px;text-align:center">
+      <div style="font-size:28px;font-weight:900;color:var(--blue)">${idDealers.length}</div>
+      <div style="font-size:10px;color:var(--muted);font-family:var(--body);letter-spacing:1px">ID CANDIDATES</div>
+    </div>
+    <div style="background:var(--bg);border:1px solid var(--red);border-radius:8px;padding:14px;text-align:center">
+      <div style="font-size:28px;font-weight:900;color:var(--red)">${exclDealers.length}</div>
+      <div style="font-size:10px;color:var(--muted);font-family:var(--body);letter-spacing:1px">SISTER EXCLUDED</div>
+    </div>
+    <div style="background:var(--bg);border:1px solid var(--gold);border-radius:8px;padding:14px;text-align:center">
+      <div style="font-size:28px;font-weight:900;color:var(--gold)">${bdDealers.length}</div>
+      <div style="font-size:10px;color:var(--muted);font-family:var(--body);letter-spacing:1px">BD BIDDERS</div>
+    </div>`;
+
+  document.getElementById('id-count').textContent   = '(' + idDealers.length + ')';
+  document.getElementById('excl-count').textContent = '(' + exclDealers.length + ')';
+  document.getElementById('bd-count').textContent   = '(' + bdDealers.length + ')';
+
+  // Render ID dealers
+  document.getElementById('id-list').innerHTML = idDealers.length
+    ? idDealers.map(d => dealerRow(d,'blue')).join('')
+    : '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">No same-brand dealers found in this hub.</div>';
+
+  // Render excluded
+  document.getElementById('excl-list').innerHTML = exclDealers.length
+    ? exclDealers.map(d => dealerRow(d,'red','🚫 SISTER STORE')).join('')
+    : '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">No sister stores to exclude.</div>';
+
+  // Render BD dealers (first 20 for display)
+  document.getElementById('bd-list').innerHTML = bdDealers.length
+    ? bdDealers.slice(0,20).map(d => dealerRow(d,'gold')).join('') +
+      (bdDealers.length>20?`<div style="color:var(--muted);font-family:var(--body);font-size:11px;padding:8px">+ ${bdDealers.length-20} more BD dealers in this hub</div>`:'')
+    : '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">No BD dealers found.</div>';
+};
+
+function dealerRow(d, color, label) {
+  const colors = { blue:'var(--blue)', gold:'var(--gold)', red:'var(--red)' };
+  const c = colors[color] || 'var(--muted)';
+  const phone   = d.phone   ? ` · <a href="tel:${d.phone}" style="color:var(--blue)">${d.phone}</a>` : '';
+  const website = d.website ? ` · <a href="${d.website}" target="_blank" style="color:var(--blue)">website</a>` : '';
+  const badge   = label     ? `<span style="font-size:9px;font-weight:900;padding:2px 7px;border-radius:8px;background:#0a0000;border:1px solid var(--red);color:var(--red);letter-spacing:1px">${label}</span>` : '';
+  return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1px solid #1a1a2e;border-left:3px solid ${c};border-radius:6px;margin-bottom:6px;background:var(--s1)">
+    <div>
+      <div style="font-size:12px;font-weight:900;color:var(--white)">${d.name||'Unknown'}</div>
+      <div style="font-size:11px;color:var(--muted);font-family:var(--body)">${d.brand||'—'} · ${d.state||'—'}${phone}${website}</div>
+    </div>
+    ${badge}
+  </div>`;
+}
+
 // ── EXPOSE ──
 window.openCertifyModal   = openCertifyModal;
 window.openCertifyWithId  = openCertifyWithId;
@@ -604,5 +714,94 @@ window.refreshAll         = refreshAll;
 // ── INIT ──
 window.addEventListener('DOMContentLoaded', loadAll);
 </script>
+<!-- BRAND MATCH MODAL -->
+<div id="match-modal" style="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px">
+  <div style="background:#0a0f1a;border:2px solid var(--green);border-radius:16px;padding:28px;max-width:680px;width:100%;font-family:var(--font);margin:auto">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:18px;font-weight:900;color:var(--green);letter-spacing:2px">🎯 BRAND MATCH ENGINE</div>
+      <button onclick="closeMatchModal()" style="background:transparent;border:1px solid #2a2a4e;color:var(--muted);padding:6px 12px;border-radius:6px;cursor:pointer;font-family:var(--font);font-size:12px">✕ CLOSE</button>
+    </div>
+
+    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-bottom:20px;line-height:1.6;padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--green)">
+      Enter a vehicle's details below. The algorithm will find every same-brand franchised dealer in that hub, exclude sister stores from the selling dealer's corporate group, and show you exactly who gets the Phase 1 ID offer vs who goes to Phase 2 BD bidding.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div>
+        <label style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;display:block;margin-bottom:5px">VEHICLE BRAND</label>
+        <select id="match-brand" style="background:#020203;border:1px solid #2a2a4e;color:var(--white);padding:10px 12px;border-radius:6px;font-size:13px;font-family:var(--body);width:100%;outline:none">
+          <option value="">Select brand</option>
+          <option>Toyota</option><option>Ford</option><option>Chevrolet</option>
+          <option>Honda</option><option>Nissan</option><option>Hyundai</option>
+          <option>Kia</option><option>Jeep</option><option>GMC</option>
+          <option>Volkswagen</option><option>Subaru</option><option>Mazda</option>
+          <option>Lexus</option><option>BMW</option><option>Mercedes-Benz</option>
+          <option>Audi</option><option>Cadillac</option><option>Lincoln</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;display:block;margin-bottom:5px">HUB MARKET</label>
+        <select id="match-hub" style="background:#020203;border:1px solid #2a2a4e;color:var(--white);padding:10px 12px;border-radius:6px;font-size:13px;font-family:var(--body);width:100%;outline:none">
+          <option value="">Select hub</option>
+          <option>DFW / Plano</option><option>Houston</option><option>Atlanta</option>
+          <option>Chicago</option><option>Denver</option><option>Phoenix</option>
+          <option>Los Angeles</option><option>NYC / NJ</option><option>Miami</option>
+          <option>Nashville</option><option>Seattle</option><option>Minneapolis</option>
+          <option>Charlotte</option><option>Columbus</option><option>Philadelphia</option>
+          <option>Detroit</option><option>Richmond</option><option>Indianapolis</option>
+          <option>St. Louis</option><option>Milwaukee</option><option>Baltimore</option>
+          <option>Las Vegas</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <label style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;display:block;margin-bottom:5px">SELLING DEALER NAME (for sister-store exclusion)</label>
+      <input id="match-seller" style="background:#020203;border:1px solid #2a2a4e;color:var(--white);padding:10px 12px;border-radius:6px;font-size:13px;font-family:var(--body);width:100%;outline:none" placeholder="e.g. AutoNation Toyota Plano"/>
+    </div>
+
+    <button onclick="runBrandMatch()" style="background:var(--green);color:#020203;border:none;padding:12px 24px;border-radius:6px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;width:100%;margin-bottom:20px">🎯 RUN BRAND MATCH</button>
+
+    <!-- RESULTS -->
+    <div id="match-results" style="display:none">
+
+      <!-- SUMMARY ROW -->
+      <div id="match-summary" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px"></div>
+
+      <!-- ID DEALERS -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
+          🔵 PHASE 1 — ID CANDIDATES <span id="id-count" style="color:var(--muted);font-weight:400"></span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:8px">
+          These same-brand franchised dealers get the Phase 1 first right of refusal. Sister stores excluded.
+        </div>
+        <div id="id-list"></div>
+      </div>
+
+      <!-- EXCLUDED -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
+          🚫 EXCLUDED — SISTER STORES <span id="excl-count" style="color:var(--muted);font-weight:400"></span>
+        </div>
+        <div id="excl-list"></div>
+      </div>
+
+      <!-- BD DEALERS -->
+      <div>
+        <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
+          ⚡ PHASE 2 — BD BIDDERS <span id="bd-count" style="color:var(--muted);font-weight:400"></span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:8px">
+          All other dealers in the hub — regardless of brand — eligible to bid in Phase 2.
+        </div>
+        <div id="bd-list"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
