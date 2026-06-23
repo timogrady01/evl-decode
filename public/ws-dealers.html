@@ -457,20 +457,10 @@ window.runAutoDiscover = async function() {
 
     for (const brand of OEM_BRANDS) {
       try {
-        // Google Places Nearby Search — Text Search endpoint
-        const query = encodeURIComponent(brand + ' dealership');
         const url = 'https://places.googleapis.com/v1/places:searchText';
-
         const body = {
-          textQuery: brand + ' dealership',
-          locationBias: {
-            circle: {
-              center: { latitude: hub.lat, longitude: hub.lng },
-              radius: 80467
-            }
-          },
-          maxResultCount: 10,
-          includedType: 'car_dealer'
+          textQuery: brand + ' car dealer ' + hub.name,
+          maxResultCount: 10
         };
 
         const res = await fetch(url, {
@@ -478,17 +468,19 @@ window.runAutoDiscover = async function() {
           headers: {
             'Content-Type': 'application/json',
             'X-Goog-Api-Key': GOOGLE_KEY,
-            'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.businessStatus,places.types'
+            'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.businessStatus'
           },
           body: JSON.stringify(body)
         });
 
         if (!res.ok) {
-          console.warn(`Places API error for ${brand} in ${hub.name}:`, res.status);
+          const errText = await res.text();
+          console.warn('Places API error for ' + brand + ' in ' + hub.name + ':', res.status, errText);
           continue;
         }
 
         const data = await res.json();
+        console.log('Places hit for ' + brand + ' in ' + hub.name + ':', (data.places||[]).length, 'results');
         const places = data.places || [];
         found += places.length;
 
