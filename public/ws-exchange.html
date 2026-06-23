@@ -698,6 +698,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 </div><!-- /ws-wrap -->
 
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init("iilAte2T5SzOKb-fn");
+</script>
+
 <script type="module">
 // ── TAB SWITCH ──
 function switchTab(tab, btn){
@@ -722,6 +728,29 @@ const firebaseConfig = {
 
 const fbApp = initializeApp(firebaseConfig);
 const db = getFirestore(fbApp);
+
+// ── EVL EMAIL ENGINE ──
+const EVL_SERVICE  = 'service_rvscjt3';
+const EVL_TEMPLATES = {
+  UNIT_CARD   : 'template_5xxsm0m',
+  HOURLY_NUDGE: 'template_h8ka8lx',
+  OUTBID      : 'template_bjy763u',
+  FINAL_CALL  : 'template_8k0u7bw',
+  WINNER      : 'template_4w8mvtm',
+  UNIT_SOLD   : 'template_ze974sd'
+};
+
+async function sendEVLEmail(templateKey, toEmail, params) {
+  try {
+    await emailjs.send(EVL_SERVICE, EVL_TEMPLATES[templateKey], {
+      to_email : toEmail,
+      ...params
+    });
+    console.log(`[EVL EMAIL] ${templateKey} → ${toEmail}`);
+  } catch(e) {
+    console.error(`[EVL EMAIL ERROR] ${templateKey}`, e);
+  }
+}
 
 // ── TAX CREDIT BY STATE ──
 const TAX_RATES = {
@@ -762,7 +791,9 @@ async function submitBidToFirebase(auctionId, bidAmount, dealerEmail) {
       alert('Auction not found. Please refresh the page.');
       return false;
     }
-    const current = snap.data().currentBid || 0;
+    const data = snap.data();
+    const current = data.currentBid || 0;
+    const prevHighBidder = data.highBidder || null;
     if (bidAmount <= current) {
       alert('Bid must be higher than current bid of $' + current.toLocaleString());
       return false;
@@ -771,10 +802,21 @@ async function submitBidToFirebase(auctionId, bidAmount, dealerEmail) {
       currentBid: bidAmount,
       highBidder: dealerEmail,
       lastBidTime: serverTimestamp(),
-      bidHistory: [...(snap.data().bidHistory || []), {
+      bidHistory: [...(data.bidHistory || []), {
         amount: bidAmount, dealer: dealerEmail, time: new Date().toISOString()
       }]
     });
+
+    // ── EMAIL: OUTBID — notify the dealer who just got bumped ──
+    if (prevHighBidder && prevHighBidder !== dealerEmail) {
+      sendEVLEmail('OUTBID', prevHighBidder, {
+        auction_id  : auctionId,
+        vehicle     : auctionId,
+        their_bid   : '$' + current.toLocaleString(),
+        new_bid     : '$' + bidAmount.toLocaleString(),
+        auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+      });
+    }
     return true;
   } catch(e) {
     console.error('Firebase bid error:', e);
@@ -1353,6 +1395,37 @@ function startTimers(auctions) {
           el.style.animation = 'pulse-red 1s infinite';
         }
 
+        // ── EMAIL: FINAL-CALL — fires once at 2 hours (7200s) remaining ──
+        if (a.phase === 2 && a.timer === 7200 && !a._finalCallSent) {
+          a._finalCallSent = true;
+          const bidders = (a.bidHistory || []).map(b => b.dealer).filter((v,i,arr) => arr.indexOf(v)===i);
+          bidders.forEach(email => {
+            sendEVLEmail('FINAL_CALL', email, {
+              auction_id  : a.id,
+              vehicle     : a.vehicle || a.id,
+              time_left   : '2 hours',
+              current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
+              auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+            });
+          });
+        }
+
+        // ── EMAIL: HOURLY-NUDGE — fires every 4 hours to active bidders ──
+        if (a.phase === 2 && a.timer > 0 && a.timer % 14400 === 0 && !a._nudgeSentAt?.[a.timer]) {
+          if (!a._nudgeSentAt) a._nudgeSentAt = {};
+          a._nudgeSentAt[a.timer] = true;
+          const bidders = (a.bidHistory || []).map(b => b.dealer).filter((v,i,arr) => arr.indexOf(v)===i);
+          bidders.forEach(email => {
+            sendEVLEmail('HOURLY_NUDGE', email, {
+              auction_id  : a.id,
+              vehicle     : a.vehicle || a.id,
+              current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
+              time_left   : Math.floor(a.timer / 3600) + ' hours',
+              auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+            });
+          });
+        }
+
       } else if (!a._transitioned) {
         a._transitioned = true;
 
@@ -1417,6 +1490,18 @@ async function transitionToPhase2(a) {
     showToast('🚨 ' + a.id + ' — PHASE 1 EXPIRED · NOW LIVE BIDDING', 'gold');
     updateStatsBar(auctions);
 
+    // ── EMAIL: UNIT-CARD → all hub dealers when Phase 2 opens ──
+    // In production, loop through registered BD dealer emails from Firestore
+    // For now fires to admin as placeholder until dealer DB is populated
+    sendEVLEmail('UNIT_CARD', 'togradyevl@gmail.com', {
+      auction_id  : a.id,
+      vehicle     : a.vehicle || a.id,
+      reserve     : '$' + (a.reserve || 0).toLocaleString(),
+      miles       : a.miles || 'N/A',
+      color       : a.color || 'N/A',
+      auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+    });
+
   } catch(e) {
     console.error('Phase transition error:', e);
   }
@@ -1462,6 +1547,26 @@ async function closeAuction(a) {
 
     showToast(winner ? '🏆 ' + a.id + ' SOLD — $' + a.currentBid.toLocaleString() : '❌ ' + a.id + ' — NO SALE', winner ? 'green' : 'red');
     updateStatsBar(auctions);
+
+    // ── EMAILS ON AUCTION CLOSE ──
+    if (winner) {
+      // EVL-WINNER → winning BD dealer
+      sendEVLEmail('WINNER', a.highBidder || 'dealer@testdrive.com', {
+        auction_id   : a.id,
+        vehicle      : a.vehicle || a.id,
+        winning_bid  : '$' + a.currentBid.toLocaleString(),
+        auction_url  : 'https://evl-decode-two.vercel.app/ws-exchange'
+      });
+      // EVL-UNIT-SOLD → ID dealer (issuing dealer)
+      const idEmail = a.idEmail || 'togradyevl@gmail.com';
+      sendEVLEmail('UNIT_SOLD', idEmail, {
+        auction_id   : a.id,
+        vehicle      : a.vehicle || a.id,
+        winning_bid  : '$' + a.currentBid.toLocaleString(),
+        winning_dealer: a.highBidder || 'Winning Dealer',
+        auction_url  : 'https://evl-decode-two.vercel.app/ws-exchange'
+      });
+    }
 
   } catch(e) {
     console.error('Auction close error:', e);
