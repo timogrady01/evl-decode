@@ -7,108 +7,151 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--gold:#FFD700;--green:#00C853;--red:#FF3333;--blue:#2B84FE;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+:root{
+  --bg:#020203;--s1:#090E17;--s2:#0a0f1a;
+  --gold:#FFD700;--green:#00C853;--red:#FF3333;
+  --blue:#2B84FE;--orange:#FF6B35;--purple:#9B59B6;
+  --white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;
+  --font:'Oswald',sans-serif;--body:'Barlow',sans-serif
+}
 body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh}
 
 /* NAV */
 .ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;flex-wrap:wrap;gap:8px}
 .ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
 .ws-nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.ws-nav-link{color:#e8d88a;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
-.ws-nav-link:hover{color:var(--gold);background:#1a1400}
+.ws-nav-link{color:#e8d88a;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.ws-nav-link:hover{color:var(--gold)}
 .ws-nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold)}
 
 /* PAGE HEADER */
-.page-hdr{background:linear-gradient(135deg,#0a0800,var(--bg));border-bottom:2px solid #1a1400;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.page-hdr-title{font-size:26px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
-.page-hdr-sub{font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px}
+.page-hdr{background:linear-gradient(135deg,#0a0800,var(--bg));border-bottom:2px solid #1a1400;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.page-hdr-title{font-size:24px;font-weight:900;letter-spacing:3px;color:var(--gold)}
+.page-hdr-sub{font-size:12px;color:var(--muted);font-family:var(--body);margin-top:4px;line-height:1.5}
 
-/* ROLE LEGEND */
-.role-legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.role-pill{font-size:12px;font-weight:900;padding:6px 14px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
-.id-pill{background:#040e1a;border:2px solid var(--blue);color:var(--blue)}
-.bd-pill{background:#1a1400;border:2px solid var(--gold);color:var(--gold)}
-
-/* STATS */
-.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid #1a1400}
-.stat-box{padding:20px 24px;border-right:1px solid #1a1400;text-align:center}
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(6,1fr);border-bottom:2px solid #1a1400}
+.stat-box{padding:16px 20px;border-right:1px solid #1a1400;text-align:center}
 .stat-box:last-child{border-right:none}
-.stat-val{font-size:36px;font-weight:900;line-height:1;display:block;margin-bottom:4px}
+.stat-val{font-size:28px;font-weight:900;line-height:1;display:block;margin-bottom:3px}
 .stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;font-family:var(--body)}
 
-/* FILTERS */
-.filter-bar{padding:16px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #0d0d1a;background:var(--s1)}
-.filter-btn{padding:7px 16px;font-size:12px;font-weight:900;letter-spacing:1px;border:1px solid #2a2a4e;border-radius:20px;cursor:pointer;font-family:var(--font);background:transparent;color:var(--muted);transition:all .2s;text-transform:uppercase}
+/* FILTER BAR */
+.filter-bar{padding:14px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid #0d0d1a;background:var(--s1)}
+.filter-btn{padding:6px 14px;font-size:11px;font-weight:900;letter-spacing:1px;border:1px solid #2a2a4e;border-radius:20px;cursor:pointer;font-family:var(--font);background:transparent;color:var(--muted);transition:all .2s;text-transform:uppercase}
 .filter-btn:hover{border-color:var(--gold);color:var(--gold)}
 .filter-btn.active{background:var(--gold);color:#020203;border-color:var(--gold)}
-.filter-btn.active-blue{background:var(--blue);color:var(--white);border-color:var(--blue)}
-.search-input{background:var(--s2);border:1px solid #2a2a4e;color:var(--white);padding:8px 14px;border-radius:8px;font-size:13px;font-family:var(--body);outline:none;min-width:200px}
-.search-input::placeholder{color:var(--muted)}
+.search-wrap{flex:1;display:flex;gap:8px;min-width:200px}
+.search-input{background:var(--s2);border:1px solid #2a2a4e;color:var(--white);padding:8px 14px;border-radius:8px;font-size:13px;font-family:var(--body);outline:none;width:100%}
 .search-input:focus{border-color:var(--gold)}
 
-/* DEALER GRID */
-.dealer-wrap{padding:24px 32px}
-.hub-section{margin-bottom:32px}
-.hub-title{font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #0d0d1a;display:flex;align-items:center;gap:10px}
-.hub-count{font-size:11px;color:var(--muted);background:var(--s1);padding:2px 8px;border-radius:10px}
+/* PROGRESS */
+#discover-progress{display:none;padding:14px 32px;background:#0a0800;border-bottom:1px solid #1a1400}
+.prog-title{font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:8px}
+.prog-track{background:#1a1400;border-radius:6px;height:6px;overflow:hidden;margin-bottom:6px}
+.prog-bar{height:100%;background:var(--gold);width:0%;transition:width .3s}
+.prog-status{font-size:12px;color:var(--muted);font-family:var(--body)}
 
-.dealer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+/* MAIN CONTENT */
+.content{padding:24px 32px}
+
+/* STATE SECTION */
+.state-section{margin-bottom:32px}
+.state-hdr{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--s1);border:1px solid #1a1a2e;border-radius:8px;margin-bottom:16px;cursor:pointer;transition:border-color .2s}
+.state-hdr:hover{border-color:var(--gold)}
+.state-flag{font-size:20px}
+.state-name{font-size:16px;font-weight:900;letter-spacing:2px;color:var(--white)}
+.state-meta{font-size:12px;color:var(--muted);font-family:var(--body)}
+.state-pills{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.state-pill{font-size:10px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px}
+.pill-green{background:#020a02;border:1px solid var(--green);color:var(--green)}
+.pill-yellow{background:#0a0800;border:1px solid var(--gold);color:var(--gold)}
+.pill-red{background:#0a0000;border:1px solid var(--red);color:var(--red)}
+.state-toggle{font-size:12px;color:var(--muted);margin-left:8px;transition:transform .2s}
+.state-toggle.open{transform:rotate(180deg)}
+
+/* HUB SECTION */
+.hub-section{margin-bottom:20px;margin-left:16px}
+.hub-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #0d0d1a}
+.hub-name{font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.hub-active{font-size:10px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px}
+.hub-on{background:#020a02;border:1px solid var(--green);color:var(--green)}
+.hub-off{background:#0d0d0d;border:1px solid #2a2a2a;color:var(--muted)}
+.hub-count{font-size:11px;color:var(--muted);font-family:var(--body);margin-left:auto}
+
+/* DEALER GRID */
+.dealer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
 
 /* DEALER CARD */
-.dealer-card{background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:16px 18px;transition:border-color .2s;position:relative}
+.dealer-card{background:var(--s1);border:1px solid #1a1a2e;border-radius:8px;padding:14px 16px;transition:border-color .2s;position:relative}
 .dealer-card:hover{border-color:var(--gold)}
 .dealer-card.role-id{border-left:3px solid var(--blue)}
 .dealer-card.role-bd{border-left:3px solid var(--gold)}
 .dealer-card.role-both{border-left:3px solid var(--green)}
+.dealer-card.mega-group{border-left:3px solid var(--red)}
 
-.dc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
-.dc-name{font-size:15px;font-weight:900;color:var(--white);line-height:1.2}
-.dc-brand{font-size:11px;color:var(--muted);font-family:var(--body);margin-top:3px}
-.dc-roles{display:flex;gap:5px;flex-shrink:0}
-.role-tag{font-size:10px;font-weight:900;padding:3px 8px;border-radius:10px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.dc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;gap:8px}
+.dc-name{font-size:13px;font-weight:900;color:var(--white);line-height:1.2}
+.dc-brand{font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px}
+.dc-badges{display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.role-tag{font-size:9px;font-weight:900;padding:2px 7px;border-radius:8px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .tag-id{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
 .tag-bd{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.tag-mega{background:#0a0000;border:1px solid var(--red);color:var(--red);font-size:8px}
+.tag-sister{background:#0a0000;border:1px solid var(--orange);color:var(--orange);font-size:8px}
 
-.dc-meta{font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.8}
-.dc-meta span{color:var(--dim);font-weight:600}
+.dc-info{font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.8}
+.dc-info a{color:var(--blue);text-decoration:none}
+.dc-info a:hover{text-decoration:underline}
 
-.dc-actions{display:flex;gap:6px;margin-top:12px}
-.btn-xs{padding:6px 12px;font-size:11px;font-weight:900;letter-spacing:1px;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);text-transform:uppercase;transition:all .2s}
+.dc-actions{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
+.btn-xs{padding:5px 10px;font-size:10px;font-weight:900;letter-spacing:1px;border:none;border-radius:5px;cursor:pointer;font-family:var(--font);text-transform:uppercase;transition:all .2s;white-space:nowrap}
 .btn-blue-xs{background:transparent;border:1px solid var(--blue);color:var(--blue)}
 .btn-blue-xs:hover{background:var(--blue);color:var(--white)}
 .btn-gold-xs{background:transparent;border:1px solid var(--gold);color:var(--gold)}
 .btn-gold-xs:hover{background:var(--gold);color:#020203}
-.btn-green-xs{background:var(--green);color:#020203}
+.btn-red-xs{background:transparent;border:1px solid var(--red);color:var(--red);cursor:not-allowed;opacity:.6}
+
+/* SISTER STORE WARNING */
+.sister-warn{font-size:10px;color:var(--orange);font-family:var(--body);margin-top:6px;padding:5px 8px;background:#0a0400;border:1px solid #2a1000;border-radius:4px}
 
 /* ADD DEALER MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:none;align-items:center;justify-content:center}
-.modal-box{background:#0a0f1a;border:2px solid var(--gold);border-radius:16px;padding:32px;max-width:560px;width:90%;font-family:var(--font);max-height:90vh;overflow-y:auto}
-.modal-title{font-size:18px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:20px}
-.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.modal-field{margin-bottom:12px}
-.modal-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
-.modal-input{background:#020203;border:1px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:6px;font-size:13px;font-family:var(--body);font-weight:600;width:100%;outline:none;transition:border-color .2s}
+.modal-box{background:#0a0f1a;border:2px solid var(--gold);border-radius:16px;padding:28px;max-width:540px;width:90%;font-family:var(--font);max-height:88vh;overflow-y:auto}
+.modal-title{font-size:17px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:18px}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.modal-field{margin-bottom:10px}
+.modal-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;display:block}
+.modal-input{background:#020203;border:1px solid #2a2a4e;color:var(--white);padding:9px 12px;border-radius:6px;font-size:13px;font-family:var(--body);font-weight:600;width:100%;outline:none}
 .modal-input:focus{border-color:var(--gold)}
 .modal-input option{background:#020203}
-.role-toggle{display:flex;gap:10px}
-.role-toggle-btn{flex:1;padding:10px;border-radius:8px;font-size:12px;font-weight:900;cursor:pointer;border:1px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s;text-transform:uppercase}
+.role-toggle{display:flex;gap:8px}
+.role-toggle-btn{flex:1;padding:9px;border-radius:7px;font-size:11px;font-weight:900;cursor:pointer;border:1px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s;text-transform:uppercase}
 .role-toggle-btn.sel-id{border-color:var(--blue);color:var(--blue);background:#040e1a}
 .role-toggle-btn.sel-bd{border-color:var(--gold);color:var(--gold);background:#1a1400}
 .role-toggle-btn.sel-both{border-color:var(--green);color:var(--green);background:#020a02}
-.modal-btns{display:flex;gap:10px;margin-top:20px}
+.modal-btns{display:flex;gap:10px;margin-top:18px}
+.btn-modal-save{flex:1;padding:12px;font-size:13px;font-weight:900;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);letter-spacing:1px;background:var(--green);color:#020203}
+.btn-modal-cancel{padding:12px 18px;font-size:13px;font-weight:900;border:1px solid #2a2a4e;color:var(--muted);background:transparent;border-radius:6px;cursor:pointer;font-family:var(--font)}
 
 /* EMPTY */
-.empty{padding:48px;text-align:center;color:var(--muted);font-family:var(--body);font-size:14px}
+.empty{padding:40px;text-align:center;color:var(--muted);font-family:var(--body);font-size:14px}
+
+/* TOAST */
+#dealers-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:8px;font-size:14px;font-weight:900;font-family:var(--font);letter-spacing:1px;z-index:9999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.5)}
 
 @media(max-width:768px){
+  .stats-bar{grid-template-columns:repeat(3,1fr)}
   .dealer-grid{grid-template-columns:1fr}
-  .stats-bar{grid-template-columns:repeat(2,1fr)}
   .modal-row{grid-template-columns:1fr}
+  .page-hdr{padding:16px}
+  .content{padding:16px}
 }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav class="ws-nav">
   <a href="https://evl-decode-two.vercel.app/ws" class="ws-nav-logo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
@@ -120,8 +163,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <a href="https://evl-decode-two.vercel.app/ws-exchange" class="ws-nav-link">EXCHANGE</a>
     <a href="https://evl-decode-two.vercel.app/ws-dealers" class="ws-nav-link active">DEALERS</a>
     <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="ws-nav-link">ONBOARDING</a>
-    <a href="https://evl-decode-two.vercel.app/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px">⬅ RETAIL</a>
-    <a href="https://evl-decode-two.vercel.app/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px">🔒 LOGOUT</a>
+    <a href="https://evl-decode-two.vercel.app/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;padding:6px 10px">⬅ RETAIL</a>
+    <a href="https://evl-decode-two.vercel.app/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:6px 14px;border-radius:6px">🔒 LOGOUT</a>
   </div>
 </nav>
 
@@ -129,24 +172,27 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 <div class="page-hdr">
   <div>
     <div class="page-hdr-title">🏢 FRANCHISED DEALER NETWORK</div>
-    <div class="page-hdr-sub">New car franchise dealers only — no independents. ID = In-Store Dealer (Phase 1 first right of refusal). BD = Buying Dealer (Phase 2 auction bidder).</div>
-  </div>
-  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-    <div class="role-legend">
-      <span class="role-pill id-pill">🔵 ID — IN-STORE DEALER</span>
-      <span class="role-pill bd-pill">⚡ BD — BUYING DEALER</span>
+    <div class="page-hdr-sub">
+      Franchised new car dealers only — no independents &nbsp;|&nbsp;
+      🔵 ID = In-Store Dealer (Phase 1 first right of refusal) &nbsp;|&nbsp;
+      ⚡ BD = Buying Dealer (Phase 2 sealed auction) &nbsp;|&nbsp;
+      🔴 MEGA = Corporate group — sister-store exclusion applies
     </div>
-    <button onclick="openModal()" style="background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:6px;padding:10px 20px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">+ ADD DEALER</button>
-    <button onclick="runAutoDiscover()" id="discover-btn" style="background:var(--gold);color:#020203;border:none;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">⚡ AUTO-DISCOVER DEALERS</button>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <button onclick="openModal()" style="background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:6px;padding:9px 18px;font-size:12px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">+ ADD DEALER</button>
+    <button onclick="runAutoDiscover()" id="discover-btn" style="background:var(--gold);color:#020203;border:none;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">⚡ AUTO-DISCOVER</button>
   </div>
 </div>
 
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stat-box"><span class="stat-val" id="st-total" style="color:var(--gold)">—</span><div class="stat-lbl">Total Dealers</div></div>
+  <div class="stat-box"><span class="stat-val" id="st-states" style="color:var(--blue)">—</span><div class="stat-lbl">States</div></div>
+  <div class="stat-box"><span class="stat-val" id="st-hubs" style="color:var(--green)">—</span><div class="stat-lbl">Hubs</div></div>
   <div class="stat-box"><span class="stat-val" id="st-id" style="color:var(--blue)">—</span><div class="stat-lbl">ID Network</div></div>
   <div class="stat-box"><span class="stat-val" id="st-bd" style="color:var(--gold)">—</span><div class="stat-lbl">BD Bidders</div></div>
-  <div class="stat-box"><span class="stat-val" id="st-hubs" style="color:var(--green)">—</span><div class="stat-lbl">Hubs Covered</div></div>
+  <div class="stat-box"><span class="stat-val" id="st-mega" style="color:var(--red)">—</span><div class="stat-lbl">Mega-Groups ⚠</div></div>
 </div>
 
 <!-- FILTER BAR -->
@@ -154,20 +200,22 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <button class="filter-btn active" onclick="setFilter('all',this)">ALL</button>
   <button class="filter-btn" onclick="setFilter('ID',this)">🔵 ID ONLY</button>
   <button class="filter-btn" onclick="setFilter('BD',this)">⚡ BD ONLY</button>
-  <button class="filter-btn" onclick="setFilter('BOTH',this)">✅ ID + BD</button>
-  <div style="flex:1"></div>
-  <input class="search-input" id="search-input" placeholder="Search dealer or brand..." oninput="renderDealers()"/>
+  <button class="filter-btn" onclick="setFilter('MEGA',this)">🔴 MEGA-GROUPS</button>
+  <button class="filter-btn" onclick="setFilter('INDIE',this)">✅ INDEPENDENT FRANCHISE</button>
+  <div class="search-wrap">
+    <input class="search-input" id="search-input" placeholder="Search dealer, brand, state, hub..." oninput="renderAll()"/>
+  </div>
 </div>
 
-<!-- DEALER GRID -->
-<div id="discover-progress" style="display:none;padding:16px 32px;background:#0a0800;border-bottom:1px solid #1a1400">
-  <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:8px" id="dp-title">⚡ AUTO-DISCOVERING FRANCHISED DEALERS...</div>
-  <div style="background:#1a1400;border-radius:6px;height:6px;overflow:hidden;margin-bottom:8px">
-    <div id="dp-bar" style="height:100%;background:var(--gold);width:0%;transition:width .4s"></div>
-  </div>
-  <div style="font-size:12px;color:var(--muted);font-family:var(--body)" id="dp-status">Initializing...</div>
+<!-- PROGRESS BAR -->
+<div id="discover-progress">
+  <div class="prog-title" id="prog-title">⚡ AUTO-DISCOVERING DEALERS...</div>
+  <div class="prog-track"><div class="prog-bar" id="prog-bar"></div></div>
+  <div class="prog-status" id="prog-status">Initializing...</div>
 </div>
-<div class="dealer-wrap" id="dealer-wrap">
+
+<!-- MAIN CONTENT -->
+<div class="content" id="main-content">
   <div class="empty">Loading dealer network...</div>
 </div>
 
@@ -175,7 +223,6 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 <div id="add-modal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-title">+ ADD FRANCHISED DEALER</div>
-
     <div class="modal-row">
       <div class="modal-field">
         <label class="modal-label">Dealership Name</label>
@@ -191,12 +238,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
           <option>Volkswagen</option><option>Subaru</option><option>Mazda</option>
           <option>Lexus</option><option>BMW</option><option>Mercedes-Benz</option>
           <option>Audi</option><option>Cadillac</option><option>Lincoln</option>
-          <option>Buick</option><option>Acura</option><option>Infiniti</option>
           <option>Multi-Brand Group</option>
         </select>
       </div>
     </div>
-
     <div class="modal-row">
       <div class="modal-field">
         <label class="modal-label">Hub Market</label>
@@ -217,336 +262,410 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <input class="modal-input" id="d-state" placeholder="TX" maxlength="2" style="text-transform:uppercase"/>
       </div>
     </div>
-
     <div class="modal-row">
       <div class="modal-field">
         <label class="modal-label">Contact Name</label>
-        <input class="modal-input" id="d-contact" placeholder="Sales Manager name"/>
+        <input class="modal-input" id="d-contact" placeholder="GM / Sales Manager"/>
       </div>
       <div class="modal-field">
         <label class="modal-label">Contact Email</label>
         <input class="modal-input" id="d-email" placeholder="manager@dealer.com" type="email"/>
       </div>
     </div>
-
     <div class="modal-field">
       <label class="modal-label">Dealer Role</label>
       <div class="role-toggle">
-        <button class="role-toggle-btn" id="role-id-btn" onclick="selectRole('ID')">🔵 ID — IN-STORE DEALER</button>
-        <button class="role-toggle-btn" id="role-bd-btn" onclick="selectRole('BD')">⚡ BD — BUYING DEALER</button>
+        <button class="role-toggle-btn" id="role-id-btn" onclick="selectRole('ID')">🔵 ID</button>
+        <button class="role-toggle-btn" id="role-bd-btn" onclick="selectRole('BD')">⚡ BD</button>
         <button class="role-toggle-btn" id="role-both-btn" onclick="selectRole('BOTH')">✅ BOTH</button>
       </div>
-      <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:8px;line-height:1.5">
-        <strong style="color:var(--blue)">ID:</strong> Gets Phase 1 first right of refusal. Must be within 50mi of hub. Tax credit arbitrage applies. &nbsp;|&nbsp;
-        <strong style="color:var(--gold)">BD:</strong> Participates in Phase 2 sealed auction bidding only.
-      </div>
     </div>
-
     <div class="modal-btns">
-      <button class="btn-xs btn-green-xs" onclick="saveDealer()" style="flex:1;padding:12px;font-size:13px">✅ ADD DEALER</button>
-      <button class="btn-xs" onclick="closeModal()" style="padding:12px 20px;font-size:13px;border:1px solid #2a2a4e;color:var(--muted);background:transparent;border-radius:6px;cursor:pointer;font-family:var(--font)">CANCEL</button>
+      <button class="btn-modal-save" onclick="saveDealer()">✅ ADD DEALER</button>
+      <button class="btn-modal-cancel" onclick="closeModal()">CANCEL</button>
     </div>
   </div>
 </div>
 
+<div id="dealers-toast"></div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, getDocs, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
-  authDomain: "evl-acquisition-radar.firebaseapp.com",
-  projectId: "evl-acquisition-radar",
-  storageBucket: "evl-acquisition-radar.firebasestorage.app",
-  messagingSenderId: "84195145348",
-  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+  apiKey:"AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain:"evl-acquisition-radar.firebaseapp.com",
+  projectId:"evl-acquisition-radar",
+  storageBucket:"evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId:"84195145348",
+  appId:"1:84195145348:web:b10f837bee92ce2e4674d1"
 };
-
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
+// ── KNOWN MEGA-GROUPS ──
+const MEGA_GROUPS = [
+  'autonation','hendrick','rick hendrick','sonic automotive','sonic',
+  'lithia','penske','group 1','asbury','larry h. miller','ken garff',
+  'holman','jm family','ed morse','berkshire hathaway','bha','sewell',
+  'park place','david taylor','van tuyl','lhm','earnhardt'
+];
+
+// ── STATE MAP ──
+const HUB_STATES = {
+  'DFW / Plano':'TX','Houston':'TX','Atlanta':'GA','Chicago':'IL',
+  'Denver':'CO','Phoenix':'AZ','Los Angeles':'CA','NYC / NJ':'NJ',
+  'Miami':'FL','Nashville':'TN','Seattle':'WA','Minneapolis':'MN',
+  'Charlotte':'NC','Columbus':'OH','Philadelphia':'PA','Detroit':'MI',
+  'Richmond':'VA','Indianapolis':'IN','St. Louis':'MO','Milwaukee':'WI',
+  'Baltimore':'MD','Las Vegas':'NV'
+};
+
+const STATE_TIERS = {
+  TX:'green',GA:'green',TN:'green',CO:'green',AZ:'green',
+  WA:'green',MN:'green',NC:'green',MI:'green',OH:'green',NV:'green',
+  FL:'yellow',IL:'yellow',PA:'yellow',MD:'yellow',VA:'yellow',
+  MO:'yellow',IN:'yellow',WI:'yellow',NJ:'yellow',
+  CA:'red',NY:'red'
+};
+
+const STATE_NAMES = {
+  TX:'Texas',GA:'Georgia',IL:'Illinois',CO:'Colorado',AZ:'Arizona',
+  CA:'California',NJ:'New Jersey',FL:'Florida',TN:'Tennessee',
+  WA:'Washington',MN:'Minnesota',NC:'North Carolina',OH:'Ohio',
+  PA:'Pennsylvania',MI:'Michigan',VA:'Virginia',IN:'Indiana',
+  MO:'Missouri',WI:'Wisconsin',MD:'Maryland',NV:'Nevada',NY:'New York'
+};
+
+// ── DATA ──
 let allDealers   = [];
 let activeFilter = 'all';
-let selectedRole = '';
+let expandedStates = new Set();
 
-// ── LOAD DEALERS ──
+function isMegaGroup(name) {
+  const n = (name||'').toLowerCase();
+  return MEGA_GROUPS.some(g => n.includes(g));
+}
+
+// ── LOAD ──
 async function loadDealers() {
   try {
     const snap = await getDocs(collection(db, 'evl_dealers'));
     allDealers = [];
-    snap.forEach(d => allDealers.push({ id: d.id, ...d.data() }));
-    renderDealers();
+    snap.forEach(d => {
+      const data = { id: d.id, ...d.data() };
+      data.isMega = isMegaGroup(data.name);
+      // Infer state from hub if missing
+      if (!data.state && data.hub) data.state = HUB_STATES[data.hub] || '??';
+      allDealers.push(data);
+    });
+    renderAll();
     updateStats();
   } catch(e) {
-    document.getElementById('dealer-wrap').innerHTML = '<div class="empty">Could not load dealers — check Firestore rules.</div>';
+    document.getElementById('main-content').innerHTML =
+      '<div class="empty">Could not load dealers — check Firestore rules include evl_dealers.</div>';
     console.error(e);
   }
 }
 
-// ── RENDER ──
-window.renderDealers = function() {
-  const search = document.getElementById('search-input')?.value?.toLowerCase() || '';
+// ── RENDER ALL ──
+window.renderAll = function() {
+  const search = (document.getElementById('search-input')?.value||'').toLowerCase();
+
   let filtered = allDealers.filter(d => {
-    const matchRole = activeFilter === 'all' || d.role === activeFilter;
+    const matchFilter =
+      activeFilter === 'all' ||
+      (activeFilter === 'ID'   && (d.role==='ID'||d.role==='BOTH')) ||
+      (activeFilter === 'BD'   && (d.role==='BD'||d.role==='BOTH')) ||
+      (activeFilter === 'MEGA' && d.isMega) ||
+      (activeFilter === 'INDIE'&& !d.isMega);
+
     const matchSearch = !search ||
-      d.name?.toLowerCase().includes(search) ||
-      d.brand?.toLowerCase().includes(search) ||
-      d.hub?.toLowerCase().includes(search);
-    return matchRole && matchSearch;
+      (d.name||'').toLowerCase().includes(search) ||
+      (d.brand||'').toLowerCase().includes(search) ||
+      (d.hub||'').toLowerCase().includes(search) ||
+      (d.state||'').toLowerCase().includes(search);
+
+    return matchFilter && matchSearch;
   });
 
   if (!filtered.length) {
-    document.getElementById('dealer-wrap').innerHTML =
-      '<div class="empty">No dealers found.<br><br><button class="filter-btn" onclick="openModal()" style="margin:0 auto;display:block">+ Add First Dealer</button></div>';
+    document.getElementById('main-content').innerHTML =
+      '<div class="empty">No dealers match your filters.</div>';
     return;
   }
 
-  // Group by hub
-  const byHub = {};
+  // Group by state → hub
+  const byState = {};
   filtered.forEach(d => {
-    const hub = d.hub || 'Unassigned';
-    if (!byHub[hub]) byHub[hub] = [];
-    byHub[hub].push(d);
+    const state = d.state || '??';
+    const hub   = d.hub || 'Unassigned';
+    if (!byState[state]) byState[state] = {};
+    if (!byState[state][hub]) byState[state][hub] = [];
+    byState[state][hub].push(d);
   });
 
-  const wrap = document.getElementById('dealer-wrap');
-  wrap.innerHTML = Object.entries(byHub).sort().map(([hub, dealers]) => `
-    <div class="hub-section">
-      <div class="hub-title">
-        📍 ${hub}
-        <span class="hub-count">${dealers.length} dealer${dealers.length!==1?'s':''}</span>
+  const stateKeys = Object.keys(byState).sort();
+  const content = document.getElementById('main-content');
+
+  content.innerHTML = stateKeys.map(state => {
+    const hubs      = byState[state];
+    const hubKeys   = Object.keys(hubs).sort();
+    const totalD    = hubKeys.reduce((s,h)=>s+hubs[h].length,0);
+    const tier      = STATE_TIERS[state] || 'yellow';
+    const tierLabel = tier==='green'?'GREEN TIER':tier==='red'?'RED TIER':'YELLOW TIER';
+    const tierClass = `pill-${tier}`;
+    const stateName = STATE_NAMES[state] || state;
+    const isOpen    = expandedStates.has(state) || search.length > 0;
+
+    return `<div class="state-section">
+      <div class="state-hdr" onclick="toggleState('${state}')">
+        <span class="state-flag">📍</span>
+        <div>
+          <div class="state-name">${state} — ${stateName}</div>
+          <div class="state-meta">${hubKeys.length} hub${hubKeys.length!==1?'s':''} · ${totalD} dealer${totalD!==1?'s':''}</div>
+        </div>
+        <div class="state-pills">
+          <span class="state-pill ${tierClass}">${tierLabel}</span>
+          ${hubKeys.length > 1 ? `<span class="state-pill" style="background:var(--s2);border:1px solid #2a2a4e;color:var(--muted)">${hubKeys.length} HUBS</span>` : ''}
+        </div>
+        <span class="state-toggle ${isOpen?'open':''}">▼</span>
       </div>
-      <div class="dealer-grid">
-        ${dealers.map(d => dealerCard(d)).join('')}
+
+      <div id="state-body-${state}" style="display:${isOpen?'block':'none'}">
+        ${hubKeys.map(hub => {
+          const dealers = hubs[hub];
+          const megaCount = dealers.filter(d=>d.isMega).length;
+          return `<div class="hub-section">
+            <div class="hub-hdr">
+              <span class="hub-name" style="color:var(--gold)">⚡ ${hub}</span>
+              <span class="hub-active hub-on">ACTIVE</span>
+              <span class="hub-count">${dealers.length} dealers${megaCount?` · <span style="color:var(--red)">${megaCount} mega-group</span>`:''}
+              </span>
+            </div>
+            <div class="dealer-grid">
+              ${dealers.map(d => dealerCard(d)).join('')}
+            </div>
+          </div>`;
+        }).join('')}
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 };
 
 function dealerCard(d) {
-  const roleClass = d.role === 'ID' ? 'role-id' : d.role === 'BD' ? 'role-bd' : 'role-both';
-  const idTag  = (d.role === 'ID'   || d.role === 'BOTH') ? '<span class="role-tag tag-id">🔵 ID</span>' : '';
-  const bdTag  = (d.role === 'BD'   || d.role === 'BOTH') ? '<span class="role-tag tag-bd">⚡ BD</span>' : '';
+  const mega = d.isMega;
+  const borderClass = mega ? 'mega-group' : d.role==='ID' ? 'role-id' : d.role==='BD' ? 'role-bd' : 'role-both';
+  const idTag  = (!mega && (d.role==='ID'||d.role==='BOTH'))  ? '<span class="role-tag tag-id">🔵 ID</span>' : '';
+  const bdTag  = (!mega && (d.role==='BD'||d.role==='BOTH'))  ? '<span class="role-tag tag-bd">⚡ BD</span>' : '';
+  const megaTag = mega ? '<span class="role-tag tag-mega">🔴 MEGA</span>' : '';
+  const sisterTag = mega ? '<span class="role-tag tag-sister">⚠ SISTER EXCL.</span>' : '';
 
-  return `<div class="dealer-card ${roleClass}">
+  const phone   = d.phone   ? `📞 <a href="tel:${d.phone}">${d.phone}</a><br>` : '';
+  const website = d.website ? `🌐 <a href="${d.website}" target="_blank">${d.website.replace(/https?:\/\//,'').slice(0,30)}${d.website.length>38?'...':''}</a><br>` : '';
+  const contact = d.contact ? `👤 ${d.contact}${d.email?` — <a href="mailto:${d.email}">${d.email}</a>`:''}<br>` : '';
+
+  const sisterWarn = mega ? `<div class="sister-warn">⚠️ Mega-group store — sister-store exclusion applies. Do not route aged inventory from same corporate group.</div>` : '';
+
+  const actions = mega
+    ? `<button class="btn-xs btn-red-xs" disabled title="Sister-store exclusion active">🚫 EXCLUDED</button>`
+    : `${d.role==='ID'||d.role==='BOTH' ? '<button class="btn-xs btn-blue-xs">🔵 SEND ID OFFER</button>' : ''}
+       ${d.role==='BD'||d.role==='BOTH' ? '<button class="btn-xs btn-gold-xs">⚡ INVITE TO BID</button>' : ''}`;
+
+  return `<div class="dealer-card ${borderClass}">
     <div class="dc-top">
       <div>
-        <div class="dc-name">${d.name || 'Unknown Dealer'}</div>
-        <div class="dc-brand">${d.brand || '—'} · ${d.state || '—'}</div>
+        <div class="dc-name">${d.name||'Unknown'}</div>
+        <div class="dc-brand">${d.brand||'—'} · ${d.state||'—'}</div>
       </div>
-      <div class="dc-roles">${idTag}${bdTag}</div>
+      <div class="dc-badges">${megaTag}${sisterTag}${idTag}${bdTag}</div>
     </div>
-    <div class="dc-meta">
-      ${d.contact ? `👤 <span>${d.contact}</span><br>` : ''}
-      ${d.email   ? `✉️ <span>${d.email}</span><br>` : ''}
-      📍 <span>${d.hub || '—'}</span>
-    </div>
-    <div class="dc-actions">
-      ${d.role === 'ID' || d.role === 'BOTH' ? `<button class="btn-xs btn-blue-xs">🔵 SEND ID OFFER</button>` : ''}
-      ${d.role === 'BD' || d.role === 'BOTH' ? `<button class="btn-xs btn-gold-xs">⚡ INVITE TO BID</button>` : ''}
-    </div>
+    <div class="dc-info">${phone}${website}${contact}${!phone&&!website&&!contact?'<span style="color:#3a3a4a">No contact data yet</span>':''}</div>
+    ${sisterWarn}
+    <div class="dc-actions">${actions}</div>
   </div>`;
 }
 
 // ── STATS ──
 function updateStats() {
-  const ids   = allDealers.filter(d => d.role === 'ID'   || d.role === 'BOTH').length;
-  const bds   = allDealers.filter(d => d.role === 'BD'   || d.role === 'BOTH').length;
-  const hubs  = new Set(allDealers.map(d => d.hub).filter(Boolean)).size;
-  document.getElementById('st-total').textContent = allDealers.length;
-  document.getElementById('st-id').textContent    = ids;
-  document.getElementById('st-bd').textContent    = bds;
-  document.getElementById('st-hubs').textContent  = hubs;
+  const states = new Set(allDealers.map(d=>d.state).filter(Boolean)).size;
+  const hubs   = new Set(allDealers.map(d=>d.hub).filter(Boolean)).size;
+  const ids    = allDealers.filter(d=>d.role==='ID'||d.role==='BOTH').length;
+  const bds    = allDealers.filter(d=>d.role==='BD'||d.role==='BOTH').length;
+  const mega   = allDealers.filter(d=>d.isMega).length;
+  const set = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('st-total', allDealers.length);
+  set('st-states', states);
+  set('st-hubs',   hubs);
+  set('st-id',     ids);
+  set('st-bd',     bds);
+  set('st-mega',   mega);
 }
+
+// ── TOGGLE STATE ACCORDION ──
+window.toggleState = function(state) {
+  const body = document.getElementById('state-body-' + state);
+  const isOpen = body.style.display !== 'none';
+  if (isOpen) { body.style.display='none'; expandedStates.delete(state); }
+  else         { body.style.display='block'; expandedStates.add(state); }
+  // Toggle arrow
+  const hdr = body.previousElementSibling;
+  const arrow = hdr?.querySelector('.state-toggle');
+  if (arrow) arrow.classList.toggle('open', !isOpen);
+};
 
 // ── FILTER ──
 window.setFilter = function(f, btn) {
   activeFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active','active-blue'));
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  renderDealers();
+  renderAll();
 };
 
-// ── ROLE SELECT ──
-window.selectRole = function(role) {
-  selectedRole = role;
-  document.querySelectorAll('.role-toggle-btn').forEach(b => b.classList.remove('sel-id','sel-bd','sel-both'));
-  if (role === 'ID')   document.getElementById('role-id-btn').classList.add('sel-id');
-  if (role === 'BD')   document.getElementById('role-bd-btn').classList.add('sel-bd');
-  if (role === 'BOTH') document.getElementById('role-both-btn').classList.add('sel-both');
-};
-
-// ── SAVE DEALER ──
-window.saveDealer = async function() {
-  const name    = document.getElementById('d-name')?.value?.trim();
-  const brand   = document.getElementById('d-brand')?.value;
-  const hub     = document.getElementById('d-hub')?.value;
-  const state   = document.getElementById('d-state')?.value?.trim().toUpperCase();
-  const contact = document.getElementById('d-contact')?.value?.trim();
-  const email   = document.getElementById('d-email')?.value?.trim();
-
-  if (!name)         { alert('Dealership name required'); return; }
-  if (!brand)        { alert('OEM brand required'); return; }
-  if (!hub)          { alert('Hub market required'); return; }
-  if (!selectedRole) { alert('Select dealer role — ID, BD, or Both'); return; }
-
-  const dealerId = 'DEALER-' + Date.now();
-  try {
-    await setDoc(doc(db, 'evl_dealers', dealerId), {
-      dealerId, name, brand, hub, state, contact, email,
-      role: selectedRole,
-      status: 'ACTIVE',
-      addedAt: serverTimestamp()
-    });
-    closeModal();
-    await loadDealers();
-  } catch(e) {
-    console.error('Save dealer error:', e);
-    alert('Save failed — check Firestore rules include evl_dealers collection.');
-  }
-};
-
-// ── AUTO-DISCOVER ENGINE ──
+// ── AUTO-DISCOVER ──
 const GOOGLE_KEY = 'AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho';
-
 const HUBS = [
-  { name: 'DFW / Plano',    state: 'TX', lat: 33.0198,  lng: -96.6989 },
-  { name: 'Houston',        state: 'TX', lat: 29.7604,  lng: -95.3698 },
-  { name: 'Atlanta',        state: 'GA', lat: 33.7490,  lng: -84.3880 },
-  { name: 'Chicago',        state: 'IL', lat: 41.8781,  lng: -87.6298 },
-  { name: 'Denver',         state: 'CO', lat: 39.7392,  lng: -104.9903 },
-  { name: 'Phoenix',        state: 'AZ', lat: 33.4484,  lng: -112.0740 },
-  { name: 'Los Angeles',    state: 'CA', lat: 34.0522,  lng: -118.2437 },
-  { name: 'NYC / NJ',       state: 'NJ', lat: 40.7128,  lng: -74.0060 },
-  { name: 'Miami',          state: 'FL', lat: 25.7617,  lng: -80.1918 },
-  { name: 'Nashville',      state: 'TN', lat: 36.1627,  lng: -86.7816 },
-  { name: 'Seattle',        state: 'WA', lat: 47.6062,  lng: -122.3321 },
-  { name: 'Minneapolis',    state: 'MN', lat: 44.9778,  lng: -93.2650 },
-  { name: 'Charlotte',      state: 'NC', lat: 35.2271,  lng: -80.8431 },
-  { name: 'Columbus',       state: 'OH', lat: 39.9612,  lng: -82.9988 },
-  { name: 'Philadelphia',   state: 'PA', lat: 39.9526,  lng: -75.1652 },
-  { name: 'Detroit',        state: 'MI', lat: 42.3314,  lng: -83.0458 },
-  { name: 'Richmond',       state: 'VA', lat: 37.5407,  lng: -77.4360 },
-  { name: 'Indianapolis',   state: 'IN', lat: 39.7684,  lng: -86.1581 },
-  { name: 'St. Louis',      state: 'MO', lat: 38.6270,  lng: -90.1994 },
-  { name: 'Milwaukee',      state: 'WI', lat: 43.0389,  lng: -87.9065 },
-  { name: 'Baltimore',      state: 'MD', lat: 39.2904,  lng: -76.6122 },
-  { name: 'Las Vegas',      state: 'NV', lat: 36.1699,  lng: -115.1398 }
+  {name:'DFW / Plano',state:'TX',lat:33.0198,lng:-96.6989},
+  {name:'Houston',state:'TX',lat:29.7604,lng:-95.3698},
+  {name:'Atlanta',state:'GA',lat:33.7490,lng:-84.3880},
+  {name:'Chicago',state:'IL',lat:41.8781,lng:-87.6298},
+  {name:'Denver',state:'CO',lat:39.7392,lng:-104.9903},
+  {name:'Phoenix',state:'AZ',lat:33.4484,lng:-112.0740},
+  {name:'Los Angeles',state:'CA',lat:34.0522,lng:-118.2437},
+  {name:'NYC / NJ',state:'NJ',lat:40.7128,lng:-74.0060},
+  {name:'Miami',state:'FL',lat:25.7617,lng:-80.1918},
+  {name:'Nashville',state:'TN',lat:36.1627,lng:-86.7816},
+  {name:'Seattle',state:'WA',lat:47.6062,lng:-122.3321},
+  {name:'Minneapolis',state:'MN',lat:44.9778,lng:-93.2650},
+  {name:'Charlotte',state:'NC',lat:35.2271,lng:-80.8431},
+  {name:'Columbus',state:'OH',lat:39.9612,lng:-82.9988},
+  {name:'Philadelphia',state:'PA',lat:39.9526,lng:-75.1652},
+  {name:'Detroit',state:'MI',lat:42.3314,lng:-83.0458},
+  {name:'Richmond',state:'VA',lat:37.5407,lng:-77.4360},
+  {name:'Indianapolis',state:'IN',lat:39.7684,lng:-86.1581},
+  {name:'St. Louis',state:'MO',lat:38.6270,lng:-90.1994},
+  {name:'Milwaukee',state:'WI',lat:43.0389,lng:-87.9065},
+  {name:'Baltimore',state:'MD',lat:39.2904,lng:-76.6122},
+  {name:'Las Vegas',state:'NV',lat:36.1699,lng:-115.1398}
 ];
-
 const OEM_BRANDS = ['Toyota','Ford','Chevrolet','Honda','Nissan','Hyundai','Kia','Jeep','GMC','Subaru','Mazda','Volkswagen'];
-
-function setProgress(pct, status) {
-  document.getElementById('dp-bar').style.width = pct + '%';
-  document.getElementById('dp-status').textContent = status;
-}
 
 window.runAutoDiscover = async function() {
   const btn = document.getElementById('discover-btn');
   btn.disabled = true;
-  btn.textContent = '⏳ DISCOVERING...';
+  btn.textContent = '⏳ RUNNING...';
   document.getElementById('discover-progress').style.display = 'block';
-  document.getElementById('dp-title').textContent = '⚡ AUTO-DISCOVERING FRANCHISED DEALERS ACROSS ALL 22 HUBS...';
 
-  let found = 0, written = 0, skipped = 0;
-  const seen = new Set(); // dedup by place_id
+  let written=0, skipped=0;
+  const seen = new Set();
 
-  for (let h = 0; h < HUBS.length; h++) {
+  for (let h=0; h<HUBS.length; h++) {
     const hub = HUBS[h];
-    const pct = Math.round((h / HUBS.length) * 100);
-    setProgress(pct, `Scanning ${hub.name} (${h+1}/${HUBS.length})...`);
+    const pct = Math.round((h/HUBS.length)*90);
+    document.getElementById('prog-bar').style.width = pct + '%';
+    document.getElementById('prog-status').textContent = 'Scanning ' + hub.name + ' (' + (h+1) + '/' + HUBS.length + ')...';
 
     for (const brand of OEM_BRANDS) {
       try {
-        const url = 'https://places.googleapis.com/v1/places:searchText';
-        const body = {
-          textQuery: brand + ' car dealer ' + hub.name,
-          maxResultCount: 10
-        };
-
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const res = await fetch('https://places.googleapis.com/v1/places:searchText', {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
             'X-Goog-Api-Key': GOOGLE_KEY,
-            'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.businessStatus'
+            'X-Goog-FieldMask':'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.businessStatus'
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify({ textQuery: brand + ' car dealer ' + hub.name, maxResultCount:10 })
         });
-
-        if (!res.ok) {
-          const errText = await res.text();
-          console.warn('Places API error for ' + brand + ' in ' + hub.name + ':', res.status, errText);
-          continue;
-        }
-
+        if (!res.ok) continue;
         const data = await res.json();
-        console.log('Places hit for ' + brand + ' in ' + hub.name + ':', (data.places||[]).length, 'results');
-        const places = data.places || [];
-        found += places.length;
-
-        for (const p of places) {
+        for (const p of (data.places||[])) {
           if (!p.id || seen.has(p.id)) { skipped++; continue; }
-          if (p.businessStatus && p.businessStatus !== 'OPERATIONAL') continue;
-
+          if (p.businessStatus && p.businessStatus!=='OPERATIONAL') continue;
           seen.add(p.id);
-
           const name = p.displayName?.text || brand + ' Dealer';
-          const addr = p.formattedAddress || '';
-          const phone = p.nationalPhoneNumber || '';
-          const website = p.websiteUri || '';
-
-          // Determine role — IDs are the hub's local dealers (within 30 miles ideally)
-          // For now assign all as BOTH (can be refined later)
-          const dealerId = 'DEALER-GP-' + p.id.slice(-10);
-
-          await setDoc(doc(db, 'evl_dealers', dealerId), {
-            dealerId,
-            placeId: p.id,
-            name,
-            brand,
-            hub: hub.name,
-            state: hub.state,
-            address: addr,
-            phone,
-            website,
-            role: 'BOTH',
-            status: 'ACTIVE',
-            source: 'google-places-auto',
-            discoveredAt: serverTimestamp()
+          const mega = isMegaGroup(name);
+          await setDoc(doc(db,'evl_dealers','DEALER-GP-'+p.id.slice(-10)), {
+            dealerId:'DEALER-GP-'+p.id.slice(-10),
+            placeId:p.id, name, brand,
+            hub:hub.name, state:hub.state,
+            address:p.formattedAddress||'',
+            phone:p.nationalPhoneNumber||'',
+            website:p.websiteUri||'',
+            role:'BOTH', isMega:mega,
+            status:'ACTIVE', source:'google-places-auto',
+            discoveredAt:serverTimestamp()
           });
-
           written++;
-          setProgress(pct, `${hub.name} — wrote: ${name}`);
         }
-
-        // Small delay to avoid rate limiting
-        await new Promise(r => setTimeout(r, 150));
-
-      } catch(e) {
-        console.error(`Error scanning ${brand} in ${hub.name}:`, e);
-      }
+        await new Promise(r=>setTimeout(r,120));
+      } catch(e){ console.warn('Error:',brand,hub.name,e); }
     }
   }
 
-  setProgress(100, `✅ Complete — ${written} dealers written to Firestore (${skipped} duplicates skipped)`);
-  document.getElementById('dp-title').textContent = `✅ DISCOVERY COMPLETE — ${written} FRANCHISED DEALERS FOUND ACROSS 22 HUBS`;
+  document.getElementById('prog-bar').style.width = '100%';
+  document.getElementById('prog-title').textContent = '✅ DISCOVERY COMPLETE — ' + written + ' FRANCHISED DEALERS ACROSS 22 HUBS';
+  document.getElementById('prog-status').textContent = 'Complete — ' + written + ' dealers written (' + skipped + ' duplicates skipped)';
   btn.textContent = '✅ DISCOVERED';
   btn.disabled = false;
-
   await loadDealers();
 };
 
-// ── MODAL ──
-window.openModal  = function() {
-  selectedRole = '';
-  document.querySelectorAll('.role-toggle-btn').forEach(b => b.classList.remove('sel-id','sel-bd','sel-both'));
-  ['d-name','d-brand','d-hub','d-state','d-contact','d-email'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  document.getElementById('add-modal').style.display = 'flex';
+// ── ROLE SELECT ──
+let selectedRole = '';
+window.selectRole = function(role) {
+  selectedRole = role;
+  document.querySelectorAll('.role-toggle-btn').forEach(b=>b.classList.remove('sel-id','sel-bd','sel-both'));
+  if(role==='ID')   document.getElementById('role-id-btn').classList.add('sel-id');
+  if(role==='BD')   document.getElementById('role-bd-btn').classList.add('sel-bd');
+  if(role==='BOTH') document.getElementById('role-both-btn').classList.add('sel-both');
 };
-window.closeModal = function() { document.getElementById('add-modal').style.display = 'none'; };
+
+// ── SAVE DEALER ──
+window.saveDealer = async function() {
+  const name  = document.getElementById('d-name')?.value?.trim();
+  const brand = document.getElementById('d-brand')?.value;
+  const hub   = document.getElementById('d-hub')?.value;
+  const state = document.getElementById('d-state')?.value?.trim().toUpperCase();
+  if(!name)         { showToast('Name required','red'); return; }
+  if(!brand)        { showToast('Brand required','red'); return; }
+  if(!hub)          { showToast('Hub required','red'); return; }
+  if(!selectedRole) { showToast('Select a role','red'); return; }
+  const id = 'DEALER-'+Date.now();
+  try {
+    await setDoc(doc(db,'evl_dealers',id),{
+      dealerId:id, name, brand, hub, state,
+      contact:document.getElementById('d-contact')?.value?.trim()||'',
+      email:document.getElementById('d-email')?.value?.trim()||'',
+      role:selectedRole, isMega:isMegaGroup(name),
+      status:'ACTIVE', source:'manual', addedAt:serverTimestamp()
+    });
+    closeModal();
+    showToast('✅ ' + name + ' added','green');
+    await loadDealers();
+  } catch(e){ showToast('Save failed','red'); console.error(e); }
+};
+
+// ── MODAL ──
+window.openModal = function() {
+  selectedRole='';
+  document.querySelectorAll('.role-toggle-btn').forEach(b=>b.classList.remove('sel-id','sel-bd','sel-both'));
+  ['d-name','d-brand','d-hub','d-state','d-contact','d-email'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('add-modal').style.display='flex';
+};
+window.closeModal = function(){ document.getElementById('add-modal').style.display='none'; };
+
+// ── TOAST ──
+function showToast(msg,color='green'){
+  const t=document.getElementById('dealers-toast');
+  const bg=color==='green'?'#00C853':color==='red'?'#FF3333':'#FFD700';
+  const tc=color==='red'||color==='green'?'#fff':'#020203';
+  t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:'+bg+';color:'+tc+';padding:12px 24px;border-radius:8px;font-size:14px;font-weight:900;font-family:Oswald,sans-serif;letter-spacing:1px;z-index:9999;display:block;box-shadow:0 4px 20px rgba(0,0,0,.5)';
+  t.textContent=msg;
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>{t.style.display='none';t.style.opacity='1';},400);},3000);
+}
 
 window.addEventListener('DOMContentLoaded', loadDealers);
 </script>
