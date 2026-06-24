@@ -754,6 +754,35 @@ async function sendEVLEmail(templateKey, toEmail, params) {
 
 // ── FETCH DEALERS FROM FIRESTORE BY HUB ──
 // Returns array of {ucm1Email, ucm2Email, dealerName} for all dealers in a given hub
+// ── EVL SMS ENGINE ──
+// Calls our secure Vercel serverless function — credentials never exposed in browser
+async function sendEVLSMS(toPhone, message) {
+  if (!toPhone) return;
+  try {
+    const res = await fetch('/api/send-sms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ to: toPhone, message })
+    });
+    const data = await res.json();
+    if (data.success) {
+      console.log(`[EVL SMS] Sent → ${toPhone}`);
+    } else {
+      console.warn(`[EVL SMS] Failed → ${toPhone}:`, data.error);
+    }
+  } catch(e) {
+    console.error('[EVL SMS ERROR]', e);
+  }
+}
+
+// ── SEND BOTH EMAIL + SMS TOGETHER ──
+async function sendEVLNotification(templateKey, toEmail, toPhone, params) {
+  // Email always fires
+  await sendEVLEmail(templateKey, toEmail, params);
+  // SMS fires if phone number available
+  if (toPhone) await sendEVLSMS(toPhone, params.sms_body || params.subject || 'EVL Auction Update');
+}
+
 async function getDealersByHub(hub) {
   try {
     const snap = await getDocs(collection(db, 'evl_ws_dealers'));
@@ -764,7 +793,9 @@ async function getDealersByHub(hub) {
         dealers.push({
           dealerName : data.dealerName || 'Unknown Dealer',
           ucm1Email  : data.ucm1?.email || null,
+          ucm1Phone  : data.ucm1?.phone || null,
           ucm2Email  : data.ucm2?.email || null,
+          ucm2Phone  : data.ucm2?.phone || null,
           ucm1Name   : data.ucm1?.name  || 'UCM',
           ucm2Name   : data.ucm2?.name  || null,
         });
@@ -789,10 +820,18 @@ async function notifyHubDealers(templateKey, hub, params) {
   }
   dealers.forEach(dealer => {
     if (dealer.ucm1Email) {
-      sendEVLEmail(templateKey, dealer.ucm1Email, {
+      // Build SMS message based on template type
+      const smsMessages = {
+        UNIT_CARD    : `🛡️ EVL CERTIFIED UNIT AVAILABLE — ${params.vehicle || 'New Unit'} | ${params.hub || 'DFW'} hub | Phase 1 opens now. Login: evl-decode-two.vercel.app/public/ws-exchange.html`,
+        HOURLY_NUDGE : `⏰ EVL AUCTION UPDATE — ${params.vehicle || 'Active Unit'} | ${params.time_remaining || 'Closing soon'} remaining. Place your bid: evl-decode-two.vercel.app/public/ws-exchange.html`,
+        FINAL_CALL   : `🚨 FINAL CALL — ${params.vehicle || 'Auction'} closes in 2 HOURS. Current high bid: $${params.current_bid || 'Reserve'}. Bid now: evl-decode-two.vercel.app/public/ws-exchange.html`,
+      };
+      const smsBody = smsMessages[templateKey] || `EVL Auction Alert — ${params.vehicle || 'Update available'}. Login to EVL WS Exchange.`;
+      sendEVLNotification(templateKey, dealer.ucm1Email, dealer.ucm1Phone, {
         ...params,
         dealer_name: dealer.dealerName,
-        ucm_name   : dealer.ucm1Name
+        ucm_name   : dealer.ucm1Name,
+        sms_body   : smsBody
       });
     }
   });
@@ -855,6 +894,8 @@ async function submitBidToFirebase(auctionId, bidAmount, dealerEmail) {
 
     // ── EMAIL: OUTBID — notify the dealer who just got bumped ──
     if (prevHighBidder && prevHighBidder !== dealerEmail) {
+      // SMS: outbid alert — time-sensitive, SMS is critical here
+      sendEVLSMS(null, `🔔 EVL OUTBID ALERT — You've been outbid on ${auctionData.vehicle || 'your unit'}. New high bid: $${bidAmount.toLocaleString()}. Counter now: evl-decode-two.vercel.app/public/ws-exchange.html`);
       sendEVLEmail('OUTBID', prevHighBidder, {
         auction_id  : auctionId,
         vehicle     : auctionId,
@@ -1591,6 +1632,8 @@ async function closeAuction(a) {
     // ── EMAILS ON AUCTION CLOSE ──
     if (winner) {
       // EVL-WINNER → winning BD dealer
+      // SMS: winner notification
+      sendEVLSMS(a.highBidderPhone || null, `🏆 YOU WON — ${a.vehicle} | Winning bid: $${a.currentBid?.toLocaleString() || 'See dashboard'}. EVL team will contact you within 2 hours. evl-decode-two.vercel.app/public/ws-exchange.html`);
       sendEVLEmail('WINNER', a.highBidder || 'dealer@testdrive.com', {
         auction_id   : a.id,
         vehicle      : a.vehicle || a.id,
@@ -1599,6 +1642,8 @@ async function closeAuction(a) {
       });
       // EVL-UNIT-SOLD → ID dealer (issuing dealer)
       const idEmail = a.idEmail || 'togradyevl@gmail.com';
+      // SMS: unit sold notification to ID dealer
+      sendEVLSMS(a.idPhone || null, `✅ EVL UNIT SOLD — ${a.vehicle} | Final price: $${a.currentBid?.toLocaleString() || 'See dashboard'}. Settlement coordination begins shortly. evl-decode-two.vercel.app/public/ws-exchange.html`);
       sendEVLEmail('UNIT_SOLD', idEmail, {
         auction_id   : a.id,
         vehicle      : a.vehicle || a.id,
@@ -1629,4 +1674,5 @@ window.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
