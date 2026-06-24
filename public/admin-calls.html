@@ -616,6 +616,40 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   </div>
 </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs, setDoc, doc, deleteDoc, query, orderBy }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const CALLS_COL = "evl_consumer_calls";
+
+  // Expose simple async helpers to the rest of the page
+  window.EVL_DB = {
+    ready: true,
+    async getAllCalls(){
+      const snap = await getDocs(collection(db, CALLS_COL));
+      return snap.docs.map(d => d.data());
+    },
+    async saveCall(call){
+      await setDoc(doc(db, CALLS_COL, call.id), call);
+    },
+    async deleteCall(id){
+      await deleteDoc(doc(db, CALLS_COL, id));
+    }
+  };
+  console.log("[EVL] Firestore call store connected:", CALLS_COL);
+  // Tell the main script Firestore is ready so it can pull live data
+  window.dispatchEvent(new Event("evl-db-ready"));
+</script>
+
 <script>
 const CORRECT_PIN = "1027";
 const CALLS_STORAGE = 'evl_call_log';
@@ -639,9 +673,35 @@ if(sessionStorage.getItem('evl-calls-auth')==='1027'){
   document.getElementById('app').style.display='block';
 }
 
+// When Firestore connects, pull the real call history from the cloud
+window.addEventListener('evl-db-ready', syncCallsFromCloud);
+// Safety: if the event already fired before this listener attached, sync anyway
+if(window.EVL_DB && window.EVL_DB.ready){ syncCallsFromCloud(); }
+
 // DATA
 function loadCalls(){ try{ return JSON.parse(localStorage.getItem(CALLS_STORAGE)||'[]'); }catch(e){ return []; } }
 function saveCalls(c){ localStorage.setItem(CALLS_STORAGE, JSON.stringify(c)); }
+
+// Push a single call to Firestore (permanent, shared across devices)
+async function pushCallToCloud(call){
+  if(window.EVL_DB && window.EVL_DB.ready){
+    try{ await window.EVL_DB.saveCall(call); }
+    catch(e){ console.error('[EVL] Cloud save failed:', e); }
+  }
+}
+// Pull every call from Firestore into the local mirror, then refresh the screen
+async function syncCallsFromCloud(){
+  if(!(window.EVL_DB && window.EVL_DB.ready)) return;
+  try{
+    const cloud = await window.EVL_DB.getAllCalls();
+    cloud.sort((a,b)=> (b.timestamp||'').localeCompare(a.timestamp||''));
+    localStorage.setItem(CALLS_STORAGE, JSON.stringify(cloud));
+    if(document.getElementById('app').style.display!=='none'){
+      renderCalls('all'); updateStats(); renderMetrics();
+    }
+    console.log('[EVL] Synced '+cloud.length+' calls from cloud');
+  }catch(e){ console.error('[EVL] Cloud sync failed:', e); }
+}
 
 function loadMastermindCustomers(){
   try{ return JSON.parse(localStorage.getItem('evl_mastermind_customers')||'[]'); }catch(e){ return []; }
@@ -649,7 +709,7 @@ function loadMastermindCustomers(){
 
 // INIT
 function initApp(){
-  addSampleCalls();
+  // addSampleCalls();  // disabled — real calls now come from Firestore
   renderCalls('all');
   updateStats();
   renderMetrics();
@@ -953,6 +1013,7 @@ function saveNewCall(){
   };
   calls.unshift(newCall);
   saveCalls(calls);
+  pushCallToCloud(newCall);   // permanent cloud save
   updateStats();
   renderCalls('all');
   renderMetrics();
@@ -964,6 +1025,7 @@ function saveNewCall(){
 function deleteCall(id){
   if(!confirm('Delete this call record?')) return;
   saveCalls(loadCalls().filter(c=>c.id!==id));
+  if(window.EVL_DB && window.EVL_DB.ready){ window.EVL_DB.deleteCall(id).catch(e=>console.error('[EVL] Cloud delete failed:',e)); }
   renderCalls('all'); updateStats(); renderMetrics();
 }
 
