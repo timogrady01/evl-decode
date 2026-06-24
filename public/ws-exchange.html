@@ -1030,8 +1030,8 @@ function renderAuctions(auctions){
     const phaseClass = a.phase===1?'phase-1':a.currentBid>a.reserve?'floor-beat':'phase-2';
     const phaseBadgeClass = a.phase===1?'phase-1-badge':a.currentBid>a.reserve?'phase-floor-badge':'phase-2-badge';
     const timerClass = a.timer<3600?'bid-timer':'bid-timer phase1';
-    const floorSrc = Object.entries({CarMax:a.carmax,Carvana:a.carvana,'SMTV':a.smtv}).sort((x,y)=>y[1]-x[1]);
-    const bestFloor = floorSrc[0];
+    const floorSrc = Object.entries({CarMax:a.carmax||0,Carvana:a.carvana||0,'SMTV':a.smtv||0}).filter(([k,v])=>v>0).sort((x,y)=>y[1]-x[1]);
+    const bestFloor = floorSrc[0] || ['Reserve',a.reserve||0];
 
     return `<div class="auction-card ${phaseClass}" data-auction-id="${a.id}">
       <div class="auction-header">
@@ -1059,8 +1059,8 @@ function renderAuctions(auctions){
           <div class="auction-reserve-section">
             <div class="reserve-card">
               <div class="reserve-label">🔒 VERIFIED RESERVE</div>
-              <div class="reserve-amount" id="reserve-val-${a.id}" data-reserve="${a.reserve}">$${a.reserve.toLocaleString()}</div>
-              <div class="reserve-source">Best offer: ${bestFloor[0]} — $${bestFloor[1].toLocaleString()}</div>
+              <div class="reserve-amount" id="reserve-val-${a.id}" data-reserve="${a.reserve}">$${(a.reserve||0).toLocaleString()}</div>
+              <div class="reserve-source">Best offer: ${bestFloor[0]} — $${(bestFloor[1]||0).toLocaleString()}</div>
               ${floorSrc.map(([src,amt])=>`<div class="reserve-row">
                 <span class="reserve-row-label">${src}</span>
                 <span class="reserve-row-val ${amt===bestFloor[1]?'best':''}">$${amt.toLocaleString()}${amt===bestFloor[1]?' ⭐':''}</span>
@@ -1079,7 +1079,7 @@ function renderAuctions(auctions){
                 <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.currentBid||(a.reserve+100)).toLocaleString()}" min="${a.reserve}"/>
                 <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
               </div>
-              <div class="bid-floor-note">🔒 RESERVE: $${a.reserve.toLocaleString()} — All bids sealed & blind</div>
+              <div class="bid-floor-note">🔒 RESERVE: $${(a.reserve||0).toLocaleString()} — All bids sealed & blind</div>
           <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
             <div style="flex:1;background:#020a02;border:1px solid #1a3a1a;border-radius:6px;padding:8px;text-align:center">
               <div style="font-size:10px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:3px">BD PLATFORM FEE</div>
@@ -1560,7 +1560,7 @@ async function transitionToPhase2(a) {
             <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.reserve + 100).toLocaleString()}" min="${a.reserve}"/>
             <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
           </div>
-          <div class="bid-floor-note">🔒 RESERVE: $${a.reserve.toLocaleString()} — All bids sealed & blind</div>
+          <div class="bid-floor-note">🔒 RESERVE: $${(a.reserve||0).toLocaleString()} — All bids sealed & blind</div>
           <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>
           <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
             <button class="btn btn-dark btn-sm">📋 EVL CERT REPORT</button>
