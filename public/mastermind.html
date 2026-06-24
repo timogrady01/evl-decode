@@ -518,6 +518,41 @@ body{display:block !important;align-items:unset !important;justify-content:unset
   </div>
 </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs, setDoc, doc, deleteDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const CUST_COL = "evl_mastermind_customers";
+
+  window.EVL_MM = {
+    ready: true,
+    async getAllCustomers(){
+      const snap = await getDocs(collection(db, CUST_COL));
+      return snap.docs.map(d => d.data());
+    },
+    async saveCustomer(cust){
+      // Each customer needs a stable id for the doc key
+      const id = String(cust.id || cust.custId || cust.phone || Date.now());
+      cust.id = cust.id || id;
+      await setDoc(doc(db, CUST_COL, id), cust);
+    },
+    async deleteCustomer(id){
+      await deleteDoc(doc(db, CUST_COL, String(id)));
+    }
+  };
+  console.log("[EVL] Mastermind Firestore connected:", CUST_COL);
+  window.dispatchEvent(new Event("evl-mm-ready"));
+</script>
+
 <script>
 const CORRECT_PIN = "1027";
 
@@ -550,6 +585,25 @@ function loadCustomers(){
 }
 function saveCustomers(customers){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
+  // Push every customer to Firestore (permanent, shared across devices)
+  if(window.EVL_MM && window.EVL_MM.ready){
+    customers.forEach(c => { window.EVL_MM.saveCustomer(c).catch(e=>console.error('[EVL] Cloud save failed:',e)); });
+  }
+}
+
+// Pull all customers from Firestore into the local mirror, then refresh views
+async function syncCustomersFromCloud(){
+  if(!(window.EVL_MM && window.EVL_MM.ready)) return;
+  try{
+    const cloud = await window.EVL_MM.getAllCustomers();
+    if(cloud && cloud.length){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cloud));
+    }
+    if(typeof renderCustomers==='function') renderCustomers();
+    if(typeof renderPipeline==='function') renderPipeline();
+    if(typeof updateHeaderStats==='function') updateHeaderStats();
+    console.log('[EVL] Synced '+(cloud?cloud.length:0)+' customers from cloud');
+  }catch(e){ console.error('[EVL] Customer cloud sync failed:', e); }
 }
 
 // Sample data for demo
@@ -574,13 +628,19 @@ function initSampleData(){
 
 // ── INIT ──
 function initApp(){
-  initSampleData();
+  // initSampleData();  // disabled — real customers now come from Firestore
   updateHeaderStats();
   renderPipeline();
   setInterval(updateHeaderStats, 30000);
+  // Pull real customer records from the cloud
+  if(window.EVL_MM && window.EVL_MM.ready){ syncCustomersFromCloud(); }
 }
 
 if(sessionStorage.getItem('evl-mm-auth')==='1027') initApp();
+// When Firestore connects (if after initApp), sync customers
+window.addEventListener('evl-mm-ready', function(){
+  if(sessionStorage.getItem('evl-mm-auth')==='1027') syncCustomersFromCloud();
+});
 
 // ── HEADER STATS ──
 function updateHeaderStats(){
@@ -1032,6 +1092,7 @@ function deleteCustomer(id){
   if(!confirm('Delete this customer? This cannot be undone.')) return;
   const customers = loadCustomers().filter(c=>c.id!==id);
   saveCustomers(customers);
+  if(window.EVL_MM && window.EVL_MM.ready){ window.EVL_MM.deleteCustomer(id).catch(e=>console.error('[EVL] Cloud delete failed:',e)); }
   renderCustomers();
   updateHeaderStats();
 }
