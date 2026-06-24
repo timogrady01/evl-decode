@@ -1,6 +1,26 @@
 {
   "rewrites": [
     {
+      "source": "/api/send-sms",
+      "destination": "api/send-sms.js"
+    },
+    {
+      "source": "/api/journal",
+      "destination": "api/journal.js"
+    },
+    {
+      "source": "/api/submit",
+      "destination": "api/submit.js"
+    },
+    {
+      "source": "/api/lookup",
+      "destination": "api/lookup.js"
+    },
+    {
+      "source": "/api/decode",
+      "destination": "api/decode.js"
+    },
+    {
       "source": "/trade-in-exchange",
       "destination": "trade-in-exchange.html"
     },
@@ -155,22 +175,6 @@
     {
       "source": "/finder.html",
       "destination": "finder.html"
-    },
-    {
-      "source": "/api/journal",
-      "destination": "api/journal.js"
-    },
-    {
-      "source": "/api/submit",
-      "destination": "api/submit.js"
-    },
-    {
-      "source": "/api/lookup",
-      "destination": "api/lookup.js"
-    },
-    {
-      "source": "/api/decode",
-      "destination": "api/decode.js"
     },
     {
       "source": "/ws-login.html",
