@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/debug-env",
+      "destination": "api/debug-env.js"
+    },
+    {
       "source": "/api/send-sms",
       "destination": "api/send-sms.js"
     },
