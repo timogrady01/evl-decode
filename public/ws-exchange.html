@@ -1016,6 +1016,7 @@ const LIVE_AUCTIONS = [
 ];
 
 const BADGE_CONFIG = {
+  'PITPO':      {label:'🛡️ EVL CERTIFIED',cls:'badge-evl-cert'},
   'EVL CERTIFIED':      {label:'🛡️ EVL CERTIFIED',cls:'badge-evl-cert'},
   'GOLD':       {label:'🥇 GOLD WARRANTY',cls:'badge-gold'},
   'SILVER':     {label:'🥈 SILVER WARRANTY',cls:'badge-silver'},
@@ -1060,12 +1061,9 @@ function renderAuctions(auctions){
             <div class="reserve-card">
               <div class="reserve-label">🔒 VERIFIED RESERVE</div>
               <div class="reserve-amount" id="reserve-val-${a.id}" data-reserve="${a.reserve}">$${(a.reserve||0).toLocaleString()}</div>
-              <div class="reserve-source">Best offer: ${bestFloor[0]} — $${(bestFloor[1]||0).toLocaleString()}</div>
-              ${floorSrc.map(([src,amt])=>`<div class="reserve-row">
-                <span class="reserve-row-label">${src}</span>
-                <span class="reserve-row-val ${amt===bestFloor[1]?'best':''}">$${amt.toLocaleString()}${amt===bestFloor[1]?' ⭐':''}</span>
-              </div>`).join('')}
-              ${a.phase===1&&a.idTarget?`<div style="margin-top:10px;background:#040e1a;border:1px solid var(--blue);border-radius:6px;padding:8px 10px;font-size:12px;color:var(--blue);font-weight:700;line-height:1.5">ID MATCH TARGET: <strong style="font-size:15px;color:var(--white)">$${a.idTarget.toLocaleString()}</strong><br><span style="font-size:11px;color:var(--muted)">(Floor − 6.25% TX tax credit − 3% logistics allowance)</span></div>`:''}
+              <div class="reserve-source" style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;">🔒 EVL VERIFIED — RESERVE SEALED</div>
+
+
             </div>
           </div>
 
