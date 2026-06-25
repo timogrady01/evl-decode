@@ -3,537 +3,772 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My EVL Deal | Express Vehicle Locators</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<title>My Deal — EVL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh;display:block!important}
-:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* NAV */
-.evl-nav{position:sticky;top:0;z-index:9999;background:var(--s1);border-bottom:2px solid var(--blue);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
-.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
-.evl-nav-links{display:flex;align-items:center;gap:4px}
-.evl-nav-link{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
-.evl-nav-link:hover{color:var(--white);background:#1a1a2e}
-.evl-nav-cta{background:var(--blue);color:var(--white)!important;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:8px 16px;border-radius:6px;margin-left:8px;white-space:nowrap}
-.evl-nav-hamburger{display:none;background:none;border:none;color:var(--white);font-size:22px;cursor:pointer}
-@media(max-width:768px){
-  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:var(--s1);border-bottom:2px solid var(--blue);padding:12px 0}
-  .evl-nav-links.open{display:flex}
-  .evl-nav-link,.evl-nav-cta{width:100%;padding:14px 24px;margin:0;border-radius:0;border-bottom:1px solid #1a1a2e}
-  .evl-nav-hamburger{display:block}
-}
+  :root {
+    --bg: #F7F8FA;
+    --white: #FFFFFF;
+    --blue: #2563EB;
+    --blue-dark: #1D4ED8;
+    --blue-light: #EFF6FF;
+    --blue-mid: #DBEAFE;
+    --text: #111827;
+    --text-mid: #374151;
+    --text-soft: #6B7280;
+    --text-ghost: #9CA3AF;
+    --border: #E5E7EB;
+    --border-soft: #F3F4F6;
+    --grey-bg: #F9FAFB;
+    --success: #16A34A;
+    --success-bg: #F0FDF4;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  }
 
-/* WRAP */
-.portal-wrap{max-width:860px;margin:0 auto;padding:40px 20px 80px}
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
 
-/* HERO */
-.portal-hero{background:var(--s1);border-bottom:2px solid #1a1a2e;padding:40px 24px;text-align:center}
-.hero-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px}
-.hero-h1{font-size:40px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;line-height:1.1}
-.hero-h1 span{color:var(--blue)}
-.hero-sub{font-size:16px;color:var(--dim);font-family:var(--body);max-width:520px;margin:0 auto;line-height:1.7}
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-/* EMAIL LOOKUP */
-.lookup-card{background:var(--s1);border:2px solid var(--blue);border-radius:16px;padding:32px;margin-bottom:24px;text-align:center}
-.lookup-title{font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
-.lookup-sub{font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px;line-height:1.6}
-.lookup-row{display:flex;gap:12px;max-width:480px;margin:0 auto}
-.lookup-input{flex:1;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:14px 16px;border-radius:8px;font-size:15px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s}
-.lookup-input:focus{border-color:var(--blue)}
-.lookup-btn{background:var(--blue);color:var(--white);border:none;padding:14px 24px;border-radius:8px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap}
-.lookup-btn:hover{background:#1a6fd4}
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 17px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+  }
 
-/* DEAL CARD */
-.deal-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:14px;overflow:hidden;margin-bottom:16px;transition:border-color .2s}
-.deal-card:hover{border-color:var(--blue)}
-.deal-card-header{background:var(--s2);padding:14px 20px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.deal-id{font-size:13px;font-weight:900;color:var(--blue);letter-spacing:2px}
-.deal-status-badge{font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
-.status-searching{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
-.status-match{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
-.status-hold{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
-.status-process{background:#0d001a;border:1px solid var(--purple,#9B59B6);color:var(--purple,#9B59B6)}
-.status-delivered{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
-.deal-card-body{padding:20px}
-.deal-vehicle{font-size:20px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:6px}
-.deal-spec{font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:14px}
-.deal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.deal-item{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:10px 12px}
-.deal-item-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.deal-item-val{font-size:14px;font-weight:900;color:var(--white)}
-.deal-progress-wrap{margin-bottom:16px}
-.deal-stages{display:flex;gap:0;overflow-x:auto;margin-bottom:8px}
-.deal-stage{flex:1;text-align:center;min-width:80px;position:relative}
-.deal-stage::after{content:'';position:absolute;top:12px;right:-1px;width:100%;height:2px;background:#1a1a2e;z-index:0}
-.deal-stage:last-child::after{display:none}
-.deal-stage-dot{width:26px;height:26px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:12px;position:relative;z-index:1;border:2px solid #2a2a4e;background:var(--bg);transition:all .3s}
-.deal-stage.done .deal-stage-dot{background:#0d1a0d;border-color:var(--green);color:var(--green)}
-.deal-stage.active .deal-stage-dot{background:#040e1a;border-color:var(--blue);color:var(--blue);animation:pulse-dot 1.5s infinite}
-@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(43,132,254,.4)}50%{box-shadow:0 0 0 6px rgba(43,132,254,0)}}
-.deal-stage-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;line-height:1.3}
-.deal-stage.done .deal-stage-label,.deal-stage.active .deal-stage-label{color:var(--white)}
-.deal-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .nav-logo span { color: var(--blue); }
 
-/* TIMELINE PREVIEW */
-.timeline-preview{background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px;margin-bottom:16px}
-.timeline-preview-title{font-size:11px;color:var(--muted);font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
-.timeline-entry{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
-.timeline-entry:last-child{margin-bottom:0}
-.timeline-dot-sm{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.timeline-text{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.4;flex:1}
-.timeline-time{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap}
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
 
-/* NO DEALS */
-.no-deals{text-align:center;padding:60px 20px}
-.no-deals-icon{font-size:56px;display:block;margin-bottom:16px}
-.no-deals-title{font-size:20px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
-.no-deals-sub{font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.6;margin-bottom:24px}
+  .nav-user {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-mid);
+  }
 
-/* SAVE SEARCH CTA */
-.save-search-card{background:#040e1a;border:2px solid var(--blue);border-radius:12px;padding:24px;margin-bottom:24px;text-align:center}
-.save-search-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
-.save-search-sub{font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:16px;line-height:1.6}
-.save-email-row{display:flex;gap:10px;max-width:440px;margin:0 auto}
+  .nav-logout {
+    font-size: 13px;
+    color: var(--text-soft);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+  }
 
-/* BUTTONS */
-.btn{padding:10px 20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
-.btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
-.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
-.btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
-.btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
-.btn-sm{padding:7px 14px;font-size:11px}
+  .nav-logout:hover { color: var(--text); }
 
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;background:#0d1a0d;border:2px solid var(--green);border-radius:10px;padding:14px 20px;font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s}
-.toast.show{transform:translateY(0);opacity:1}
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 36px 20px 60px;
+  }
 
-/* FOOTER */
-.evl-footer{background:var(--s1);border-top:2px solid #1a1a2e;padding:24px 20px;font-family:var(--font)}
-.evl-footer-inner{max-width:1100px;margin:0 auto}
-.evl-footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:12px}
-.evl-footer-links a{color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;transition:color .2s}
-.evl-footer-links a:hover{color:var(--blue)}
-.evl-footer-copy{font-size:12px;color:#445566;font-weight:600}
+  /* ── PAGE HEADER ── */
+  .page-header {
+    margin-bottom: 32px;
+  }
 
-@media(max-width:600px){
-  .lookup-row,.save-email-row{flex-direction:column}
-  .deal-grid{grid-template-columns:1fr}
-  .hero-h1{font-size:28px}
-}
+  .page-header .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+
+  .page-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+    color: var(--text-soft);
+  }
+
+  /* ── TIMELINE CARD ── */
+  .timeline-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 20px;
+  }
+
+  .timeline {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    right: 18px;
+    height: 4px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  .timeline-progress {
+    height: 100%;
+    background: var(--blue);
+    transition: width 0.6s ease;
+  }
+
+  .tl-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+    min-width: 72px;
+    flex: 1;
+  }
+
+  .tl-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+
+  .tl-dot.completed {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 0 0 3px var(--blue-mid);
+  }
+
+  .tl-dot.current {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 0 0 4px var(--blue-mid);
+    animation: pulse 2s infinite;
+  }
+
+  .tl-dot.upcoming {
+    background: var(--white);
+    border: 2px solid var(--border);
+    color: var(--text-ghost);
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px var(--blue-mid); }
+    50% { box-shadow: 0 0 0 8px rgba(37,99,235,0.1); }
+  }
+
+  .tl-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.3;
+    color: var(--text-mid);
+  }
+
+  .tl-label.upcoming { color: var(--text-ghost); }
+  .tl-label.current { color: var(--blue); font-weight: 700; }
+
+  .tl-date {
+    font-size: 10px;
+    color: var(--text-ghost);
+    text-align: center;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 12px;
+    margin-top: 8px;
+  }
+
+  /* ── DEAL CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .cards-grid.three { grid-template-columns: 1fr; }
+  }
+
+  .cards-grid.three {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  /* ── DEAL CARD ── */
+  .deal-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+
+  .deal-card:hover:not(.locked) {
+    box-shadow: var(--shadow);
+  }
+
+  .deal-card.locked {
+    background: var(--grey-bg);
+    border-color: var(--border-soft);
+  }
+
+  .deal-card.locked * {
+    color: var(--text-ghost) !important;
+  }
+
+  .deal-card .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--blue-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .deal-card.locked .card-icon {
+    background: var(--border-soft);
+  }
+
+  .deal-card .card-icon svg {
+    width: 18px;
+    height: 18px;
+    color: var(--blue);
+  }
+
+  .deal-card.locked .card-icon svg {
+    color: var(--text-ghost);
+  }
+
+  .deal-card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: 0.01em;
+  }
+
+  .deal-card .card-sub {
+    font-size: 12px;
+    color: var(--text-soft);
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+
+  .deal-card .card-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+
+  .deal-card .card-value-label {
+    font-size: 11px;
+    color: var(--text-soft);
+  }
+
+  .deal-card .locked-msg {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-ghost);
+    font-style: italic;
+  }
+
+  .deal-card .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .status-badge.active {
+    background: var(--success-bg);
+    color: var(--success);
+  }
+
+  .status-badge.pending {
+    background: #FEF9C3;
+    color: #A16207;
+  }
+
+  .status-badge.locked {
+    background: var(--border-soft);
+    color: var(--text-ghost);
+  }
+
+  /* ── LOCK OVERLAY ── */
+  .lock-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    background: var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lock-badge svg {
+    width: 11px;
+    height: 11px;
+    color: var(--text-ghost);
+  }
+
+  /* ── CTA CARD ── */
+  .cta-card {
+    background: var(--blue);
+    border-radius: 14px;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .cta-card .cta-text h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .cta-card .cta-text p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .cta-card .cta-btn {
+    background: white;
+    color: var(--blue);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .cta-card .cta-btn:hover { background: var(--blue-light); }
+
+  /* ── HELP FOOTER ── */
+  .help-footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-soft);
+  }
+
+  .help-footer a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* ── LOADING STATE ── */
+  #loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .spinner-lg {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #main-content { display: none; }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="evl-nav">
-  <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-logo">
-    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
-    EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
-  </a>
-  <button class="evl-nav-hamburger" onclick="document.getElementById('evl-nav-links').classList.toggle('open')">&#9776;</button>
-  <div class="evl-nav-links" id="evl-nav-links">
-    <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
-    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link">FIND MY CAR</a>
-    <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
-    <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
-    <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link">COMPARE</a>
-    <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
-    <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
-    <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
-    <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
-    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+<nav>
+  <a href="/" class="nav-logo">Express <span>Vehicle</span> Locators</a>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user-name">My EVL</span>
+    <button class="nav-logout" onclick="handleLogout()">Sign Out</button>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="portal-hero">
-  <div class="hero-badge">YOUR PERSONAL EVL PORTAL</div>
-  <h1 class="hero-h1">PICK UP<br><span>WHERE YOU LEFT OFF</span></h1>
-  <p class="hero-sub">Enter your email to see your saved searches, deal status, and all activity — no password needed.</p>
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="spinner-lg"></div>
+  <p style="font-size:14px;color:var(--text-soft);">Loading your deal...</p>
 </div>
 
-<div class="portal-wrap">
+<!-- MAIN CONTENT -->
+<div id="main-content">
+<div class="page">
 
-  <!-- EMAIL LOOKUP -->
-  <div class="lookup-card" id="lookup-card">
-    <div class="lookup-title">🔍 FIND YOUR DEAL</div>
-    <div class="lookup-sub">Enter the email address you used when you first contacted EVL. We'll pull up everything instantly.</div>
-    <div class="lookup-row">
-      <input class="lookup-input" id="lookup-email" type="email" placeholder="your@email.com" onkeydown="if(event.key==='Enter')lookupDeals()"/>
-      <button class="lookup-btn" onclick="lookupDeals()">FIND MY DEAL →</button>
-    </div>
-    <div id="lookup-error" style="color:var(--red);font-size:13px;font-weight:700;margin-top:12px;display:none">❌ No deals found for that email. Check the address or start a new search below.</div>
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="eyebrow">My EVL Portal</div>
+    <h1 id="welcome-name">Welcome Back</h1>
+    <p>Here's where your deal stands today.</p>
   </div>
 
-  <!-- DEALS DISPLAY AREA -->
-  <div id="deals-area" style="display:none"></div>
+  <!-- DEAL TIMELINE -->
+  <div class="timeline-card">
+    <div class="card-label">Deal Progress</div>
+    <div class="timeline">
+      <div class="timeline-track">
+        <div class="timeline-progress" id="timeline-bar" style="width:14%"></div>
+      </div>
 
-  <!-- SAVE YOUR SEARCH CTA -->
-  <div class="save-search-card" id="save-search-card">
-    <div class="save-search-title">📧 SAVE YOUR SEARCH — GET STATUS UPDATES</div>
-    <div class="save-search-sub">Enter your email and we'll send you a personal link anytime. Check your deal status, see new matches, and pick up right where you left off — from any device, anytime.</div>
-    <div class="save-email-row">
-      <input class="lookup-input" id="save-email" type="email" placeholder="your@email.com" style="flex:1"/>
-      <button class="lookup-btn" onclick="saveSearch()" style="background:var(--green);color:#020203">📧 SEND MY LINK</button>
+      <div class="tl-step">
+        <div class="tl-dot completed">✓</div>
+        <div class="tl-label">Submitted</div>
+        <div class="tl-date" id="date-submitted">—</div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot current" id="dot-review">●</div>
+        <div class="tl-label current">In Review</div>
+        <div class="tl-date">Today</div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot upcoming">3</div>
+        <div class="tl-label upcoming">Match Found</div>
+        <div class="tl-date">—</div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot upcoming">4</div>
+        <div class="tl-label upcoming">Offer Ready</div>
+        <div class="tl-date">—</div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot upcoming">5</div>
+        <div class="tl-label upcoming">In Process</div>
+        <div class="tl-date">—</div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot upcoming">6</div>
+        <div class="tl-label upcoming">Delivered</div>
+        <div class="tl-date">—</div>
+      </div>
     </div>
-    <div id="save-success" style="display:none;color:var(--green);font-size:14px;font-weight:900;margin-top:12px;letter-spacing:1px">✅ LINK SENT! Check your email — click it anytime to return to your deal.</div>
   </div>
 
-  <!-- NEW SEARCH BUTTONS -->
-  <div style="text-align:center;margin-bottom:40px">
-    <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">START SOMETHING NEW</div>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a href="https://evl-decode-two.vercel.app/find" class="btn btn-blue">🔍 FIND MY VEHICLE</a>
-      <a href="https://evl-decode-two.vercel.app/trade-in" class="btn btn-green">🚗 TRADE-IN EVALUATOR</a>
-      <a href="https://evl-decode-two.vercel.app/compare" class="btn btn-dark">⚡ COMPARE VEHICLES</a>
-      <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-dark">📅 BOOK CONSULTATION</a>
+  <!-- ACTIVE CARDS -->
+  <div class="section-title">Your Deal</div>
+  <div class="cards-grid">
+
+    <!-- MY VEHICLE -->
+    <div class="deal-card">
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2 1m8-11h2l3 5 1 5-2 1"/>
+        </svg>
+      </div>
+      <h3>My Vehicle</h3>
+      <div class="card-sub" id="vehicle-sub">Tell us what you're looking for</div>
+      <div class="card-value" id="vehicle-name">—</div>
+      <div class="card-value-label" id="vehicle-detail"></div>
+      <span class="status-badge pending">● Searching</span>
     </div>
+
+    <!-- MY TRADE-IN -->
+    <div class="deal-card">
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+        </svg>
+      </div>
+      <h3>My Trade-In</h3>
+      <div class="card-sub">Current vehicle value estimate</div>
+      <div class="card-value" id="trade-value">—</div>
+      <div class="card-value-label">Estimated offer range</div>
+      <span class="status-badge pending">● Pending Evaluation</span>
+    </div>
+
+    <!-- MY PAYMENT -->
+    <div class="deal-card">
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <h3>My Payment Estimate</h3>
+      <div class="card-sub">Estimated monthly range</div>
+      <div class="card-value" id="payment-value">—</div>
+      <div class="card-value-label">Based on your stated credit score</div>
+      <span class="status-badge pending">● Not Yet Started</span>
+    </div>
+
+    <!-- MY FINANCING -->
+    <div class="deal-card locked">
+      <div class="lock-badge">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/>
+        </svg>
+      </div>
+      <h3>My Financing</h3>
+      <div class="card-sub">Lender options and rate estimates</div>
+      <div class="locked-msg">Available once your offer is ready</div>
+      <span class="status-badge locked">● Coming Soon</span>
+    </div>
+
   </div>
 
-  <!-- HOW IT WORKS -->
-  <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:24px">
-    <div style="font-size:14px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">HOW YOUR EVL PORTAL WORKS</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px">
-      ${[
-        {icon:'📧',title:'EMAIL = YOUR KEY',desc:'Your email address is your portal key. No password to forget. No account to create.'},
-        {icon:'🔗',title:'PERSONAL LINK',desc:'Every EVL deal gets a unique link emailed to you. Bookmark it or click it from your email anytime.'},
-        {icon:'📊',title:'LIVE STATUS',desc:'See exactly where your deal is — Searching, Match Found, Deposit, In Process, Delivered.'},
-        {icon:'📱',title:'ANY DEVICE',desc:'Works on phone, tablet, or desktop. Pick up exactly where you left off, every time.'},
-      ].map(s=>`<div style="text-align:center">
-        <div style="font-size:28px;margin-bottom:8px">${s.icon}</div>
-        <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px">${s.title}</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">${s.desc}</div>
-      </div>`).join('')}
+  <!-- COMING SOON CARDS -->
+  <div class="section-title">Coming as Your Deal Progresses</div>
+  <div class="cards-grid three">
+
+    <!-- PROTECTION -->
+    <div class="deal-card locked">
+      <div class="lock-badge">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+      <h3>My Protection</h3>
+      <div class="locked-msg">Warranty and protection options unlock at offer stage</div>
     </div>
+
+    <!-- DOCUMENTS -->
+    <div class="deal-card locked">
+      <div class="lock-badge">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+      </div>
+      <h3>My Documents</h3>
+      <div class="locked-msg">Paperwork and agreements unlock in process stage</div>
+    </div>
+
+    <!-- DELIVERY -->
+    <div class="deal-card locked">
+      <div class="lock-badge">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+        </svg>
+      </div>
+      <h3>My Delivery</h3>
+      <div class="locked-msg">Delivery details and tracking unlock when your vehicle is secured</div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-card">
+    <div class="cta-text">
+      <h3>Ready to Start Your Trade-In?</h3>
+      <p>Get your vehicle's estimated value in minutes — no obligation.</p>
+    </div>
+    <a href="/trade-in-exchange.html" class="cta-btn">Start Trade-In →</a>
+  </div>
+
+  <!-- HELP -->
+  <div class="help-footer">
+    Questions about your deal? <a href="/contact.html">Contact your EVL advisor</a> &nbsp;·&nbsp;
+    <a href="/">EVL Home</a>
   </div>
 
 </div>
+</div><!-- /main-content -->
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import {
+    getAuth, onAuthStateChanged, signOut
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  import {
+    getFirestore, doc, getDoc
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-<!-- FOOTER -->
-<footer class="evl-footer">
-  <div class="evl-footer-inner">
-    <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:14px">
-      <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
-      EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
-    </div>
-    <div class="evl-footer-links">
-      <a href="https://evl-decode-two.vercel.app/home">Home</a>
-      <a href="https://evl-decode-two.vercel.app/find">Find My Car</a>
-      <a href="https://evl-decode-two.vercel.app/trade-in">Trade-In</a>
-      <a href="https://evl-decode-two.vercel.app/faq">FAQ</a>
-      <a href="https://evl-decode-two.vercel.app/contact">Contact</a>
-      <a href="https://evl-decode-two.vercel.app/privacy">Privacy</a>
-    </div>
-    <div class="evl-footer-copy">&copy; 2026 Express Vehicle Locators — Plano, TX</div>
-  </div>
-</footer>
-
-<script>
-const DEALS_KEY = 'evl_customer_deals';
-const APPTS_KEY = 'evl_appointments';
-
-
-// ── ENHANCED STAGE CONFIG WITH TIMING ──
-const STAGES = [
-  {id:'lead',    label:'INQUIRY',     icon:'📋', avgDays:0,  desc:'Initial contact received'},
-  {id:'search',  label:'SEARCHING',   icon:'🔍', avgDays:1,  desc:'Nationwide search active'},
-  {id:'match',   label:'MATCH FOUND', icon:'🎯', avgDays:2,  desc:'Vehicle match identified'},
-  {id:'deposit', label:'DEPOSIT',     icon:'💰', avgDays:1,  desc:'Hold secured'},
-  {id:'process', label:'IN PROCESS',  icon:'⚙️', avgDays:2,  desc:'Deal & delivery prep'},
-  {id:'delivered',label:'DELIVERED',  icon:'🚗', avgDays:0,  desc:'Vehicle delivered!'},
-];
-
-const STAGE_ORDER = STAGES.map(s=>s.id);
-
-function getStageIndex(status){
-  const map = {
-    'Lead':0,'Searching':1,'Match Found':2,
-    'Deposit':3,'In Process':4,'Delivered':5,'Follow-Up':5
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    messagingSenderId: "84195145348",
+    appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
   };
-  return map[status]||0;
-}
 
-function getStatusCls(status){
-  const map = {'Searching':'status-searching','Match Found':'status-match','Deposit':'status-hold','In Process':'status-process','Delivered':'status-delivered','Follow-Up':'status-delivered'};
-  return map[status]||'status-searching';
-}
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
 
-// ── LOAD DEALS ──
-function loadCustomerDeals(email){
-  // Check Mastermind CRM for matching customer
-  const customers = JSON.parse(localStorage.getItem('evl_mastermind_customers')||'[]');
-  const actLog = JSON.parse(localStorage.getItem('evl_activity_log')||'{}');
-  const dealDesks = JSON.parse(localStorage.getItem('evl_deal_desk')||'{}');
-  const appts = JSON.parse(localStorage.getItem(APPTS_KEY)||'[]');
+  // ── AUTH GATE ──
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = '/login.html';
+      return;
+    }
 
-  const matching = customers.filter(c=>
-    (c.email||'').toLowerCase() === email.toLowerCase()
-  );
+    // Save last page
+    localStorage.setItem('evl_last_page', '/my-deal.html');
 
-  // Also check appointments
-  const matchingAppts = appts.filter(a=>
-    (a.email||'').toLowerCase() === email.toLowerCase()
-  );
+    // Load customer data
+    try {
+      const snap = await getDoc(doc(db, 'evl_leads', user.uid));
+      const data = snap.exists() ? snap.data() : {};
 
-  return {customers: matching, appointments: matchingAppts, actLog, dealDesks};
-}
+      // Welcome name
+      const name = data.name || user.email.split('@')[0];
+      const firstName = name.split(' ')[0];
+      document.getElementById('welcome-name').textContent = `Welcome Back, ${firstName}`;
+      document.getElementById('nav-user-name').textContent = firstName;
 
-// ── LOOKUP ──
-function lookupDeals(){
-  const email = document.getElementById('lookup-email').value.trim();
-  if(!email || !email.includes('@')){ showError('Please enter a valid email address'); return; }
+      // Deal submitted date
+      if (data.createdAt) {
+        const d = data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+        document.getElementById('date-submitted').textContent =
+          d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
 
-  const {customers, appointments} = loadCustomerDeals(email);
+      // Vehicle info
+      if (data.vehicle) {
+        document.getElementById('vehicle-name').textContent = data.vehicle;
+        document.getElementById('vehicle-sub').textContent = 'Your target vehicle';
+      }
 
-  // Pre-populate save email
-  document.getElementById('save-email').value = email;
+      // Trade value
+      if (data.tradeValue) {
+        document.getElementById('trade-value').textContent = `$${Number(data.tradeValue).toLocaleString()}`;
+      }
 
-  if(customers.length === 0 && appointments.length === 0){
-    document.getElementById('lookup-error').style.display = 'block';
-    // Auto-suggest
-    setTimeout(()=>{ document.getElementById('save-search-card').scrollIntoView({behavior:'smooth'}); }, 500);
-    return;
-  }
+      // Payment estimate
+      if (data.paymentMin && data.paymentMax) {
+        document.getElementById('payment-value').textContent =
+          `$${data.paymentMin}–$${data.paymentMax}/mo`;
+      }
 
-  document.getElementById('lookup-error').style.display = 'none';
-  document.getElementById('lookup-card').style.background = '#020a02';
-  document.getElementById('lookup-card').style.borderColor = 'var(--green)';
+    } catch(e) {
+      console.log('Could not load deal data:', e.message);
+    }
 
-  renderDeals(customers, appointments, email);
-}
-
-
-function calcEstDelivery(status, createdAt){
-  const stageOrder = ['Lead','Searching','Match Found','Deposit','In Process','Delivered'];
-  // Realistic delivery timelines — local same day, search 24-48hrs, out-of-state 3-5 days
-  const avgDaysRemaining = {
-    'Lead':0,         // Just submitted — EVL responds within 2 hrs
-    'Searching':1,    // Active search — matches within 24-48hrs
-    'Match Found':1,  // Found it — move to deposit today
-    'Deposit':1,      // Vehicle held — close deal within 24hrs
-    'In Process':1,   // Paperwork — delivery same day or next
-    'Delivered':0,
-    'Follow-Up':0
-  };
-  // Note: Local in-stock deals = same day (2-4 hrs)
-  // Search/locate deals = 24-48 hrs typically
-  // Out-of-state transport = 3-5 business days
-  const remaining = avgDaysRemaining[status]||0;
-  if(remaining===0) return null;
-  const est = new Date();
-  est.setDate(est.getDate()+remaining);
-  return {
-    days: remaining,
-    date: est.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}),
-    label: remaining===1?'Tomorrow':remaining<=3?'In '+remaining+' days':'Est. '+est.toLocaleDateString('en-US',{month:'short',day:'numeric'})
-  };
-}
-
-function renderDeals(customers, appointments, email){
-  const actLog = JSON.parse(localStorage.getItem('evl_activity_log')||'{}');
-  const dealDesks = JSON.parse(localStorage.getItem('evl_deal_desk')||'{}');
-  let html = '';
-
-  // CUSTOMER DEALS FROM CRM
-  customers.forEach(c=>{
-    const desk = dealDesks[c.id]||{};
-    const activities = (actLog[c.id]||[]).slice(0,4);
-    const stageIdx = getStageIndex(c.status);
-    const statusCls = getStatusCls(c.status);
-
-    html += `<div class="deal-card">
-      <div class="deal-card-header">
-        <div class="deal-id">⚡ ${c.id} — EVL DEAL</div>
-        <span class="deal-status-badge ${statusCls}">${c.status}</span>
-      </div>
-      <div class="deal-card-body">
-        <div class="deal-vehicle">${desk.vehicle||c.vehicleInterest||'Vehicle Search Active'}</div>
-        <div class="deal-spec">
-          ${c.budget?'Budget: '+c.budget+' · ':''} 
-          ${desk.mileage?'Max Miles: '+desk.mileage+' · ':''}
-          Started: ${c.createdAt?new Date(c.createdAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—'}
-        </div>
-
-        <div class="deal-grid">
-          <div class="deal-item">
-            <div class="deal-item-label">Customer</div>
-            <div class="deal-item-val">${c.fname} ${c.lname}${c.nickname?' ('+c.nickname+')':''}</div>
-          </div>
-          <div class="deal-item">
-            <div class="deal-item-label">Current Status</div>
-            <div class="deal-item-val" style="color:var(--blue)">${c.status}</div>
-          </div>
-          ${c.tradeIn?`<div class="deal-item">
-            <div class="deal-item-label">Trade-In</div>
-            <div class="deal-item-val">${c.tradeIn}</div>
-          </div>`:''}
-          <div class="deal-item">
-            <div class="deal-item-label">EVL Advisor</div>
-            <div class="deal-item-val">Tim O'Grady</div>
-          </div>
-          ${desk.sellingPrice?`<div class="deal-item">
-            <div class="deal-item-label">Deal Price</div>
-            <div class="deal-item-val" style="color:var(--gold)">$${Number(desk.sellingPrice).toLocaleString()}</div>
-          </div>`:''}
-          <div class="deal-item">
-            <div class="deal-item-label">Last Activity</div>
-            <div class="deal-item-val">${c.lastContact?new Date(c.lastContact).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—'}</div>
-          </div>
-        </div>
-
-        <!-- DEAL PROGRESS -->
-        <div class="deal-progress-wrap">
-          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">DEAL PROGRESS</div>
-          <div class="deal-stages">
-            ${STAGES.map((s,i)=>{
-              const cls = i<stageIdx?'done':i===stageIdx?'active':'';
-              return `<div class="deal-stage ${cls}">
-                <div class="deal-stage-dot">${i<stageIdx?'✓':s.icon}</div>
-                <div class="deal-stage-label">${s.label}</div>
-              </div>`;
-            }).join('')}
-          </div>
-        </div>
-
-        <!-- DELIVERY ESTIMATE -->
-        ${(()=>{
-          const eta = calcEstDelivery(c.status, c.createdAt);
-          if(!eta) return c.status==='Delivered'?`<div style="background:#020a02;border:2px solid var(--green);border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px"><span style="font-size:28px">🎉</span><div><div style="font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px">VEHICLE DELIVERED!</div><div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-top:2px">Your EVL deal is complete. How are you enjoying your new vehicle?</div></div></div>`:'';
-          return `<div style="background:#040e1a;border:2px solid var(--blue);border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-            <div style="display:flex;align-items:center;gap:12px">
-              <span style="font-size:28px">⏱</span>
-              <div>
-                <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px">ESTIMATED DELIVERY</div>
-                <div style="font-size:22px;font-weight:900;color:var(--blue)">${eta.label}</div>
-                <div style="font-size:12px;color:var(--dim);font-family:var(--body);margin-top:2px">Approximately ${eta.days} business day${eta.days!==1?'s':''} remaining · ${eta.date}</div>
-              </div>
-            </div>
-            <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:10px 16px;text-align:center">
-              <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">CURRENT STAGE</div>
-              <div style="font-size:14px;font-weight:900;color:var(--gold)">${c.status}</div>
-            </div>
-          </div>`;
-        })()}
-
-        ${activities.length>0?`
-        <!-- RECENT ACTIVITY -->
-        <div class="timeline-preview">
-          <div class="timeline-preview-title">RECENT ACTIVITY</div>
-          ${activities.map(a=>{
-            const colors = {call:'var(--blue)',text:'var(--green)',email:'var(--gold)',note:'var(--muted)',stage:'var(--cyan,#00BCD4)',voi:'#FF6B35',deal:'#FF6B35'};
-            const color = colors[a.type]||'var(--muted)';
-            const t = new Date(a.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-            return `<div class="timeline-entry">
-              <div class="timeline-dot-sm" style="background:${color}"></div>
-              <div class="timeline-text">${a.content.slice(0,100)}${a.content.length>100?'...':''}</div>
-              <div class="timeline-time">${t}</div>
-            </div>`;
-          }).join('')}
-        </div>`:''}
-
-        <div class="deal-actions">
-          <a href="https://evl-decode-two.vercel.app/find" class="btn btn-blue btn-sm">🔍 UPDATE SEARCH</a>
-          <a href="https://evl-decode-two.vercel.app/trade-in" class="btn btn-dark btn-sm">🚗 TRADE-IN</a>
-          <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-dark btn-sm">📅 SCHEDULE CALL</a>
-          <button class="btn btn-dark btn-sm" onclick="copyLink('${c.id}','${email}')">🔗 COPY MY LINK</button>
-        </div>
-      </div>
-    </div>`;
+    // Show page
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
   });
 
-  // APPOINTMENTS
-  appointments.forEach(a=>{
-    const apptDate = a.date ? new Date(a.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '—';
-    const fmt12 = t=>{ if(!t)return'—'; const [h,m]=t.split(':'); const hh=parseInt(h); return `${hh>12?hh-12:hh||12}:${m} ${hh>=12?'PM':'AM'} CST`; };
-    html += `<div class="deal-card">
-      <div class="deal-card-header">
-        <div class="deal-id">📅 ${a.id} — APPOINTMENT</div>
-        <span class="deal-status-badge status-match">CONFIRMED ✅</span>
-      </div>
-      <div class="deal-card-body">
-        <div class="deal-vehicle">${a.service}</div>
-        <div class="deal-spec">Scheduled consultation with EVL</div>
-        <div class="deal-grid">
-          <div class="deal-item"><div class="deal-item-label">Date</div><div class="deal-item-val">${apptDate}</div></div>
-          <div class="deal-item"><div class="deal-item-label">Time</div><div class="deal-item-val" style="color:var(--blue)">${fmt12(a.time)}</div></div>
-          <div class="deal-item"><div class="deal-item-label">Duration</div><div class="deal-item-val">${a.duration}</div></div>
-          <div class="deal-item"><div class="deal-item-label">Contact Via</div><div class="deal-item-val">${a.pref||'—'}</div></div>
-        </div>
-        ${a.notes?`<div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.5"><strong style="color:var(--white)">Your Notes:</strong> ${a.notes}</div>`:''}
-        <div class="deal-actions">
-          <a href="https://evl-decode-two.vercel.app/contact" class="btn btn-blue btn-sm">📞 CONTACT EVL</a>
-          <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-dark btn-sm">🔄 RESCHEDULE</a>
-        </div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('deals-area').innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-      <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px">✅ FOUND ${customers.length+appointments.length} RECORD${customers.length+appointments.length!==1?'S':''} FOR ${email.toUpperCase()}</div>
-      <button class="btn btn-dark btn-sm" onclick="clearLookup()">🔍 SEARCH DIFFERENT EMAIL</button>
-    </div>
-    ${html}`;
-  document.getElementById('deals-area').style.display='block';
-  showToast('✅ Deal found! Showing your EVL portal.');
-}
-
-function clearLookup(){
-  document.getElementById('deals-area').innerHTML='';
-  document.getElementById('deals-area').style.display='none';
-  document.getElementById('lookup-email').value='';
-  document.getElementById('lookup-card').style.background='';
-  document.getElementById('lookup-card').style.borderColor='var(--blue)';
-  document.getElementById('lookup-error').style.display='none';
-}
-
-function copyLink(dealId, email){
-  const url = `${window.location.origin}/my-deal?email=${encodeURIComponent(email)}&deal=${dealId}`;
-  navigator.clipboard?.writeText(url).then(()=>{
-    showToast('🔗 Link copied! Share or bookmark it.');
-  }).catch(()=>{
-    prompt('Copy this link:', url);
-  });
-}
-
-function saveSearch(){
-  const email = document.getElementById('save-email').value.trim();
-  if(!email||!email.includes('@')){ alert('Please enter a valid email address'); return; }
-  // Send via mailto
-  const subject = 'Your EVL Portal Link — Return Anytime';
-  const body = `Hi!\n\nHere is your personal EVL portal link — click it anytime to pick up where you left off:\n\n${window.location.origin}/my-deal?email=${encodeURIComponent(email)}\n\nThis link restores your saved searches, deal status, and appointment info automatically.\n\n— Express Vehicle Locators\ntogradyevl@gmail.com\nAvailable 24/7`;
-  window.location.href = `mailto:togradyevl@gmail.com?subject=${encodeURIComponent('PORTAL LINK REQUEST: '+email)}&body=${encodeURIComponent(body)}`;
-  document.getElementById('save-success').style.display='block';
-  showToast('📧 Portal link request sent!');
-}
-
-function showError(msg){ document.getElementById('lookup-error').textContent='❌ '+msg; document.getElementById('lookup-error').style.display='block'; }
-
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 3000);
-}
-
-// Check URL params on load
-window.addEventListener('DOMContentLoaded',function(){
-  if(!localStorage.getItem('evl-cookie')){const b=document.getElementById('evl-cookie');if(b)b.style.display='flex';}
-  const params = new URLSearchParams(window.location.search);
-  const email = params.get('email');
-  const dealId = params.get('deal');
-  if(email){
-    document.getElementById('lookup-email').value = email;
-    document.getElementById('save-email').value = email;
-    lookupDeals();
-    if(dealId) showToast('✅ Welcome back! Your deal is loaded.');
-  }
-});
+  // ── LOGOUT ──
+  window.handleLogout = async function() {
+    await signOut(auth);
+    localStorage.removeItem('evl_last_page');
+    window.location.href = '/login.html';
+  };
 </script>
+
 </body>
 </html>
