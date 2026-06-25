@@ -342,6 +342,30 @@
     nav { padding: 0 20px; }
   }
 </style>
+
+<script>
+// ── EVL UTM + SOURCE TRACKING ──
+// Runs on every page load — captures ad source, device, referrer
+(function() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const tracking = {
+      source:       params.get('utm_source')   || document.referrer ? 'organic' : 'direct',
+      utm_source:   params.get('utm_source')   || '',
+      utm_medium:   params.get('utm_medium')   || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      utm_content:  params.get('utm_content')  || '',
+      utm_term:     params.get('utm_term')     || '',
+      landing_page: window.location.pathname,
+      referrer:     document.referrer || 'direct',
+      device:       /mobile|android|iphone|ipad/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      first_visit:  new Date().toISOString()
+    };
+    // Save to sessionStorage so registration picks it up
+    sessionStorage.setItem('evl_tracking', JSON.stringify(tracking));
+  } catch(e) {}
+})();
+</script>
 </head>
 <body>
 
@@ -581,8 +605,14 @@
       const cred = await createUserWithEmailAndPassword(auth, email, pass);
       const uid  = cred.user.uid;
 
-      // Save customer record to Firestore
-      await setDoc(doc(db, 'evl_leads', uid), {
+      // Get UTM tracking data
+      let tracking = {};
+      try {
+        tracking = JSON.parse(sessionStorage.getItem('evl_tracking') || '{}');
+      } catch(e) {}
+
+      // Save to evl_customers collection
+      await setDoc(doc(db, 'evl_customers', uid), {
         uid,
         name,
         email,
@@ -590,7 +620,21 @@
         createdAt: serverTimestamp(),
         role: 'customer',
         dealStatus: 'new',
-        lastPage: '/my-deal.html'
+        tradeChoice: null,
+        lastPage: '/my-deal.html',
+        lastVisit: serverTimestamp(),
+        pagesVisited: ['/login.html'],
+        // UTM + Source tracking
+        source:       tracking.source       || 'direct',
+        utm_source:   tracking.utm_source   || '',
+        utm_medium:   tracking.utm_medium   || '',
+        utm_campaign: tracking.utm_campaign || '',
+        utm_content:  tracking.utm_content  || '',
+        utm_term:     tracking.utm_term     || '',
+        landing_page: tracking.landing_page || '/login.html',
+        referrer:     tracking.referrer     || 'direct',
+        device:       tracking.device       || 'unknown',
+        first_visit:  tracking.first_visit  || new Date().toISOString()
       });
 
       showMsg('Account created! Taking you to your deal...', 'success');
