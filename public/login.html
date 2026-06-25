@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EVL — Customer Login</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0b0f1a;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      background: #0d1120;
+      border-bottom: 1px solid #1e2a3a;
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .nav-logo span { color: #3b82f6; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: #111827;
+      border: 1px solid #1e2a3a;
+      border-radius: 16px;
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .card-header h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .card-header p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      background: #0b0f1a;
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: #1e3a5f;
+      color: #fff;
+    }
+
+    /* FORM */
+    .form-group { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    input {
+      width: 100%;
+      padding: 13px 16px;
+      background: #0b0f1a;
+      border: 1px solid #1e2a3a;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: #3b82f6; }
+    input::placeholder { color: #4b5563; }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-primary:disabled { background: #1e3a5f; cursor: not-allowed; }
+
+    /* MESSAGES */
+    .msg {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .msg.error { background: #2d1a1a; color: #f87171; border: 1px solid #7f1d1d; }
+    .msg.success { background: #0f2a1a; color: #4ade80; border: 1px solid #14532d; }
+    .msg.show { display: block; }
+
+    /* FORGOT PASSWORD */
+    .forgot-link {
+      text-align: right;
+      margin-top: -10px;
+      margin-bottom: 18px;
+    }
+    .forgot-link a {
+      color: #3b82f6;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .forgot-link a:hover { text-decoration: underline; }
+
+    /* DIVIDER */
+    .divider {
+      text-align: center;
+      color: #4b5563;
+      font-size: 0.8rem;
+      margin: 20px 0;
+      position: relative;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: #1e2a3a;
+    }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    /* TRUST BAR */
+    .trust-bar {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #1e2a3a;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #64748b;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .trust-item svg { width: 14px; height: 14px; }
+
+    /* HIDDEN PANEL */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #4b5563;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 32px 22px; }
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Express <span>Vehicle</span> Locators</div>
+    <div class="nav-links">
+      <a href="/home">Home</a>
+      <a href="/find">Find My Car</a>
+      <a href="/leasing">Leasing</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="card">
+
+      <div class="card-header">
+        <h1>My EVL Account</h1>
+        <p>Sign in to access your deal workspace — payment estimates, trade-in values, and more.</p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('signin')">Sign In</button>
+        <button class="tab-btn" onclick="switchTab('register')">Create Account</button>
+      </div>
+
+      <!-- MESSAGE BAR -->
+      <div id="msg" class="msg"></div>
+
+      <!-- SIGN IN PANEL -->
+      <div id="panel-signin" class="panel active">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="signin-email" placeholder="you@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signin-password" placeholder="••••••••" />
+        </div>
+        <div class="forgot-link">
+          <a href="#" onclick="sendReset(); return false;">Forgot password?</a>
+        </div>
+        <button class="btn-primary" id="signin-btn" onclick="signIn()">Sign In</button>
+      </div>
+
+      <!-- REGISTER PANEL -->
+      <div id="panel-register" class="panel">
+        <div class="form-group">
+          <label>First &amp; Last Name</label>
+          <input type="text" id="reg-name" placeholder="Jane Smith" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="reg-email" placeholder="you@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="reg-password" placeholder="At least 6 characters" />
+        </div>
+        <button class="btn-primary" id="register-btn" onclick="register()">Create My Account</button>
+      </div>
+
+      <!-- TRUST BAR -->
+      <div class="trust-bar">
+        <div class="trust-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          Secure Login
+        </div>
+        <div class="trust-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          No Credit Pull
+        </div>
+        <div class="trust-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          No Obligation
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Express Vehicle Locators &mdash; Advisory platform, not a dealer. No credit pull. No obligation.
+  </footer>
+
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+             sendPasswordResetEmail, onAuthStateChanged }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.firebasestorage.app",
+      messagingSenderId: "84195145348",
+      appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // If already logged in, go straight to my-deal
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "/my-deal.html";
+      }
+    });
+
+    // ── SIGN IN ──
+    window.signIn = async function () {
+      const email = document.getElementById("signin-email").value.trim();
+      const password = document.getElementById("signin-password").value;
+      const btn = document.getElementById("signin-btn");
+
+      if (!email || !password) { showMsg("Please fill in all fields.", "error"); return; }
+
+      btn.disabled = true;
+      btn.textContent = "Signing in…";
+      clearMsg();
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        showMsg("Welcome back! Redirecting…", "success");
+        setTimeout(() => window.location.href = "/my-deal.html", 800);
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = "Sign In";
+        showMsg(friendlyError(err.code), "error");
+      }
+    };
+
+    // ── REGISTER ──
+    window.register = async function () {
+      const name = document.getElementById("reg-name").value.trim();
+      const email = document.getElementById("reg-email").value.trim();
+      const password = document.getElementById("reg-password").value;
+      const btn = document.getElementById("register-btn");
+
+      if (!name || !email || !password) { showMsg("Please fill in all fields.", "error"); return; }
+      if (password.length < 6) { showMsg("Password must be at least 6 characters.", "error"); return; }
+
+      btn.disabled = true;
+      btn.textContent = "Creating account…";
+      clearMsg();
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = cred.user.uid;
+
+        // Save customer profile to Firestore
+        await setDoc(doc(db, "evl_leads", uid), {
+          uid,
+          name,
+          email,
+          createdAt: serverTimestamp(),
+          status: "active"
+        });
+
+        showMsg("Account created! Redirecting…", "success");
+        setTimeout(() => window.location.href = "/my-deal.html", 800);
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = "Create My Account";
+        showMsg(friendlyError(err.code), "error");
+      }
+    };
+
+    // ── FORGOT PASSWORD ──
+    window.sendReset = async function () {
+      const email = document.getElementById("signin-email").value.trim();
+      if (!email) { showMsg("Enter your email above first, then click Forgot Password.", "error"); return; }
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showMsg("Reset email sent — check your inbox.", "success");
+      } catch (err) {
+        showMsg(friendlyError(err.code), "error");
+      }
+    };
+
+    // ── HELPERS ──
+    function showMsg(text, type) {
+      const el = document.getElementById("msg");
+      el.textContent = text;
+      el.className = "msg " + type + " show";
+    }
+    function clearMsg() {
+      const el = document.getElementById("msg");
+      el.className = "msg";
+      el.textContent = "";
+    }
+    function friendlyError(code) {
+      const map = {
+        "auth/user-not-found": "No account found with that email.",
+        "auth/wrong-password": "Incorrect password. Try again.",
+        "auth/invalid-email": "Please enter a valid email address.",
+        "auth/email-already-in-use": "An account with that email already exists. Try signing in.",
+        "auth/weak-password": "Password must be at least 6 characters.",
+        "auth/invalid-credential": "Incorrect email or password.",
+        "auth/too-many-requests": "Too many attempts. Please wait a moment and try again."
+      };
+      return map[code] || "Something went wrong. Please try again.";
+    }
+  </script>
+
+  <!-- TAB SWITCH (plain JS, no module needed) -->
+  <script>
+    function switchTab(tab) {
+      document.getElementById("panel-signin").classList.remove("active");
+      document.getElementById("panel-register").classList.remove("active");
+      document.getElementById("panel-" + tab).classList.add("active");
+      document.querySelectorAll(".tab-btn").forEach((b, i) => {
+        b.classList.toggle("active", (i === 0 && tab === "signin") || (i === 1 && tab === "register"));
+      });
+      document.getElementById("msg").className = "msg";
+    }
+  </script>
+
+</body>
+</html>
