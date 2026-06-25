@@ -716,6 +716,7 @@ function switchTab(tab, btn){
 // ── FIREBASE INTEGRATION ──
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 import { getFirestore, collection, doc, onSnapshot, updateDoc, setDoc, serverTimestamp, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
@@ -728,6 +729,45 @@ const firebaseConfig = {
 
 const fbApp = initializeApp(firebaseConfig);
 const db = getFirestore(fbApp);
+const auth = getAuth(fbApp);
+
+// ── AUTH GATE ──
+const ADMIN_UID = 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = '/ws-login.html';
+    return;
+  }
+  if (user.uid === ADMIN_UID) {
+    console.log('EVL Admin authenticated');
+    return;
+  }
+  try {
+    const dealerDoc = await getDoc(doc(db, 'evl_ws_dealers', user.uid));
+    if (!dealerDoc.exists()) {
+      window.location.href = '/ws-login.html';
+      return;
+    }
+    const status = dealerDoc.data().status;
+    if (status !== 'active') {
+      document.body.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0B0C10;font-family:Barlow,sans-serif;color:#fff;text-align:center;padding:40px;">
+          <div>
+            <div style="font-size:48px;margin-bottom:20px;">⏳</div>
+            <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:12px;">Account Pending Approval</h2>
+            <p style="color:#8B8FA8;font-size:16px;line-height:1.6;max-width:400px;">Your dealer account has been created and is pending EVL verification.<br><br>You will receive an email at <strong style="color:#fff;">${user.email}</strong> once your account is activated.</p>
+            <p style="margin-top:24px;font-size:13px;color:#555;">Questions? <a href="/contact.html" style="color:#2563EB;">Contact EVL</a></p>
+          </div>
+        </div>`;
+      return;
+    }
+    console.log('Dealer authenticated:', dealerDoc.data().dealerName);
+  } catch(e) {
+    console.error('Auth check failed:', e);
+    window.location.href = '/ws-login.html';
+  }
+});
 
 // ── EVL EMAIL ENGINE ──
 const EVL_SERVICE  = 'service_rvscjt3';
