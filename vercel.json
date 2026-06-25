@@ -401,6 +401,14 @@
       "destination": "public/login.html"
     },
     {
+      "source": "/schedule.html",
+      "destination": "public/schedule.html"
+    },
+    {
+      "source": "/schedule",
+      "destination": "public/schedule.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
