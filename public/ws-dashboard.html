@@ -255,6 +255,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 import { getFirestore, collection, doc, onSnapshot, updateDoc, setDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
@@ -267,6 +268,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
+const auth = getAuth(app);
+
+// ── ADMIN AUTH GATE ──
+// Dashboard is admin-only — no dealers, no public access
+const ADMIN_UID = 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
+
+onAuthStateChanged(auth, (user) => {
+  if (!user || user.uid !== ADMIN_UID) {
+    // Not logged in or not admin — block access
+    window.location.href = '/ws-login.html';
+    return;
+  }
+  // Admin confirmed — load dashboard data
+  console.log('✅ EVL Admin authenticated — Dashboard access granted');
+  loadAll();
+});
 
 let allAuctions = [];
 let allLeads    = [];
