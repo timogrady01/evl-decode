@@ -276,12 +276,8 @@
   }
 
   .deal-card.locked {
-    background: var(--grey-bg);
-    border-color: var(--border-soft);
-  }
-
-  .deal-card.locked * {
-    color: #374151 !important;
+    background: var(--white);
+    border-color: var(--border);
   }
 
   .deal-card .card-icon {
@@ -605,11 +601,6 @@
 
     <!-- MY FINANCING -->
     <div class="deal-card locked">
-      <div class="lock-badge">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-        </svg>
-      </div>
       <div class="card-icon">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/>
@@ -617,62 +608,50 @@
       </div>
       <h3>My Financing</h3>
       <div class="card-sub">Lender options and rate estimates</div>
-      <div class="locked-msg">Available once your offer is ready</div>
-      <span class="status-badge locked">● Coming Soon</span>
+      <div class="card-value-label">Based on your stated credit score</div>
+      <span class="status-badge pending">● Not Yet Started</span>
     </div>
 
   </div>
 
-  <!-- COMING SOON CARDS -->
-  <div class="section-title">Coming as Your Deal Progresses</div>
+  <!-- MORE DEAL CARDS -->
+  <div class="section-title">More of Your Deal</div>
   <div class="cards-grid three">
 
     <!-- PROTECTION -->
-    <div class="deal-card locked">
-      <div class="lock-badge">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-        </svg>
-      </div>
+    <div class="deal-card">
       <div class="card-icon">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
         </svg>
       </div>
       <h3>My Protection</h3>
-      <div class="locked-msg">Warranty and protection options unlock at offer stage</div>
+      <div class="card-sub">Warranty and protection options</div>
+      <span class="status-badge pending">● Pending Deal Stage</span>
     </div>
 
     <!-- DOCUMENTS -->
-    <div class="deal-card locked">
-      <div class="lock-badge">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-        </svg>
-      </div>
+    <div class="deal-card">
       <div class="card-icon">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
         </svg>
       </div>
       <h3>My Documents</h3>
-      <div class="locked-msg">Paperwork and agreements unlock in process stage</div>
+      <div class="card-sub">Paperwork and agreements</div>
+      <span class="status-badge pending">● Pending Deal Stage</span>
     </div>
 
     <!-- DELIVERY -->
-    <div class="deal-card locked">
-      <div class="lock-badge">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-        </svg>
-      </div>
+    <div class="deal-card">
       <div class="card-icon">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
         </svg>
       </div>
       <h3>My Delivery</h3>
-      <div class="locked-msg">Delivery details and tracking unlock when your vehicle is secured</div>
+      <div class="card-sub">Delivery details and tracking</div>
+      <span class="status-badge pending">● Pending Deal Stage</span>
     </div>
 
   </div>
