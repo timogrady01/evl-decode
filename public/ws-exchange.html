@@ -788,10 +788,9 @@ onAuthStateChanged(auth, async (user) => {
 // ── INIT EXCHANGE ──
 // Called after auth passes for both admin and active dealers
 function initExchange() {
-  // Trigger auction load if not already running
-  if (typeof loadAuctions === 'function') loadAuctions();
-  if (typeof seedAndLoad === 'function') seedAndLoad();
-  if (typeof initFirestore === 'function') initFirestore();
+  if (typeof loadAndRenderAuctions === 'function') {
+    loadAndRenderAuctions();
+  }
 }
 
 // ── EVL EMAIL ENGINE ──
