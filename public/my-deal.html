@@ -884,6 +884,9 @@
   const auth = getAuth(app);
   const db   = getFirestore(app);
 
+  // ── ADMIN UID ──
+  const ADMIN_UID = 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
+
   // ── AUTH GATE ──
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
@@ -931,6 +934,15 @@
 
     } catch(e) {
       console.log('Could not load deal data:', e.message);
+    }
+
+    // Admin skips popup and tracking
+    if (user.uid === ADMIN_UID) {
+      document.getElementById('welcome-name').textContent = 'Welcome Back, Tim';
+      document.getElementById('nav-user-name').textContent = 'Tim';
+      document.getElementById('loading-screen').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      return;
     }
 
     // Track activity
@@ -1006,9 +1018,9 @@
     const ctaSub      = document.getElementById('cta-sub');
 
     if (choice === 'yes') {
-      // Trade-in primary — move to top left
-      if (vehicleCard) { vehicleCard.style.order = '3'; vehicleCard.style.gridColumn = '2'; }
-      if (tradeCard)   { tradeCard.style.order = '1'; tradeCard.style.gridColumn = '1'; }
+      // Trade-in primary — swap positions
+      if (vehicleCard) vehicleCard.style.order = '2';
+      if (tradeCard)   tradeCard.style.order = '1';
       if (ctaTitle)    ctaTitle.textContent = 'Start Your Trade-In Evaluation';
       if (ctaSub)      ctaSub.textContent = "Get your vehicle's value in minutes — no obligation.";
       if (ctaBtn)      ctaBtn.href = '/trade-in-exchange.html';
