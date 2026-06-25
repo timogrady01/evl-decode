@@ -736,21 +736,32 @@ const ADMIN_UID = 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
+    // Not logged in — redirect to login
     window.location.href = '/ws-login.html';
     return;
   }
+
+  // ── ADMIN: full access, no dealer record needed ──
   if (user.uid === ADMIN_UID) {
-    console.log('EVL Admin authenticated');
+    console.log('✅ EVL Admin authenticated — full access granted');
+    initExchange(); // Load auction data
     return;
   }
+
+  // ── DEALER: must exist in evl_ws_dealers AND be active ──
   try {
     const dealerDoc = await getDoc(doc(db, 'evl_ws_dealers', user.uid));
+
     if (!dealerDoc.exists()) {
+      // Authenticated but not a registered dealer
       window.location.href = '/ws-login.html';
       return;
     }
+
     const status = dealerDoc.data().status;
+
     if (status !== 'active') {
+      // Registered but pending approval
       document.body.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0B0C10;font-family:Barlow,sans-serif;color:#fff;text-align:center;padding:40px;">
           <div>
@@ -762,12 +773,26 @@ onAuthStateChanged(auth, async (user) => {
         </div>`;
       return;
     }
-    console.log('Dealer authenticated:', dealerDoc.data().dealerName);
+
+    // Active dealer — load exchange
+    console.log('✅ Dealer authenticated:', dealerDoc.data().dealerName);
+    initExchange();
+
   } catch(e) {
-    console.error('Auth check failed:', e);
-    window.location.href = '/ws-login.html';
+    console.error('Auth check error:', e.code, e.message);
+    // Do not redirect on error — show message instead
+    console.warn('Firestore read blocked — check security rules');
   }
 });
+
+// ── INIT EXCHANGE ──
+// Called after auth passes for both admin and active dealers
+function initExchange() {
+  // Trigger auction load if not already running
+  if (typeof loadAuctions === 'function') loadAuctions();
+  if (typeof seedAndLoad === 'function') seedAndLoad();
+  if (typeof initFirestore === 'function') initFirestore();
+}
 
 // ── EVL EMAIL ENGINE ──
 const EVL_SERVICE  = 'service_rvscjt3';
