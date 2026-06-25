@@ -729,7 +729,7 @@ window.rejectSubmission   = rejectSubmission;
 window.refreshAll         = refreshAll;
 
 // ── INIT ──
-window.addEventListener('DOMContentLoaded', loadAll);
+// Auth gate handles loadAll() — see onAuthStateChanged above
 </script>
 <!-- BRAND MATCH MODAL -->
 <div id="match-modal" style="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px">
