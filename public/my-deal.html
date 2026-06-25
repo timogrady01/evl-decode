@@ -474,6 +474,141 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   #main-content { display: none; }
+
+  /* ── TRADE FORK POPUP ── */
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  .popup-overlay.hidden { display: none; }
+
+  .popup-box {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px 36px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+
+  .popup-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--blue-light);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .popup-icon svg {
+    width: 32px;
+    height: 32px;
+    color: var(--blue);
+  }
+
+  .popup-box h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .popup-box p {
+    font-size: 16px;
+    color: var(--text-soft);
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+
+  .popup-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .popup-btn {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .popup-btn:hover {
+    border-color: var(--blue);
+    background: var(--blue-light);
+    color: var(--blue);
+  }
+
+  .popup-btn.primary {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+  }
+
+  .popup-btn.primary:hover {
+    background: var(--blue-dark);
+    border-color: var(--blue-dark);
+    color: white;
+  }
+
+  .popup-btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .popup-btn:not(.primary) .popup-btn-icon {
+    background: var(--bg);
+  }
+
+  .popup-btn-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .popup-btn-text .btn-title {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .popup-btn-text .btn-sub {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
 </style>
 </head>
 <body>
@@ -553,10 +688,10 @@
   <!-- CTA ABOVE FOLD -->
   <div class="cta-card" style="margin-bottom:20px;">
     <div class="cta-text">
-      <h3>Ready to Start Your Trade-In?</h3>
-      <p>Get your vehicle's estimated value in minutes — no obligation.</p>
+      <h3 id="cta-title">Ready to Start Your Trade-In?</h3>
+      <p id="cta-sub">Get your vehicle's estimated value in minutes — no obligation.</p>
     </div>
-    <a href="/trade-in-exchange.html" class="cta-btn">Start Trade-In →</a>
+    <a href="/trade-in-exchange.html" class="cta-btn" id="cta-btn">Start Trade-In →</a>
   </div>
 
   <!-- ACTIVE CARDS -->
@@ -564,7 +699,7 @@
   <div class="cards-grid">
 
     <!-- MY VEHICLE -->
-    <div class="deal-card">
+    <div class="deal-card" id="vehicle-card">
       <div class="card-icon">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -579,7 +714,7 @@
     </div>
 
     <!-- MY TRADE-IN -->
-    <div class="deal-card">
+    <div class="deal-card" id="trade-card">
       <div class="card-icon">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
@@ -670,6 +805,59 @@
   </div>
 
 </div>
+
+<!-- ── TRADE FORK POPUP ── -->
+<div class="popup-overlay hidden" id="trade-popup">
+  <div class="popup-box">
+    <div class="popup-icon">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <h2>One Quick Question</h2>
+    <p>This helps us personalize your EVL experience<br>and get you to the right next step.</p>
+    <div class="popup-choices">
+
+      <button class="popup-btn primary" onclick="setTradeChoice('yes')">
+        <div class="popup-btn-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+          </svg>
+        </div>
+        <div class="popup-btn-text">
+          <span class="btn-title">Yes — I have a trade-in</span>
+          <span class="btn-sub">Get your vehicle's value first</span>
+        </div>
+      </button>
+
+      <button class="popup-btn" onclick="setTradeChoice('no')">
+        <div class="popup-btn-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <div class="popup-btn-text">
+          <span class="btn-title">No trade — just buying</span>
+          <span class="btn-sub">Find your vehicle and payment estimate</span>
+        </div>
+      </button>
+
+      <button class="popup-btn" onclick="setTradeChoice('unsure')">
+        <div class="popup-btn-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+        </div>
+        <div class="popup-btn-text">
+          <span class="btn-title">Not sure yet</span>
+          <span class="btn-sub">We'll help you figure it out</span>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</div>
+
 </div><!-- /main-content -->
 
 <!-- FIREBASE -->
@@ -679,7 +867,7 @@
     getAuth, onAuthStateChanged, signOut
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
   import {
-    getFirestore, doc, getDoc
+    getFirestore, doc, getDoc, setDoc, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -744,10 +932,84 @@
       console.log('Could not load deal data:', e.message);
     }
 
+    // Check trade choice — show popup if first visit
+    await checkTradeChoice(user.uid);
+
     // Show page
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('main-content').style.display = 'block';
   });
+
+
+  // ── TRADE FORK LOGIC ──
+  async function checkTradeChoice(uid) {
+    try {
+      const snap = await getDoc(doc(db, 'evl_leads', uid));
+      const data = snap.exists() ? snap.data() : {};
+      
+      if (!data.tradeChoice) {
+        // First visit — show popup
+        document.getElementById('trade-popup').classList.remove('hidden');
+      } else {
+        // Already answered — apply choice to page
+        applyTradeChoice(data.tradeChoice);
+      }
+    } catch(e) {
+      console.log('Could not check trade choice:', e.message);
+    }
+  }
+
+  window.setTradeChoice = async function(choice) {
+    // Hide popup immediately
+    document.getElementById('trade-popup').classList.add('hidden');
+
+    // Save to Firestore
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(db, 'evl_leads', user.uid), {
+          tradeChoice: choice,
+          tradeChoiceAt: serverTimestamp()
+        }, { merge: true });
+      }
+    } catch(e) {
+      console.log('Could not save trade choice:', e.message);
+    }
+
+    // Apply to page
+    applyTradeChoice(choice);
+  };
+
+  function applyTradeChoice(choice) {
+    const vehicleCard = document.getElementById('vehicle-card');
+    const tradeCard   = document.getElementById('trade-card');
+    const ctaBtn      = document.getElementById('cta-btn');
+    const ctaTitle    = document.getElementById('cta-title');
+    const ctaSub      = document.getElementById('cta-sub');
+
+    if (choice === 'yes') {
+      // Trade-in primary
+      if (vehicleCard) vehicleCard.style.order = '2';
+      if (tradeCard)   tradeCard.style.order = '1';
+      if (ctaTitle)    ctaTitle.textContent = 'Start Your Trade-In Evaluation';
+      if (ctaSub)      ctaSub.textContent = "Get your vehicle's value in minutes — no obligation.";
+      if (ctaBtn)      ctaBtn.href = '/trade-in-exchange.html';
+      if (ctaBtn)      ctaBtn.textContent = 'Start Trade-In →';
+    } else if (choice === 'no') {
+      // No trade — vehicle search primary
+      if (tradeCard)   tradeCard.style.display = 'none';
+      if (ctaTitle)    ctaTitle.textContent = 'Find Your Vehicle';
+      if (ctaSub)      ctaSub.textContent = "Tell us what you're looking for and we'll find it.";
+      if (ctaBtn)      ctaBtn.href = '/find.html';
+      if (ctaBtn)      ctaBtn.textContent = 'Find My Vehicle →';
+    } else {
+      // Not sure — show both
+      if (ctaTitle)    ctaTitle.textContent = "Let's Figure Out Your Best Path";
+      if (ctaSub)      ctaSub.textContent = 'Talk to your EVL advisor — no obligation.';
+      if (ctaBtn)      ctaBtn.href = '/contact.html';
+      if (ctaBtn)      ctaBtn.textContent = 'Talk to an Advisor →';
+    }
+  }
 
   // ── LOGOUT ──
   window.handleLogout = async function() {
