@@ -1,4 +1,5 @@
 {
+  "_deploy": "2026-06-25",
   "rewrites": [
     {
       "source": "/api/debug-env",
