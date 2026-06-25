@@ -393,6 +393,14 @@
       "destination": "private-sale.html"
     },
     {
+      "source": "/login.html",
+      "destination": "public/login.html"
+    },
+    {
+      "source": "/login",
+      "destination": "public/login.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
