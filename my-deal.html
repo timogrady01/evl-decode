@@ -247,6 +247,7 @@
   .cards-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-auto-flow: dense;
     gap: 16px;
     margin-bottom: 16px;
   }
@@ -696,7 +697,7 @@
 
   <!-- ACTIVE CARDS -->
   <div class="section-title">Your Deal</div>
-  <div class="cards-grid">
+  <div class="cards-grid" id="deal-cards-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
 
     <!-- MY VEHICLE -->
     <div class="deal-card" id="vehicle-card">
@@ -1005,9 +1006,9 @@
     const ctaSub      = document.getElementById('cta-sub');
 
     if (choice === 'yes') {
-      // Trade-in primary
-      if (vehicleCard) vehicleCard.style.order = '2';
-      if (tradeCard)   tradeCard.style.order = '1';
+      // Trade-in primary — move to top left
+      if (vehicleCard) { vehicleCard.style.order = '3'; vehicleCard.style.gridColumn = '2'; }
+      if (tradeCard)   { tradeCard.style.order = '1'; tradeCard.style.gridColumn = '1'; }
       if (ctaTitle)    ctaTitle.textContent = 'Start Your Trade-In Evaluation';
       if (ctaSub)      ctaSub.textContent = "Get your vehicle's value in minutes — no obligation.";
       if (ctaBtn)      ctaBtn.href = '/trade-in-exchange.html';
