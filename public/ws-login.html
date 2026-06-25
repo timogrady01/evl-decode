@@ -3,128 +3,610 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
-<title>WS-EVL Wholesale Command Center</title>
+<title>EVL Wholesale Exchange — Dealer Login</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#0A0A08;--s1:#111110;--s2:#1A1A16;--s3:#222220;
-  --gold:#F5C842;--gold2:#D4A820;--gold3:#FFE580;
-  --green:#00C853;--red:#FF3333;--blue:#2B84FE;
-  --muted:#C8C4A8;--border:rgba(245,200,66,0.2);
-  --border2:rgba(245,200,66,0.4);
-}
-body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* LOGIN SCREEN */
-.login-wrap{width:100%;max-width:480px;padding:32px 24px;}
-.ws-logo{text-align:center;margin-bottom:40px;}
-.ws-logo-mark{font-family:"Barlow Condensed",sans-serif;font-size:52px;font-weight:900;color:var(--gold);letter-spacing:4px;text-transform:uppercase;line-height:1;}
-.ws-logo-sub{font-size:14px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
-.ws-logo-divider{width:60px;height:3px;background:var(--gold);margin:16px auto;}
+  :root {
+    --bg: #0B0C10;
+    --surface: #13141A;
+    --surface2: #1C1D24;
+    --border: #2A2B35;
+    --blue: #2563EB;
+    --blue-hover: #1D4ED8;
+    --white: #FFFFFF;
+    --grey: #8B8FA8;
+    --grey-light: #C4C7D9;
+    --error: #EF4444;
+    --success: #22C55E;
+    --gold: #F59E0B;
+  }
 
-.login-card{background:var(--s1);border:2px solid var(--border2);padding:40px;}
-.login-title{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;color:var(--gold);}
-.login-sub{font-size:15px;color:var(--muted);margin-bottom:28px;line-height:1.6;}
-.fgroup{margin-bottom:18px;}
-.fgroup label{display:block;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.finput{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;padding:14px 16px;outline:none;transition:border-color .2s;}
-.finput:focus{border-color:var(--gold);}
-.finput::placeholder{color:#555;}
-.login-btn{display:block;width:100%;background:var(--gold);border:none;color:#000;font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:16px;cursor:pointer;margin-top:24px;transition:all .2s;}
-.login-btn:hover{background:var(--gold3);}
-.login-err{display:none;background:rgba(255,51,51,.1);border:2px solid rgba(255,51,51,.3);color:var(--red);padding:12px 16px;font-size:15px;font-weight:600;margin-top:14px;}
-.login-err.show{display:block;}
-.login-note{text-align:center;color:var(--muted);font-size:13px;margin-top:16px;font-weight:600;}
-.back-link{display:block;text-align:center;margin-top:24px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
-.back-link:hover{color:var(--gold);}
+  body {
+    background: var(--bg);
+    font-family: 'Barlow', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-/* ACCESS DENIED */
-.access-denied{text-align:center;padding:48px 24px;}
-.ad-icon{font-size:64px;margin-bottom:20px;}
-.ad-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:3px;color:var(--red);margin-bottom:12px;}
-.ad-sub{color:var(--muted);font-size:18px;line-height:1.75;}
-</style>
-<style id="evl-ws-nav-css">
-/* ── EVL WHOLESALE NAV ── */
-.evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid #FFD700;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
-.evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
-.evl-ws-nav-links{display:flex;align-items:center;gap:4px;}
-.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
-.evl-ws-nav-link:hover{color:#FFD700;background:#1a1400;}
-.evl-ws-nav-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;margin-left:8px;border:1px solid #2a2a2e;}
-.evl-ws-nav-retail:hover{color:#fff;border-color:#fff;}
-.evl-ws-nav-logout{background:#1a1400;border:1px solid #FFD700;color:#FFD700;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;transition:all .2s;white-space:nowrap;}
-.evl-ws-nav-logout:hover{background:#FFD700;color:#000;}
-.evl-ws-hamburger{display:none;background:none;border:none;color:#FFD700;font-size:22px;cursor:pointer;padding:4px 8px;}
-@media(max-width:768px){
-  .evl-ws-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#0a0800;border-bottom:2px solid #FFD700;padding:12px 0;gap:0;}
-  .evl-ws-nav-links.open{display:flex;}
-  .evl-ws-nav-link,.evl-ws-nav-retail,.evl-ws-nav-logout{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1400;}
-  .evl-ws-hamburger{display:block;}
-}
-</style>
-<style id="evl-nav-body-fix">
-/* Fix body flex centering that pushes nav down */
-body { display:block !important; align-items:unset !important; justify-content:unset !important; }
-.evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--blue); }
+
+  .nav-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  /* ── MAIN ── */
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .login-wrap {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* ── HEADER ── */
+  .login-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .login-header .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .login-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .login-header p {
+    font-size: 14px;
+    color: var(--grey);
+    line-height: 1.5;
+  }
+
+  /* ── CARD ── */
+  .login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 32px;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+
+  .tab.active {
+    color: var(--white);
+    border-bottom-color: var(--blue);
+  }
+
+  .tab:hover:not(.active) {
+    color: var(--grey-light);
+  }
+
+  /* ── PANELS ── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── FORM ── */
+  .field {
+    margin-bottom: 18px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey-light);
+    margin-bottom: 7px;
+  }
+
+  input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input::placeholder { color: var(--grey); }
+
+  input:focus {
+    border-color: var(--blue);
+    background: #16172050;
+  }
+
+  input.error-field {
+    border-color: var(--error);
+  }
+
+  /* ── SUBMIT BUTTON ── */
+  .btn-primary {
+    width: 100%;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+
+  .btn-primary:hover { background: var(--blue-hover); }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ── MESSAGES ── */
+  .msg {
+    display: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  .msg.error {
+    display: block;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #FCA5A5;
+  }
+
+  .msg.success {
+    display: block;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: var(--grey);
+    font-size: 12px;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── FOOTER NOTE ── */
+  .login-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--grey);
+    line-height: 1.6;
+  }
+
+  .login-footer a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .login-footer a:hover { text-decoration: underline; }
+
+  /* ── SPINNER ── */
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .trust-item svg {
+    width: 14px;
+    height: 14px;
+    color: var(--blue);
+    flex-shrink: 0;
+  }
 </style>
 </head>
 <body>
-<nav class="evl-ws-nav">
-  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
-    <span>EVL <span style="color:#FFD700">WHOLESALE</span></span>
-  </a>
-  <button class="evl-ws-hamburger" onclick="toggleWsNav()" aria-label="Menu">&#9776;</button>
-  <div class="evl-ws-nav-links" id="evl-ws-nav-links">
-    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
-    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link">EXCHANGE</a>
-    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
-    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
-    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
-    <a href="https://evl-decode-two.vercel.app/home" class="evl-ws-nav-retail">⬅ RETAIL SITE</a>
-    <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logout">🔒 LOGOUT</a>
-  </div>
-</nav>
-<div class="login-wrap">
-  <div class="ws-logo">
-    <div class="ws-logo-mark">⚡ WS-EVL</div>
-    <div class="ws-logo-divider"></div>
-    <div class="ws-logo-sub">Wholesale Command Center</div>
-  </div>
 
-  <div class="login-card">
-    <div class="login-title">🔒 Secure Access</div>
-    <div class="login-sub">WS-EVL is a restricted platform for authorized EVL wholesale partners, dealers, and operators only.</div>
-    <div class="fgroup">
-      <label>Access Code</label>
-      <input class="finput" id="pwInput" type="password" placeholder="Enter access code" onkeydown="if(event.key==='Enter')doLogin()">
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Express <span>Vehicle</span> Locators</a>
+  <span class="nav-badge">WS Exchange</span>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="login-wrap">
+
+    <!-- HEADER -->
+    <div class="login-header">
+      <div class="eyebrow">Franchised Dealer Access</div>
+      <h1>Wholesale Exchange<br>Portal</h1>
+      <p>Authorized franchised dealers only.<br>Sign in to access live auction inventory.</p>
     </div>
-    <button class="login-btn" onclick="doLogin()">⚡ Enter Command Center</button>
-    <div class="login-err" id="loginErr">⛔ Invalid access code. Authorized personnel only.</div>
-    <div class="login-note">🔒 This area is monitored. Unauthorized access attempts are logged.</div>
+
+    <!-- CARD -->
+    <div class="login-card">
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('login')">Sign In</button>
+        <button class="tab" onclick="switchTab('register')">Create Account</button>
+      </div>
+
+      <!-- ERROR / SUCCESS MESSAGE -->
+      <div class="msg" id="msg"></div>
+
+      <!-- ── LOGIN PANEL ── -->
+      <div class="panel active" id="panel-login">
+        <div class="field">
+          <label for="login-email">Dealer Email</label>
+          <input type="email" id="login-email" placeholder="you@dealership.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="login-pass">Password</label>
+          <input type="password" id="login-pass" placeholder="••••••••••••" autocomplete="current-password">
+        </div>
+        <button class="btn-primary" id="btn-login" onclick="handleLogin()">
+          Sign In to Exchange
+        </button>
+        <div class="divider">or</div>
+        <div style="text-align:center; font-size:13px; color:var(--grey);">
+          New to EVL? <a href="#" onclick="switchTab('register'); return false;" style="color:var(--blue);">Create your dealer account</a>
+        </div>
+      </div>
+
+      <!-- ── REGISTER PANEL ── -->
+      <div class="panel" id="panel-register">
+        <div class="field">
+          <label for="reg-name">Full Name</label>
+          <input type="text" id="reg-name" placeholder="First Last" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="reg-dealer">Dealership Name</label>
+          <input type="text" id="reg-dealer" placeholder="ABC Toyota of Dallas">
+        </div>
+        <div class="field">
+          <label for="reg-email">Work Email</label>
+          <input type="email" id="reg-email" placeholder="you@dealership.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="reg-phone">Cell Phone</label>
+          <input type="tel" id="reg-phone" placeholder="(214) 555-0100" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="reg-pass">Password</label>
+          <input type="password" id="reg-pass" placeholder="12+ characters recommended" autocomplete="new-password">
+        </div>
+        <button class="btn-primary" id="btn-register" onclick="handleRegister()">
+          Create Dealer Account
+        </button>
+        <div style="margin-top:14px; font-size:12px; color:var(--grey); text-align:center; line-height:1.5;">
+          By creating an account you confirm you are an authorized representative of a franchised new car dealership.
+        </div>
+      </div>
+
+    </div><!-- /card -->
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar">
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+        Encrypted
+      </div>
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+        Franchised Only
+      </div>
+      <div class="trust-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        Live Auctions
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="login-footer">
+      Need access? <a href="/contact.html">Contact EVL</a> &nbsp;·&nbsp;
+      <a href="/">EVL Home</a>
+    </div>
+
   </div>
-  <a href="https://www.expressvehiclelocators.com/home.html" class="back-link">← Back to EVL Customer Platform</a>
-</div>
+</main>
+
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  import {
+    getFirestore, doc, setDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM9331wODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    messagingSenderId: "84195145348",
+    appId: "1:84195145348:web:b10f837bee92ce2e4674d1",
+    measurementId: "G-S746N8SY7Z"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ── If already logged in, go straight to exchange ──
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      window.location.href = '/ws-exchange.html';
+    }
+  });
+
+  // ── Show message helper ──
+  function showMsg(text, type) {
+    const el = document.getElementById('msg');
+    el.textContent = text;
+    el.className = `msg ${type}`;
+  }
+
+  function clearMsg() {
+    const el = document.getElementById('msg');
+    el.className = 'msg';
+    el.textContent = '';
+  }
+
+  function setLoading(btnId, loading) {
+    const btn = document.getElementById(btnId);
+    if (loading) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Please wait...';
+    } else {
+      btn.disabled = false;
+    }
+  }
+
+  // ── LOGIN ──
+  window.handleLogin = async function() {
+    clearMsg();
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-pass').value;
+
+    if (!email || !pass) {
+      showMsg('Please enter your email and password.', 'error');
+      return;
+    }
+
+    setLoading('btn-login', true);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      // onAuthStateChanged will redirect
+    } catch (err) {
+      setLoading('btn-login', false);
+      document.getElementById('btn-login').textContent = 'Sign In to Exchange';
+
+      const codes = {
+        'auth/user-not-found': 'No account found with that email.',
+        'auth/wrong-password': 'Incorrect password. Please try again.',
+        'auth/invalid-email': 'Please enter a valid email address.',
+        'auth/too-many-requests': 'Too many attempts. Please wait a few minutes and try again.',
+        'auth/invalid-credential': 'Email or password is incorrect.'
+      };
+      showMsg(codes[err.code] || 'Sign in failed. Please try again.', 'error');
+    }
+  };
+
+  // ── REGISTER ──
+  window.handleRegister = async function() {
+    clearMsg();
+    const name   = document.getElementById('reg-name').value.trim();
+    const dealer = document.getElementById('reg-dealer').value.trim();
+    const email  = document.getElementById('reg-email').value.trim();
+    const phone  = document.getElementById('reg-phone').value.trim();
+    const pass   = document.getElementById('reg-pass').value;
+
+    if (!name || !dealer || !email || !phone || !pass) {
+      showMsg('Please fill in all fields.', 'error');
+      return;
+    }
+
+    if (pass.length < 8) {
+      showMsg('Password must be at least 8 characters.', 'error');
+      return;
+    }
+
+    setLoading('btn-register', true);
+
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, pass);
+      const uid  = cred.user.uid;
+
+      // Save dealer profile to Firestore
+      await setDoc(doc(db, 'evl_ws_dealers', uid), {
+        uid,
+        name,
+        dealerName: dealer,
+        email,
+        phone,
+        status: 'pending',       // Admin approves before full access
+        createdAt: serverTimestamp(),
+        hub: null,               // Assigned by admin
+        role: 'dealer'
+      });
+
+      showMsg('Account created! Redirecting to the exchange...', 'success');
+      // onAuthStateChanged will redirect
+
+    } catch (err) {
+      setLoading('btn-register', false);
+      document.getElementById('btn-register').textContent = 'Create Dealer Account';
+
+      const codes = {
+        'auth/email-already-in-use': 'An account with that email already exists. Try signing in.',
+        'auth/invalid-email': 'Please enter a valid email address.',
+        'auth/weak-password': 'Password must be at least 6 characters.'
+      };
+      showMsg(codes[err.code] || 'Registration failed. Please try again.', 'error');
+    }
+  };
+</script>
 
 <script>
-function doLogin(){
-  var pw = document.getElementById('pwInput').value;
-  var codes = ['1027','WSEVL2026','EVLWS2026','DEALER2026','WSADMIN'];
-  if(codes.indexOf(pw.toUpperCase()) > -1){
-    window.location.href = '/ws-dashboard.html';
-  } else {
-    document.getElementById('loginErr').classList.add('show');
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
+  // ── TAB SWITCHER ──
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`panel-${tab}`).classList.add('active');
+    document.querySelectorAll('.tab')[tab === 'login' ? 0 : 1].classList.add('active');
+
+    // Clear messages on tab switch
+    const msg = document.getElementById('msg');
+    msg.className = 'msg';
+    msg.textContent = '';
   }
-}
+
+  // ── ENTER KEY SUPPORT ──
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const loginPanel = document.getElementById('panel-login');
+      const registerPanel = document.getElementById('panel-register');
+      if (loginPanel.classList.contains('active')) handleLogin();
+      if (registerPanel.classList.contains('active')) handleRegister();
+    }
+  });
 </script>
-<script id="evl-ws-nav-js">
-function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.toggle('open');}
-(function(){var path=window.location.pathname;document.querySelectorAll('.evl-ws-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){a.style.color='#FFD700';a.style.borderBottom='2px solid #FFD700';}});})();
-</script>
+
 </body>
 </html>
