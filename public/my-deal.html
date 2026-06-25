@@ -867,7 +867,7 @@
     getAuth, onAuthStateChanged, signOut
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
   import {
-    getFirestore, doc, getDoc, setDoc, serverTimestamp
+    getFirestore, doc, getDoc, setDoc, serverTimestamp, arrayUnion
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -895,7 +895,7 @@
 
     // Load customer data
     try {
-      const snap = await getDoc(doc(db, 'evl_leads', user.uid));
+      const snap = await getDoc(doc(db, 'evl_customers', user.uid));
       const data = snap.exists() ? snap.data() : {};
 
       // Welcome name
@@ -932,6 +932,9 @@
       console.log('Could not load deal data:', e.message);
     }
 
+    // Track activity
+    trackActivity(user.uid);
+
     // Check trade choice — show popup if first visit
     await checkTradeChoice(user.uid);
 
@@ -941,10 +944,24 @@
   });
 
 
+
+  // ── ACTIVITY TRACKING ──
+  async function trackActivity(uid) {
+    try {
+      await setDoc(doc(db, 'evl_customers', uid), {
+        lastVisit: serverTimestamp(),
+        lastPage: '/my-deal.html',
+        pagesVisited: arrayUnion('/my-deal.html')
+      }, { merge: true });
+    } catch(e) {
+      console.log('Activity tracking skipped:', e.message);
+    }
+  }
+
   // ── TRADE FORK LOGIC ──
   async function checkTradeChoice(uid) {
     try {
-      const snap = await getDoc(doc(db, 'evl_leads', uid));
+      const snap = await getDoc(doc(db, 'evl_customers', uid));
       const data = snap.exists() ? snap.data() : {};
       
       if (!data.tradeChoice) {
@@ -967,7 +984,7 @@
     try {
       const user = auth.currentUser;
       if (user) {
-        await setDoc(doc(db, 'evl_leads', user.uid), {
+        await setDoc(doc(db, 'evl_customers', user.uid), {
           tradeChoice: choice,
           tradeChoiceAt: serverTimestamp()
         }, { merge: true });
