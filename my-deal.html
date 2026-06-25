@@ -699,6 +699,20 @@
   <div class="section-title">Your Deal</div>
   <div class="cards-grid" id="deal-cards-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
 
+    <!-- MY TRADE-IN — first in HTML so it shows top-left when tradeChoice=yes -->
+    <div class="deal-card" id="trade-card">
+      <div class="card-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+        </svg>
+      </div>
+      <h3>My Trade-In</h3>
+      <div class="card-sub">Current vehicle value estimate</div>
+      <div class="card-value" id="trade-value">—</div>
+      <div class="card-value-label">Estimated offer range</div>
+      <span class="status-badge pending">● Pending Evaluation</span>
+    </div>
+
     <!-- MY VEHICLE -->
     <div class="deal-card" id="vehicle-card">
       <div class="card-icon">
@@ -712,20 +726,6 @@
       <div class="card-value" id="vehicle-name">—</div>
       <div class="card-value-label" id="vehicle-detail"></div>
       <span class="status-badge pending">● Searching</span>
-    </div>
-
-    <!-- MY TRADE-IN -->
-    <div class="deal-card" id="trade-card">
-      <div class="card-icon">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-        </svg>
-      </div>
-      <h3>My Trade-In</h3>
-      <div class="card-sub">Current vehicle value estimate</div>
-      <div class="card-value" id="trade-value">—</div>
-      <div class="card-value-label">Estimated offer range</div>
-      <span class="status-badge pending">● Pending Evaluation</span>
     </div>
 
     <!-- MY PAYMENT -->
@@ -1018,9 +1018,7 @@
     const ctaSub      = document.getElementById('cta-sub');
 
     if (choice === 'yes') {
-      // Trade-in primary — swap positions
-      if (vehicleCard) vehicleCard.style.order = '2';
-      if (tradeCard)   tradeCard.style.order = '1';
+      // Trade-In already first in HTML — just update CTA
       if (ctaTitle)    ctaTitle.textContent = 'Start Your Trade-In Evaluation';
       if (ctaSub)      ctaSub.textContent = "Get your vehicle's value in minutes — no obligation.";
       if (ctaBtn)      ctaBtn.href = '/trade-in-exchange.html';
