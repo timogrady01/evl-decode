@@ -734,8 +734,16 @@
 
     <!-- Loan Term -->
     <div class="field">
-      <label>Loan Term</label>
-      <div class="term-options">
+      <label>Loan Term — <span id="termDisplay" style="color:var(--blue);font-weight:900;">60 months</span></label>
+      <!-- SLIDER -->
+      <input type="range" id="termSlider" min="0" max="4" value="2" step="1"
+        style="width:100%;accent-color:var(--blue);height:6px;margin:10px 0 6px;cursor:pointer;"
+        oninput="syncTermFromSlider(this.value)"/>
+      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#ffffff;font-family:var(--body);margin-bottom:14px;letter-spacing:1px;">
+        <span>36 mo</span><span>48 mo</span><span>60 mo</span><span>72 mo</span><span>84 mo</span>
+      </div>
+      <!-- HIDDEN RADIO BUTTONS — still drive the calculation -->
+      <div class="term-options" style="display:none;">
         <div class="term-opt">
           <input type="radio" name="term" id="t36" value="36">
           <label for="t36">36<span>mo</span></label>
@@ -755,6 +763,43 @@
         <div class="term-opt">
           <input type="radio" name="term" id="t84" value="84">
           <label for="t84">84<span>mo</span></label>
+        </div>
+      </div>
+      <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;margin-top:4px;">
+        💡 Longer term = lower monthly payment but more interest paid overall. EVL shows you both sides honestly.
+      </div>
+    </div>
+
+    <!-- YOUR OWN RATE BOX -->
+    <div class="field">
+      <label>Have Your Own Rate? <span style="font-size:12px;font-weight:600;color:#ffffff;letter-spacing:0;text-transform:none;">Optional</span></label>
+      <div style="background:rgba(43,132,254,0.06);border:2px solid rgba(43,132,254,0.2);border-radius:10px;padding:18px;margin-top:4px;">
+        <div style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;margin-bottom:12px;">
+          If your bank, credit union, or dealer has already quoted you a specific rate — enter it here. Your estimate will use your actual rate instead of the Experian average.
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <input type="number" id="customRate" min="0" max="30" step="0.1"
+            placeholder="e.g. 5.9"
+            style="flex:1;min-width:120px;background:var(--bg);border:2px solid var(--border);color:#ffffff;padding:12px 16px;border-radius:8px;font-size:20px;font-family:var(--font);font-weight:900;outline:none;letter-spacing:1px;"
+            oninput="checkCustomRate(this.value)"
+            onfocus="this.style.borderColor='var(--blue)'"
+            onblur="this.style.borderColor='var(--border)'"/>
+          <span style="font-size:18px;font-weight:900;color:#ffffff;font-family:var(--font);">% APR</span>
+          <button onclick="clearCustomRate()"
+            style="background:transparent;border:1px solid var(--border);color:#ffffff;padding:10px 16px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--body);">
+            Clear
+          </button>
+        </div>
+        <!-- MANUFACTURER RATE DISCLAIMER — fires when rate < 3% -->
+        <div id="mfrRateDisclaimer" style="display:none;margin-top:14px;background:rgba(255,184,0,0.08);border:2px solid rgba(255,184,0,0.35);border-radius:8px;padding:14px;">
+          <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">⚠️ Manufacturer Incentive Rate Detected</div>
+          <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.7;">
+            Rates below 3% APR are typically manufacturer-subvented programs (e.g. Ford 0%, Toyota 1.9%). These require: <strong style="color:var(--gold);">top-tier credit (usually 720+)</strong>, specific model/trim eligibility, captive lender financing (e.g. TMCC, Ford Motor Credit), and are subject to expiration without notice. <strong style="color:var(--gold);">Important:</strong> accepting an incentive rate often requires forfeiting a cash rebate of $1,500–$3,000. EVL will help you calculate which option — low rate or cash rebate — puts more money in your pocket. This estimate is illustrative only. Consult your EVL advisor or dealer for current program availability.
+          </div>
+        </div>
+        <!-- CONFIRMED RATE NOTICE -->
+        <div id="customRateConfirmed" style="display:none;margin-top:10px;font-size:13px;color:var(--green);font-family:var(--body);font-weight:700;">
+          ✅ Your quoted rate will be used for the estimate below.
         </div>
       </div>
     </div>
@@ -875,7 +920,39 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-  // ── EXPERIAN Q4 2025 RATE TABLE ──
+  // ── TERM SLIDER ──
+  var termValues = [36, 48, 60, 72, 84];
+  window.syncTermFromSlider = function(idx) {
+    var term = termValues[parseInt(idx)];
+    document.getElementById('termDisplay').textContent = term + ' months';
+    var radio = document.getElementById('t' + term);
+    if(radio) radio.checked = true;
+  };
+  // Init slider label
+  syncTermFromSlider(2); // default 60mo
+
+  // ── CUSTOM RATE ──
+  window.checkCustomRate = function(val) {
+    var num = parseFloat(val);
+    var disclaimer = document.getElementById('mfrRateDisclaimer');
+    var confirmed  = document.getElementById('customRateConfirmed');
+    if(!val || isNaN(num)) {
+      disclaimer.style.display = 'none';
+      confirmed.style.display  = 'none';
+      return;
+    }
+    // Fire manufacturer disclaimer if rate is below 3%
+    disclaimer.style.display = (num < 3) ? 'block' : 'none';
+    confirmed.style.display  = (num >= 0) ? 'block' : 'none';
+  };
+
+  window.clearCustomRate = function() {
+    document.getElementById('customRate').value = '';
+    document.getElementById('mfrRateDisclaimer').style.display = 'none';
+    document.getElementById('customRateConfirmed').style.display = 'none';
+  };
+
+
   const RATES = {
     new: {
       super_prime:  5.25,
@@ -948,8 +1025,11 @@ window.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Standard rate calculation
-    const rate = RATES[vtype][credit];
+    // Standard rate calculation — use custom rate if entered
+    const customRateInput = parseFloat(document.getElementById('customRate').value);
+    const hasCustomRate = !isNaN(customRateInput) && customRateInput >= 0;
+    const rate = hasCustomRate ? customRateInput : RATES[vtype][credit];
+    const VARIANCE = hasCustomRate ? 0.25 : (RATES[vtype][credit] > 10 ? 2 : 1);
     const rateLow  = Math.max(0, rate - VARIANCE);
     const rateHigh = rate + VARIANCE;
     const payLow   = calcMonthly(principal, rateLow, term);
@@ -1059,4 +1139,5 @@ window.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
 
