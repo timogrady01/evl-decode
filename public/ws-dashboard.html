@@ -643,7 +643,7 @@ window.runBrandMatch = async function() {
   document.getElementById('excl-list').innerHTML = '';
 
   // Load all dealers for this hub
-  const snap = await getDocs(collection(db, 'evl_dealers'));
+  const snap = await getDocs(collection(db, 'evl_ws_dealers'));
   const hubDealers = [];
   snap.forEach(d => {
     const data = { id: d.id, ...d.data() };
@@ -822,3 +822,4 @@ window.refreshAll         = refreshAll;
 
 </body>
 </html>
+
