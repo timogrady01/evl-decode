@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activate Your EVL Deal — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #020203;
+  --s1:    #090E17;
+  --s2:    #070A12;
+  --blue:  #2B84FE;
+  --green: #00C853;
+  --gold:  #FFB800;
+  --red:   #FF4444;
+  --white: #ffffff;
+  --gray:  #A1A1AA;
+  --border:#1a2a3a;
+  --font:  'Barlow Condensed', sans-serif;
+  --body:  'Barlow', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:var(--bg); color:var(--white); font-family:var(--body); min-height:100vh; }
+
+/* NAV */
+.evl-nav { position:sticky; top:0; z-index:500; background:#090E17; border-bottom:2px solid var(--blue); padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:58px; font-family:var(--font); }
+.evl-nav-logo { display:flex; align-items:center; gap:8px; text-decoration:none; font-size:16px; font-weight:900; color:#fff; letter-spacing:1px; }
+.evl-nav-logo span { color:var(--blue); }
+.evl-nav-cta { background:var(--blue); color:#fff; text-decoration:none; font-size:14px; font-weight:900; letter-spacing:1px; padding:8px 16px; }
+
+/* WRAP */
+.wrap { max-width:680px; margin:0 auto; padding:40px 20px 80px; }
+
+/* PROGRESS */
+.progress-bar { display:flex; align-items:center; gap:0; margin-bottom:40px; }
+.prog-step { flex:1; text-align:center; }
+.prog-step-circle { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; margin:0 auto 6px; font-family:var(--font); }
+.prog-step.done .prog-step-circle { background:var(--green); color:#fff; }
+.prog-step.active .prog-step-circle { background:var(--gold); color:#020203; box-shadow:0 0 0 4px rgba(255,184,0,0.2); }
+.prog-step.pending .prog-step-circle { background:var(--s2); color:var(--gray); border:2px solid var(--border); }
+.prog-step-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gray); }
+.prog-step.done .prog-step-label { color:var(--green); }
+.prog-step.active .prog-step-label { color:var(--gold); }
+.prog-line { flex:1; height:2px; background:var(--border); max-width:40px; }
+.prog-line.done { background:var(--green); }
+.prog-line.active { background:linear-gradient(90deg,var(--green),var(--gold)); }
+
+/* HERO */
+.page-hero { text-align:center; margin-bottom:32px; }
+.page-badge { display:inline-block; background:rgba(255,184,0,0.1); border:2px solid rgba(255,184,0,0.4); color:var(--gold); font-size:12px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
+.page-title { font-family:var(--font); font-size:clamp(32px,6vw,52px); font-weight:900; text-transform:uppercase; line-height:1.05; margin-bottom:12px; }
+.page-title span { color:var(--gold); }
+.page-sub { font-size:17px; font-weight:600; color:#ffffff; line-height:1.7; max-width:520px; margin:0 auto; }
+
+/* FEE CARD */
+.fee-card { background:linear-gradient(135deg,rgba(255,184,0,0.1),rgba(255,184,0,0.03)); border:3px solid var(--gold); border-radius:14px; padding:32px; margin-bottom:24px; text-align:center; }
+.fee-label { font-size:13px; font-weight:900; color:var(--gold); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px; font-family:var(--font); }
+.fee-amount { font-family:var(--font); font-size:80px; font-weight:900; color:#ffffff; line-height:1; margin-bottom:8px; }
+.fee-name { font-family:var(--font); font-size:22px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:2px; margin-bottom:20px; }
+.fee-items { display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:left; margin-bottom:20px; }
+.fee-item { display:flex; align-items:flex-start; gap:10px; background:rgba(0,0,0,0.2); border-radius:8px; padding:12px; }
+.fee-item-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.fee-item-text { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
+.fee-waiver { background:rgba(0,200,83,0.08); border:2px solid rgba(0,200,83,0.3); border-radius:8px; padding:14px 18px; font-size:14px; color:#ffffff; font-family:var(--body); font-weight:700; line-height:1.6; }
+.fee-waiver strong { color:var(--green); }
+
+/* PAYMENT METHOD CARD */
+.card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:28px; margin-bottom:20px; }
+.card-title { font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--white); margin-bottom:6px; }
+.card-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:20px; }
+
+/* NO CREDIT CARD BANNER */
+.no-cc-banner { background:rgba(255,68,68,0.06); border:2px solid rgba(255,68,68,0.3); border-radius:10px; padding:16px 20px; margin-bottom:20px; display:flex; align-items:center; gap:14px; }
+.no-cc-icon { font-size:28px; flex-shrink:0; }
+.no-cc-text { font-size:15px; color:#ffffff; font-family:var(--body); font-weight:700; line-height:1.6; }
+.no-cc-text strong { color:var(--red); }
+
+/* PAYMENT METHODS */
+.method-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:20px; }
+.method-card { background:var(--bg); border:2px solid var(--border); border-radius:10px; padding:18px 12px; text-align:center; cursor:pointer; transition:all .2s; }
+.method-card:hover { border-color:var(--blue); }
+.method-card.selected { border-color:var(--gold); background:rgba(255,184,0,0.06); }
+.method-icon { font-size:28px; margin-bottom:8px; display:block; }
+.method-name { font-family:var(--font); font-size:16px; font-weight:900; color:#ffffff; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.method-desc { font-size:12px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.4; }
+.method-check { font-size:16px; color:var(--gold); margin-top:6px; display:none; }
+.method-card.selected .method-check { display:block; }
+
+/* METHOD DETAIL */
+.method-detail { display:none; background:rgba(255,184,0,0.05); border:1px solid rgba(255,184,0,0.25); border-radius:10px; padding:20px; margin-bottom:20px; }
+.method-detail.active { display:block; }
+.method-detail-title { font-family:var(--font); font-size:16px; font-weight:900; color:var(--gold); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
+.method-detail-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; font-family:var(--body); }
+.method-detail-row:last-of-type { border-bottom:none; }
+.method-detail-note { font-size:13px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-top:12px; background:rgba(0,0,0,0.2); border-radius:6px; padding:10px 12px; }
+
+/* CONTACT FORM */
+.field { margin-bottom:16px; }
+.field label { display:block; font-size:13px; font-weight:900; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; font-family:var(--font); }
+.field input, .field select, .field textarea { width:100%; background:var(--bg); border:2px solid var(--border); color:#ffffff; padding:13px 16px; border-radius:8px; font-size:16px; font-family:var(--body); font-weight:600; outline:none; transition:border-color .2s; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color:var(--blue); }
+.field textarea { resize:vertical; min-height:80px; }
+
+/* AGREEMENT */
+.agreement-card { background:var(--s2); border:2px solid rgba(255,184,0,0.2); border-radius:12px; padding:24px; margin-bottom:20px; }
+.agreement-title { font-family:var(--font); font-size:18px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
+.agreement-items { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+.ack-row { display:flex; align-items:flex-start; gap:12px; cursor:pointer; }
+.ack-row input { width:20px; height:20px; margin-top:2px; accent-color:var(--gold); flex-shrink:0; cursor:pointer; }
+.ack-row span { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
+.ack-row a { color:var(--blue); }
+
+/* ACTIVATE BTN */
+.activate-btn { width:100%; background:var(--gold); color:#020203; border:none; padding:22px; font-family:var(--font); font-size:24px; font-weight:900; letter-spacing:2px; text-transform:uppercase; cursor:pointer; border-radius:10px; transition:all .2s; display:none; margin-bottom:12px; }
+.activate-btn:hover { background:#e6a800; transform:translateY(-2px); box-shadow:0 12px 32px rgba(255,184,0,0.3); }
+.activate-btn-disabled { width:100%; background:var(--s2); color:var(--gray); border:2px solid var(--border); padding:22px; font-family:var(--font); font-size:20px; font-weight:900; letter-spacing:2px; text-transform:uppercase; border-radius:10px; margin-bottom:12px; text-align:center; }
+
+/* SUCCESS STATE */
+.success-state { display:none; text-align:center; padding:48px 20px; }
+.success-state.active { display:block; }
+.success-icon { font-size:72px; margin-bottom:20px; }
+.success-title { font-family:var(--font); font-size:42px; font-weight:900; text-transform:uppercase; color:var(--green); margin-bottom:12px; }
+.success-sub { font-size:17px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.7; max-width:480px; margin:0 auto 28px; }
+.success-ref { background:var(--s1); border:2px solid var(--green); border-radius:10px; padding:20px; max-width:400px; margin:0 auto 28px; }
+.success-ref-label { font-size:12px; color:var(--green); font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.success-ref-num { font-family:var(--font); font-size:28px; font-weight:900; color:#ffffff; letter-spacing:2px; }
+.success-next { display:flex; flex-direction:column; gap:12px; max-width:400px; margin:0 auto; }
+.success-btn { display:block; background:var(--blue); color:#fff; padding:16px; border-radius:8px; font-family:var(--font); font-size:18px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; text-align:center; }
+.success-btn-outline { display:block; background:transparent; color:#ffffff; padding:14px; border-radius:8px; border:2px solid var(--border); font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; text-align:center; }
+
+/* TRUST BADGES */
+.trust-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:24px; }
+.trust-badge { background:var(--s1); border:1px solid var(--border); border-radius:8px; padding:10px 16px; display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:#ffffff; font-family:var(--body); }
+.trust-badge span { font-size:16px; }
+
+/* DISCLAIMER */
+.disclaimer { font-size:12px; color:var(--gray); font-family:var(--body); line-height:1.7; text-align:center; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+
+/* FOOTER */
+footer { background:var(--s1); border-top:1px solid var(--border); padding:24px; text-align:center; margin-top:40px; }
+.footer-copy { font-size:13px; color:var(--gray); font-family:var(--body); }
+
+@media(max-width:500px) {
+  .fee-items { grid-template-columns:1fr; }
+  .method-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="evl-nav">
+  <a href="/home" class="evl-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    EXPRESS <span>&nbsp;VEHICLE</span>&nbsp;LOCATORS
+  </a>
+  <a href="/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar">
+    <div class="prog-step done">
+      <div class="prog-step-circle">✓</div>
+      <div class="prog-step-label">Vehicle</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step done">
+      <div class="prog-step-circle">✓</div>
+      <div class="prog-step-label">Trade-In</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step done">
+      <div class="prog-step-circle">✓</div>
+      <div class="prog-step-label">Credit</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step done">
+      <div class="prog-step-circle">✓</div>
+      <div class="prog-step-label">Your Deal</div>
+    </div>
+    <div class="prog-line active"></div>
+    <div class="prog-step active">
+      <div class="prog-step-circle">⚡</div>
+      <div class="prog-step-label">Activate</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT — hidden after success -->
+  <div id="mainContent">
+
+    <!-- HERO -->
+    <div class="page-hero">
+      <div class="page-badge">⚡ Final Step — Deal Activation</div>
+      <h1 class="page-title">Activate Your<br><span>EVL Deal</span></h1>
+      <p class="page-sub">One flat fee. No commissions. No hidden charges. EVL goes to work the moment you activate.</p>
+    </div>
+
+    <!-- TRUST BADGES -->
+    <div class="trust-row">
+      <div class="trust-badge"><span>🔒</span> No Credit Card Ever</div>
+      <div class="trust-badge"><span>✅</span> Fee Waived If No Sale</div>
+      <div class="trust-badge"><span>⚡</span> EVL Starts Within 2 Hours</div>
+      <div class="trust-badge"><span>📋</span> No Obligation Until You Sign</div>
+    </div>
+
+    <!-- FEE CARD -->
+    <div class="fee-card">
+      <div class="fee-label">EVL Platform Activation Fee</div>
+      <div class="fee-amount">$199</div>
+      <div class="fee-name">One-Time · Flat · No Hidden Fees</div>
+      <div class="fee-items">
+        <div class="fee-item">
+          <div class="fee-item-icon">🔍</div>
+          <div class="fee-item-text">Vehicle search and sourcing across EVL dealer network</div>
+        </div>
+        <div class="fee-item">
+          <div class="fee-item-icon">💰</div>
+          <div class="fee-item-text">Trade-in auction — dealers compete, you keep the highest bid</div>
+        </div>
+        <div class="fee-item">
+          <div class="fee-item-icon">📊</div>
+          <div class="fee-item-text">Deal structure optimization — price, rate, term, trade all aligned</div>
+        </div>
+        <div class="fee-item">
+          <div class="fee-item-icon">🚗</div>
+          <div class="fee-item-text">Delivery coordination — EVL manages the handoff start to finish</div>
+        </div>
+        <div class="fee-item">
+          <div class="fee-item-icon">📱</div>
+          <div class="fee-item-text">Digital Glovebox — all deal documents stored and accessible</div>
+        </div>
+        <div class="fee-item">
+          <div class="fee-item-icon">🤝</div>
+          <div class="fee-item-text">Dedicated EVL advisor — your advocate from start to keys</div>
+        </div>
+      </div>
+      <div class="fee-waiver">
+        <strong>✅ No-Sale Guarantee:</strong> If EVL is unable to complete your vehicle transaction, the $199 platform fee is fully waived. You pay nothing for a deal that doesn't close.
+      </div>
+    </div>
+
+    <!-- NO CREDIT CARD -->
+    <div class="no-cc-banner">
+      <div class="no-cc-icon">🚫</div>
+      <div class="no-cc-text">
+        <strong>No credit cards — ever.</strong> EVL does not accept credit card payments for platform fees. All payments are processed by check, wire transfer, or ACH only. Your EVL advisor will provide wire/ACH instructions after you submit your activation request below.
+      </div>
+    </div>
+
+    <!-- PAYMENT METHOD SELECTION -->
+    <div class="card">
+      <div class="card-title">Select Your Payment Method</div>
+      <div class="card-sub">Choose how you'll send the $199 platform fee. Your EVL advisor will follow up with exact instructions within 2 hours of your activation request.</div>
+
+      <div class="method-grid">
+        <div class="method-card" onclick="selectMethod('check')" id="m-check">
+          <span class="method-icon">✍️</span>
+          <div class="method-name">Check</div>
+          <div class="method-desc">Personal or cashier's check mailed to EVL</div>
+          <div class="method-check">✅ Selected</div>
+        </div>
+        <div class="method-card" onclick="selectMethod('wire')" id="m-wire">
+          <span class="method-icon">🏦</span>
+          <div class="method-name">Wire Transfer</div>
+          <div class="method-desc">Same-day bank wire — fastest activation</div>
+          <div class="method-check">✅ Selected</div>
+        </div>
+        <div class="method-card" onclick="selectMethod('ach')" id="m-ach">
+          <span class="method-icon">🔄</span>
+          <div class="method-name">ACH</div>
+          <div class="method-desc">Direct bank transfer — 1-2 business days</div>
+          <div class="method-check">✅ Selected</div>
+        </div>
+      </div>
+
+      <!-- METHOD DETAILS -->
+      <div class="method-detail" id="detail-check">
+        <div class="method-detail-title">✍️ Check Instructions</div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Payable To</span><span style="color:var(--gold);font-weight:900;">Express Vehicle Locators</span></div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Amount</span><span style="color:#ffffff;font-weight:900;">$199.00</span></div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Memo Line</span><span style="color:#ffffff;font-weight:900;">EVL Platform Fee — [Your Name]</span></div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Mailing Address</span><span style="color:#ffffff;font-weight:900;">Provided by your EVL advisor</span></div>
+        <div class="method-detail-note">⏱ Processing: Check must be received and cleared before EVL begins active deal work. Your advisor will confirm receipt. Local checks: 2-3 business days. Out-of-state: allow 5-7 days. Cashier's check preferred for fastest processing.</div>
+      </div>
+
+      <div class="method-detail" id="detail-wire">
+        <div class="method-detail-title">🏦 Wire Transfer Instructions</div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Amount</span><span style="color:#ffffff;font-weight:900;">$199.00</span></div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Wire Instructions</span><span style="color:var(--gold);font-weight:900;">Sent by EVL advisor within 2 hrs</span></div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Reference</span><span style="color:#ffffff;font-weight:900;">Your EVL confirmation number</span></div>
+        <div class="method-detail-note">⚡ Fastest activation method. Wire transfers typically same-day. EVL begins active deal work upon wire confirmation. Your advisor will send bank routing and account details directly to your email — never by text or third party. <strong style="color:var(--red);">Important:</strong> EVL will never ask you to wire funds to a personal account or third-party payment app. If you receive unusual wire instructions, call EVL directly before sending.</div>
+      </div>
+
+      <div class="method-detail" id="detail-ach">
+        <div class="method-detail-title">🔄 ACH Transfer Instructions</div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Amount</span><span style="color:#ffffff;font-weight:900;">$199.00</span></div>
+        <div class="method-detail-row"><span style="color:#ffffff;">ACH Details</span><span style="color:var(--gold);font-weight:900;">Sent by EVL advisor within 2 hrs</span></div>
+        <div class="method-detail-row"><span style="color:#ffffff;">Processing Time</span><span style="color:#ffffff;font-weight:900;">1-2 business days</span></div>
+        <div class="method-detail-note">⏱ ACH is the most common method for clients who prefer bank-to-bank transfer without a wire fee. Your advisor will send routing and account details directly to your email. EVL begins deal work once ACH clears — typically next business day.</div>
+      </div>
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="card">
+      <div class="card-title">Your Contact Information</div>
+      <div class="card-sub">Your EVL advisor needs this to send payment instructions and begin your deal.</div>
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="custName" placeholder="First and last name" autocomplete="name"/>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" id="custPhone" placeholder="(214) 555-0100" autocomplete="tel"/>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="custEmail" placeholder="you@email.com" autocomplete="email"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Best Time to Reach You</label>
+        <select id="custTime">
+          <option value="">— Select a time —</option>
+          <option value="morning">Morning (8am–12pm)</option>
+          <option value="afternoon">Afternoon (12pm–5pm)</option>
+          <option value="evening">Evening (5pm–8pm)</option>
+          <option value="anytime">Any time</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Anything You'd Like EVL to Know? <span style="font-size:11px;color:var(--gray);letter-spacing:0;text-transform:none;font-family:var(--body);">Optional</span></label>
+        <textarea id="custNotes" placeholder="Vehicle preference, timeline, trade-in details, questions..."></textarea>
+      </div>
+    </div>
+
+    <!-- AGREEMENT -->
+    <div class="agreement-card">
+      <div class="agreement-title">📋 Confirm & Agree</div>
+      <div class="agreement-items">
+        <label class="ack-row">
+          <input type="checkbox" id="ack1" onchange="checkAllAcks()"/>
+          <span>I have reviewed my deal summary and understand the $199 EVL Platform Fee is a flat technology platform fee — not a commission, dealer markup, or financing charge.</span>
+        </label>
+        <label class="ack-row">
+          <input type="checkbox" id="ack2" onchange="checkAllAcks()"/>
+          <span>I understand the $199 fee is <strong style="color:var(--green);">fully waived</strong> if EVL is unable to complete my transaction. I pay nothing for a deal that doesn't close.</span>
+        </label>
+        <label class="ack-row">
+          <input type="checkbox" id="ack3" onchange="checkAllAcks()"/>
+          <span>I understand payment is by check, wire, or ACH only. No credit cards. My EVL advisor will send payment instructions within 2 hours of this activation request.</span>
+        </label>
+        <label class="ack-row">
+          <input type="checkbox" id="ack4" onchange="checkAllAcks()"/>
+          <span>I have read and agree to the EVL <a href="/service-agreement" target="_blank">Service Agreement</a>, <a href="/terms" target="_blank">Terms of Service</a>, and <a href="/privacy" target="_blank">Privacy Policy</a>. I am under no further obligation until I sign a purchase agreement.</span>
+        </label>
+        <label class="ack-row">
+          <input type="checkbox" id="ack5" onchange="checkAllAcks()"/>
+          <span>I understand EVL is a technology advisory platform — not a dealer, lender, or broker. EVL does not take possession of vehicles or handle funds between parties.</span>
+        </label>
+      </div>
+
+      <!-- DISABLED STATE -->
+      <div class="activate-btn-disabled" id="activateBtnDisabled">
+        Complete all fields and agreements above to activate →
+      </div>
+
+      <!-- ACTIVE BUTTON -->
+      <button class="activate-btn" id="activateBtn" onclick="submitActivation()">
+        ⚡ SUBMIT ACTIVATION REQUEST →
+      </button>
+
+      <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;text-align:center;line-height:1.6;">
+        Submitting this form does not charge your card or complete a payment. Your EVL advisor will contact you within 2 hours with payment instructions to finalize your activation.
+      </div>
+    </div>
+
+  </div><!-- /mainContent -->
+
+  <!-- SUCCESS STATE -->
+  <div class="success-state" id="successState">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">You're Activated!</div>
+    <div class="success-sub">Your EVL deal is now in motion. Your advisor will contact you within 2 hours with payment instructions and your official deal kickoff.</div>
+    <div class="success-ref">
+      <div class="success-ref-label">Your EVL Confirmation Number</div>
+      <div class="success-ref-num" id="confirmNum">EVL-2026-XXXX</div>
+    </div>
+    <div style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:700;margin-bottom:20px;line-height:1.6;text-align:center;">
+      📧 A confirmation has been sent to your email.<br>
+      📞 Watch for a call or text from your EVL advisor.
+    </div>
+    <div class="success-next">
+      <a href="/my-deal" class="success-btn">⚡ View My Deal Hub →</a>
+      <a href="/trade-in-exchange" class="success-btn-outline">Track My Trade-In Auction →</a>
+      <a href="/schedule" class="success-btn-outline">📅 Schedule a Call With My Advisor →</a>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer" id="mainDisclaimer">
+    The $199 EVL Platform Activation Fee is a technology platform fee charged by Express Vehicle Locators for advisory, coordination, and platform access services. It is not a down payment, dealer fee, financing charge, or commission. EVL is a technology advisory platform — not a dealer, lender, broker, or credit reporting agency. EVL does not take title to vehicles, hold funds between parties, or participate in any financing transaction. The fee is fully waived if EVL is unable to facilitate a completed vehicle transaction on your behalf. Submission of this activation request does not create a binding purchase agreement. You are under no obligation to complete a vehicle purchase until you sign a purchase agreement with a dealer. Payment instructions are provided by your EVL advisor via secure email only. EVL will never request payment via credit card, payment app, or third-party platform.
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="footer-copy">© 2026 Express Vehicle Locators — Plano, TX — EVL is a vehicle advisory platform — not a dealer.</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain: "evl-acquisition-radar.firebaseapp.com",
+  projectId: "evl-acquisition-radar",
+  storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId: "84195145348",
+  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+};
+
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+var selectedMethod = null;
+
+window.selectMethod = function(method) {
+  selectedMethod = method;
+  ['check','wire','ach'].forEach(function(m) {
+    document.getElementById('m-' + m).classList.toggle('selected', m === method);
+    var detail = document.getElementById('detail-' + m);
+    if(detail) detail.classList.toggle('active', m === method);
+  });
+  checkAllAcks();
+};
+
+window.checkAllAcks = function() {
+  var allChecked = ['ack1','ack2','ack3','ack4','ack5'].every(function(id) {
+    return document.getElementById(id).checked;
+  });
+  var hasMethod  = !!selectedMethod;
+  var hasName    = document.getElementById('custName').value.trim().length > 1;
+  var hasPhone   = document.getElementById('custPhone').value.trim().length > 6;
+  var hasEmail   = document.getElementById('custEmail').value.trim().includes('@');
+
+  var ready = allChecked && hasMethod && hasName && hasPhone && hasEmail;
+  document.getElementById('activateBtn').style.display      = ready ? 'block' : 'none';
+  document.getElementById('activateBtnDisabled').style.display = ready ? 'none' : 'block';
+};
+
+// Also check on input changes
+['custName','custPhone','custEmail','custTime'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if(el) el.addEventListener('input', window.checkAllAcks);
+});
+
+window.submitActivation = function() {
+  var btn = document.getElementById('activateBtn');
+  btn.textContent = '⏳ Submitting...';
+  btn.disabled = true;
+
+  // Generate confirmation number
+  var confirmNum = 'EVL-2026-' + Math.floor(1000 + Math.random() * 9000);
+
+  // Pull session data
+  var payload = {
+    confirmationNumber: confirmNum,
+    name:          document.getElementById('custName').value.trim(),
+    phone:         document.getElementById('custPhone').value.trim(),
+    email:         document.getElementById('custEmail').value.trim(),
+    bestTime:      document.getElementById('custTime').value,
+    notes:         document.getElementById('custNotes').value.trim(),
+    paymentMethod: selectedMethod,
+    status:        'pending_payment',
+    // Session data
+    vehiclePrice:  sessionStorage.getItem('evl_vehicle_price') || '',
+    downPayment:   sessionStorage.getItem('evl_down_payment') || '',
+    tradeEquity:   sessionStorage.getItem('evl_trade_equity') || '',
+    creditScore:   sessionStorage.getItem('evl_credit_score') || '',
+    creditLabel:   sessionStorage.getItem('evl_credit_label') || '',
+    loanTerm:      sessionStorage.getItem('evl_term') || '',
+    lienStatus:    sessionStorage.getItem('evl_lien') || '',
+    physicalState: sessionStorage.getItem('evl_physical_state') || '',
+    titleState:    sessionStorage.getItem('evl_title_state') || '',
+    stateTier:     sessionStorage.getItem('evl_tier') || '',
+    motAcknowledged: sessionStorage.getItem('evl_mot_acknowledged') || 'false',
+    createdAt:     serverTimestamp(),
+    source:        'payment-collection',
+    platform:      'EVL Retail'
+  };
+
+  // Get logged-in user if available
+  var user = auth.currentUser;
+  if(user) { payload.uid = user.uid; payload.userEmail = user.email; }
+
+  addDoc(collection(db, 'evl_activations'), payload)
+    .then(function() {
+      document.getElementById('confirmNum').textContent = confirmNum;
+      document.getElementById('mainContent').style.display = 'none';
+      document.getElementById('mainDisclaimer').style.display = 'none';
+      document.getElementById('successState').classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+
+      // Update customer record if logged in
+      if(user) {
+        import("https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js").then(function(fs) {
+          fs.updateDoc(fs.doc(db, 'evl_customers', user.uid), {
+            activationStatus:     'pending_payment',
+            activationRef:        confirmNum,
+            activationMethod:     selectedMethod,
+            activationSubmitted:  serverTimestamp()
+          }).catch(function() {});
+        });
+      }
+    })
+    .catch(function(err) {
+      console.error(err);
+      btn.textContent = '⚡ SUBMIT ACTIVATION REQUEST →';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or contact EVL directly at togradyevl@gmail.com');
+    });
+};
+</script>
+</body>
+</html>
