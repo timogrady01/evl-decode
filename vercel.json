@@ -401,6 +401,14 @@
       "destination": "public/login.html"
     },
     {
+      "source": "/payment-estimator.html",
+      "destination": "public/payment-estimator.html"
+    },
+    {
+      "source": "/payment-estimator",
+      "destination": "public/payment-estimator.html"
+    },
+    {
       "source": "/schedule.html",
       "destination": "public/schedule.html"
     },
