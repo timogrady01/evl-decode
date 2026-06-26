@@ -467,6 +467,48 @@ body { font-size: 20px !important; color: #f0f4ff !important; }
       </div>
     </div>
 
+    <!-- GSM CONTACT -->
+    <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin:24px 0 6px">🏆 GENERAL SALES MANAGER — EVL APPOINTMENT NOTIFICATIONS</div>
+    <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;margin-bottom:14px;">The GSM receives all EVL customer appointment requests and lead notifications. This ensures no EVL deal is ever missed at the management level.</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">GSM Full Name <span>*</span></label>
+        <input class="form-input" id="d-gsm-name" placeholder="Jane Williams"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">GSM Direct Cell <span>*</span></label>
+        <input class="form-input" id="d-gsm-phone" type="tel" placeholder="(214) 555-0101"/>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">GSM Email <span>*</span></label>
+        <input class="form-input" id="d-gsm-email" type="email" placeholder="gsm@dealership.com"/>
+      </div>
+    </div>
+
+    <!-- SALESPERSON CONTACT -->
+    <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin:24px 0 6px">👤 SALESPERSON / INTERNET MANAGER — EVL LEAD CONTACT</div>
+    <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;margin-bottom:14px;">The designated salesperson receives EVL customer appointment details directly — so they can pull the vehicle, review the customer profile, and greet them by name at the door. This contact can be updated at any time as staff changes.</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Salesperson / Internet Mgr Name <span>*</span></label>
+        <input class="form-input" id="d-sp-name" placeholder="Mike Johnson"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Salesperson Direct Cell <span>*</span></label>
+        <input class="form-input" id="d-sp-phone" type="tel" placeholder="(214) 555-0102"/>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Salesperson Email <span>*</span></label>
+        <input class="form-input" id="d-sp-email" type="email" placeholder="mjohnson@dealership.com"/>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,184,0,0.06);border:2px solid rgba(255,184,0,0.25);border-radius:8px;padding:14px;margin-top:4px;margin-bottom:20px;">
+      <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:700;line-height:1.7;">
+        ⚡ <strong style="color:var(--gold);">How EVL Appointment Notifications Work:</strong> When an EVL customer requests an appointment for a vehicle at your dealership, both your GSM and Salesperson receive simultaneous SMS and email notifications with the customer's name, vehicle of interest, requested date and time, credit tier, and estimated payment range. No lead ever goes to just one inbox.
+      </div>
+    </div>
+
     <div class="btn-row">
       <button class="btn btn-dark" onclick="prevStep(2)">← BACK</button>
       <button class="btn btn-gold" onclick="nextStep(2)">DEALER INFO CONFIRMED →</button>
@@ -1008,6 +1050,18 @@ function submitOnboarding(){
     phone: document.getElementById('d-phone').value,
     license: document.getElementById('d-license').value,
     state: document.getElementById('d-state').value,
+    // GSM — receives all EVL appointment notifications
+    gsm: {
+      name:  document.getElementById('d-gsm-name').value,
+      phone: document.getElementById('d-gsm-phone').value,
+      email: document.getElementById('d-gsm-email').value
+    },
+    // Salesperson / Internet Manager — receives customer appointment details
+    salesperson: {
+      name:  document.getElementById('d-sp-name').value,
+      phone: document.getElementById('d-sp-phone').value,
+      email: document.getElementById('d-sp-email').value
+    },
     signatory: sigName,
     signature: sigSign,
     completedAt: new Date().toISOString()
@@ -1045,3 +1099,4 @@ window.addEventListener('DOMContentLoaded',function(){
 </script>
 </body>
 </html>
+
