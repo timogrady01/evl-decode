@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Credit Score — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #020203;
+  --s1:    #090E17;
+  --s2:    #070A12;
+  --blue:  #2B84FE;
+  --green: #00C853;
+  --gold:  #FFB800;
+  --red:   #FF4444;
+  --white: #ffffff;
+  --gray:  #A1A1AA;
+  --border:#1a2a3a;
+  --font:  'Barlow Condensed', sans-serif;
+  --body:  'Barlow', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:var(--bg); color:var(--white); font-family:var(--body); min-height:100vh; }
+
+/* NAV */
+.evl-nav { position:sticky; top:0; z-index:500; background:#090E17; border-bottom:2px solid var(--blue); padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:58px; font-family:var(--font); }
+.evl-nav-logo { display:flex; align-items:center; gap:8px; text-decoration:none; font-size:16px; font-weight:900; color:#fff; letter-spacing:1px; white-space:nowrap; }
+.evl-nav-logo span { color:var(--blue); }
+.evl-nav-cta { background:var(--blue); color:#fff; text-decoration:none; font-size:14px; font-weight:900; letter-spacing:1px; padding:8px 16px; }
+
+/* WRAP */
+.wrap { max-width:700px; margin:0 auto; padding:40px 20px 80px; }
+
+/* PROGRESS BAR */
+.progress-bar { display:flex; align-items:center; gap:0; margin-bottom:40px; }
+.prog-step { flex:1; text-align:center; position:relative; }
+.prog-step-circle { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; margin:0 auto 6px; font-family:var(--font); }
+.prog-step.done .prog-step-circle { background:var(--green); color:#fff; }
+.prog-step.active .prog-step-circle { background:var(--blue); color:#fff; border:3px solid rgba(43,132,254,0.4); }
+.prog-step.pending .prog-step-circle { background:var(--s2); color:var(--gray); border:2px solid var(--border); }
+.prog-step-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gray); }
+.prog-step.done .prog-step-label { color:var(--green); }
+.prog-step.active .prog-step-label { color:var(--white); }
+.prog-line { flex:1; height:2px; background:var(--border); max-width:40px; }
+.prog-line.done { background:var(--green); }
+
+/* HERO */
+.page-hero { text-align:center; margin-bottom:36px; }
+.page-badge { display:inline-block; background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.3); color:var(--blue); font-size:12px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
+.page-title { font-family:var(--font); font-size:clamp(32px,6vw,52px); font-weight:900; text-transform:uppercase; line-height:1.05; margin-bottom:12px; }
+.page-title span { color:var(--blue); }
+.page-sub { font-size:17px; font-weight:600; color:#ffffff; line-height:1.7; max-width:560px; margin:0 auto; }
+
+/* CARDS */
+.card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:28px; margin-bottom:20px; }
+.card-title { font-family:var(--font); font-size:22px; font-weight:900; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; color:var(--white); }
+.card-sub { font-size:15px; color:#ffffff; font-weight:600; line-height:1.6; margin-bottom:20px; }
+
+/* WHY EVL DOESN'T PULL */
+.why-box { background:rgba(43,132,254,0.06); border:2px solid rgba(43,132,254,0.25); border-radius:10px; padding:20px; margin-bottom:24px; }
+.why-title { font-family:var(--font); font-size:18px; font-weight:900; color:var(--blue); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+.why-text { font-size:15px; color:#ffffff; font-weight:600; line-height:1.7; }
+
+/* SCORE ENTRY */
+.score-options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+.score-btn { background:var(--bg); border:2px solid var(--border); border-radius:10px; padding:18px 14px; cursor:pointer; text-align:center; transition:all .2s; font-family:var(--font); }
+.score-btn:hover { border-color:var(--blue); }
+.score-btn.selected { border-color:var(--blue); background:rgba(43,132,254,0.08); }
+.score-btn-range { font-size:22px; font-weight:900; color:var(--white); display:block; margin-bottom:4px; }
+.score-btn-label { font-size:13px; font-weight:700; color:#ffffff; letter-spacing:1px; text-transform:uppercase; display:block; margin-bottom:4px; }
+.score-btn-desc { font-size:12px; color:#ffffff; font-family:var(--body); line-height:1.4; }
+
+/* EXACT SCORE INPUT */
+.exact-input-wrap { margin-top:4px; }
+.exact-label { font-size:14px; font-weight:900; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; display:block; }
+.exact-input { width:100%; background:var(--bg); border:2px solid var(--border); color:var(--white); padding:14px 18px; border-radius:8px; font-size:24px; font-family:var(--font); font-weight:900; outline:none; letter-spacing:2px; }
+.exact-input:focus { border-color:var(--blue); }
+.exact-hint { font-size:13px; color:#ffffff; font-family:var(--body); font-weight:600; margin-top:8px; line-height:1.5; }
+
+/* DON'T KNOW SECTION */
+.dont-know { background:var(--s2); border:2px solid rgba(255,184,0,0.2); border-radius:12px; padding:24px; margin-bottom:20px; }
+.dont-know-title { font-family:var(--font); font-size:20px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.dont-know-sub { font-size:15px; color:#ffffff; font-weight:600; line-height:1.6; margin-bottom:20px; }
+.third-party-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.tp-card { background:var(--bg); border:2px solid var(--border); border-radius:10px; padding:16px; text-align:center; text-decoration:none; display:block; transition:all .2s; }
+.tp-card:hover { border-color:var(--gold); transform:translateY(-2px); }
+.tp-name { font-family:var(--font); font-size:18px; font-weight:900; color:var(--white); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; display:block; }
+.tp-detail { font-size:13px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.4; }
+.tp-tag { display:inline-block; margin-top:8px; font-size:11px; font-weight:900; color:var(--green); letter-spacing:1px; text-transform:uppercase; }
+.dont-know-note { font-size:13px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; text-align:center; }
+
+/* PROCEED SECTION */
+.proceed-section { display:none; }
+.proceed-section.active { display:block; }
+
+.score-confirmed { background:rgba(0,200,83,0.07); border:2px solid rgba(0,200,83,0.3); border-radius:10px; padding:20px; margin-bottom:20px; display:flex; align-items:center; gap:16px; }
+.score-confirmed-num { font-family:var(--font); font-size:48px; font-weight:900; color:var(--green); line-height:1; flex-shrink:0; }
+.score-confirmed-label { font-size:14px; font-weight:900; color:var(--green); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
+.score-confirmed-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
+
+.proceed-btn { width:100%; background:var(--blue); color:#fff; border:none; padding:20px; font-family:var(--font); font-size:22px; font-weight:900; letter-spacing:2px; text-transform:uppercase; cursor:pointer; border-radius:8px; margin-bottom:12px; transition:all .2s; }
+.proceed-btn:hover { background:#1a6fd4; transform:translateY(-2px); }
+
+/* PROCEED ANYWAY */
+.proceed-anyway { text-align:center; margin-top:8px; }
+.proceed-anyway-link { font-size:14px; color:var(--gray); font-family:var(--body); font-weight:600; cursor:pointer; text-decoration:underline; }
+.proceed-anyway-link:hover { color:#ffffff; }
+.anyway-ack { display:none; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; padding:16px; margin-top:12px; }
+.anyway-ack.active { display:block; }
+.anyway-label { display:flex; align-items:flex-start; gap:12px; cursor:pointer; }
+.anyway-label input { width:18px; height:18px; margin-top:2px; accent-color:var(--blue); flex-shrink:0; }
+.anyway-label span { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
+.anyway-btn { display:none; width:100%; background:transparent; color:var(--gray); border:2px solid var(--border); padding:14px; font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; cursor:pointer; border-radius:8px; margin-top:12px; transition:all .2s; }
+.anyway-btn:hover { border-color:#ffffff; color:#ffffff; }
+
+/* DISCLAIMER */
+.disclaimer { font-size:12px; color:var(--gray); font-family:var(--body); line-height:1.7; text-align:center; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+
+/* FOOTER */
+footer { background:var(--s1); border-top:1px solid var(--border); padding:24px; text-align:center; margin-top:40px; }
+.footer-copy { font-size:13px; color:var(--gray); font-family:var(--body); }
+
+@media(max-width:500px) {
+  .score-options { grid-template-columns:1fr; }
+  .third-party-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="evl-nav">
+  <a href="/home" class="evl-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    EXPRESS <span>&nbsp;VEHICLE</span>&nbsp;LOCATORS
+  </a>
+  <a href="/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar">
+    <div class="prog-step done">
+      <div class="prog-step-circle">✓</div>
+      <div class="prog-step-label">Vehicle</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step done">
+      <div class="prog-step-circle">✓</div>
+      <div class="prog-step-label">Trade-In</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step active">
+      <div class="prog-step-circle">3</div>
+      <div class="prog-step-label">Credit</div>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step pending">
+      <div class="prog-step-circle">4</div>
+      <div class="prog-step-label">Payment</div>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step pending">
+      <div class="prog-step-circle">5</div>
+      <div class="prog-step-label">Done</div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="page-badge">⚡ Step 3 of 5 — Credit Profile</div>
+    <h1 class="page-title">What's Your<br><span>Credit Score?</span></h1>
+    <p class="page-sub">Your credit score is the single biggest factor in your payment estimate. A real number gives you a real answer — not a guess.</p>
+  </div>
+
+  <!-- WHY EVL DOESN'T PULL -->
+  <div class="why-box">
+    <div class="why-title">🔒 EVL Never Pulls Your Credit</div>
+    <div class="why-text">EVL is a technology platform — not a lender or dealer. We never run a credit check. Your score comes from you, based on your own information from a source you trust. This protects your score and your privacy. No hard inquiry. No soft pull. Nothing on your credit report from EVL — ever.</div>
+  </div>
+
+  <!-- SCORE ENTRY CARD -->
+  <div class="card">
+    <div class="card-title">Enter Your Credit Score</div>
+    <div class="card-sub">Select a range below or enter your exact score. If you don't know your score, we'll show you how to check it free — no impact to your credit.</div>
+
+    <!-- RANGE BUTTONS -->
+    <div class="score-options">
+      <button class="score-btn" onclick="selectRange(this, 780, 'Excellent')">
+        <span class="score-btn-range">780+</span>
+        <span class="score-btn-label">Excellent</span>
+        <span class="score-btn-desc">Best rates available. Lenders compete for your business.</span>
+      </button>
+      <button class="score-btn" onclick="selectRange(this, 740, 'Very Good')">
+        <span class="score-btn-range">740–779</span>
+        <span class="score-btn-label">Very Good</span>
+        <span class="score-btn-desc">Strong approval. Near-best rates on most vehicles.</span>
+      </button>
+      <button class="score-btn" onclick="selectRange(this, 700, 'Good')">
+        <span class="score-btn-range">700–739</span>
+        <span class="score-btn-label">Good</span>
+        <span class="score-btn-desc">Good approval odds. Competitive rates available.</span>
+      </button>
+      <button class="score-btn" onclick="selectRange(this, 660, 'Fair')">
+        <span class="score-btn-range">660–699</span>
+        <span class="score-btn-label">Fair</span>
+        <span class="score-btn-desc">Approval likely. Rates higher — down payment helps.</span>
+      </button>
+      <button class="score-btn" onclick="selectRange(this, 620, 'Rebuilding')">
+        <span class="score-btn-range">620–659</span>
+        <span class="score-btn-label">Rebuilding</span>
+        <span class="score-btn-desc">Approval possible. EVL works with specialty lenders.</span>
+      </button>
+      <button class="score-btn" onclick="selectRange(this, 580, 'Challenged')">
+        <span class="score-btn-range">Below 620</span>
+        <span class="score-btn-label">Challenged</span>
+        <span class="score-btn-desc">Let's talk. More info needed to find the right path.</span>
+      </button>
+    </div>
+
+    <!-- EXACT SCORE -->
+    <div class="exact-input-wrap">
+      <span class="exact-label">📍 Or Enter Your Exact Score:</span>
+      <input class="exact-input" id="exactScore" type="number" min="300" max="850"
+        placeholder="e.g. 724"
+        oninput="onExactInput(this.value)"
+        onfocus="this.style.borderColor='var(--blue)'"
+        onblur="this.style.borderColor='var(--border)'" />
+      <div class="exact-hint">Enter any score between 300–850. Your exact number gives you the most accurate payment estimate. EVL does not store or share this number.</div>
+    </div>
+  </div>
+
+  <!-- DON'T KNOW YOUR SCORE -->
+  <div class="dont-know">
+    <div class="dont-know-title">🤷 Don't Know Your Score?</div>
+    <div class="dont-know-sub">Check it free in under 2 minutes — no impact to your credit. These services use a soft inquiry that does not affect your score. Come back and enter the number once you have it.</div>
+    <div class="third-party-grid">
+      <a href="https://www.creditkarma.com" target="_blank" rel="noopener" class="tp-card">
+        <span class="tp-name">Credit Karma</span>
+        <span class="tp-detail">Free. No credit card required. Updates weekly.</span>
+        <span class="tp-tag">✅ Most Popular — Free</span>
+      </a>
+      <a href="https://www.experian.com/consumer-products/free-credit-score.html" target="_blank" rel="noopener" class="tp-card">
+        <span class="tp-name">Experian</span>
+        <span class="tp-detail">Free FICO® Score. The same score most auto lenders use.</span>
+        <span class="tp-tag">✅ FICO Score — Free</span>
+      </a>
+      <a href="https://www.annualcreditreport.com" target="_blank" rel="noopener" class="tp-card">
+        <span class="tp-name">AnnualCreditReport</span>
+        <span class="tp-detail">Official government-authorized free credit report site.</span>
+        <span class="tp-tag">✅ Official — Free</span>
+      </a>
+      <a href="https://www.creditwise.capitalone.com" target="_blank" rel="noopener" class="tp-card">
+        <span class="tp-name">Capital One CreditWise</span>
+        <span class="tp-detail">Free for anyone. No Capital One account needed.</span>
+        <span class="tp-tag">✅ No Account Needed — Free</span>
+      </a>
+    </div>
+    <div class="dont-know-note">⚡ Once you have your score, come back and enter it above. It takes under 2 minutes and gives you a real payment estimate — not a guess.</div>
+  </div>
+
+  <!-- PROCEED SECTION — appears after score entered -->
+  <div class="proceed-section" id="proceedSection">
+
+    <div class="score-confirmed">
+      <div class="score-confirmed-num" id="confirmedScore">—</div>
+      <div>
+        <div class="score-confirmed-label" id="confirmedLabel">Score Entered</div>
+        <div class="score-confirmed-sub">EVL has your score for this session only. It is not stored, not shared, and not used to pull any inquiry on your credit report.</div>
+      </div>
+    </div>
+
+    <button class="proceed-btn" onclick="goToPaymentEstimator()">
+      ⚡ CONTINUE TO PAYMENT ESTIMATE →
+    </button>
+
+    <!-- PROCEED ANYWAY -->
+    <div class="proceed-anyway">
+      <span class="proceed-anyway-link" onclick="toggleAnyway()">I'd rather not share my score — proceed anyway</span>
+      <div class="anyway-ack" id="anywayAck">
+        <label class="anyway-label">
+          <input type="checkbox" id="anywayBox" onchange="checkAnyway()" />
+          <span>I understand my payment estimate will be a wider range without a credit score. EVL will use a mid-range assumption. I can update my score at any time before my deal is finalized.</span>
+        </label>
+        <button class="anyway-btn" id="anywayBtn" onclick="proceedWithoutScore()">
+          PROCEED WITHOUT SCORE →
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency. EVL does not pull, store, transmit, or share your credit score or credit report. The score you enter is used solely to generate an estimated payment range for informational purposes during this session. It is not retained after your session ends. Payment estimates are not a loan offer, pre-approval, or guarantee of financing. Actual rates and approvals are determined by lenders based on a full credit application. EVL makes no representation regarding your creditworthiness or loan eligibility.
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="footer-copy">© 2026 Express Vehicle Locators — Plano, TX — AI specs for informational use only. EVL is a vehicle advisory platform — not a dealer.</div>
+</footer>
+
+<script>
+var selectedScore = null;
+var selectedLabel = null;
+
+function selectRange(btn, score, label) {
+  // Clear all selections
+  document.querySelectorAll('.score-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  // Clear exact input
+  document.getElementById('exactScore').value = '';
+
+  btn.classList.add('selected');
+  selectedScore = score;
+  selectedLabel = label;
+  showProceed(score, label + ' (' + score + '+)');
+}
+
+function onExactInput(val) {
+  // Clear range buttons
+  document.querySelectorAll('.score-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+
+  var num = parseInt(val);
+  if(!num || num < 300 || num > 850) {
+    hideProceed();
+    return;
+  }
+
+  selectedScore = num;
+  var label = getLabel(num);
+  selectedLabel = label;
+  showProceed(num, label + ' — ' + num);
+}
+
+function getLabel(score) {
+  if(score >= 780) return 'Excellent';
+  if(score >= 740) return 'Very Good';
+  if(score >= 700) return 'Good';
+  if(score >= 660) return 'Fair';
+  if(score >= 620) return 'Rebuilding';
+  return 'Challenged';
+}
+
+function showProceed(score, label) {
+  document.getElementById('confirmedScore').textContent = score + (typeof score === 'number' && score < 780 ? '' : '+');
+  document.getElementById('confirmedLabel').textContent = label;
+  var ps = document.getElementById('proceedSection');
+  ps.classList.add('active');
+  setTimeout(function() {
+    ps.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 150);
+  // Save to sessionStorage
+  sessionStorage.setItem('evl_credit_score', score);
+  sessionStorage.setItem('evl_credit_label', label);
+}
+
+function hideProceed() {
+  document.getElementById('proceedSection').classList.remove('active');
+  selectedScore = null;
+}
+
+function goToPaymentEstimator() {
+  if(selectedScore) {
+    sessionStorage.setItem('evl_credit_score', selectedScore);
+    sessionStorage.setItem('evl_credit_label', selectedLabel);
+  }
+  window.location.href = '/payment-estimator';
+}
+
+function toggleAnyway() {
+  var ack = document.getElementById('anywayAck');
+  ack.classList.toggle('active');
+}
+
+function checkAnyway() {
+  var checked = document.getElementById('anywayBox').checked;
+  document.getElementById('anywayBtn').style.display = checked ? 'block' : 'none';
+}
+
+function proceedWithoutScore() {
+  sessionStorage.setItem('evl_credit_score', 'unknown');
+  sessionStorage.setItem('evl_credit_label', 'Not provided');
+  window.location.href = '/payment-estimator';
+}
+
+// On load — show proceed section if returning with a score already set
+window.addEventListener('DOMContentLoaded', function() {
+  var stored = sessionStorage.getItem('evl_credit_score');
+  var storedLabel = sessionStorage.getItem('evl_credit_label');
+  if(stored && stored !== 'unknown') {
+    selectedScore = parseInt(stored) || stored;
+    selectedLabel = storedLabel || getLabel(parseInt(stored));
+    showProceed(selectedScore, storedLabel);
+  } else {
+    // Show proceed anyway option even without a score entered yet
+    // so customer always has a path forward
+    document.getElementById('proceedSection').classList.add('active');
+    document.getElementById('confirmedScore').textContent = '—';
+    document.getElementById('confirmedLabel').textContent = 'No score entered yet';
+    document.querySelector('.proceed-btn').style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
