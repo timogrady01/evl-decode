@@ -220,6 +220,80 @@
 
 <div class="wrap">
 
+  <!-- ══ TITLE ELIGIBILITY GATE ══ -->
+  <div id="eligibilityGate" style="margin-bottom:28px;">
+
+    <!-- GATE STEP 1 — LIEN STATUS -->
+    <div id="gateStep1" style="background:var(--s1);border:2px solid var(--blue);border-radius:14px;padding:32px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">⚡ STEP 1 OF 2 — TITLE STATUS</div>
+      <div style="font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Is your vehicle currently financed?</div>
+      <div style="font-size:18px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:24px;line-height:1.6;">This tells us which selling paths are available to you and how quickly your title can transfer.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <button onclick="selectLien('yes')" id="lienYes"
+          style="background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:22px 16px;cursor:pointer;text-align:left;transition:all .2s;">
+          <div style="font-size:28px;margin-bottom:8px;">🏦</div>
+          <div style="font-size:20px;font-weight:900;color:#ffffff;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">YES — I Have a Loan</div>
+          <div style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.5;">My vehicle is still financed. I have a payoff amount.</div>
+        </button>
+        <button onclick="selectLien('no')" id="lienNo"
+          style="background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:22px 16px;cursor:pointer;text-align:left;transition:all .2s;">
+          <div style="font-size:28px;margin-bottom:8px;">✅</div>
+          <div style="font-size:20px;font-weight:900;color:#ffffff;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">NO — Paid Off</div>
+          <div style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.5;">I own my vehicle free and clear. No lender involved.</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- GATE STEP 2 — STATE TIER (hidden until Step 1 answered) -->
+    <div id="gateStep2" style="display:none;background:var(--s1);border:2px solid var(--blue);border-radius:14px;padding:32px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">⚡ STEP 2 OF 2 — YOUR STATE</div>
+      <div style="font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">What state is your vehicle titled in?</div>
+      <div style="font-size:18px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:24px;line-height:1.6;">Title transfer timelines vary by state. We'll show you exactly what to expect.</div>
+      <select id="stateSelect" onchange="detectStateTier()"
+        style="width:100%;background:var(--bg);border:2px solid var(--border);color:#ffffff;padding:16px 20px;border-radius:8px;font-size:20px;font-family:var(--font);font-weight:700;outline:none;margin-bottom:20px;cursor:pointer;">
+        <option value="">— Select Your State —</option>
+        <option value="TX">Texas</option><option value="TN">Tennessee</option>
+        <option value="CO">Colorado</option><option value="WA">Washington</option>
+        <option value="MN">Minnesota</option><option value="NC">North Carolina</option>
+        <option value="OH">Ohio</option><option value="MI">Michigan</option>
+        <option value="NV">Nevada</option><option value="GA">Georgia</option>
+        <option value="FL">Florida</option><option value="IL">Illinois</option>
+        <option value="PA">Pennsylvania</option><option value="MD">Maryland</option>
+        <option value="VA">Virginia</option><option value="MO">Missouri</option>
+        <option value="IN">Indiana</option><option value="WI">Wisconsin</option>
+        <option value="CA">California</option><option value="NJ">New Jersey</option>
+        <option value="NY">New York</option>
+        <option value="OTHER">My state isn't listed</option>
+      </select>
+
+      <!-- TIER RESULT — populated by JS -->
+      <div id="tierResult" style="display:none;"></div>
+
+      <!-- RED STATE ACKNOWLEDGMENT -->
+      <div id="redAck" style="display:none;background:rgba(255,68,68,.08);border:2px solid rgba(255,68,68,.4);border-radius:10px;padding:20px;margin-top:16px;">
+        <label style="display:flex;align-items:flex-start;gap:14px;cursor:pointer;">
+          <input type="checkbox" id="redAckBox" onchange="checkRedAck()"
+            style="width:22px;height:22px;margin-top:3px;accent-color:var(--blue);flex-shrink:0;"/>
+          <span style="font-size:17px;color:#ffffff;font-family:var(--body);font-weight:700;line-height:1.6;">
+            I understand and acknowledge the title timeline and requirements in my state. I'm ready to proceed.
+          </span>
+        </label>
+      </div>
+
+      <!-- CONTINUE BUTTON -->
+      <div id="gateContBtn" style="display:none;margin-top:20px;">
+        <button onclick="openLookup()"
+          style="background:var(--blue);color:#ffffff;border:none;padding:18px 40px;border-radius:8px;font-size:20px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;width:100%;">
+          ⚡ CONTINUE — LOOK UP MY AUCTION →
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /eligibilityGate -->
+
+  <!-- LOOKUP — hidden until gate clears -->
+  <div id="lookupSection" style="display:none;">
+
   <!-- LOOKUP -->
   <div class="lookup-card">
     <div class="lookup-title">🔍 LOOK UP YOUR AUCTION</div>
@@ -1042,6 +1116,8 @@
 
   </div><!-- /status-wrap -->
 
+  </div><!-- /lookupSection -->
+
   <!-- HOW IT WORKS -->
   <div class="how-section">
     <div class="how-title">HOW YOUR AUCTION WORKS</div>
@@ -1430,7 +1506,122 @@ window.updateSplit = function() {
   document.getElementById('opt2Cash').textContent = '$' + cash.toLocaleString();
 }
 
-// Auto-lookup from URL param
+
+// ── TITLE ELIGIBILITY GATE ──
+var gateState = { lien: null, state: null, tier: null };
+
+var stateTiers = {
+  // GREEN — clean title states
+  TX:{tier:'green',label:'Texas',notes:'Clean electronic title system. Standard 20-day payoff window. Fastest processing in EVL network.'},
+  TN:{tier:'green',label:'Tennessee',notes:'Straightforward title transfer. Standard lien release timeline.'},
+  CO:{tier:'green',label:'Colorado',notes:'Electronic title system. Clean processing. Standard EVL timeline applies.'},
+  WA:{tier:'green',label:'Washington',notes:'Electronic titles. Standard processing. No known delays.'},
+  MN:{tier:'green',label:'Minnesota',notes:'Clean title system. Standard lien release and transfer timeline.'},
+  NC:{tier:'green',label:'North Carolina',notes:'Electronic title system. Standard processing timeline.'},
+  OH:{tier:'green',label:'Ohio',notes:'Clean title transfer. Standard EVL timeline.'},
+  MI:{tier:'green',label:'Michigan',notes:'Electronic titles. Straightforward process. Standard timeline.'},
+  NV:{tier:'green',label:'Nevada',notes:'Clean electronic title system. Standard processing.'},
+  GA:{tier:'green',label:'Georgia',notes:'Electronic titles. Clean processing. Standard EVL timeline.'},
+  // YELLOW — manageable but requires extra steps
+  FL:{tier:'yellow',label:'Florida',notes:'Florida titles are paper-based for older vehicles. Allow extra 5-7 days for lien release processing. EVL will coordinate directly with your lender.'},
+  IL:{tier:'yellow',label:'Illinois',notes:'Illinois requires a tax clearance certificate before title transfer. EVL handles coordination — allow 7-10 extra days.'},
+  PA:{tier:'yellow',label:'Pennsylvania',notes:'PA titles require notarized signatures in some cases. EVL will guide you through the exact requirements for your vehicle.'},
+  MD:{tier:'yellow',label:'Maryland',notes:'Maryland has a mandatory odometer disclosure requirement and specific lien release format. Allow 5-7 extra days.'},
+  VA:{tier:'yellow',label:'Virginia',notes:'Virginia title process is manageable but requires specific lender documentation. EVL coordinates directly with your lender.'},
+  MO:{tier:'yellow',label:'Missouri',notes:'Missouri titles require a safety inspection certificate in some transfer scenarios. EVL will confirm what applies to your vehicle.'},
+  IN:{tier:'yellow',label:'Indiana',notes:'Indiana has specific lien release timing requirements. Allow 5-7 extra days. EVL manages the lender coordination.'},
+  WI:{tier:'yellow',label:'Wisconsin',notes:'Wisconsin paper title system for some vehicles. Extra 5-7 days for processing. EVL handles coordination.'},
+  // RED — complex — requires acknowledgment
+  CA:{tier:'red',label:'California',notes:'California has the most complex title transfer process in the country. DMV backlogs can add 30-60 days. Lien releases require specific DMV forms (REG 227). Smog certificate required before transfer. EVL strongly recommends starting the lien release process before auction close.'},
+  NJ:{tier:'red',label:'New Jersey',notes:'New Jersey requires a title search and specific lender payoff format. Processing can take 21-45 days. Odometer certification and specific notarization required. EVL coordinates all lender communication.'},
+  NY:{tier:'red',label:'New York',notes:'New York title process involves both DMV and lender coordination with strict formatting requirements. Allow 30-45 days. EVL will manage the full process but timeline is outside our direct control.'}
+};
+
+window.selectLien = function(val) {
+  gateState.lien = val;
+  var yesBtn = document.getElementById('lienYes');
+  var noBtn = document.getElementById('lienNo');
+  if(val === 'yes') {
+    yesBtn.style.border = '2px solid var(--blue)';
+    yesBtn.style.background = 'rgba(43,132,254,0.1)';
+    noBtn.style.border = '2px solid var(--border)';
+    noBtn.style.background = 'var(--bg)';
+  } else {
+    noBtn.style.border = '2px solid var(--green)';
+    noBtn.style.background = 'rgba(0,200,83,0.08)';
+    yesBtn.style.border = '2px solid var(--border)';
+    yesBtn.style.background = 'var(--bg)';
+  }
+  document.getElementById('gateStep2').style.display = 'block';
+  document.getElementById('gateStep2').scrollIntoView({behavior:'smooth', block:'start'});
+};
+
+window.detectStateTier = function() {
+  var stateCode = document.getElementById('stateSelect').value;
+  if(!stateCode) return;
+
+  var tierDiv = document.getElementById('tierResult');
+  var redAck = document.getElementById('redAck');
+  var contBtn = document.getElementById('gateContBtn');
+  var redAckBox = document.getElementById('redAckBox');
+  redAckBox.checked = false;
+
+  if(stateCode === 'OTHER') {
+    tierDiv.style.display = 'block';
+    tierDiv.innerHTML = '<div style="background:rgba(43,132,254,0.08);border:2px solid rgba(43,132,254,0.3);border-radius:10px;padding:20px;">'
+      + '<div style="font-size:20px;font-weight:900;color:var(--blue);margin-bottom:8px;">📋 YOUR STATE — EVL WILL CONFIRM</div>'
+      + '<div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;">EVL currently operates in select states. Your EVL advisor will confirm title processing requirements for your state before the auction launches. Proceed to look up your auction — we\'ll reach out within 2 hours.</div></div>';
+    redAck.style.display = 'none';
+    contBtn.style.display = 'block';
+    gateState.tier = 'unknown';
+    return;
+  }
+
+  var info = stateTiers[stateCode];
+  if(!info) return;
+  gateState.state = stateCode;
+  gateState.tier = info.tier;
+
+  var color, icon, tierLabel, borderColor;
+  if(info.tier === 'green') {
+    color='rgba(0,200,83,0.08)'; borderColor='rgba(0,200,83,0.4)'; icon='✅'; tierLabel='<span style="color:var(--green);">🟢 GREEN STATE — Standard Processing</span>';
+  } else if(info.tier === 'yellow') {
+    color='rgba(255,215,0,0.06)'; borderColor='rgba(255,215,0,0.4)'; icon='⚠️'; tierLabel='<span style="color:var(--gold);">🟡 YELLOW STATE — Allow Extra Time</span>';
+  } else {
+    color='rgba(255,68,68,0.06)'; borderColor='rgba(255,68,68,0.4)'; icon='🔴'; tierLabel='<span style="color:var(--red);">🔴 RED STATE — Complex Title Process</span>';
+  }
+
+  tierDiv.style.display = 'block';
+  tierDiv.innerHTML = '<div style="background:'+color+';border:2px solid '+borderColor+';border-radius:10px;padding:20px;">'
+    + '<div style="font-size:20px;font-weight:900;margin-bottom:8px;">'+icon+' '+info.label+' — '+tierLabel+'</div>'
+    + '<div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.7;">'+info.notes+'</div></div>';
+
+  if(info.tier === 'red') {
+    redAck.style.display = 'block';
+    contBtn.style.display = 'none';
+  } else {
+    redAck.style.display = 'none';
+    contBtn.style.display = 'block';
+  }
+};
+
+window.checkRedAck = function() {
+  var checked = document.getElementById('redAckBox').checked;
+  document.getElementById('gateContBtn').style.display = checked ? 'block' : 'none';
+};
+
+window.openLookup = function() {
+  document.getElementById('eligibilityGate').style.display = 'none';
+  var ls = document.getElementById('lookupSection');
+  ls.style.display = 'block';
+  ls.scrollIntoView({behavior:'smooth', block:'start'});
+  // Save gate answers to sessionStorage for later use
+  sessionStorage.setItem('evl_lien', gateState.lien);
+  sessionStorage.setItem('evl_state', gateState.state);
+  sessionStorage.setItem('evl_tier', gateState.tier);
+};
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const vinParam = urlParams.get('vin') || urlParams.get('code');
 if(vinParam) {
@@ -1440,3 +1631,4 @@ if(vinParam) {
 </script>
 </body>
 </html>
+
