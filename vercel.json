@@ -417,6 +417,14 @@
       "destination": "public/schedule.html"
     },
     {
+      "source": "/credit-score",
+      "destination": "public/credit-score.html"
+    },
+    {
+      "source": "/credit-score.html",
+      "destination": "public/credit-score.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
