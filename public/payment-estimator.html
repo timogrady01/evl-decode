@@ -844,6 +844,37 @@
 </div>
 
 <script>
+// ── AUTO-LOAD CREDIT SCORE FROM CREDIT-SCORE PAGE ──
+window.addEventListener('DOMContentLoaded', function() {
+  var storedScore = sessionStorage.getItem('evl_credit_score');
+  if(!storedScore || storedScore === 'unknown') return;
+
+  var score = parseInt(storedScore);
+  if(!score) return;
+
+  // Map numeric score to the estimator's tier radio buttons
+  var tier;
+  if(score >= 781)      tier = 'super_prime';
+  else if(score >= 661) tier = 'prime';
+  else if(score >= 601) tier = 'near_prime';
+  else if(score >= 501) tier = 'subprime';
+  else                  tier = 'deep_subprime';
+
+  // Select the matching radio button
+  var radio = document.querySelector('input[name="credit"][value="' + tier + '"]');
+  if(radio) {
+    radio.checked = true;
+    // Show a confirmation banner so customer knows their score carried over
+    var banner = document.createElement('div');
+    banner.style.cssText = 'background:rgba(0,200,83,0.08);border:2px solid rgba(0,200,83,0.3);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;font-family:Barlow,sans-serif;';
+    banner.innerHTML = '<span style="font-size:22px;">✅</span><span style="font-size:15px;font-weight:700;color:#ffffff;">Credit score of <strong style="color:#00C853;">' + score + '</strong> carried over from your profile — pre-selected below.</span>';
+    var creditSection = document.querySelector('.credit-options');
+    if(creditSection && creditSection.parentNode) {
+      creditSection.parentNode.insertBefore(banner, creditSection);
+    }
+  }
+});
+
   // ── EXPERIAN Q4 2025 RATE TABLE ──
   const RATES = {
     new: {
@@ -1028,3 +1059,4 @@
 
 </body>
 </html>
+
