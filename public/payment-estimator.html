@@ -787,7 +787,9 @@
 
     <!-- YOUR OWN RATE BOX -->
     <div class="field">
-      <label>Have Your Own Rate? <span style="font-size:12px;font-weight:600;color:#ffffff;letter-spacing:0;text-transform:none;">Optional</span></label>
+      <label>Have Your Own Rate? <span style="font-size:12px;font-weight:600;color:#ffffff;letter-spacing:0;text-transform:none;">Optional</span>
+        <button class="info-btn" onclick="showDisclosure('custom_rate')" style="margin-left:6px;vertical-align:middle;" title="View disclosure">i</button>
+      </label>
       <div style="background:rgba(43,132,254,0.06);border:2px solid rgba(43,132,254,0.2);border-radius:10px;padding:18px;margin-top:4px;">
         <div style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;margin-bottom:12px;">
           If your bank, credit union, or dealer has already quoted you a specific rate — enter it here. Your estimate will use your actual rate instead of the Experian average.
@@ -917,7 +919,9 @@
 
       <!-- MAX VEHICLE PRICE -->
       <div style="background:linear-gradient(135deg,rgba(43,132,254,0.12),rgba(43,132,254,0.05));border:2px solid var(--blue);border-radius:12px;padding:28px;margin-bottom:20px;text-align:center;">
-        <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ YOUR AFFORDABLE VEHICLE PRICE</div>
+        <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ YOUR AFFORDABLE VEHICLE PRICE
+          <button class="info-btn" onclick="showDisclosure('backward_results')" style="margin-left:8px;vertical-align:middle;" title="View full disclosure">i</button>
+        </div>
         <div style="font-family:var(--font);font-size:56px;font-weight:900;color:#ffffff;line-height:1;" id="bMaxPrice">$—</div>
         <div style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:8px;" id="bPriceDetail">Based on your target payment, credit tier, and term</div>
       </div>
@@ -971,7 +975,9 @@
   <div class="card" id="results">
 
     <div class="results-header">
-      <div class="results-label">Estimated Monthly Payment Range</div>
+      <div class="results-label">Estimated Monthly Payment Range
+        <button class="info-btn" onclick="showDisclosure('forward_results')" style="margin-left:8px;vertical-align:middle;" title="View full disclosure">i</button>
+      </div>
       <div class="payment-range" id="payment-display">$— – $—</div>
       <div class="payment-sub" id="payment-sub">Based on standard market rate</div>
     </div>
@@ -1272,6 +1278,18 @@ window.addEventListener('DOMContentLoaded', function() {
     buydown: {
       title: 'Special Rate / Dealer Buydown Disclosure',
       text: 'Special rate financing may be available on select models through dealer-arranged financing programs. In some cases, rate reductions are made available in lieu of other available discounts or incentives — you may not be able to combine a special rate with all available rebates or dealer discounts. Offer availability varies by dealer, model, and lender. Not all buyers will qualify. See your EVL advisor for complete offer details before making any financing decision.'
+    },
+    forward_results: {
+      title: 'Payment Estimate Disclosure',
+      text: 'Payment estimates displayed are for informational purposes only and do not constitute a financing offer, pre-approval, or commitment of any kind. Estimates are based on Experian Q4 2025 average auto loan rates by credit tier and are updated quarterly. Actual interest rates, monthly payments, and loan terms are determined solely by the financing institution based on a complete credit application, your full credit profile, vehicle details, loan-to-value ratio, and lender underwriting criteria. Two borrowers with identical credit scores may receive materially different rate quotes from the same lender. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Results shown are estimates only. Always consult directly with a licensed financing professional before making any financial decision.'
+    },
+    backward_results: {
+      title: 'What Can I Afford — Disclosure',
+      text: 'The maximum vehicle price and required down payment shown are estimates for informational purposes only and do not constitute a financing offer or guarantee of any kind. Estimates are based on Experian Q4 2025 average auto loan rates for your selected credit tier and are updated quarterly. The vehicle price shown does not include sales tax, title, license, registration, dealer fees, or any other costs associated with a vehicle purchase. In Texas, sales tax is 6.25% of the vehicle sales price. Tax rates and fee structures vary by state. Your actual out-the-door cost will be higher than the vehicle price shown. Required down payment estimates assume the lender approves the full financed amount — actual lender down payment requirements may differ based on your credit profile and loan-to-value ratio. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Always consult directly with a licensed financing professional before making any financial decision.'
+    },
+    custom_rate: {
+      title: 'Your Own Rate — Disclosure',
+      text: 'The rate you have entered is self-reported and has not been verified by EVL. EVL does not confirm, validate, or guarantee any rate quoted to you by a lender, dealer, or financial institution. The payment estimate generated using your entered rate is for informational purposes only. Your actual approved rate at time of financing may differ from the rate you entered, based on lender underwriting, current market conditions, vehicle details, and your complete credit profile at time of application. A rate quote is not a rate lock or a financing commitment. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency.'
     }
   };
 
@@ -1425,6 +1443,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
 
 
 
