@@ -417,6 +417,14 @@
       "destination": "public/payment-collection.html"
     },
     {
+      "source": "/appointment-confirm",
+      "destination": "public/appointment-confirm.html"
+    },
+    {
+      "source": "/appointment-confirm.html",
+      "destination": "public/appointment-confirm.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
