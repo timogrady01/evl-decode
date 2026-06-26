@@ -803,6 +803,91 @@ body { display:block !important; align-items:unset !important; justify-content:u
 </div>
 
 
+<!-- JUN 26 2026 — FULL REPO AUDIT & MISSING PAGE DOCUMENTATION -->
+<div class="card" style="margin-top:32px;">
+  <div class="card-title">📋 Full Repo Audit — Jun 26, 2026 — All 49 Pages Documented</div>
+  <p style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:20px;">
+    Complete audit of all HTML pages in the public/ directory. 14 pages were previously undocumented in the vault. All are now logged below.
+  </p>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">① Previously Undocumented Pages — Now Logged</div>
+  <table>
+    <thead><tr><th>Page</th><th>URL</th><th>What It Does</th><th>Category</th></tr></thead>
+    <tbody>
+      <tr><td>Admin Calls</td><td>/admin-calls</td><td>EVL Call Center admin tool — logs inbound consumer calls, captures name/phone/vehicle interest/notes, saves to Firestore evl_consumer_calls collection, "Add to Mastermind" flow wires call records into the retail CRM. Admin-only access.</td><td><span class="badge badge-green">ADMIN</span></td></tr>
+      <tr><td>Admin Comms</td><td>/admin-comms</td><td>EVL Communication Templates admin page — outreach email and SMS template library for dealer and consumer communications. Admin-only access.</td><td><span class="badge badge-green">ADMIN</span></td></tr>
+      <tr><td>Admin Docs</td><td>/admin-docs</td><td>EVL Legal & Documents admin page — stores and manages legal documents, agreements, and compliance materials. Admin-only access.</td><td><span class="badge badge-green">ADMIN</span></td></tr>
+      <tr><td>Admin Scripts</td><td>/admin-scripts</td><td>EVL Script Repository — call scripts, BDC scripts, dealer outreach scripts, customer-facing advisory scripts. Organized by use case. Admin-only access.</td><td><span class="badge badge-green">ADMIN</span></td></tr>
+      <tr><td>Auto Alert</td><td>/auto-alert</td><td>Automated vehicle alert system — customer signs up to be notified when a specific vehicle matching their criteria becomes available. Feeds into EVL lead pipeline.</td><td><span class="badge badge-blue">RETAIL</span></td></tr>
+      <tr><td>Find My Car</td><td>/find</td><td>AI-powered vehicle research and comparison tool — consumer-facing. Category cards (Trucks/SUVs/Luxury/Electric), search bar, AI chat interface for vehicle comparisons, specs, and recommendations. Free lead generator — no login required.</td><td><span class="badge badge-blue">RETAIL</span></td></tr>
+      <tr><td>Finder</td><td>/finder</td><td>Vehicle Finder flow — step-by-step vehicle identification tool. Multi-step card-based flow for customer to specify year/make/model/trim/color/options. Feeds into EVL deal pipeline.</td><td><span class="badge badge-blue">RETAIL</span></td></tr>
+      <tr><td>Mastermind</td><td>/mastermind</td><td>EVL Mastermind — retail-side customer intelligence CRM. Tracks consumer deal progress, contact info, vehicle interest, trade status, payment estimate, notes. Saves to Firestore evl_mastermind_customers collection. Receives records from admin-calls via "Add to Mastermind" flow. Admin-only access.</td><td><span class="badge badge-green">ADMIN</span></td></tr>
+      <tr><td>Privacy Policy</td><td>/privacy</td><td>Full Privacy Policy — EVL data collection practices, cookie policy, third-party services, customer rights, contact information. Legally required. Linked from footer on all pages.</td><td><span class="badge badge-blue">LEGAL</span></td></tr>
+      <tr><td>Refund Policy</td><td>/refund</td><td>EVL Refund Policy — $199 platform fee refund conditions, timeline, process. Covers no-sale waiver condition (fee waived if no auction sale occurs). Legally required.</td><td><span class="badge badge-blue">LEGAL</span></td></tr>
+      <tr><td>Revenue Radar</td><td>/revenue-radar</td><td>EVL Revenue Radar — admin financial intelligence dashboard. Tracks platform fee revenue, auction close rates, deal pipeline value, hub performance metrics. Admin-only access.</td><td><span class="badge badge-green">ADMIN</span></td></tr>
+      <tr><td>Service Agreement</td><td>/service-agreement</td><td>EVL Service Agreement — full platform services agreement covering EVL's role as technology platform (not dealer/lender), customer obligations, fee structure, limitation of liability, dispute resolution. Legally required. Customer signs before deal activation.</td><td><span class="badge badge-blue">LEGAL</span></td></tr>
+      <tr><td>Terms of Service</td><td>/terms</td><td>EVL Terms of Service — platform usage terms, prohibited uses, intellectual property, disclaimers, governing law (Texas). Legally required. Linked from footer on all pages.</td><td><span class="badge badge-blue">LEGAL</span></td></tr>
+      <tr><td>Trade-In Evaluator</td><td>/trade-in</td><td>Original customer-facing trade-in evaluation flow — VIN entry, vehicle details capture, photo upload (Cloudinary), condition assessment, Title Eligibility Gate (lien status + state tier detection with Green/Yellow/Red tiers), equity calculation, EVL auction submission. Feeds into evl_auctions Firestore collection.</td><td><span class="badge badge-blue">RETAIL</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">② Complete Page Inventory — All 49 Pages</div>
+  <table>
+    <thead><tr><th>Page</th><th>URL</th><th>Category</th><th>Vault Status</th></tr></thead>
+    <tbody>
+      <tr><td>Admin Bid Board</td><td>/admin-bid-board</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Admin Calls</td><td>/admin-calls</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Admin Comms</td><td>/admin-comms</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Admin Docs</td><td>/admin-docs</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Admin Scripts</td><td>/admin-scripts</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Admin Dashboard</td><td>/admin</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Appointment / Schedule</td><td>/appointment</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Auto Alert</td><td>/auto-alert</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>BD Submit</td><td>/bd-submit</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Compare / Research</td><td>/compare</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Contact</td><td>/contact</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Credit Score</td><td>/credit-score</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Dealer Onboard</td><td>/dealer-onboard</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Dealer Outreach Hub</td><td>/dealer-outreach-hub</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>EVL Notif Engine</td><td>/evl-notif-engine</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>FAQ</td><td>/faq</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Financing</td><td>/financing</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Find My Car</td><td>/find</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Finder</td><td>/finder</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Home</td><td>/home</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>How It Works</td><td>/how</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Index (Landing)</td><td>/</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Leasing</td><td>/leasing</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Live Bid Board</td><td>/live-bid-board</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Login (Customer)</td><td>/login</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Mastermind CRM</td><td>/mastermind</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Moment of Truth</td><td>/moment-of-truth</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>My Deal</td><td>/my-deal</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Payment Estimator</td><td>/payment-estimator</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Privacy Policy</td><td>/privacy</td><td>Legal</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Private Sale Assist</td><td>/private-sale</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Protection</td><td>/protection</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Refund Policy</td><td>/refund</td><td>Legal</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Revenue Radar</td><td>/revenue-radar</td><td>Admin</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Reviews / Client Wins</td><td>/reviews</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Savings</td><td>/savings</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Schedule a Call</td><td>/schedule</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Service Agreement</td><td>/service-agreement</td><td>Legal</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Terms of Service</td><td>/terms</td><td>Legal</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Trade-In Exchange</td><td>/trade-in-exchange</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>Trade-In Evaluator</td><td>/trade-in</td><td>Retail</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Dashboard</td><td>/ws-dashboard</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Dealers</td><td>/ws-dealers</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Exchange</td><td>/ws-exchange</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Hub</td><td>/ws-hub</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Intelligence</td><td>/ws-intelligence</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Login</td><td>/ws-login</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Onboarding</td><td>/ws-onboarding</td><td>Wholesale</td><td><span class="badge badge-green">LOGGED</span></td></tr>
+      <tr><td>WS Vault</td><td>/ws-vault</td><td>Admin</td><td><span class="badge badge-green">THIS PAGE</span></td></tr>
+    </tbody>
+  </table>
+</div><!-- /audit -->
+
 <!-- JUN 26 2026 BUILD LOG -->
 <div class="card" style="margin-top:32px;">
   <div class="card-title">📋 Build Log — Jun 26, 2026 Session</div>
