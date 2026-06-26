@@ -803,6 +803,79 @@ body { display:block !important; align-items:unset !important; justify-content:u
 </div>
 
 
+<!-- JUN 26 2026 BUILD LOG -->
+<div class="card" style="margin-top:32px;">
+  <div class="card-title">📋 Build Log — Jun 26, 2026 Session</div>
+  <p style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:20px;">
+    Full retail consumer build session. Completed the Title Eligibility Gate, Credit Score Hand-Off, Payment Estimator enhancements, Moment of Truth screen. Entire retail sequence from login through deal activation now built and deployed.
+  </p>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">① Pages Built / Updated Today</div>
+  <table>
+    <thead><tr><th>Page</th><th>URL</th><th>What It Does</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Trade-In Exchange — Title Gate</td><td>/trade-in-exchange</td><td>Title Eligibility Gate added — Step 1: lien status (financed vs paid off). Step 2: two separate state dropdowns — physical location AND title state. Mismatch detection fires gold warning if states differ. Green/Yellow/Red tier detection runs on title state. Red state (CA/NJ/NY) requires acknowledgment checkbox before Continue unlocks. Gate saves lien status, physical state, title state, and tier to sessionStorage.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Credit Score Hand-Off</td><td>/credit-score</td><td>NEW PAGE. 5-step progress bar. EVL never pulls credit disclosure. Six credit tier range buttons (Excellent/Very Good/Good/Fair/Rebuilding/Challenged). Exact score input (300–850). Four free third-party check options (Credit Karma, Experian, AnnualCreditReport, Capital One CreditWise). Proceed anyway door with acknowledgment checkbox. Score saves to sessionStorage and auto-carries to payment estimator.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Payment Estimator — Enhancements</td><td>/payment-estimator</td><td>UPDATED. Added: (1) Term slider — drags 36/48/60/72/84 months with live label update. (2) Backward calculator tab — "What Can I Afford?" — target payment slider $200–$1,500, down payment input, term slider, calculates max vehicle price + out-the-door estimate + required down for specific vehicle + term tradeoff table. (3) Custom rate input box — customer enters their own quoted rate, estimate uses actual rate instead of Experian average. (4) Manufacturer rate disclaimer — fires automatically when entered rate drops below 3% (incentive rate warning with rebate tradeoff). (5) Credit score auto-carries from credit-score page via sessionStorage. (6) Full disclosure system — ⓘ buttons on all calculation surfaces.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Moment of Truth</td><td>/moment-of-truth</td><td>NEW PAGE. Deal reality check screen — Step 4 of 5. Pulls all sessionStorage data into one clean summary: vehicle price, down payment, trade equity, amount financed, credit score, rate used, term, EVL platform fee, estimated tax/title/fees. Large payment range display with target payment comparison (over/under/match). Three doors: (1) See Vehicles In My Range → /find, (2) What If I Put More Down? → expands with live calculator showing new payment and monthly savings, (3) Adjust My Loan Term → expands with 4-column term tradeoff table showing payment/total paid/extra interest with honest tradeoff warning. Proceed Anyway acknowledgment checkbox unlocks Activate button → /payment-collection. Clean exit → /my-deal. Full ⓘ disclosures on payment range and tax/title estimates.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">② Key Decisions Locked Today</div>
+  <table>
+    <thead><tr><th>Decision</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--gold);font-weight:900;">Two-State Gate</td><td>Title Eligibility Gate captures both physical location AND title state separately. Title state drives tier detection (Green/Yellow/Red). Physical state captured for EVL operating footprint. Mismatch notice fires if they differ.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">EVL Never Pulls Credit</td><td>Hard rule confirmed — EVL is a technology platform, not a lender or CRA. Customer self-reports from third-party source. Credit Karma / Experian / AnnualCreditReport / Capital One CreditWise offered as free hand-off options. Score stored in sessionStorage only — never transmitted to EVL backend.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Manufacturer Rate Disclaimer</td><td>Auto-fires when entered rate is below 3%. Covers: top-tier credit requirement, model eligibility, captive lender requirement, expiration risk, and the rebate tradeoff ($1,500–$3,000 cash rebate often forfeited to get incentive rate). Customer must see this before calculating.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Moment of Truth — Informs, Never Blocks</td><td>The screen is a reality check, not a gate. Three doors plus proceed anyway plus clean exit. A fully-informed customer who still wants to move forward can do so — EVL does not decide for them. Proceed anyway requires acknowledgment checkbox (informed consent protection).</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Term Tradeoff — Shown Honestly</td><td>Every term calculation shows: payment, total paid over life of loan, AND extra interest paid. Longer term lower payment must always be shown alongside the true cost. No hiding the math.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Rate Tables</td><td>Experian Q4 2025 averages baked in. New car: Super-prime 4.66% / Prime 6.27% / Near-prime 9.57% / Subprime 13% / Deep subprime 16.01%. Used car: +3pts across all tiers. Update quarterly — approximately 6–10 weeks after each quarter ends.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Disclosures</td><td>Every calculation surface has a tappable ⓘ disclosure button. Never shortened. Forward results, backward results, custom rate, manufacturer rate, tax/title/fees — all covered. Legal language confirmed: not a financing offer, not a pre-approval, EVL not a lender/dealer/CRA.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">③ Retail Build Sequence — Current Status</div>
+  <table>
+    <thead><tr><th>Step</th><th>Page</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>login.html — Customer login + Firebase Auth + security rules</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>2</td><td>home.html — Credibility front door</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>3</td><td>my-deal.html — Post-login deal hub with trade fork</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>4</td><td>schedule.html — Schedule a Call</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>5</td><td>payment-estimator.html — Forward + backward calculator</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>6</td><td>trade-in-exchange.html — Title Eligibility Gate</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>7</td><td>credit-score.html — Credit hand-off page</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>8</td><td>moment-of-truth.html — Deal reality check</td><td><span class="badge badge-green">COMPLETE</span></td></tr>
+      <tr><td>9</td><td>payment-collection.html — $199 platform fee activation</td><td><span class="badge badge-blue">NEXT</span></td></tr>
+      <tr><td>10</td><td>Twilio SMS — confirm delivery to test number</td><td><span class="badge badge-blue">OUTSTANDING</span></td></tr>
+      <tr><td>11</td><td>ws-dashboard.html — Firestore error resolution</td><td><span class="badge badge-blue">OUTSTANDING</span></td></tr>
+      <tr><td>12</td><td>ID/BD dealer logins — held until real dealers onboard</td><td><span class="badge badge-blue">QUEUED</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">④ SessionStorage Keys — Retail Flow</div>
+  <table>
+    <thead><tr><th>Key</th><th>Set By</th><th>Used By</th></tr></thead>
+    <tbody>
+      <tr><td>evl_lien</td><td>trade-in-exchange gate</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_physical_state</td><td>trade-in-exchange gate</td><td>moment-of-truth, EVL ops</td></tr>
+      <tr><td>evl_title_state</td><td>trade-in-exchange gate</td><td>moment-of-truth, EVL ops</td></tr>
+      <tr><td>evl_tier</td><td>trade-in-exchange gate</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_credit_score</td><td>credit-score.html</td><td>payment-estimator, moment-of-truth</td></tr>
+      <tr><td>evl_credit_label</td><td>credit-score.html</td><td>payment-estimator, moment-of-truth</td></tr>
+      <tr><td>evl_credit_tier</td><td>payment-estimator</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_vehicle_price</td><td>payment-estimator</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_down_payment</td><td>payment-estimator</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_trade_equity</td><td>trade-in-exchange</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_term</td><td>payment-estimator</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_custom_rate</td><td>payment-estimator</td><td>moment-of-truth</td></tr>
+      <tr><td>evl_mot_acknowledged</td><td>moment-of-truth</td><td>payment-collection</td></tr>
+    </tbody>
+  </table>
+
+</div><!-- /Jun 26 build log -->
+
 <!-- JUN 12 2026 BUILD LOG -->
 <div class="card" style="margin-top:32px;">
   <div class="card-title">📋 Build Log — Jun 12, 2026 Session</div>
