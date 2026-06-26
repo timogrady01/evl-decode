@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule Your Appointment — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #020203;
+  --s1:    #090E17;
+  --s2:    #070A12;
+  --blue:  #2B84FE;
+  --green: #00C853;
+  --gold:  #FFB800;
+  --red:   #FF4444;
+  --white: #ffffff;
+  --gray:  #A1A1AA;
+  --border:#1a2a3a;
+  --font:  'Barlow Condensed', sans-serif;
+  --body:  'Barlow', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:var(--bg); color:var(--white); font-family:var(--body); min-height:100vh; }
+
+.evl-nav { position:sticky; top:0; z-index:500; background:#090E17; border-bottom:2px solid var(--blue); padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:58px; font-family:var(--font); }
+.evl-nav-logo { display:flex; align-items:center; gap:8px; text-decoration:none; font-size:16px; font-weight:900; color:#fff; letter-spacing:1px; }
+.evl-nav-logo span { color:var(--blue); }
+.evl-nav-cta { background:var(--blue); color:#fff; text-decoration:none; font-size:14px; font-weight:900; letter-spacing:1px; padding:8px 16px; }
+
+.wrap { max-width:680px; margin:0 auto; padding:40px 20px 80px; }
+
+.page-hero { text-align:center; margin-bottom:32px; }
+.page-badge { display:inline-block; background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.3); color:var(--blue); font-size:12px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
+.page-title { font-family:var(--font); font-size:clamp(32px,6vw,50px); font-weight:900; text-transform:uppercase; line-height:1.05; margin-bottom:10px; }
+.page-title span { color:var(--blue); }
+.page-sub { font-size:16px; font-weight:600; color:#ffffff; line-height:1.7; }
+
+.card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:28px; margin-bottom:20px; }
+.card-title { font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--white); margin-bottom:6px; }
+.card-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:20px; }
+
+/* VEHICLE CARD */
+.vehicle-card { background:linear-gradient(135deg,rgba(43,132,254,0.1),rgba(43,132,254,0.03)); border:2px solid var(--blue); border-radius:12px; padding:20px; margin-bottom:20px; display:flex; align-items:center; gap:16px; }
+.vehicle-icon { font-size:36px; flex-shrink:0; }
+.vehicle-detail-title { font-family:var(--font); font-size:22px; font-weight:900; color:#ffffff; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.vehicle-detail-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
+.vehicle-badge { display:inline-block; background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); color:var(--green); font-size:11px; font-weight:900; letter-spacing:1px; padding:4px 10px; border-radius:4px; text-transform:uppercase; margin-top:6px; }
+
+/* DEALER CARD */
+.dealer-card { background:var(--s2); border:2px solid rgba(255,184,0,0.25); border-radius:12px; padding:20px; margin-bottom:20px; }
+.dealer-name { font-family:var(--font); font-size:20px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.dealer-info { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
+.dealer-call-btn { display:inline-flex; align-items:center; gap:8px; background:var(--green); color:#020203; padding:10px 20px; border-radius:6px; font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; margin-top:12px; transition:all .2s; }
+.dealer-call-btn:hover { background:#00a844; }
+
+/* FORM */
+.field { margin-bottom:16px; }
+.field label { display:block; font-size:12px; font-weight:900; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; font-family:var(--font); }
+.field input, .field select, .field textarea {
+  width:100%; background:var(--bg); border:2px solid var(--border); color:#ffffff;
+  padding:13px 16px; border-radius:8px; font-size:16px; font-family:var(--body);
+  font-weight:600; outline:none; transition:border-color .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color:var(--blue); }
+.field textarea { resize:vertical; min-height:80px; }
+
+/* DATE/TIME GRID */
+.datetime-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+/* TIME SLOTS */
+.time-slots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:6px; }
+.time-slot { background:var(--bg); border:2px solid var(--border); border-radius:8px; padding:14px 10px; text-align:center; cursor:pointer; transition:all .2s; }
+.time-slot:hover { border-color:var(--blue); }
+.time-slot.selected { border-color:var(--blue); background:rgba(43,132,254,0.1); }
+.time-slot-icon { font-size:20px; margin-bottom:4px; display:block; }
+.time-slot-label { font-family:var(--font); font-size:14px; font-weight:900; color:#ffffff; text-transform:uppercase; display:block; margin-bottom:2px; }
+.time-slot-range { font-size:12px; color:#ffffff; font-family:var(--body); font-weight:600; display:block; }
+
+/* NOTIFICATION PREVIEW */
+.notification-preview { background:rgba(0,200,83,0.05); border:2px solid rgba(0,200,83,0.2); border-radius:10px; padding:18px; margin-bottom:20px; }
+.notif-title { font-size:13px; font-weight:900; color:var(--green); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; font-family:var(--font); }
+.notif-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; font-family:var(--body); font-weight:600; color:#ffffff; }
+.notif-row:last-child { border-bottom:none; }
+.notif-row span { font-size:18px; flex-shrink:0; }
+
+/* SUBMIT BTN */
+.submit-btn { width:100%; background:var(--blue); color:#fff; border:none; padding:20px; font-family:var(--font); font-size:22px; font-weight:900; letter-spacing:2px; text-transform:uppercase; cursor:pointer; border-radius:8px; transition:all .2s; margin-bottom:12px; }
+.submit-btn:hover { background:#1a6fd4; transform:translateY(-2px); }
+.submit-btn:disabled { background:var(--s2); color:var(--gray); cursor:not-allowed; transform:none; }
+
+/* SUCCESS */
+.success-state { display:none; text-align:center; padding:48px 20px; }
+.success-state.active { display:block; }
+.success-icon { font-size:72px; margin-bottom:20px; }
+.success-title { font-family:var(--font); font-size:42px; font-weight:900; text-transform:uppercase; color:var(--green); margin-bottom:12px; }
+.success-sub { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.7; max-width:480px; margin:0 auto 28px; }
+.success-ref { background:var(--s1); border:2px solid var(--green); border-radius:10px; padding:20px; max-width:400px; margin:0 auto 24px; }
+.success-ref-label { font-size:12px; color:var(--green); font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.success-ref-num { font-family:var(--font); font-size:28px; font-weight:900; color:#ffffff; letter-spacing:2px; }
+.success-who { background:var(--s2); border:1px solid var(--border); border-radius:8px; padding:16px; max-width:400px; margin:0 auto 20px; text-align:left; }
+.success-who-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:14px; font-family:var(--body); font-weight:600; color:#ffffff; }
+.success-who-row span { font-size:16px; }
+.success-btns { display:flex; flex-direction:column; gap:12px; max-width:400px; margin:0 auto; }
+.success-btn { display:block; background:var(--blue); color:#fff; padding:16px; border-radius:8px; font-family:var(--font); font-size:18px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; text-align:center; }
+.success-btn-out { display:block; background:transparent; color:#ffffff; padding:14px; border-radius:8px; border:2px solid var(--border); font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; text-align:center; }
+
+/* TRUST */
+.trust-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:24px; }
+.trust-badge { background:var(--s1); border:1px solid var(--border); border-radius:8px; padding:10px 16px; display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:#ffffff; font-family:var(--body); }
+
+footer { background:var(--s1); border-top:1px solid var(--border); padding:24px; text-align:center; margin-top:40px; }
+.footer-copy { font-size:13px; color:var(--gray); font-family:var(--body); }
+
+@media(max-width:500px) {
+  .datetime-grid { grid-template-columns:1fr; }
+  .time-slots { grid-template-columns:1fr 1fr; }
+  .vehicle-card { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<nav class="evl-nav">
+  <a href="/home" class="evl-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    EXPRESS <span>&nbsp;VEHICLE</span>&nbsp;LOCATORS
+  </a>
+  <a href="/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-hero">
+    <div class="page-badge">⚡ Schedule Your Appointment</div>
+    <h1 class="page-title">Let's Get You<br><span>Into That Vehicle</span></h1>
+    <p class="page-sub">Pick your date and time. EVL notifies the dealer immediately — your vehicle will be ready and waiting when you arrive.</p>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainContent">
+
+    <!-- VEHICLE OF INTEREST -->
+    <div class="vehicle-card" id="vehicleCard" style="display:none;">
+      <div class="vehicle-icon">🚗</div>
+      <div>
+        <div class="vehicle-detail-title" id="vehicleTitle">Your Selected Vehicle</div>
+        <div class="vehicle-detail-sub" id="vehicleDetail">VIN and details below</div>
+        <div class="vehicle-badge">⚡ EVL Vehicle Match</div>
+      </div>
+    </div>
+
+    <!-- DEALER CARD -->
+    <div class="dealer-card" id="dealerCard" style="display:none;">
+      <div class="dealer-name" id="dealerName">Dealership</div>
+      <div class="dealer-info" id="dealerAddress">Address loading...</div>
+      <div class="dealer-info" id="dealerPhone" style="margin-top:4px;"></div>
+      <a href="#" class="dealer-call-btn" id="dealerCallBtn">
+        📞 Call Dealership Now
+      </a>
+    </div>
+
+    <!-- APPOINTMENT FORM -->
+    <div class="card">
+      <div class="card-title">Your Appointment Details</div>
+      <div class="card-sub">Fill in your information below. Both the GSM and your salesperson will be notified the moment you submit.</div>
+
+      <div class="field">
+        <label>Your Full Name <span style="color:var(--red);">*</span></label>
+        <input type="text" id="custName" placeholder="First and last name" autocomplete="name"/>
+      </div>
+
+      <div class="datetime-grid">
+        <div class="field">
+          <label>Best Phone <span style="color:var(--red);">*</span></label>
+          <input type="tel" id="custPhone" placeholder="(214) 555-0100" autocomplete="tel"/>
+        </div>
+        <div class="field">
+          <label>Email Address <span style="color:var(--red);">*</span></label>
+          <input type="email" id="custEmail" placeholder="you@email.com" autocomplete="email"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Preferred Appointment Date <span style="color:var(--red);">*</span></label>
+        <input type="date" id="apptDate" min=""/>
+      </div>
+
+      <div class="field">
+        <label>Preferred Time</label>
+        <div class="time-slots">
+          <div class="time-slot" onclick="selectTime(this, 'Morning — 9am to 12pm')">
+            <span class="time-slot-icon">☀️</span>
+            <span class="time-slot-label">Morning</span>
+            <span class="time-slot-range">9am – 12pm</span>
+          </div>
+          <div class="time-slot" onclick="selectTime(this, 'Afternoon — 12pm to 5pm')">
+            <span class="time-slot-icon">🌤️</span>
+            <span class="time-slot-label">Afternoon</span>
+            <span class="time-slot-range">12pm – 5pm</span>
+          </div>
+          <div class="time-slot" onclick="selectTime(this, 'Evening — 5pm to 7pm')">
+            <span class="time-slot-icon">🌙</span>
+            <span class="time-slot-label">Evening</span>
+            <span class="time-slot-range">5pm – 7pm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Vehicle of Interest <span style="color:var(--red);">*</span></label>
+        <input type="text" id="vehicleInterest" placeholder="e.g. 2024 Toyota Camry XSE — Silver"/>
+      </div>
+
+      <div class="field">
+        <label>Anything Else? <span style="font-size:11px;color:var(--gray);letter-spacing:0;text-transform:none;font-family:var(--body);">Optional</span></label>
+        <textarea id="custNotes" placeholder="Trade-in details, financing questions, specific options you want to confirm are on the vehicle..."></textarea>
+      </div>
+
+      <!-- NOTIFICATION PREVIEW -->
+      <div class="notification-preview">
+        <div class="notif-title">⚡ Who Gets Notified The Moment You Submit</div>
+        <div class="notif-row"><span>🏆</span> <strong>General Sales Manager</strong> — SMS + Email with your full appointment details</div>
+        <div class="notif-row"><span>👤</span> <strong>Your Salesperson</strong> — SMS + Email so they can pull the vehicle and greet you by name</div>
+        <div class="notif-row"><span>📧</span> <strong>You</strong> — Confirmation email with dealer address, appointment time, and what to bring</div>
+        <div class="notif-row"><span>⚡</span> <strong>EVL Advisor</strong> — Alert so your advisor has visibility and can follow up if needed</div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitAppointment()">
+        ⚡ CONFIRM MY APPOINTMENT →
+      </button>
+
+      <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;text-align:center;line-height:1.6;">
+        Submitting this form notifies the dealership immediately. Your vehicle will not be held — arrive at your scheduled time to secure it.
+      </div>
+    </div>
+
+    <!-- TRUST -->
+    <div class="trust-row">
+      <div class="trust-badge"><span>⚡</span> Dealer Notified Instantly</div>
+      <div class="trust-badge"><span>🔒</span> No Obligation</div>
+      <div class="trust-badge"><span>📱</span> Confirmation to Your Phone</div>
+      <div class="trust-badge"><span>🤝</span> EVL Advisor Has Visibility</div>
+    </div>
+
+  </div><!-- /mainContent -->
+
+  <!-- SUCCESS STATE -->
+  <div class="success-state" id="successState">
+    <div class="success-icon">📅</div>
+    <div class="success-title">Appointment Set!</div>
+    <div class="success-sub">Your appointment has been submitted. The dealership has been notified and your EVL advisor has visibility. See you there!</div>
+    <div class="success-ref">
+      <div class="success-ref-label">Your Confirmation Number</div>
+      <div class="success-ref-num" id="confirmNum">EVL-APT-XXXX</div>
+    </div>
+    <div class="success-who">
+      <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-family:var(--font);">✅ Notifications Sent To:</div>
+      <div class="success-who-row"><span>🏆</span> General Sales Manager — SMS + Email</div>
+      <div class="success-who-row"><span>👤</span> Salesperson — SMS + Email</div>
+      <div class="success-who-row"><span>📧</span> You — Confirmation Email</div>
+      <div class="success-who-row"><span>⚡</span> EVL Advisor — Admin Alert</div>
+    </div>
+    <div style="background:rgba(255,184,0,0.06);border:2px solid rgba(255,184,0,0.25);border-radius:8px;padding:16px;max-width:400px;margin:0 auto 24px;font-size:14px;color:#ffffff;font-family:var(--body);font-weight:700;line-height:1.7;text-align:left;">
+      📋 <strong style="color:var(--gold);">What to bring:</strong> Your driver's license, proof of insurance, and any trade-in title if applicable. Your EVL advisor will reach out before your appointment to confirm details.
+    </div>
+    <div class="success-btns">
+      <a href="/my-deal" class="success-btn">⚡ View My Deal Hub →</a>
+      <a href="/find" class="success-btn-out">Find Another Vehicle →</a>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="footer-copy">© 2026 Express Vehicle Locators — Plano, TX — EVL is a vehicle advisory platform — not a dealer.</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain: "evl-acquisition-radar.firebaseapp.com",
+  projectId: "evl-acquisition-radar",
+  storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId: "84195145348",
+  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+};
+
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// Set min date to today
+var today = new Date().toISOString().split('T')[0];
+document.getElementById('apptDate').min = today;
+
+// Selected time slot
+var selectedTime = '';
+
+window.selectTime = function(el, label) {
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTime = label;
+};
+
+// Load session data if available
+window.addEventListener('DOMContentLoaded', function() {
+  var vehicle = sessionStorage.getItem('evl_appointment_vehicle');
+  var dealer  = sessionStorage.getItem('evl_appointment_dealer');
+  var dealerAddr = sessionStorage.getItem('evl_appointment_dealer_address');
+  var dealerPhone = sessionStorage.getItem('evl_appointment_dealer_phone');
+
+  if(vehicle) {
+    document.getElementById('vehicleInterest').value = vehicle;
+    document.getElementById('vehicleTitle').textContent = vehicle;
+    document.getElementById('vehicleCard').style.display = 'flex';
+  }
+
+  if(dealer) {
+    document.getElementById('dealerName').textContent = dealer;
+    document.getElementById('dealerCard').style.display = 'block';
+    if(dealerAddr) document.getElementById('dealerAddress').textContent = dealerAddr;
+    if(dealerPhone) {
+      document.getElementById('dealerPhone').textContent = '📞 ' + dealerPhone;
+      document.getElementById('dealerCallBtn').href = 'tel:' + dealerPhone.replace(/\D/g,'');
+    }
+  }
+
+  // Pre-fill customer name/email if logged in
+  onAuthStateChanged(auth, function(user) {
+    if(user && user.email) {
+      document.getElementById('custEmail').value = user.email;
+    }
+  });
+});
+
+// EmailJS — send notifications to GSM, SP, customer, and EVL
+function sendEmailNotifications(apptData) {
+  emailjs.init('iilAte2T5SzOKb-fn');
+
+  // 1 — GSM notification
+  if(apptData.gsmEmail) {
+    emailjs.send('service_rvscjt3', 'template_appt_dealer', {
+      to_email:      apptData.gsmEmail,
+      to_name:       apptData.gsmName || 'General Sales Manager',
+      role:          'General Sales Manager',
+      customer_name: apptData.custName,
+      customer_phone:apptData.custPhone,
+      customer_email:apptData.custEmail,
+      vehicle:       apptData.vehicle,
+      appt_date:     apptData.date,
+      appt_time:     apptData.time,
+      dealer_name:   apptData.dealerName,
+      credit_tier:   apptData.creditLabel || 'Not provided',
+      payment_range: apptData.paymentRange || 'Not provided',
+      notes:         apptData.notes || 'None',
+      confirm_num:   apptData.confirmNum
+    }).catch(e => console.warn('GSM email error:', e));
+  }
+
+  // 2 — Salesperson notification
+  if(apptData.spEmail) {
+    emailjs.send('service_rvscjt3', 'template_appt_dealer', {
+      to_email:      apptData.spEmail,
+      to_name:       apptData.spName || 'Salesperson',
+      role:          'Salesperson',
+      customer_name: apptData.custName,
+      customer_phone:apptData.custPhone,
+      customer_email:apptData.custEmail,
+      vehicle:       apptData.vehicle,
+      appt_date:     apptData.date,
+      appt_time:     apptData.time,
+      dealer_name:   apptData.dealerName,
+      credit_tier:   apptData.creditLabel || 'Not provided',
+      payment_range: apptData.paymentRange || 'Not provided',
+      notes:         apptData.notes || 'None',
+      confirm_num:   apptData.confirmNum
+    }).catch(e => console.warn('SP email error:', e));
+  }
+
+  // 3 — Customer confirmation
+  emailjs.send('service_rvscjt3', 'template_appt_customer', {
+    to_email:      apptData.custEmail,
+    to_name:       apptData.custName,
+    vehicle:       apptData.vehicle,
+    appt_date:     apptData.date,
+    appt_time:     apptData.time,
+    dealer_name:   apptData.dealerName,
+    dealer_address:apptData.dealerAddress || 'Your EVL advisor will confirm the address',
+    dealer_phone:  apptData.dealerPhone || '',
+    confirm_num:   apptData.confirmNum
+  }).catch(e => console.warn('Customer email error:', e));
+
+  // 4 — EVL Admin alert (to Tim)
+  emailjs.send('service_rvscjt3', 'template_appt_admin', {
+    to_email:      'togradyevl@gmail.com',
+    customer_name: apptData.custName,
+    customer_phone:apptData.custPhone,
+    vehicle:       apptData.vehicle,
+    appt_date:     apptData.date,
+    appt_time:     apptData.time,
+    dealer_name:   apptData.dealerName,
+    credit_tier:   apptData.creditLabel || 'Not provided',
+    confirm_num:   apptData.confirmNum
+  }).catch(e => console.warn('Admin email error:', e));
+}
+
+window.submitAppointment = async function() {
+  var name    = document.getElementById('custName').value.trim();
+  var phone   = document.getElementById('custPhone').value.trim();
+  var email   = document.getElementById('custEmail').value.trim();
+  var date    = document.getElementById('apptDate').value;
+  var vehicle = document.getElementById('vehicleInterest').value.trim();
+  var notes   = document.getElementById('custNotes').value.trim();
+
+  // Validation
+  if(!name || !phone || !email || !date || !vehicle) {
+    alert('Please complete all required fields before submitting.');
+    return;
+  }
+  if(!selectedTime) {
+    alert('Please select a preferred time — morning, afternoon, or evening.');
+    return;
+  }
+
+  var btn = document.getElementById('submitBtn');
+  btn.textContent = '⏳ Submitting...';
+  btn.disabled = true;
+
+  var confirmNum = 'EVL-APT-' + Math.floor(1000 + Math.random() * 9000);
+
+  // Pull dealer contact info from sessionStorage
+  var dealerName    = sessionStorage.getItem('evl_appointment_dealer') || '';
+  var dealerAddress = sessionStorage.getItem('evl_appointment_dealer_address') || '';
+  var dealerPhone   = sessionStorage.getItem('evl_appointment_dealer_phone') || '';
+  var gsmName       = sessionStorage.getItem('evl_dealer_gsm_name') || '';
+  var gsmEmail      = sessionStorage.getItem('evl_dealer_gsm_email') || '';
+  var gsmPhone      = sessionStorage.getItem('evl_dealer_gsm_phone') || '';
+  var spName        = sessionStorage.getItem('evl_dealer_sp_name') || '';
+  var spEmail       = sessionStorage.getItem('evl_dealer_sp_email') || '';
+  var spPhone       = sessionStorage.getItem('evl_dealer_sp_phone') || '';
+
+  // Pull credit/payment data
+  var creditLabel  = sessionStorage.getItem('evl_credit_label') || '';
+  var payLow       = sessionStorage.getItem('evl_pay_low') || '';
+  var payHigh      = sessionStorage.getItem('evl_pay_high') || '';
+  var paymentRange = payLow && payHigh ? '$' + Math.round(payLow) + ' – $' + Math.round(payHigh) + '/mo' : '';
+
+  var apptData = {
+    confirmNum, custName: name, custPhone: phone, custEmail: email,
+    vehicle, date, time: selectedTime, notes,
+    dealerName, dealerAddress, dealerPhone,
+    gsmName, gsmEmail, gsmPhone,
+    spName, spEmail, spPhone,
+    creditLabel, paymentRange
+  };
+
+  try {
+    // Save to Firestore evl_appointments collection
+    await addDoc(collection(db, 'evl_appointments'), {
+      confirmationNumber: confirmNum,
+      customerName:    name,
+      customerPhone:   phone,
+      customerEmail:   email,
+      vehicle,
+      appointmentDate: date,
+      appointmentTime: selectedTime,
+      notes,
+      dealerName,
+      dealerAddress,
+      dealerPhone,
+      gsm: { name: gsmName, email: gsmEmail, phone: gsmPhone },
+      salesperson: { name: spName, email: spEmail, phone: spPhone },
+      creditLabel,
+      paymentRange,
+      status:     'pending_dealer_confirm',
+      createdAt:  serverTimestamp(),
+      source:     'appointment-confirm',
+      uid:        auth.currentUser ? auth.currentUser.uid : null
+    });
+
+    // Fire email notifications
+    sendEmailNotifications(apptData);
+
+    // Show success
+    document.getElementById('confirmNum').textContent = confirmNum;
+    document.getElementById('mainContent').style.display = 'none';
+    document.getElementById('successState').classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+
+  } catch(err) {
+    console.error(err);
+    btn.textContent = '⚡ CONFIRM MY APPOINTMENT →';
+    btn.disabled = false;
+    alert('Something went wrong. Please try again or contact EVL at togradyevl@gmail.com');
+  }
+};
+</script>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+</body>
+</html>
