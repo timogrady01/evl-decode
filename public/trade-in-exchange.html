@@ -246,25 +246,59 @@
 
     <!-- GATE STEP 2 — STATE TIER (hidden until Step 1 answered) -->
     <div id="gateStep2" style="display:none;background:var(--s1);border:2px solid var(--blue);border-radius:14px;padding:32px;margin-bottom:16px;">
-      <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">⚡ STEP 2 OF 2 — YOUR STATE</div>
-      <div style="font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">What state is your vehicle titled in?</div>
-      <div style="font-size:18px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:24px;line-height:1.6;">Title transfer timelines vary by state. We'll show you exactly what to expect.</div>
-      <select id="stateSelect" onchange="detectStateTier()"
-        style="width:100%;background:var(--bg);border:2px solid var(--border);color:#ffffff;padding:16px 20px;border-radius:8px;font-size:20px;font-family:var(--font);font-weight:700;outline:none;margin-bottom:20px;cursor:pointer;">
-        <option value="">— Select Your State —</option>
-        <option value="TX">Texas</option><option value="TN">Tennessee</option>
-        <option value="CO">Colorado</option><option value="WA">Washington</option>
-        <option value="MN">Minnesota</option><option value="NC">North Carolina</option>
-        <option value="OH">Ohio</option><option value="MI">Michigan</option>
-        <option value="NV">Nevada</option><option value="GA">Georgia</option>
-        <option value="FL">Florida</option><option value="IL">Illinois</option>
-        <option value="PA">Pennsylvania</option><option value="MD">Maryland</option>
-        <option value="VA">Virginia</option><option value="MO">Missouri</option>
-        <option value="IN">Indiana</option><option value="WI">Wisconsin</option>
-        <option value="CA">California</option><option value="NJ">New Jersey</option>
-        <option value="NY">New York</option>
-        <option value="OTHER">My state isn't listed</option>
-      </select>
+      <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">⚡ STEP 2 OF 2 — YOUR STATES</div>
+      <div style="font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Where are you located — and where is your title?</div>
+      <div style="font-size:18px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:24px;line-height:1.6;">These are often the same — but not always. Both matter. If you recently moved or haven't retitled yet, your title state may be different from where you live now.</div>
+
+      <!-- QUESTION A — Physical Location -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">📍 WHERE ARE YOU CURRENTLY LOCATED?</div>
+        <div style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:10px;line-height:1.5;">This tells us if EVL operates in your area and where your vehicle will be picked up or delivered.</div>
+        <select id="physicalStateSelect" onchange="checkBothStates()"
+          style="width:100%;background:var(--bg);border:2px solid var(--border);color:#ffffff;padding:16px 20px;border-radius:8px;font-size:20px;font-family:var(--font);font-weight:700;outline:none;cursor:pointer;">
+          <option value="">— Select Your Current State —</option>
+          <option value="TX">Texas</option><option value="TN">Tennessee</option>
+          <option value="CO">Colorado</option><option value="WA">Washington</option>
+          <option value="MN">Minnesota</option><option value="NC">North Carolina</option>
+          <option value="OH">Ohio</option><option value="MI">Michigan</option>
+          <option value="NV">Nevada</option><option value="GA">Georgia</option>
+          <option value="FL">Florida</option><option value="IL">Illinois</option>
+          <option value="PA">Pennsylvania</option><option value="MD">Maryland</option>
+          <option value="VA">Virginia</option><option value="MO">Missouri</option>
+          <option value="IN">Indiana</option><option value="WI">Wisconsin</option>
+          <option value="CA">California</option><option value="NJ">New Jersey</option>
+          <option value="NY">New York</option>
+          <option value="OTHER">My state isn't listed</option>
+        </select>
+      </div>
+
+      <!-- QUESTION B — Title State -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">📄 WHAT STATE IS YOUR TITLE ISSUED IN?</div>
+        <div style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:10px;line-height:1.5;">Check your vehicle registration or loan paperwork. This is the state that controls the title transfer process and timeline — it may be different from where you live.</div>
+        <select id="stateSelect" onchange="checkBothStates()"
+          style="width:100%;background:var(--bg);border:2px solid var(--border);color:#ffffff;padding:16px 20px;border-radius:8px;font-size:20px;font-family:var(--font);font-weight:700;outline:none;cursor:pointer;">
+          <option value="">— Select Your Title State —</option>
+          <option value="TX">Texas</option><option value="TN">Tennessee</option>
+          <option value="CO">Colorado</option><option value="WA">Washington</option>
+          <option value="MN">Minnesota</option><option value="NC">North Carolina</option>
+          <option value="OH">Ohio</option><option value="MI">Michigan</option>
+          <option value="NV">Nevada</option><option value="GA">Georgia</option>
+          <option value="FL">Florida</option><option value="IL">Illinois</option>
+          <option value="PA">Pennsylvania</option><option value="MD">Maryland</option>
+          <option value="VA">Virginia</option><option value="MO">Missouri</option>
+          <option value="IN">Indiana</option><option value="WI">Wisconsin</option>
+          <option value="CA">California</option><option value="NJ">New Jersey</option>
+          <option value="NY">New York</option>
+          <option value="OTHER">My title state isn't listed</option>
+        </select>
+      </div>
+
+      <!-- MISMATCH NOTICE — shown if states differ -->
+      <div id="mismatchNotice" style="display:none;background:rgba(255,215,0,0.07);border:2px solid rgba(255,215,0,0.4);border-radius:10px;padding:18px;margin-bottom:16px;">
+        <div style="font-size:18px;font-weight:900;color:var(--gold);margin-bottom:6px;">⚠️ STATE MISMATCH DETECTED</div>
+        <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;">Your physical location and title state are different. <strong style="color:var(--gold);">The title state controls your processing timeline.</strong> Your EVL advisor will coordinate across both states. This is manageable — just allow extra time.</div>
+      </div>
 
       <!-- TIER RESULT — populated by JS -->
       <div id="tierResult" style="display:none;"></div>
@@ -1556,8 +1590,27 @@ window.selectLien = function(val) {
   document.getElementById('gateStep2').scrollIntoView({behavior:'smooth', block:'start'});
 };
 
-window.detectStateTier = function() {
-  var stateCode = document.getElementById('stateSelect').value;
+// Called whenever either state dropdown changes
+window.checkBothStates = function() {
+  var physicalCode = document.getElementById('physicalStateSelect').value;
+  var titleCode = document.getElementById('stateSelect').value;
+
+  // Only run tier detection once both are selected
+  if(!physicalCode || !titleCode) return;
+
+  // Show mismatch notice if states differ
+  var mismatch = document.getElementById('mismatchNotice');
+  if(physicalCode !== titleCode && physicalCode !== 'OTHER' && titleCode !== 'OTHER') {
+    mismatch.style.display = 'block';
+  } else {
+    mismatch.style.display = 'none';
+  }
+
+  // Run tier detection on the TITLE state
+  detectStateTier(titleCode);
+};
+
+window.detectStateTier = function(stateCode) {
   if(!stateCode) return;
 
   var tierDiv = document.getElementById('tierResult');
@@ -1617,7 +1670,8 @@ window.openLookup = function() {
   ls.scrollIntoView({behavior:'smooth', block:'start'});
   // Save gate answers to sessionStorage for later use
   sessionStorage.setItem('evl_lien', gateState.lien);
-  sessionStorage.setItem('evl_state', gateState.state);
+  sessionStorage.setItem('evl_physical_state', document.getElementById('physicalStateSelect').value);
+  sessionStorage.setItem('evl_title_state', gateState.state);
   sessionStorage.setItem('evl_tier', gateState.tier);
 };
 
@@ -1631,4 +1685,5 @@ if(vinParam) {
 </script>
 </body>
 </html>
+
 
