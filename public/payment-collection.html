@@ -527,6 +527,24 @@ window.submitActivation = function() {
       alert('Something went wrong. Please try again or contact EVL directly at togradyevl@gmail.com');
     });
 };
+
+  // ── LOAD SELECTED VEHICLE ──
+  (function() {
+    const vehicle = sessionStorage.getItem('evl_selected_vehicle');
+    const vin     = sessionStorage.getItem('evl_selected_vin');
+    const price   = sessionStorage.getItem('evl_vehicle_price');
+    const dealer  = sessionStorage.getItem('evl_vehicle_dealer');
+    const city    = sessionStorage.getItem('evl_vehicle_dealer_city');
+
+    if (vehicle) {
+      document.getElementById('selected-vehicle-card').style.display = 'block';
+      document.getElementById('selected-vehicle-name').textContent = vehicle;
+      if (vin) document.getElementById('selected-vehicle-vin').textContent = 'VIN: ' + vin;
+      if (price) document.getElementById('selected-vehicle-price').textContent = '$' + Number(price).toLocaleString();
+      if (dealer) document.getElementById('selected-vehicle-dealer').textContent = dealer + (city ? ' · ' + city : '');
+    }
+  })();
+
 </script>
 </body>
 </html>
