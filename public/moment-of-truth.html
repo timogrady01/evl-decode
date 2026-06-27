@@ -477,14 +477,39 @@
   <!-- PATHS -->
   <div class="section-title">Choose Your Next Step</div>
 
-  <!-- PATH 1 — READY TO GO -->
-  <div class="path-card green" onclick="handleReady()">
+  <!-- PATH 1 — READY TO GO — 3 sub-paths -->
+  <div class="path-card green" onclick="toggleReadyMenu()">
     <div class="path-icon green">✅</div>
     <div class="path-content">
-      <div class="path-title">I'm Ready to Move Forward</div>
-      <div class="path-sub">This works for me — let's get my deal started with an EVL advisor.</div>
+      <div class="path-title">I'm Ready — Find My Vehicle</div>
+      <div class="path-sub">My budget is set — let's find the right vehicle.</div>
     </div>
-    <div class="path-arrow">→</div>
+    <div class="path-arrow" id="ready-arrow">↓</div>
+  </div>
+
+  <!-- READY SUBMENU — 3 paths -->
+  <div class="submenu" id="ready-submenu">
+    <a href="/find.html" class="submenu-item">
+      <div class="sub-icon">🎯</div>
+      <div class="sub-text">
+        <div class="sub-title">I Know What I Want — Find It</div>
+        <div class="sub-desc">Search by year, make, model, trim and price</div>
+      </div>
+    </a>
+    <a href="/find.html" class="submenu-item">
+      <div class="sub-icon">💰</div>
+      <div class="sub-text">
+        <div class="sub-title">Find Vehicles In My Budget</div>
+        <div class="sub-desc">Show me what fits my payment range</div>
+      </div>
+    </a>
+    <a href="/trade-in-exchange.html" class="submenu-item">
+      <div class="sub-icon">🔄</div>
+      <div class="sub-text">
+        <div class="sub-title">I Have a Trade — What Can I Get?</div>
+        <div class="sub-desc">Start with my trade value, then find my vehicle</div>
+      </div>
+    </a>
   </div>
 
   <!-- PATH 2 — LOWER PAYMENT -->
@@ -562,9 +587,9 @@
   <!-- SUCCESS PANEL -->
   <div id="success-panel">
     <div class="s-icon">🎉</div>
-    <h2>Let's Make It Happen!</h2>
-    <p>Your EVL advisor will be in touch shortly to move your deal forward. You'll receive a confirmation shortly.</p>
-    <a href="/schedule.html" class="success-btn">Schedule My Call →</a>
+    <h2>Let's Find Your Vehicle!</h2>
+    <p>Your budget is locked in. Now let's find the right vehicle — EVL will secure it for you once you choose.</p>
+    <a href="/find.html" class="success-btn">Find My Vehicle →</a>
   </div>
 
 </div>
@@ -602,6 +627,15 @@
     // Save status to localStorage
     localStorage.setItem('evl_deal_status', 'in_progress');
     localStorage.setItem('evl_last_page', '/moment-of-truth.html');
+  }
+
+  // ── PATH 1 — READY MENU ──
+  function toggleReadyMenu() {
+    const sub = document.getElementById('ready-submenu');
+    const arrow = document.getElementById('ready-arrow');
+    const isOpen = sub.classList.contains('show');
+    sub.classList.toggle('show');
+    arrow.textContent = isOpen ? '↓' : '↑';
   }
 
   // ── PATH 2 — LOWER PAYMENT ──
