@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Estimator — EVL</title>
+<!-- v2026-06-26 -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -653,25 +654,10 @@
 
   <!-- INPUT CARD -->
   <div class="card">
-
-    <!-- MODE TOGGLE -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--blue);border-radius:10px;overflow:hidden;margin-bottom:28px;">
-      <button id="modeForward" onclick="setMode('forward')"
-        style="background:var(--blue);color:#fff;border:none;padding:16px 12px;font-family:var(--font);font-size:17px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;">
-        ⚡ Calculate My Payment
-      </button>
-      <button id="modeBackward" onclick="setMode('backward')"
-        style="background:var(--bg);color:#ffffff;border:none;padding:16px 12px;font-family:var(--font);font-size:17px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;">
-        🎯 What Can I Afford?
-      </button>
-    </div>
-
-    <div class="card-title" id="cardTitle">Tell Us About Your Deal</div>
+    <div class="card-title">Tell Us About Your Deal</div>
 
     <div class="msg" id="msg"></div>
 
-    <!-- ══ FORWARD CALCULATOR (default) ══ -->
-    <div id="forwardCalc">
     <!-- Vehicle Type -->
     <div class="field">
       <label>Vehicle Type</label>
@@ -749,16 +735,8 @@
 
     <!-- Loan Term -->
     <div class="field">
-      <label>Loan Term — <span id="termDisplay" style="color:var(--blue);font-weight:900;">60 months</span></label>
-      <!-- SLIDER -->
-      <input type="range" id="termSlider" min="0" max="4" value="2" step="1"
-        style="width:100%;accent-color:var(--blue);height:6px;margin:10px 0 6px;cursor:pointer;"
-        oninput="syncTermFromSlider(this.value)"/>
-      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#ffffff;font-family:var(--body);margin-bottom:14px;letter-spacing:1px;">
-        <span>36 mo</span><span>48 mo</span><span>60 mo</span><span>72 mo</span><span>84 mo</span>
-      </div>
-      <!-- HIDDEN RADIO BUTTONS — still drive the calculation -->
-      <div class="term-options" style="display:none;">
+      <label>Loan Term</label>
+      <div class="term-options">
         <div class="term-opt">
           <input type="radio" name="term" id="t36" value="36">
           <label for="t36">36<span>mo</span></label>
@@ -780,204 +758,16 @@
           <label for="t84">84<span>mo</span></label>
         </div>
       </div>
-      <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;margin-top:4px;">
-        💡 Longer term = lower monthly payment but more interest paid overall. EVL shows you both sides honestly.
-      </div>
-    </div>
-
-    <!-- YOUR OWN RATE BOX -->
-    <div class="field">
-      <label>Have Your Own Rate? <span style="font-size:12px;font-weight:600;color:#ffffff;letter-spacing:0;text-transform:none;">Optional</span>
-        <button class="info-btn" onclick="showDisclosure('custom_rate')" style="margin-left:6px;vertical-align:middle;" title="View disclosure">i</button>
-      </label>
-      <div style="background:rgba(43,132,254,0.06);border:2px solid rgba(43,132,254,0.2);border-radius:10px;padding:18px;margin-top:4px;">
-        <div style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;margin-bottom:12px;">
-          If your bank, credit union, or dealer has already quoted you a specific rate — enter it here. Your estimate will use your actual rate instead of the Experian average.
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <input type="number" id="customRate" min="0" max="30" step="0.1"
-            placeholder="e.g. 5.9"
-            style="flex:1;min-width:120px;background:var(--bg);border:2px solid var(--border);color:#ffffff;padding:12px 16px;border-radius:8px;font-size:20px;font-family:var(--font);font-weight:900;outline:none;letter-spacing:1px;"
-            oninput="checkCustomRate(this.value)"
-            onfocus="this.style.borderColor='var(--blue)'"
-            onblur="this.style.borderColor='var(--border)'"/>
-          <span style="font-size:18px;font-weight:900;color:#ffffff;font-family:var(--font);">% APR</span>
-          <button onclick="clearCustomRate()"
-            style="background:transparent;border:1px solid var(--border);color:#ffffff;padding:10px 16px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--body);">
-            Clear
-          </button>
-        </div>
-        <!-- MANUFACTURER RATE DISCLAIMER — fires when rate < 3% -->
-        <div id="mfrRateDisclaimer" style="display:none;margin-top:14px;background:rgba(255,184,0,0.08);border:2px solid rgba(255,184,0,0.35);border-radius:8px;padding:14px;">
-          <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">⚠️ Manufacturer Incentive Rate Detected</div>
-          <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.7;">
-            Rates below 3% APR are typically manufacturer-subvented programs (e.g. Ford 0%, Toyota 1.9%). These require: <strong style="color:var(--gold);">top-tier credit (usually 720+)</strong>, specific model/trim eligibility, captive lender financing (e.g. TMCC, Ford Motor Credit), and are subject to expiration without notice. <strong style="color:var(--gold);">Important:</strong> accepting an incentive rate often requires forfeiting a cash rebate of $1,500–$3,000. EVL will help you calculate which option — low rate or cash rebate — puts more money in your pocket. This estimate is illustrative only. Consult your EVL advisor or dealer for current program availability.
-          </div>
-        </div>
-        <!-- CONFIRMED RATE NOTICE -->
-        <div id="customRateConfirmed" style="display:none;margin-top:10px;font-size:13px;color:var(--green);font-family:var(--body);font-weight:700;">
-          ✅ Your quoted rate will be used for the estimate below.
-        </div>
-      </div>
     </div>
 
     <button class="btn-calc" onclick="calculate()">Calculate My Payment Range</button>
+  </div>
 
-    </div><!-- /forwardCalc -->
-
-    <!-- ══ BACKWARD CALCULATOR ══ -->
-    <div id="backwardCalc" style="display:none;">
-
-      <!-- Vehicle Type -->
-      <div class="field">
-        <label>Vehicle Type</label>
-        <div class="type-options">
-          <div class="type-opt">
-            <input type="radio" name="bvtype" id="bnew" value="new" checked>
-            <label for="bnew">New</label>
-          </div>
-          <div class="type-opt">
-            <input type="radio" name="bvtype" id="bused" value="used">
-            <label for="bused">Used</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Credit Score -->
-      <div class="field">
-        <label>Your Credit Score Range</label>
-        <div class="credit-options">
-          <div class="credit-opt">
-            <input type="radio" name="bcredit" id="bc1" value="super_prime">
-            <label for="bc1">Excellent<span class="credit-score-range">781–850</span></label>
-          </div>
-          <div class="credit-opt">
-            <input type="radio" name="bcredit" id="bc2" value="prime" checked>
-            <label for="bc2">Good<span class="credit-score-range">661–780</span></label>
-          </div>
-          <div class="credit-opt">
-            <input type="radio" name="bcredit" id="bc3" value="near_prime">
-            <label for="bc3">Fair<span class="credit-score-range">601–660</span></label>
-          </div>
-          <div class="credit-opt">
-            <input type="radio" name="bcredit" id="bc4" value="subprime">
-            <label for="bc4">Poor<span class="credit-score-range">501–600</span></label>
-          </div>
-          <div class="credit-opt">
-            <input type="radio" name="bcredit" id="bc5" value="deep_subprime">
-            <label for="bc5">Rebuilding<span class="credit-score-range">300–500</span></label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Target Payment -->
-      <div class="field">
-        <label>Your Target Monthly Payment — <span id="targetPayDisplay" style="color:var(--blue);font-weight:900;">$600 / mo</span></label>
-        <input type="range" id="targetPaySlider" min="200" max="1500" value="600" step="25"
-          style="width:100%;accent-color:var(--blue);height:6px;margin:10px 0 6px;cursor:pointer;"
-          oninput="syncTargetPay(this.value)"/>
-        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#ffffff;font-family:var(--body);margin-bottom:8px;letter-spacing:1px;">
-          <span>$200</span><span>$500</span><span>$800</span><span>$1,100</span><span>$1,500</span>
-        </div>
-        <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.6;">
-          Drag to set your maximum comfortable monthly payment.
-        </div>
-      </div>
-
-      <!-- Down Payment -->
-      <div class="field">
-        <label>Down Payment Available</label>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div>
-            <input type="number" id="bdown" placeholder="e.g. 3000" min="0"
-              style="width:100%;background:var(--bg);border:2px solid var(--border);color:#fff;padding:12px 16px;border-radius:8px;font-size:18px;font-family:var(--font);font-weight:700;outline:none;"
-              onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
-          </div>
-          <div style="display:flex;align-items:center;">
-            <span style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.5;">Enter $0 if no down payment. Trade-in equity counts as down payment.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Loan Term -->
-      <div class="field">
-        <label>Loan Term — <span id="btermDisplay" style="color:var(--blue);font-weight:900;">60 months</span></label>
-        <input type="range" id="btermSlider" min="0" max="4" value="2" step="1"
-          style="width:100%;accent-color:var(--blue);height:6px;margin:10px 0 6px;cursor:pointer;"
-          oninput="syncBTerm(this.value)"/>
-        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#ffffff;font-family:var(--body);margin-bottom:8px;letter-spacing:1px;">
-          <span>36 mo</span><span>48 mo</span><span>60 mo</span><span>72 mo</span><span>84 mo</span>
-        </div>
-      </div>
-
-      <button class="btn-calc" onclick="calculateBackward()">🎯 Show What I Can Afford</button>
-
-    </div><!-- /backwardCalc -->
-
-    <!-- BACKWARD RESULTS -->
-    <div id="backwardResults" style="display:none;margin-top:24px;">
-
-      <!-- MAX VEHICLE PRICE -->
-      <div style="background:linear-gradient(135deg,rgba(43,132,254,0.12),rgba(43,132,254,0.05));border:2px solid var(--blue);border-radius:12px;padding:28px;margin-bottom:20px;text-align:center;">
-        <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ YOUR AFFORDABLE VEHICLE PRICE
-          <button class="info-btn" onclick="showDisclosure('backward_results')" style="margin-left:8px;vertical-align:middle;" title="View full disclosure">i</button>
-        </div>
-        <div style="font-family:var(--font);font-size:56px;font-weight:900;color:#ffffff;line-height:1;" id="bMaxPrice">$—</div>
-        <div style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:8px;" id="bPriceDetail">Based on your target payment, credit tier, and term</div>
-      </div>
-
-      <!-- OUT THE DOOR WARNING -->
-      <div style="background:rgba(255,184,0,0.07);border:2px solid rgba(255,184,0,0.35);border-radius:10px;padding:18px;margin-bottom:20px;">
-        <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">⚠️ Important — Out-the-Door Cost</div>
-        <div style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;line-height:1.7;" id="bOTDNote">
-          This vehicle price does not include tax, title, license, or dealer fees. In Texas, add approximately 6.25% sales tax plus $150–$300 in title and registration fees. Your actual out-the-door budget should be <strong style="color:var(--gold);" id="bOTDEstimate">$—</strong> to comfortably land at this vehicle price.
-        </div>
-      </div>
-
-      <!-- REQUIRED DOWN PAYMENT (if they have a specific price in mind) -->
-      <div style="background:var(--s1);border:2px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;">
-        <div style="font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">📍 Have a Specific Vehicle in Mind?</div>
-        <div style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:14px;line-height:1.6;">Enter the vehicle price and we'll tell you exactly how much down payment you need to hit your target monthly payment.</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <input type="number" id="bSpecificPrice" placeholder="e.g. 42000"
-            style="flex:1;min-width:140px;background:var(--bg);border:2px solid var(--border);color:#fff;padding:12px 16px;border-radius:8px;font-size:18px;font-family:var(--font);font-weight:700;outline:none;"
-            oninput="calcRequiredDown()"
-            onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
-          <span style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;">vehicle price</span>
-        </div>
-        <div id="bRequiredDown" style="display:none;margin-top:16px;background:rgba(0,200,83,0.07);border:1px solid rgba(0,200,83,0.3);border-radius:8px;padding:14px;">
-          <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:4px;">DOWN PAYMENT NEEDED</div>
-          <div style="font-family:var(--font);font-size:36px;font-weight:900;color:var(--green);" id="bDownNeeded">$—</div>
-          <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:6px;" id="bDownNote"></div>
-        </div>
-      </div>
-
-      <!-- TERM TRADEOFF TABLE -->
-      <div style="background:var(--s1);border:2px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;">
-        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;">📊 Term Tradeoff — Same Payment, Different Terms</div>
-        <div style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:16px;line-height:1.6;">Here's how your affordable vehicle price changes across loan terms — at the same target monthly payment.</div>
-        <div id="termTradeoffTable"></div>
-      </div>
-
-      <!-- CTA -->
-      <div style="text-align:center;">
-        <a href="/find" style="display:inline-block;background:var(--blue);color:#fff;padding:18px 40px;border-radius:8px;font-family:var(--font);font-size:20px;font-weight:900;letter-spacing:2px;text-decoration:none;text-transform:uppercase;">
-          ⚡ Find Vehicles In My Range →
-        </a>
-        <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:12px;line-height:1.6;">
-          Estimates are based on Experian Q4 2025 average rates and are for informational purposes only. Not a loan offer or guarantee of financing. Tax, title, license, and fees not included.
-        </div>
-      </div>
-
-    </div><!-- /backwardResults -->
-
-  </div><!-- /card -->
+  <!-- RESULTS CARD -->
   <div class="card" id="results">
 
     <div class="results-header">
-      <div class="results-label">Estimated Monthly Payment Range
-        <button class="info-btn" onclick="showDisclosure('forward_results')" style="margin-left:8px;vertical-align:middle;" title="View full disclosure">i</button>
-      </div>
+      <div class="results-label">Estimated Monthly Payment Range</div>
       <div class="payment-range" id="payment-display">$— – $—</div>
       <div class="payment-sub" id="payment-sub">Based on standard market rate</div>
     </div>
@@ -1055,196 +845,7 @@
 </div>
 
 <script>
-// ── AUTO-LOAD CREDIT SCORE FROM CREDIT-SCORE PAGE ──
-window.addEventListener('DOMContentLoaded', function() {
-  var storedScore = sessionStorage.getItem('evl_credit_score');
-  if(!storedScore || storedScore === 'unknown') return;
-
-  var score = parseInt(storedScore);
-  if(!score) return;
-
-  // Map numeric score to the estimator's tier radio buttons
-  var tier;
-  if(score >= 781)      tier = 'super_prime';
-  else if(score >= 661) tier = 'prime';
-  else if(score >= 601) tier = 'near_prime';
-  else if(score >= 501) tier = 'subprime';
-  else                  tier = 'deep_subprime';
-
-  // Select the matching radio button
-  var radio = document.querySelector('input[name="credit"][value="' + tier + '"]');
-  if(radio) {
-    radio.checked = true;
-    // Show a confirmation banner so customer knows their score carried over
-    var banner = document.createElement('div');
-    banner.style.cssText = 'background:rgba(0,200,83,0.08);border:2px solid rgba(0,200,83,0.3);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;font-family:Barlow,sans-serif;';
-    banner.innerHTML = '<span style="font-size:22px;">✅</span><span style="font-size:15px;font-weight:700;color:#ffffff;">Credit score of <strong style="color:#00C853;">' + score + '</strong> carried over from your profile — pre-selected below.</span>';
-    var creditSection = document.querySelector('.credit-options');
-    if(creditSection && creditSection.parentNode) {
-      creditSection.parentNode.insertBefore(banner, creditSection);
-    }
-  }
-});
-
-  // ── TERM SLIDER ──
-  var termValues = [36, 48, 60, 72, 84];
-  window.syncTermFromSlider = function(idx) {
-    var term = termValues[parseInt(idx)];
-    document.getElementById('termDisplay').textContent = term + ' months';
-    var radio = document.getElementById('t' + term);
-    if(radio) radio.checked = true;
-  };
-  syncTermFromSlider(2);
-
-  // ── MODE TOGGLE ──
-  window.setMode = function(mode) {
-    var fwd = document.getElementById('forwardCalc');
-    var bwd = document.getElementById('backwardCalc');
-    var bwdResults = document.getElementById('backwardResults');
-    var results = document.getElementById('results');
-    var title = document.getElementById('cardTitle');
-    var btnFwd = document.getElementById('modeForward');
-    var btnBwd = document.getElementById('modeBackward');
-
-    if(mode === 'forward') {
-      fwd.style.display = 'block';
-      bwd.style.display = 'none';
-      bwdResults.style.display = 'none';
-      title.textContent = 'Tell Us About Your Deal';
-      btnFwd.style.background = 'var(--blue)';
-      btnFwd.style.color = '#fff';
-      btnBwd.style.background = 'var(--bg)';
-      btnBwd.style.color = '#ffffff';
-    } else {
-      fwd.style.display = 'none';
-      results.style.display = 'none';
-      bwd.style.display = 'block';
-      title.textContent = 'What Can I Afford?';
-      btnBwd.style.background = 'var(--blue)';
-      btnBwd.style.color = '#fff';
-      btnFwd.style.background = 'var(--bg)';
-      btnFwd.style.color = '#ffffff';
-      // Sync credit score from sessionStorage
-      var stored = sessionStorage.getItem('evl_credit_score');
-      if(stored && stored !== 'unknown') {
-        var score = parseInt(stored);
-        var tier = score >= 781 ? 'super_prime' : score >= 661 ? 'prime' : score >= 601 ? 'near_prime' : score >= 501 ? 'subprime' : 'deep_subprime';
-        var radio = document.querySelector('input[name="bcredit"][value="' + tier + '"]');
-        if(radio) radio.checked = true;
-      }
-    }
-  };
-
-  // ── BACKWARD SLIDER SYNC ──
-  window.syncTargetPay = function(val) {
-    document.getElementById('targetPayDisplay').textContent = '$' + parseInt(val).toLocaleString() + ' / mo';
-  };
-  window.syncBTerm = function(idx) {
-    var term = termValues[parseInt(idx)];
-    document.getElementById('btermDisplay').textContent = term + ' months';
-  };
-
-  // ── BACKWARD CALCULATOR ──
-  window.calculateBackward = function() {
-    var targetPay = parseInt(document.getElementById('targetPaySlider').value);
-    var down      = parseFloat(document.getElementById('bdown').value) || 0;
-    var vtype     = document.querySelector('input[name="bvtype"]:checked').value;
-    var credit    = document.querySelector('input[name="bcredit"]:checked').value;
-    var termIdx   = parseInt(document.getElementById('btermSlider').value);
-    var term      = termValues[termIdx];
-    var rate      = RATES[vtype][credit] / 100 / 12;
-
-    // Max principal = targetPay * ((1+r)^n - 1) / (r * (1+r)^n)
-    var maxPrincipal;
-    if(rate === 0) {
-      maxPrincipal = targetPay * term;
-    } else {
-      maxPrincipal = targetPay * (Math.pow(1+rate, term) - 1) / (rate * Math.pow(1+rate, term));
-    }
-    var maxPrice = Math.round(maxPrincipal + down);
-
-    // Out the door estimate (TX: 6.25% tax + ~$250 fees)
-    var otd = Math.round(maxPrice * 1.0625 + 250);
-
-    document.getElementById('bMaxPrice').textContent = '$' + maxPrice.toLocaleString();
-    document.getElementById('bPriceDetail').textContent =
-      'At ' + RATES[vtype][credit] + '% APR · ' + term + '-month term · $' + down.toLocaleString() + ' down · $' + targetPay.toLocaleString() + '/mo target';
-    document.getElementById('bOTDEstimate').textContent = '$' + otd.toLocaleString();
-
-    // Term tradeoff table
-    var tableHTML = '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;border-radius:8px;overflow:hidden;">';
-    tableHTML += '<div style="background:#1a2a3a;padding:10px;font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">TERM</div>';
-    tableHTML += '<div style="background:#1a2a3a;padding:10px;font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">MAX PRICE</div>';
-    tableHTML += '<div style="background:#1a2a3a;padding:10px;font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">TOTAL PAID</div>';
-
-    termValues.forEach(function(t) {
-      var r = RATES[vtype][credit] / 100 / 12;
-      var p = r === 0 ? targetPay * t : targetPay * (Math.pow(1+r, t) - 1) / (r * Math.pow(1+r, t));
-      var price = Math.round(p + down);
-      var totalPaid = Math.round(targetPay * t);
-      var isSelected = t === term;
-      var bg = isSelected ? 'rgba(43,132,254,0.15)' : 'var(--s2)';
-      var border = isSelected ? 'border-left:3px solid var(--blue);' : '';
-      tableHTML += '<div style="background:' + bg + ';' + border + 'padding:12px 10px;font-size:14px;font-weight:900;color:#fff;text-align:center;">' + t + ' mo' + (isSelected ? ' ★' : '') + '</div>';
-      tableHTML += '<div style="background:' + bg + ';padding:12px 10px;font-size:14px;font-weight:900;color:var(--green);text-align:center;">$' + price.toLocaleString() + '</div>';
-      tableHTML += '<div style="background:' + bg + ';padding:12px 10px;font-size:13px;font-weight:700;color:#ffffff;text-align:center;">$' + totalPaid.toLocaleString() + '</div>';
-    });
-    tableHTML += '</div>';
-    tableHTML += '<div style="font-size:12px;color:#ffffff;font-family:var(--body);margin-top:10px;line-height:1.5;">★ = your selected term. Longer term = higher vehicle price at same payment, but more total interest paid.</div>';
-    document.getElementById('termTradeoffTable').innerHTML = tableHTML;
-
-    document.getElementById('backwardResults').style.display = 'block';
-    document.getElementById('backwardResults').scrollIntoView({behavior:'smooth', block:'start'});
-  };
-
-  // Required down payment for a specific vehicle price
-  window.calcRequiredDown = function() {
-    var specificPrice = parseFloat(document.getElementById('bSpecificPrice').value);
-    if(!specificPrice) { document.getElementById('bRequiredDown').style.display = 'none'; return; }
-
-    var targetPay = parseInt(document.getElementById('targetPaySlider').value);
-    var vtype     = document.querySelector('input[name="bvtype"]:checked').value;
-    var credit    = document.querySelector('input[name="bcredit"]:checked').value;
-    var termIdx   = parseInt(document.getElementById('btermSlider').value);
-    var term      = termValues[termIdx];
-    var rate      = RATES[vtype][credit] / 100 / 12;
-
-    var maxPrincipal = rate === 0 ? targetPay * term :
-      targetPay * (Math.pow(1+rate, term) - 1) / (rate * Math.pow(1+rate, term));
-    var requiredDown = Math.max(0, Math.round(specificPrice - maxPrincipal));
-
-    document.getElementById('bDownNeeded').textContent = '$' + requiredDown.toLocaleString();
-    document.getElementById('bDownNote').textContent =
-      'To buy a $' + specificPrice.toLocaleString() + ' vehicle at $' + targetPay.toLocaleString() +
-      '/mo over ' + term + ' months at ' + RATES[vtype][credit] + '% APR, you need $' +
-      requiredDown.toLocaleString() + ' down. Trade-in equity counts toward this amount.';
-    document.getElementById('bRequiredDown').style.display = 'block';
-  };
-
-
-
-  // ── CUSTOM RATE ──
-  window.checkCustomRate = function(val) {
-    var num = parseFloat(val);
-    var disclaimer = document.getElementById('mfrRateDisclaimer');
-    var confirmed  = document.getElementById('customRateConfirmed');
-    if(!val || isNaN(num)) {
-      disclaimer.style.display = 'none';
-      confirmed.style.display  = 'none';
-      return;
-    }
-    // Fire manufacturer disclaimer if rate is below 3%
-    disclaimer.style.display = (num < 3) ? 'block' : 'none';
-    confirmed.style.display  = (num >= 0) ? 'block' : 'none';
-  };
-
-  window.clearCustomRate = function() {
-    document.getElementById('customRate').value = '';
-    document.getElementById('mfrRateDisclaimer').style.display = 'none';
-    document.getElementById('customRateConfirmed').style.display = 'none';
-  };
-
-
+  // ── EXPERIAN Q4 2025 RATE TABLE ──
   const RATES = {
     new: {
       super_prime:  5.25,
@@ -1278,18 +879,6 @@ window.addEventListener('DOMContentLoaded', function() {
     buydown: {
       title: 'Special Rate / Dealer Buydown Disclosure',
       text: 'Special rate financing may be available on select models through dealer-arranged financing programs. In some cases, rate reductions are made available in lieu of other available discounts or incentives — you may not be able to combine a special rate with all available rebates or dealer discounts. Offer availability varies by dealer, model, and lender. Not all buyers will qualify. See your EVL advisor for complete offer details before making any financing decision.'
-    },
-    forward_results: {
-      title: 'Payment Estimate Disclosure',
-      text: 'Payment estimates displayed are for informational purposes only and do not constitute a financing offer, pre-approval, or commitment of any kind. Estimates are based on Experian Q4 2025 average auto loan rates by credit tier and are updated quarterly. Actual interest rates, monthly payments, and loan terms are determined solely by the financing institution based on a complete credit application, your full credit profile, vehicle details, loan-to-value ratio, and lender underwriting criteria. Two borrowers with identical credit scores may receive materially different rate quotes from the same lender. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Results shown are estimates only. Always consult directly with a licensed financing professional before making any financial decision.'
-    },
-    backward_results: {
-      title: 'What Can I Afford — Disclosure',
-      text: 'The maximum vehicle price and required down payment shown are estimates for informational purposes only and do not constitute a financing offer or guarantee of any kind. Estimates are based on Experian Q4 2025 average auto loan rates for your selected credit tier and are updated quarterly. The vehicle price shown does not include sales tax, title, license, registration, dealer fees, or any other costs associated with a vehicle purchase. In Texas, sales tax is 6.25% of the vehicle sales price. Tax rates and fee structures vary by state. Your actual out-the-door cost will be higher than the vehicle price shown. Required down payment estimates assume the lender approves the full financed amount — actual lender down payment requirements may differ based on your credit profile and loan-to-value ratio. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Always consult directly with a licensed financing professional before making any financial decision.'
-    },
-    custom_rate: {
-      title: 'Your Own Rate — Disclosure',
-      text: 'The rate you have entered is self-reported and has not been verified by EVL. EVL does not confirm, validate, or guarantee any rate quoted to you by a lender, dealer, or financial institution. The payment estimate generated using your entered rate is for informational purposes only. Your actual approved rate at time of financing may differ from the rate you entered, based on lender underwriting, current market conditions, vehicle details, and your complete credit profile at time of application. A rate quote is not a rate lock or a financing commitment. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency.'
     }
   };
 
@@ -1329,11 +918,8 @@ window.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Standard rate calculation — use custom rate if entered
-    const customRateInput = parseFloat(document.getElementById('customRate').value);
-    const hasCustomRate = !isNaN(customRateInput) && customRateInput >= 0;
-    const rate = hasCustomRate ? customRateInput : RATES[vtype][credit];
-    const VARIANCE = hasCustomRate ? 0.25 : (RATES[vtype][credit] > 10 ? 2 : 1);
+    // Standard rate calculation
+    const rate = RATES[vtype][credit];
     const rateLow  = Math.max(0, rate - VARIANCE);
     const rateHigh = rate + VARIANCE;
     const payLow   = calcMonthly(principal, rateLow, term);
@@ -1443,7 +1029,3 @@ window.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
-
-
-
