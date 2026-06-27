@@ -3,546 +3,639 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Deal Summary — Express Vehicle Locators</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Moment of Truth — EVL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:    #020203;
-  --s1:    #090E17;
-  --s2:    #070A12;
-  --blue:  #2B84FE;
-  --green: #00C853;
-  --gold:  #FFB800;
-  --red:   #FF4444;
-  --white: #ffffff;
-  --gray:  #A1A1AA;
-  --border:#1a2a3a;
-  --font:  'Barlow Condensed', sans-serif;
-  --body:  'Barlow', sans-serif;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { background:var(--bg); color:var(--white); font-family:var(--body); min-height:100vh; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* NAV */
-.evl-nav { position:sticky; top:0; z-index:500; background:#090E17; border-bottom:2px solid var(--blue); padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:58px; font-family:var(--font); }
-.evl-nav-logo { display:flex; align-items:center; gap:8px; text-decoration:none; font-size:16px; font-weight:900; color:#fff; letter-spacing:1px; }
-.evl-nav-logo span { color:var(--blue); }
-.evl-nav-cta { background:var(--blue); color:#fff; text-decoration:none; font-size:14px; font-weight:900; letter-spacing:1px; padding:8px 16px; }
+  :root {
+    --bg: #F7F8FA;
+    --white: #FFFFFF;
+    --blue: #2563EB;
+    --blue-dark: #1D4ED8;
+    --blue-light: #EFF6FF;
+    --blue-mid: #DBEAFE;
+    --text: #111827;
+    --text-mid: #374151;
+    --text-soft: #6B7280;
+    --border: #E5E7EB;
+    --green: #16A34A;
+    --green-bg: #F0FDF4;
+    --green-border: #BBF7D0;
+    --orange: #D97706;
+    --orange-bg: #FFFBEB;
+    --purple: #7C3AED;
+    --purple-bg: #F5F3FF;
+    --grey-bg: #F9FAFB;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  }
 
-/* WRAP */
-.wrap { max-width:720px; margin:0 auto; padding:40px 20px 80px; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: var(--text);
+    min-height: 100vh;
+  }
 
-/* PROGRESS */
-.progress-bar { display:flex; align-items:center; gap:0; margin-bottom:40px; }
-.prog-step { flex:1; text-align:center; }
-.prog-step-circle { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; margin:0 auto 6px; font-family:var(--font); }
-.prog-step.done .prog-step-circle { background:var(--green); color:#fff; }
-.prog-step.active .prog-step-circle { background:var(--blue); color:#fff; }
-.prog-step.pending .prog-step-circle { background:var(--s2); color:var(--gray); border:2px solid var(--border); }
-.prog-step-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gray); }
-.prog-step.done .prog-step-label { color:var(--green); }
-.prog-step.active .prog-step-label { color:var(--white); }
-.prog-line { flex:1; height:2px; background:var(--border); max-width:40px; }
-.prog-line.done { background:var(--green); }
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-/* HERO */
-.page-hero { text-align:center; margin-bottom:32px; }
-.page-badge { display:inline-block; background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.3); color:var(--blue); font-size:12px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
-.page-title { font-family:var(--font); font-size:clamp(32px,6vw,52px); font-weight:900; text-transform:uppercase; line-height:1.05; margin-bottom:12px; }
-.page-title span { color:var(--blue); }
-.page-sub { font-size:17px; font-weight:600; color:#ffffff; line-height:1.7; max-width:560px; margin:0 auto; }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+  }
 
-/* DEAL SUMMARY CARD */
-.summary-card { background:var(--s1); border:2px solid var(--blue); border-radius:14px; padding:28px; margin-bottom:20px; }
-.summary-title { font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--gold); margin-bottom:20px; }
-.summary-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
-.summary-row:last-child { border-bottom:none; }
-.summary-lbl { font-size:15px; color:#ffffff; font-family:var(--body); font-weight:600; }
-.summary-val { font-size:17px; font-weight:900; color:var(--white); font-family:var(--font); letter-spacing:0.5px; }
-.summary-val.green { color:var(--green); }
-.summary-val.gold { color:var(--gold); }
-.summary-val.blue { color:var(--blue); }
-.summary-val.muted { color:var(--gray); font-size:14px; font-weight:600; font-family:var(--body); }
+  .nav-logo span { color: var(--blue); }
 
-/* PAYMENT DISPLAY */
-.payment-hero { background:linear-gradient(135deg,rgba(43,132,254,0.12),rgba(43,132,254,0.04)); border:2px solid var(--blue); border-radius:14px; padding:32px; text-align:center; margin-bottom:20px; position:relative; }
-.payment-label { font-size:13px; font-weight:900; color:var(--blue); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px; }
-.payment-range { font-family:var(--font); font-size:clamp(42px,8vw,64px); font-weight:900; color:#ffffff; line-height:1; margin-bottom:8px; }
-.payment-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
-.payment-target-row { margin-top:16px; padding-top:16px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
-.payment-target-lbl { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; }
-.payment-gap { font-size:15px; font-weight:900; font-family:var(--font); }
-.gap-over { color:var(--gold); }
-.gap-under { color:var(--green); }
-.gap-match { color:var(--green); }
+  .nav-back {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blue);
+    text-decoration: none;
+  }
 
-/* INFO BTN */
-.info-btn { background:rgba(43,132,254,0.15); border:1px solid rgba(43,132,254,0.4); color:var(--blue); border-radius:50%; width:22px; height:22px; font-size:12px; font-weight:900; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-family:var(--font); }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
 
-/* THREE DOORS */
-.doors-title { font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--white); margin-bottom:6px; }
-.doors-sub { font-size:15px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:20px; }
+  /* ── HEADER ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
 
-.door { background:var(--s1); border:2px solid var(--border); border-radius:12px; padding:22px; margin-bottom:14px; cursor:pointer; transition:all .2s; text-decoration:none; display:block; }
-.door:hover { border-color:var(--blue); transform:translateY(-2px); }
-.door-header { display:flex; align-items:center; gap:14px; }
-.door-icon { font-size:28px; flex-shrink:0; }
-.door-title { font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:1px; color:var(--white); margin-bottom:3px; }
-.door-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
-.door-arrow { font-size:20px; color:var(--blue); font-weight:900; margin-left:auto; flex-shrink:0; }
+  .header-icon {
+    width: 72px;
+    height: 72px;
+    background: var(--blue-light);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 36px;
+  }
 
-.door.door-primary { border-color:rgba(43,132,254,0.4); background:rgba(43,132,254,0.06); }
-.door.door-gold { border-color:rgba(255,184,0,0.4); background:rgba(255,184,0,0.04); }
-.door.door-green { border-color:rgba(0,200,83,0.4); background:rgba(0,200,83,0.04); }
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
 
-/* DOOR DETAIL — shown on expand */
-.door-detail { display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
-.door-detail.open { display:block; }
-.detail-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; font-family:var(--body); }
-.detail-row:last-of-type { border-bottom:none; }
-.detail-note { font-size:13px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-top:10px; }
+  .page-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
 
-/* PROCEED ANYWAY */
-.proceed-anyway-section { background:var(--s2); border:1px solid var(--border); border-radius:12px; padding:22px; margin-bottom:14px; }
-.proceed-anyway-title { font-family:var(--font); font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:1px; color:var(--white); margin-bottom:8px; }
-.proceed-anyway-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:16px; }
-.ack-label { display:flex; align-items:flex-start; gap:12px; cursor:pointer; margin-bottom:14px; }
-.ack-label input { width:20px; height:20px; margin-top:2px; accent-color:var(--blue); flex-shrink:0; }
-.ack-label span { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
-.proceed-btn { width:100%; background:var(--blue); color:#fff; border:none; padding:18px; font-family:var(--font); font-size:20px; font-weight:900; letter-spacing:2px; text-transform:uppercase; cursor:pointer; border-radius:8px; transition:all .2s; display:none; }
-.proceed-btn:hover { background:#1a6fd4; }
+  .page-header p {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
 
-/* EXIT */
-.exit-section { text-align:center; padding:20px; }
-.exit-link { font-size:14px; color:var(--gray); font-family:var(--body); font-weight:600; cursor:pointer; text-decoration:none; display:inline-block; }
-.exit-link:hover { color:#ffffff; }
+  /* ── PAYMENT SUMMARY CARD ── */
+  .summary-card {
+    background: var(--blue);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* DISCLOSURE MODAL */
-.disclosure-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:999; display:flex; align-items:center; justify-content:center; padding:20px; }
-.disclosure-overlay.hidden { display:none; }
-.disclosure-box { background:var(--s1); border:2px solid var(--blue); border-radius:14px; padding:32px; max-width:560px; width:100%; }
-.disclosure-box h3 { font-family:var(--font); font-size:22px; font-weight:900; text-transform:uppercase; letter-spacing:1px; color:var(--white); margin-bottom:16px; }
-.disclosure-box p { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.8; }
-.disclosure-close { margin-top:20px; background:var(--blue); color:#fff; border:none; padding:12px 32px; border-radius:8px; font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; cursor:pointer; width:100%; }
+  .summary-card .summary-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 6px;
+  }
 
-/* DISCLAIMER */
-.disclaimer { font-size:12px; color:var(--gray); font-family:var(--body); line-height:1.7; text-align:center; margin-top:28px; padding-top:20px; border-top:1px solid var(--border); }
+  .summary-card .summary-payment {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+  }
 
-/* FOOTER */
-footer { background:var(--s1); border-top:1px solid var(--border); padding:24px; text-align:center; margin-top:40px; }
-.footer-copy { font-size:13px; color:var(--gray); font-family:var(--body); }
+  .summary-card .summary-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
 
-@media(max-width:500px) {
-  .payment-range { font-size:40px; }
-}
+  .summary-card .summary-edit {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 14px;
+  }
+
+  /* ── PATH CARDS ── */
+  .path-card {
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .path-card:hover {
+    border-color: var(--blue);
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+  }
+
+  .path-card.green:hover { border-color: var(--green); }
+  .path-card.orange:hover { border-color: var(--orange); }
+  .path-card.purple:hover { border-color: var(--purple); }
+  .path-card.grey:hover { border-color: var(--text-soft); }
+
+  .path-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .path-icon.blue   { background: var(--blue-light); }
+  .path-icon.green  { background: var(--green-bg); }
+  .path-icon.orange { background: var(--orange-bg); }
+  .path-icon.purple { background: var(--purple-bg); }
+  .path-icon.grey   { background: var(--grey-bg); }
+
+  .path-content { flex: 1; }
+
+  .path-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .path-sub {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.4;
+  }
+
+  .path-arrow {
+    font-size: 22px;
+    color: var(--text-soft);
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  /* ── LOWER PAYMENT SUBMENU ── */
+  .submenu {
+    display: none;
+    margin-top: -6px;
+    margin-bottom: 14px;
+    background: var(--grey-bg);
+    border: 1px solid var(--border);
+    border-radius: 0 0 16px 16px;
+    overflow: hidden;
+  }
+
+  .submenu.show { display: block; }
+
+  .submenu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+
+  .submenu-item:last-child { border-bottom: none; }
+  .submenu-item:hover { background: var(--blue-light); }
+
+  .submenu-item .sub-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--white);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .submenu-item .sub-text .sub-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .submenu-item .sub-text .sub-desc {
+    font-size: 13px;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  /* ── THINK ABOUT IT PANEL ── */
+  #think-panel {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-top: -6px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  #think-panel.show { display: block; }
+
+  #think-panel h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  #think-panel p {
+    font-size: 16px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .think-btn {
+    width: 100%;
+    background: var(--text);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+
+  /* ── SUCCESS STATE ── */
+  #success-panel {
+    display: none;
+    text-align: center;
+    padding: 48px 28px;
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  #success-panel.show { display: block; }
+
+  #success-panel .s-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+  }
+
+  #success-panel h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  #success-panel p {
+    font-size: 17px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .success-btn {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── CREDIT KARMA SECTION ── */
+  .credit-karma-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-top: -6px;
+    margin-bottom: 14px;
+    display: none;
+  }
+
+  .credit-karma-card.show { display: block; }
+
+  .credit-karma-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .credit-karma-card p {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .ck-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #3AC389;
+    color: white;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: 14px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ck-note {
+    font-size: 13px;
+    color: var(--text-soft);
+    text-align: center;
+    font-style: italic;
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="evl-nav">
-  <a href="/home" class="evl-nav-logo">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
-    EXPRESS <span>&nbsp;VEHICLE</span>&nbsp;LOCATORS
-  </a>
-  <a href="/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+<nav>
+  <a href="/" class="nav-logo">Express <span>Vehicle</span> Locators</a>
+  <a href="/my-deal.html" class="nav-back">← Back to My Deal</a>
 </nav>
 
-<div class="wrap">
+<div class="page">
 
-  <!-- PROGRESS BAR -->
-  <div class="progress-bar">
-    <div class="prog-step done">
-      <div class="prog-step-circle">✓</div>
-      <div class="prog-step-label">Vehicle</div>
-    </div>
-    <div class="prog-line done"></div>
-    <div class="prog-step done">
-      <div class="prog-step-circle">✓</div>
-      <div class="prog-step-label">Trade-In</div>
-    </div>
-    <div class="prog-line done"></div>
-    <div class="prog-step done">
-      <div class="prog-step-circle">✓</div>
-      <div class="prog-step-label">Credit</div>
-    </div>
-    <div class="prog-line done"></div>
-    <div class="prog-step active">
-      <div class="prog-step-circle">4</div>
-      <div class="prog-step-label">Your Deal</div>
-    </div>
-    <div class="prog-line"></div>
-    <div class="prog-step pending">
-      <div class="prog-step-circle">5</div>
-      <div class="prog-step-label">Activate</div>
-    </div>
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-icon">⚡</div>
+    <div class="eyebrow">My EVL Portal</div>
+    <h1>Moment of Truth</h1>
+    <p>Here's where your deal stands.<br>What would you like to do next?</p>
   </div>
 
-  <!-- HERO -->
-  <div class="page-hero">
-    <div class="page-badge">⚡ Step 4 of 5 — Deal Reality Check</div>
-    <h1 class="page-title">Here's Your<br><span>Deal Summary</span></h1>
-    <p class="page-sub">Everything in one place — no surprises. Review your numbers before you commit. You are in control of every decision from here.</p>
-  </div>
-
-  <!-- DEAL SUMMARY -->
+  <!-- PAYMENT SUMMARY -->
   <div class="summary-card">
-    <div class="summary-title">📋 Your Deal At A Glance</div>
-    <div class="summary-row">
-      <span class="summary-lbl">Vehicle Price</span>
-      <span class="summary-val" id="sumPrice">—</span>
+    <div>
+      <div class="summary-label">Your Estimated Payment Range</div>
+      <div class="summary-payment" id="mot-payment">$837 – $867<span style="font-size:24px;">/mo</span></div>
+      <div class="summary-sub" id="mot-sub">60-month term · 7.01% APR · $2,000 down</div>
     </div>
-    <div class="summary-row">
-      <span class="summary-lbl">Down Payment</span>
-      <span class="summary-val green" id="sumDown">—</span>
-    </div>
-    <div class="summary-row">
-      <span class="summary-lbl">Trade-In Equity Applied</span>
-      <span class="summary-val green" id="sumTradeEquity">—</span>
-    </div>
-    <div class="summary-row">
-      <span class="summary-lbl">Amount Financed</span>
-      <span class="summary-val blue" id="sumFinanced">—</span>
-    </div>
-    <div class="summary-row">
-      <span class="summary-lbl">Credit Score</span>
-      <span class="summary-val" id="sumCredit">—</span>
-    </div>
-    <div class="summary-row">
-      <span class="summary-lbl">Rate Used</span>
-      <span class="summary-val" id="sumRate">—</span>
-    </div>
-    <div class="summary-row">
-      <span class="summary-lbl">Loan Term</span>
-      <span class="summary-val" id="sumTerm">—</span>
-    </div>
-    <div class="summary-row">
-      <span class="summary-lbl">EVL Platform Fee</span>
-      <span class="summary-val">$199</span>
-    </div>
-    <div class="summary-row" style="background:rgba(43,132,254,0.06);margin:0 -28px;padding:12px 28px;border-radius:0 0 12px 12px;">
-      <span class="summary-lbl" style="font-weight:900;color:#ffffff;font-size:16px;">Est. Tax + Title + Fees*</span>
-      <span class="summary-val gold" id="sumTTL">—</span>
-    </div>
+    <a href="/payment-estimator.html" class="summary-edit">Edit Estimate</a>
   </div>
 
-  <!-- PAYMENT HERO -->
-  <div class="payment-hero">
-    <div class="payment-label">
-      Estimated Monthly Payment Range
-      <button class="info-btn" onclick="showDisclosure('payment')" style="margin-left:6px;" title="View disclosure">i</button>
+  <!-- PATHS -->
+  <div class="section-title">Choose Your Next Step</div>
+
+  <!-- PATH 1 — READY TO GO -->
+  <div class="path-card green" onclick="handleReady()">
+    <div class="path-icon green">✅</div>
+    <div class="path-content">
+      <div class="path-title">I'm Ready to Move Forward</div>
+      <div class="path-sub">This works for me — let's get my deal started with an EVL advisor.</div>
     </div>
-    <div class="payment-range" id="motPaymentRange">$— – $—</div>
-    <div class="payment-sub" id="motPaymentSub">Based on your entries above</div>
-    <div class="payment-target-row" id="targetRow" style="display:none;">
-      <span class="payment-target-lbl">Your Target Payment</span>
-      <span class="payment-gap" id="paymentGapLabel">—</span>
-    </div>
+    <div class="path-arrow">→</div>
   </div>
 
-  <!-- THREE DOORS -->
-  <div style="margin-bottom:8px;">
-    <div class="doors-title">What Would You Like To Do?</div>
-    <div class="doors-sub">Here are your options — all of them. You decide. EVL informs, never pressures.</div>
+  <!-- PATH 2 — LOWER PAYMENT -->
+  <div class="path-card orange" onclick="toggleSubmenu()">
+    <div class="path-icon orange">📉</div>
+    <div class="path-content">
+      <div class="path-title">I Want a Lower Payment</div>
+      <div class="path-sub">Let's look at ways to bring this number down.</div>
+    </div>
+    <div class="path-arrow" id="submenu-arrow">↓</div>
   </div>
 
-  <!-- DOOR 1 — See Lower Priced Vehicles -->
-  <a href="/find" class="door door-primary">
-    <div class="door-header">
-      <div class="door-icon">🔍</div>
-      <div>
-        <div class="door-title">See Vehicles In My Range</div>
-        <div class="door-sub">Find vehicles priced to fit your target payment — EVL searches for you.</div>
+  <!-- LOWER PAYMENT SUBMENU -->
+  <div class="submenu" id="lower-submenu">
+    <a href="/find.html" class="submenu-item">
+      <div class="sub-icon">🚗</div>
+      <div class="sub-text">
+        <div class="sub-title">Find a Less Expensive Vehicle</div>
+        <div class="sub-desc">Search vehicles in a lower price range</div>
       </div>
-      <div class="door-arrow">→</div>
-    </div>
-  </a>
-
-  <!-- DOOR 2 — More Down -->
-  <div class="door door-gold" onclick="toggleDoor('door2')">
-    <div class="door-header">
-      <div class="door-icon">💰</div>
-      <div>
-        <div class="door-title">What If I Put More Down?</div>
-        <div class="door-sub">See exactly how additional down payment changes your monthly number.</div>
-      </div>
-      <div class="door-arrow" id="arrow2">▼</div>
-    </div>
-    <div class="door-detail" id="door2">
-      <div style="margin-bottom:12px;">
-        <label style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Additional Down Payment</label>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <input type="number" id="extraDown" placeholder="e.g. 2000" min="0"
-            style="flex:1;background:var(--bg);border:2px solid var(--border);color:#fff;padding:12px 16px;border-radius:8px;font-size:18px;font-family:var(--font);font-weight:700;outline:none;"
-            oninput="calcMoreDown()"
-            onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"/>
-          <span style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:700;">more down</span>
-        </div>
-      </div>
-      <div id="moreDownResult" style="display:none;background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:14px;margin-top:4px;">
-        <div class="detail-row"><span style="color:#ffffff;">New Monthly Range</span><span style="color:var(--gold);font-weight:900;" id="moreDownPayment">—</span></div>
-        <div class="detail-row"><span style="color:#ffffff;">Monthly Savings</span><span style="color:var(--green);font-weight:900;" id="moreDownSaving">—</span></div>
-        <div class="detail-row"><span style="color:#ffffff;">New Amount Financed</span><span style="color:#ffffff;font-weight:900;" id="moreDownFinanced">—</span></div>
-        <div class="detail-note">💡 Every $1,000 in additional down payment reduces your financed amount by $1,000 — directly lowering your monthly payment and total interest paid.</div>
+    </a>
+    <div class="submenu-item" onclick="goToEstimatorWithHigherDown()">
+      <div class="sub-icon">💵</div>
+      <div class="sub-text">
+        <div class="sub-title">Increase My Down Payment</div>
+        <div class="sub-desc">See how more down affects my monthly payment</div>
       </div>
     </div>
-  </div>
-
-  <!-- DOOR 3 — Adjust Term -->
-  <div class="door door-green" onclick="toggleDoor('door3')">
-    <div class="door-header">
-      <div class="door-icon">📅</div>
-      <div>
-        <div class="door-title">Adjust My Loan Term</div>
-        <div class="door-sub">See how a longer or shorter term changes your payment — and what it costs you overall.</div>
+    <a href="/payment-estimator.html" class="submenu-item">
+      <div class="sub-icon">📅</div>
+      <div class="sub-text">
+        <div class="sub-title">Try a Longer Term</div>
+        <div class="sub-desc">Stretch to 72 or 84 months to lower payments</div>
       </div>
-      <div class="door-arrow" id="arrow3">▼</div>
+    </a>
+  </div>
+
+  <!-- PATH 3 — CHECK CREDIT -->
+  <div class="path-card purple" onclick="toggleCreditKarma()">
+    <div class="path-icon purple">📊</div>
+    <div class="path-content">
+      <div class="path-title">Check My Real Credit Score First</div>
+      <div class="path-sub">Get your actual score — it's free, no impact to credit.</div>
     </div>
-    <div class="door-detail" id="door3">
-      <div id="termTableMOT" style="border-radius:8px;overflow:hidden;"></div>
-      <div class="detail-note" style="background:rgba(255,68,68,0.06);border:1px solid rgba(255,68,68,0.2);border-radius:8px;padding:12px;margin-top:10px;">
-        ⚠️ <strong style="color:var(--gold);">Honest tradeoff:</strong> A longer term lowers your monthly payment but increases the total interest you pay and can leave you owing more than the vehicle is worth (negative equity) for longer. EVL shows you both sides — the lower payment AND the total cost.
-      </div>
+    <div class="path-arrow">→</div>
+  </div>
+
+  <!-- CREDIT KARMA PANEL -->
+  <div class="credit-karma-card" id="ck-panel">
+    <h3>Get Your Real Score — Free</h3>
+    <p>Credit Karma shows your real TransUnion and Equifax scores instantly — no credit pull, no impact. Once you have your score, come back and re-run your estimate for a more accurate result.</p>
+    <a href="https://www.creditkarma.com" target="_blank" class="ck-btn">
+      <span>📊</span> Check My Score on Credit Karma
+    </a>
+    <div class="ck-note">Opens in a new tab. EVL has no affiliation with Credit Karma.</div>
+  </div>
+
+  <!-- PATH 4 — THINK ABOUT IT -->
+  <div class="path-card grey" onclick="toggleThink()">
+    <div class="path-icon grey">💭</div>
+    <div class="path-content">
+      <div class="path-title">I Need to Think About It</div>
+      <div class="path-sub">No rush — your deal is saved and your portal stays open.</div>
     </div>
+    <div class="path-arrow">→</div>
   </div>
 
-  <!-- PROCEED ANYWAY -->
-  <div class="proceed-anyway-section">
-    <div class="proceed-anyway-title">✅ I Want To Move Forward</div>
-    <div class="proceed-anyway-sub">You've seen the numbers. You've seen your options. If you're ready to activate your EVL deal — this is your next step. You are under no obligation until you sign.</div>
-    <label class="ack-label">
-      <input type="checkbox" id="proceedAck" onchange="checkProceedAck()"/>
-      <span>I have reviewed my deal summary and payment estimate. I understand these are estimates only — not a financing offer or guarantee. I want to proceed to activate my EVL deal.</span>
-    </label>
-    <button class="proceed-btn" id="proceedBtn" onclick="goToActivate()">
-      ⚡ ACTIVATE MY EVL DEAL →
-    </button>
+  <!-- THINK PANEL -->
+  <div id="think-panel">
+    <h3>No Problem — We'll Be Here</h3>
+    <p>Your deal progress is saved. We'll send you a friendly reminder so you can pick up right where you left off. No pressure, no obligation.</p>
+    <a href="/my-deal.html" class="think-btn">Return to My Deal →</a>
   </div>
 
-  <!-- CLEAN EXIT -->
-  <div class="exit-section">
-    <a href="/my-deal" class="exit-link">Not right now — save my progress and come back later →</a>
+  <!-- SUCCESS PANEL -->
+  <div id="success-panel">
+    <div class="s-icon">🎉</div>
+    <h2>Let's Make It Happen!</h2>
+    <p>Your EVL advisor will be in touch shortly to move your deal forward. You'll receive a confirmation shortly.</p>
+    <a href="/schedule.html" class="success-btn">Schedule My Call →</a>
   </div>
 
-  <!-- DISCLAIMER -->
-  <div class="disclaimer">
-    * Tax, title, license, and fee estimates are based on Texas rates (6.25% sales tax + approx. $250 title/registration). Rates vary by state. Payment estimates are based on Experian Q4 2025 average auto loan rates and are for informational purposes only. Not a financing offer, pre-approval, or commitment of any kind. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Actual rates, terms, and approval are determined solely by the financing institution. You are under no obligation until you sign a purchase agreement.
-  </div>
-
-</div><!-- /wrap -->
-
-<footer>
-  <div class="footer-copy">© 2026 Express Vehicle Locators — Plano, TX — AI specs for informational use only. EVL is a vehicle advisory platform — not a dealer.</div>
-</footer>
-
-<!-- DISCLOSURE MODAL -->
-<div class="disclosure-overlay hidden" id="disclosure-overlay">
-  <div class="disclosure-box">
-    <h3 id="disclosure-title">Disclosure</h3>
-    <p id="disclosure-text"></p>
-    <button class="disclosure-close" onclick="closeDisclosure()">Got It</button>
-  </div>
 </div>
 
 <script>
-// ── DISCLOSURES ──
-var DISCLOSURES = {
-  payment: {
-    title: 'Payment Estimate Disclosure',
-    text: 'The estimated monthly payment range shown is for informational purposes only and does not constitute a financing offer, pre-approval, or commitment of any kind. Estimates are based on Experian Q4 2025 average auto loan rates by credit tier, updated quarterly. Actual rates, monthly payments, and loan terms are determined solely by the financing institution based on a complete credit application, your full credit profile, vehicle details, and lender underwriting criteria. EVL is a technology advisory platform — not a lender, dealer, or credit reporting agency. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. You are under no obligation until you sign a purchase agreement.'
-  },
-  ttl: {
-    title: 'Tax, Title & License Estimate Disclosure',
-    text: 'Tax, title, and license estimates shown are based on Texas rates: 6.25% sales tax on the vehicle sales price plus approximately $250 for title and registration fees. Actual tax rates and fees vary by state, county, and individual transaction. Some vehicles may be subject to additional fees. The estimates shown are approximations only and should not be relied upon for budgeting purposes without verification from your EVL advisor or the relevant state DMV. EVL makes no representation regarding the accuracy of tax or fee estimates outside the state of Texas.'
-  }
-};
-
-function showDisclosure(key) {
-  var d = DISCLOSURES[key];
-  if(!d) return;
-  document.getElementById('disclosure-title').textContent = d.title;
-  document.getElementById('disclosure-text').textContent = d.text;
-  document.getElementById('disclosure-overlay').classList.remove('hidden');
-}
-function closeDisclosure() {
-  document.getElementById('disclosure-overlay').classList.add('hidden');
-}
-document.addEventListener('keydown', function(e) { if(e.key === 'Escape') closeDisclosure(); });
-
-// ── LOAD SESSION DATA ──
-var sessionData = {};
-
-function loadSession() {
-  sessionData = {
-    price:       parseFloat(sessionStorage.getItem('evl_vehicle_price')) || 0,
-    down:        parseFloat(sessionStorage.getItem('evl_down_payment')) || 0,
-    tradeEquity: parseFloat(sessionStorage.getItem('evl_trade_equity')) || 0,
-    creditScore: sessionStorage.getItem('evl_credit_score') || 'unknown',
-    creditLabel: sessionStorage.getItem('evl_credit_label') || 'Not provided',
-    creditTier:  sessionStorage.getItem('evl_credit_tier') || 'prime',
-    term:        parseInt(sessionStorage.getItem('evl_term')) || 60,
-    targetPay:   parseFloat(sessionStorage.getItem('evl_target_payment')) || 0,
-    customRate:  parseFloat(sessionStorage.getItem('evl_custom_rate')) || 0,
-    payLow:      parseFloat(sessionStorage.getItem('evl_pay_low')) || 0,
-    payHigh:     parseFloat(sessionStorage.getItem('evl_pay_high')) || 0,
-    rate:        parseFloat(sessionStorage.getItem('evl_rate_used')) || 0,
-  };
-
-  // Rates table (Experian Q4 2025)
-  var RATES = {
-    new:  { super_prime:4.66, prime:6.27, near_prime:9.57, subprime:13.0, deep_subprime:16.01 },
-    used: { super_prime:7.52, prime:9.75, near_prime:13.91, subprime:18.86, deep_subprime:22.16 }
-  };
-  var vtype  = sessionStorage.getItem('evl_vehicle_type') || 'new';
-  var tier   = sessionData.creditTier;
-  sessionData.rateUsed = sessionData.customRate > 0 ? sessionData.customRate : (RATES[vtype] ? RATES[vtype][tier] || 6.27 : 6.27);
-  sessionData.vtype = vtype;
-
-  renderSummary();
-  renderPayment();
-  renderTermTable();
-}
-
-function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
-
-function calcMonthly(principal, annualRate, months) {
-  if(annualRate === 0) return principal / months;
-  var r = annualRate / 100 / 12;
-  return principal * r * Math.pow(1+r, months) / (Math.pow(1+r, months) - 1);
-}
-
-function renderSummary() {
-  var d = sessionData;
-  var totalDown = d.down + d.tradeEquity;
-  var financed = Math.max(0, d.price - totalDown);
-  var ttl = Math.round(d.price * 0.0625 + 250);
-
-  sessionData.financed = financed;
-  sessionData.ttl = ttl;
-
-  document.getElementById('sumPrice').textContent      = d.price ? fmt(d.price) : 'Not entered';
-  document.getElementById('sumDown').textContent       = d.down ? fmt(d.down) : '$0';
-  document.getElementById('sumTradeEquity').textContent= d.tradeEquity ? fmt(d.tradeEquity) : 'None / Not entered';
-  document.getElementById('sumFinanced').textContent   = financed ? fmt(financed) : '—';
-  document.getElementById('sumCredit').textContent     = d.creditScore !== 'unknown' ? d.creditLabel + (d.creditScore && !isNaN(d.creditScore) ? ' (' + d.creditScore + ')' : '') : 'Not provided';
-  document.getElementById('sumRate').textContent       = d.rateUsed ? d.rateUsed + '% APR' + (d.customRate > 0 ? ' (your rate)' : ' (Experian avg)') : '—';
-  document.getElementById('sumTerm').textContent       = d.term ? d.term + ' months' : '60 months';
-  document.getElementById('sumTTL').textContent        = d.price ? '~' + fmt(ttl) + ' *' : '—';
-}
-
-function renderPayment() {
-  var d = sessionData;
-  if(!d.financed || !d.rateUsed) {
-    document.getElementById('motPaymentRange').textContent = 'Enter vehicle price to calculate';
-    return;
-  }
-
-  var VARIANCE = d.customRate > 0 ? 0.25 : (d.rateUsed > 10 ? 2 : 1);
-  var rateLow  = Math.max(0, d.rateUsed - VARIANCE);
-  var rateHigh = d.rateUsed + VARIANCE;
-  var payLow   = calcMonthly(d.financed, rateLow, d.term);
-  var payHigh  = calcMonthly(d.financed, rateHigh, d.term);
-
-  sessionData.payLow = payLow;
-  sessionData.payHigh = payHigh;
-
-  document.getElementById('motPaymentRange').textContent = fmt(payLow) + ' – ' + fmt(payHigh) + '/mo';
-  document.getElementById('motPaymentSub').textContent =
-    d.term + '-month term · ' + d.rateUsed + '% APR · ' + fmt(d.down + d.tradeEquity) + ' down';
-
-  // Target payment comparison
-  if(d.targetPay > 0) {
-    var targetRow = document.getElementById('targetRow');
-    var gapLabel  = document.getElementById('paymentGapLabel');
-    targetRow.style.display = 'flex';
-    var midPay = (payLow + payHigh) / 2;
-    var gap = Math.round(midPay - d.targetPay);
-    if(gap > 25) {
-      gapLabel.textContent = '+' + fmt(gap) + '/mo over your target';
-      gapLabel.className = 'payment-gap gap-over';
-    } else if(gap < -25) {
-      gapLabel.textContent = fmt(Math.abs(gap)) + '/mo under your target ✅';
-      gapLabel.className = 'payment-gap gap-under';
-    } else {
-      gapLabel.textContent = '✅ Right at your target';
-      gapLabel.className = 'payment-gap gap-match';
-    }
-  }
-}
-
-function renderTermTable() {
-  var d = sessionData;
-  if(!d.financed || !d.rateUsed) return;
-
-  var terms = [36, 48, 60, 72, 84];
-  var html = '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:2px;border-radius:8px;overflow:hidden;">';
-  html += '<div style="background:#1a2a3a;padding:10px 8px;font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">TERM</div>';
-  html += '<div style="background:#1a2a3a;padding:10px 8px;font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">PAYMENT</div>';
-  html += '<div style="background:#1a2a3a;padding:10px 8px;font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">TOTAL PAID</div>';
-  html += '<div style="background:#1a2a3a;padding:10px 8px;font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">EXTRA INTEREST</div>';
-
-  var basePay = calcMonthly(d.financed, d.rateUsed, d.term);
-  var baseTotal = basePay * d.term;
-
-  terms.forEach(function(t) {
-    var pmt = calcMonthly(d.financed, d.rateUsed, t);
-    var total = pmt * t;
-    var extraInterest = Math.max(0, total - d.financed);
-    var isSelected = t === d.term;
-    var bg = isSelected ? 'rgba(43,132,254,0.15)' : 'var(--s2)';
-    var border = isSelected ? 'border-left:3px solid var(--blue);' : '';
-    html += '<div style="background:' + bg + ';' + border + 'padding:10px 8px;font-size:13px;font-weight:900;color:#fff;text-align:center;">' + t + 'mo' + (isSelected ? '★' : '') + '</div>';
-    html += '<div style="background:' + bg + ';padding:10px 8px;font-size:13px;font-weight:900;color:var(--green);text-align:center;">' + fmt(pmt) + '</div>';
-    html += '<div style="background:' + bg + ';padding:10px 8px;font-size:13px;font-weight:700;color:#ffffff;text-align:center;">' + fmt(total) + '</div>';
-    html += '<div style="background:' + bg + ';padding:10px 8px;font-size:13px;font-weight:700;color:' + (extraInterest > baseTotal - d.financed + 500 ? 'var(--gold)' : '#ffffff') + ';text-align:center;">~' + fmt(extraInterest) + '</div>';
+  // ── LOAD PAYMENT SUMMARY FROM SESSION ──
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      const saved = sessionStorage.getItem('evl_payment_result');
+      if (saved) {
+        const r = JSON.parse(saved);
+        if (r.paymentDisplay) {
+          document.getElementById('mot-payment').innerHTML = 
+            r.paymentDisplay + '<span style="font-size:24px;">/mo</span>';
+        }
+        if (r.paymentSub) {
+          document.getElementById('mot-sub').textContent = r.paymentSub;
+        }
+      }
+    } catch(e) {}
   });
 
-  html += '</div>';
-  html += '<div style="font-size:12px;color:#ffffff;font-family:var(--body);margin-top:10px;line-height:1.5;">★ = your current term. Extra interest = total interest paid over life of loan at this term and rate.</div>';
-  document.getElementById('termTableMOT').innerHTML = html;
-}
+  // ── PATH 1 — READY ──
+  function handleReady() {
+    // Hide path cards
+    document.querySelectorAll('.path-card, .submenu, #think-panel, .credit-karma-card').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.querySelector('.section-title').style.display = 'none';
 
-// ── DOOR TOGGLE ──
-window.toggleDoor = function(id) {
-  var detail = document.getElementById(id);
-  var arrow  = document.getElementById('arrow' + id.replace('door',''));
-  var isOpen = detail.classList.contains('open');
-  detail.classList.toggle('open', !isOpen);
-  arrow.textContent = isOpen ? '▼' : '▲';
-};
+    // Show success
+    document.getElementById('success-panel').classList.add('show');
+    document.getElementById('success-panel').scrollIntoView({ behavior: 'smooth' });
 
-// ── MORE DOWN CALC ──
-window.calcMoreDown = function() {
-  var extra = parseFloat(document.getElementById('extraDown').value) || 0;
-  if(!extra) { document.getElementById('moreDownResult').style.display = 'none'; return; }
+    // Save status to localStorage
+    localStorage.setItem('evl_deal_status', 'in_progress');
+    localStorage.setItem('evl_last_page', '/moment-of-truth.html');
+  }
 
-  var d = sessionData;
-  var newFinanced = Math.max(0, d.financed - extra);
-  var VARIANCE = d.customRate > 0 ? 0.25 : (d.rateUsed > 10 ? 2 : 1);
-  var newPayLow  = calcMonthly(newFinanced, Math.max(0, d.rateUsed - VARIANCE), d.term);
-  var newPayHigh = calcMonthly(newFinanced, d.rateUsed + VARIANCE, d.term);
-  var savingLow  = d.payLow - newPayLow;
-  var savingHigh = d.payHigh - newPayHigh;
+  // ── PATH 2 — LOWER PAYMENT ──
+  function toggleSubmenu() {
+    const sub = document.getElementById('lower-submenu');
+    const arrow = document.getElementById('submenu-arrow');
+    const isOpen = sub.classList.contains('show');
+    sub.classList.toggle('show');
+    arrow.textContent = isOpen ? '↓' : '↑';
+  }
 
-  document.getElementById('moreDownPayment').textContent = fmt(newPayLow) + ' – ' + fmt(newPayHigh) + '/mo';
-  document.getElementById('moreDownSaving').textContent  = fmt(savingLow) + ' – ' + fmt(savingHigh) + '/mo less';
-  document.getElementById('moreDownFinanced').textContent= fmt(newFinanced);
-  document.getElementById('moreDownResult').style.display = 'block';
-};
+  function goToEstimatorWithHigherDown() {
+    sessionStorage.setItem('evl_mot_action', 'increase_down');
+    window.location.href = '/payment-estimator.html';
+  }
 
-// ── PROCEED ACK ──
-window.checkProceedAck = function() {
-  var checked = document.getElementById('proceedAck').checked;
-  document.getElementById('proceedBtn').style.display = checked ? 'block' : 'none';
-};
+  // ── PATH 3 — CREDIT KARMA ──
+  function toggleCreditKarma() {
+    const panel = document.getElementById('ck-panel');
+    panel.classList.toggle('show');
+    if (panel.classList.contains('show')) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
 
-window.goToActivate = function() {
-  sessionStorage.setItem('evl_mot_acknowledged', 'true');
-  window.location.href = '/payment-collection';
-};
-
-// ── INIT ──
-window.addEventListener('DOMContentLoaded', loadSession);
+  // ── PATH 4 — THINK ABOUT IT ──
+  function toggleThink() {
+    const panel = document.getElementById('think-panel');
+    panel.classList.toggle('show');
+    if (panel.classList.contains('show')) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
 </script>
+
 </body>
 </html>
