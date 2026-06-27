@@ -821,7 +821,7 @@ function buildVehicleCard(v, isList){
     </div>
     <div class="vehicle-card-actions">
       <button class="btn btn-blue btn-sm" onclick="event.stopPropagation();openVDP('${vin}')">🔍 DETAILS</button>
-      <button class="btn btn-green btn-sm" onclick="event.stopPropagation();requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')">⚡ REQUEST EVL</button>
+      <button class="btn btn-green btn-sm" onclick="event.stopPropagation();requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')">⚡ I WANT THIS</button>
     </div>
   </div>`;
 }
@@ -899,7 +899,7 @@ async function openVDP(vin){
       ${[['Market Low',v.price_stats?.mean?v.price_stats.mean*0.88:0],['This Vehicle',v.price||0],['Market High',v.price_stats?.mean?v.price_stats.mean*1.12:0]].map(([l,p])=>`<div class="vdp-market-bar-wrap"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:3px"><span>${l}</span><span>$${Math.round(p).toLocaleString()}</span></div></div>`).join('')}
     </div>
     <div style="display:flex;flex-direction:column;gap:8px">
-      <button class="btn btn-green" onclick="requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')" style="width:100%;justify-content:center">⚡ REQUEST EVL ADVISORY</button>
+      <button class="btn btn-green" onclick="requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')" style="width:100%;justify-content:center">⚡ I WANT THIS VEHICLE</button>
       <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue" style="width:100%;justify-content:center">📅 BOOK CONSULTATION</a>
       <a href="https://evl-decode-two.vercel.app/trade-in" class="btn btn-dark" style="width:100%;justify-content:center">🚗 VALUE MY TRADE-IN</a>
     </div>
@@ -912,8 +912,23 @@ function closeVDP(){
 }
 
 function requestAdvisory(vin, vehicleName){
-  const url = `https://evl-decode-two.vercel.app/appointment?q=${encodeURIComponent('EVL Advisory — '+vehicleName+' (VIN: '+vin+')')}`;
-  window.location.href = url;
+  // Find the vehicle record
+  const v = allVehicles.find(x => x.vin === vin) || {};
+
+  // Save vehicle details to sessionStorage
+  sessionStorage.setItem('evl_appointment_vehicle', vehicleName + (vin ? ' — VIN: ' + vin : ''));
+  sessionStorage.setItem('evl_appointment_vin', vin || '');
+
+  // Save dealer details if available
+  if(v.dealer_name)    sessionStorage.setItem('evl_appointment_dealer', v.dealer_name);
+  if(v.dealer_city)    sessionStorage.setItem('evl_appointment_dealer_address', (v.dealer_city || '') + ', ' + (v.dealer_state || ''));
+  if(v.dealer_phone)   sessionStorage.setItem('evl_appointment_dealer_phone', v.dealer_phone);
+
+  // Save vehicle price for reference
+  if(v.price)          sessionStorage.setItem('evl_appointment_vehicle_price', v.price);
+
+  // Route to appointment confirmation page
+  window.location.href = '/appointment-confirm';
 }
 
 // ── UI HELPERS ──
@@ -951,3 +966,4 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVDP();});
 </script>
 </body>
 </html>
+
