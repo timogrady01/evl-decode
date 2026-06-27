@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── HELPER FUNCTIONS ──
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
+    }
+    function isActiveDealer() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/evl_ws_dealers/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/evl_ws_dealers/$(request.auth.uid)).data.status == 'active';
+    }
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // ── RETAIL CUSTOMER COLLECTIONS ──
+
+    // evl_customers — customer owns their record, admin can read all
+    match /evl_customers/{uid} {
+      allow read, write: if isOwner(uid) || isAdmin();
+    }
+
+    // evl_leads — admin only
+    match /evl_leads/{docId} {
+      allow read, write: if isAdmin();
+      allow create: if true; // allow unauthenticated lead capture from forms
+    }
+
+    // evl_wholesale_leads — admin only
+    match /evl_wholesale_leads/{docId} {
+      allow read, write: if isAdmin();
+      allow create: if true;
+    }
+
+    // evl_consumer_calls — admin only (call log)
+    match /evl_consumer_calls/{docId} {
+      allow read, write: if isAdmin();
+      allow create: if true;
+    }
+
+    // evl_mastermind_customers — admin only retail CRM
+    match /evl_mastermind_customers/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // evl_activations — $199 platform fee activation records
+    // Customer can create their own, admin can read all
+    match /evl_activations/{docId} {
+      allow create: if true; // allow unauthenticated activation (guest checkout)
+      allow read, write: if isAdmin();
+      allow read: if request.auth != null &&
+        resource.data.uid == request.auth.uid;
+    }
+
+    // evl_appointments — appointment notification engine
+    // Customer can create, admin can read all
+    match /evl_appointments/{docId} {
+      allow create: if true; // allow any authenticated or guest customer to book
+      allow read, write: if isAdmin();
+      allow read: if request.auth != null &&
+        resource.data.uid == request.auth.uid;
+    }
+
+    // ── WHOLESALE COLLECTIONS ──
+
+    // evl_auctions — public read, admin write, active dealers can bid
+    match /evl_auctions/{auctionId} {
+      allow read: if true; // public read for auction display
+      allow write: if isAdmin();
+      allow update: if isActiveDealer(); // dealers can submit bids
+    }
+
+    // evl_ws_dealers — dealer owns their record, admin controls status
+    match /evl_ws_dealers/{dealerId} {
+      allow read: if isAdmin() || isActiveDealer();
+      allow create: if true; // allow new dealer registration
+      allow update: if isAdmin() || isOwner(dealerId);
+    }
+
+  }
+}
