@@ -629,6 +629,75 @@
     .next-steps { grid-template-columns: 1fr; }
     .scenario-tabs { grid-template-columns: 1fr; }
   }
+
+  /* ── MODE TABS ── */
+  .mode-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+  }
+
+  .mode-tab {
+    padding: 14px 10px;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mode-tab.active {
+    background: var(--white);
+    color: var(--blue);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  .mode-tab .tab-icon { font-size: 20px; }
+  .mode-tab .tab-text { font-size: 13px; font-weight: 700; }
+
+  /* ── REVERSE RESULTS ── */
+  .price-range-display {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .price-range-display .prd-label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 8px;
+  }
+
+  .price-range-display .prd-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .price-range-display .prd-sub {
+    font-size: 16px;
+    color: var(--text-soft);
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
@@ -652,9 +721,21 @@
     <p>See your estimated monthly payment range.<br>No credit pull. No commitment.</p>
   </div>
 
+  <!-- MODE TABS -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="switchMode('payment')" id="mode-payment">
+      <span class="tab-icon">💰</span>
+      <span class="tab-text">Calculate My Payment</span>
+    </button>
+    <button class="mode-tab" onclick="switchMode('reverse')" id="mode-reverse">
+      <span class="tab-icon">🎯</span>
+      <span class="tab-text">Find My Price Range</span>
+    </button>
+  </div>
+
   <!-- INPUT CARD -->
   <div class="card">
-    <div class="card-title">Tell Us About Your Deal</div>
+    <div class="card-title" id="input-card-title">Tell Us About Your Deal</div>
 
     <div class="msg" id="msg"></div>
 
@@ -760,7 +841,92 @@
       </div>
     </div>
 
-    <button class="btn-calc" onclick="calculate()">Calculate My Payment Range</button>
+    <!-- STANDARD MODE FIELDS -->
+    <div id="standard-fields">
+      <!-- already rendered above -->
+    </div>
+
+    <!-- REVERSE MODE FIELDS -->
+    <div id="reverse-fields" style="display:none;">
+      <div class="field-row">
+        <div>
+          <label for="target-payment">Target Monthly Payment</label>
+          <input type="number" id="target-payment" placeholder="650" min="100" max="5000">
+        </div>
+        <div>
+          <label for="rev-down">Down Payment</label>
+          <input type="number" id="rev-down" placeholder="2000" min="0">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Your Credit Score Range</label>
+        <div class="credit-options">
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc1" value="super_prime">
+            <label for="rc1">Excellent<span class="credit-score-range">781–850</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc2" value="prime" checked>
+            <label for="rc2">Good<span class="credit-score-range">661–780</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc3" value="near_prime">
+            <label for="rc3">Fair<span class="credit-score-range">601–660</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc4" value="subprime">
+            <label for="rc4">Poor<span class="credit-score-range">501–600</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc5" value="deep_subprime">
+            <label for="rc5">Rebuilding<span class="credit-score-range">300–500</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Vehicle Type</label>
+        <div class="type-options">
+          <div class="type-opt">
+            <input type="radio" name="rev-vtype" id="rnew" value="new" checked>
+            <label for="rnew"><span style="font-size:22px;">🏷️</span>New Vehicle</label>
+          </div>
+          <div class="type-opt">
+            <input type="radio" name="rev-vtype" id="rused" value="used">
+            <label for="rused"><span style="font-size:22px;">🔑</span>Used Vehicle</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Loan Term</label>
+        <div class="term-options">
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt36" value="36">
+            <label for="rt36">36<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt48" value="48">
+            <label for="rt48">48<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt60" value="60" checked>
+            <label for="rt60">60<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt72" value="72">
+            <label for="rt72">72<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt84" value="84">
+            <label for="rt84">84<span>mo</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calc-btn" onclick="handleCalc()">Calculate My Payment Range</button>
   </div>
 
   <!-- RESULTS CARD -->
@@ -831,6 +997,74 @@
       <a href="/my-deal.html" class="next-btn secondary">Back to My Deal</a>
     </div>
 
+  </div>
+
+</div>
+
+<!-- REVERSE RESULTS CARD -->
+<div class="card" id="reverse-results" style="display:none;">
+
+  <div class="price-range-display">
+    <div class="prd-label">You Can Afford a Vehicle Priced Up To</div>
+    <div class="prd-value" id="rev-price-display">$—</div>
+    <div class="prd-sub" id="rev-price-sub">Based on standard market rate</div>
+  </div>
+
+  <!-- INPUTS SUMMARY -->
+  <div class="inputs-summary">
+    <div class="input-chip">
+      <span class="chip-label">Payment</span>
+      <span class="chip-value" id="rev-sum-payment">—</span>
+    </div>
+    <div class="input-chip">
+      <span class="chip-label">Down</span>
+      <span class="chip-value" id="rev-sum-down">—</span>
+    </div>
+    <div class="input-chip">
+      <span class="chip-label">Term</span>
+      <span class="chip-value" id="rev-sum-term">—</span>
+    </div>
+    <div class="input-chip">
+      <span class="chip-label">Credit</span>
+      <span class="chip-value" id="rev-sum-credit">—</span>
+    </div>
+  </div>
+
+  <!-- SCENARIO TABS -->
+  <div class="scenario-tabs">
+    <div class="scenario-tab active" onclick="selectRevScenario('standard')" id="rev-tab-standard">
+      <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('standard')">i</button>
+      <span class="tab-label">Standard Rate</span>
+      <span class="tab-rate" id="rev-rate-standard">—%</span>
+      <span class="tab-payment" id="rev-price-standard">Up to $—</span>
+    </div>
+    <div class="scenario-tab" onclick="selectRevScenario('mfr')" id="rev-tab-mfr">
+      <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('mfr')">i</button>
+      <span class="tab-label">Mfr. 0% APR</span>
+      <span class="tab-rate" id="rev-rate-mfr">0%</span>
+      <span class="tab-payment" id="rev-price-mfr">Up to $—</span>
+    </div>
+    <div class="scenario-tab" onclick="selectRevScenario('buydown')" id="rev-tab-buydown">
+      <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('buydown')">i</button>
+      <span class="tab-label">Special Rate</span>
+      <span class="tab-rate" id="rev-rate-buydown">0%</span>
+      <span class="tab-payment" id="rev-price-buydown">Up to $—</span>
+    </div>
+  </div>
+
+  <!-- SCENARIO DETAIL -->
+  <div class="scenario-detail" id="rev-scenario-detail">Select a scenario above to see details.</div>
+
+  <!-- PLATFORM DISCLAIMER -->
+  <div class="platform-disclaimer">
+    <strong>⚠ EVL Platform Disclosure</strong>
+    Payment estimates provided by EVL are for informational purposes only and do not constitute a financing offer or commitment. Actual rates, terms, and approval are determined solely by the financing institution. EVL is not a lender and does not participate in any financing transaction. Manufacturer and dealer financing offers are subject to change without notice and require credit approval. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Results displayed are estimates only and may not reflect the actual terms available to you. Credit score ranges used in this estimator are based on published industry averages and are provided for general reference purposes only. Individual lender criteria and underwriting standards vary. Always consult directly with a licensed financing professional before making any financial decision.
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="next-steps">
+    <a href="/find.html" class="next-btn primary">Find Vehicles In My Range →</a>
+    <a href="/my-deal.html" class="next-btn secondary">Back to My Deal</a>
   </div>
 
 </div>
@@ -1015,7 +1249,157 @@
     document.getElementById('disclosure-overlay').classList.add('hidden');
   }
 
-  // Close on overlay click
+  // ── MODE SWITCHING ──
+  let currentMode = 'payment';
+
+  window.switchMode = function(mode) {
+    currentMode = mode;
+    
+    // Update tabs
+    document.getElementById('mode-payment').classList.toggle('active', mode === 'payment');
+    document.getElementById('mode-reverse').classList.toggle('active', mode === 'reverse');
+
+    // Show/hide fields
+    const stdFields = document.getElementById('standard-fields');
+    const revFields = document.getElementById('reverse-fields');
+    
+    if (mode === 'payment') {
+      // Show all standard fields
+      document.getElementById('price').closest('.field-row').style.display = 'grid';
+      document.querySelectorAll('input[name="vtype"]')[0].closest('.field').style.display = 'block';
+      document.querySelectorAll('input[name="credit"]')[0].closest('.field').style.display = 'block';
+      document.querySelectorAll('input[name="term"]')[0].closest('.field').style.display = 'block';
+      revFields.style.display = 'none';
+      document.getElementById('calc-btn').textContent = 'Calculate My Payment Range';
+      document.getElementById('input-card-title').textContent = 'Tell Us About Your Deal';
+      // Hide reverse results
+      document.getElementById('reverse-results').style.display = 'none';
+    } else {
+      // Hide standard fields
+      document.getElementById('price').closest('.field-row').style.display = 'none';
+      document.querySelectorAll('input[name="vtype"]')[0].closest('.field').style.display = 'none';
+      document.querySelectorAll('input[name="credit"]')[0].closest('.field').style.display = 'none';
+      document.querySelectorAll('input[name="term"]')[0].closest('.field').style.display = 'none';
+      revFields.style.display = 'block';
+      document.getElementById('calc-btn').textContent = 'Find My Price Range';
+      document.getElementById('input-card-title').textContent = 'What Can I Afford?';
+      // Hide standard results
+      document.getElementById('results').style.display = 'none';
+    }
+
+    // Clear message
+    document.getElementById('msg').classList.remove('show');
+  };
+
+  window.handleCalc = function() {
+    if (currentMode === 'payment') {
+      calculate();
+    } else {
+      calculateReverse();
+    }
+  };
+
+  // ── REVERSE CALCULATOR ──
+  function calcMaxPrice(monthlyPayment, annualRate, months, downPayment) {
+    let loanAmount;
+    if (annualRate === 0) {
+      loanAmount = monthlyPayment * months;
+    } else {
+      const r = annualRate / 100 / 12;
+      loanAmount = monthlyPayment * (1 - Math.pow(1 + r, -months)) / r;
+    }
+    return loanAmount + downPayment;
+  }
+
+  function calculateReverse() {
+    const payment = parseFloat(document.getElementById('target-payment').value);
+    const down    = parseFloat(document.getElementById('rev-down').value) || 0;
+    const credit  = document.querySelector('input[name="rev-credit"]:checked').value;
+    const vtype   = document.querySelector('input[name="rev-vtype"]:checked').value;
+    const term    = parseInt(document.querySelector('input[name="rev-term"]:checked').value);
+    const msg     = document.getElementById('msg');
+
+    if (!payment || payment < 100) {
+      msg.textContent = 'Please enter a valid target monthly payment.';
+      msg.classList.add('show');
+      return;
+    }
+    msg.classList.remove('show');
+
+    const rate     = RATES[vtype][credit];
+    const rateLow  = Math.max(0, rate - VARIANCE);
+    const rateHigh = rate + VARIANCE;
+
+    // At standard rate — use midpoint rate for max price
+    const maxStandard = calcMaxPrice(payment, rate, term, down);
+    const maxStdLow   = calcMaxPrice(payment, rateHigh, term, down); // higher rate = lower price
+    const maxStdHigh  = calcMaxPrice(payment, rateLow, term, down);  // lower rate = higher price
+
+    // At 0%
+    const max0 = calcMaxPrice(payment, 0, term, down);
+
+    // Store reverse results
+    calcResults.reverse = {
+      standard: { rate, maxLow: maxStdLow, maxHigh: maxStdHigh },
+      mfr:      { rate: 0, maxLow: max0 * 0.97, maxHigh: max0 * 1.03 },
+      buydown:  { rate: 0, maxLow: max0 * 0.97, maxHigh: max0 * 1.03 },
+      payment, down, term, vtype, credit
+    };
+
+    // Update scenario tabs
+    document.getElementById('rev-rate-standard').textContent  = rate.toFixed(2) + '%';
+    document.getElementById('rev-price-standard').textContent = `${fmt(maxStdLow)} – ${fmt(maxStdHigh)}`;
+    document.getElementById('rev-rate-mfr').textContent       = '0%*';
+    document.getElementById('rev-price-mfr').textContent      = `${fmt(max0 * 0.97)} – ${fmt(max0 * 1.03)}`;
+    document.getElementById('rev-rate-buydown').textContent   = '0%*';
+    document.getElementById('rev-price-buydown').textContent  = `${fmt(max0 * 0.97)} – ${fmt(max0 * 1.03)}`;
+
+    // Summary chips
+    document.getElementById('rev-sum-payment').textContent = fmt(payment) + '/mo';
+    document.getElementById('rev-sum-down').textContent    = fmt(down);
+    document.getElementById('rev-sum-term').textContent    = term + ' mo';
+    document.getElementById('rev-sum-credit').textContent  = getCreditLabel(credit).split(' ')[0];
+
+    // Show results
+    document.getElementById('reverse-results').style.display = 'block';
+    document.getElementById('reverse-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    selectRevScenario('standard');
+  }
+
+  function selectRevScenario(scenario) {
+    if (!calcResults.reverse) return;
+
+    ['standard', 'mfr', 'buydown'].forEach(s => {
+      document.getElementById(`rev-tab-${s}`).classList.toggle('active', s === scenario);
+    });
+
+    const r = calcResults.reverse;
+    let maxLow, maxHigh, detail, ratePct;
+
+    if (scenario === 'standard') {
+      maxLow  = r.standard.maxLow;
+      maxHigh = r.standard.maxHigh;
+      ratePct = r.standard.rate.toFixed(2) + '% APR';
+      detail  = `Based on the ${getCreditLabel(r.credit)} credit tier (${ratePct}) for a ${r.vtype} vehicle over ${r.term} months. Range reflects typical lender variance of +/-0.75%. Source: Experian Q4 2025.`;
+    } else if (scenario === 'mfr') {
+      maxLow  = r.mfr.maxLow;
+      maxHigh = r.mfr.maxHigh;
+      ratePct = '0% APR';
+      detail  = `Estimate assumes 0% manufacturer-subvented APR for ${r.term} months. Requires qualified credit with approved lender. Not all buyers will qualify. Tap the info button for full disclosure.`;
+    } else {
+      maxLow  = r.buydown.maxLow;
+      maxHigh = r.buydown.maxHigh;
+      ratePct = '0% APR';
+      detail  = `Estimate assumes 0% APR through dealer-arranged special rate financing for ${r.term} months. Special rate may be in lieu of other available discounts. Tap the info button for full disclosure.`;
+    }
+
+    document.getElementById('rev-price-display').textContent = `${fmt(maxLow)} – ${fmt(maxHigh)}`;
+    document.getElementById('rev-price-sub').textContent     = `${r.term}-month term · ${ratePct} · ${fmt(r.down)} down`;
+    document.getElementById('rev-scenario-detail').textContent = detail;
+  }
+
+  // ── Close on overlay click
   document.getElementById('disclosure-overlay').addEventListener('click', function(e) {
     if (e.target === this) closeDisclosure();
   });
