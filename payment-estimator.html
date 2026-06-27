@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Estimator — EVL</title>
-<!-- v2026-06-26 -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -443,21 +442,22 @@
   /* ── INFO ICON ── */
   .info-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 20px;
-    height: 20px;
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: var(--blue-mid);
+    background: var(--blue);
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 900;
-    color: var(--blue);
+    color: white;
     font-family: serif;
+    box-shadow: 0 2px 6px rgba(37,99,235,0.3);
   }
 
   /* ── DISCLOSURE POPUP ── */
@@ -874,7 +874,7 @@
     },
     mfr: {
       title: 'Manufacturer 0% APR Disclosure',
-      text: '0% APR financing may be available on select new vehicle models through manufacturer-approved lending sources with qualified credit. Toyota Financial Services financing is provided through Toyota Motor Credit Corporation (TMCC). Not all buyers will qualify. Offer availability, eligible models, and terms vary and are subject to change without notice. Higher rates apply for buyers who do not meet credit requirements. See your EVL advisor or dealer for current offer details and eligibility requirements.'
+      text: '0% APR financing may be available on select new vehicle models through manufacturer-approved lending sources with qualified credit. Not all buyers will qualify. Offer availability, eligible models, and terms vary by manufacturer and lender and are subject to change without notice. Higher rates apply for buyers who do not meet credit requirements. Manufacturer financing programs are administered by the manufacturer's affiliated lending institution. See your EVL advisor for current manufacturer offer details and eligibility requirements.'
     },
     buydown: {
       title: 'Special Rate / Dealer Buydown Disclosure',
