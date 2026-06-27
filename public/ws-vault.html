@@ -803,6 +803,59 @@ body { display:block !important; align-items:unset !important; justify-content:u
 </div>
 
 
+<!-- JUN 26 2026 — SESSION 2 BUILD LOG -->
+<div class="card" style="margin-top:32px;">
+  <div class="card-title">📋 Build Log — Jun 26, 2026 — Session 2</div>
+  <p style="font-size:15px;color:#ffffff;font-family:var(--body);font-weight:600;margin-bottom:20px;">Appointment notification engine, dealer contact routing, payment collection, Firestore rules update completed.</p>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">① Pages Built / Updated</div>
+  <table>
+    <thead><tr><th>Page</th><th>URL</th><th>What Changed</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Payment Collection</td><td>/payment-collection</td><td>NEW. $199 EVL platform fee activation. No credit cards — check/wire/ACH only. Five acknowledgment checkboxes. Saves to evl_activations Firestore collection with full session data and confirmation number.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>WS Onboarding</td><td>/ws-onboarding</td><td>UPDATED. GSM and Salesperson contact fields added to Step 2. Both saved to evl_ws_dealers under gsm{} and salesperson{} objects. Notification explainer added.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Appointment Confirm</td><td>/appointment-confirm</td><td>NEW. Full appointment notification engine. Four simultaneous EmailJS notifications on submit — GSM, SP, Customer, EVL Admin. Saves to evl_appointments Firestore collection with full customer profile, dealer contacts, credit tier, payment range, and confirmation number.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>WS Dashboard</td><td>/ws-dashboard</td><td>FIXED. evl_dealers → evl_ws_dealers collection name corrected on line 646. Brand match engine now reads correct collection.</td><td><span class="badge badge-green">LIVE</span></td></tr>
+      <tr><td>Firestore Rules</td><td>firestore.rules</td><td>UPDATED. Added evl_appointments (public create, owner/admin read) and evl_activations (public create, owner/admin read). Pushed to GitHub. Needs paste into Firebase Console to activate.</td><td><span class="badge badge-blue">PENDING FIREBASE</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">② EmailJS Templates — Written — Pending Creation</div>
+  <table>
+    <thead><tr><th>Template Name</th><th>Template ID</th><th>Fires To</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>EVL-APPT-DEALER</td><td>template_appt_dealer</td><td>GSM + Salesperson simultaneously</td><td><span class="badge badge-blue">PENDING</span></td></tr>
+      <tr><td>EVL-APPT-CUSTOMER</td><td>template_appt_customer</td><td>Customer appointment confirmation</td><td><span class="badge badge-blue">PENDING</span></td></tr>
+      <tr><td>EVL-APPT-ADMIN</td><td>template_appt_admin</td><td>Tim — togradyevl@gmail.com admin alert</td><td><span class="badge badge-blue">PENDING</span></td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">③ Key Decisions Locked</div>
+  <table>
+    <thead><tr><th>Decision</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--gold);font-weight:900;">No Vehicle Hold</td><td>EVL does not hold or reserve vehicles. No deposit. No courtesy hold. Speed is the model — pre-qualified customer moves fast and arrives at scheduled time.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">No Money Through EVL</td><td>EVL never holds or processes funds of any kind. $199 platform fee is the only EVL charge — paid by check/wire/ACH only. No credit cards ever.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">GSM + SP Routing</td><td>Every appointment notification fires simultaneously to GSM AND Salesperson. Both captured during onboarding. No lead ever goes to a single inbox.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Four-Party Notification</td><td>GSM (email) + Salesperson (email) + Customer (confirmation) + EVL Admin Tim (alert). All four simultaneous on every appointment submission.</td></tr>
+      <tr><td style="color:var(--gold);font-weight:900;">Twilio Business Number</td><td>+14694043192 is both the FROM number and test recipient. Old test number +14698772165 is retired.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:24px 0 12px;">④ Outstanding — Needs Desktop Session</div>
+  <table>
+    <thead><tr><th>Item</th><th>Action Required</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--red);font-weight:900;">Firestore Rules</td><td>Copy firestore.rules from GitHub → paste into Firebase Console → Firestore → Rules tab → Publish</td><td>console.firebase.google.com → evl-acquisition-radar</td></tr>
+      <tr><td style="color:var(--red);font-weight:900;">EmailJS Template 1</td><td>Create EVL-APPT-DEALER at emailjs.com</td><td>emailjs.com → Email Templates → Create New</td></tr>
+      <tr><td style="color:var(--red);font-weight:900;">EmailJS Template 2</td><td>Create EVL-APPT-CUSTOMER at emailjs.com</td><td>emailjs.com → Email Templates → Create New</td></tr>
+      <tr><td style="color:var(--red);font-weight:900;">EmailJS Template 3</td><td>Create EVL-APPT-ADMIN at emailjs.com</td><td>emailjs.com → Email Templates → Create New</td></tr>
+      <tr><td style="color:var(--red);font-weight:900;">Twilio SMS</td><td>Vercel → Settings → Env Vars → confirm 3 vars present → hit /api/debug-env → test to +14694043192</td><td>vercel.com → evl-decode project</td></tr>
+      <tr><td style="color:var(--red);font-weight:900;">WordPress Audit</td><td>WP Admin → Pages → All Pages → screenshot and send to Claude for cross-reference</td><td>expressvehiclelocators.com/wp-admin</td></tr>
+    </tbody>
+  </table>
+</div><!-- /Jun 26 Session 2 -->
+
 <!-- JUN 26 2026 — FULL REPO AUDIT & MISSING PAGE DOCUMENTATION -->
 <div class="card" style="margin-top:32px;">
   <div class="card-title">📋 Full Repo Audit — Jun 26, 2026 — All 49 Pages Documented</div>
@@ -1450,3 +1503,4 @@ function toggleWsNav(){document.getElementById('evl-ws-nav-links').classList.tog
 (function(){var path=window.location.pathname;document.querySelectorAll('.evl-ws-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.includes(a.getAttribute('href').split('/').pop())){a.style.color='#FFD700';a.style.borderBottom='2px solid #FFD700';}});})();
 </script>
 </body></html>
+
