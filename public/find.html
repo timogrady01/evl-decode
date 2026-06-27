@@ -927,8 +927,16 @@ function requestAdvisory(vin, vehicleName){
   // Save vehicle price for reference
   if(v.price)          sessionStorage.setItem('evl_appointment_vehicle_price', v.price);
 
-  // Route to appointment confirmation page
-  window.location.href = '/appointment-confirm';
+  // Save full vehicle data for payment-collection page
+  sessionStorage.setItem('evl_selected_vehicle', vehicleName);
+  sessionStorage.setItem('evl_selected_vin', vin || '');
+  if(v.price)       sessionStorage.setItem('evl_vehicle_price', v.price);
+  if(v.mileage)     sessionStorage.setItem('evl_vehicle_mileage', v.mileage);
+  if(v.dealer_name) sessionStorage.setItem('evl_vehicle_dealer', v.dealer_name);
+  if(v.dealer_city) sessionStorage.setItem('evl_vehicle_dealer_city', v.dealer_city);
+
+  // Route to EVL activation / payment collection
+  window.location.href = '/payment-collection';
 }
 
 // ── UI HELPERS ──
