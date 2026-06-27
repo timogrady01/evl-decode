@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moment of Truth — EVL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F8FA;
+    --white: #FFFFFF;
+    --blue: #2563EB;
+    --blue-dark: #1D4ED8;
+    --blue-light: #EFF6FF;
+    --blue-mid: #DBEAFE;
+    --text: #111827;
+    --text-mid: #374151;
+    --text-soft: #6B7280;
+    --border: #E5E7EB;
+    --green: #16A34A;
+    --green-bg: #F0FDF4;
+    --green-border: #BBF7D0;
+    --orange: #D97706;
+    --orange-bg: #FFFBEB;
+    --purple: #7C3AED;
+    --purple-bg: #F5F3FF;
+    --grey-bg: #F9FAFB;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--blue); }
+
+  .nav-back {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .header-icon {
+    width: 72px;
+    height: 72px;
+    background: var(--blue-light);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 36px;
+  }
+
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+
+  .page-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+
+  .page-header p {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  /* ── PAYMENT SUMMARY CARD ── */
+  .summary-card {
+    background: var(--blue);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .summary-card .summary-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 6px;
+  }
+
+  .summary-card .summary-payment {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+  }
+
+  .summary-card .summary-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  .summary-card .summary-edit {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 14px;
+  }
+
+  /* ── PATH CARDS ── */
+  .path-card {
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .path-card:hover {
+    border-color: var(--blue);
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+  }
+
+  .path-card.green:hover { border-color: var(--green); }
+  .path-card.orange:hover { border-color: var(--orange); }
+  .path-card.purple:hover { border-color: var(--purple); }
+  .path-card.grey:hover { border-color: var(--text-soft); }
+
+  .path-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .path-icon.blue   { background: var(--blue-light); }
+  .path-icon.green  { background: var(--green-bg); }
+  .path-icon.orange { background: var(--orange-bg); }
+  .path-icon.purple { background: var(--purple-bg); }
+  .path-icon.grey   { background: var(--grey-bg); }
+
+  .path-content { flex: 1; }
+
+  .path-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .path-sub {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.4;
+  }
+
+  .path-arrow {
+    font-size: 22px;
+    color: var(--text-soft);
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  /* ── LOWER PAYMENT SUBMENU ── */
+  .submenu {
+    display: none;
+    margin-top: -6px;
+    margin-bottom: 14px;
+    background: var(--grey-bg);
+    border: 1px solid var(--border);
+    border-radius: 0 0 16px 16px;
+    overflow: hidden;
+  }
+
+  .submenu.show { display: block; }
+
+  .submenu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+
+  .submenu-item:last-child { border-bottom: none; }
+  .submenu-item:hover { background: var(--blue-light); }
+
+  .submenu-item .sub-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--white);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .submenu-item .sub-text .sub-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .submenu-item .sub-text .sub-desc {
+    font-size: 13px;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  /* ── THINK ABOUT IT PANEL ── */
+  #think-panel {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-top: -6px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  #think-panel.show { display: block; }
+
+  #think-panel h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  #think-panel p {
+    font-size: 16px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .think-btn {
+    width: 100%;
+    background: var(--text);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+
+  /* ── SUCCESS STATE ── */
+  #success-panel {
+    display: none;
+    text-align: center;
+    padding: 48px 28px;
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  #success-panel.show { display: block; }
+
+  #success-panel .s-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+  }
+
+  #success-panel h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  #success-panel p {
+    font-size: 17px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .success-btn {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── CREDIT KARMA SECTION ── */
+  .credit-karma-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-top: -6px;
+    margin-bottom: 14px;
+    display: none;
+  }
+
+  .credit-karma-card.show { display: block; }
+
+  .credit-karma-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .credit-karma-card p {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .ck-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #3AC389;
+    color: white;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: 14px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ck-note {
+    font-size: 13px;
+    color: var(--text-soft);
+    text-align: center;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Express <span>Vehicle</span> Locators</a>
+  <a href="/my-deal.html" class="nav-back">← Back to My Deal</a>
+</nav>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-icon">⚡</div>
+    <div class="eyebrow">My EVL Portal</div>
+    <h1>Moment of Truth</h1>
+    <p>Here's where your deal stands.<br>What would you like to do next?</p>
+  </div>
+
+  <!-- PAYMENT SUMMARY -->
+  <div class="summary-card">
+    <div>
+      <div class="summary-label">Your Estimated Payment Range</div>
+      <div class="summary-payment" id="mot-payment">$837 – $867<span style="font-size:24px;">/mo</span></div>
+      <div class="summary-sub" id="mot-sub">60-month term · 7.01% APR · $2,000 down</div>
+    </div>
+    <a href="/payment-estimator.html" class="summary-edit">Edit Estimate</a>
+  </div>
+
+  <!-- PATHS -->
+  <div class="section-title">Choose Your Next Step</div>
+
+  <!-- PATH 1 — READY TO GO -->
+  <div class="path-card green" onclick="handleReady()">
+    <div class="path-icon green">✅</div>
+    <div class="path-content">
+      <div class="path-title">I'm Ready to Move Forward</div>
+      <div class="path-sub">This works for me — let's get my deal started with an EVL advisor.</div>
+    </div>
+    <div class="path-arrow">→</div>
+  </div>
+
+  <!-- PATH 2 — LOWER PAYMENT -->
+  <div class="path-card orange" onclick="toggleSubmenu()">
+    <div class="path-icon orange">📉</div>
+    <div class="path-content">
+      <div class="path-title">I Want a Lower Payment</div>
+      <div class="path-sub">Let's look at ways to bring this number down.</div>
+    </div>
+    <div class="path-arrow" id="submenu-arrow">↓</div>
+  </div>
+
+  <!-- LOWER PAYMENT SUBMENU -->
+  <div class="submenu" id="lower-submenu">
+    <a href="/find.html" class="submenu-item">
+      <div class="sub-icon">🚗</div>
+      <div class="sub-text">
+        <div class="sub-title">Find a Less Expensive Vehicle</div>
+        <div class="sub-desc">Search vehicles in a lower price range</div>
+      </div>
+    </a>
+    <div class="submenu-item" onclick="goToEstimatorWithHigherDown()">
+      <div class="sub-icon">💵</div>
+      <div class="sub-text">
+        <div class="sub-title">Increase My Down Payment</div>
+        <div class="sub-desc">See how more down affects my monthly payment</div>
+      </div>
+    </div>
+    <a href="/payment-estimator.html" class="submenu-item">
+      <div class="sub-icon">📅</div>
+      <div class="sub-text">
+        <div class="sub-title">Try a Longer Term</div>
+        <div class="sub-desc">Stretch to 72 or 84 months to lower payments</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- PATH 3 — CHECK CREDIT -->
+  <div class="path-card purple" onclick="toggleCreditKarma()">
+    <div class="path-icon purple">📊</div>
+    <div class="path-content">
+      <div class="path-title">Check My Real Credit Score First</div>
+      <div class="path-sub">Get your actual score — it's free, no impact to credit.</div>
+    </div>
+    <div class="path-arrow">→</div>
+  </div>
+
+  <!-- CREDIT KARMA PANEL -->
+  <div class="credit-karma-card" id="ck-panel">
+    <h3>Get Your Real Score — Free</h3>
+    <p>Credit Karma shows your real TransUnion and Equifax scores instantly — no credit pull, no impact. Once you have your score, come back and re-run your estimate for a more accurate result.</p>
+    <a href="https://www.creditkarma.com" target="_blank" class="ck-btn">
+      <span>📊</span> Check My Score on Credit Karma
+    </a>
+    <div class="ck-note">Opens in a new tab. EVL has no affiliation with Credit Karma.</div>
+  </div>
+
+  <!-- PATH 4 — THINK ABOUT IT -->
+  <div class="path-card grey" onclick="toggleThink()">
+    <div class="path-icon grey">💭</div>
+    <div class="path-content">
+      <div class="path-title">I Need to Think About It</div>
+      <div class="path-sub">No rush — your deal is saved and your portal stays open.</div>
+    </div>
+    <div class="path-arrow">→</div>
+  </div>
+
+  <!-- THINK PANEL -->
+  <div id="think-panel">
+    <h3>No Problem — We'll Be Here</h3>
+    <p>Your deal progress is saved. We'll send you a friendly reminder so you can pick up right where you left off. No pressure, no obligation.</p>
+    <a href="/my-deal.html" class="think-btn">Return to My Deal →</a>
+  </div>
+
+  <!-- SUCCESS PANEL -->
+  <div id="success-panel">
+    <div class="s-icon">🎉</div>
+    <h2>Let's Make It Happen!</h2>
+    <p>Your EVL advisor will be in touch shortly to move your deal forward. You'll receive a confirmation shortly.</p>
+    <a href="/schedule.html" class="success-btn">Schedule My Call →</a>
+  </div>
+
+</div>
+
+<script>
+  // ── LOAD PAYMENT SUMMARY FROM SESSION ──
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      const saved = sessionStorage.getItem('evl_payment_result');
+      if (saved) {
+        const r = JSON.parse(saved);
+        if (r.paymentDisplay) {
+          document.getElementById('mot-payment').innerHTML = 
+            r.paymentDisplay + '<span style="font-size:24px;">/mo</span>';
+        }
+        if (r.paymentSub) {
+          document.getElementById('mot-sub').textContent = r.paymentSub;
+        }
+      }
+    } catch(e) {}
+  });
+
+  // ── PATH 1 — READY ──
+  function handleReady() {
+    // Hide path cards
+    document.querySelectorAll('.path-card, .submenu, #think-panel, .credit-karma-card').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.querySelector('.section-title').style.display = 'none';
+
+    // Show success
+    document.getElementById('success-panel').classList.add('show');
+    document.getElementById('success-panel').scrollIntoView({ behavior: 'smooth' });
+
+    // Save status to localStorage
+    localStorage.setItem('evl_deal_status', 'in_progress');
+    localStorage.setItem('evl_last_page', '/moment-of-truth.html');
+  }
+
+  // ── PATH 2 — LOWER PAYMENT ──
+  function toggleSubmenu() {
+    const sub = document.getElementById('lower-submenu');
+    const arrow = document.getElementById('submenu-arrow');
+    const isOpen = sub.classList.contains('show');
+    sub.classList.toggle('show');
+    arrow.textContent = isOpen ? '↓' : '↑';
+  }
+
+  function goToEstimatorWithHigherDown() {
+    sessionStorage.setItem('evl_mot_action', 'increase_down');
+    window.location.href = '/payment-estimator.html';
+  }
+
+  // ── PATH 3 — CREDIT KARMA ──
+  function toggleCreditKarma() {
+    const panel = document.getElementById('ck-panel');
+    panel.classList.toggle('show');
+    if (panel.classList.contains('show')) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  // ── PATH 4 — THINK ABOUT IT ──
+  function toggleThink() {
+    const panel = document.getElementById('think-panel');
+    panel.classList.toggle('show');
+    if (panel.classList.contains('show')) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+</script>
+
+</body>
+</html>
