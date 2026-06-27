@@ -377,6 +377,14 @@
       "destination": "public/login.html"
     },
     {
+      "source": "/payment-collection",
+      "destination": "public/payment-collection.html"
+    },
+    {
+      "source": "/payment-collection.html",
+      "destination": "public/payment-collection.html"
+    },
+    {
       "source": "/moment-of-truth.html",
       "destination": "public/moment-of-truth.html"
     },
@@ -411,6 +419,14 @@
     {
       "source": "/moment-of-truth",
       "destination": "public/moment-of-truth.html"
+    },
+    {
+      "source": "/payment-collection",
+      "destination": "public/payment-collection.html"
+    },
+    {
+      "source": "/payment-collection.html",
+      "destination": "public/payment-collection.html"
     },
     {
       "source": "/moment-of-truth.html",
