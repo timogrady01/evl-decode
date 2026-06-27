@@ -377,6 +377,14 @@
       "destination": "public/login.html"
     },
     {
+      "source": "/moment-of-truth.html",
+      "destination": "public/moment-of-truth.html"
+    },
+    {
+      "source": "/moment-of-truth",
+      "destination": "public/moment-of-truth.html"
+    },
+    {
       "source": "/payment-estimator.html",
       "destination": "public/payment-estimator.html"
     },
