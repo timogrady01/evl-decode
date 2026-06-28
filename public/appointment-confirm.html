@@ -15,7 +15,7 @@
   --gold:  #FFB800;
   --red:   #FF4444;
   --white: #ffffff;
-  --gray:  #A1A1AA;
+  --gray:  #C8D0DC;
   --border:#1a2a3a;
   --font:  'Barlow Condensed', sans-serif;
   --body:  'Barlow', sans-serif;
@@ -31,7 +31,7 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .wrap { max-width:680px; margin:0 auto; padding:40px 20px 80px; }
 
 .page-hero { text-align:center; margin-bottom:32px; }
-.page-badge { display:inline-block; background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.3); color:var(--blue); font-size:12px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
+.page-badge { display:inline-block; background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.3); color:var(--blue); font-size:14px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
 .page-title { font-family:var(--font); font-size:clamp(32px,6vw,50px); font-weight:900; text-transform:uppercase; line-height:1.05; margin-bottom:10px; }
 .page-title span { color:var(--blue); }
 .page-sub { font-size:16px; font-weight:600; color:#ffffff; line-height:1.7; }
@@ -45,7 +45,7 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .vehicle-icon { font-size:36px; flex-shrink:0; }
 .vehicle-detail-title { font-family:var(--font); font-size:22px; font-weight:900; color:#ffffff; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
 .vehicle-detail-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
-.vehicle-badge { display:inline-block; background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); color:var(--green); font-size:11px; font-weight:900; letter-spacing:1px; padding:4px 10px; border-radius:4px; text-transform:uppercase; margin-top:6px; }
+.vehicle-badge { display:inline-block; background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); color:var(--green); font-size:13px; font-weight:900; letter-spacing:1px; padding:4px 10px; border-radius:4px; text-transform:uppercase; margin-top:6px; }
 
 /* DEALER CARD */
 .dealer-card { background:var(--s2); border:2px solid rgba(255,184,0,0.25); border-radius:12px; padding:20px; margin-bottom:20px; }
@@ -56,7 +56,7 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 
 /* FORM */
 .field { margin-bottom:16px; }
-.field label { display:block; font-size:12px; font-weight:900; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; font-family:var(--font); }
+.field label { display:block; font-size:14px; font-weight:900; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; font-family:var(--font); }
 .field input, .field select, .field textarea {
   width:100%; background:var(--bg); border:2px solid var(--border); color:#ffffff;
   padding:13px 16px; border-radius:8px; font-size:16px; font-family:var(--body);
@@ -75,7 +75,7 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .time-slot.selected { border-color:var(--blue); background:rgba(43,132,254,0.1); }
 .time-slot-icon { font-size:20px; margin-bottom:4px; display:block; }
 .time-slot-label { font-family:var(--font); font-size:14px; font-weight:900; color:#ffffff; text-transform:uppercase; display:block; margin-bottom:2px; }
-.time-slot-range { font-size:12px; color:#ffffff; font-family:var(--body); font-weight:600; display:block; }
+.time-slot-range { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; display:block; }
 
 /* NOTIFICATION PREVIEW */
 .notification-preview { background:rgba(0,200,83,0.05); border:2px solid rgba(0,200,83,0.2); border-radius:10px; padding:18px; margin-bottom:20px; }
@@ -96,7 +96,7 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .success-title { font-family:var(--font); font-size:42px; font-weight:900; text-transform:uppercase; color:var(--green); margin-bottom:12px; }
 .success-sub { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.7; max-width:480px; margin:0 auto 28px; }
 .success-ref { background:var(--s1); border:2px solid var(--green); border-radius:10px; padding:20px; max-width:400px; margin:0 auto 24px; }
-.success-ref-label { font-size:12px; color:var(--green); font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.success-ref-label { font-size:14px; color:var(--green); font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
 .success-ref-num { font-family:var(--font); font-size:28px; font-weight:900; color:#ffffff; letter-spacing:2px; }
 .success-who { background:var(--s2); border:1px solid var(--border); border-radius:8px; padding:16px; max-width:400px; margin:0 auto 20px; text-align:left; }
 .success-who-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:14px; font-family:var(--body); font-weight:600; color:#ffffff; }
@@ -213,7 +213,7 @@ footer { background:var(--s1); border-top:1px solid var(--border); padding:24px;
       </div>
 
       <div class="field">
-        <label>Anything Else? <span style="font-size:11px;color:var(--gray);letter-spacing:0;text-transform:none;font-family:var(--body);">Optional</span></label>
+        <label>Anything Else? <span style="font-size:13px;color:var(--gray);letter-spacing:0;text-transform:none;font-family:var(--body);">Optional</span></label>
         <textarea id="custNotes" placeholder="Trade-in details, financing questions, specific options you want to confirm are on the vehicle..."></textarea>
       </div>
 
@@ -255,7 +255,7 @@ footer { background:var(--s1); border-top:1px solid var(--border); padding:24px;
       <div class="success-ref-num" id="confirmNum">EVL-APT-XXXX</div>
     </div>
     <div class="success-who">
-      <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-family:var(--font);">✅ Notifications Sent To:</div>
+      <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-family:var(--font);">✅ Notifications Sent To:</div>
       <div class="success-who-row"><span>🏆</span> General Sales Manager — SMS + Email</div>
       <div class="success-who-row"><span>👤</span> Salesperson — SMS + Email</div>
       <div class="success-who-row"><span>📧</span> You — Confirmation Email</div>
