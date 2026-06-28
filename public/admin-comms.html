@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh}
+body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh}
 
 /* LOGIN */
 #login-screen{position:fixed;inset:0;background:#020203;display:flex;align-items:center;justify-content:center;z-index:1000}
@@ -27,9 +27,9 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 /* HEADER */
 .evl-header{background:#090E17;border-bottom:2px solid #2B84FE;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .evl-logo-text{font-size:18px;font-weight:900;color:#fff;letter-spacing:1px}
-.evl-logo-sub{font-size:11px;font-weight:700;color:#2B84FE;letter-spacing:3px}
-.evl-badge{background:#2B84FE;color:#fff;font-size:11px;font-weight:900;padding:4px 12px;border-radius:4px;letter-spacing:2px}
-.evl-logout{background:transparent;border:1px solid #FF3333;color:#FF3333;font-size:12px;font-weight:700;padding:6px 14px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:'Oswald',sans-serif}
+.evl-logo-sub{font-size:13px;font-weight:700;color:#2B84FE;letter-spacing:3px}
+.evl-badge{background:#2B84FE;color:#fff;font-size:13px;font-weight:900;padding:4px 12px;border-radius:4px;letter-spacing:2px}
+.evl-logout{background:transparent;border:1px solid #FF3333;color:#FF3333;font-size:13px;font-weight:700;padding:6px 14px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:'Oswald',sans-serif}
 .evl-logout:hover{background:#FF3333;color:#fff}
 .nav-links{display:flex;align-items:center;gap:16px}
 .nav-link{color:#ccd6e0;font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;transition:color .2s}
@@ -42,7 +42,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .stats-bar{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:24px;background:#090E17;border:1px solid #1a1a2e;border-radius:10px;padding:16px 24px}
 .stat{text-align:center}
 .stat-val{font-size:28px;font-weight:900;color:#2B84FE;display:block;line-height:1}
-.stat-lbl{font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-top:2px}
+.stat-lbl{font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-top:2px}
 
 /* SEARCH */
 .search-wrap{position:relative;margin-bottom:20px}
@@ -69,7 +69,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 /* SECTION */
 .section-hdr{display:flex;align-items:center;gap:10px;margin:28px 0 14px;padding-bottom:10px;border-bottom:2px solid #1a1a2e}
 .section-hdr h2{font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
-.section-count{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px}
+.section-count{font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px}
 .lane-customer .section-hdr h2{color:#FFD700}
 .lane-customer .section-count{background:#1a1400;color:#FFD700;border:1px solid #FFD700}
 .lane-bd .section-hdr h2{color:#00C853}
@@ -85,13 +85,13 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .comm-card:hover{border-color:#2B84FE}
 .comm-card-header{padding:12px 16px;background:#0a0f1a;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .comm-title{font-size:15px;font-weight:900;color:#fff;letter-spacing:1px;line-height:1.2}
-.comm-trigger{font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.comm-trigger{font-size:13px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .trigger-auto{background:#0d1a0d;border:1px solid #00C853;color:#00C853}
 .trigger-manual{background:#1a1400;border:1px solid #FFD700;color:#FFD700}
 .trigger-express{background:#0a0a1a;border:1px solid #2B84FE;color:#2B84FE}
 .comm-card-body{padding:14px 16px}
 .comm-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.comm-tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase}
+.comm-tag{font-size:13px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase}
 .tag-email{background:#0a0a1a;border:1px solid #2B84FE;color:#2B84FE}
 .tag-text{background:#0d1a0d;border:1px solid #00C853;color:#00C853}
 .tag-both{background:#1a0a1a;border:1px solid #9B59B6;color:#9B59B6}
@@ -99,12 +99,12 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .tag-bd{background:#0d1a0d;border:1px solid #00C853;color:#00C853}
 .tag-id{background:#0d001a;border:1px solid #9B59B6;color:#9B59B6}
 .tag-internal{background:#001a1a;border:1px solid #00BCD4;color:#00BCD4}
-.comm-timing{font-size:12px;color:#2B84FE;font-weight:700;margin-bottom:8px;letter-spacing:1px}
+.comm-timing{font-size:13px;color:#2B84FE;font-weight:700;margin-bottom:8px;letter-spacing:1px}
 .comm-desc{font-size:14px;color:#ccd6e0;font-weight:600;line-height:1.5;margin-bottom:12px}
 
 /* BUTTONS */
 .btn-row{display:flex;gap:8px;flex-wrap:wrap}
-.btn{padding:8px 14px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:'Oswald',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.btn{padding:10px 16px 14px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:'Oswald',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
 .btn-blue{background:#2B84FE;color:#fff}
 .btn-blue:hover{background:#1a6fd4}
 .btn-green{background:#00C853;color:#020203}
@@ -122,14 +122,14 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .tmpl-inner{max-width:800px;margin:0 auto;background:#090E17;border:2px solid #2B84FE;border-radius:12px;overflow:hidden}
 .tmpl-header{background:#0a0f1a;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e;flex-wrap:wrap;gap:10px}
 .tmpl-title{font-size:18px;font-weight:900;color:#fff;letter-spacing:1px}
-.tmpl-close{background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif;letter-spacing:1px}
+.tmpl-close{background:#FF3333;color:#fff;border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif;letter-spacing:1px}
 .tmpl-toolbar{background:#070710;padding:12px 20px;display:flex;gap:8px;border-bottom:1px solid #1a1a2e;flex-wrap:wrap}
 .tmpl-body{padding:24px}
-.tmpl-label{font-size:11px;color:#A1A1AA;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.tmpl-label{font-size:13px;color:#A1A1AA;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
 .tmpl-subject{background:#020203;border:1px solid #2a2a4e;color:#fff;padding:10px 14px;border-radius:6px;font-size:14px;font-weight:700;margin-bottom:16px;letter-spacing:1px}
 .tmpl-text{background:#020203;border:1px solid #2a2a4e;color:#ccd6e0;padding:16px;border-radius:8px;font-size:14px;line-height:1.8;font-family:'Segoe UI',Arial,sans-serif;white-space:pre-wrap;margin-bottom:16px}
 .tmpl-note{background:#1a1400;border:1px solid #FFD700;border-radius:8px;padding:12px 16px;font-size:13px;color:#FFD700;font-weight:600;margin-top:12px}
-.var-chip{display:inline-block;background:#040e1a;border:1px solid #2B84FE;color:#2B84FE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin:2px;letter-spacing:1px;font-family:'Oswald',sans-serif}
+.var-chip{display:inline-block;background:#040e1a;border:1px solid #2B84FE;color:#2B84FE;font-size:13px;font-weight:700;padding:2px 8px;border-radius:4px;margin:2px;letter-spacing:1px;font-family:'Oswald',sans-serif}
 
 @media(max-width:600px){
   .comm-grid{grid-template-columns:1fr}
@@ -1138,15 +1138,15 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
     <div style="background:#0a0f1a;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
       <div>
         <div style="font-size:18px;font-weight:900;color:#fff;letter-spacing:1px">⚡ SMART FILL</div>
-        <div style="font-size:12px;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-top:2px" id="sf-template-name">Template Name</div>
+        <div style="font-size:13px;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-top:2px" id="sf-template-name">Template Name</div>
       </div>
-      <button onclick="closeSmartFill()" style="background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif;letter-spacing:1px">✕ CLOSE</button>
+      <button onclick="closeSmartFill()" style="background:#FF3333;color:#fff;border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif;letter-spacing:1px">✕ CLOSE</button>
     </div>
 
     <!-- Timestamp bar -->
     <div style="background:#040e1a;padding:10px 20px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between">
-      <span style="font-size:12px;color:#2B84FE;font-weight:700;letter-spacing:1px">🕐 AUTO-TIMESTAMP: <span id="sf-timestamp" style="color:#00C853"></span></span>
-      <span style="font-size:11px;color:#A1A1AA;font-weight:700;letter-spacing:1px">DEAL ID: <span id="sf-deal-id" style="color:#FFD700"></span></span>
+      <span style="font-size:13px;color:#2B84FE;font-weight:700;letter-spacing:1px">🕐 AUTO-TIMESTAMP: <span id="sf-timestamp" style="color:#00C853"></span></span>
+      <span style="font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px">DEAL ID: <span id="sf-deal-id" style="color:#FFD700"></span></span>
     </div>
 
     <!-- Form -->
@@ -1247,7 +1247,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
 </div>
 
 <style>
-.sf-label{font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px;font-family:'Oswald',sans-serif}
+.sf-label{font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px;font-family:'Oswald',sans-serif}
 .sf-input{width:100%;background:#020203;border:2px solid #2a2a4e;color:#fff;padding:10px 12px;border-radius:6px;font-size:14px;font-family:'Oswald',sans-serif;font-weight:600;outline:none;transition:border-color .2s}
 .sf-input:focus{border-color:#2B84FE}
 .sf-input option{background:#0a0a1a}
