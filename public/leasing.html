@@ -8,17 +8,17 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh;display:block!important}
-:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--white:#fff;--muted:#C8D0DC;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
 
 /* NAV */
 
 .evl-nav{position:sticky;top:0;z-index:9999;background:#090E17;border-bottom:2px solid #2B84FE;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;width:100%}
 .evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap}
 .evl-nav-links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
-.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 8px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 8px;border-radius:4px;transition:all .2s;white-space:nowrap}
 .evl-nav-link:hover{color:#fff;background:#1a1a2e}
 .evl-nav-link.active{color:#2B84FE;border-bottom:2px solid #2B84FE}
-.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;white-space:nowrap}
+.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:14px;font-weight:900;letter-spacing:1px;padding:9px 14px;border-radius:6px;margin-left:8px;white-space:nowrap}
 .evl-nav-hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
 @media(max-width:900px){
   .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#090E17;border-bottom:2px solid #2B84FE;padding:8px 0;z-index:9999}
@@ -30,26 +30,26 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 
 
 /* DISCLAIMER BANNER */
-.disclaimer-banner{background:#1a0a00;border-bottom:2px solid var(--gold);padding:10px 24px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--gold);font-weight:700;letter-spacing:1px}
+.disclaimer-banner{background:#1a0a00;border-bottom:2px solid var(--gold);padding:10px 24px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gold);font-weight:700;letter-spacing:1px}
 .disclaimer-banner a{color:var(--gold);font-weight:900}
 
 /* HERO */
 .lease-hero{background:linear-gradient(135deg,#020203 0%,#040e1a 50%,#020203 100%);padding:64px 24px;text-align:center;position:relative;overflow:hidden;border-bottom:2px solid #1a1a2e}
 .lease-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(43,132,254,0.08) 0%,transparent 70%)}
-.hero-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:20px}
+.hero-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:20px}
 .lease-hero h1{font-size:52px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;line-height:1.05}
 .lease-hero h1 span{color:var(--blue)}
 .lease-hero p{font-size:18px;color:var(--dim);font-family:var(--body);max-width:640px;margin:0 auto 32px;line-height:1.7;font-weight:500}
 .hero-stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:32px}
 .hero-stat{text-align:center}
 .hero-stat-val{font-size:36px;font-weight:900;display:block;line-height:1}
-.hero-stat-lbl{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-top:4px}
+.hero-stat-lbl{font-size:14px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-top:4px}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
 /* SECTION */
 .section{padding:60px 24px}
 .section-inner{max-width:1100px;margin:0 auto}
-.section-label{font-size:11px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.section-label{font-size:13px;font-weight:900;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
 .section-title{font-size:38px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;line-height:1.1}
 .section-title span{color:var(--blue)}
 .section-sub{font-size:16px;color:var(--dim);font-family:var(--body);max-width:640px;line-height:1.7;font-weight:500;margin-bottom:40px}
@@ -69,14 +69,14 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .calc-section{background:var(--s1);border:2px solid var(--blue);border-radius:16px;overflow:hidden;margin-bottom:40px}
 .calc-header{background:#040e1a;padding:20px 24px;border-bottom:2px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .calc-title{font-size:20px;font-weight:900;color:var(--white);letter-spacing:2px}
-.calc-badge{background:var(--green);color:#020203;font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;letter-spacing:1px}
+.calc-badge{background:var(--green);color:#020203;font-size:13px;font-weight:900;padding:4px 12px;border-radius:20px;letter-spacing:1px}
 .calc-body{padding:24px}
 .calc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
 .calc-group{display:flex;flex-direction:column;gap:6px}
-.calc-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.calc-label{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
 .calc-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 14px;border-radius:8px;font-size:15px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
 .calc-input:focus{border-color:var(--blue)}
-.calc-note{font-size:11px;color:var(--muted);font-family:var(--body);margin-top:3px}
+.calc-note{font-size:13px;color:var(--muted);font-family:var(--body);margin-top:3px}
 
 /* RESULT PANEL */
 .calc-result{background:var(--bg);border:2px solid #2a2a4e;border-radius:12px;padding:20px;margin-top:8px;display:none}
@@ -85,12 +85,12 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .result-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
 .result-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .result-row{background:var(--s1);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px}
-.result-row-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.result-row-label{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:4px}
 .result-row-val{font-size:16px;font-weight:900;color:var(--white)}
 .result-savings{background:#0d1a0d;border:2px solid var(--green);border-radius:10px;padding:16px;margin-top:16px;text-align:center}
 .result-savings-val{font-size:28px;font-weight:900;color:var(--green);display:block;line-height:1}
-.result-savings-lbl{font-size:12px;color:var(--dim);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
-.result-disclosure{font-size:11px;color:var(--muted);font-family:var(--body);margin-top:12px;line-height:1.5;font-style:italic}
+.result-savings-lbl{font-size:14px;color:var(--dim);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.result-disclosure{font-size:13px;color:var(--muted);font-family:var(--body);margin-top:12px;line-height:1.5;font-style:italic}
 
 /* VEHICLE SOURCES */
 .sources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:40px}
@@ -99,7 +99,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .source-icon{font-size:32px;margin-bottom:12px;display:block}
 .source-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
 .source-desc{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6;font-weight:500;margin-bottom:12px}
-.source-tag{display:inline-block;font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.source-tag{display:inline-block;font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
 .tag-best-value{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 .tag-lowest-payment{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
 .tag-short-term{background:#0d001a;border:1px solid var(--purple);color:var(--purple)}
@@ -112,11 +112,11 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .step-card::before{content:counter(steps);position:absolute;top:-14px;left:20px;background:var(--blue);color:var(--white);font-size:13px;font-weight:900;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font)}
 .step-title{font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px;margin-top:4px}
 .step-desc{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6;font-weight:500}
-.step-tag{font-size:11px;font-weight:900;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-top:8px;display:block}
+.step-tag{font-size:13px;font-weight:900;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-top:8px;display:block}
 
 /* COMPARISON TABLE */
 .compare-table{width:100%;border-collapse:collapse;margin-bottom:40px}
-.compare-table th{background:var(--s2);padding:14px 16px;text-align:left;font-size:12px;font-weight:900;color:var(--blue);letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid #1a1a2e}
+.compare-table th{background:var(--s2);padding:14px 16px;text-align:left;font-size:14px;font-weight:900;color:var(--blue);letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid #1a1a2e}
 .compare-table th:not(:first-child){text-align:center}
 .compare-table td{padding:14px 16px;border-bottom:1px solid #0d0d1a;font-size:14px;color:var(--dim);font-family:var(--body);font-weight:500}
 .compare-table td:not(:first-child){text-align:center;font-weight:900}
@@ -136,8 +136,8 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .lease-type-body{padding:16px 18px}
 .lease-type-desc{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6;margin-bottom:12px}
 .lease-type-pros{list-style:none}
-.lease-type-pros li{font-size:12px;color:var(--dim);font-family:var(--body);margin-bottom:4px;padding-left:16px;position:relative}
-.lease-type-pros li::before{content:'✅';position:absolute;left:0;font-size:11px}
+.lease-type-pros li{font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:4px;padding-left:16px;position:relative}
+.lease-type-pros li::before{content:'✅';position:absolute;left:0;font-size:13px}
 
 /* CTA SECTION */
 .cta-section{background:linear-gradient(135deg,#040e1a 0%,#020203 100%);border-top:2px solid var(--blue);border-bottom:2px solid var(--blue);padding:64px 24px;text-align:center}
@@ -153,7 +153,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-dark{background:#1a1a2e;color:var(--white);border:2px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
 .btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}.btn-outline:hover{background:var(--blue);color:var(--white)}
-.btn-sm{padding:8px 16px;font-size:12px}
+.btn-sm{padding:8px 16px;font-size:14px}
 
 /* LEGAL NOTE */
 .legal-note{background:#1a1400;border:2px solid var(--gold);border-radius:10px;padding:16px 20px;margin:20px 0;display:flex;align-items:flex-start;gap:12px}
@@ -168,7 +168,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .evl-footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:16px}
 .evl-footer-links a{color:var(--dim);text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;transition:color .2s}
 .evl-footer-links a:hover{color:var(--blue)}
-.evl-footer-copy{font-size:12px;color:#556677;font-weight:600;line-height:1.6}
+.evl-footer-copy{font-size:14px;color:#556677;font-weight:600;line-height:1.6}
 .evl-footer-copy a{color:var(--blue);text-decoration:none}
 
 /* COOKIE */
@@ -179,7 +179,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
   .calc-grid{grid-template-columns:1fr}
   .advisory-grid{grid-template-columns:1fr}
   .result-breakdown{grid-template-columns:1fr}
-  .compare-table{font-size:12px}
+  .compare-table{font-size:14px}
   .cta-title{font-size:28px}
 }
 </style>
@@ -254,7 +254,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
       <div class="advisory-col" style="border-color:var(--red)">
         <div class="advisory-col-header" style="background:#0d0000;border-color:#2a0000">
           <span style="font-size:16px;font-weight:900;color:var(--red);letter-spacing:1px">🏪 TRADITIONAL LEASING CO</span>
-          <span style="font-size:11px;color:var(--muted);font-weight:700">(D&M, Autoflex, Dealer)</span>
+          <span style="font-size:13px;color:var(--muted);font-weight:700">(D&M, Autoflex, Dealer)</span>
         </div>
         <div class="advisory-col-body">
           <div class="advisory-item">
@@ -279,7 +279,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
       <div class="advisory-col" style="border-color:var(--green)">
         <div class="advisory-col-header" style="background:#020a02;border-color:#0d2a0d">
           <span style="font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px">⚡ EVL ADVISORY MODEL</span>
-          <span style="font-size:11px;color:var(--green);font-weight:700">PURE CUSTOMER ADVOCACY</span>
+          <span style="font-size:13px;color:var(--green);font-weight:700">PURE CUSTOMER ADVOCACY</span>
         </div>
         <div class="advisory-col-body">
           <div class="advisory-item">
@@ -390,7 +390,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
             </div>
             <div>
               <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:16px;margin-bottom:12px">
-                <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">LEASE INTELLIGENCE</div>
+                <div style="font-size:14px;font-weight:900;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">LEASE INTELLIGENCE</div>
                 <div style="display:flex;flex-direction:column;gap:8px">
                   <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--dim);font-family:var(--body)">Residual Value ($)</span><span style="font-weight:900;color:var(--white)" id="result-residual-dollar">—</span></div>
                   <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--dim);font-family:var(--body)">Total Depreciation</span><span style="font-weight:900;color:var(--white)" id="result-total-dep">—</span></div>
@@ -780,7 +780,7 @@ function calculateLease(){
 <!-- MANUFACTURER PROGRAMS -->
 <div style="background:var(--s1);border-top:2px solid #1a1a2e;padding:48px 24px">
   <div style="max-width:1100px;margin:0 auto">
-    <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">MANUFACTURER PROGRAMS</div>
+    <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">MANUFACTURER PROGRAMS</div>
     <h2 style="font-size:36px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">WHERE THE REAL LEASE DEALS LIVE</h2>
     <p style="font-size:16px;color:var(--dim);font-family:var(--body);max-width:700px;line-height:1.7;margin-bottom:28px">Every manufacturer has a captive finance arm. These companies set residual values and money factors — not the dealership. EVL tracks monthly program changes across all major brands so you always know where the best deals are right now.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:20px">
@@ -788,42 +788,42 @@ function calculateLease(){
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Toyota Financial Services</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">TFS</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Strong residuals on RAV4/Camry/Tundra. MF varies monthly by region.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Strong residuals on RAV4/Camry/Tundra. MF varies monthly by region.</div>
       </div>
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">BMW Financial Services</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">BMWFS</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">European Delivery Program. MF transparency varies — always convert to APR.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">European Delivery Program. MF transparency varies — always convert to APR.</div>
       </div>
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Lexus Financial Services</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">LFS</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Often best loyalty incentives. Strong residuals on RX/NX models.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Often best loyalty incentives. Strong residuals on RX/NX models.</div>
       </div>
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Ford Motor Credit</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">FMCC</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Special rates on F-150/Bronco. Watch dealer MF markup on popular trims.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Special rates on F-150/Bronco. Watch dealer MF markup on popular trims.</div>
       </div>
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">GM Financial</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">GMF</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">10-year powertrain warranty transfers. Strong residuals on Tahoe/Silverado.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">10-year powertrain warranty transfers. Strong residuals on Tahoe/Silverado.</div>
       </div>
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Honda Financial Services</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">HFS</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Competitive on CR-V/Pilot. MF tends to be lower than manufacturer avg.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Competitive on CR-V/Pilot. MF tends to be lower than manufacturer avg.</div>
       </div>
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Chrysler Capital / Stellantis</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">CCAP</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">RAM/Jeep programs. Highly variable — check monthly. Loyalty bonuses available.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">RAM/Jeep programs. Highly variable — check monthly. Loyalty bonuses available.</div>
       </div>
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px">
         <div style="font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">Hyundai/Kia Finance</div>
         <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:1px;margin-bottom:8px">HMF</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">EV lease programs among best in market. Ioniq 5/EV6 federal credit eligible.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">EV lease programs among best in market. Ioniq 5/EV6 federal credit eligible.</div>
       </div>
     </div>
     <div style="background:#040e1a;border:1px solid var(--blue);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:14px">
@@ -839,7 +839,7 @@ function calculateLease(){
 <!-- INCEPTION FEES -->
 <div style="background:var(--bg);border-top:2px solid #1a1a2e;padding:48px 24px">
   <div style="max-width:1100px;margin:0 auto">
-    <div style="display:inline-block;background:#1a0a00;border:1px solid var(--red);color:var(--red);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">WHAT YOU PAY AT SIGNING</div>
+    <div style="display:inline-block;background:#1a0a00;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">WHAT YOU PAY AT SIGNING</div>
     <h2 style="font-size:36px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">INCEPTION FEES — <span style="color:var(--red)">THE BLINDSIDE</span></h2>
     <p style="font-size:16px;color:var(--dim);font-family:var(--body);max-width:700px;line-height:1.7;margin-bottom:28px">Most customers focus only on the monthly payment — then sit down at the finance desk and discover they owe thousands more at signing. EVL shows you every fee before you walk in.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px">
@@ -849,7 +849,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">Your monthly payment amount</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Always required. Usually rolled into total drive-off cost.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Always required. Usually rolled into total drive-off cost.</div>
       </div>
       <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
@@ -857,7 +857,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#0d1a0d;border:1px solid var(--green);color:var(--green)">NEGOTIABLE</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$0 — $1,000+</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Many brands have eliminated this. Always negotiate to $0. MSDs can lower MF — EVL advises when this makes sense.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Many brands have eliminated this. Always negotiate to $0. MSDs can lower MF — EVL advises when this makes sense.</div>
       </div>
       <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
@@ -865,7 +865,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$595 — $1,095</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Charged by the captive finance company (TFS, BMWFS, etc.) — NOT negotiable. Can be rolled into cap cost vs. paid upfront.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Charged by the captive finance company (TFS, BMWFS, etc.) — NOT negotiable. Can be rolled into cap cost vs. paid upfront.</div>
       </div>
       <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
@@ -873,7 +873,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$150 — $499</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Dealer charge. In Texas, capped by law. Negotiable on cap cost offset — EVL factors this in.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Dealer charge. In Texas, capped by law. Negotiable on cap cost offset — EVL factors this in.</div>
       </div>
       <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
@@ -881,7 +881,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">~$150-250 (Texas)</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Must be paid upfront. Cannot be rolled into most leases. Texas is relatively low vs other states.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Must be paid upfront. Cannot be rolled into most leases. Texas is relatively low vs other states.</div>
       </div>
       <div style="background:var(--s1);border:1px solid #2a0000;border-radius:10px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
@@ -889,7 +889,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#1a0000;border:1px solid var(--red);color:var(--red)">REQUIRED</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">6.25% on monthly payment</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Texas taxes the monthly payment — not the full vehicle price. This is actually favorable vs buying outright.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Texas taxes the monthly payment — not the full vehicle price. This is actually favorable vs buying outright.</div>
       </div>
       <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
@@ -897,7 +897,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#0d1a0d;border:1px solid var(--green);color:var(--green)">NEGOTIABLE</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">$300 — $500 (at lease end)</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Charged at turn-in if you don't buy or re-lease. EVL ALWAYS gets this waived in writing at signing. Most dealers agree — they just never volunteer it.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Charged at turn-in if you don't buy or re-lease. EVL ALWAYS gets this waived in writing at signing. Most dealers agree — they just never volunteer it.</div>
       </div>
       <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
@@ -905,7 +905,7 @@ function calculateLease(){
           <span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;background:#0d1a0d;border:1px solid var(--green);color:var(--green)">YOUR CHOICE</span>
         </div>
         <div style="font-size:13px;color:var(--blue);font-weight:700;margin-bottom:6px">Optional down payment</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">EVL advises against large cap reductions — you lose that money if the car is totaled. Smaller is smarter on a lease.</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">EVL advises against large cap reductions — you lose that money if the car is totaled. Smaller is smarter on a lease.</div>
       </div>
     </div>
     <div style="background:#1a0000;border:2px solid var(--red);border-radius:10px;padding:16px 20px">
@@ -918,7 +918,7 @@ function calculateLease(){
 <!-- EARLY TERMINATION & WEAR/TEAR -->
 <div style="background:var(--s1);border-top:2px solid #1a1a2e;padding:48px 24px">
   <div style="max-width:1100px;margin:0 auto">
-    <div style="display:inline-block;background:#1a1400;border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">LEASE END INTELLIGENCE</div>
+    <div style="display:inline-block;background:#1a1400;border:1px solid var(--gold);color:var(--gold);font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">LEASE END INTELLIGENCE</div>
     <h2 style="font-size:36px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">EARLY EXIT & WEAR/TEAR — <span style="color:var(--gold)">KNOW BEFORE YOU SIGN</span></h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px">
       <div>
@@ -927,38 +927,38 @@ function calculateLease(){
           <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
             <span style="font-size:20px;flex-shrink:0">💸</span>
             <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">You owe remaining payments PLUS fees</div>
-            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Unlike a car loan, you cannot simply return a lease early. You owe remaining payments, early termination fees, and the difference between residual value and current market value.</div></div>
+            <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Unlike a car loan, you cannot simply return a lease early. You owe remaining payments, early termination fees, and the difference between residual value and current market value.</div></div>
           </div>
           <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
             <span style="font-size:20px;flex-shrink:0">🔄</span>
             <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">Lease transfer is your escape hatch</div>
-            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">SwapALease and Lease Trader let you transfer your lease to another qualified buyer. EVL coordinates this process — transfer fee of $300-500 beats thousands in termination penalties.</div></div>
+            <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">SwapALease and Lease Trader let you transfer your lease to another qualified buyer. EVL coordinates this process — transfer fee of $300-500 beats thousands in termination penalties.</div></div>
           </div>
           <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
             <span style="font-size:20px;flex-shrink:0">⚠️</span>
             <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">GAP insurance is critical on leases</div>
-            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">If the car is totaled, your insurance may not cover the full remaining lease obligation. GAP bridges this gap. EVL always recommends GAP on leases — and finds it cheaper than dealer pricing.</div></div>
+            <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">If the car is totaled, your insurance may not cover the full remaining lease obligation. GAP bridges this gap. EVL always recommends GAP on leases — and finds it cheaper than dealer pricing.</div></div>
           </div>
           <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;display:flex;gap:10px">
             <span style="font-size:20px;flex-shrink:0">📊</span>
             <div><div style="font-size:13px;font-weight:900;color:var(--white);margin-bottom:4px">The 12-month breakeven rule</div>
-            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">Never trade out of a lease more than 12 months early without running the full financial analysis. EVL calculates the exact breakeven point before you make any decision.</div></div>
+            <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">Never trade out of a lease more than 12 months early without running the full financial analysis. EVL calculates the exact breakeven point before you make any decision.</div></div>
           </div>
         </div>
       </div>
       <div>
         <div style="font-size:14px;font-weight:900;color:var(--blue);letter-spacing:1px;margin-bottom:14px">WEAR & TEAR — WHAT ACTUALLY GETS CHARGED</div>
         <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;margin-bottom:8px">
-          <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:6px">✅ NORMAL — No charge</div>
-          <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.8">• Small door dings under 1/2 inch<br>• Minor scuffs on bumpers<br>• Light interior wear<br>• Small chips on windshield edges</div>
+          <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:6px">✅ NORMAL — No charge</div>
+          <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.8">• Small door dings under 1/2 inch<br>• Minor scuffs on bumpers<br>• Light interior wear<br>• Small chips on windshield edges</div>
         </div>
         <div style="background:var(--bg);border:1px solid #2a0000;border-radius:8px;padding:12px 14px;margin-bottom:8px">
-          <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:6px">🔴 EXCESS — You pay</div>
-          <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.8">• Dents larger than 1/2 inch<br>• Deep scratches through paint<br>• Torn or burned upholstery<br>• Missing components/features<br>• Tires below 2/32 tread depth</div>
+          <div style="font-size:14px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:6px">🔴 EXCESS — You pay</div>
+          <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.8">• Dents larger than 1/2 inch<br>• Deep scratches through paint<br>• Torn or burned upholstery<br>• Missing components/features<br>• Tires below 2/32 tread depth</div>
         </div>
         <div style="background:#040e1a;border:1px solid var(--blue);border-radius:8px;padding:12px 14px">
-          <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:1px;margin-bottom:6px">⚡ EVL PRO TIPS</div>
-          <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.8">• Get wear/tear standards in writing before signing<br>• Professional detail before turn-in<br>• PDR (paintless dent repair) at lease end costs $100-200 and saves hundreds<br>• Document every ding with photos at delivery day</div>
+          <div style="font-size:14px;font-weight:900;color:var(--blue);letter-spacing:1px;margin-bottom:6px">⚡ EVL PRO TIPS</div>
+          <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.8">• Get wear/tear standards in writing before signing<br>• Professional detail before turn-in<br>• PDR (paintless dent repair) at lease end costs $100-200 and saves hundreds<br>• Document every ding with photos at delivery day</div>
         </div>
       </div>
     </div>
@@ -970,11 +970,11 @@ function calculateLease(){
   <div style="max-width:1100px;margin:0 auto">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
       <div>
-        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">THE MATH THEY DON'T SHOW YOU</div>
+        <div style="display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">THE MATH THEY DON'T SHOW YOU</div>
         <h2 style="font-size:30px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">MONEY FACTOR → APR CONVERSION</h2>
         <p style="font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:18px;line-height:1.6">Dealers quote money factors like 0.00225 because it sounds small. Here's how to convert any MF to a real APR — instantly.</p>
         <div style="background:var(--s1);border:2px solid var(--blue);border-radius:12px;padding:20px;margin-bottom:16px;text-align:center">
-          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase">The Conversion Formula</div>
+          <div style="font-size:14px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase">The Conversion Formula</div>
           <div style="font-size:32px;font-weight:900;color:var(--white);margin-bottom:8px;letter-spacing:1px">MF × 2,400 = APR %</div>
           <div style="font-size:14px;color:var(--muted);font-family:var(--body)">Example: 0.00225 × 2400 = <strong style="color:var(--gold)">5.4% APR</strong></div>
         </div>
@@ -986,12 +986,12 @@ function calculateLease(){
           <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-radius:6px;font-size:13px"><span style="color:var(--muted);font-weight:700">MF: 0.00280</span><span style="color:var(--white);font-weight:900">6.7% APR</span><span style="color:var(--red);font-weight:700">🔴 HIGH</span></div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#1a0000;border:1px solid var(--red);border-radius:6px;font-size:13px"><span style="color:var(--red);font-weight:900">MF: 0.00350+</span><span style="color:var(--white);font-weight:900">8.4%+ APR</span><span style="color:var(--red);font-weight:700">🔴 DEALER MARKUP</span></div>
         </div>
-        <div style="background:#1a0000;border:1px solid var(--red);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5">
+        <div style="background:#1a0000;border:1px solid var(--red);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.5">
           <strong style="color:var(--red)">⚠️ DEALER MF MARKUP:</strong> Dealers can mark up the money factor by up to 0.0008 above the buy rate. On a $45,000 vehicle that's approximately $54/month extra — $1,944 over 36 months. EVL identifies and eliminates dealer MF markup before you sign.
         </div>
       </div>
       <div>
-        <div style="display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">LEGAL FRAMEWORK</div>
+        <div style="display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:14px">LEGAL FRAMEWORK</div>
         <h2 style="font-size:30px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">EVL IS NOT A LEASE FACILITATOR</h2>
         <div style="background:#020a02;border:2px solid var(--green);border-radius:12px;padding:20px;margin-bottom:14px">
           <div style="font-size:13px;color:var(--green);font-weight:900;letter-spacing:1px;margin-bottom:10px">WHAT EVL DOES</div>
@@ -1015,7 +1015,7 @@ function calculateLease(){
             ❌ Act as a licensed lessor or lender
           </div>
         </div>
-        <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.6;font-style:italic">
+        <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;font-size:13px;color:var(--muted);font-family:var(--body);line-height:1.6;font-style:italic">
           EVL provides market research, data aggregation, and administrative consulting services. All lease transactions are executed directly between the client and the licensed dealer or lessor. EVL charges a flat advisory fee for data and consulting services only — never a transaction commission. — Express Vehicle Locators Service Agreement §1.1
         </div>
       </div>
