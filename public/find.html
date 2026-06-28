@@ -640,15 +640,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
       </div>
     </div>
 
-    <!-- EVL ADVISORY BANNER -->
-    <div class="advisory-banner">
-      <div class="advisory-banner-icon">⚡</div>
-      <div class="advisory-banner-text">
-        <div class="advisory-banner-title">SEE SOMETHING YOU LIKE? EVL ADVISES YOU.</div>
-        <div class="advisory-banner-sub">EVL delivers a Vehicle Intelligence Report on this listing — real market data, what to offer, and trade-in strategy. You walk in armed with facts. Average client savings: $4,300.</div>
-      </div>
-      <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 REQUEST EVL ADVISORY</a>
-    </div>
+
 
     <!-- VEHICLES CONTAINER -->
     <div id="vehicles-container" class="vehicles-grid"></div>
@@ -660,11 +652,11 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 
     <!-- CAN'T FIND IT? -->
     <div style="background:var(--s1);border-top:2px solid #1a1a2e;padding:24px 20px;margin-top:20px;text-align:center">
-      <div style="font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px">CAN'T FIND EXACTLY WHAT YOU WANT?</div>
-      <div style="font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:16px;line-height:1.6">EVL searches beyond public listings — wholesale inventory, fleet returns, lease returns, and dealer trades that never hit retail. Tell us what you want.</div>
+      <div style="font-size:20px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px">CAN'T FIND EXACTLY WHAT YOU WANT?</div>
+      <div style="font-size:16px;font-weight:600;color:#C8D0DC;font-family:var(--body);margin-bottom:16px;line-height:1.6;">EVL searches beyond public listings — wholesale inventory, fleet returns, lease returns, and dealer trades that never hit retail. Tell us exactly what you want and we'll find it.</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <a href="https://evl-decode-two.vercel.app/finder" class="btn btn-green">⚡ DESCRIBE WHAT YOU WANT</a>
-        <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 TALK TO AN ADVISOR</a>
+
       </div>
     </div>
 
@@ -717,7 +709,7 @@ window.addEventListener('DOMContentLoaded', function(){
   if(params.get('make')) document.getElementById('qs-make').value = params.get('make');
   if(params.get('zip')) document.getElementById('qs-zip').value = params.get('zip');
   if(params.get('zip')||params.get('make')) triggerSearch();
-  else showDefaultState();
+  else fetchVehicles(true); // Auto-load inventory on page open
   // Show mobile filter btn on small screens
   if(window.innerWidth < 900) document.getElementById('mobile-filter-btn').style.display='flex';
 });
