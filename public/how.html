@@ -162,7 +162,7 @@ footer{background:var(--s1);border-top:1px solid var(--border);padding:36px 48px
 </style>
 <style id="evl-nav-body-fix">
 /* Fix body flex centering that pushes nav down */
-body { display:block !important; align-items:unset !important; justify-content:unset !important; }
+body {overflow-x:hidden; display:block !important; align-items:unset !important; justify-content:unset !important; }
 .evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
 </style>
 </head>
@@ -337,7 +337,7 @@ body { display:block !important; align-items:unset !important; justify-content:u
     <h2 class="section-title reveal">EVL vs. <span>Going It Alone</span></h2>
     <p class="section-sub reveal">See exactly what changes when EVL is in your corner.</p>
 
-    <table class="compare-table reveal">
+    <div style="width:100%;overflow-x:auto;"><table class="compare-table reveal">
       <thead>
         <tr>
           <th>What You Get</th>
@@ -356,7 +356,7 @@ body { display:block !important; align-items:unset !important; justify-content:u
         <tr><td>EVL Commission / Fee</td><td class="evl-col"><span class="yes">$0</span></td><td>N/A</td><td><span class="no">$500–$2,000</span></td></tr>
         <tr><td>Average Total Savings</td><td class="evl-col" style="color:var(--gold);font-weight:900;font-size:18px;">$13,409</td><td style="color:var(--red);">$0–$500</td><td style="color:var(--muted);">$2,000–$4,000</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 </section>
 
