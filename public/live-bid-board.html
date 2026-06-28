@@ -10,7 +10,7 @@
     --green:#00C853;--red:#FF4444;--white:#ffffff;--muted:#8899aa;
     --border:#1a2a3a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
+  html,body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
 
   /* NAV */
   nav{background:#090E17;border-bottom:2px solid var(--blue);padding:0 24px;height:64px;
@@ -36,7 +36,7 @@
   .unit-stat{background:var(--bg);border:1px solid var(--border);border-radius:8px;
     padding:10px 16px;text-align:center;}
   .unit-stat-val{font-size:22px;font-weight:900;}
-  .unit-stat-lbl{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  .unit-stat-lbl{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;
     letter-spacing:1px;margin-top:2px;font-family:var(--body);}
 
   /* AUCTION STATUS */
@@ -45,7 +45,7 @@
     padding:18px;text-align:center;}
   .status-card.highlight{border-color:var(--gold);}
   .status-val{font-size:36px;font-weight:900;}
-  .status-lbl{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;
+  .status-lbl{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;
     letter-spacing:1px;margin-top:4px;font-family:var(--body);}
 
   /* COUNTDOWN */
@@ -75,7 +75,7 @@
   .bid-id.winner{color:var(--gold);}
   .bid-amount{font-size:20px;font-weight:900;}
   .bid-time{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:600;}
-  .spread-pill{font-size:12px;font-weight:900;padding:3px 10px;border-radius:10px;
+  .spread-pill{font-size:13px;font-weight:900;padding:3px 10px;border-radius:10px;
     letter-spacing:1px;font-family:var(--font);}
   .spread-high{background:rgba(0,200,83,.12);color:var(--green);border:1px solid rgba(0,200,83,.3);}
   .spread-low{background:rgba(255,68,68,.1);color:var(--red);border:1px solid rgba(255,68,68,.3);}
@@ -111,7 +111,7 @@
   .auction-card:hover{border-color:var(--blue);}
   .auction-card.active{border-color:var(--gold);background:rgba(255,215,0,.03);}
   .auction-card-name{font-size:15px;font-weight:900;color:var(--white);margin-bottom:4px;}
-  .auction-card-meta{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;}
+  .auction-card-meta{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;}
   .auction-card-status{margin-top:8px;}
 
   /* DEALER ID ENTRY */
@@ -252,7 +252,7 @@
       <div class="floor-bar">
         <div>
           <div class="floor-label">WS Reserve Floor (MC Wholesale) — Minimum acceptable bid</div>
-          <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
             margin-top:2px;">Bids below this amount are not accepted</div>
         </div>
         <div id="floorDisplay" class="floor-val">$—</div>
@@ -276,7 +276,7 @@
             BID NOW →
           </button>
         </div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
           margin-top:10px;line-height:1.5;">
           🔒 Your identity is never visible to other bidders — only your Dealer ID and bid amount appear.
           EVL reveals winner identity only to the selling dealer after auction closes.
@@ -415,9 +415,9 @@ function renderAuctionSelector() {
       <div class="auction-card-status">
         <span style="font-family:var(--font);font-size:16px;font-weight:900;
           color:var(--green);">$${high.toLocaleString()}</span>
-        <span style="font-size:12px;color:var(--muted);font-family:var(--body);
+        <span style="font-size:13px;color:var(--muted);font-family:var(--body);
           font-weight:600;margin-left:8px;">${timeLeft}</span>
-        ${imHigh ? '<span style="font-size:11px;font-weight:900;color:var(--gold);margin-left:6px;font-family:var(--font);">★ YOU\'RE WINNING</span>' : ''}
+        ${imHigh ? '<span style="font-size:13px;font-weight:900;color:var(--gold);margin-left:6px;font-family:var(--font);">★ YOU\'RE WINNING</span>' : ''}
       </div>
     </div>`;
   }).join('');
@@ -497,7 +497,7 @@ function renderBidTable(bids, floor, high) {
       <td><span class="bid-rank">${rank}</span></td>
       <td>
         <span class="bid-id${isHigh?' winner':''}">${b.bidId}</span>
-        ${isMine ? '<span style="font-size:11px;font-weight:900;color:var(--gold);margin-left:6px;font-family:var(--font);">← YOU</span>' : ''}
+        ${isMine ? '<span style="font-size:13px;font-weight:900;color:var(--gold);margin-left:6px;font-family:var(--font);">← YOU</span>' : ''}
       </td>
       <td><span class="bid-time">${b.ts}</span></td>
       <td><span class="bid-amount" style="color:${isHigh?'var(--green)':'var(--white)'};">
