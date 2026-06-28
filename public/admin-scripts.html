@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-height:100vh; }
+body {overflow-x:hidden; background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-height:100vh; }
 
 /* LOGIN */
 #login-screen {
@@ -48,9 +48,9 @@ body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-heig
 }
 .evl-header-left { display:flex; align-items:center; gap:12px; }
 .evl-logo-text { font-size:18px; font-weight:900; letter-spacing:1px; color:#fff; }
-.evl-logo-sub { font-size:11px; font-weight:700; color:#2B84FE; letter-spacing:3px; text-transform:uppercase; }
-.evl-badge { background:#2B84FE; color:#fff; font-size:11px; font-weight:900; padding:4px 12px; border-radius:4px; letter-spacing:2px; }
-.evl-logout { background:transparent; border:1px solid #FF3333; color:#FF3333; font-size:12px; font-weight:700; padding:6px 14px; border-radius:4px; cursor:pointer; letter-spacing:1px; font-family:'Oswald',sans-serif; }
+.evl-logo-sub { font-size:13px; font-weight:700; color:#2B84FE; letter-spacing:3px; text-transform:uppercase; }
+.evl-badge { background:#2B84FE; color:#fff; font-size:13px; font-weight:900; padding:4px 12px; border-radius:4px; letter-spacing:2px; }
+.evl-logout { background:transparent; border:1px solid #FF3333; color:#FF3333; font-size:13px; font-weight:700; padding:6px 14px; border-radius:4px; cursor:pointer; letter-spacing:1px; font-family:'Oswald',sans-serif; }
 .evl-logout:hover { background:#FF3333; color:#fff; }
 
 /* STATS BAR */
@@ -60,7 +60,7 @@ body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-heig
 }
 .stat-item { text-align:center; }
 .stat-val { font-size:26px; font-weight:900; color:#2B84FE; display:block; line-height:1; }
-.stat-lbl { font-size:11px; color:#A1A1AA; letter-spacing:1px; text-transform:uppercase; font-weight:700; margin-top:2px; }
+.stat-lbl { font-size:13px; color:#A1A1AA; letter-spacing:1px; text-transform:uppercase; font-weight:700; margin-top:2px; }
 
 /* WRAP */
 .evl-wrap { max-width:1200px; margin:0 auto; padding:24px 20px 60px; }
@@ -71,7 +71,7 @@ body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-heig
   margin:28px 0 14px; border-bottom:2px solid #2B84FE; padding-bottom:10px;
 }
 .section-hdr h2 { font-size:20px; font-weight:900; color:#fff; letter-spacing:2px; text-transform:uppercase; }
-.section-count { background:#2B84FE; color:#fff; font-size:12px; font-weight:900; padding:3px 10px; border-radius:20px; }
+.section-count { background:#2B84FE; color:#fff; font-size:13px; font-weight:900; padding:3px 10px; border-radius:20px; }
 
 /* FILE CARDS */
 .file-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:14px; }
@@ -85,11 +85,11 @@ body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-heig
   border-bottom:1px solid #1a1a2e; display:flex; align-items:center; justify-content:space-between;
 }
 .file-name { font-size:17px; font-weight:900; color:#fff; letter-spacing:1px; }
-.file-size { font-size:12px; color:#A1A1AA; font-weight:700; }
+.file-size { font-size:13px; color:#A1A1AA; font-weight:700; }
 .file-card-body { padding:14px 16px; }
 .file-url { font-size:13px; color:#2B84FE; font-weight:700; letter-spacing:1px; margin-bottom:8px; display:block; }
 .file-desc { font-size:13px; color:#ccd6e0; font-weight:600; margin-bottom:12px; line-height:1.4; }
-.file-status { display:inline-block; font-size:11px; font-weight:900; padding:3px 10px; border-radius:20px; letter-spacing:1px; margin-bottom:12px; }
+.file-status { display:inline-block; font-size:13px; font-weight:900; padding:3px 10px; border-radius:20px; letter-spacing:1px; margin-bottom:12px; }
 .status-live { background:#0d1a0d; border:1px solid #00C853; color:#00C853; }
 .status-ws { background:#1a1400; border:1px solid #FFD700; color:#FFD700; }
 .status-legal { background:#1a1a0d; border:1px solid #A1A1AA; color:#A1A1AA; }
@@ -98,7 +98,7 @@ body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-heig
 /* BUTTONS */
 .btn-row { display:flex; gap:8px; flex-wrap:wrap; }
 .btn { 
-  padding:8px 14px; font-size:12px; font-weight:900; letter-spacing:1px;
+  padding:10px 16px 14px; font-size:13px; font-weight:900; letter-spacing:1px;
   text-transform:uppercase; border:none; border-radius:6px; cursor:pointer;
   font-family:'Oswald',sans-serif; transition:all .2s; text-decoration:none;
   display:inline-flex; align-items:center; gap:5px;
@@ -120,13 +120,13 @@ body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-heig
 }
 .code-viewer.open { display:block; }
 .code-toolbar {
-  background:#0a0a1a; padding:8px 12px;
+  background:#0a0a1a; padding:10px 16px 12px;
   display:flex; align-items:center; justify-content:space-between;
   border-bottom:1px solid #1a1a2e;
 }
-.code-toolbar-label { font-size:12px; color:#2B84FE; font-weight:700; letter-spacing:1px; }
+.code-toolbar-label { font-size:13px; color:#2B84FE; font-weight:700; letter-spacing:1px; }
 .code-content {
-  padding:16px; font-family:monospace; font-size:12px; color:#ccd6e0;
+  padding:16px; font-family:monospace; font-size:13px; color:#ccd6e0;
   max-height:400px; overflow-y:auto; white-space:pre-wrap; word-break:break-all;
   line-height:1.5;
 }
@@ -140,7 +140,7 @@ body { background:#020203; color:#fff; font-family:'Oswald',sans-serif; min-heig
 .info-box h3 { font-size:16px; font-weight:900; color:#2B84FE; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
 .info-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; }
 .info-row { display:flex; flex-direction:column; gap:3px; }
-.info-label { font-size:11px; color:#A1A1AA; letter-spacing:1px; text-transform:uppercase; font-weight:700; }
+.info-label { font-size:13px; color:#A1A1AA; letter-spacing:1px; text-transform:uppercase; font-weight:700; }
 .info-value { font-size:14px; color:#fff; font-weight:700; font-family:monospace; }
 .info-value.blue { color:#2B84FE; }
 .info-value.green { color:#00C853; }
@@ -252,7 +252,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
         <div class="info-row"><span class="info-label">GitHub Repo</span><span class="info-value blue">github.com/timogrady01/evl-decode</span></div>
         <div class="info-row"><span class="info-label">Vercel Dashboard</span><span class="info-value blue">vercel.com/vehicle-locator-service</span></div>
         <div class="info-row"><span class="info-label">Notification Email</span><span class="info-value green">togradyevl@gmail.com</span></div>
-        <div class="info-row"><span class="info-label">MarketCheck API Key</span><span class="info-value" style="font-size:11px">B15Zgw0IlF2pSbOTaxeNmq8mV9VpoELj</span></div>
+        <div class="info-row"><span class="info-label">MarketCheck API Key</span><span class="info-value" style="font-size:13px">B15Zgw0IlF2pSbOTaxeNmq8mV9VpoELj</span></div>
         <div class="info-row"><span class="info-label">Design Background</span><span class="info-value">#020203 | Blue: #2B84FE | Green: #00C853</span></div>
       </div>
       <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
