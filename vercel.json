@@ -425,6 +425,14 @@
       "destination": "public/appointment-confirm.html"
     },
     {
+      "source": "/consult",
+      "destination": "public/consult.html"
+    },
+    {
+      "source": "/consult.html",
+      "destination": "public/consult.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
