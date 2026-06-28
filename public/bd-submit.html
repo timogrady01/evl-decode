@@ -22,7 +22,7 @@
     --body:  'Barlow', sans-serif;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { background:var(--bg); color:var(--white); font-family:var(--font); min-height:100vh; }
+  html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-family:var(--font); min-height:100vh; }
 
   /* NAV */
   nav { background:#090E17; border-bottom:2px solid var(--blue); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
@@ -73,7 +73,7 @@
   .bd-card { background:var(--bg); border:2px solid var(--border); border-radius:12px; padding:20px; text-align:center; transition:border-color .2s; cursor:pointer; position:relative; }
   .bd-card:hover { border-color:var(--blue); }
   .bd-card.selected { border-color:var(--gold); background:rgba(255,215,0,.04); }
-  .bd-card.selected::after { content:'✓ SELECTED'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--gold); color:#000; font-size:11px; font-weight:900; padding:2px 10px; border-radius:10px; letter-spacing:1px; font-family:var(--body); }
+  .bd-card.selected::after { content:'✓ SELECTED'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--gold); color:#000; font-size:13px; font-weight:900; padding:2px 10px; border-radius:10px; letter-spacing:1px; font-family:var(--body); }
   .bd-logo { font-size:22px; font-weight:900; letter-spacing:1px; margin-bottom:6px; color:var(--white); }
   .bd-est { font-size:26px; font-weight:900; color:var(--green); margin-bottom:4px; }
   .bd-note { font-size:13px; color:#ffffff; font-family:var(--body); font-weight:600; }
@@ -153,7 +153,7 @@
     .next-grid { grid-template-columns:1fr; }
     .vs-right { width:100%; }
     .progress-bar { gap:0; }
-    .step-label { font-size:11px; }
+    .step-label { font-size:13px; }
   }
 </style>
 </head>
@@ -460,7 +460,7 @@
     <p class="success-sub">Your vehicle has been queued for Bidding Dealer Network submission — no charge today. EVL will reach out within 24 hours to confirm everything and get your vehicle in front of buyers. If you accept an offer, EVL will send a secure link for the $199 service fee at that time.</p>
     <div class="success-ref" id="refNum">EVL-BD-000000</div>
     <div style="margin-top:8px;">
-      <button onclick="copyRefNum()" id="copyBtn" style="background:transparent;border:1px solid var(--blue);color:var(--blue);padding:8px 18px;border-radius:6px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;">📋 Copy Reference Number</button>
+      <button onclick="copyRefNum()" id="copyBtn" style="background:transparent;border:1px solid var(--blue);color:var(--blue);padding:10px 16px 18px;border-radius:6px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;">📋 Copy Reference Number</button>
     </div>
     <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:6px;">Save this number — you'll need it if you contact EVL about this submission.</p>
     <div class="success-steps">
