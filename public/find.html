@@ -33,14 +33,14 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .search-hero{background:var(--s1);border-bottom:2px solid #1a1a2e;padding:20px 24px}
 .search-hero-inner{max-width:1400px;margin:0 auto}
 .quick-search-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.qs-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 16px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s}
+.qs-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:14px 18px;font-size:17px;font-weight:600;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s}
 .qs-input:focus{border-color:var(--blue)}
 .qs-input.qs-zip{width:100px}
 .qs-input.qs-main{flex:1;min-width:200px}
-.qs-select{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;cursor:pointer;transition:border-color .2s;min-width:120px}
+.qs-select{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:14px 16px;font-size:16px;font-weight:600;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;cursor:pointer;transition:border-color .2s;min-width:120px}
 .qs-select:focus{border-color:var(--blue)}
 .qs-select option{background:#0a0a1a}
-.search-go-btn{background:var(--blue);color:var(--white);border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap}
+.search-go-btn{background:var(--blue);color:var(--white);border:none;padding:16px 32px;font-size:18px;font-weight:900;border-radius:8px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap}
 .search-go-btn:hover{background:#1a6fd4}
 .results-count{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-align:right;margin-top:8px}
 
@@ -63,7 +63,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .filter-section.collapsed .filter-section-chevron{transform:rotate(-90deg)}
 .filter-section-body{padding:12px 16px;display:block}
 .filter-section.collapsed .filter-section-body{display:none}
-.filter-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
+.filter-label{font-size:14px;color:#C8D0DC;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
 .filter-input{width:100%;background:var(--bg);border:1px solid #2a2a4e;color:var(--white);padding:9px 12px;border-radius:6px;font-size:13px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;margin-bottom:8px}
 .filter-input:focus{border-color:var(--blue)}
 .filter-input option{background:#0a0a1a}
@@ -96,7 +96,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 /* MAIN RESULTS */
 .results-main{background:var(--bg);overflow-y:auto}
 .sort-bar{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:12px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;flex-wrap:wrap}
-.sort-label{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.sort-label{font-size:15px;color:#C8D0DC;font-weight:800;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .sort-btn{padding:7px 14px;border-radius:6px;font-size:11px;font-weight:900;cursor:pointer;border:1px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s;white-space:nowrap}
 .sort-btn:hover{border-color:var(--blue);color:var(--blue)}
 .sort-btn.active{background:var(--blue);color:var(--white);border-color:var(--blue)}
@@ -139,7 +139,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 .vehicle-price-below.above{color:var(--red)}
 .vehicle-price-below.avg{color:var(--muted)}
 .vehicle-meta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-.vehicle-meta-item{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600;display:flex;align-items:center;gap:4px}
+.vehicle-meta-item{font-size:14px;color:var(--dim);font-family:var(--body);font-weight:600;display:flex;align-items:center;gap:4px}
 .vehicle-distance{font-size:12px;font-weight:900;color:var(--blue);letter-spacing:1px}
 .vehicle-dom{font-size:11px;font-weight:700;letter-spacing:1px}
 .vehicle-dom.fresh{color:var(--green)}
@@ -191,7 +191,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 /* BUTTONS */
 .btn{padding:9px 18px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
 .btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
-.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
+.btn-green{background:var(--green);color:#020203;font-weight:900;}.btn-green:hover{background:#00a844}.btn.btn-green.btn-sm{font-size:14px;padding:10px 16px;min-height:42px;}
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
 .btn-sm{padding:6px 12px;font-size:11px}
@@ -663,7 +663,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
       <div style="font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px">CAN'T FIND EXACTLY WHAT YOU WANT?</div>
       <div style="font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:16px;line-height:1.6">EVL searches beyond public listings — wholesale inventory, fleet returns, lease returns, and dealer trades that never hit retail. Tell us what you want.</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <a href="https://evl-decode-two.vercel.app/finder" class="btn btn-green">⚡ TELL EVL WHAT YOU WANT</a>
+        <a href="https://evl-decode-two.vercel.app/finder" class="btn btn-green">⚡ DESCRIBE WHAT YOU WANT</a>
         <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue">📅 TALK TO AN ADVISOR</a>
       </div>
     </div>
@@ -1209,6 +1209,18 @@ function closeCompareModal() {
   document.body.style.overflow = '';
 }
 
+
+function setMakeAndSearch(make) {
+  // Find and set the make dropdown
+  const makeSelect = document.querySelector('select[data-field="make"]') || 
+                     document.querySelectorAll('.qs-select')[1];
+  if (makeSelect) {
+    makeSelect.value = make;
+    // Also set searchCriteria
+    searchCriteria.make = make;
+  }
+  fetchVehicles(true);
+}
 
 function loadMore(){ currentPage++; fetchVehicles(false); }
 
