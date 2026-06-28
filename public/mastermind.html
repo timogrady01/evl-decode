@@ -10,7 +10,7 @@
 :root{
   --bg:#020203;--s1:#090E17;--s2:#0a0f1a;--s3:#070710;
   --blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;
-  --white:#ffffff;--muted:#A1A1AA;--dim:#ccd6e0;
+  --white:#ffffff;--muted:#C8D0DC;--dim:#ccd6e0;
   --font:'Oswald',sans-serif;--body:'Barlow',sans-serif;
 }
 body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh}
@@ -36,10 +36,10 @@ body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(-
 .evl-header-title{font-size:20px;font-weight:900;letter-spacing:2px;color:var(--white)}
 .evl-header-sub{font-size:10px;color:var(--blue);letter-spacing:3px;font-weight:700;text-transform:uppercase}
 .evl-header-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.hdr-stat{background:var(--s2);border:1px solid #1a1a2e;border-radius:6px;padding:6px 12px;text-align:center}
+.hdr-stat{background:var(--s2);border:1px solid #1a1a2e;border-radius:6px;padding:8px 12px;text-align:center}
 .hdr-stat-val{font-size:18px;font-weight:900;color:var(--blue);display:block;line-height:1}
 .hdr-stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
-.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:8px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
 .evl-logout:hover{background:var(--red);color:var(--white)}
 
 /* TAB NAV */
@@ -92,7 +92,7 @@ body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(-
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
 .btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
-.btn-sm{padding:6px 12px;font-size:13px}
+.btn-sm{padding:8px 12px;font-size:13px}
 
 /* Customer table */
 .cust-table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden}
@@ -271,9 +271,9 @@ body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(-
 .evl-admin-nav{position:sticky;top:0;z-index:500;background:#020a02;border-bottom:2px solid #00C853;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
 .evl-admin-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
 .evl-admin-links{display:flex;align-items:center;gap:4px;}
-.evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:8px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
 .evl-admin-link:hover{color:#fff;background:#0d1a0d;}
-.evl-admin-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;border:1px solid #2a2a4e;transition:all .2s;white-space:nowrap;}
+.evl-admin-retail{color:#ccd6e0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:9px 14px;border-radius:6px;margin-left:8px;border:1px solid #2a2a4e;transition:all .2s;white-space:nowrap;}
 .evl-admin-retail:hover{color:#fff;border-color:#fff;}
 .evl-admin-hamburger{display:none;background:none;border:none;color:#00C853;font-size:22px;cursor:pointer;padding:4px 8px;}
 /* Fix body centering */
@@ -334,7 +334,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-active" style="font-size:18px;color:var(--green)">0</span><span class="rev-lbl" style="font-size:10px">Active Deals</span></div>
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-followup" style="font-size:18px;color:var(--gold)">0</span><span class="rev-lbl" style="font-size:10px">Follow-Ups Due</span></div>
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-equity" style="font-size:18px;color:var(--purple)">0</span><span class="rev-lbl" style="font-size:10px">Equity Alerts</span></div>
-    <a href="https://evl-decode-two.vercel.app/admin-scripts" style="color:var(--blue);font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:6px 10px">⬅ ADMIN</a>
+    <a href="https://evl-decode-two.vercel.app/admin-scripts" style="color:var(--blue);font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:8px 10px">⬅ ADMIN</a>
     <button class="evl-logout" onclick="logout()">LOGOUT</button>
   </div>
 </div>
@@ -1339,7 +1339,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
             oninput="updateTextCounter()"
             style="resize:none;line-height:1.6;padding-bottom:40px"></textarea>
           <!-- CHARACTER COUNTER BAR -->
-          <div style="position:absolute;bottom:0;left:0;right:0;background:#0a0a1a;border-top:1px solid #1a1a2e;border-radius:0 0 8px 8px;padding:6px 12px;display:flex;align-items:center;justify-content:space-between">
+          <div style="position:absolute;bottom:0;left:0;right:0;background:#0a0a1a;border-top:1px solid #1a1a2e;border-radius:0 0 8px 8px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between">
             <div style="display:flex;align-items:center;gap:8px">
               <div id="text-counter-bar" style="width:120px;height:6px;background:#1a1a2e;border-radius:3px;overflow:hidden">
                 <div id="text-counter-fill" style="height:100%;width:0%;background:var(--green);transition:all .2s;border-radius:3px"></div>
@@ -1935,7 +1935,7 @@ document.addEventListener('keydown', e=>{
     <div class="merge-header">
       <div>
         <div style="font-size:18px;font-weight:900;color:#FF3333;letter-spacing:1px">🔀 MERGE DUPLICATE CUSTOMERS</div>
-        <div style="font-size:13px;color:#A1A1AA;margin-top:4px;font-family:'Barlow',sans-serif">Click any field value to select it for the merged record. All activity from both records will be combined.</div>
+        <div style="font-size:13px;color:#C8D0DC;margin-top:4px;font-family:'Barlow',sans-serif">Click any field value to select it for the merged record. All activity from both records will be combined.</div>
       </div>
       <button onclick="closeMergeModal()" style="background:#FF3333;color:#fff;border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif">✕ CLOSE</button>
     </div>
@@ -1944,7 +1944,7 @@ document.addEventListener('keydown', e=>{
     </div>
     <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px" id="merge-compare-grid"></div>
     <div style="padding:16px;background:#020a02;border-top:2px solid #1a1a2e;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <div style="font-size:13px;color:#A1A1AA;font-family:'Barlow',sans-serif;flex:1">✅ All calls, texts, emails, and notes from BOTH records will be preserved in the merged record. The secondary record will be archived — not deleted.</div>
+      <div style="font-size:13px;color:#C8D0DC;font-family:'Barlow',sans-serif;flex:1">✅ All calls, texts, emails, and notes from BOTH records will be preserved in the merged record. The secondary record will be archived — not deleted.</div>
       <button onclick="executeMerge()" style="background:#00C853;color:#020203;border:none;padding:12px 24px;font-size:14px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif;letter-spacing:1px">✅ EXECUTE MERGE</button>
       <button onclick="closeMergeModal()" style="background:#1a1a2e;color:#fff;border:1px solid #2a2a4e;padding:12px 20px;font-size:14px;font-weight:900;cursor:pointer;border-radius:8px;font-family:'Oswald',sans-serif">CANCEL</button>
     </div>
@@ -1965,10 +1965,10 @@ document.addEventListener('keydown', e=>{
       <!-- VOI -->
       <div style="font-size:13px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">VEHICLE OF INTEREST</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
-        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Vehicle (YMM)</label><input id="dd-vehicle" class="form-input" placeholder="2023 Toyota Tundra TRD Pro"/></div>
-        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">VIN (if known)</label><input id="dd-vin" class="form-input" placeholder="17-digit VIN"/></div>
-        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Color</label><input id="dd-color" class="form-input" placeholder="White Exterior"/></div>
-        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Mileage</label><input id="dd-mileage" class="form-input" placeholder="22,000"/></div>
+        <div><label style="font-size:13px;color:#C8D0DC;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Vehicle (YMM)</label><input id="dd-vehicle" class="form-input" placeholder="2023 Toyota Tundra TRD Pro"/></div>
+        <div><label style="font-size:13px;color:#C8D0DC;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">VIN (if known)</label><input id="dd-vin" class="form-input" placeholder="17-digit VIN"/></div>
+        <div><label style="font-size:13px;color:#C8D0DC;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Color</label><input id="dd-color" class="form-input" placeholder="White Exterior"/></div>
+        <div><label style="font-size:13px;color:#C8D0DC;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Mileage</label><input id="dd-mileage" class="form-input" placeholder="22,000"/></div>
       </div>
 
       <!-- DEAL NUMBERS -->
@@ -1978,10 +1978,10 @@ document.addEventListener('keydown', e=>{
       <!-- GROSS DISPLAY -->
       <div style="background:#020203;border:2px solid #1a1a2e;border-radius:10px;padding:16px;margin-bottom:16px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span style="font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase">TOTAL DEAL GROSS</span>
+          <span style="font-size:13px;color:#C8D0DC;font-weight:700;letter-spacing:1px;text-transform:uppercase">TOTAL DEAL GROSS</span>
           <span id="dd-total-gross" style="font-size:28px;font-weight:900;color:#00C853">$0</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;color:#A1A1AA">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#C8D0DC">
           <span>Front End: <strong id="dd-front" style="color:#ccd6e0">$0</strong></span>
           <span>Back End: <strong id="dd-back" style="color:#ccd6e0">$0</strong></span>
           <span>EVL Fee: <strong id="dd-fee" style="color:#FFD700">$0</strong></span>
@@ -2012,7 +2012,7 @@ document.addEventListener('keydown', e=>{
 .act-body:hover{border-color:#2B84FE}
 .act-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
 .act-type-label{font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
-.act-timestamp{font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;margin-left:auto}
+.act-timestamp{font-size:13px;color:#C8D0DC;font-weight:700;letter-spacing:1px;margin-left:auto}
 .act-content{font-size:13px;color:#ccd6e0;font-family:'Barlow',sans-serif;line-height:1.5}
 .act-outcome-badge{display:inline-block;font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;margin-top:5px;letter-spacing:1px}
 
@@ -2038,7 +2038,7 @@ document.addEventListener('keydown', e=>{
 .merge-col-box.primary-col{border-color:#00C853}
 .merge-col-box.secondary-col{border-color:#FF3333}
 .merge-field{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
-.merge-field-lbl{font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase;width:90px;flex-shrink:0;padding-top:4px;font-family:'Oswald',sans-serif}
+.merge-field-lbl{font-size:13px;color:#C8D0DC;font-weight:700;letter-spacing:1px;text-transform:uppercase;width:90px;flex-shrink:0;padding-top:4px;font-family:'Oswald',sans-serif}
 .merge-field-value{font-size:14px;font-weight:700;color:#ccd6e0;font-family:'Barlow',sans-serif;flex:1;padding:5px 10px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .2s}
 .merge-field-value:hover{background:#1a1a2e;border-color:#2B84FE}
 .merge-field-value.selected{background:#0d1a0d;border-color:#00C853;color:#00C853}
@@ -2047,8 +2047,8 @@ document.addEventListener('keydown', e=>{
 /* DEAL DESK ROWS */
 .dd-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 0;border-bottom:1px solid #0d0d1a}
 .dd-row:last-child{border-bottom:none}
-.dd-row-label{font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.dd-input{background:#020203;border:1px solid #2a2a4e;color:#fff;padding:6px 10px;border-radius:6px;font-size:14px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;width:130px;text-align:right}
+.dd-row-label{font-size:13px;color:#C8D0DC;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.dd-input{background:#020203;border:1px solid #2a2a4e;color:#fff;padding:8px 10px;border-radius:6px;font-size:14px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;width:130px;text-align:right}
 .dd-input:focus{border-color:#2B84FE}
 
 /* DUP CHECK LIVE */
@@ -2110,7 +2110,7 @@ function renderActivityTimeline(customerId, containerId){
   };
 
   if(activities.length === 0){
-    el.innerHTML = '<div style="text-align:center;padding:30px;color:#A1A1AA;font-size:14px;font-weight:700;font-family:\'Barlow\',sans-serif">No activity yet — communications will appear here automatically</div>';
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:#C8D0DC;font-size:14px;font-weight:700;font-family:\'Barlow\',sans-serif">No activity yet — communications will appear here automatically</div>';
     return;
   }
 
@@ -2124,7 +2124,7 @@ function renderActivityTimeline(customerId, containerId){
   });
 
   el.innerHTML = Object.entries(grouped).map(([date, acts])=>`
-    <div style="font-size:13px;font-weight:900;color:#A1A1AA;letter-spacing:2px;text-transform:uppercase;margin:16px 0 8px;padding-left:38px">${date}</div>
+    <div style="font-size:13px;font-weight:900;color:#C8D0DC;letter-spacing:2px;text-transform:uppercase;margin:16px 0 8px;padding-left:38px">${date}</div>
     <ul class="act-timeline">
       ${acts.map(act=>{
         const cfg = typeConfig[act.type]||typeConfig['note'];
@@ -2163,7 +2163,7 @@ function renderVOICard(c, containerId){
   const el = document.getElementById(containerId);
   if(!el) return;
   const {voi, vin, matchCount, desk} = getCustomerVOI(c);
-  if(!voi){ el.innerHTML = `<div style="text-align:center;padding:16px;color:#A1A1AA;font-size:13px;font-weight:700;cursor:pointer;border:2px dashed #2a2a4e;border-radius:10px" onclick="openDealDesk('${c.id}')">➕ ADD VEHICLE OF INTEREST</div>`; return; }
+  if(!voi){ el.innerHTML = `<div style="text-align:center;padding:16px;color:#C8D0DC;font-size:13px;font-weight:700;cursor:pointer;border:2px dashed #2a2a4e;border-radius:10px" onclick="openDealDesk('${c.id}')">➕ ADD VEHICLE OF INTEREST</div>`; return; }
   const statusColor = matchCount > 0 ? '#00C853' : '#FFD700';
   const statusLabel = matchCount > 0 ? `${matchCount} MATCHES FOUND` : 'SEARCHING...';
   el.innerHTML = `<div class="voi-card">
@@ -2172,7 +2172,7 @@ function renderVOICard(c, containerId){
       <span class="voi-status-badge" style="background:${matchCount>0?'#0d1a0d':'#1a1400'};border:1px solid ${statusColor};color:${statusColor}">${statusLabel}</span>
     </div>
     <div class="voi-spec-text">${voi}</div>
-    ${vin ? `<div style="font-size:13px;color:#A1A1AA;font-family:'Barlow',sans-serif;margin-bottom:6px">VIN: ${vin}</div>` : ''}
+    ${vin ? `<div style="font-size:13px;color:#C8D0DC;font-family:'Barlow',sans-serif;margin-bottom:6px">VIN: ${vin}</div>` : ''}
     <div class="voi-detail-text">Budget: ${c.budget||'—'} · Max Miles: ${c.maxMiles||'—'} · Status: <strong style="color:#ccd6e0">${c.status}</strong></div>
     ${desk?.sellingPrice ? `<div class="voi-match-bar">💰 Deal Desk Active: Selling $${Number(desk.sellingPrice||0).toLocaleString()} · Gross: <strong>$${Number(desk.grossTotal||0).toLocaleString()}</strong></div>` : ''}
     <div style="display:flex;gap:6px;margin-top:10px">
@@ -2248,8 +2248,8 @@ function renderDupAlert(customerId, containerId){
         <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px">${d.reasons.map(r=>`<span class="dup-reason-badge" style="background:#1a0000;border:1px solid #FF3333;color:#FF3333">${r}</span>`).join('')}</div>
       </div>
       <div style="text-align:center;flex-shrink:0">
-        <div class="dup-score-pct" style="color:${d.score>=70?'#FF3333':d.score>=50?'#FFD700':'#A1A1AA'}">${d.score}%</div>
-        <div style="font-size:10px;color:#A1A1AA;letter-spacing:1px;font-weight:700">MATCH</div>
+        <div class="dup-score-pct" style="color:${d.score>=70?'#FF3333':d.score>=50?'#FFD700':'#C8D0DC'}">${d.score}%</div>
+        <div style="font-size:10px;color:#C8D0DC;letter-spacing:1px;font-weight:700">MATCH</div>
         <button class="btn btn-sm" style="background:#1a0000;border:1px solid #FF3333;color:#FF3333;margin-top:6px" onclick="openMergeModal('${customerId}','${d.id}')">🔀 MERGE</button>
       </div>
     </div>`).join('')}
@@ -2278,7 +2278,7 @@ function liveDupCheck(){
     <div class="live-dup-check-title">⚠️ POSSIBLE DUPLICATE${matches.length>1?'S':''} — ${matches.length} EXISTING RECORD${matches.length>1?'S':''} MATCH</div>
     ${matches.slice(0,3).map(m=>`<div class="live-dup-item">
       <span style="font-weight:700;color:#fff">${m.fname} ${m.lname}${m.nickname?' ('+m.nickname+')':''}</span>
-      <span style="color:#A1A1AA;font-family:'Barlow',sans-serif;font-size:13px">${m.phone||''} · ${m.status}</span>
+      <span style="color:#C8D0DC;font-family:'Barlow',sans-serif;font-size:13px">${m.phone||''} · ${m.status}</span>
       <button class="btn btn-sm" style="background:#040e1a;border:1px solid #2B84FE;color:#2B84FE" onclick="openProfile('${m.id}')">VIEW</button>
     </div>`).join('')}
   </div>`;
@@ -2309,7 +2309,7 @@ function openMergeModal(primaryId, secondaryId){
   const makeCol = (c, side)=>`<div class="merge-col-box ${side}-col">
     <div style="font-size:13px;font-weight:900;color:${side==='primary'?'#00C853':'#FF3333'};letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">
       ${side==='primary'?'✅ PRIMARY (KEEP ID)':'🔴 SECONDARY (ARCHIVE)'}
-      <span style="font-size:13px;color:#A1A1AA;margin-left:8px">${c.id}</span>
+      <span style="font-size:13px;color:#C8D0DC;margin-left:8px">${c.id}</span>
     </div>
     ${fields.map(f=>`<div class="merge-field">
       <div class="merge-field-lbl">${f.label}</div>
@@ -2424,7 +2424,7 @@ function calcDealDesk(){
   const el = document.getElementById('dd-total-gross');
   if(el){
     el.textContent = '$'+Math.abs(total).toLocaleString();
-    el.style.color = total>0?'#00C853':total<0?'#FF3333':'#A1A1AA';
+    el.style.color = total>0?'#00C853':total<0?'#FF3333':'#C8D0DC';
   }
   const fe = document.getElementById('dd-front');
   const be = document.getElementById('dd-back');
@@ -2625,7 +2625,7 @@ window.addEventListener('DOMContentLoaded',function(){
   if(fnameGroup && !document.getElementById('add-nickname')){
     const nickDiv = document.createElement('div');
     nickDiv.className='form-group';
-    nickDiv.innerHTML='<label class="form-label">Nickname / Goes By <span style="color:#A1A1AA;font-size:13px">(optional)</span></label><input class="form-input" id="add-nickname" placeholder="e.g. Bob, Liz, Mike"/>';
+    nickDiv.innerHTML='<label class="form-label">Nickname / Goes By <span style="color:#C8D0DC;font-size:13px">(optional)</span></label><input class="form-input" id="add-nickname" placeholder="e.g. Bob, Liz, Mike"/>';
     fnameGroup.parentNode.insertBefore(nickDiv, fnameGroup.nextSibling);
   }
   // Inject live dup check container
@@ -2701,7 +2701,7 @@ window.renderCustomersV2 = function(){
     const lastContact = c.lastContact ? new Date(c.lastContact).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
     const actCount = getActivityForCustomer(c.id).length;
     return `<tr>
-      <td><strong style="color:#fff">${c.fname} ${c.lname}</strong>${c.nickname?` <span style="color:#A1A1AA;font-size:13px">(${c.nickname})</span>`:''}<br><span style="font-size:13px;color:#A1A1AA">${c.id}</span></td>
+      <td><strong style="color:#fff">${c.fname} ${c.lname}</strong>${c.nickname?` <span style="color:#C8D0DC;font-size:13px">(${c.nickname})</span>`:''}<br><span style="font-size:13px;color:#C8D0DC">${c.id}</span></td>
       <td><a href="tel:${c.phone}" style="color:#2B84FE;text-decoration:none;font-weight:700">${c.phone}</a></td>
       <td style="max-width:200px">${c.vehicleInterest||'—'}</td>
       <td style="color:#00C853;font-weight:900">${c.budget||'—'}</td>
