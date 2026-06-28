@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
-body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
+body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
 
 /* WS NAV */
 .evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:var(--font)}
@@ -45,7 +45,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .stat-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:16px;text-align:center}
 .stat-card:hover{border-color:var(--gold)}
 .stat-val{font-size:30px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
-.stat-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.stat-lbl{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
 
 /* HUB MAP */
 .hub-map{background:var(--s1);border:2px solid var(--gold);border-radius:16px;overflow:hidden;margin-bottom:24px}
@@ -61,7 +61,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .hub-tooltip{position:absolute;background:#0a0800;border:2px solid var(--gold);border-radius:10px;padding:12px 16px;min-width:200px;font-family:var(--font);z-index:10;pointer-events:none;display:none}
 .hub-tooltip.show{display:block}
 .hub-tooltip-name{font-size:14px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:6px}
-.hub-tooltip-stats{font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.6}
+.hub-tooltip-stats{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6}
 
 /* PIPELINE BOARD */
 .pipeline-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px}
@@ -71,21 +71,21 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .pipeline-card.warm{border-color:var(--gold)}
 @keyframes pulse-red{0%,100%{border-color:var(--red)}50%{border-color:#ff6666}}
 .pipe-header{background:rgba(0,0,0,0.2);padding:12px 16px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between}
-.pipe-status{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.pipe-status{font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
 .status-hot{background:#1a0000;border:1px solid var(--red);color:var(--red)}
 .status-active{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
 .status-pending{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .status-complete{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
-.pipe-days{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px}
+.pipe-days{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px}
 .pipe-body{padding:14px 16px}
 .pipe-vehicle{font-size:16px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:4px}
-.pipe-vin{font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:10px;font-weight:700;letter-spacing:1px}
+.pipe-vin{font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:10px;font-weight:700;letter-spacing:1px}
 .pipe-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.pipe-meta-item{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600}
+.pipe-meta-item{font-size:13px;color:var(--dim);font-family:var(--body);font-weight:600}
 .pipe-meta-item strong{color:var(--white)}
 .pipe-acv{font-size:20px;font-weight:900;color:var(--gold);margin-bottom:10px}
 .pipe-progress{margin-bottom:10px}
-.pipe-progress-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between}
+.pipe-progress-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between}
 .pipe-progress-track{height:8px;background:#1a1a2e;border-radius:4px;overflow:hidden}
 .pipe-progress-fill{height:100%;border-radius:4px;transition:width .3s}
 
@@ -94,14 +94,14 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .bid-card:hover{border-color:var(--gold)}
 .bid-header{background:var(--s2);padding:12px 18px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .bid-vehicle-name{font-size:16px;font-weight:900;color:var(--white);letter-spacing:0.5px}
-.bid-expires{font-size:12px;font-weight:700;color:var(--red);letter-spacing:1px}
+.bid-expires{font-size:13px;font-weight:700;color:var(--red);letter-spacing:1px}
 .bid-body{padding:16px 18px}
 .bid-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .bid-item{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:10px 12px}
-.bid-item-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.bid-item-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
 .bid-item-val{font-size:15px;font-weight:900;color:var(--white)}
 .bid-market-range{background:#040e1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;margin-bottom:14px}
-.bid-market-title{font-size:11px;color:var(--blue);font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.bid-market-title{font-size:13px;color:var(--blue);font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .bid-market-row{display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px}
 .bid-input-row{display:flex;gap:10px;align-items:center}
 .bid-input{background:var(--bg);border:2px solid var(--gold);color:var(--white);padding:12px 14px;border-radius:8px;font-size:16px;font-family:var(--font);font-weight:900;outline:none;width:160px}
@@ -115,24 +115,24 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .porter-card.delivered{border-color:var(--green);background:#020a02}
 .porter-card.assigned{border-color:var(--gold)}
 .porter-header{padding:12px 16px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between}
-.porter-status-badge{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.porter-status-badge{font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
 .porter-in-transit{background:#040010;border:1px solid var(--blue);color:var(--blue)}
 .porter-delivered{background:#020a02;border:1px solid var(--green);color:var(--green)}
 .porter-assigned{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .porter-body{padding:14px 16px}
 .porter-name{font-size:16px;font-weight:900;color:var(--white);margin-bottom:4px}
 .porter-vehicle{font-size:13px;color:var(--gold);font-weight:700;margin-bottom:8px}
-.porter-route{font-size:12px;color:var(--dim);font-family:var(--body);margin-bottom:10px;line-height:1.6}
+.porter-route{font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:10px;line-height:1.6}
 .porter-eta{font-size:13px;font-weight:900;color:var(--cyan);letter-spacing:1px}
 .porter-progress{height:6px;background:#1a1a2e;border-radius:3px;overflow:hidden;margin-top:8px}
 .porter-progress-fill{height:100%;border-radius:3px;transition:width .3s}
 
 /* AGED UNIT RADAR */
 .aged-unit-table{width:100%;border-collapse:collapse}
-.aged-unit-table th{background:var(--s2);color:var(--gold);padding:11px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.aged-unit-table th{background:var(--s2);color:var(--gold);padding:11px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .aged-unit-table td{padding:11px 14px;border-bottom:1px solid #0d0d1a;font-size:13px;color:var(--dim);font-weight:600;vertical-align:middle}
 .aged-unit-table tr:hover td{background:#0a0a0a;color:var(--white)}
-.days-badge{display:inline-block;font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.days-badge{display:inline-block;font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
 .days-hot{background:#1a0000;border:1px solid var(--red);color:var(--red)}
 .days-warm{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .days-cool{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
@@ -146,7 +146,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 /* DEALER NETWORK */
 .dn-filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
 .dn-filter-btn{background:var(--s2);border:1px solid #1a1a2e;color:var(--muted);padding:7px 16px;
-  border-radius:6px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;
+  border-radius:6px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;
   cursor:pointer;font-family:var(--font);transition:all .2s;}
 .dn-filter-btn:hover{border-color:var(--gold);color:var(--gold);}
 .dn-filter-btn.active{background:#1a1400;border-color:var(--gold);color:var(--gold);}
@@ -157,7 +157,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .dn-mfg-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:10px;
   border-bottom:2px solid #1a1a2e;}
 .dn-mfg-name{font-size:18px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;}
-.dn-mfg-count{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;
+.dn-mfg-count{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;
   background:var(--s2);padding:3px 10px;border-radius:10px;}
 .dn-dealer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;}
 .dn-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;overflow:hidden;
@@ -168,7 +168,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .dn-card-header{background:rgba(0,0,0,.2);padding:12px 16px;border-bottom:1px solid #1a1a2e;
   display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
 .dn-dealer-name{font-size:15px;font-weight:900;color:var(--white);letter-spacing:.5px;line-height:1.3;}
-.dn-dealer-metro{font-size:11px;color:var(--muted);font-family:var(--body);font-weight:600;
+.dn-dealer-metro{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
   text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
 .dn-status-badge{font-size:10px;font-weight:900;padding:3px 8px;border-radius:10px;
   letter-spacing:1px;text-transform:uppercase;white-space:nowrap;font-family:var(--font);flex-shrink:0;}
@@ -181,15 +181,15 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   letter-spacing:1px;width:28px;flex-shrink:0;padding-top:2px;font-family:var(--font);}
 .dn-contact-info{flex:1;}
 .dn-contact-name{font-size:14px;font-weight:900;color:var(--white);}
-.dn-contact-detail{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+.dn-contact-detail{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
   line-height:1.5;margin-top:1px;}
 .dn-card-footer{padding:10px 16px;border-top:1px solid #1a1a2e;display:flex;gap:6px;flex-wrap:wrap;}
 .dn-vol-bar{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.dn-vol-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+.dn-vol-label{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;
   letter-spacing:1px;flex-shrink:0;font-family:var(--font);}
 .dn-vol-track{flex:1;height:6px;background:#1a1a2e;border-radius:3px;overflow:hidden;}
 .dn-vol-fill{height:100%;background:var(--gold);border-radius:3px;}
-.dn-vol-num{font-size:12px;font-weight:900;color:var(--gold);flex-shrink:0;}
+.dn-vol-num{font-size:13px;font-weight:900;color:var(--gold);flex-shrink:0;}
 .dn-tier{display:inline-block;font-size:10px;font-weight:900;padding:2px 8px;border-radius:8px;
   letter-spacing:1px;text-transform:uppercase;font-family:var(--font);margin-bottom:8px;}
 .dn-tier-green{background:rgba(0,200,83,.1);color:var(--green);border:1px solid rgba(0,200,83,.3);}
@@ -229,14 +229,14 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .cl-setting-val.green{color:var(--green);}
 .cl-algo-box{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.2);
   border-radius:8px;padding:12px 14px;margin-top:10px;}
-.cl-algo-title{font-size:11px;font-weight:900;color:var(--gold);text-transform:uppercase;
+.cl-algo-title{font-size:13px;font-weight:900;color:var(--gold);text-transform:uppercase;
   letter-spacing:2px;margin-bottom:6px;font-family:var(--font);}
-.cl-algo-item{font-size:12px;color:#ffffff;font-family:var(--body);font-weight:600;
+.cl-algo-item{font-size:13px;color:#ffffff;font-family:var(--body);font-weight:600;
   line-height:1.6;display:flex;gap:8px;}
 .cl-algo-item::before{content:'→';color:var(--gold);flex-shrink:0;}
 .cl-pricing-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
 .cl-price-box{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px;}
-.cl-price-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
+.cl-price-label{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;
   letter-spacing:1px;margin-bottom:4px;font-family:var(--font);}
 .cl-price-val{font-size:20px;font-weight:900;color:var(--white);}
 .cl-launch-btn{width:100%;background:var(--gold);color:#020203;border:none;padding:18px;
@@ -261,7 +261,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .dc-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .dc-stat{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px;text-align:center;}
 .dc-stat-val{font-family:var(--font);font-size:22px;font-weight:900;color:var(--white);}
-.dc-stat-lbl{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:2px;font-family:var(--font);}
+.dc-stat-lbl{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:2px;font-family:var(--font);}
 .dc-stat-src{font-size:10px;color:#3d4460;font-family:var(--body);font-weight:600;margin-top:2px;}
 .dc-math-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body);font-size:15px;}
 .dc-math-row:last-child{border-bottom:none;}
@@ -277,7 +277,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .dc-approval-reason{font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;line-height:1.6;}
 .dc-staircase-rec{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:14px;margin-top:12px;}
 .dc-step-row{display:flex;gap:12px;align-items:center;padding:6px 0;font-family:var(--body);font-size:13px;color:#ffffff;font-weight:600;}
-.dc-step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0;font-family:var(--font);}
+.dc-step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0;font-family:var(--font);}
 .dc-step-active{background:rgba(0,200,83,.15);border:2px solid var(--green);color:var(--green);}
 .dc-step-pending{background:#0d0d1a;border:1px solid #3d4460;color:#3d4460;}
 .dc-step-skip{background:rgba(255,215,0,.1);border:1px solid var(--gold);color:var(--gold);}
@@ -286,13 +286,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .dc-pass-btn{width:100%;background:transparent;color:var(--red);border:2px solid var(--red);padding:14px;border-radius:10px;font-family:var(--font);font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;}
 
 /* BUTTONS */
-.btn{padding:8px 16px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
+.btn{padding:10px 16px 16px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
 .btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
 .btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--gold)}
-.btn-sm{padding:6px 12px;font-size:11px}
+.btn-sm{padding:6px 12px;font-size:13px}
 
 /* SECTION HDR */
 .section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
@@ -302,7 +302,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
 .form-input:focus{border-color:var(--gold)}
 .form-input option{background:#0a0a1a}
-.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px}
+.form-label{font-size:13px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -357,9 +357,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div class="hub-map-header">
       <div class="hub-map-title">⚡ EVL NATIONWIDE 50-MILE HUB NETWORK</div>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:700"><span style="width:10px;height:10px;background:var(--gold);border-radius:50%;display:inline-block"></span> ACTIVE HUB</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:700"><span style="width:10px;height:10px;background:var(--green);border-radius:50%;display:inline-block"></span> DEAL IN PROGRESS</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:700"><span style="width:10px;height:10px;background:var(--blue);border-radius:50%;display:inline-block"></span> PORTER ACTIVE</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:700"><span style="width:10px;height:10px;background:var(--gold);border-radius:50%;display:inline-block"></span> ACTIVE HUB</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:700"><span style="width:10px;height:10px;background:var(--green);border-radius:50%;display:inline-block"></span> DEAL IN PROGRESS</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:700"><span style="width:10px;height:10px;background:var(--blue);border-radius:50%;display:inline-block"></span> PORTER ACTIVE</div>
       </div>
     </div>
     <div class="hub-map-body">
@@ -565,18 +565,18 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
   <!-- FILTERS -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
-    <select class="form-input" id="aged-filter" style="width:auto;padding:8px 12px;font-size:13px;border-color:var(--gold)" onchange="applyAgedFilters()">
+    <select class="form-input" id="aged-filter" style="width:auto;padding:10px 16px 12px;font-size:13px;border-color:var(--gold)" onchange="applyAgedFilters()">
       <option value="">ALL DAYS ON LOT</option>
       <option value="120">120+ Days (CRITICAL)</option>
       <option value="90">90+ Days (HOT)</option>
       <option value="60">60+ Days (WARM)</option>
     </select>
-    <select class="form-input" id="aged-orphan" style="width:auto;padding:8px 12px;font-size:13px;border-color:var(--gold)" onchange="applyAgedFilters()">
+    <select class="form-input" id="aged-orphan" style="width:auto;padding:10px 16px 12px;font-size:13px;border-color:var(--gold)" onchange="applyAgedFilters()">
       <option value="">ALL UNITS</option>
       <option value="orphan">ORPHAN UNITS FIRST</option>
       <option value="native">NATIVE BRAND ONLY</option>
     </select>
-    <select class="form-input" id="aged-make-filter" style="width:auto;padding:8px 12px;font-size:13px;" onchange="applyAgedFilters()">
+    <select class="form-input" id="aged-make-filter" style="width:auto;padding:10px 16px 12px;font-size:13px;" onchange="applyAgedFilters()">
       <option value="">ALL MAKES</option>
       <option>Ford</option><option>Chevrolet</option><option>GMC</option>
       <option>RAM</option><option>Toyota</option><option>Honda</option>
@@ -621,7 +621,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       MarketCheck inventory from DFW 100-mile radius dealers.
     </div>
     <div style="overflow-x:auto;">
-      <table class="aged-unit-table" id="aged-table">
+      <div style="width:100%;overflow-x:auto;"><table class="aged-unit-table" id="aged-table">
         <thead><tr>
           <th>VEHICLE</th><th>VIN</th><th>DEALER / ROOFTOP</th>
           <th>ORPHAN?</th><th>DAYS ON LOT</th><th>MDS</th>
@@ -629,7 +629,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
           <th>TOP BUYER MATCH</th><th>ACTIONS</th>
         </tr></thead>
         <tbody id="aged-tbody"></tbody>
-      </table>
+      </table></div>
     </div>
   </div>
 
@@ -700,7 +700,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <input class="form-input" type="number" id="dcMinimum" placeholder="38,000"
           style="font-size:22px;font-weight:900;border-color:var(--gold);"
           oninput="dcRunMath()">
-        <p style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+        <p style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
           margin-top:6px;line-height:1.5;">
           This is the absolute floor the dealer will accept. If this number is above MarketCheck wholesale — the deal fails the math gate.
         </p>
@@ -876,24 +876,24 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <!-- RESULT PANELS -->
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px" id="pricing-result" style="display:none">
           <div style="background:var(--bg);border:2px solid var(--red);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">FLOOR BID</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">FLOOR BID</div>
             <div style="font-size:26px;font-weight:900;color:var(--red)" id="pc-floor">—</div>
-            <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:4px">Minimum viable offer</div>
+            <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px">Minimum viable offer</div>
           </div>
           <div style="background:var(--bg);border:2px solid var(--gold);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">TARGET BID</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">TARGET BID</div>
             <div style="font-size:26px;font-weight:900;color:var(--gold)" id="pc-target">—</div>
-            <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:4px">Best deal for both parties</div>
+            <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px">Best deal for both parties</div>
           </div>
           <div style="background:var(--bg);border:2px solid var(--green);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">MAX BID</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">MAX BID</div>
             <div style="font-size:26px;font-weight:900;color:var(--green)" id="pc-max">—</div>
-            <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:4px">Still leaves margin</div>
+            <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px">Still leaves margin</div>
           </div>
         </div>
 
         <div id="pc-breakdown" style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:14px;display:none">
-          <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">DEAL BREAKDOWN</div>
+          <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">DEAL BREAKDOWN</div>
           <div id="pc-breakdown-rows"></div>
         </div>
 
@@ -962,7 +962,7 @@ function showHub(key){
     {lbl:'Inventory Access',val:h.units,color:'var(--dim)'},
     {lbl:'Hub Status',val:h.status,color:'var(--gold)'},
   ].map(s=>`<div style="background:var(--bg);border:1px solid #2a2a2e;border-radius:8px;padding:10px 12px">
-    <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">${s.lbl}</div>
+    <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">${s.lbl}</div>
     <div style="font-size:15px;font-weight:900;color:${s.color}">${s.val}</div>
   </div>`).join('');
   panel.style.display='block';
@@ -1008,7 +1008,7 @@ function renderPipeline(){
             <div class="pipe-progress-fill" style="width:${d.stage}%;background:${progressColor}"></div>
           </div>
         </div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-bottom:10px;line-height:1.4">${d.notes}</div>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:10px;line-height:1.4">${d.notes}</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
           <button class="btn btn-gold btn-sm">📞 CONTACT BD</button>
           <button class="btn btn-dark btn-sm">📋 LOG UPDATE</button>
@@ -1033,11 +1033,11 @@ function renderBids(){
       <div class="bid-header">
         <div>
           <div class="bid-vehicle-name">${b.vehicle}</div>
-          <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:2px">${b.vin} · ${b.miles} mi · ${b.color} · Hub: ${b.hub}</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:2px">${b.vin} · ${b.miles} mi · ${b.color} · Hub: ${b.hub}</div>
         </div>
         <div style="text-align:right">
           <div class="bid-expires">⏱ BID CLOSES: ${b.expires}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px;font-family:var(--body)">${b.photo}</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px;font-family:var(--body)">${b.photo}</div>
         </div>
       </div>
       <div class="bid-body">
@@ -1053,7 +1053,7 @@ function renderBids(){
         </div>
         <div class="bid-input-row">
           <div>
-            <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">YOUR BID</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">YOUR BID</div>
             <input class="bid-input" type="number" placeholder="${fmt(b.mid).replace('$','')}" id="bid-input-${b.id}"/>
           </div>
           <div style="margin-top:22px;display:flex;gap:8px">
@@ -1095,7 +1095,7 @@ function renderPorters(){
     return `<div class="porter-card ${statusCls}">
       <div class="porter-header">
         <span class="porter-status-badge ${statusBadge}">${statusText}</span>
-        <span style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px">${p.id} · ${p.hub}</span>
+        <span style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px">${p.id} · ${p.hub}</span>
       </div>
       <div class="porter-body">
         <div class="porter-name">${p.name} <a href="tel:${p.phone}" style="color:var(--blue);font-size:13px;font-weight:700;text-decoration:none">${p.phone}</a></div>
@@ -1246,13 +1246,13 @@ function renderAgedUnitCards(units) {
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
             <span style="font-size:18px;font-weight:900;color:var(--white);letter-spacing:.5px;">${u.vehicle}</span>
             ${isOrphan ? `<span style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.4);color:var(--blue);
-              font-size:11px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px;
+              font-size:13px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px;
               font-family:var(--font);">🔀 ORPHAN UNIT</span>` : ''}
             ${u.recalls > 0 ? `<span style="background:rgba(255,51,51,.15);border:1px solid rgba(255,51,51,.4);color:var(--red);
-              font-size:11px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px;
+              font-size:13px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px;
               font-family:var(--font);">⚠️ ${u.recalls} OPEN RECALL${u.recalls>1?'S':''}</span>` : ''}
           </div>
-          <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;">
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;">
             VIN: <span style="font-family:monospace;color:var(--dim);">${u.vin}</span>
             &nbsp;·&nbsp; <span style="color:var(--gold);">${u.dealer}</span>
             &nbsp;·&nbsp; Dealer brand: <strong style="color:var(--white);">${u.dealerMfg}</strong>
@@ -1265,24 +1265,24 @@ function renderAgedUnitCards(units) {
       <!-- INTELLIGENCE GRID -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid #1a1a2e;">
         <div style="padding:14px 16px;border-right:1px solid #1a1a2e;text-align:center;">
-          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Retail Value</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Retail Value</div>
           <div style="font-size:22px;font-weight:900;color:var(--white);">$${u.retail.toLocaleString()}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">MarketCheck</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:2px;">MarketCheck</div>
         </div>
         <div style="padding:14px 16px;border-right:1px solid #1a1a2e;text-align:center;">
-          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Wholesale ACV</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Wholesale ACV</div>
           <div style="font-size:22px;font-weight:900;color:var(--gold);">$${u.wholesale.toLocaleString()}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">MarketCheck</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:2px;">MarketCheck</div>
         </div>
         <div style="padding:14px 16px;border-right:1px solid #1a1a2e;text-align:center;">
-          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Dealer Pain</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Dealer Pain</div>
           <div style="font-size:22px;font-weight:900;color:var(--red);">$${totalPain.toLocaleString()}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">Floor plan + depr.</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:2px;">Floor plan + depr.</div>
         </div>
         <div style="padding:14px 16px;text-align:center;">
-          <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">EVL Margin Opp.</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">EVL Margin Opp.</div>
           <div style="font-size:22px;font-weight:900;color:var(--green);">$${marginOpp.toLocaleString()}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px;">Est. broker fee</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:2px;">Est. broker fee</div>
         </div>
       </div>
 
@@ -1291,7 +1291,7 @@ function renderAgedUnitCards(units) {
 
         <!-- LEFT: PAIN BREAKDOWN -->
         <div style="padding:14px 16px;border-right:1px solid #1a1a2e;">
-          <div style="font-size:11px;color:var(--muted);font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">💸 DEALER PAIN BREAKDOWN</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">💸 DEALER PAIN BREAKDOWN</div>
           <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body);font-size:13px;">
             <span style="color:var(--muted);">Floor plan cost (${u.days} days)</span>
             <span style="color:var(--red);font-weight:900;">−$${floorPain.toLocaleString()}</span>
@@ -1300,14 +1300,14 @@ function renderAgedUnitCards(units) {
             <span style="color:var(--muted);">30-day depreciation ahead</span>
             <span style="color:var(--red);font-weight:900;">−$${depr30.toLocaleString()}</span>
           </div>
-          <div style="display:flex;justify-content:space-between;padding:8px 0 0;font-family:var(--body);font-size:14px;font-weight:900;">
+          <div style="display:flex;justify-content:space-between;padding:10px 16px 0 0;font-family:var(--body);font-size:14px;font-weight:900;">
             <span style="color:var(--white);">Total pressure</span>
             <span style="color:var(--red);">$${totalPain.toLocaleString()}</span>
           </div>
           <div style="margin-top:12px;background:rgba(0,200,83,.06);border:1px solid rgba(0,200,83,.2);border-radius:6px;padding:10px 12px;">
-            <div style="font-size:12px;color:var(--green);font-weight:700;font-family:var(--body);line-height:1.5;">${u.strategy}</div>
+            <div style="font-size:13px;color:var(--green);font-weight:700;font-family:var(--body);line-height:1.5;">${u.strategy}</div>
           </div>
-          <div style="margin-top:8px;display:flex;gap:8px;align-items:center;font-family:var(--body);font-size:12px;">
+          <div style="margin-top:8px;display:flex;gap:8px;align-items:center;font-family:var(--body);font-size:13px;">
             <span style="color:var(--muted);">KBB Trade-In:</span>
             <span style="color:#3d4460;font-weight:700;border:1px solid #1a1a2e;padding:2px 8px;border-radius:4px;">ADD KBB SUB</span>
             <span style="color:var(--muted);">NADA:</span>
@@ -1317,9 +1317,9 @@ function renderAgedUnitCards(units) {
 
         <!-- RIGHT: TOP BUYER MATCHES -->
         <div style="padding:14px 16px;">
-          <div style="font-size:11px;color:var(--muted);font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🎯 TOP BUYER MATCHES — ${u.unitMfg} DEALERS</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🎯 TOP BUYER MATCHES — ${u.unitMfg} DEALERS</div>
           ${buyers.length > 0 ? buyers.map((b,i) => `
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #0d0d1a;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 16px 0;border-bottom:1px solid #0d0d1a;">
             <div style="width:28px;height:28px;border-radius:50%;background:${b.score>=80?'rgba(0,200,83,.15)':b.score>=60?'rgba(255,215,0,.1)':'rgba(255,255,255,.05)'};
               border:2px solid ${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'#3d4460'};
               display:flex;align-items:center;justify-content:center;
@@ -1327,7 +1327,7 @@ function renderAgedUnitCards(units) {
               flex-shrink:0;">#${i+1}</div>
             <div style="flex:1;">
               <div style="font-size:14px;font-weight:900;color:var(--white);">${b.name}</div>
-              <div style="font-size:11px;color:var(--muted);font-family:var(--body);font-weight:600;">
+              <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;">
                 Turn: ${b.turn}d · Stock: ${b.stock} · Need: ${b.need} · ${b.status.toUpperCase()}
               </div>
             </div>
@@ -1346,7 +1346,7 @@ function renderAgedUnitCards(units) {
         <button class="btn btn-dark btn-sm" onclick="agedPricingCalc('${u.retail}','${u.wholesale}','${u.days}')">💰 PRICING CALC</button>
         <button class="btn btn-dark btn-sm" style="border-color:var(--gold);" onclick="clLoadFromRadarUnit(${AGED_UNITS.indexOf(u)})">📺 LAUNCH</button>
         <button class="btn btn-dark btn-sm" onclick="checkRecalls('${u.vin}','${u.vehicle.replace(/'/g,"\'")}')">🔍 NHTSA CHECK</button>
-        <div style="margin-left:auto;font-size:12px;color:var(--muted);font-family:var(--body);">
+        <div style="margin-left:auto;font-size:13px;color:var(--muted);font-family:var(--body);">
           MDS: <strong style="color:${u.mds<=20?'var(--green)':u.mds<=35?'var(--gold)':'var(--red)'};">${u.mds}d</strong>
         </div>
       </div>
@@ -4562,13 +4562,13 @@ function clLaunch() {
       <div>
         <div style="font-family:var(--font);font-size:15px;font-weight:900;color:var(--white);
           margin-bottom:2px;">${c.channel}</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600;
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;
           line-height:1.4;">${c.detail} · ${c.pricing}</div>
-        <div style="font-size:12px;color:${c.color};font-family:var(--body);font-weight:700;
+        <div style="font-size:13px;color:${c.color};font-family:var(--body);font-weight:700;
           margin-top:2px;">${c.timing}</div>
       </div>
       <span style="background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.3);
-        color:var(--green);font-size:11px;font-weight:900;padding:4px 10px;border-radius:8px;
+        color:var(--green);font-size:13px;font-weight:900;padding:4px 10px;border-radius:8px;
         letter-spacing:1px;white-space:nowrap;font-family:var(--font);">${c.status}</span>
     </div>
   `).join('');
@@ -4735,17 +4735,17 @@ function dcLoadMatchedBuyers() {
 
   document.getElementById('dcMatchedBuyers').innerHTML = buyers.length > 0 ?
     buyers.map((b,i) => `
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 16px 0;
         border-bottom:1px solid #0d0d1a;">
         <div style="width:26px;height:26px;border-radius:50%;
           background:${b.score>=80?'rgba(0,200,83,.15)':b.score>=60?'rgba(255,215,0,.1)':'rgba(255,255,255,.04)'};
           border:2px solid ${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'#3d4460'};
           display:flex;align-items:center;justify-content:center;
-          font-size:12px;font-weight:900;color:${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'var(--muted)'};
+          font-size:13px;font-weight:900;color:${b.score>=80?'var(--green)':b.score>=60?'var(--gold)':'var(--muted)'};
           flex-shrink:0;">#${i+1}</div>
         <div style="flex:1;">
           <div style="font-size:14px;font-weight:900;color:var(--white);">${b.name}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);font-weight:600;">
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;">
             Turn: ${b.turn}d · Stock: ${b.stock} · Need: ${b.need} · ${b.status.toUpperCase()}
           </div>
         </div>
@@ -4794,7 +4794,7 @@ function dcBuildStaircaseRec(mds, days) {
       return `<div class="dc-step-row">
         <div class="dc-step-num ${cls}">${s.n}</div>
         <div style="flex:1;">${s.label}</div>
-        <div style="font-size:11px;color:var(--muted);font-family:var(--body);">${s.days}</div>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);">${s.days}</div>
         ${label ? `<span style="font-size:10px;font-weight:900;padding:2px 8px;border-radius:8px;
           background:${s.n===startStep?'rgba(0,200,83,.15)':'rgba(255,215,0,.1)'};
           color:${s.n===startStep?'var(--green)':'var(--gold)'};border:1px solid ${s.n===startStep?'rgba(0,200,83,.3)':'rgba(255,215,0,.3)'};
