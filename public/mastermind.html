@@ -13,14 +13,14 @@
   --white:#ffffff;--muted:#A1A1AA;--dim:#ccd6e0;
   --font:'Oswald',sans-serif;--body:'Barlow',sans-serif;
 }
-body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh}
+body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh}
 
 /* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
 .login-box{background:var(--s1);border:2px solid var(--blue);border-radius:12px;padding:40px;width:100%;max-width:420px;text-align:center}
-.login-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
+.login-badge{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
 .login-title{font-size:32px;font-weight:900;color:var(--white);letter-spacing:3px;margin-bottom:4px}
-.login-sub{font-size:12px;color:var(--muted);margin-bottom:28px;letter-spacing:2px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:28px;letter-spacing:2px}
 .login-input{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:16px;border-radius:8px;font-size:26px;font-family:var(--font);font-weight:700;letter-spacing:10px;text-align:center;outline:none;margin-bottom:16px;transition:border-color .2s}
 .login-input:focus{border-color:var(--blue)}
 .login-btn{width:100%;background:var(--blue);color:var(--white);border:none;padding:16px;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:8px;font-family:var(--font);transition:background .2s}
@@ -39,7 +39,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .hdr-stat{background:var(--s2);border:1px solid #1a1a2e;border-radius:6px;padding:6px 12px;text-align:center}
 .hdr-stat-val{font-size:18px;font-weight:900;color:var(--blue);display:block;line-height:1}
 .hdr-stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
-.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:12px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
 .evl-logout:hover{background:var(--red);color:var(--white)}
 
 /* TAB NAV */
@@ -56,7 +56,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .pipeline-title{font-size:20px;font-weight:900;letter-spacing:2px;color:var(--white)}
 .pipeline-board{display:grid;grid-template-columns:repeat(7,minmax(180px,1fr));gap:12px;overflow-x:auto;padding-bottom:12px}
 .pipeline-col{background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden;min-height:400px}
-.pipeline-col-header{padding:12px 14px;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a2e}
+.pipeline-col-header{padding:12px 14px;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a2e}
 .pipeline-col-count{font-size:18px;font-weight:900}
 .pipeline-cards{padding:10px;display:flex;flex-direction:column;gap:8px;min-height:300px}
 
@@ -73,10 +73,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .deal-card{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all .2s;position:relative}
 .deal-card:hover{border-color:var(--blue);transform:translateY(-1px)}
 .deal-card-name{font-size:14px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:3px}
-.deal-card-vehicle{font-size:12px;color:var(--dim);font-weight:600;margin-bottom:6px}
+.deal-card-vehicle{font-size:13px;color:var(--dim);font-weight:600;margin-bottom:6px}
 .deal-card-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px}
 .deal-card-days{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px}
-.deal-card-budget{font-size:12px;font-weight:900;color:var(--green)}
+.deal-card-budget{font-size:13px;font-weight:900;color:var(--green)}
 .deal-card-urgent{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse-dot 1.5s infinite}
 @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
 
@@ -92,15 +92,15 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--blue)}
 .btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
-.btn-sm{padding:6px 12px;font-size:11px}
+.btn-sm{padding:6px 12px;font-size:13px}
 
 /* Customer table */
 .cust-table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden}
-.cust-table th{background:#0a0f1a;color:var(--blue);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.cust-table th{background:#0a0f1a;color:var(--blue);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .cust-table td{padding:12px 14px;border-bottom:1px solid #0d0d1a;font-size:14px;color:var(--dim);font-weight:600;vertical-align:middle}
 .cust-table tr:hover td{background:#0a0f1a;color:var(--white)}
 .cust-table tr:last-child td{border-bottom:none}
-.status-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.status-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
 .pill-lead{background:#1a1a2e;color:var(--muted);border:1px solid #2a2a4e}
 .pill-search{background:#040e1a;color:var(--blue);border:1px solid var(--blue)}
 .pill-match{background:#001a1a;color:var(--cyan);border:1px solid var(--cyan)}
@@ -118,12 +118,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .fu-card.today{border-color:var(--gold);background:#0d0a00}
 .fu-card-name{font-size:17px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:3px}
 .fu-card-vehicle{font-size:13px;color:var(--dim);font-weight:600;margin-bottom:8px}
-.fu-card-task{font-size:13px;font-weight:700;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.fu-card-task{font-size:13px;font-weight:700;margin-bottom:10px;padding:10px 16px 12px;border-radius:6px}
 .fu-task-call{background:#040e1a;border-left:3px solid var(--blue);color:var(--blue)}
 .fu-task-text{background:#0d1a0d;border-left:3px solid var(--green);color:var(--green)}
 .fu-task-email{background:#1a1400;border-left:3px solid var(--gold);color:var(--gold)}
 .fu-task-equity{background:#0d001a;border-left:3px solid var(--purple);color:var(--purple)}
-.fu-due{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.fu-due{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
 .fu-due.overdue{color:var(--red)}
 .fu-due.today-label{color:var(--gold)}
 
@@ -146,13 +146,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .modal-inner{max-width:900px;margin:0 auto;background:var(--s1);border:2px solid var(--blue);border-radius:12px;overflow:hidden}
 .modal-header{background:var(--s2);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e}
 .modal-title{font-size:20px;font-weight:900;color:var(--white);letter-spacing:1px}
-.modal-close{background:var(--red);color:var(--white);border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font);letter-spacing:1px}
+.modal-close{background:var(--red);color:var(--white);border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font);letter-spacing:1px}
 .modal-body{padding:24px}
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .modal-section{margin-bottom:20px}
-.modal-section-title{font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e}
+.modal-section-title{font-size:13px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e}
 .info-row{display:flex;flex-direction:column;margin-bottom:10px}
-.info-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:3px}
+.info-label{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:3px}
 .info-value{font-size:15px;color:var(--white);font-weight:700;font-family:var(--body)}
 
 /* Timeline */
@@ -164,13 +164,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .tl-dot.green{border-color:var(--green)}
 .tl-dot.gold{border-color:var(--gold)}
 .tl-dot.red{border-color:var(--red)}
-.tl-time{font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:700;margin-bottom:3px}
+.tl-time{font-size:13px;color:var(--muted);letter-spacing:1px;font-weight:700;margin-bottom:3px}
 .tl-text{font-size:14px;color:var(--dim);font-weight:600;font-family:var(--body);line-height:1.4}
 
 /* ADD CUSTOMER FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form-group{display:flex;flex-direction:column;gap:6px}
-.form-label{font-size:12px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.form-label{font-size:13px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
 .form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 14px;border-radius:8px;font-size:15px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
 .form-input:focus{border-color:var(--blue)}
 .form-input option{background:#0a0a1a}
@@ -180,8 +180,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .rev-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:18px;text-align:center;transition:border-color .2s}
 .rev-card:hover{border-color:var(--blue)}
 .rev-val{font-size:30px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
-.rev-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
-.rev-sub{font-size:12px;color:var(--dim);font-weight:600;margin-top:4px}
+.rev-lbl{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.rev-sub{font-size:13px;color:var(--dim);font-weight:600;margin-top:4px}
 
 /* TABS CONTENT */
 .tab-content{display:none}
@@ -204,7 +204,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .ds-opp-stat-val{font-size:16px;font-weight:900;display:block;line-height:1}
 .ds-opp-stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
 .ds-action-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.ds-action-btn{padding:9px 16px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.ds-action-btn{padding:9px 16px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .ds-btn-blue{background:#2B84FE;color:#fff}.ds-btn-blue:hover{background:#1a6fd4}
 .ds-btn-green{background:#00C853;color:#020203}.ds-btn-green:hover{background:#00a844}
 .ds-btn-gold{background:#FFD700;color:#020203}.ds-btn-gold:hover{background:#e6c200}
@@ -214,12 +214,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* OPPORTUNITY TIMELINE */
 .opp-timeline{background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:20px;margin-bottom:16px}
-.opp-tl-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.opp-tl-title{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
 .opp-tl-stages{display:flex;align-items:center;overflow-x:auto;gap:0;padding-bottom:8px}
 .opp-tl-stage{display:flex;flex-direction:column;align-items:center;min-width:90px;position:relative}
 .opp-tl-stage::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:2px;background:#1a1a2e;z-index:0}
 .opp-tl-stage:last-child::after{display:none}
-.opp-tl-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;position:relative;z-index:1;margin-bottom:6px;border:2px solid #2a2a4e;background:var(--bg);font-weight:900}
+.opp-tl-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;position:relative;z-index:1;margin-bottom:6px;border:2px solid #2a2a4e;background:var(--bg);font-weight:900}
 .opp-tl-dot.done{background:#0d1a0d;border-color:var(--green);color:var(--green)}
 .opp-tl-dot.current{background:#040e1a;border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(255,215,0,0.4);animation:tl-pulse 1.5s infinite}
 .opp-tl-dot.pending{background:var(--bg);border-color:#2a2a4e;color:var(--muted)}
@@ -230,15 +230,15 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* OPEN TASKS */
 .tasks-panel{background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:16px;margin-bottom:16px}
-.tasks-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.tasks-title{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .task-item{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px;transition:border-color .2s}
 .task-item:hover{border-color:var(--blue)}
 .task-checkbox{width:18px;height:18px;border-radius:4px;border:2px solid #2a2a4e;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .task-checkbox.done{background:var(--green);border-color:var(--green);color:#020203}
 .task-content{flex:1}
 .task-title-text{font-size:13px;font-weight:700;color:var(--white);margin-bottom:2px}
-.task-meta{font-size:11px;color:var(--muted);font-family:var(--body)}
-.task-due{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.task-meta{font-size:13px;color:var(--muted);font-family:var(--body)}
+.task-due{font-size:13px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
 .task-due.overdue{background:#1a0000;border:1px solid var(--red);color:var(--red)}
 .task-due.today{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .task-due.upcoming{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
@@ -249,9 +249,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .modal-box{background:var(--s1);border:2px solid var(--gold);border-radius:14px;overflow:hidden;width:100%;max-width:520px;margin:20px}
 .modal-hdr{background:var(--s2);padding:14px 20px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between}
 .modal-title{font-size:15px;font-weight:900;color:var(--white);letter-spacing:1px}
-.modal-close-btn{background:var(--red);color:#fff;border:none;padding:5px 12px;border-radius:4px;font-size:12px;font-weight:900;cursor:pointer;font-family:var(--font)}
+.modal-close-btn{background:var(--red);color:#fff;border:none;padding:5px 12px;border-radius:4px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font)}
 .modal-body{padding:20px}
-.modal-label{font-size:11px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.modal-label{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
 .modal-select{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;margin-bottom:14px}
 .modal-select option{background:#0a0a1a}
 .modal-textarea{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:8px;font-size:14px;font-family:var(--body);outline:none;resize:vertical;min-height:80px;margin-bottom:14px}
@@ -259,7 +259,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* LOG CALL MODAL */
 .call-result-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.call-result-btn{padding:10px;border-radius:8px;font-size:12px;font-weight:900;cursor:pointer;border:2px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s;text-align:center}
+.call-result-btn{padding:10px;border-radius:8px;font-size:13px;font-weight:900;cursor:pointer;border:2px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s;text-align:center}
 .call-result-btn.selected,.call-result-btn:hover{border-color:var(--blue);color:var(--white);background:#040e1a}
 .call-result-btn.connected.selected{border-color:var(--green);background:#0d1a0d;color:var(--green)}
 .call-result-btn.voicemail.selected{border-color:var(--gold);background:#1a1400;color:var(--gold)}
@@ -334,7 +334,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-active" style="font-size:18px;color:var(--green)">0</span><span class="rev-lbl" style="font-size:10px">Active Deals</span></div>
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-followup" style="font-size:18px;color:var(--gold)">0</span><span class="rev-lbl" style="font-size:10px">Follow-Ups Due</span></div>
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-equity" style="font-size:18px;color:var(--purple)">0</span><span class="rev-lbl" style="font-size:10px">Equity Alerts</span></div>
-    <a href="https://evl-decode-two.vercel.app/admin-scripts" style="color:var(--blue);font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:6px 10px">⬅ ADMIN</a>
+    <a href="https://evl-decode-two.vercel.app/admin-scripts" style="color:var(--blue);font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:6px 10px">⬅ ADMIN</a>
     <button class="evl-logout" onclick="logout()">LOGOUT</button>
   </div>
 </div>
@@ -379,7 +379,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
     <button class="btn btn-blue btn-sm" onclick="switchTab('add',document.querySelector('[onclick*=add]'))">➕ ADD</button>
   </div>
   <div style="overflow-x:auto">
-    <table class="cust-table" id="cust-table">
+    <div style="width:100%;overflow-x:auto;"><table class="cust-table" id="cust-table">
       <thead>
         <tr>
           <th>CUSTOMER</th>
@@ -393,7 +393,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
         </tr>
       </thead>
       <tbody id="cust-tbody"></tbody>
-    </table>
+    </table></div>
   </div>
 </div>
 
@@ -420,7 +420,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
     </div>
     <div style="background:#0d001a;border:1px solid var(--purple);border-radius:8px;padding:10px 16px;text-align:center">
       <div style="font-size:22px;font-weight:900;color:var(--purple)" id="equity-count">0</div>
-      <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700">Equity Alerts</div>
+      <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700">Equity Alerts</div>
     </div>
   </div>
   <div class="equity-grid" id="equity-grid"></div>
@@ -433,10 +433,10 @@ body{display:block !important;align-items:unset !important;justify-content:unset
   <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden">
     <div style="padding:14px 20px;background:var(--s2);border-bottom:1px solid #1a1a2e;font-size:14px;font-weight:900;color:var(--blue);letter-spacing:2px">RECENT DEALS</div>
     <div style="overflow-x:auto">
-      <table class="cust-table" id="rev-table">
+      <div style="width:100%;overflow-x:auto;"><table class="cust-table" id="rev-table">
         <thead><tr><th>CUSTOMER</th><th>VEHICLE</th><th>CLOSE DATE</th><th>REVENUE BUCKET</th><th>GROSS</th><th>STATUS</th></tr></thead>
         <tbody id="rev-tbody"></tbody>
-      </table>
+      </table></div>
     </div>
   </div>
 </div>
@@ -447,7 +447,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
     <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">➕ ADD NEW CUSTOMER / DEAL</div>
     <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:24px">
 
-      <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">CUSTOMER INFO</div>
+      <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">CUSTOMER INFO</div>
       <div class="form-grid" style="margin-bottom:20px">
         <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="add-fname" placeholder="First Name"/></div>
         <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="add-lname" placeholder="Last Name"/></div>
@@ -455,7 +455,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
         <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="add-email" placeholder="email@address.com" type="email"/></div>
       </div>
 
-      <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">VEHICLE INTEREST</div>
+      <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">VEHICLE INTEREST</div>
       <div class="form-grid" style="margin-bottom:20px">
         <div class="form-group"><label class="form-label">Year (From)</label><input class="form-input" id="add-year-from" placeholder="2021"/></div>
         <div class="form-group"><label class="form-label">Year (To)</label><input class="form-input" id="add-year-to" placeholder="2024"/></div>
@@ -465,7 +465,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
         <div class="form-group"><label class="form-label">Max Mileage</label><input class="form-input" id="add-miles" placeholder="50,000"/></div>
       </div>
 
-      <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">TRADE-IN (IF APPLICABLE)</div>
+      <div style="font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">TRADE-IN (IF APPLICABLE)</div>
       <div class="form-grid" style="margin-bottom:20px">
         <div class="form-group"><label class="form-label">Trade-In Vehicle</label><input class="form-input" id="add-trade" placeholder="2019 Honda CR-V"/></div>
         <div class="form-group"><label class="form-label">Trade-In VIN</label><input class="form-input" id="add-trade-vin" placeholder="17-char VIN"/></div>
@@ -473,7 +473,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
         <div class="form-group"><label class="form-label">Est. Trade Value</label><input class="form-input" id="add-trade-value" placeholder="$18,500"/></div>
       </div>
 
-      <div style="font-size:12px;font-weight:900;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL STATUS & NOTES</div>
+      <div style="font-size:13px;font-weight:900;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL STATUS & NOTES</div>
       <div class="form-grid" style="margin-bottom:20px">
         <div class="form-group"><label class="form-label">Status</label>
           <select class="form-input" id="add-status">
@@ -741,7 +741,7 @@ function renderCustomers(){
     const lastContact = c.lastContact ? new Date(c.lastContact).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
     const nextAction = c.followupDate ? new Date(c.followupDate).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
     return `<tr>
-      <td><strong style="color:var(--white)">${c.fname} ${c.lname}</strong><br><span style="font-size:12px;color:var(--muted)">${c.id}</span></td>
+      <td><strong style="color:var(--white)">${c.fname} ${c.lname}</strong><br><span style="font-size:13px;color:var(--muted)">${c.id}</span></td>
       <td><a href="tel:${c.phone}" style="color:var(--blue);text-decoration:none;font-weight:700">${c.phone}</a></td>
       <td style="max-width:200px">${c.vehicleInterest||'—'}</td>
       <td style="color:var(--green);font-weight:900">${c.budget||'—'}</td>
@@ -848,7 +848,7 @@ function renderEquity(){
         <div class="eq-card-header">
           <div>
             <div style="font-size:15px;font-weight:900;color:var(--white)">${c.fname} ${c.lname}</div>
-            <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:2px">${c.vehicleInterest||'—'}</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:2px">${c.vehicleInterest||'—'}</div>
           </div>
           <div>
             <div class="eq-score ${scoreCls}">${c.equityScore}%</div>
@@ -856,9 +856,9 @@ function renderEquity(){
           </div>
         </div>
         <div style="padding:14px 16px">
-          <div style="font-size:12px;font-weight:700;color:${hot?'var(--green)':warm?'var(--gold)':'var(--blue)'};margin-bottom:8px">${scoreLabel}</div>
+          <div style="font-size:13px;font-weight:700;color:${hot?'var(--green)':warm?'var(--gold)':'var(--blue)'};margin-bottom:8px">${scoreLabel}</div>
           <div class="eq-meter"><div class="eq-meter-fill" style="width:${c.equityScore}%;background:${hot?'var(--green)':warm?'var(--gold)':'var(--blue)'}"></div></div>
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:12px">
             <span>${c.daysSince} days since delivery</span>
             <span>Target: 180 days</span>
           </div>
@@ -1247,7 +1247,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
   <div class="opp-timeline" style="margin:16px 20px">
     <div class="opp-tl-title">
       <span>📊 OPPORTUNITY TIMELINE</span>
-      <select onchange="renderOpportunityTimeline(this.value)" style="background:var(--bg);border:1px solid #2a2a4e;color:var(--white);padding:4px 10px;border-radius:6px;font-size:11px;font-family:var(--font)">
+      <select onchange="renderOpportunityTimeline(this.value)" style="background:var(--bg);border:1px solid #2a2a4e;color:var(--white);padding:4px 10px;border-radius:6px;font-size:13px;font-family:var(--font)">
         <option value="inquiry">Inquiry</option>
         <option value="qualified">Qualified</option>
         <option value="searching" selected>Searching</option>
@@ -1265,8 +1265,8 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
     <div class="tasks-title">
       <span>✅ OPEN TASKS</span>
       <div style="display:flex;align-items:center;gap:8px">
-        <span id="tasks-count" style="font-size:11px;color:var(--green)">0 OPEN</span>
-        <button onclick="openModal('modal-add-task')" style="background:var(--blue);color:#fff;border:none;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:900;cursor:pointer;font-family:var(--font)">+ ADD</button>
+        <span id="tasks-count" style="font-size:13px;color:var(--green)">0 OPEN</span>
+        <button onclick="openModal('modal-add-task')" style="background:var(--blue);color:#fff;border:none;padding:4px 10px;border-radius:4px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font)">+ ADD</button>
       </div>
     </div>
     <div id="tasks-list"></div>
@@ -1274,9 +1274,9 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
 
   <!-- CALL LOG -->
   <div style="margin:16px 20px;background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:16px">
-    <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
       <span>📞 CALL HISTORY</span>
-      <button onclick="openModal('modal-log-call')" style="background:var(--green);color:#020203;border:none;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:900;cursor:pointer;font-family:var(--font)">+ LOG CALL</button>
+      <button onclick="openModal('modal-log-call')" style="background:var(--green);color:#020203;border:none;padding:4px 10px;border-radius:4px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font)">+ LOG CALL</button>
     </div>
     <div id="call-log-ds-list"></div>
   </div>
@@ -1296,7 +1296,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
     <div class="modal-header">
       <div>
         <div class="modal-title" id="comm-modal-title">📨 COMMUNICATION CENTER</div>
-        <div style="font-size:12px;color:var(--blue);letter-spacing:1px;margin-top:2px" id="comm-customer-name">Customer Name</div>
+        <div style="font-size:13px;color:var(--blue);letter-spacing:1px;margin-top:2px" id="comm-customer-name">Customer Name</div>
       </div>
       <button class="modal-close" onclick="closeCommModal()">✕ CLOSE</button>
     </div>
@@ -1314,13 +1314,13 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
       <!-- TEXT TAB -->
       <div id="comm-text" class="comm-tab-content active">
         <div style="margin-bottom:12px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">TO:</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">TO:</div>
           <div id="text-to" style="font-size:15px;font-weight:700;color:var(--white);background:var(--bg);border:1px solid #2a2a4e;border-radius:6px;padding:10px 14px"></div>
         </div>
 
         <!-- TEMPLATE PICKER -->
         <div style="margin-bottom:12px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">QUICK TEMPLATES:</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">QUICK TEMPLATES:</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px">
             <button class="btn btn-dark btn-sm" onclick="loadTextTemplate('received')">✅ Received</button>
             <button class="btn btn-dark btn-sm" onclick="loadTextTemplate('search')">🔍 Searching</button>
@@ -1346,7 +1346,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
               </div>
               <span id="text-counter" style="font-size:13px;font-weight:900;color:var(--green)">0/160</span>
             </div>
-            <span id="text-counter-msg" style="font-size:12px;font-weight:700;color:var(--green)">✅ 1 MESSAGE — FREE</span>
+            <span id="text-counter-msg" style="font-size:13px;font-weight:700;color:var(--green)">✅ 1 MESSAGE — FREE</span>
           </div>
         </div>
 
@@ -1355,16 +1355,16 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
 
         <!-- MMS OPTION -->
         <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:12px;margin-bottom:14px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px">📸 ATTACH PHOTO (MMS)</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px">📸 ATTACH PHOTO (MMS)</div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <input type="url" id="text-image-url" class="form-input" style="flex:1;min-width:200px;padding:8px 12px;font-size:13px" placeholder="Paste Cloudinary image URL..." oninput="checkImageUrl()"/>
+            <input type="url" id="text-image-url" class="form-input" style="flex:1;min-width:200px;padding:10px 16px 12px;font-size:13px" placeholder="Paste Cloudinary image URL..." oninput="checkImageUrl()"/>
             <button class="btn btn-dark btn-sm" onclick="openCloudinaryPaste()">📋 PASTE URL</button>
           </div>
           <div id="image-preview" style="display:none;margin-top:8px">
             <img id="image-preview-img" style="max-height:80px;border-radius:6px;border:1px solid #2a2a4e"/>
-            <div style="font-size:11px;color:var(--green);font-weight:700;margin-top:4px">✅ Image ready — will send as MMS</div>
+            <div style="font-size:13px;color:var(--green);font-weight:700;margin-top:4px">✅ Image ready — will send as MMS</div>
           </div>
-          <div style="font-size:11px;color:var(--muted);margin-top:6px;font-weight:600">💡 TIP: Use Cloudinary URLs for best delivery. JPG under 500KB recommended.</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:600">💡 TIP: Use Cloudinary URLs for best delivery. JPG under 500KB recommended.</div>
         </div>
 
         <div style="display:flex;gap:8px">
@@ -1376,26 +1376,26 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
       <!-- EMAIL TAB -->
       <div id="comm-email" class="comm-tab-content">
         <div style="margin-bottom:12px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">TO:</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">TO:</div>
           <div id="email-to" style="font-size:15px;font-weight:700;color:var(--white);background:var(--bg);border:1px solid #2a2a4e;border-radius:6px;padding:10px 14px"></div>
         </div>
 
         <!-- EMAIL TYPE SELECTOR -->
         <div style="margin-bottom:12px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">EMAIL MODE:</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">EMAIL MODE:</div>
           <div style="display:flex;gap:8px">
             <button class="btn btn-blue btn-sm active-mode" id="mode-customer" onclick="setEmailMode('customer',this)">👤 CUSTOMER</button>
             <button class="btn btn-dark btn-sm" id="mode-dealer" onclick="setEmailMode('dealer',this)">🏪 DEALER (PLAIN TEXT)</button>
             <button class="btn btn-dark btn-sm" id="mode-internal" onclick="setEmailMode('internal',this)">⚙️ INTERNAL</button>
           </div>
-          <div id="email-mode-alert" style="margin-top:8px;padding:8px 12px;border-radius:6px;font-size:12px;font-weight:700;background:#1a1400;border:1px solid var(--gold);color:var(--gold);display:none">
+          <div id="email-mode-alert" style="margin-top:8px;padding:10px 16px 12px;border-radius:6px;font-size:13px;font-weight:700;background:#1a1400;border:1px solid var(--gold);color:var(--gold);display:none">
             🏪 DEALER MODE: Plain text only. Corporate IT systems block HTML emails. Template will be stripped of formatting.
           </div>
         </div>
 
         <!-- TEMPLATE PICKER -->
         <div style="margin-bottom:12px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">QUICK TEMPLATES:</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">QUICK TEMPLATES:</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px">
             <button class="btn btn-dark btn-sm" onclick="loadEmailTemplate('trade-received')">✅ Trade Received</button>
             <button class="btn btn-dark btn-sm" onclick="loadEmailTemplate('vehicle-found')">🎯 Vehicle Found</button>
@@ -1407,12 +1407,12 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
         </div>
 
         <div style="margin-bottom:10px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">SUBJECT:</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">SUBJECT:</div>
           <input type="text" id="email-subject" class="form-input" placeholder="Email subject line..."/>
         </div>
 
         <div style="margin-bottom:8px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">MESSAGE:</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">MESSAGE:</div>
           <textarea id="email-body" class="form-input" rows="8" 
             placeholder="Email body..." 
             oninput="checkEmailContent()"
@@ -1424,7 +1424,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
 
         <!-- LINK BUILDER -->
         <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:12px;margin-bottom:14px">
-          <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px">🔗 ADD EVL PAGE LINK (NO ATTACHMENTS)</div>
+          <div style="font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px">🔗 ADD EVL PAGE LINK (NO ATTACHMENTS)</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px">
             <button class="btn btn-dark btn-sm" onclick="insertLink('trade-in','Trade-In Evaluator')">🚗 Trade-In</button>
             <button class="btn btn-dark btn-sm" onclick="insertLink('finder','Vehicle Finder')">🔍 Finder</button>
@@ -1432,7 +1432,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
             <button class="btn btn-dark btn-sm" onclick="insertLink('how','How It Works')">📖 How It Works</button>
             <button class="btn btn-dark btn-sm" onclick="insertLink('contact','Contact')">📞 Contact</button>
           </div>
-          <div style="font-size:11px;color:var(--muted);margin-top:6px;font-weight:600">💡 Links replace attachments — pass every spam filter, work on every email server.</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:6px;font-weight:600">💡 Links replace attachments — pass every spam filter, work on every email server.</div>
         </div>
 
         <div style="display:flex;gap:8px">
@@ -1447,7 +1447,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
           <a id="call-direct-btn" href="#" class="btn btn-blue" style="font-size:18px;padding:18px 40px;display:inline-flex;gap:10px;align-items:center">
             📞 CALL NOW
           </a>
-          <div style="font-size:12px;color:var(--muted);margin-top:8px;font-weight:700;letter-spacing:1px">TAP TO DIAL — OPENS YOUR PHONE APP</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px;font-weight:700;letter-spacing:1px">TAP TO DIAL — OPENS YOUR PHONE APP</div>
         </div>
 
         <div style="background:var(--bg);border:2px solid #2a2a4e;border-radius:10px;padding:20px;margin-bottom:16px">
@@ -1511,7 +1511,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
 
         <!-- CALL TIPS -->
         <div style="background:#040e1a;border:1px solid var(--blue);border-radius:8px;padding:14px">
-          <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">📞 CRISP CALL FRAMEWORK</div>
+          <div style="font-size:13px;font-weight:900;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">📞 CRISP CALL FRAMEWORK</div>
           <div style="font-size:13px;color:var(--dim);font-weight:600;line-height:1.8;font-family:var(--body)">
             <strong style="color:var(--white)">C</strong> — Connect: Use their name, be warm<br>
             <strong style="color:var(--white)">R</strong> — Reason: State why you're calling clearly<br>
@@ -1654,13 +1654,13 @@ function updateTextCounter(){
     fill.style.background = 'var(--gold)';
     msg.textContent = `⚠️ ${msgs} MESSAGES — Consider shortening`;
     msg.style.color = 'var(--gold)';
-    alerts.innerHTML = `<div style="background:#1a1400;border:1px solid var(--gold);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--gold);font-weight:700">⚠️ Message is ${len-160} chars over limit — splits into 2 texts. Consider shortening to save cost.</div>`;
+    alerts.innerHTML = `<div style="background:#1a1400;border:1px solid var(--gold);border-radius:6px;padding:10px 16px 12px;font-size:13px;color:var(--gold);font-weight:700">⚠️ Message is ${len-160} chars over limit — splits into 2 texts. Consider shortening to save cost.</div>`;
   } else {
     counter.style.color = 'var(--red)';
     fill.style.background = 'var(--red)';
     msg.textContent = `🔴 ${msgs} MESSAGES — Shorten now`;
     msg.style.color = 'var(--red)';
-    alerts.innerHTML = `<div style="background:#1a0000;border:1px solid var(--red);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--red);font-weight:700">🔴 ${msgs} messages — costs ${msgs}x. Shorten to under 160 chars for best delivery and cost.</div>`;
+    alerts.innerHTML = `<div style="background:#1a0000;border:1px solid var(--red);border-radius:6px;padding:10px 16px 12px;font-size:13px;color:var(--red);font-weight:700">🔴 ${msgs} messages — costs ${msgs}x. Shorten to under 160 chars for best delivery and cost.</div>`;
   }
 }
 
@@ -1765,7 +1765,7 @@ function checkEmailContent(){
   if(currentEmailMode==='dealer' && /<[^>]+>/.test(body)) warnings.push({level:'gold',msg:'🏪 DEALER MODE — HTML detected. Will be stripped to plain text for dealer email servers.'});
   if(body.includes('FREE') || body.includes('URGENT') || body.includes('CLICK HERE')) warnings.push({level:'gold',msg:'⚠️ SPAM TRIGGER WORDS detected — Consider rephrasing for better inbox delivery.'});
 
-  alerts.innerHTML = warnings.map(w=>`<div style="background:${w.level==='red'?'#1a0000':'#1a1400'};border:1px solid ${w.level==='red'?'var(--red)':'var(--gold)'};border-radius:6px;padding:8px 12px;font-size:12px;color:${w.level==='red'?'var(--red)':'var(--gold)'};font-weight:700;margin-bottom:6px">${w.msg}</div>`).join('');
+  alerts.innerHTML = warnings.map(w=>`<div style="background:${w.level==='red'?'#1a0000':'#1a1400'};border:1px solid ${w.level==='red'?'var(--red)':'var(--gold)'};border-radius:6px;padding:10px 16px 12px;font-size:13px;color:${w.level==='red'?'var(--red)':'var(--gold)'};font-weight:700;margin-bottom:6px">${w.msg}</div>`).join('');
 }
 
 function insertLink(page, label){
@@ -1865,7 +1865,7 @@ function renderCommHistory(customerId){
     return `<div class="comm-history-item type-${item.type}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
         <span style="font-size:14px;font-weight:900;color:var(--white)">${icons[item.type]||'📋'} ${item.subject}</span>
-        <span style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px">${timeStr} CST</span>
+        <span style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px">${timeStr} CST</span>
       </div>
       <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.4">${item.preview||''}</div>
     </div>`;
@@ -1884,7 +1884,7 @@ function updateLastContact(customerId){
 function showCommAlert(containerId, msg, color){
   const el = document.getElementById(containerId);
   const div = document.createElement('div');
-  div.style.cssText = `background:#0d1a0d;border:1px solid var(--${color});border-radius:6px;padding:8px 12px;font-size:13px;color:var(--${color});font-weight:700;margin-bottom:6px`;
+  div.style.cssText = `background:#0d1a0d;border:1px solid var(--${color});border-radius:6px;padding:10px 16px 12px;font-size:13px;color:var(--${color});font-weight:700;margin-bottom:6px`;
   div.textContent = msg;
   el.insertBefore(div, el.firstChild);
   setTimeout(()=>div.remove(), 4000);
@@ -1937,7 +1937,7 @@ document.addEventListener('keydown', e=>{
         <div style="font-size:18px;font-weight:900;color:#FF3333;letter-spacing:1px">🔀 MERGE DUPLICATE CUSTOMERS</div>
         <div style="font-size:13px;color:#A1A1AA;margin-top:4px;font-family:'Barlow',sans-serif">Click any field value to select it for the merged record. All activity from both records will be combined.</div>
       </div>
-      <button onclick="closeMergeModal()" style="background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif">✕ CLOSE</button>
+      <button onclick="closeMergeModal()" style="background:#FF3333;color:#fff;border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif">✕ CLOSE</button>
     </div>
     <div style="padding:12px 16px;background:#1a1400;border-bottom:1px solid #2a2000;font-size:13px;color:#FFD700;font-weight:700;text-align:center">
       ⚠️ GREEN = data to keep in merged record. Click any field to choose. PRIMARY record ID will be preserved.
@@ -1957,22 +1957,22 @@ document.addEventListener('keydown', e=>{
     <div style="background:#0a0f1a;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
       <div>
         <div style="font-size:18px;font-weight:900;color:#fff;letter-spacing:1px">🖊️ DEAL DESK</div>
-        <div style="font-size:12px;color:#2B84FE;font-weight:700;letter-spacing:1px;margin-top:2px" id="dd-customer-name">Customer</div>
+        <div style="font-size:13px;color:#2B84FE;font-weight:700;letter-spacing:1px;margin-top:2px" id="dd-customer-name">Customer</div>
       </div>
-      <button onclick="closeDealDesk()" style="background:#FF3333;color:#fff;border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif">✕ CLOSE</button>
+      <button onclick="closeDealDesk()" style="background:#FF3333;color:#fff;border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:'Oswald',sans-serif">✕ CLOSE</button>
     </div>
     <div style="padding:20px">
       <!-- VOI -->
-      <div style="font-size:12px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">VEHICLE OF INTEREST</div>
+      <div style="font-size:13px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">VEHICLE OF INTEREST</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
-        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Vehicle (YMM)</label><input id="dd-vehicle" class="form-input" placeholder="2023 Toyota Tundra TRD Pro"/></div>
-        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">VIN (if known)</label><input id="dd-vin" class="form-input" placeholder="17-digit VIN"/></div>
-        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Color</label><input id="dd-color" class="form-input" placeholder="White Exterior"/></div>
-        <div><label style="font-size:11px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Mileage</label><input id="dd-mileage" class="form-input" placeholder="22,000"/></div>
+        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Vehicle (YMM)</label><input id="dd-vehicle" class="form-input" placeholder="2023 Toyota Tundra TRD Pro"/></div>
+        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">VIN (if known)</label><input id="dd-vin" class="form-input" placeholder="17-digit VIN"/></div>
+        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Color</label><input id="dd-color" class="form-input" placeholder="White Exterior"/></div>
+        <div><label style="font-size:13px;color:#A1A1AA;letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px">Mileage</label><input id="dd-mileage" class="form-input" placeholder="22,000"/></div>
       </div>
 
       <!-- DEAL NUMBERS -->
-      <div style="font-size:12px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL NUMBERS</div>
+      <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL NUMBERS</div>
       <div id="dd-rows" style="margin-bottom:16px"></div>
 
       <!-- GROSS DISPLAY -->
@@ -2011,19 +2011,19 @@ document.addEventListener('keydown', e=>{
 .act-body{flex:1;background:#090E17;border:1px solid #1a1a2e;border-radius:8px;padding:10px 12px;transition:border-color .2s}
 .act-body:hover{border-color:#2B84FE}
 .act-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
-.act-type-label{font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
-.act-timestamp{font-size:11px;color:#A1A1AA;font-weight:700;letter-spacing:1px;margin-left:auto}
+.act-type-label{font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.act-timestamp{font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;margin-left:auto}
 .act-content{font-size:13px;color:#ccd6e0;font-family:'Barlow',sans-serif;line-height:1.5}
 .act-outcome-badge{display:inline-block;font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;margin-top:5px;letter-spacing:1px}
 
 /* VOI CARD */
 .voi-card{background:#1a0a00;border:2px solid #FF6B35;border-radius:10px;padding:14px;margin-bottom:12px}
 .voi-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.voi-label{font-size:11px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase}
-.voi-status-badge{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.voi-label{font-size:13px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase}
+.voi-status-badge{font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
 .voi-spec-text{font-size:15px;font-weight:900;color:#fff;margin-bottom:4px}
-.voi-detail-text{font-size:12px;color:#ccd6e0;font-family:'Barlow',sans-serif;margin-bottom:10px}
-.voi-match-bar{background:#0d1a0d;border:1px solid #00C853;border-radius:6px;padding:8px 12px;font-size:12px;color:#00C853;font-weight:700}
+.voi-detail-text{font-size:13px;color:#ccd6e0;font-family:'Barlow',sans-serif;margin-bottom:10px}
+.voi-match-bar{background:#0d1a0d;border:1px solid #00C853;border-radius:6px;padding:10px 16px 12px;font-size:13px;color:#00C853;font-weight:700}
 
 /* DUP ALERT */
 .dup-alert-card{background:#0d0000;border:2px solid #FF3333;border-radius:10px;padding:14px;margin-bottom:12px}
@@ -2038,23 +2038,23 @@ document.addEventListener('keydown', e=>{
 .merge-col-box.primary-col{border-color:#00C853}
 .merge-col-box.secondary-col{border-color:#FF3333}
 .merge-field{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
-.merge-field-lbl{font-size:11px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase;width:90px;flex-shrink:0;padding-top:4px;font-family:'Oswald',sans-serif}
+.merge-field-lbl{font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase;width:90px;flex-shrink:0;padding-top:4px;font-family:'Oswald',sans-serif}
 .merge-field-value{font-size:14px;font-weight:700;color:#ccd6e0;font-family:'Barlow',sans-serif;flex:1;padding:5px 10px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .2s}
 .merge-field-value:hover{background:#1a1a2e;border-color:#2B84FE}
 .merge-field-value.selected{background:#0d1a0d;border-color:#00C853;color:#00C853}
 .merge-field-value.rejected{opacity:.4;text-decoration:line-through}
 
 /* DEAL DESK ROWS */
-.dd-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #0d0d1a}
+.dd-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 0;border-bottom:1px solid #0d0d1a}
 .dd-row:last-child{border-bottom:none}
-.dd-row-label{font-size:12px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.dd-row-label{font-size:13px;color:#A1A1AA;font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .dd-input{background:#020203;border:1px solid #2a2a4e;color:#fff;padding:6px 10px;border-radius:6px;font-size:14px;font-family:'Oswald',sans-serif;font-weight:700;outline:none;width:130px;text-align:right}
 .dd-input:focus{border-color:#2B84FE}
 
 /* DUP CHECK LIVE */
 .live-dup-check{background:#1a0000;border:1px solid #FF3333;border-radius:8px;padding:10px 14px;margin-top:8px;display:none}
 .live-dup-check.show{display:block}
-.live-dup-check-title{font-size:12px;font-weight:900;color:#FF3333;letter-spacing:1px;margin-bottom:8px}
+.live-dup-check-title{font-size:13px;font-weight:900;color:#FF3333;letter-spacing:1px;margin-bottom:8px}
 .live-dup-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2a0000;font-size:13px}
 .live-dup-item:last-child{border-bottom:none}
 </style>
@@ -2124,7 +2124,7 @@ function renderActivityTimeline(customerId, containerId){
   });
 
   el.innerHTML = Object.entries(grouped).map(([date, acts])=>`
-    <div style="font-size:11px;font-weight:900;color:#A1A1AA;letter-spacing:2px;text-transform:uppercase;margin:16px 0 8px;padding-left:38px">${date}</div>
+    <div style="font-size:13px;font-weight:900;color:#A1A1AA;letter-spacing:2px;text-transform:uppercase;margin:16px 0 8px;padding-left:38px">${date}</div>
     <ul class="act-timeline">
       ${acts.map(act=>{
         const cfg = typeConfig[act.type]||typeConfig['note'];
@@ -2138,7 +2138,7 @@ function renderActivityTimeline(customerId, containerId){
               <span class="act-timestamp">${t} CST · ${act.rep||'EVL'}</span>
             </div>
             <div class="act-content">${act.content}</div>
-            ${act.metadata?.vehicle ? `<div style="font-size:11px;color:#FF6B35;font-weight:700;margin-top:4px;letter-spacing:1px">🚗 ${act.metadata.vehicle}</div>` : ''}
+            ${act.metadata?.vehicle ? `<div style="font-size:13px;color:#FF6B35;font-weight:700;margin-top:4px;letter-spacing:1px">🚗 ${act.metadata.vehicle}</div>` : ''}
           </div>
         </li>`;
       }).join('')}
@@ -2172,7 +2172,7 @@ function renderVOICard(c, containerId){
       <span class="voi-status-badge" style="background:${matchCount>0?'#0d1a0d':'#1a1400'};border:1px solid ${statusColor};color:${statusColor}">${statusLabel}</span>
     </div>
     <div class="voi-spec-text">${voi}</div>
-    ${vin ? `<div style="font-size:12px;color:#A1A1AA;font-family:'Barlow',sans-serif;margin-bottom:6px">VIN: ${vin}</div>` : ''}
+    ${vin ? `<div style="font-size:13px;color:#A1A1AA;font-family:'Barlow',sans-serif;margin-bottom:6px">VIN: ${vin}</div>` : ''}
     <div class="voi-detail-text">Budget: ${c.budget||'—'} · Max Miles: ${c.maxMiles||'—'} · Status: <strong style="color:#ccd6e0">${c.status}</strong></div>
     ${desk?.sellingPrice ? `<div class="voi-match-bar">💰 Deal Desk Active: Selling $${Number(desk.sellingPrice||0).toLocaleString()} · Gross: <strong>$${Number(desk.grossTotal||0).toLocaleString()}</strong></div>` : ''}
     <div style="display:flex;gap:6px;margin-top:10px">
@@ -2244,7 +2244,7 @@ function renderDupAlert(customerId, containerId){
     ${dups.map(d=>`<div class="dup-match-row">
       <div>
         <div style="font-size:14px;font-weight:900;color:#fff">${d.fname} ${d.lname}${d.nickname?' ('+d.nickname+')':''} — ${d.id}</div>
-        <div style="font-size:12px;color:#ccd6e0;font-family:'Barlow',sans-serif;margin-top:2px">${d.phone||'—'} · ${d.email||'—'} · ${d.status}</div>
+        <div style="font-size:13px;color:#ccd6e0;font-family:'Barlow',sans-serif;margin-top:2px">${d.phone||'—'} · ${d.email||'—'} · ${d.status}</div>
         <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px">${d.reasons.map(r=>`<span class="dup-reason-badge" style="background:#1a0000;border:1px solid #FF3333;color:#FF3333">${r}</span>`).join('')}</div>
       </div>
       <div style="text-align:center;flex-shrink:0">
@@ -2278,7 +2278,7 @@ function liveDupCheck(){
     <div class="live-dup-check-title">⚠️ POSSIBLE DUPLICATE${matches.length>1?'S':''} — ${matches.length} EXISTING RECORD${matches.length>1?'S':''} MATCH</div>
     ${matches.slice(0,3).map(m=>`<div class="live-dup-item">
       <span style="font-weight:700;color:#fff">${m.fname} ${m.lname}${m.nickname?' ('+m.nickname+')':''}</span>
-      <span style="color:#A1A1AA;font-family:'Barlow',sans-serif;font-size:12px">${m.phone||''} · ${m.status}</span>
+      <span style="color:#A1A1AA;font-family:'Barlow',sans-serif;font-size:13px">${m.phone||''} · ${m.status}</span>
       <button class="btn btn-sm" style="background:#040e1a;border:1px solid #2B84FE;color:#2B84FE" onclick="openProfile('${m.id}')">VIEW</button>
     </div>`).join('')}
   </div>`;
@@ -2307,9 +2307,9 @@ function openMergeModal(primaryId, secondaryId){
     {key:'notes',label:'Notes'},
   ];
   const makeCol = (c, side)=>`<div class="merge-col-box ${side}-col">
-    <div style="font-size:12px;font-weight:900;color:${side==='primary'?'#00C853':'#FF3333'};letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">
+    <div style="font-size:13px;font-weight:900;color:${side==='primary'?'#00C853':'#FF3333'};letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">
       ${side==='primary'?'✅ PRIMARY (KEEP ID)':'🔴 SECONDARY (ARCHIVE)'}
-      <span style="font-size:11px;color:#A1A1AA;margin-left:8px">${c.id}</span>
+      <span style="font-size:13px;color:#A1A1AA;margin-left:8px">${c.id}</span>
     </div>
     ${fields.map(f=>`<div class="merge-field">
       <div class="merge-field-lbl">${f.label}</div>
@@ -2541,14 +2541,14 @@ window.openProfile = function(id){
     div.innerHTML = `
       <!-- VOI -->
       <div style="margin-bottom:16px">
-        <div style="font-size:12px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">🚗 VEHICLE OF INTEREST & DEAL DESK</div>
+        <div style="font-size:13px;font-weight:900;color:#FF6B35;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">🚗 VEHICLE OF INTEREST & DEAL DESK</div>
         <div id="voi-container-${id}"></div>
       </div>
       <!-- DUPLICATES -->
       <div id="dup-container-${id}" style="margin-bottom:16px"></div>
       <!-- ACTIVITY TIMELINE -->
       <div>
-        <div style="font-size:12px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:13px;font-weight:900;color:#2B84FE;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
           ACTIVITY TIMELINE
           <button class="btn btn-dark btn-sm" onclick="openAddActivityForm('${id}')">➕ ADD NOTE</button>
         </div>
@@ -2625,7 +2625,7 @@ window.addEventListener('DOMContentLoaded',function(){
   if(fnameGroup && !document.getElementById('add-nickname')){
     const nickDiv = document.createElement('div');
     nickDiv.className='form-group';
-    nickDiv.innerHTML='<label class="form-label">Nickname / Goes By <span style="color:#A1A1AA;font-size:11px">(optional)</span></label><input class="form-input" id="add-nickname" placeholder="e.g. Bob, Liz, Mike"/>';
+    nickDiv.innerHTML='<label class="form-label">Nickname / Goes By <span style="color:#A1A1AA;font-size:13px">(optional)</span></label><input class="form-input" id="add-nickname" placeholder="e.g. Bob, Liz, Mike"/>';
     fnameGroup.parentNode.insertBefore(nickDiv, fnameGroup.nextSibling);
   }
   // Inject live dup check container
@@ -2701,7 +2701,7 @@ window.renderCustomersV2 = function(){
     const lastContact = c.lastContact ? new Date(c.lastContact).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
     const actCount = getActivityForCustomer(c.id).length;
     return `<tr>
-      <td><strong style="color:#fff">${c.fname} ${c.lname}</strong>${c.nickname?` <span style="color:#A1A1AA;font-size:12px">(${c.nickname})</span>`:''}<br><span style="font-size:12px;color:#A1A1AA">${c.id}</span></td>
+      <td><strong style="color:#fff">${c.fname} ${c.lname}</strong>${c.nickname?` <span style="color:#A1A1AA;font-size:13px">(${c.nickname})</span>`:''}<br><span style="font-size:13px;color:#A1A1AA">${c.id}</span></td>
       <td><a href="tel:${c.phone}" style="color:#2B84FE;text-decoration:none;font-weight:700">${c.phone}</a></td>
       <td style="max-width:200px">${c.vehicleInterest||'—'}</td>
       <td style="color:#00C853;font-weight:900">${c.budget||'—'}</td>
@@ -2892,14 +2892,14 @@ function renderCallLogDS(){
     <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;margin-bottom:8px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
         <span style="font-size:13px;font-weight:900;color:var(--white)">\${c.type}</span>
-        <span style="font-size:11px;color:var(--muted)">\${c.time}</span>
+        <span style="font-size:13px;color:var(--muted)">\${c.time}</span>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-        <span style="font-size:11px;font-weight:900;padding:2px 8px;border-radius:10px;background:var(--s1);border:1px solid \${resultColors[c.result]||'#2a2a4e'};color:\${resultColors[c.result]||'var(--muted)'}">\${c.result.toUpperCase()}</span>
-        <span style="font-size:11px;color:var(--muted);font-family:var(--body)">⏱ \${c.duration}</span>
-        \${c.nextAction?\`<span style="font-size:11px;color:var(--blue);font-family:var(--body)">📅 \${c.nextAction}</span>\`:''}
+        <span style="font-size:13px;font-weight:900;padding:2px 8px;border-radius:10px;background:var(--s1);border:1px solid \${resultColors[c.result]||'#2a2a4e'};color:\${resultColors[c.result]||'var(--muted)'}">\${c.result.toUpperCase()}</span>
+        <span style="font-size:13px;color:var(--muted);font-family:var(--body)">⏱ \${c.duration}</span>
+        \${c.nextAction?\`<span style="font-size:13px;color:var(--blue);font-family:var(--body)">📅 \${c.nextAction}</span>\`:''}
       </div>
-      \${c.notes?\`<div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5">\${c.notes}</div>\`:''}
+      \${c.notes?\`<div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.5">\${c.notes}</div>\`:''}
     </div>\`).join('');
 }
 
