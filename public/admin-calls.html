@@ -13,14 +13,14 @@
   --white:#ffffff;--muted:#A1A1AA;--dim:#ccd6e0;
   --font:'Oswald',sans-serif;--body:'Barlow',sans-serif;
 }
-body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
+body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
 
 /* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
 .login-box{background:var(--s1);border:2px solid var(--green);border-radius:12px;padding:40px;width:100%;max-width:420px;text-align:center}
-.login-badge{display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
+.login-badge{display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
 .login-title{font-size:32px;font-weight:900;color:var(--white);letter-spacing:3px;margin-bottom:4px}
-.login-sub{font-size:12px;color:var(--muted);margin-bottom:28px;letter-spacing:2px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:28px;letter-spacing:2px}
 .login-input{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:16px;border-radius:8px;font-size:26px;font-family:var(--font);font-weight:700;letter-spacing:10px;text-align:center;outline:none;margin-bottom:16px;transition:border-color .2s}
 .login-input:focus{border-color:var(--green)}
 .login-btn{width:100%;background:var(--green);color:#020203;border:none;padding:16px;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:8px;font-family:var(--font)}
@@ -35,7 +35,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
 .evl-admin-link:hover{color:var(--white);background:#0d1a0d}
 .evl-admin-link.active-link{color:var(--green);border-bottom:2px solid var(--green)}
-.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:12px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;font-family:var(--font)}
 .evl-logout:hover{background:var(--red);color:var(--white)}
 
 /* TAB NAV */
@@ -56,8 +56,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .stat-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:16px;text-align:center;transition:border-color .2s}
 .stat-card:hover{border-color:var(--green)}
 .stat-val{font-size:32px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
-.stat-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
-.stat-sub{font-size:12px;font-weight:600;margin-top:4px}
+.stat-lbl{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.stat-sub{font-size:13px;font-weight:600;margin-top:4px}
 
 /* ALERT BANNER */
 .alert-banner{background:#1a0000;border:2px solid var(--red);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;animation:pulse-border 2s infinite}
@@ -73,36 +73,36 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .call-card.active-call{border-color:var(--green);background:#020a02;animation:pulse-border 1.5s infinite}
 .call-card.completed{border-color:#1a1a2e;opacity:.8}
 .call-card-header{padding:12px 16px;background:rgba(0,0,0,0.2);border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.call-type-badge{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.call-type-badge{font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
 .badge-inbound{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 .badge-outbound{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
 .badge-missed{background:#1a0000;border:1px solid var(--red);color:var(--red)}
 .badge-active{background:#020a02;border:1px solid var(--green);color:var(--green);animation:pulse-border 1s infinite}
-.call-time{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px}
+.call-time{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px}
 .call-card-body{padding:14px 16px}
 .call-caller{font-size:18px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:3px}
 .call-number{font-size:14px;color:var(--blue);font-weight:700;margin-bottom:6px}
 .call-match{font-size:13px;font-weight:700;padding:6px 10px;border-radius:6px;margin-bottom:10px}
 .match-found{background:#0d1a0d;border-left:3px solid var(--green);color:var(--green)}
 .match-none{background:#1a1000;border-left:3px solid var(--gold);color:var(--gold)}
-.call-duration{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:10px}
+.call-duration{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:10px}
 .call-notes-text{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.4;margin-bottom:10px}
 
 /* BUTTONS */
-.btn{padding:8px 14px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
+.btn{padding:10px 16px 14px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
 .btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
 .btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--green)}
-.btn-sm{padding:6px 12px;font-size:11px}
+.btn-sm{padding:6px 12px;font-size:13px}
 .btn-row{display:flex;gap:6px;flex-wrap:wrap}
 
 /* FORMS */
 .form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
 .form-input:focus{border-color:var(--green)}
 .form-input option{background:#0a0a1a}
-.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:6px}
+.form-label{font-size:13px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:6px}
 .form-group{display:flex;flex-direction:column;gap:6px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
@@ -118,8 +118,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .dir-key.operator{background:var(--blue)}
 .dir-info{flex:1}
 .dir-label{font-size:15px;font-weight:900;color:var(--white);letter-spacing:0.5px}
-.dir-desc{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;font-family:var(--body)}
-.dir-route{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.dir-desc{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px;font-family:var(--body)}
+.dir-route{font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
 .route-direct{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 .route-vm{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .route-text{background:#0d001a;border:1px solid var(--purple);color:var(--purple)}
@@ -127,7 +127,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 /* METRICS */
 .metrics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px}
 .metric-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:18px}
-.metric-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e}
+.metric-title{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e}
 .metric-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #0d0d1a}
 .metric-row:last-child{border-bottom:none;margin-bottom:0}
 .metric-key{font-size:13px;color:var(--dim);font-weight:600;font-family:var(--body)}
@@ -144,7 +144,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .step-content{flex:1}
 .step-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px}
 .step-desc{font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6}
-.step-cost{font-size:12px;font-weight:900;letter-spacing:1px;margin-top:8px}
+.step-cost{font-size:13px;font-weight:900;letter-spacing:1px;margin-top:8px}
 
 /* INCOMING CALL SIMULATOR */
 .incoming-call{display:none;position:fixed;top:80px;right:20px;z-index:400;background:var(--s1);border:3px solid var(--green);border-radius:16px;padding:20px;width:300px;box-shadow:0 0 40px rgba(0,200,83,0.3);animation:ring 0.5s ease infinite alternate}
@@ -270,20 +270,20 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <button class="btn btn-green btn-sm" onclick="openLogNewCall()">➕ LOG NEW CALL</button>
   </div>
   <div style="overflow-x:auto">
-    <table style="width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden">
+    <div style="width:100%;overflow-x:auto;"><table style="width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden">
       <thead>
         <tr>
-          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap">DATE / TIME</th>
-          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">CALLER</th>
-          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">TYPE</th>
-          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">OUTCOME</th>
-          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">DURATION</th>
-          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">MATCH</th>
-          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase">ACTIONS</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap">DATE / TIME</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase">CALLER</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase">TYPE</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase">OUTCOME</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase">DURATION</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase">MATCH</th>
+          <th style="background:#0a0f1a;color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase">ACTIONS</th>
         </tr>
       </thead>
       <tbody id="call-log-tbody"></tbody>
-    </table>
+    </table></div>
   </div>
 </div>
 
@@ -303,7 +303,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <div style="background:#1a1a2e;border-radius:8px;height:16px;overflow:hidden;margin-bottom:8px">
           <div id="connect-rate-bar" style="height:100%;background:var(--green);border-radius:8px;transition:width .5s;width:0%"></div>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:700">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:700">
           <span>0%</span><span style="color:var(--gold)">62% Industry</span><span style="color:var(--green)">80% Target</span><span>100%</span>
         </div>
       </div>
@@ -340,7 +340,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div class="dir-tree">
     <div class="dir-header">
       <div style="font-size:16px;font-weight:900;color:var(--white);letter-spacing:2px">MENU OPTIONS</div>
-      <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px">PRESS A NUMBER TO HEAR THAT OPTION'S SCRIPT</div>
+      <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px">PRESS A NUMBER TO HEAR THAT OPTION'S SCRIPT</div>
     </div>
     <div class="dir-tree-body">
 
@@ -441,7 +441,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       ${['C — CONNECT: Use their name immediately. Warm, professional, confident.','R — REASON: State why you\'re calling clearly in one sentence.','I — INVOLVE: Ask questions. Listen 70%, talk 30%.','S — SCHEDULE: Always set the next step before hanging up.','P — PROMISE: Confirm exactly what you will do and by when.'].map((item,i)=>`
       <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:14px">
         <div style="font-size:20px;font-weight:900;color:var(--blue);margin-bottom:6px">${item[0]}</div>
-        <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;font-weight:600">${item.slice(4)}</div>
+        <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.5;font-weight:600">${item.slice(4)}</div>
       </div>`).join('')}
     </div>
   </div>
@@ -534,7 +534,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div style="max-width:600px;margin:0 auto;background:var(--s1);border:2px solid var(--green);border-radius:12px;overflow:hidden">
     <div style="background:#020a02;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
       <div style="font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px">➕ LOG NEW CALL</div>
-      <button onclick="closeLogModal()" style="background:var(--red);color:var(--white);border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font);letter-spacing:1px">✕ CLOSE</button>
+      <button onclick="closeLogModal()" style="background:var(--red);color:var(--white);border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font);letter-spacing:1px">✕ CLOSE</button>
     </div>
     <div style="padding:20px">
       <div class="form-grid" style="margin-bottom:14px">
@@ -607,7 +607,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div style="max-width:600px;margin:0 auto;background:var(--s1);border:2px solid var(--green);border-radius:12px;overflow:hidden">
     <div style="background:#020a02;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1a1a2e">
       <div style="font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px" id="dir-script-title">Option Script</div>
-      <button onclick="closeDirScript()" style="background:var(--red);color:var(--white);border:none;padding:8px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font)">✕ CLOSE</button>
+      <button onclick="closeDirScript()" style="background:var(--red);color:var(--white);border:none;padding:10px 16px 16px;font-size:14px;font-weight:900;cursor:pointer;border-radius:6px;font-family:var(--font)">✕ CLOSE</button>
     </div>
     <div style="padding:20px">
       <div style="background:var(--bg);border:1px solid #2a2a4e;border-radius:8px;padding:16px;font-family:var(--body);font-size:14px;color:var(--dim);line-height:1.8;font-style:italic;margin-bottom:16px" id="dir-script-content"></div>
@@ -781,7 +781,7 @@ function renderCalls(filter='all'){
       <div class="call-card-body">
         <div class="call-caller">${call.name||'Unknown Caller'}</div>
         <div class="call-number"><a href="tel:${call.phone}" style="color:var(--blue);text-decoration:none">${call.phone}</a></div>
-        ${call.dir ? `<div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:6px">${dirLabels[call.dir]||''}</div>` : ''}
+        ${call.dir ? `<div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:6px">${dirLabels[call.dir]||''}</div>` : ''}
         ${matchHtml}
         <div class="call-duration">⏱ ${call.duration} · ${call.outcome}</div>
         ${call.notes ? `<div class="call-notes-text">${call.notes}</div>` : ''}
@@ -846,7 +846,7 @@ function renderCallLog(calls){
     const typeBadge = c.type==='missed'?'<span style="color:var(--red);font-weight:900">🔴 MISSED</span>':c.type==='outbound'?'<span style="color:var(--blue);font-weight:900">📤 OUT</span>':'<span style="color:var(--green);font-weight:900">📥 IN</span>';
     return `<tr>
       <td style="color:var(--muted);font-size:13px;white-space:nowrap">${timeStr}</td>
-      <td><strong style="color:var(--white)">${c.name||'Unknown'}</strong><br><span style="font-size:12px;color:var(--blue)">${c.phone}</span></td>
+      <td><strong style="color:var(--white)">${c.name||'Unknown'}</strong><br><span style="font-size:13px;color:var(--blue)">${c.phone}</span></td>
       <td>${typeBadge}</td>
       <td style="font-size:13px;color:var(--dim)">${c.outcome}</td>
       <td style="font-size:13px;color:var(--muted)">${c.duration||'—'}</td>
@@ -909,10 +909,10 @@ function renderWeeklyChart(){
   const w = `calc(${100/7}% - 8px)`;
   chart.innerHTML = days.map(d=>`
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-      <div style="font-size:12px;font-weight:900;color:var(--dim)">${d.count||''}</div>
+      <div style="font-size:13px;font-weight:900;color:var(--dim)">${d.count||''}</div>
       <div style="width:100%;background:${d.count>0?'var(--green)':'#1a1a2e'};border-radius:4px 4px 0 0;height:${Math.max(8,(d.count/max)*100)}px;transition:height .3s"></div>
     </div>`).join('');
-  labels.innerHTML = days.map(d=>`<div style="flex:1;text-align:center;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px">${d.label}</div>`).join('');
+  labels.innerHTML = days.map(d=>`<div style="flex:1;text-align:center;font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px">${d.label}</div>`).join('');
 }
 
 // SCRIPTS
