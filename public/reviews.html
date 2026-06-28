@@ -8,16 +8,16 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh}
-:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--white:#fff;--muted:#C8D0DC;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
 
 
 .evl-nav{position:sticky;top:0;z-index:9999;background:#090E17;border-bottom:2px solid #2B84FE;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;width:100%}
 .evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap}
 .evl-nav-links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
-.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 8px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 8px;border-radius:4px;transition:all .2s;white-space:nowrap}
 .evl-nav-link:hover{color:#fff;background:#1a1a2e}
 .evl-nav-link.active{color:#2B84FE;border-bottom:2px solid #2B84FE}
-.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px;margin-left:8px;white-space:nowrap}
+.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:14px;font-weight:900;letter-spacing:1px;padding:9px 14px;border-radius:6px;margin-left:8px;white-space:nowrap}
 .evl-nav-hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
 @media(max-width:900px){
   .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#090E17;border-bottom:2px solid #2B84FE;padding:8px 0;z-index:9999}
@@ -31,7 +31,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 /* HERO */
 .reviews-hero{background:linear-gradient(135deg,#020203 0%,#040e1a 50%,#020203 100%);border-bottom:2px solid #1a1a2e;padding:56px 24px;text-align:center;position:relative;overflow:hidden}
 .reviews-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,215,0,0.06) 0%,transparent 70%)}
-.hero-badge{display:inline-block;background:#1a1400;border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
+.hero-badge{display:inline-block;background:#1a1400;border:1px solid var(--gold);color:var(--gold);font-size:13px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
 .hero-h1{font-size:52px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;line-height:1.05}
 .hero-h1 span{color:var(--gold)}
 .hero-sub{font-size:17px;color:var(--dim);font-family:var(--body);max-width:600px;margin:0 auto 32px;line-height:1.7}
@@ -47,7 +47,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 
 /* FILTER BAR */
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;justify-content:center}
-.filter-btn{padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;font-family:var(--font);border:2px solid #1a1a2e;color:var(--muted);background:transparent}
+.filter-btn{padding:8px 18px;border-radius:20px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;font-family:var(--font);border:2px solid #1a1a2e;color:var(--muted);background:transparent}
 .filter-btn:hover,.filter-btn.active{border-color:var(--gold);color:var(--gold);background:#1a1400}
 
 /* REVIEW CARDS */
@@ -59,12 +59,12 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .review-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .review-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;flex-shrink:0;border:2px solid #2a2a4e}
 .review-name{font-size:15px;font-weight:900;color:var(--white);margin-bottom:2px}
-.review-location{font-size:12px;color:var(--muted);font-family:var(--body)}
+.review-location{font-size:14px;color:var(--muted);font-family:var(--body)}
 .review-stars{color:var(--gold);font-size:14px;margin-bottom:10px;letter-spacing:2px}
-.review-vehicle{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px;margin-bottom:12px}
+.review-vehicle{display:inline-block;background:#040e1a;border:1px solid var(--blue);color:var(--blue);font-size:13px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px;margin-bottom:12px}
 .review-text{font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.7;margin-bottom:14px}
 .review-savings{background:#020a02;border:1px solid var(--green);border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
-.review-savings-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.review-savings-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .review-savings-val{font-size:20px;font-weight:900;color:var(--green)}
 .review-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-right:4px;margin-top:6px;letter-spacing:1px}
 .rt-purchase{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
@@ -101,7 +101,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 .evl-footer{background:var(--s1);border-top:2px solid #1a1a2e;padding:24px 20px;font-family:var(--font)}
 .evl-footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .evl-footer-links{display:flex;flex-wrap:wrap;gap:8px 16px}
-.evl-footer-links a{color:var(--dim);text-decoration:none;font-size:12px;font-weight:700;transition:color .2s}
+.evl-footer-links a{color:var(--dim);text-decoration:none;font-size:14px;font-weight:700;transition:color .2s}
 .evl-footer-links a:hover{color:var(--blue)}
 
 @media(max-width:768px){
@@ -301,7 +301,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
       <a href="https://evl-decode-two.vercel.app/find" class="btn btn-green">⚡ FIND MY VEHICLE</a>
       <a href="https://evl-decode-two.vercel.app/savings" class="btn btn-dark">📊 SEE THE SAVINGS MATH</a>
     </div>
-    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:16px">Advisory fee paid back 20x over in average client savings. No dealer relationship. No commissions. Pure intelligence.</div>
+    <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:16px">Advisory fee paid back 20x over in average client savings. No dealer relationship. No commissions. Pure intelligence.</div>
   </div>
 
 </div>
