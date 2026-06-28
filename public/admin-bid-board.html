@@ -10,7 +10,7 @@
     --green:#00C853;--red:#FF4444;--orange:#FF8C00;--white:#ffffff;--muted:#8899aa;
     --border:#1a2a3a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
+  html,body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;overflow-x:hidden;}
 
   /* NAV */
   nav{background:#0a0a0a;border-bottom:3px solid var(--red);padding:0 24px;height:64px;
@@ -47,7 +47,7 @@
   .wrap{max-width:1060px;margin:0 auto;padding:24px 16px 80px;}
 
   /* STATS */
-  .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;}
+  .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;width:100%;}
   .stat-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
     padding:18px;text-align:center;}
   .stat-val{font-size:36px;font-weight:900;}
@@ -74,7 +74,7 @@
   .aac-title{font-size:22px;font-weight:900;color:var(--white);}
   .aac-meta{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600;margin-top:3px;}
   .aac-body{padding:20px;}
-  .aac-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+  .aac-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;width:100%;}
   .aac-stat{background:var(--bg);border:1px solid var(--border);border-radius:8px;
     padding:12px;text-align:center;}
   .aac-stat-val{font-size:22px;font-weight:900;}
@@ -82,7 +82,7 @@
     letter-spacing:1px;margin-top:2px;font-family:var(--body);}
 
   /* ADMIN BID TABLE — shows real dealer identities */
-  table{width:100%;border-collapse:collapse;}
+  table{width:100%;border-collapse:collapse;min-width:600px;}
   th{background:rgba(0,0,0,.3);color:var(--muted);font-family:var(--body);font-size:12px;
     font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;
     text-align:left;border-bottom:2px solid var(--border);}
@@ -119,13 +119,14 @@
     padding:20px 24px;margin-bottom:16px;}
   .winner-title{font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px;
     text-transform:uppercase;margin-bottom:14px;}
-  .winner-detail{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .winner-detail{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;}
   .winner-field{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;}
   .winner-field-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;
     letter-spacing:1px;margin-bottom:4px;font-family:var(--body);}
   .winner-field-val{font-size:16px;font-weight:900;color:var(--white);}
 
   /* AUCTION STATUS CONTROLS */
+  .table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;}
   .aac-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;padding-top:16px;
     border-top:1px solid var(--border);}
 
@@ -140,7 +141,7 @@
   /* DEALER DIRECTORY TAB */
   .dealer-admin-card{background:var(--s1);border:2px solid var(--border);border-radius:12px;
     padding:18px;margin-bottom:12px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;
-    gap:12px;align-items:center;}
+    gap:12px;align-items:center;width:100%;}
   .dealer-admin-name{font-size:16px;font-weight:900;color:var(--white);}
   .dealer-admin-meta{font-size:12px;color:var(--muted);font-family:var(--body);
     font-weight:600;margin-top:3px;}
@@ -163,10 +164,13 @@
   .txn-step.active .txn-step-label{color:var(--gold);}
 
   @media(max-width:700px){
-    .stats-row{grid-template-columns:repeat(3,1fr);}
+    .stats-row{grid-template-columns:repeat(2,1fr);}
     .aac-grid{grid-template-columns:repeat(2,1fr);}
     .dealer-admin-card{grid-template-columns:1fr;}
-    .txn-steps{grid-template-columns:repeat(3,1fr);}
+    .txn-steps{grid-template-columns:repeat(2,1fr);}
+    .winner-detail{grid-template-columns:1fr;}
+    .aac-header{flex-direction:column;align-items:flex-start;}
+    .aac-controls{flex-direction:column;}
   }
 </style>
 </head>
@@ -656,7 +660,7 @@ function renderAuctions() {
           text-transform:uppercase;margin-bottom:10px;font-family:var(--body);">
           🔐 ADMIN VIEW — DEALER IDENTITIES VISIBLE — DO NOT SHARE SCREEN
         </div>
-        <table>
+        <div class="table-wrap"><table>
           <thead>
             <tr>
               <th>Rank</th>
@@ -669,7 +673,7 @@ function renderAuctions() {
             </tr>
           </thead>
           <tbody>${bidRows}</tbody>
-        </table>
+        </table></div>
 
         <!-- CONTROLS -->
         <div class="aac-controls">
