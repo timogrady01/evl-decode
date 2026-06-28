@@ -985,7 +985,7 @@ function buildVehicleCard(v, isList){
     : `<div class="vehicle-img-placeholder">🚗</div>`;
   const evlBadge = dom>=90?'<span class="badge badge-hot">⚡ EVL LEVERAGE</span>':'';
 
-  return `<div class="vehicle-card${isList?' list-view':''}" onclick="openVDP('${vin}')">
+  return `<div class="vehicle-card${isList?' list-view':''}" data-vin="${vin}" onclick="openVDP('${vin}')">
     <div class="vehicle-img-wrap">
       ${imgHtml}
       <div class="vehicle-badges">
@@ -998,7 +998,6 @@ function buildVehicleCard(v, isList){
       ${photoCount>1?`<div class="vehicle-img-count">📷 ${photoCount}</div>`:''}
     </div>
     <div class="vehicle-info">
-      \${getMatchBadge(calcMatchScore({make:'${make}',model:'${model}',year:'${year}',price:'${price}',mileage:'${miles}'}))}
       <div class="vehicle-year-make">${year} ${make}</div>
       <div class="vehicle-name">${model}${trim?' '+trim:''}</div>
       <span class="vehicle-price">${price}</span>
@@ -1213,6 +1212,21 @@ function setMakeAndSearch(make) {
     searchCriteria.make = make;
   }
   fetchVehicles(true);
+}
+
+// Apply match badges after cards render
+function applyMatchBadges() {
+  if (!searchCriteria.make && !searchCriteria.model) return;
+  document.querySelectorAll('[data-vin]').forEach(card => {
+    const vin = card.dataset.vin;
+    const v = allVehicles.find(x => x.vin === vin);
+    if (!v) return;
+    const score = calcMatchScore(v);
+    const wrap = card.querySelector('.match-badge-wrap');
+    if (wrap && score !== null) {
+      wrap.innerHTML = getMatchBadge(score);
+    }
+  });
 }
 
 function loadMore(){ currentPage++; fetchVehicles(false); }
