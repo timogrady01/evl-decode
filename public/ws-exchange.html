@@ -735,15 +735,16 @@ const auth = getAuth(fbApp);
 const ADMIN_UID = 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
 
 onAuthStateChanged(auth, async (user) => {
+  console.log('[EVL AUTH] State changed — user:', user ? user.email : 'null');
   if (!user) {
-    // Not logged in — redirect to login
+    console.log('[EVL AUTH] No user — redirecting to login');
     window.location.href = '/ws-login.html';
     return;
   }
 
   // ── ADMIN: full access, no dealer record needed ──
   if (user.uid === ADMIN_UID) {
-    console.log('✅ EVL Admin authenticated — full access granted');
+    console.log('[EVL AUTH] ✅ Admin confirmed — loading exchange');
     initExchange();
     return;
   }
@@ -753,7 +754,7 @@ onAuthStateChanged(auth, async (user) => {
     const dealerDoc = await getDoc(doc(db, 'evl_ws_dealers', user.uid));
 
     if (!dealerDoc.exists()) {
-      // Authenticated but not a registered dealer
+      console.log('[EVL AUTH] Dealer doc not found — redirecting');
       window.location.href = '/ws-login.html';
       return;
     }
@@ -800,8 +801,12 @@ function dismissOverlay() {
 }
 
 function initExchange() {
+  console.log('[EVL] initExchange called');
   if (typeof loadAndRenderAuctions === 'function') {
+    console.log('[EVL] calling loadAndRenderAuctions');
     loadAndRenderAuctions();
+  } else {
+    console.error('[EVL] loadAndRenderAuctions NOT FOUND');
   }
 }
 
@@ -1102,6 +1107,7 @@ const BADGE_CONFIG = {
 };
 
 function renderAuctions(auctions){
+  console.log('[EVL] renderAuctions called with', auctions.length, 'auctions');
   dismissOverlay();
   const container = document.getElementById('auction-list');
   container.innerHTML = auctions.map(a=>{
@@ -1480,6 +1486,7 @@ async function submitIntake() {
 
 // ── LIVE LOAD FROM FIRESTORE ──
 async function loadAndRenderAuctions() {
+  console.log('[EVL] loadAndRenderAuctions started');
   const container = document.getElementById('auction-list');
   container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);font-size:14px;font-family:var(--body)">⚡ Loading live auction data...</div>';
 
