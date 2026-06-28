@@ -56,7 +56,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 
 /* DEAL DATA CARD */
 .deal-data{background:rgba(9,14,23,0.9);border:2px solid var(--green);border-radius:16px;padding:28px 32px;margin:0 auto 32px;max-width:680px;position:relative;backdrop-filter:blur(10px)}
-.deal-data::before{content:'EVL ACQUISITION CONFIRMED';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#020203;color:var(--green);font-size:11px;font-weight:900;letter-spacing:3px;padding:2px 16px;white-space:nowrap}
+.deal-data::before{content:'EVL ACQUISITION CONFIRMED';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#020203;color:var(--green);font-size:13px;font-weight:900;letter-spacing:3px;padding:2px 16px;white-space:nowrap}
 .deal-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
 .deal-item{text-align:center}
 .deal-item-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
@@ -68,7 +68,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 
 /* PITPO STATUS */
 .pitpo-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
-.pitpo-badge{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.pitpo-badge{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
 .pb-pass{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 .pb-gold{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .pb-blue{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
@@ -76,9 +76,9 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 /* RELEASE COMMAND */
 .release-section{text-align:center;margin-bottom:32px}
 .release-code-wrap{display:inline-block;background:rgba(0,200,83,0.05);border:2px solid var(--green);border-radius:12px;padding:20px 32px;margin-bottom:16px;position:relative}
-.release-code-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.release-code-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
 .release-code{font-size:48px;font-weight:900;color:var(--green);letter-spacing:12px;font-family:monospace;text-shadow:0 0 20px rgba(0,200,83,0.5)}
-.release-copy{font-size:11px;color:var(--muted);font-family:var(--body);margin-top:6px}
+.release-copy{font-size:13px;color:var(--muted);font-family:var(--body);margin-top:6px}
 
 /* TIMELINE */
 .timeline{display:flex;align-items:center;justify-content:center;gap:0;margin:0 auto 32px;max-width:700px;overflow-x:auto;padding:0 16px}
@@ -225,7 +225,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
           <div class="release-code" id="release-code">7-4-2-9-1-8</div>
           <div class="release-copy">Present to Issuing Dealer porter at vehicle pickup. Code expires 24 hours after payment confirmation.</div>
         </div>
-        <button class="btn btn-dark" onclick="copyReleaseCode()" style="font-size:12px;padding:8px 16px">📋 COPY RELEASE CODE</button>
+        <button class="btn btn-dark" onclick="copyReleaseCode()" style="font-size:13px;padding:10px 16px 16px">📋 COPY RELEASE CODE</button>
       </div>
     </div>
 
@@ -256,7 +256,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
         <input class="lookup-input" id="lookup-input" placeholder="Transaction ID (EVL-AUC-001) or VIN" onkeydown="if(event.key==='Enter')runLookup()"/>
         <button class="lookup-btn" onclick="runLookup()">SCAN →</button>
       </div>
-      <div style="font-size:11px;color:var(--muted);font-family:var(--body);text-align:center;margin-top:10px">Enter Transaction ID from WS Exchange or VIN to pull deal intelligence</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);text-align:center;margin-top:10px">Enter Transaction ID from WS Exchange or VIN to pull deal intelligence</div>
     </div>
 
     <!-- BOTTOM STATS -->
@@ -278,7 +278,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
     <div class="modal-hdr">
       <div>
         <div style="font-size:18px;font-weight:900;color:var(--gold);letter-spacing:1px">📄 CERTIFIED DEAL DOSSIER</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:4px" id="modal-id">Transaction EVL-AUC-001 · EVL Wholesale Exchange</div>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px" id="modal-id">Transaction EVL-AUC-001 · EVL Wholesale Exchange</div>
       </div>
       <button class="modal-close" onclick="closeModal()">✕ CLOSE</button>
     </div>
@@ -287,20 +287,20 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 
       <!-- PITPO VERIFICATION SECTION -->
       <div style="background:#020a02;border:2px solid var(--green);border-radius:10px;padding:16px;margin-bottom:14px">
-        <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;margin-bottom:12px">🛡️ PITPO VERIFICATION RECORD</div>
+        <div style="font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;margin-bottom:12px">🛡️ PITPO VERIFICATION RECORD</div>
         <div style="display:flex;flex-direction:column;gap:6px" id="pitpo-checks"></div>
       </div>
 
       <!-- FINANCIAL BREAKDOWN -->
       <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:16px;margin-bottom:14px">
-        <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:12px">💰 FINANCIAL SETTLEMENT BREAKDOWN</div>
+        <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:12px">💰 FINANCIAL SETTLEMENT BREAKDOWN</div>
         <div id="financial-breakdown"></div>
       </div>
 
       <!-- ARBITRATION NOTICE -->
       <div style="background:#1a1400;border:1px solid var(--gold);border-radius:10px;padding:14px">
-        <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:8px">⚖️ ARBITRATION NOTICE — COLLIN COUNTY TX</div>
-        <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.7">
+        <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:8px">⚖️ ARBITRATION NOTICE — COLLIN COUNTY TX</div>
+        <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.7">
           48-hour arbitration window is active. Title defects only — no mechanical claims accepted. Off-Ramping Protocol photos are on file and constitute the final condition record. EVL is a neutral referee — documentation beats conversation. If dispute cannot be resolved, governing law is Collin County, Texas. Party filing against EVL and losing bears all EVL legal fees. Mid-flight DMV sweeps confirmed both dealer licenses ACTIVE as of deal close.
         </div>
       </div>
