@@ -450,7 +450,7 @@
     onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
   import {
-    getFirestore, doc, setDoc, serverTimestamp
+    getFirestore, doc, getDoc, setDoc, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -467,10 +467,26 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // ── If already logged in, go straight to exchange ──
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
+  // ── If already logged in, verify they are admin or active dealer before redirecting ──
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) return; // Not logged in — stay on login page
+    
+    // Admin always gets through
+    if (user.uid === 'XJRYpmaBichWwlb3meNQRFwNnxZ2') {
       window.location.href = '/ws-exchange.html';
+      return;
+    }
+    
+    // Check if active dealer
+    try {
+      const db = getFirestore();
+      const dealerDoc = await getDoc(doc(db, 'evl_ws_dealers', user.uid));
+      if (dealerDoc.exists() && dealerDoc.data().status === 'active') {
+        window.location.href = '/ws-exchange.html';
+      }
+      // If not active dealer — stay on login page, show message
+    } catch(e) {
+      console.log('Dealer check failed:', e.message);
     }
   });
 
