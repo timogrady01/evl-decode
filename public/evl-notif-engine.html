@@ -12,7 +12,7 @@
     --red:#FF4444;--white:#ffffff;--muted:#8899aa;--border:#1a2a3a;
     --font:'Oswald',sans-serif;--body:'Barlow',sans-serif;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--white);font-family:var(--font);
+  body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);
     min-height:100vh;padding:32px 20px;}
   .wrap{max-width:800px;margin:0 auto;}
   h1{font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:2px;
@@ -41,7 +41,7 @@
     padding:14px;font-family:monospace;font-size:16px;color:var(--green);
     line-height:1.8;min-height:80px;max-height:300px;overflow-y:auto;margin-top:12px;
     white-space:pre-wrap;}
-  .badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:11px;
+  .badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:13px;
     font-weight:900;font-family:var(--font);letter-spacing:1px;}
   .badge-green{background:rgba(0,200,83,.12);color:var(--green);border:1px solid rgba(0,200,83,.3);}
   .badge-red{background:rgba(255,68,68,.12);color:var(--red);border:1px solid rgba(255,68,68,.3);}
@@ -312,35 +312,35 @@ Congratulations — EVL WS Dealer Network</div>
     <div class="card-title">📱 SMS Templates (Twilio — 160 char limit)</div>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
-        <div style="font-size:12px;font-weight:900;color:var(--gold);text-transform:uppercase;
+        <div style="font-size:13px;font-weight:900;color:var(--gold);text-transform:uppercase;
           letter-spacing:1px;margin-bottom:6px;">Unit Card SMS</div>
         <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
           ⚡ EVL ALERT: {vehicle} now available. WS Floor: {floor}. {days}d on lot. Bid now: {url}
         </div>
       </div>
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
-        <div style="font-size:12px;font-weight:900;color:var(--blue);text-transform:uppercase;
+        <div style="font-size:13px;font-weight:900;color:var(--blue);text-transform:uppercase;
           letter-spacing:1px;margin-bottom:6px;">Hourly Nudge SMS</div>
         <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
           📡 EVL: {vehicle} - High bid: {high_bid} - {time_left} left - Your status: {status} - {url}
         </div>
       </div>
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
-        <div style="font-size:12px;font-weight:900;color:var(--red);text-transform:uppercase;
+        <div style="font-size:13px;font-weight:900;color:var(--red);text-transform:uppercase;
           letter-spacing:1px;margin-bottom:6px;">Outbid SMS</div>
         <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
           ⚠️ EVL: You've been outbid on {vehicle}. New high: {high_bid}. Counter: {url}
         </div>
       </div>
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
-        <div style="font-size:12px;font-weight:900;color:var(--red);text-transform:uppercase;
+        <div style="font-size:13px;font-weight:900;color:var(--red);text-transform:uppercase;
           letter-spacing:1px;margin-bottom:6px;">Final Call SMS</div>
         <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
           🚨 EVL FINAL HOUR: {vehicle} closes in 60min. High bid: {high_bid}. Last chance: {url}
         </div>
       </div>
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;">
-        <div style="font-size:12px;font-weight:900;color:var(--green);text-transform:uppercase;
+        <div style="font-size:13px;font-weight:900;color:var(--green);text-transform:uppercase;
           letter-spacing:1px;margin-bottom:6px;">Winner SMS</div>
         <div style="font-family:monospace;font-size:14px;color:#ffffff;line-height:1.6;">
           ✅ EVL: You won {vehicle} at {winning_bid}! EVL will call you within 2hrs. Ref: {ref}
