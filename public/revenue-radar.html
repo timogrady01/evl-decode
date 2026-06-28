@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#C8D0DC;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
 body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
 
 /* LOGIN */
@@ -25,10 +25,10 @@ body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(-
 .evl-admin-nav{position:sticky;top:0;z-index:500;background:#020a02;border-bottom:2px solid var(--green);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:var(--font)}
 .evl-admin-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
 .evl-admin-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:8px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
 .evl-admin-link:hover{color:var(--white);background:#0d1a0d}
 .evl-admin-link.active-link{color:var(--green);border-bottom:2px solid var(--green)}
-.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;font-family:var(--font)}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:8px 12px;border-radius:4px;cursor:pointer;font-family:var(--font)}
 
 /* TABS */
 .tab-nav{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;gap:0;overflow-x:auto}
@@ -114,7 +114,7 @@ body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(-
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--green)}
 .btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
-.btn-sm{padding:6px 12px;font-size:13px}
+.btn-sm{padding:8px 12px;font-size:13px}
 
 /* GOAL METER */
 .goal-meter{margin-bottom:10px}
@@ -867,7 +867,7 @@ function renderGoals(){
       </div>
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
         <div class="goal-track" style="flex:1"><div class="goal-fill" style="width:${pct}%;background:${color}"></div></div>
-        <input type="number" class="goal-input form-input" data-key="${f.key}" value="${goal}" style="width:100px;padding:6px 10px;font-size:13px"/>
+        <input type="number" class="goal-input form-input" data-key="${f.key}" value="${goal}" style="width:100px;padding:8px 10px;font-size:13px"/>
       </div>
       <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600">Current: ${f.current.toLocaleString()} · Goal: ${goal.toLocaleString()} · Gap: ${Math.max(0,goal-f.current).toLocaleString()}</div>
     </div>`;
