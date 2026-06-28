@@ -8,12 +8,12 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
-body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
+body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
 
 /* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
 .login-box{background:var(--s1);border:2px solid var(--green);border-radius:12px;padding:40px;width:100%;max-width:420px;text-align:center}
-.login-badge{display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
+.login-badge{display:inline-block;background:#020a02;border:1px solid var(--green);color:var(--green);font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:3px;margin-bottom:16px}
 .login-input{width:100%;background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:16px;border-radius:8px;font-size:26px;font-family:var(--font);font-weight:700;letter-spacing:10px;text-align:center;outline:none;margin-bottom:16px;transition:border-color .2s}
 .login-input:focus{border-color:var(--green)}
 .login-btn{width:100%;background:var(--green);color:#020203;border:none;padding:16px;font-size:16px;font-weight:900;letter-spacing:2px;cursor:pointer;border-radius:8px;font-family:var(--font)}
@@ -28,7 +28,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .evl-admin-link{color:#a8d4a8;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
 .evl-admin-link:hover{color:var(--white);background:#0d1a0d}
 .evl-admin-link.active-link{color:var(--green);border-bottom:2px solid var(--green)}
-.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:12px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;font-family:var(--font)}
+.evl-logout{background:transparent;border:1px solid var(--red);color:var(--red);font-size:13px;font-weight:700;padding:6px 12px;border-radius:4px;cursor:pointer;font-family:var(--font)}
 
 /* TABS */
 .tab-nav{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;gap:0;overflow-x:auto}
@@ -54,8 +54,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .kpi-card.cyan::before{background:var(--cyan)}
 .kpi-card.orange::before{background:var(--orange)}
 .kpi-val{font-size:34px;font-weight:900;line-height:1;display:block;margin-bottom:4px}
-.kpi-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px}
-.kpi-trend{font-size:12px;font-weight:700;font-family:var(--body)}
+.kpi-lbl{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.kpi-trend{font-size:13px;font-weight:700;font-family:var(--body)}
 .kpi-trend.up{color:var(--green)}
 .kpi-trend.down{color:var(--red)}
 .kpi-trend.flat{color:var(--muted)}
@@ -72,10 +72,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .chart-body{padding:18px}
 .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .bar-row:last-child{margin-bottom:0}
-.bar-label{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600;width:100px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-label{font-size:13px;color:var(--dim);font-family:var(--body);font-weight:600;width:100px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar-track{flex:1;background:#1a1a2e;border-radius:4px;height:20px;overflow:hidden;position:relative}
 .bar-fill{height:100%;border-radius:4px;transition:width .6s ease;display:flex;align-items:center;padding-left:8px}
-.bar-fill-label{font-size:11px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
+.bar-fill-label{font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;white-space:nowrap}
 .bar-val{font-size:13px;font-weight:900;color:var(--white);width:70px;text-align:right;flex-shrink:0}
 
 /* MINI CHART (sparkline) */
@@ -85,7 +85,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* DEAL TABLE */
 .deal-table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;overflow:hidden}
-.deal-table th{background:var(--s2);color:var(--green);padding:12px 14px;text-align:left;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.deal-table th{background:var(--s2);color:var(--green);padding:12px 14px;text-align:left;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .deal-table td{padding:12px 14px;border-bottom:1px solid #0d0d1a;font-size:14px;color:var(--dim);font-weight:600;vertical-align:middle}
 .deal-table tr:hover td{background:#0a0f1a;color:var(--white)}
 .deal-table tr:last-child td{border-bottom:none}
@@ -102,7 +102,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 /* ADD DEAL FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 .form-group{display:flex;flex-direction:column;gap:6px}
-.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.form-label{font-size:13px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
 .form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:11px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
 .form-input:focus{border-color:var(--green)}
 .form-input option{background:#0a0a1a}
@@ -114,12 +114,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--green)}
 .btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
-.btn-sm{padding:6px 12px;font-size:11px}
+.btn-sm{padding:6px 12px;font-size:13px}
 
 /* GOAL METER */
 .goal-meter{margin-bottom:10px}
 .goal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.goal-label{font-size:12px;color:var(--dim);font-weight:700;font-family:var(--body)}
+.goal-label{font-size:13px;color:var(--dim);font-weight:700;font-family:var(--body)}
 .goal-pct{font-size:13px;font-weight:900}
 .goal-track{height:10px;background:#1a1a2e;border-radius:5px;overflow:hidden}
 .goal-fill{height:100%;border-radius:5px;transition:width .5s}
@@ -137,13 +137,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .bucket-icon{font-size:28px;display:block;margin-bottom:8px}
 .bucket-name{font-size:13px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px}
 .bucket-amount{font-size:24px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
-.bucket-count{font-size:12px;color:var(--muted);font-weight:700;font-family:var(--body)}
+.bucket-count{font-size:13px;color:var(--muted);font-weight:700;font-family:var(--body)}
 
 /* F&I PENETRATION */
 .fi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
 .fi-card{background:var(--s1);border:1px solid #1a1a2e;border-radius:10px;padding:14px;text-align:center}
 .fi-pct{font-size:28px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
-.fi-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.fi-label{font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
 .fi-gauge{height:8px;background:#1a1a2e;border-radius:4px;overflow:hidden}
 .fi-fill{height:100%;border-radius:4px;transition:width .5s}
 
@@ -172,7 +172,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div class="login-box">
     <div class="login-badge">EVL INTERNAL — AUTHORIZED ONLY</div>
     <div style="font-size:32px;font-weight:900;letter-spacing:3px;margin-bottom:4px">REVENUE RADAR</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:28px;letter-spacing:2px">DEAL INTELLIGENCE — ADMIN ACCESS</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:28px;letter-spacing:2px">DEAL INTELLIGENCE — ADMIN ACCESS</div>
     <input type="password" class="login-input" id="pin-input" maxlength="4" placeholder="••••" autocomplete="off"/>
     <button class="login-btn" onclick="checkPin()">📈 ACCESS REVENUE RADAR</button>
     <div class="login-error" id="login-error">❌ INCORRECT PIN</div>
@@ -225,7 +225,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div class="chart-card">
       <div class="chart-card-header">
         <div class="chart-title">📈 MONTHLY GROSS — LAST 6 MONTHS</div>
-        <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px">ALL BUCKETS COMBINED</div>
+        <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px">ALL BUCKETS COMBINED</div>
       </div>
       <div class="chart-body">
         <div style="display:flex;align-items:flex-end;gap:8px;height:120px;margin-bottom:8px" id="monthly-chart"></div>
@@ -262,13 +262,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <button class="btn btn-dark btn-sm" onclick="switchTab('deals',document.querySelectorAll('.tab-btn')[1])">VIEW ALL →</button>
   </div>
   <div style="overflow-x:auto;margin-bottom:24px">
-    <table class="deal-table" id="recent-deal-table">
+    <div style="width:100%;overflow-x:auto;"><table class="deal-table" id="recent-deal-table">
       <thead><tr>
         <th>DATE</th><th>CUSTOMER</th><th>VEHICLE</th>
         <th>BUCKET</th><th>VEHICLE FEE</th><th>TRADE UPLIFT</th><th>CONSULTING FEE</th><th>TOTAL GROSS</th>
       </tr></thead>
       <tbody id="recent-deal-tbody"></tbody>
-    </table>
+    </table></div>
   </div>
 
 </div>
@@ -278,25 +278,25 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div class="section-hdr">
     <div class="section-title">COMPLETE DEAL LOG</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <select class="form-input" id="filter-bucket" style="width:auto;padding:8px 12px;font-size:13px" onchange="renderDealLog()">
+      <select class="form-input" id="filter-bucket" style="width:auto;padding:10px 16px 12px;font-size:13px" onchange="renderDealLog()">
         <option value="">ALL BUCKETS</option>
         <option>Vehicle Find</option><option>Trade-In</option><option>Leasing</option>
         <option>F&I</option><option>Advisory Fee</option><option>Wholesale</option>
       </select>
-      <select class="form-input" id="filter-month" style="width:auto;padding:8px 12px;font-size:13px" onchange="renderDealLog()">
+      <select class="form-input" id="filter-month" style="width:auto;padding:10px 16px 12px;font-size:13px" onchange="renderDealLog()">
         <option value="">ALL TIME</option>
       </select>
       <button class="btn btn-green btn-sm" onclick="switchTab('add',document.querySelectorAll('.tab-btn')[5])">➕ LOG DEAL</button>
     </div>
   </div>
   <div style="overflow-x:auto">
-    <table class="deal-table" id="full-deal-table">
+    <div style="width:100%;overflow-x:auto;"><table class="deal-table" id="full-deal-table">
       <thead><tr>
         <th>DATE</th><th>CUSTOMER</th><th>VEHICLE</th>
         <th>BUCKET</th><th>VEHICLE FEE</th><th>TRADE UPLIFT</th><th>CONSULTING FEE</th><th>TOTAL</th><th>ACTIONS</th>
       </tr></thead>
       <tbody id="full-deal-tbody"></tbody>
-    </table>
+    </table></div>
   </div>
   <div id="deal-log-empty" style="display:none;text-align:center;padding:60px;color:var(--muted);font-size:16px;font-weight:700">No deals logged yet — click LOG DEAL to add your first deal</div>
 </div>
@@ -336,7 +336,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <div>
           <div style="font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px">${b.name}</div>
           <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:6px">${b.desc}</div>
-          <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px">${b.legal}</div>
+          <div style="font-size:13px;font-weight:700;color:var(--green);letter-spacing:1px">${b.legal}</div>
         </div>
       </div>`).join('')}
     </div>
@@ -361,8 +361,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         {title:'LEASE-END ADVISORY',tip:'Pre-position lease customers on end-of-lease options. Creates next-deal opportunity.'},
         {title:'CREDIT LIFE/DISABILITY',tip:'Discuss on financed deals with significant balance. Customer protection focus.'},
       ].map(p=>`<div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:14px">
-        <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:6px">${p.title}</div>
-        <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5">${p.tip}</div>
+        <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:6px">${p.title}</div>
+        <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.5">${p.tip}</div>
       </div>`).join('')}
     </div>
   </div>
@@ -409,7 +409,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">➕ LOG NEW DEAL</div>
     <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:24px">
 
-      <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL INFO</div>
+      <div style="font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">DEAL INFO</div>
       <div class="form-grid" style="margin-bottom:20px">
         <div class="form-group"><label class="form-label">Customer Name</label><input class="form-input" id="log-customer" placeholder="Full Name"/></div>
         <div class="form-group"><label class="form-label">Deal Date</label><input class="form-input" type="date" id="log-date"/></div>
@@ -437,7 +437,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         </div>
       </div>
 
-      <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">EVL REVENUE BREAKDOWN</div>
+      <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">EVL REVENUE BREAKDOWN</div>
       <div class="form-grid" style="margin-bottom:20px">
         <div class="form-group"><label class="form-label">Vehicle Advisory Fee ($)</label><input class="form-input" id="log-front" type="number" placeholder="0" oninput="calcLogTotal()"/></div>
         <div class="form-group"><label class="form-label">Other / Misc Revenue ($)</label><input class="form-input" id="log-back" type="number" placeholder="0" oninput="calcLogTotal()"/></div>
@@ -448,13 +448,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <!-- LIVE TOTAL -->
       <div style="background:#020a02;border:2px solid var(--green);border-radius:10px;padding:16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
         <div>
-          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">TOTAL DEAL GROSS</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">TOTAL DEAL GROSS</div>
           <div style="font-size:38px;font-weight:900;color:var(--green)" id="log-total-display">$0</div>
         </div>
         <div style="text-align:right">
-          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:4px">VEHICLE FEE</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:4px">VEHICLE FEE</div>
           <div style="font-size:16px;font-weight:900;color:var(--dim)" id="log-front-display">$0</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-top:6px;margin-bottom:4px">TRADE + CONSULTING</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-top:6px;margin-bottom:4px">TRADE + CONSULTING</div>
           <div style="font-size:16px;font-weight:900;color:var(--dim)" id="log-back-display">$0</div>
         </div>
       </div>
@@ -465,7 +465,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       </div>
 
       <!-- F&I PRODUCTS -->
-      <div style="font-size:12px;font-weight:900;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">F&I PRODUCTS ADVISED</div>
+      <div style="font-size:13px;font-weight:900;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1a1a2e">F&I PRODUCTS ADVISED</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px" id="fi-checkboxes"></div>
 
       <button class="btn btn-green" onclick="logDeal()" style="width:100%;font-size:15px;padding:14px">✅ LOG THIS DEAL</button>
@@ -608,7 +608,7 @@ function initApp(){
   months.forEach(m=>{ const opt=document.createElement('option'); opt.value=m; opt.textContent=new Date(m+'-15').toLocaleDateString('en-US',{month:'long',year:'numeric'}); sel.appendChild(opt); });
   // F&I checkboxes
   document.getElementById('fi-checkboxes').innerHTML = FI_PRODUCTS.map(p=>`
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer;background:var(--bg);border:1px solid #2a2a4e;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:700;transition:border-color .2s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='#2a2a4e'">
+    <label style="display:flex;align-items:center;gap:6px;cursor:pointer;background:var(--bg);border:1px solid #2a2a4e;padding:10px 16px 12px;border-radius:6px;font-size:13px;font-weight:700;transition:border-color .2s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='#2a2a4e'">
       <input type="checkbox" value="${p}" style="accent-color:var(--purple);width:14px;height:14px"/> ${p}
     </label>`).join('');
   renderAll();
@@ -665,10 +665,10 @@ function renderMonthlyChart(){
   const maxGross = Math.max(...months.map(m=>m.gross),1);
   document.getElementById('monthly-chart').innerHTML = months.map(m=>`
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-      <div style="font-size:11px;font-weight:700;color:var(--muted)">${m.gross>0?'$'+Math.round(m.gross/1000)+'k':''}</div>
+      <div style="font-size:13px;font-weight:700;color:var(--muted)">${m.gross>0?'$'+Math.round(m.gross/1000)+'k':''}</div>
       <div style="width:100%;background:${m.gross>0?'var(--green)':'#1a1a2e'};border-radius:4px 4px 0 0;height:${Math.max(4,(m.gross/maxGross)*100)}px;transition:height .3s"></div>
     </div>`).join('');
-  document.getElementById('monthly-labels').innerHTML = months.map(m=>`<div style="flex:1;text-align:center;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px">${m.label}</div>`).join('');
+  document.getElementById('monthly-labels').innerHTML = months.map(m=>`<div style="flex:1;text-align:center;font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px">${m.label}</div>`).join('');
 }
 
 // ── GLANCE STATS ──
@@ -679,11 +679,11 @@ function renderGlanceStats(){
   const pct = Math.min(100,Math.round((m.thisMonthGross/goalGross)*100));
   document.getElementById('glance-stats').innerHTML = `
     <div style="margin-bottom:14px">
-      <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">GOAL PROGRESS — ${pct}%</div>
+      <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">GOAL PROGRESS — ${pct}%</div>
       <div style="background:#1a1a2e;border-radius:6px;height:12px;overflow:hidden;margin-bottom:4px">
         <div style="height:100%;background:${pct>=100?'var(--green)':pct>=70?'var(--gold)':'var(--blue)'};width:${pct}%;border-radius:6px;transition:width .5s"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:700">
         <span>$${Math.round(m.thisMonthGross).toLocaleString()} earned</span>
         <span>$${Math.round(goalGross).toLocaleString()} goal</span>
       </div>
@@ -693,7 +693,7 @@ function renderGlanceStats(){
       ['Best Single Deal','$'+Math.round(Math.max(0,...m.thisMonthDeals.map(d=>d.total||0))).toLocaleString()],
       ['Avg This Month',m.thisMonthCount?'$'+Math.round(m.thisMonthGross/m.thisMonthCount).toLocaleString():'—'],
       ['Lead Source #1',m.thisMonthDeals.length?m.thisMonthDeals.sort((a,b)=>b.total-a.total)[0]?.source?.split(' — ')[0]||'—':'—'],
-    ].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body)">
+    ].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:10px 16px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body)">
       <span style="font-size:13px;color:var(--muted);font-weight:700">${l}</span>
       <span style="font-size:14px;font-weight:900;color:var(--white)">${v}</span>
     </div>`).join('')}`;
@@ -747,7 +747,7 @@ function renderDOWChart(){
   const maxCount = Math.max(...dowCounts,1);
   document.getElementById('dow-chart').innerHTML = `<div style="display:flex;align-items:flex-end;gap:8px;height:80px;margin-bottom:8px">
     ${dowCounts.map((c,i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-      <div style="font-size:11px;font-weight:700;color:var(--muted)">${c||''}</div>
+      <div style="font-size:13px;font-weight:700;color:var(--muted)">${c||''}</div>
       <div style="width:100%;background:${c>0?'var(--blue)':'#1a1a2e'};border-radius:3px 3px 0 0;height:${Math.max(4,(c/maxCount)*70)}px"></div>
     </div>`).join('')}
   </div>
@@ -841,7 +841,7 @@ function renderFIPenetration(){
       <div class="fi-label">${p}</div>
       <div class="fi-pct" style="color:${color}">${pct}%</div>
       <div class="fi-gauge"><div class="fi-fill" style="width:${pct}%;background:${color}"></div></div>
-      <div style="font-size:11px;color:var(--muted);margin-top:6px;font-family:var(--body)">Benchmark: ${bench}%</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px;font-family:var(--body)">Benchmark: ${bench}%</div>
     </div>`;
   }).join('');
 }
@@ -869,7 +869,7 @@ function renderGoals(){
         <div class="goal-track" style="flex:1"><div class="goal-fill" style="width:${pct}%;background:${color}"></div></div>
         <input type="number" class="goal-input form-input" data-key="${f.key}" value="${goal}" style="width:100px;padding:6px 10px;font-size:13px"/>
       </div>
-      <div style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:600">Current: ${f.current.toLocaleString()} · Goal: ${goal.toLocaleString()} · Gap: ${Math.max(0,goal-f.current).toLocaleString()}</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600">Current: ${f.current.toLocaleString()} · Goal: ${goal.toLocaleString()} · Gap: ${Math.max(0,goal-f.current).toLocaleString()}</div>
     </div>`;
   }).join('');
 
@@ -898,7 +898,7 @@ function renderGoals(){
           <div style="height:100%;background:${done?'var(--gold)':'var(--green)'};width:${pct}%;transition:width .5s;border-radius:4px"></div>
         </div>
       </div>
-      <div style="font-size:12px;color:${done?'var(--gold)':'var(--muted)'};font-weight:700;text-align:right;white-space:nowrap">
+      <div style="font-size:13px;color:${done?'var(--gold)':'var(--muted)'};font-weight:700;text-align:right;white-space:nowrap">
         ${done?'✅ ACHIEVED':pct+'%'}
       </div>
     </div>`;
