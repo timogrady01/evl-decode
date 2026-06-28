@@ -7,14 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
-body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
+:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#C8D0DC;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important;overflow-x:hidden}
 
 /* WS NAV */
 .evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
 .evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
 .evl-ws-nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:8px 12px;border-radius:4px;transition:all .2s;white-space:nowrap}
 .evl-ws-nav-link:hover{color:var(--gold);background:#1a1400}
 .evl-ws-nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold)}
 .ws-hamburger{display:none;background:none;border:none;color:var(--gold);font-size:22px;cursor:pointer}
@@ -27,7 +27,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* TABS */
 .tab-nav{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;overflow-x:auto}
-.tab-btn{padding:14px 18px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:var(--font)}
+.tab-btn{padding:14px 20px;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:var(--font)}
 .tab-btn:hover{color:var(--white)}
 .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
 .tab-content{display:none}
@@ -40,13 +40,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px}
 .stat-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:16px;text-align:center;transition:border-color .2s}
 .stat-card:hover{border-color:var(--gold)}
-.stat-val{font-size:28px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
-.stat-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.stat-val{font-size:36px;font-weight:900;display:block;line-height:1;margin-bottom:6px}
+.stat-lbl{font-size:14px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:800}
 
 /* DISCLAIMER BANNER */
 .platform-disclaimer{background:#1a1400;border:2px solid var(--gold);border-radius:10px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px}
 .disclaimer-icon{font-size:20px;flex-shrink:0}
-.disclaimer-text{font-size:13px;color:var(--gold);font-family:var(--body);line-height:1.6;font-weight:600}
+.disclaimer-text{font-size:15px;color:var(--gold);font-family:var(--body);line-height:1.7;font-weight:600}
 
 /* VEHICLE AUCTION CARD */
 .auction-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;overflow:hidden;margin-bottom:16px;transition:border-color .2s}
@@ -56,8 +56,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .auction-card.floor-beat{border-color:var(--green)}
 .auction-card.expired{border-color:var(--red);opacity:.7}
 .auction-header{background:var(--s2);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a2e;flex-wrap:wrap;gap:8px}
-.auction-id{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px}
-.auction-phase-badge{font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.auction-id{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:1px}
+.auction-phase-badge{font-size:13px;font-weight:900;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
 .phase-1-badge{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
 .phase-2-badge{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .phase-floor-badge{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
@@ -66,13 +66,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .auction-vehicle-section{grid-column:1/2}
 .auction-reserve-section{grid-column:2/3}
 .auction-bid-section{grid-column:3/4}
-.auction-vehicle-name{font-size:18px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:6px}
-.auction-vin{font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:10px;font-weight:700;letter-spacing:1px}
+.auction-vehicle-name{font-size:22px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:8px}
+.auction-vin{font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:10px;font-weight:700;letter-spacing:1px}
 .auction-miles{font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:8px}
 
 /* EVL CERTIFIED BADGES */
 .evl-cert-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;font-family:var(--font)}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:900;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;font-family:var(--font)}
 .badge-evl-cert{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 .badge-gold{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
 .badge-silver{background:#0d0d1a;border:1px solid #C0C0C0;color:#C0C0C0}
@@ -85,10 +85,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* RESERVE */
 .reserve-card{background:var(--bg);border:2px solid var(--blue);border-radius:10px;padding:14px}
-.reserve-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.reserve-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
 .reserve-amount{font-size:28px;font-weight:900;color:var(--blue);margin-bottom:4px}
-.reserve-source{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600;margin-bottom:10px}
-.reserve-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;border-bottom:1px solid #0d0d1a;font-family:var(--body)}
+.reserve-source{font-size:14px;color:var(--dim);font-family:var(--body);font-weight:600;margin-bottom:10px}
+.reserve-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:14px;border-bottom:1px solid #0d0d1a;font-family:var(--body)}
 .reserve-row:last-child{border-bottom:none}
 .reserve-row-label{color:var(--muted)}
 .reserve-row-val{font-weight:700;color:var(--dim)}
@@ -96,7 +96,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* BID INPUT */
 .bid-card{background:var(--bg);border:2px solid var(--gold);border-radius:10px;padding:14px}
-.bid-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.bid-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
 .bid-timer{font-size:24px;font-weight:900;color:var(--red);margin-bottom:8px;letter-spacing:2px}
 .bid-timer.phase1{color:var(--blue)}
 .bid-input-wrap{display:flex;gap:8px;margin-bottom:8px}
@@ -105,8 +105,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .bid-submit{background:var(--gold);color:#020203;border:none;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap}
 .bid-submit:hover{background:#e6c200}
 .bid-current{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600}
-.bid-floor-note{font-size:11px;color:var(--gold);font-family:var(--body);font-weight:700;margin-top:6px}
-.phase-1-note{font-size:12px;color:var(--blue);font-family:var(--body);font-weight:600;margin-top:8px;line-height:1.5;padding:8px 10px;background:#040e1a;border-radius:6px;border-left:3px solid var(--blue)}
+.bid-floor-note{font-size:13px;color:var(--gold);font-family:var(--body);font-weight:700;margin-top:6px}
+.phase-1-note{font-size:14px;color:var(--blue);font-family:var(--body);font-weight:600;margin-top:8px;line-height:1.5;padding:8px 10px;background:#040e1a;border-radius:6px;border-left:3px solid var(--blue)}
 
 /* INVENTORY INTAKE */
 .intake-form{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;overflow:hidden;max-width:800px}
@@ -116,7 +116,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .intake-section-title{font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-group{display:flex;flex-direction:column;gap:6px}
-.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.form-label{font-size:14px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:800;font-weight:700}
 .form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:11px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
 .form-input:focus{border-color:var(--gold)}
 .form-input option{background:#0a0a1a}
@@ -124,7 +124,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .photo-upload-btn{background:var(--bg);border:2px dashed #2a2a4e;border-radius:8px;padding:20px 12px;text-align:center;cursor:pointer;transition:all .2s;font-family:var(--font)}
 .photo-upload-btn:hover{border-color:var(--gold);background:#1a1400}
 .photo-upload-icon{font-size:24px;display:block;margin-bottom:6px}
-.photo-upload-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;line-height:1.3}
+.photo-upload-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;line-height:1.3}
 .title-status-toggle{display:flex;gap:12px;flex-wrap:wrap}
 .title-status-btn{padding:10px 18px;border-radius:8px;font-size:13px;font-weight:900;cursor:pointer;border:2px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s}
 .title-status-btn.active-title-hand{border-color:var(--green);color:var(--green);background:#0d1a0d}
@@ -144,9 +144,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* ESCROW STATUS */
 .escrow-card{background:var(--bg);border:2px solid #2a2a4e;border-radius:10px;padding:14px}
-.escrow-title{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.escrow-title{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
 .escrow-amount{font-size:24px;font-weight:900;color:var(--white);margin-bottom:4px}
-.escrow-status{font-size:12px;font-weight:900;letter-spacing:1px}
+.escrow-status{font-size:14px;font-weight:900;letter-spacing:1px}
 .escrow-held{color:var(--gold)}
 .escrow-released{color:var(--green)}
 .escrow-frozen{color:var(--red)}
@@ -157,7 +157,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .state-compliance-card{background:#0d0000;border:2px solid var(--red);border-radius:10px;padding:16px;margin-bottom:16px}
 .state-compliance-title{font-size:13px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:10px}
 .excluded-states{display:flex;flex-wrap:wrap;gap:6px}
-.state-tag{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:1px;font-family:var(--font)}
+.state-tag{padding:4px 10px;border-radius:20px;font-size:13px;font-weight:900;letter-spacing:1px;font-family:var(--font)}
 .state-excluded{background:#1a0000;border:1px solid var(--red);color:var(--red)}
 .state-ok{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
 
@@ -168,7 +168,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
 .btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
 .btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--gold)}
-.btn-sm{padding:6px 12px;font-size:11px}
+.btn-sm{padding:8px 14px;font-size:14px;min-height:36px}
 
 /* SECTION HEADERS */
 .section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
@@ -183,8 +183,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .phase-box.phase-alt{border-color:var(--purple);background:#0d001a}
 .phase-arrow{display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);padding:0 8px;align-self:center}
 .phase-title{font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.phase-timing{font-size:11px;font-weight:900;letter-spacing:1px;margin-bottom:8px}
-.phase-steps{font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.6}
+.phase-timing{font-size:13px;font-weight:900;letter-spacing:1px;margin-bottom:8px}
+.phase-steps{font-size:15px;color:var(--dim);font-family:var(--body);line-height:1.6}
 
 /* SAAS MONETIZATION */
 .monetization-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:24px}
@@ -193,14 +193,14 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .revenue-icon{font-size:28px;display:block;margin-bottom:10px}
 .revenue-title{font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px}
 .revenue-amount{font-size:22px;font-weight:900;color:var(--gold);display:block;margin-bottom:6px}
-.revenue-desc{font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5}
+.revenue-desc{font-size:15px;color:var(--dim);font-family:var(--body);line-height:1.5}
 
 /* BOL / DOCS */
 .doc-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #0d0d1a;flex-wrap:wrap;gap:8px}
 .doc-row:last-child{border-bottom:none}
 .doc-name{font-size:13px;font-weight:900;color:var(--white)}
-.doc-desc{font-size:12px;color:var(--muted);font-family:var(--body)}
-.doc-status{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.doc-desc{font-size:14px;color:var(--muted);font-family:var(--body)}
+.doc-status{font-size:13px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
 .doc-required{background:#1a0000;border:1px solid var(--red);color:var(--red)}
 .doc-optional{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
 .doc-auto{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
@@ -275,7 +275,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div class="section-hdr">
     <div class="section-title">⚡ LIVE AUCTION BOARD — LICENSED DEALERS ONLY</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <span style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:700;align-self:center">All bids are sealed and blind. Reserve set by EVL.</span>
+      <span style="font-size:14px;color:var(--muted);font-family:var(--body);font-weight:700;align-self:center">All bids are sealed and blind. Reserve set by EVL.</span>
       <button class="btn btn-gold btn-sm" onclick="switchTab('intake',document.querySelectorAll('.tab-btn')[1])">➕ SUBMIT VEHICLE</button>
     </div>
   </div>
@@ -292,7 +292,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div class="intake-form" id="intake-form-wrap">
     <div class="intake-header">
       <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px">EVL CERTIFICATION INTAKE</div>
-      <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:4px">EVL CERTIFIED · Licensed Dealer Auction · SaaS Platform</div>
+      <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:4px">EVL CERTIFIED · Licensed Dealer Auction · SaaS Platform</div>
     </div>
 
     <!-- STEP 1: VEHICLE INFO -->
@@ -304,7 +304,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
                 <input class="form-input" id="intake-vin" placeholder="Enter 17-digit VIN" maxlength="17" style="flex:1;text-transform:uppercase" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter'){event.preventDefault();decodeIntakeVin()}" onblur="decodeIntakeVin()"/>
                 <button type="button" class="btn btn-blue" onclick="decodeIntakeVin()" style="white-space:nowrap;padding:0 16px">🔍 DECODE</button>
               </div>
-              <div id="vin-decode-status" style="font-size:12px;font-family:var(--body);margin-top:6px;min-height:18px"></div>
+              <div id="vin-decode-status" style="font-size:14px;font-family:var(--body);margin-top:6px;min-height:18px"></div>
             </div>
         <div class="form-group"><label class="form-label">Current Odometer</label><input class="form-input" id="intake-miles" type="number" placeholder="e.g. 44200"/></div>
         <div class="form-group"><label class="form-label">Year</label><input class="form-input" id="intake-year" type="number" placeholder="2023"/></div>
@@ -313,7 +313,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <div class="form-group"><label class="form-label">Trim</label><input class="form-input" id="intake-trim" placeholder="TRD Pro"/></div>
         <div class="form-group"><label class="form-label">Exterior Color</label><input class="form-input" id="intake-color" placeholder="White"/></div>
         <div class="form-group"><label class="form-label">State of Registration</label>
-            <div style="background:#020a02;border:1px solid var(--green);border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:11px;font-family:var(--body);color:var(--green);font-weight:700">
+            <div style="background:#020a02;border:1px solid var(--green);border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:13px;font-family:var(--body);color:var(--green);font-weight:700">
               🤠 Currently operating in <strong>Texas only</strong>. Additional states coming as licensing is secured.
             </div>
           <select class="form-input" id="intake-state">
@@ -390,16 +390,16 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <div class="intake-section-title" style="color:var(--red)"><span>4️⃣</span> AUTOMATIC DISQUALIFICATION RULES</div>
       <div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:12px">EVL reserves the right to refuse any submission. The following trigger automatic rejection:</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Salvage / Rebuilt / Junk Title</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Flood or Fire Damage History</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">VIN Mismatch or Error</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Name Mismatch (title ≠ account)</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Vehicle Over 20 Years Old (Federal Odometer Exemption)</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Active Lien Not Payoff Coordinated</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Restricted State — CA, NY, NJ, IL</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Lost Title — No Delivery Path Within 30 Days</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Open Recalls Affecting Safety</span></div>
-        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">Commercial Fleet Without Proper Paperwork</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Salvage / Rebuilt / Junk Title</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Flood or Fire Damage History</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">VIN Mismatch or Error</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Name Mismatch (title ≠ account)</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Vehicle Over 20 Years Old (Federal Odometer Exemption)</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Active Lien Not Payoff Coordinated</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Restricted State — CA, NY, NJ, IL</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Lost Title — No Delivery Path Within 30 Days</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Open Recalls Affecting Safety</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:14px;color:var(--dim);font-family:var(--body)">Commercial Fleet Without Proper Paperwork</span></div>
       </div>
     </div>
 
@@ -409,15 +409,15 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         <div style="background:#020a02;border:2px solid var(--green);border-radius:8px;padding:14px;text-align:center">
           <div style="font-size:10px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px">YOUR FEE AS ID</div>
           <div style="font-size:28px;font-weight:900;color:var(--green)">$295</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:4px;line-height:1.4">Flat platform fee · Only if unit sells<br><strong style="color:var(--green)">Waived if no sale</strong></div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px;line-height:1.4">Flat platform fee · Only if unit sells<br><strong style="color:var(--green)">Waived if no sale</strong></div>
         </div>
         <div style="background:#0a0600;border:2px solid var(--gold);border-radius:8px;padding:14px;text-align:center">
           <div style="font-size:10px;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px">WINNING BD PAYS</div>
           <div style="font-size:28px;font-weight:900;color:var(--gold)">$395</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:4px;line-height:1.4">Flat platform fee · Paid by buyer<br><strong style="color:var(--gold)">You pay nothing extra</strong></div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px;line-height:1.4">Flat platform fee · Paid by buyer<br><strong style="color:var(--gold)">You pay nothing extra</strong></div>
         </div>
       </div>
-      <div style="background:#020203;border:1px solid #1a1a2e;border-radius:8px;padding:12px;margin-bottom:16px;text-align:center;font-size:11px;color:var(--muted);font-family:var(--body);line-height:1.6">
+      <div style="background:#020203;border:1px solid #1a1a2e;border-radius:8px;padding:12px;margin-bottom:16px;text-align:center;font-size:13px;color:var(--muted);font-family:var(--body);line-height:1.6">
         <strong style="color:var(--white)">CarMax ICO = Your guaranteed floor.</strong> If no BD beats your reserve — CarMax buys at their standing offer. EVL fee waived. You never walk away with less than CarMax.
       </div>
     </div>
@@ -495,26 +495,26 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div style="background:#1a1400;border:2px solid var(--gold);border-radius:12px;padding:18px">
       <div style="font-size:24px;margin-bottom:8px">🥇</div>
       <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:6px">GOLD BADGE — FULL COVERAGE</div>
-      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Vehicle is within factory bumper-to-bumper AND powertrain warranty. Typically under 3 years / 36,000 miles. Any covered defect = OEM fixes it free.</div>
-      <div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px">WHY DEALERS BID HIGH: Zero mechanical risk. Cracked block? Factory covers it.</div>
+      <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Vehicle is within factory bumper-to-bumper AND powertrain warranty. Typically under 3 years / 36,000 miles. Any covered defect = OEM fixes it free.</div>
+      <div style="font-size:13px;color:var(--gold);font-weight:700;letter-spacing:1px">WHY DEALERS BID HIGH: Zero mechanical risk. Cracked block? Factory covers it.</div>
     </div>
     <div style="background:#0d0d1a;border:2px solid #C0C0C0;border-radius:12px;padding:18px">
       <div style="font-size:24px;margin-bottom:8px">🥈</div>
       <div style="font-size:14px;font-weight:900;color:#C0C0C0;letter-spacing:1px;margin-bottom:6px">SILVER BADGE — POWERTRAIN ONLY</div>
-      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Basic warranty expired. Powertrain warranty still active. Typically under 5 years / 60,000 miles. Engine, transmission, drivetrain covered. Accessories AS-IS.</div>
-      <div style="font-size:11px;color:#C0C0C0;font-weight:700;letter-spacing:1px">WHY DEALERS BID CONFIDENT: Engine protection remains. AC/stereo/electronics = buyer risk.</div>
+      <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Basic warranty expired. Powertrain warranty still active. Typically under 5 years / 60,000 miles. Engine, transmission, drivetrain covered. Accessories AS-IS.</div>
+      <div style="font-size:13px;color:#C0C0C0;font-weight:700;letter-spacing:1px">WHY DEALERS BID CONFIDENT: Engine protection remains. AC/stereo/electronics = buyer risk.</div>
     </div>
     <div style="background:#1a0a00;border:2px solid var(--orange);border-radius:12px;padding:18px">
       <div style="font-size:24px;margin-bottom:8px">🥉</div>
       <div style="font-size:14px;font-weight:900;color:var(--orange);letter-spacing:1px;margin-bottom:6px">BRONZE BADGE — AS-IS CERTIFIED</div>
-      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">All factory coverage expired. Vehicle sold strictly AS-IS. EVL CERTification confirms clean title and keys. No mechanical warranties of any kind.</div>
-      <div style="font-size:11px;color:var(--orange);font-weight:700;letter-spacing:1px">WHY DEALERS BID: EVL CERTIFIED = no title surprises. Price reflects condition.</div>
+      <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">All factory coverage expired. Vehicle sold strictly AS-IS. EVL CERTification confirms clean title and keys. No mechanical warranties of any kind.</div>
+      <div style="font-size:13px;color:var(--orange);font-weight:700;letter-spacing:1px">WHY DEALERS BID: EVL CERTIFIED = no title surprises. Price reflects condition.</div>
     </div>
     <div style="background:#020a02;border:2px solid var(--green);border-radius:12px;padding:18px">
       <div style="font-size:24px;margin-bottom:8px">🛡️</div>
       <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:6px">EVL CERTIFIED — ALL UNITS</div>
-      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Applied to every vehicle on the platform regardless of badge tier. Confirms: Clean title API verified, physical keys confirmed, title photos on file, no active liens, name match verified.</div>
-      <div style="font-size:11px;color:var(--green);font-weight:700;letter-spacing:1px">THE FLOOR: Title is clean. No fraud. No surprises on paperwork.</div>
+      <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Applied to every vehicle on the platform regardless of badge tier. Confirms: Clean title API verified, physical keys confirmed, title photos on file, no active liens, name match verified.</div>
+      <div style="font-size:13px;color:var(--green);font-weight:700;letter-spacing:1px">THE FLOOR: Title is clean. No fraud. No surprises on paperwork.</div>
     </div>
   </div>
 
@@ -523,7 +523,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">⚖️ ARBITRATION RULES — NAAA STANDARD</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
       <div>
-        <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:8px">✅ VALID ARBITRATION GROUNDS</div>
+        <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:8px">✅ VALID ARBITRATION GROUNDS</div>
         <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.8">
           • Title issues not disclosed in EVL CERT<br>
           • Salvage brand discovered after sale<br>
@@ -533,7 +533,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         </div>
       </div>
       <div>
-        <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:8px">❌ NOT VALID — BUYER ACCEPTS RISK</div>
+        <div style="font-size:14px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:8px">❌ NOT VALID — BUYER ACCEPTS RISK</div>
         <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.8">
           • "I can't resell it" — market risk<br>
           • Mechanical failures (cracked block, AC)<br>
@@ -543,7 +543,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         </div>
       </div>
     </div>
-    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:12px;padding-top:12px;border-top:1px solid #2a2000">Arbitration window: <strong style="color:var(--white)">24 hours</strong> after delivery. All platform disputes governed under <strong style="color:var(--white)">Collin County, Texas</strong> law. If a dealer files action against EVL and court dismisses based on platform neutrality, dealer pays EVL's full legal fees. Title defects only. All mechanical conditions are buyer's risk as disclosed at time of bidding. EVL is a technology coordinator — not a party to the transaction.</div>
+    <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:12px;padding-top:12px;border-top:1px solid #2a2000">Arbitration window: <strong style="color:var(--white)">24 hours</strong> after delivery. All platform disputes governed under <strong style="color:var(--white)">Collin County, Texas</strong> law. If a dealer files action against EVL and court dismisses based on platform neutrality, dealer pays EVL's full legal fees. Title defects only. All mechanical conditions are buyer's risk as disclosed at time of bidding. EVL is a technology coordinator — not a party to the transaction.</div>
   </div>
 </div>
 
@@ -607,7 +607,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 <div id="tab-docs" class="tab-content">
   <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">📄 REQUIRED TRANSACTION DOCUMENTS</div>
   <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;overflow:hidden">
-    <div style="background:var(--s2);padding:14px 20px;border-bottom:1px solid #1a1a2e;display:grid;grid-template-columns:1fr 1fr auto auto;gap:12px;font-size:11px;font-weight:900;color:var(--muted);letter-spacing:1px;text-transform:uppercase">
+    <div style="background:var(--s2);padding:14px 20px;border-bottom:1px solid #1a1a2e;display:grid;grid-template-columns:1fr 1fr auto auto;gap:12px;font-size:13px;font-weight:900;color:var(--muted);letter-spacing:1px;text-transform:uppercase">
       <span>DOCUMENT</span><span>DESCRIPTION</span><span>PARTIES</span><span>STATUS</span>
     </div>
     <div style="padding:16px 20px">
@@ -626,8 +626,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         {name:'State Title Transfer Docs',desc:'State-specific. Generated per state of registration. Excludes CA/NY/NJ/IL.',parties:'Both parties',status:'AUTO'},
       ].map(d=>`<div class="doc-row">
         <div><div class="doc-name">${d.name}</div></div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body)">${d.desc}</div>
-        <div style="font-size:12px;color:var(--dim);font-weight:700;font-family:var(--body);white-space:nowrap">${d.parties}</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body)">${d.desc}</div>
+        <div style="font-size:14px;color:var(--dim);font-weight:700;font-family:var(--body);white-space:nowrap">${d.parties}</div>
         <div><span class="doc-status ${d.status==='AUTO'?'doc-auto':d.status==='REQUIRED'?'doc-required':'doc-optional'}">${d.status}</span></div>
       </div>`).join('')}
     </div>
@@ -648,7 +648,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
       <span class="state-tag state-excluded">🚫 NEW JERSEY — 4-8 Week Backlog</span>
       <span class="state-tag state-excluded">🚫 ILLINOIS — Extended Processing</span>
     </div>
-    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:12px">Customers in these states are directed to CarMax or Carvana who have dedicated title processing teams able to handle extended DMV timelines.</div>
+    <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:12px">Customers in these states are directed to CarMax or Carvana who have dedicated title processing teams able to handle extended DMV timelines.</div>
   </div>
 
   <!-- ADDITIONAL EXCLUSIONS -->
@@ -666,7 +666,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         ['Open Safety Recalls','Liability exposure. Cannot certify safe transport.'],
       ].map(([title,reason])=>`<div style="background:var(--bg);border:1px solid #2a0000;border-radius:8px;padding:10px 12px">
         <div style="font-size:13px;font-weight:900;color:var(--red);margin-bottom:4px">${title}</div>
-        <div style="font-size:12px;color:var(--muted);font-family:var(--body)">${reason}</div>
+        <div style="font-size:14px;color:var(--muted);font-family:var(--body)">${reason}</div>
       </div>`).join('')}
     </div>
   </div>
@@ -676,7 +676,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:14px">✅ EVL LEGAL IDENTITY — WHAT WE ARE / ARE NOT</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-family:var(--body);font-size:13px;line-height:2">
       <div>
-        <div style="font-size:11px;color:var(--green);font-weight:900;letter-spacing:1px;margin-bottom:8px">EVL IS:</div>
+        <div style="font-size:13px;color:var(--green);font-weight:900;letter-spacing:1px;margin-bottom:8px">EVL IS:</div>
         ✅ A technology platform (SaaS)<br>
         ✅ The consumer's authorized technology agent<br>
         ✅ An auction coordinator (marketplace)<br>
@@ -684,7 +684,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         ✅ A subscription tool for licensed dealers
       </div>
       <div>
-        <div style="font-size:11px;color:var(--red);font-weight:900;letter-spacing:1px;margin-bottom:8px">EVL IS NOT:</div>
+        <div style="font-size:13px;color:var(--red);font-weight:900;letter-spacing:1px;margin-bottom:8px">EVL IS NOT:</div>
         ❌ A licensed motor vehicle dealer<br>
         ❌ A licensed auctioneer<br>
         ❌ A broker or facilitator<br>
@@ -692,7 +692,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         ❌ Responsible for vehicle condition
       </div>
     </div>
-    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:14px;padding-top:12px;border-top:1px solid #0d2a0d;line-height:1.6">Platform operates under the same legal framework as eBay Motors — a technology marketplace connecting sellers and buyers. All transactions are between the consumer (seller) and licensed dealer (buyer). EVL's name appears nowhere on title, bill of sale, or financing documents. EVL charges SaaS subscription and coordination fees — not transaction commissions.</div>
+    <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:14px;padding-top:12px;border-top:1px solid #0d2a0d;line-height:1.6">Platform operates under the same legal framework as eBay Motors — a technology marketplace connecting sellers and buyers. All transactions are between the consumer (seller) and licensed dealer (buyer). EVL's name appears nowhere on title, bill of sale, or financing documents. EVL charges SaaS subscription and coordination fees — not transaction commissions.</div>
   </div>
 </div>
 
@@ -1102,7 +1102,7 @@ function renderAuctions(auctions){
       <div class="auction-header">
         <div>
           <div class="auction-id">${a.id}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px">${a.phaseLabel}</div>
+          <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-top:2px">${a.phaseLabel}</div>
         </div>
         <span class="auction-phase-badge ${phaseBadgeClass}">${a.phase===1?'🔵 PHASE 1':'⚡ PHASE 2'}</span>
       </div>
@@ -1117,7 +1117,7 @@ function renderAuctions(auctions){
             <div class="evl-cert-badges">
               ${a.badges.map(b=>`<span class="badge ${BADGE_CONFIG[b]?.cls||''}">${BADGE_CONFIG[b]?.label||b}</span>`).join('')}
             </div>
-            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">${a.description}</div>
+            <div style="font-size:14px;color:var(--muted);font-family:var(--body);line-height:1.5">${a.description}</div>
           </div>
 
           <!-- RESERVE -->
@@ -1125,7 +1125,7 @@ function renderAuctions(auctions){
             <div class="reserve-card">
               <div class="reserve-label">🔒 VERIFIED RESERVE</div>
               <div class="reserve-amount" id="reserve-val-${a.id}" data-reserve="${a.reserve}">$${(a.reserve||0).toLocaleString()}</div>
-              <div class="reserve-source" style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;">🔒 EVL VERIFIED — RESERVE SEALED</div>
+              <div class="reserve-source" style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;">🔒 EVL VERIFIED — RESERVE SEALED</div>
 
 
             </div>
@@ -1154,7 +1154,7 @@ function renderAuctions(auctions){
               <div style="font-size:9px;color:var(--muted);font-family:var(--body)">Waived if no sale</div>
             </div>
           </div>
-              <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>`
+              <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>`
               :`<div class="phase-1-note">This vehicle is in Phase 1 — the local In-Store Dealer has first right of refusal. If the ID does not match the target within the hold window, this vehicle moves to Phase 2 live bidding automatically.</div>`}
               <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
                 <button class="btn btn-dark btn-sm">📋 EVL CERT REPORT</button>
@@ -1292,7 +1292,7 @@ async function decodeIntakeVin() {
     const detail = [year, make, model, trim].filter(Boolean).join(' ');
     const sub    = [body, engine].filter(Boolean).join(' · ');
     status.innerHTML = '<span style="color:var(--green)">✅ ' + detail + (sub ? ' — ' + sub : '') + '</span>' +
-      '<span style="color:var(--muted);font-size:11px;margin-left:10px">via MarketCheck</span>';
+      '<span style="color:var(--muted);font-size:13px;margin-left:10px">via MarketCheck</span>';
 
     document.getElementById('intake-miles')?.focus();
 
@@ -1315,7 +1315,7 @@ async function decodeViaNHTSA(vin, status) {
     set('intake-model', v.Model);
     set('intake-trim',  v.Trim || v.Series || '');
     status.innerHTML = '<span style="color:var(--green)">✅ ' + v.ModelYear + ' ' + v.Make + ' ' + v.Model + '</span>' +
-      '<span style="color:var(--muted);font-size:11px;margin-left:10px">via NHTSA fallback</span>';
+      '<span style="color:var(--muted);font-size:13px;margin-left:10px">via NHTSA fallback</span>';
     document.getElementById('intake-miles')?.focus();
   } catch(e) {
     status.innerHTML = '<span style="color:var(--red)">❌ Both decode sources failed</span>';
@@ -1439,7 +1439,7 @@ async function submitIntake() {
           </div>
 
           <div style="background:#020a02;border:2px solid var(--green);border-radius:12px;padding:20px;text-align:left;margin-bottom:24px">
-            <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;margin-bottom:14px">WHAT HAPPENS NEXT</div>
+            <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:2px;margin-bottom:14px">WHAT HAPPENS NEXT</div>
             <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:2">
               <span style="color:var(--green)">1.</span> EVL CERTIFIED title verification running now<br>
               <span style="color:var(--green)">2.</span> Corporate floor pull — CarMax / Carvana / SMTV (~2 hrs)<br>
@@ -1623,7 +1623,7 @@ async function transitionToPhase2(a) {
             <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
           </div>
           <div class="bid-floor-note">🔒 RESERVE: $${(a.reserve||0).toLocaleString()} — All bids sealed & blind</div>
-          <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>
+          <button onclick="showDealMath(${a.carmax},'${a.vehicle}','${a.id}')" style="width:100%;margin-top:8px;background:transparent;border:1px solid #c9a227;color:#c9a227;padding:8px;border-radius:6px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;">⚡ DEAL MATH + TAX CREDIT CALC</button>
           <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
             <button class="btn btn-dark btn-sm">📋 EVL CERT REPORT</button>
             <button class="btn btn-dark btn-sm">📸 VIEW PHOTOS</button>
@@ -1683,7 +1683,7 @@ async function closeAuction(a) {
             <div style="font-size:16px;font-weight:900;color:${winner ? 'var(--green)' : 'var(--red)'};letter-spacing:1px;margin-bottom:8px">
               ${winner ? 'AUCTION CLOSED — SOLD' : 'AUCTION CLOSED — NO SALE'}
             </div>
-            ${winner ? '<div style="font-size:24px;font-weight:900;color:var(--gold)">WINNING BID: $' + a.currentBid.toLocaleString() + '</div><div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:8px">Winning dealer will be contacted within 30 minutes.</div>' : '<div style="font-size:13px;color:var(--muted);font-family:var(--body)">No bids met the reserve. Vehicle returned to seller.</div>'}
+            ${winner ? '<div style="font-size:24px;font-weight:900;color:var(--gold)">WINNING BID: $' + a.currentBid.toLocaleString() + '</div><div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:8px">Winning dealer will be contacted within 30 minutes.</div>' : '<div style="font-size:13px;color:var(--muted);font-family:var(--body)">No bids met the reserve. Vehicle returned to seller.</div>'}
           </div>`;
       }
     }
