@@ -223,6 +223,203 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
   .vdp-gallery{grid-template-columns:1fr}
   .vdp-gallery img:first-child{grid-row:span 1;height:200px}
 }
+
+  /* ── MATCH SCORING ── */
+  .match-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:0.5px;
+    margin-bottom:8px;
+  }
+  .match-exact{background:rgba(0,200,83,.15);color:#00C853;border:1px solid rgba(0,200,83,.3);}
+  .match-close{background:rgba(43,132,254,.15);color:#2B84FE;border:1px solid rgba(43,132,254,.3);}
+  .match-similar{background:rgba(255,193,7,.1);color:#FFC107;border:1px solid rgba(255,193,7,.2);}
+
+  /* ── COMPARE BUTTON ── */
+  .btn-compare{background:rgba(43,132,254,.1);color:#2B84FE;border:1px solid rgba(43,132,254,.3);}
+  .btn-compare:hover{background:rgba(43,132,254,.2);}
+  .btn-compare.selected{background:#2B84FE;color:#fff;}
+
+  /* ── COMPARE TRAY ── */
+  #compare-tray{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#090E17;
+    border-top:2px solid #2B84FE;
+    padding:14px 24px;
+    display:none;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    z-index:200;
+    flex-wrap:wrap;
+  }
+  #compare-tray.show{display:flex;}
+  .compare-tray-vehicles{
+    display:flex;
+    gap:12px;
+    flex:1;
+    flex-wrap:wrap;
+  }
+  .compare-slot{
+    background:#020203;
+    border:1px solid rgba(43,132,254,.3);
+    border-radius:8px;
+    padding:8px 14px;
+    font-size:13px;
+    font-weight:700;
+    color:#C8D0DC;
+    min-width:160px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .compare-slot .remove-btn{
+    background:none;
+    border:none;
+    color:#FF4444;
+    cursor:pointer;
+    font-size:16px;
+    padding:0;
+    line-height:1;
+  }
+  .compare-slot.empty{
+    border-style:dashed;
+    color:rgba(200,208,220,0.3);
+    font-style:italic;
+  }
+  .btn-compare-now{
+    background:#2B84FE;
+    color:#fff;
+    border:none;
+    padding:12px 24px;
+    border-radius:10px;
+    font-family:'Oswald',sans-serif;
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .btn-compare-now:disabled{opacity:0.4;cursor:not-allowed;}
+
+  /* ── COMPARE MODAL ── */
+  #compare-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    z-index:300;
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding:20px;
+    overflow-y:auto;
+  }
+  #compare-modal.open{display:flex;}
+  .compare-modal-inner{
+    background:#090E17;
+    border:2px solid #2B84FE;
+    border-radius:16px;
+    width:100%;
+    max-width:1100px;
+    overflow:hidden;
+    margin:auto;
+  }
+  .compare-modal-header{
+    background:#020203;
+    padding:20px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid rgba(43,132,254,.2);
+  }
+  .compare-modal-title{
+    font-family:'Oswald',sans-serif;
+    font-size:22px;
+    font-weight:900;
+    color:#fff;
+    text-transform:uppercase;
+    letter-spacing:2px;
+  }
+  .compare-close{
+    background:none;
+    border:none;
+    color:#C8D0DC;
+    font-size:28px;
+    cursor:pointer;
+    line-height:1;
+  }
+  .compare-grid{
+    display:grid;
+    gap:0;
+    overflow-x:auto;
+  }
+  .compare-row{
+    display:grid;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  .compare-row:last-child{border-bottom:none;}
+  .compare-cell{
+    padding:14px 20px;
+    font-size:15px;
+    font-weight:600;
+    color:#fff;
+    border-right:1px solid rgba(255,255,255,0.05);
+  }
+  .compare-cell:last-child{border-right:none;}
+  .compare-cell.label{
+    background:rgba(0,0,0,0.3);
+    font-size:12px;
+    font-weight:900;
+    color:#C8D0DC;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .compare-cell.winner{color:#00C853;font-weight:900;}
+  .compare-vehicle-header{
+    background:rgba(43,132,254,0.06);
+    padding:20px;
+    text-align:center;
+    border-right:1px solid rgba(255,255,255,0.05);
+  }
+  .compare-vehicle-name{
+    font-family:'Oswald',sans-serif;
+    font-size:18px;
+    font-weight:900;
+    color:#fff;
+    margin-bottom:6px;
+  }
+  .compare-vehicle-price{
+    font-size:22px;
+    font-weight:900;
+    color:#00C853;
+    margin-bottom:8px;
+  }
+  .compare-i-want{
+    background:#00C853;
+    color:#020203;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-family:'Oswald',sans-serif;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    width:100%;
+    margin-top:8px;
+  }
+
 </style>
 </head>
 <body>
@@ -808,6 +1005,7 @@ function buildVehicleCard(v, isList){
       ${photoCount>1?`<div class="vehicle-img-count">📷 ${photoCount}</div>`:''}
     </div>
     <div class="vehicle-info">
+      \${getMatchBadge(calcMatchScore({make:'${make}',model:'${model}',year:'${year}',price:'${price}',mileage:'${miles}'}))}
       <div class="vehicle-year-make">${year} ${make}</div>
       <div class="vehicle-name">${model}${trim?' '+trim:''}</div>
       <span class="vehicle-price">${price}</span>
@@ -821,10 +1019,196 @@ function buildVehicleCard(v, isList){
     </div>
     <div class="vehicle-card-actions">
       <button class="btn btn-blue btn-sm" onclick="event.stopPropagation();openVDP('${vin}')">🔍 DETAILS</button>
+      <button class="btn btn-compare btn-sm" data-vin="${vin}" onclick="event.stopPropagation();toggleCompare('${vin}','${year} ${make} ${model}','${price}')">⚖️ COMPARE</button>
       <button class="btn btn-green btn-sm" onclick="event.stopPropagation();requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')">⚡ I WANT THIS</button>
     </div>
   </div>`;
 }
+
+
+// ── EVL MATCH SCORING ENGINE ──
+let searchCriteria = {};
+let compareList = [];
+
+function calcMatchScore(v) {
+  if (!searchCriteria.make && !searchCriteria.model) return null;
+  
+  let score = 0;
+  let total = 0;
+
+  // Make match (25%)
+  if (searchCriteria.make) {
+    total += 25;
+    if (v.make && v.make.toLowerCase() === searchCriteria.make.toLowerCase()) score += 25;
+  }
+
+  // Model match (25%)
+  if (searchCriteria.model) {
+    total += 25;
+    if (v.model && v.model.toLowerCase().includes(searchCriteria.model.toLowerCase())) score += 25;
+  }
+
+  // Year match (20%) — within 2 years
+  if (searchCriteria.year) {
+    total += 20;
+    const yearDiff = Math.abs(parseInt(v.year||0) - parseInt(searchCriteria.year));
+    if (yearDiff === 0) score += 20;
+    else if (yearDiff === 1) score += 14;
+    else if (yearDiff === 2) score += 7;
+  }
+
+  // Price match (15%) — within range
+  if (searchCriteria.maxPrice) {
+    total += 15;
+    const vPrice = parseFloat((v.price||'0').toString().replace(/[^0-9.]/g,''));
+    const maxP = parseFloat(searchCriteria.maxPrice);
+    if (vPrice <= maxP) score += 15;
+    else if (vPrice <= maxP * 1.05) score += 10;
+    else if (vPrice <= maxP * 1.10) score += 5;
+  }
+
+  // Mileage match (10%)
+  if (searchCriteria.maxMiles) {
+    total += 10;
+    const vMiles = parseInt((v.mileage||'0').toString().replace(/[^0-9]/g,''));
+    const maxM = parseInt(searchCriteria.maxMiles);
+    if (vMiles <= maxM) score += 10;
+    else if (vMiles <= maxM * 1.1) score += 6;
+  }
+
+  // Color match (5%)
+  if (searchCriteria.color && v.color) {
+    total += 5;
+    if (v.color.toLowerCase().includes(searchCriteria.color.toLowerCase())) score += 5;
+  }
+
+  if (total === 0) return null;
+  return Math.round((score / total) * 100);
+}
+
+function getMatchBadge(score) {
+  if (score === null) return '';
+  if (score >= 95) return `<span class="match-badge match-exact">🎯 ${score}% MATCH</span>`;
+  if (score >= 80) return `<span class="match-badge match-close">✅ ${score}% MATCH</span>`;
+  if (score >= 65) return `<span class="match-badge match-similar">📍 ${score}% MATCH</span>`;
+  return `<span class="match-badge match-similar">🔵 ${score}% MATCH</span>`;
+}
+
+// ── COMPARE ENGINE ──
+function toggleCompare(vin, vehicleName, price) {
+  const existing = compareList.findIndex(v => v.vin === vin);
+  if (existing >= 0) {
+    compareList.splice(existing, 1);
+  } else {
+    if (compareList.length >= 3) {
+      alert('Maximum 3 vehicles for comparison. Remove one first.');
+      return;
+    }
+    compareList.push({ vin, name: vehicleName, price });
+  }
+  updateCompareTray();
+  updateCompareButtons();
+}
+
+function updateCompareTray() {
+  const tray = document.getElementById('compare-tray');
+  const btn = document.getElementById('compare-now-btn');
+  
+  if (compareList.length === 0) {
+    tray.classList.remove('show');
+    return;
+  }
+  tray.classList.add('show');
+  btn.disabled = compareList.length < 2;
+
+  for (let i = 0; i < 3; i++) {
+    const slot = document.getElementById('slot-' + i);
+    if (compareList[i]) {
+      slot.className = 'compare-slot';
+      slot.innerHTML = `
+        <span style="font-size:12px;">${compareList[i].name.split(' ').slice(0,4).join(' ')}</span>
+        <button class="remove-btn" onclick="toggleCompare('${compareList[i].vin}','${compareList[i].name}','${compareList[i].price}')">✕</button>
+      `;
+    } else {
+      slot.className = 'compare-slot empty';
+      slot.innerHTML = '+ Add vehicle';
+    }
+  }
+}
+
+function updateCompareButtons() {
+  document.querySelectorAll('.btn-compare').forEach(btn => {
+    const vin = btn.dataset.vin;
+    const inList = compareList.some(v => v.vin === vin);
+    btn.classList.toggle('selected', inList);
+    btn.textContent = inList ? '✓ ADDED' : '⚖️ COMPARE';
+  });
+}
+
+function clearCompare() {
+  compareList = [];
+  updateCompareTray();
+  updateCompareButtons();
+}
+
+function openCompareModal() {
+  if (compareList.length < 2) return;
+  
+  const vehicles = compareList.map(c => allVehicles.find(v => v.vin === c.vin) || c);
+  const cols = vehicles.length + 1;
+  
+  const rows = [
+    { label: '', values: vehicles.map(v => {
+      const vData = allVehicles.find(x => x.vin === v.vin) || v;
+      const score = calcMatchScore(vData);
+      return `
+        <div class="compare-vehicle-name">${vData.year||''} ${vData.make||''} ${vData.model||''}</div>
+        ${score !== null ? getMatchBadge(score) : ''}
+        <div class="compare-vehicle-price">$${parseFloat((vData.price||'0').toString().replace(/[^0-9.]/g,'')).toLocaleString()}</div>
+        <button class="compare-i-want" onclick="closeCompareModal();requestAdvisory('${vData.vin}','${vData.year} ${vData.make} ${vData.model}')">
+          ⚡ I WANT THIS
+        </button>
+      `;
+    })},
+    { label: 'Mileage', values: vehicles.map(v => { const d = allVehicles.find(x=>x.vin===v.vin)||v; return d.mileage||'—'; }) },
+    { label: 'Price', values: vehicles.map(v => { const d = allVehicles.find(x=>x.vin===v.vin)||v; const p = parseFloat((d.price||'0').toString().replace(/[^0-9.]/g,'')); return p ? '$'+p.toLocaleString() : '—'; }) },
+    { label: 'Days on Market', values: vehicles.map(v => { const d = allVehicles.find(x=>x.vin===v.vin)||v; return d.dom ? d.dom+' days' : '—'; }) },
+    { label: 'Location', values: vehicles.map(v => { const d = allVehicles.find(x=>x.vin===v.vin)||v; return (d.dealer_city||'') + (d.dealer_state?' '+d.dealer_state:''); }) },
+    { label: 'Dealer', values: vehicles.map(v => { const d = allVehicles.find(x=>x.vin===v.vin)||v; return d.dealer_name||'—'; }) },
+    { label: 'VIN', values: vehicles.map(v => `<span style="font-family:monospace;font-size:12px;">${v.vin||'—'}</span>`) },
+  ];
+
+  // Find best price for winner highlighting
+  const prices = vehicles.map(v => {
+    const d = allVehicles.find(x=>x.vin===v.vin)||v;
+    return parseFloat((d.price||'0').toString().replace(/[^0-9.]/g,''));
+  });
+  const minPrice = Math.min(...prices.filter(p=>p>0));
+
+  const content = `
+    <div class="compare-grid" style="display:grid;grid-template-columns:160px ${'1fr '.repeat(vehicles.length).trim()};">
+      ${rows.map((row, ri) => `
+        <div class="compare-row" style="grid-column:1/-1;display:grid;grid-template-columns:160px ${'1fr '.repeat(vehicles.length).trim()};">
+          <div class="compare-cell label">${ri === 0 ? 'VEHICLE' : row.label}</div>
+          ${row.values.map((val, vi) => {
+            const isWinner = row.label === 'Price' && prices[vi] === minPrice;
+            return `<div class="compare-cell ${ri===0?'compare-vehicle-header':''} ${isWinner?'winner':''}">${val}</div>`;
+          }).join('')}
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('compare-content').innerHTML = content;
+  document.getElementById('compare-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCompareModal() {
+  document.getElementById('compare-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 
 function loadMore(){ currentPage++; fetchVehicles(false); }
 
@@ -972,6 +1356,38 @@ function showAPIError(msg){
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVDP();});
 </script>
+
+<!-- COMPARE TRAY -->
+<div id="compare-tray">
+  <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:900;
+    color:#2B84FE;letter-spacing:1px;white-space:nowrap;">
+    ⚖️ COMPARE
+  </div>
+  <div class="compare-tray-vehicles">
+    <div class="compare-slot empty" id="slot-0">+ Add vehicle</div>
+    <div class="compare-slot empty" id="slot-1">+ Add vehicle</div>
+    <div class="compare-slot empty" id="slot-2">+ Add vehicle</div>
+  </div>
+  <button class="btn-compare-now" id="compare-now-btn" onclick="openCompareModal()" disabled>
+    COMPARE NOW →
+  </button>
+  <button onclick="clearCompare()" style="background:none;border:none;color:#FF4444;
+    font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
+    Clear
+  </button>
+</div>
+
+<!-- COMPARE MODAL -->
+<div id="compare-modal">
+  <div class="compare-modal-inner">
+    <div class="compare-modal-header">
+      <div class="compare-modal-title">⚖️ Side-by-Side Comparison</div>
+      <button class="compare-close" onclick="closeCompareModal()">✕</button>
+    </div>
+    <div id="compare-content"></div>
+  </div>
+</div>
+
 </body>
 </html>
 
