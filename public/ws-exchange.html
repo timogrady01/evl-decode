@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#C8D0DC;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
-body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;overflow-x:hidden;visibility:hidden}
+body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;overflow-x:hidden;}
 
 /* WS NAV */
 .evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
@@ -744,7 +744,6 @@ onAuthStateChanged(auth, async (user) => {
   // ── ADMIN: full access, no dealer record needed ──
   if (user.uid === ADMIN_UID) {
     console.log('✅ EVL Admin authenticated — full access granted');
-    document.body.style.visibility = 'visible';
     initExchange();
     return;
   }
@@ -763,7 +762,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (status !== 'active') {
       // Registered but pending approval
-      document.body.style.visibility = 'visible';
+      dismissOverlay();
       document.body.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0B0C10;font-family:Barlow,sans-serif;color:#fff;text-align:center;padding:40px;">
           <div>
@@ -778,12 +777,11 @@ onAuthStateChanged(auth, async (user) => {
 
     // Active dealer — load exchange
     console.log('✅ Dealer authenticated:', dealerDoc.data().dealerName);
-    document.body.style.visibility = 'visible';
     initExchange();
 
   } catch(e) {
     console.error('Auth check error:', e.code, e.message);
-    document.body.style.visibility = 'visible';
+    dismissOverlay();
     // Do not redirect on error — show message instead
     console.warn('Firestore read blocked — check security rules');
   }
@@ -791,6 +789,16 @@ onAuthStateChanged(auth, async (user) => {
 
 // ── INIT EXCHANGE ──
 // Called after auth passes for both admin and active dealers
+
+function dismissOverlay() {
+  const overlay = document.getElementById('evl-loading');
+  if (overlay) {
+    overlay.style.transition = 'opacity 0.3s';
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 300);
+  }
+}
+
 function initExchange() {
   if (typeof loadAndRenderAuctions === 'function') {
     loadAndRenderAuctions();
@@ -1094,6 +1102,7 @@ const BADGE_CONFIG = {
 };
 
 function renderAuctions(auctions){
+  dismissOverlay();
   const container = document.getElementById('auction-list');
   container.innerHTML = auctions.map(a=>{
     const phaseClass = a.phase===1?'phase-1':a.currentBid>a.reserve?'floor-beat':'phase-2';
