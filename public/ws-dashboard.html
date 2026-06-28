@@ -6,8 +6,9 @@
 <title>EVL WS Dashboard — Operator Command Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
+  html,body{overflow-x:hidden;}
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--gold:#FFD700;--green:#00C853;--red:#FF3333;--blue:#2B84FE;--orange:#FF6B35;--purple:#9B59B6;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--gold:#FFD700;--green:#00C853;--red:#FF3333;--blue:#2B84FE;--orange:#FF6B35;--purple:#9B59B6;--white:#fff;--muted:#C8D0DC;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
 body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh}
 
 /* NAV */
@@ -20,7 +21,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* PAGE HEADER */
 .page-hdr{background:linear-gradient(135deg,#0a0800,var(--bg));border-bottom:2px solid #1a1400;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.page-hdr-title{font-size:28px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.page-hdr-title{font-size:36px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
 .page-hdr-sub{font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px}
 .live-dot{display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;margin-right:6px;animation:blink 1.4s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -43,7 +44,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 /* SECTION */
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .sec-title{font-size:14px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
-.sec-count{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:700}
+.sec-count{font-size:14px;color:var(--muted);font-family:var(--body);font-weight:700}
 .sec-divider{border:none;border-top:1px solid #0d0d1a;margin:24px 0}
 
 /* AUCTION ROW */
@@ -55,17 +56,17 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .auction-row.closed-nosale{border-left:3px solid var(--red);opacity:.7}
 .auction-row.pending{border-left:3px solid var(--muted)}
 .ar-vehicle{font-size:14px;font-weight:900;color:var(--white);margin-bottom:3px}
-.ar-sub{font-size:11px;color:var(--muted);font-family:var(--body);font-weight:600}
+.ar-sub{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600}
 .ar-badge{font-size:10px;font-weight:900;padding:3px 8px;border-radius:12px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .ar-timer{font-size:16px;font-weight:900;color:var(--red);font-family:var(--font);min-width:80px;text-align:right}
 .ar-bid{font-size:15px;font-weight:900;color:var(--green);text-align:right;min-width:90px}
-.ar-bid.no-bid{color:var(--muted);font-size:12px}
+.ar-bid.no-bid{color:var(--muted);font-size:14px}
 
 /* LEAD ROW */
 .lead-row{background:var(--s2);border:1px solid #1a1a2e;border-radius:8px;padding:14px 16px;margin-bottom:10px;border-left:3px solid var(--blue)}
 .lead-id{font-size:10px;color:var(--blue);font-weight:900;letter-spacing:1px;margin-bottom:4px}
 .lead-vehicle{font-size:13px;font-weight:900;color:var(--white);margin-bottom:3px}
-.lead-meta{font-size:11px;color:var(--muted);font-family:var(--body)}
+.lead-meta{font-size:13px;color:var(--muted);font-family:var(--body)}
 .lead-actions{display:flex;gap:6px;margin-top:10px}
 .btn-xs{padding:5px 10px;font-size:10px;font-weight:900;letter-spacing:1px;border:none;border-radius:4px;cursor:pointer;font-family:var(--font);text-transform:uppercase}
 .btn-green-xs{background:var(--green);color:#020203}
@@ -75,7 +76,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 /* SIDE PANELS */
 .side-panel{background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:16px;margin-bottom:16px}
-.side-panel-title{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.side-panel-title{font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .side-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #0d0d1a;font-family:var(--body);font-size:13px}
 .side-row:last-child{border-bottom:none}
 .side-label{color:var(--muted);font-weight:600}
@@ -88,7 +89,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 .modal-box{background:#0a0f1a;border:2px solid var(--gold);border-radius:16px;padding:32px;max-width:520px;width:90%;font-family:var(--font)}
 .modal-title{font-size:20px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:20px}
 .modal-field{margin-bottom:14px}
-.modal-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
+.modal-label{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
 .modal-input{background:#020203;border:2px solid #2a2a4e;color:var(--white);padding:10px 14px;border-radius:6px;font-size:15px;font-family:var(--font);font-weight:700;width:100%;outline:none}
 .modal-input:focus{border-color:var(--gold)}
 .modal-btns{display:flex;gap:10px;margin-top:20px}
@@ -132,8 +133,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div class="page-hdr-sub"><span class="live-dot"></span>Live Firestore Feed · EVL WS Exchange · All Hubs</div>
   </div>
   <div style="display:flex;gap:10px;align-items:center">
-    <span id="last-refresh" style="font-size:11px;color:var(--muted);font-family:var(--body)"></span>
-    <button onclick="refreshAll()" style="background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:6px;font-size:12px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">🔄 REFRESH</button>
+    <span id="last-refresh" style="font-size:13px;color:var(--muted);font-family:var(--body)"></span>
+    <button onclick="refreshAll()" style="background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:6px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">🔄 REFRESH</button>
     <a href="https://evl-decode-two.vercel.app/ws-exchange" style="background:var(--gold);color:#020203;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px">⚡ LIVE EXCHANGE</a>
   </div>
 </div>
@@ -459,7 +460,7 @@ function renderClosed(items) {
       </div>
       <span class="ar-badge" style="background:#0a0a1a;border:1px solid ${color};color:${color}">${lbl}</span>
       <div style="font-size:16px;font-weight:900;color:${color};text-align:right">${amount}</div>
-      <div style="font-size:11px;color:var(--muted);font-family:var(--body);text-align:right">FINAL</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);text-align:right">FINAL</div>
     </div>`;
   }).join('');
 }
@@ -487,8 +488,8 @@ function renderBidFeed() {
     const dealer = b.dealer ? b.dealer.split('@')[0] : 'dealer';
     return `<div class="side-row">
       <div>
-        <div style="font-size:12px;font-weight:900;color:var(--white)">${b.auctionId}</div>
-        <div style="font-size:11px;color:var(--muted);font-family:var(--body)">${dealer} · ${time}</div>
+        <div style="font-size:14px;font-weight:900;color:var(--white)">${b.auctionId}</div>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body)">${dealer} · ${time}</div>
       </div>
       <span style="font-size:14px;font-weight:900;color:var(--green)">$${b.amount.toLocaleString()}</span>
     </div>`;
@@ -638,8 +639,8 @@ window.runBrandMatch = async function() {
 
   const resultsEl = document.getElementById('match-results');
   resultsEl.style.display = 'block';
-  document.getElementById('id-list').innerHTML   = '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">Loading...</div>';
-  document.getElementById('bd-list').innerHTML   = '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">Loading...</div>';
+  document.getElementById('id-list').innerHTML   = '<div style="color:var(--muted);font-family:var(--body);font-size:14px;padding:8px">Loading...</div>';
+  document.getElementById('bd-list').innerHTML   = '<div style="color:var(--muted);font-family:var(--body);font-size:14px;padding:8px">Loading...</div>';
   document.getElementById('excl-list').innerHTML = '';
 
   // Load all dealers for this hub
@@ -672,15 +673,15 @@ window.runBrandMatch = async function() {
   // Render summary
   document.getElementById('match-summary').innerHTML = `
     <div style="background:var(--bg);border:1px solid var(--blue);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:28px;font-weight:900;color:var(--blue)">${idDealers.length}</div>
+      <div style="font-size:36px;font-weight:900;color:var(--blue)">${idDealers.length}</div>
       <div style="font-size:10px;color:var(--muted);font-family:var(--body);letter-spacing:1px">ID CANDIDATES</div>
     </div>
     <div style="background:var(--bg);border:1px solid var(--red);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:28px;font-weight:900;color:var(--red)">${exclDealers.length}</div>
+      <div style="font-size:36px;font-weight:900;color:var(--red)">${exclDealers.length}</div>
       <div style="font-size:10px;color:var(--muted);font-family:var(--body);letter-spacing:1px">SISTER EXCLUDED</div>
     </div>
     <div style="background:var(--bg);border:1px solid var(--gold);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:28px;font-weight:900;color:var(--gold)">${bdDealers.length}</div>
+      <div style="font-size:36px;font-weight:900;color:var(--gold)">${bdDealers.length}</div>
       <div style="font-size:10px;color:var(--muted);font-family:var(--body);letter-spacing:1px">BD BIDDERS</div>
     </div>`;
 
@@ -691,18 +692,18 @@ window.runBrandMatch = async function() {
   // Render ID dealers
   document.getElementById('id-list').innerHTML = idDealers.length
     ? idDealers.map(d => dealerRow(d,'blue')).join('')
-    : '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">No same-brand dealers found in this hub.</div>';
+    : '<div style="color:var(--muted);font-family:var(--body);font-size:14px;padding:8px">No same-brand dealers found in this hub.</div>';
 
   // Render excluded
   document.getElementById('excl-list').innerHTML = exclDealers.length
     ? exclDealers.map(d => dealerRow(d,'red','🚫 SISTER STORE')).join('')
-    : '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">No sister stores to exclude.</div>';
+    : '<div style="color:var(--muted);font-family:var(--body);font-size:14px;padding:8px">No sister stores to exclude.</div>';
 
   // Render BD dealers (first 20 for display)
   document.getElementById('bd-list').innerHTML = bdDealers.length
     ? bdDealers.slice(0,20).map(d => dealerRow(d,'gold')).join('') +
-      (bdDealers.length>20?`<div style="color:var(--muted);font-family:var(--body);font-size:11px;padding:8px">+ ${bdDealers.length-20} more BD dealers in this hub</div>`:'')
-    : '<div style="color:var(--muted);font-family:var(--body);font-size:12px;padding:8px">No BD dealers found.</div>';
+      (bdDealers.length>20?`<div style="color:var(--muted);font-family:var(--body);font-size:13px;padding:8px">+ ${bdDealers.length-20} more BD dealers in this hub</div>`:'')
+    : '<div style="color:var(--muted);font-family:var(--body);font-size:14px;padding:8px">No BD dealers found.</div>';
 };
 
 function dealerRow(d, color, label) {
@@ -713,8 +714,8 @@ function dealerRow(d, color, label) {
   const badge   = label     ? `<span style="font-size:9px;font-weight:900;padding:2px 7px;border-radius:8px;background:#0a0000;border:1px solid var(--red);color:var(--red);letter-spacing:1px">${label}</span>` : '';
   return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1px solid #1a1a2e;border-left:3px solid ${c};border-radius:6px;margin-bottom:6px;background:var(--s1)">
     <div>
-      <div style="font-size:12px;font-weight:900;color:var(--white)">${d.name||'Unknown'}</div>
-      <div style="font-size:11px;color:var(--muted);font-family:var(--body)">${d.brand||'—'} · ${d.state||'—'}${phone}${website}</div>
+      <div style="font-size:14px;font-weight:900;color:var(--white)">${d.name||'Unknown'}</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body)">${d.brand||'—'} · ${d.state||'—'}${phone}${website}</div>
     </div>
     ${badge}
   </div>`;
@@ -737,10 +738,10 @@ window.refreshAll         = refreshAll;
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <div style="font-size:18px;font-weight:900;color:var(--green);letter-spacing:2px">🎯 BRAND MATCH ENGINE</div>
-      <button onclick="closeMatchModal()" style="background:transparent;border:1px solid #2a2a4e;color:var(--muted);padding:6px 12px;border-radius:6px;cursor:pointer;font-family:var(--font);font-size:12px">✕ CLOSE</button>
+      <button onclick="closeMatchModal()" style="background:transparent;border:1px solid #2a2a4e;color:var(--muted);padding:6px 12px;border-radius:6px;cursor:pointer;font-family:var(--font);font-size:14px">✕ CLOSE</button>
     </div>
 
-    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-bottom:20px;line-height:1.6;padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--green)">
+    <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:20px;line-height:1.6;padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--green)">
       Enter a vehicle's details below. The algorithm will find every same-brand franchised dealer in that hub, exclude sister stores from the selling dealer's corporate group, and show you exactly who gets the Phase 1 ID offer vs who goes to Phase 2 BD bidding.
     </div>
 
@@ -788,10 +789,10 @@ window.refreshAll         = refreshAll;
 
       <!-- ID DEALERS -->
       <div style="margin-bottom:16px">
-        <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
+        <div style="font-size:14px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
           🔵 PHASE 1 — ID CANDIDATES <span id="id-count" style="color:var(--muted);font-weight:400"></span>
         </div>
-        <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:8px">
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:8px">
           These same-brand franchised dealers get the Phase 1 first right of refusal. Sister stores excluded.
         </div>
         <div id="id-list"></div>
@@ -799,7 +800,7 @@ window.refreshAll         = refreshAll;
 
       <!-- EXCLUDED -->
       <div style="margin-bottom:16px">
-        <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
+        <div style="font-size:14px;font-weight:900;color:var(--red);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
           🚫 EXCLUDED — SISTER STORES <span id="excl-count" style="color:var(--muted);font-weight:400"></span>
         </div>
         <div id="excl-list"></div>
@@ -807,10 +808,10 @@ window.refreshAll         = refreshAll;
 
       <!-- BD DEALERS -->
       <div>
-        <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
+        <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #0d0d1a">
           ⚡ PHASE 2 — BD BIDDERS <span id="bd-count" style="color:var(--muted);font-weight:400"></span>
         </div>
-        <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:8px">
+        <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:8px">
           All other dealers in the hub — regardless of brand — eligible to bid in Phase 2.
         </div>
         <div id="bd-list"></div>
