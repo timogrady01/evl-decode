@@ -192,7 +192,38 @@ footer { background:var(--s1); border-top:1px solid var(--border); padding:24px;
   <div id="mainContent">
 
     <!-- HERO -->
-    <div class="page-hero">
+    
+  <!-- SELECTED VEHICLE CONFIRMATION -->
+  <div id="selected-vehicle-card" style="display:none;max-width:860px;margin:0 auto 28px;
+    background:rgba(255,215,0,0.06);border:2px solid rgba(255,215,0,0.3);
+    border-radius:16px;padding:22px 28px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:16px;">
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#FFD700;letter-spacing:2px;
+          text-transform:uppercase;margin-bottom:8px;">✅ Your Selected Vehicle</div>
+        <div id="selected-vehicle-name" style="font-size:26px;font-weight:900;
+          color:#ffffff;margin-bottom:6px;font-family:'Barlow Condensed',sans-serif;
+          text-transform:uppercase;letter-spacing:1px;"></div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:6px;">
+          <span id="selected-vehicle-vin" style="font-size:14px;font-weight:600;
+            color:#C8D0DC;font-family:monospace;"></span>
+          <span id="selected-vehicle-price" style="font-size:20px;font-weight:900;
+            color:#00C853;"></span>
+          <span id="selected-vehicle-dealer" style="font-size:14px;font-weight:600;
+            color:#C8D0DC;"></span>
+        </div>
+      </div>
+      <a href="/find.html" style="background:rgba(255,255,255,0.08);color:#C8D0DC;
+        text-decoration:none;padding:12px 20px;border-radius:10px;font-size:14px;
+        font-weight:700;border:1px solid rgba(255,255,255,0.15);white-space:nowrap;
+        transition:all 0.2s;">
+        ← Choose a Different Vehicle
+      </a>
+    </div>
+  </div>
+
+<div class="page-hero">
       <div class="page-badge">⚡ Final Step — Deal Activation</div>
       <h1 class="page-title">Activate Your<br><span>EVL Deal</span></h1>
       <p class="page-sub">One flat fee. No commissions. No hidden charges. EVL goes to work the moment you activate.</p>
