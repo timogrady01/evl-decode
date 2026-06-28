@@ -13,7 +13,7 @@
     --border:#1a2a3a; --font:'Oswald',sans-serif; --body:'Barlow',sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
+  html,body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;}
 
   /* NAV */
   nav{background:#090E17;border-bottom:2px solid var(--blue);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
@@ -49,7 +49,7 @@
   .tier-card{background:var(--s1);border:2px solid var(--border);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative;transition:border-color .2s;}
   .tier-card:hover{border-color:var(--blue);}
   .tier-card.featured{border-color:var(--gold);background:rgba(255,215,0,.03);}
-  .tier-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#020203;font-size:12px;font-weight:900;padding:4px 16px;border-radius:10px;letter-spacing:2px;white-space:nowrap;font-family:var(--body);}
+  .tier-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#020203;font-size:13px;font-weight:900;padding:4px 16px;border-radius:10px;letter-spacing:2px;white-space:nowrap;font-family:var(--body);}
   .tier-name{font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
   .tier-name.t1{color:var(--blue);}
   .tier-name.t2{color:var(--blue);}
@@ -80,7 +80,7 @@
   .net-col-head{font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
   .net-col-head.alone{color:var(--red);}
   .net-col-head.evl{color:var(--green);}
-  .net-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-family:var(--body);font-size:16px;}
+  .net-row{display:flex;justify-content:space-between;padding:10px 16px 0;border-bottom:1px solid var(--border);font-family:var(--body);font-size:16px;}
   .net-row:last-child{border-bottom:none;}
   .net-label{color:#ffffff;font-weight:600;}
   .net-val{font-weight:900;}
@@ -124,7 +124,7 @@
   .next-step:last-child{border-bottom:none;}
   .next-step-num{width:30px;height:30px;border-radius:50%;background:rgba(0,200,83,.15);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--green);flex-shrink:0;}
   .next-step-text{font-family:var(--body);font-size:15px;color:#ffffff;font-weight:600;line-height:1.5;}
-  .next-step-time{font-size:12px;font-weight:900;color:var(--green);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+  .next-step-time{font-size:13px;font-weight:900;color:var(--green);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
 
   /* FOOTER */
   footer{background:var(--s1);border-top:2px solid var(--border);padding:32px;text-align:center;margin-top:80px;}
@@ -296,17 +296,17 @@
         <div class="tier-opt" id="opt1" onclick="selectTier(1)">
           <div class="tier-opt-name">Listing Assist</div>
           <div class="tier-opt-price">$149</div>
-          <div style="font-size:12px;color:#ffffff;font-family:var(--body);margin-top:4px;">Same day listing</div>
+          <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-top:4px;">Same day listing</div>
         </div>
         <div class="tier-opt" id="opt2" onclick="selectTier(2)">
           <div class="tier-opt-name">Full Assist</div>
           <div class="tier-opt-price">$299</div>
-          <div style="font-size:12px;color:#ffffff;font-family:var(--body);margin-top:4px;">3–7 days avg</div>
+          <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-top:4px;">3–7 days avg</div>
         </div>
         <div class="tier-opt selected" id="opt3" onclick="selectTier(3)">
           <div class="tier-opt-name">⭐ Concierge</div>
           <div class="tier-opt-price">$499</div>
-          <div style="font-size:12px;color:#ffffff;font-family:var(--body);margin-top:4px;">White glove · Best value</div>
+          <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-top:4px;">White glove · Best value</div>
         </div>
       </div>
 
@@ -404,7 +404,7 @@
     <p class="success-sub">Your Private Sale Assist request is in. EVL will reach out within 2 hours to confirm your vehicle details and get everything moving.</p>
     <div class="success-ref" id="refNum">EVL-PS-000000</div>
     <div style="margin-top:8px;">
-      <button onclick="copyRefNum()" id="copyBtn" style="background:transparent;border:1px solid var(--green);color:var(--green);padding:8px 18px;border-radius:6px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;">📋 Copy Reference Number</button>
+      <button onclick="copyRefNum()" id="copyBtn" style="background:transparent;border:1px solid var(--green);color:var(--green);padding:10px 16px 18px;border-radius:6px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;">📋 Copy Reference Number</button>
     </div>
     <p style="font-size:14px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:6px;">Save this number — you'll need it if you contact EVL about this request.</p>
     <div class="next-steps">
