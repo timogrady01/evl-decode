@@ -607,6 +607,35 @@
     .total-gap{grid-template-columns:1fr;gap:12px;}
   }
 </style>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain: "evl-acquisition-radar.firebaseapp.com",
+  projectId: "evl-acquisition-radar",
+  storageBucket: "evl-acquisition-radar.appspot.com",
+  messagingSenderId: "84195145348",
+  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveDealGap = async function(data) {
+  try {
+    await addDoc(collection(db, 'evl_deal_gap'), {
+      ...data,
+      createdAt: serverTimestamp(),
+      source: 'deal-gap-form'
+    });
+    console.log('Deal gap saved to Firestore');
+  } catch(e) {
+    console.error('Firestore save failed:', e);
+  }
+};
+</script>
 </head>
 <body>
 
@@ -1408,6 +1437,39 @@ function buildReport() {
     s.className = i < 4 ? 'step done' : 'step active';
   });
   document.querySelectorAll('.step-line').forEach(l => l.className = 'step-line done');
+
+  // ── SAVE TO FIRESTORE ──
+  if (typeof window.saveDealGap === 'function') {
+    window.saveDealGap({
+      name:             document.getElementById('p-name').value.trim(),
+      phone:            document.getElementById('p-phone').value.trim(),
+      email:            document.getElementById('p-email')?.value.trim() || '',
+      vehicle:          `${vYear} ${vMake} ${vModel}${vTrim ? ' ' + vTrim : ''}`,
+      vYear, vMake, vModel, vTrim,
+      vCondition:       vCond,
+      vDealer, vCity,
+      vAsking, vLowest,
+      hasTrade,
+      tradeOffer:       hasTrade ? tOffer : null,
+      tradePayoff:      hasTrade ? tPayoff : null,
+      tradeMake:        hasTrade ? tMake : null,
+      tradeModel:       hasTrade ? tModel : null,
+      tradeYear:        hasTrade ? tYear : null,
+      tradeMiles:       hasTrade ? tMiles : null,
+      dealerRate:       fRate,
+      term:             fTerm,
+      downPayment:      fDown,
+      creditTier:       credit,
+      qualifiedRate:    qualRate,
+      blocker,
+      priceGap:         Math.round(priceGap),
+      tradeGap:         Math.round(tradeGap),
+      rateSavings:      Math.round(totalRateSavings),
+      totalGap:         Math.round(totalGap),
+      netBenefit:       Math.round(netBenefit),
+      roi
+    });
+  }
 
   document.getElementById('report-card').style.display = 'block';
   document.getElementById('report-card').scrollIntoView({ behavior: 'smooth' });
