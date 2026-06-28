@@ -433,6 +433,14 @@
       "destination": "public/consult.html"
     },
     {
+      "source": "/deal-gap",
+      "destination": "public/deal-gap.html"
+    },
+    {
+      "source": "/deal-gap.html",
+      "destination": "public/deal-gap.html"
+    },
+    {
       "source": "/",
       "destination": "public/index.html"
     }
