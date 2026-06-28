@@ -1746,9 +1746,8 @@ window.closeAuction        = closeAuction;
 window.setTitleStatus      = setTitleStatus;
 
 // ── INIT ──
-window.addEventListener('DOMContentLoaded', function() {
-  loadAndRenderAuctions();
-});
+// loadAndRenderAuctions is called by initExchange() AFTER auth confirms
+// Do NOT call it here — doing so causes a flash before auth resolves
 </script>
 </body>
 </html>
