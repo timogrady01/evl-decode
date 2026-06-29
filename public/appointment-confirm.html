@@ -344,7 +344,7 @@ function sendEmailNotifications(apptData) {
 
   // 1 — GSM notification
   if(apptData.gsmEmail) {
-    emailjs.send('service_rvscjt3', 'template_appt_dealer', {
+    emailjs.send('service_rvscjt3', 'template_wcb59jb', {
       to_email:      apptData.gsmEmail,
       to_name:       apptData.gsmName || 'General Sales Manager',
       role:          'General Sales Manager',
@@ -364,7 +364,7 @@ function sendEmailNotifications(apptData) {
 
   // 2 — Salesperson notification
   if(apptData.spEmail) {
-    emailjs.send('service_rvscjt3', 'template_appt_dealer', {
+    emailjs.send('service_rvscjt3', 'template_wcb59jb', {
       to_email:      apptData.spEmail,
       to_name:       apptData.spName || 'Salesperson',
       role:          'Salesperson',
@@ -383,7 +383,7 @@ function sendEmailNotifications(apptData) {
   }
 
   // 3 — Customer confirmation
-  emailjs.send('service_rvscjt3', 'template_appt_customer', {
+  emailjs.send('service_rvscjt3', 'template_pedlfa6', {
     to_email:      apptData.custEmail,
     to_name:       apptData.custName,
     vehicle:       apptData.vehicle,
@@ -396,7 +396,7 @@ function sendEmailNotifications(apptData) {
   }).catch(e => console.warn('Customer email error:', e));
 
   // 4 — EVL Admin alert (to Tim)
-  emailjs.send('service_rvscjt3', 'template_appt_admin', {
+  emailjs.send('service_rvscjt3', 'template_hxbn2x6', {
     to_email:      'togradyevl@gmail.com',
     customer_name: apptData.custName,
     customer_phone:apptData.custPhone,
