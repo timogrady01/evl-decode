@@ -296,6 +296,35 @@ body { font-size: 20px !important; color: #f0f4ff !important; }
 }
 
 </style>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain: "evl-acquisition-radar.firebaseapp.com",
+  projectId: "evl-acquisition-radar",
+  storageBucket: "evl-acquisition-radar.appspot.com",
+  messagingSenderId: "84195145348",
+  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveOnboardingToFirestore = async function(data) {
+  try {
+    await addDoc(collection(db, 'evl_ws_dealers_onboarding'), {
+      ...data,
+      createdAt: serverTimestamp(),
+      status: 'pending_review'
+    });
+    console.log('✅ Dealer onboarding saved to Firestore');
+  } catch(e) {
+    console.error('❌ Firestore save failed:', e);
+  }
+};
+</script>
 </head>
 <body>
 
@@ -1070,6 +1099,11 @@ function submitOnboarding(){
   const existing = JSON.parse(localStorage.getItem(ONBOARD_KEY)||'[]');
   existing.push(data);
   localStorage.setItem(ONBOARD_KEY, JSON.stringify(existing));
+
+  // Save to Firestore
+  if (typeof window.saveOnboardingToFirestore === 'function') {
+    window.saveOnboardingToFirestore(data);
+  }
   
   document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
   document.getElementById('step-success').classList.add('active');
