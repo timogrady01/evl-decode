@@ -412,17 +412,14 @@ const EVL_NOTIF = {
       return false;
     }
 
-    // Try Firebase Cloud Function proxy first (production path)
+    // Vercel API proxy (production path)
     try {
-      const resp = await fetch('https://us-central1-evl-acquisition-radar.cloudfunctions.net/sendSMS', {
+      const resp = await fetch('/api/send-sms', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
           to,
-          from: this.twilio.fromNumber,
-          body: message,
-          accountSid: this.twilio.accountSid,
-          authToken:  this.twilio.authToken
+          message
         })
       });
       if (resp.ok) {
