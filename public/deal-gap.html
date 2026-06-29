@@ -607,6 +607,11 @@
     .total-gap{grid-template-columns:1fr;gap:12px;}
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init('iilAte2T5SzOKb-fn');
+</script>
+
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
@@ -624,6 +629,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.saveDealGap = async function(data) {
+  // Save to Firestore
   try {
     await addDoc(collection(db, 'evl_deal_gap'), {
       ...data,
@@ -633,6 +639,29 @@ window.saveDealGap = async function(data) {
     console.log('Deal gap saved to Firestore');
   } catch(e) {
     console.error('Firestore save failed:', e);
+  }
+
+  // Send EmailJS notification
+  try {
+    await emailjs.send('service_rvscjt3', 'template_cz14mrq', {
+      customer_name:  data.name,
+      customer_phone: data.phone,
+      customer_email: data.email || 'Not provided',
+      vehicle:        data.vehicle,
+      dealer:         `${data.vDealer || ''} ${data.vCity || ''}`.trim(),
+      dealer_asking:  data.vAsking ? Number(data.vAsking).toLocaleString() : 'N/A',
+      price_gap:      Number(data.priceGap || 0).toLocaleString(),
+      trade_gap:      Number(data.tradeGap || 0).toLocaleString(),
+      rate_savings:   Number(data.rateSavings || 0).toLocaleString(),
+      total_gap:      Number(data.totalGap || 0).toLocaleString(),
+      net_benefit:    Number(data.netBenefit || 0).toLocaleString(),
+      roi:            data.roi,
+      blocker:        data.blocker || 'Not specified',
+      timestamp:      new Date().toLocaleString()
+    });
+    console.log('EmailJS notification sent');
+  } catch(e) {
+    console.error('EmailJS send failed:', e);
   }
 };
 </script>
