@@ -34,7 +34,7 @@
     },
     {
       "source": "/index",
-      "destination": "public/index.html"
+      "destination": "public/home.html"
     },
     {
       "source": "/index.html",
@@ -442,7 +442,7 @@
     },
     {
       "source": "/",
-      "destination": "public/index.html"
+      "destination": "public/home.html"
     }
   ]
 }
