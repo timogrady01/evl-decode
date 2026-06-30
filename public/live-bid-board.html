@@ -313,7 +313,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot,
-         query, orderBy, serverTimestamp, doc, getDoc, getDocs }
+         query, orderBy, where, serverTimestamp, doc, getDoc, getDocs }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const app = initializeApp({
@@ -378,16 +378,34 @@ const DEMO_BIDS = {
 };
 
 let myDealerId = '';
+let myDealerRecord = null;
 let currentAuction = null;
 let countdownInterval = null;
 
-// ── ID GATE ──
-window.enterBidBoard = function() {
+// ── ID GATE — looks up real dealer contact info from evl_ws_dealers_onboarding ──
+window.enterBidBoard = async function() {
   const id = document.getElementById('dealerIdInput').value.trim().toUpperCase();
   if (!id || id.length < 8) {
     document.getElementById('gateError').style.display = 'block';
     return;
   }
+
+  // Look up dealer record in Firestore by their EVL-WS Dealer ID
+  try {
+    const q = query(collection(db, 'evl_ws_dealers_onboarding'), where('dealerId', '==', id));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      myDealerRecord = snap.docs[0].data();
+      console.log('✅ Dealer record found:', myDealerRecord.dealerName);
+    } else {
+      console.warn('⚠️ No dealer record found for ID — notifications will not fire for this dealer');
+      myDealerRecord = null;
+    }
+  } catch(e) {
+    console.error('Dealer lookup failed:', e);
+    myDealerRecord = null;
+  }
+
   myDealerId = id;
   document.getElementById('idGate').style.display = 'none';
   document.getElementById('bidBoard').style.display = 'block';
@@ -559,12 +577,45 @@ window.checkBidAmount = function() {
   }
 };
 
+// ── NOTIFY A DEALER WHO JUST GOT OUTBID ──
+async function notifyOutbidDealer(outbidDealerId, auctionVehicle, theirAmount, newHighAmount) {
+  if (!outbidDealerId || outbidDealerId === myDealerId) return; // don't notify yourself
+
+  try {
+    const q = query(collection(db, 'evl_ws_dealers_onboarding'), where('dealerId', '==', outbidDealerId));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      console.warn('No contact record for outbid dealer:', outbidDealerId);
+      return;
+    }
+    const dealer = snap.docs[0].data();
+    const phone = dealer.gsm?.phone || dealer.phone;
+    const email = dealer.gsm?.email || dealer.email;
+    const msg = `⚠️ EVL-WS: You've been outbid on ${auctionVehicle}. Your bid: $${theirAmount.toLocaleString()} — New high: $${newHighAmount.toLocaleString()}. Bid again now.`;
+
+    if (phone) {
+      await fetch('/api/send-sms', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ to: phone, message: msg })
+      });
+    }
+    console.log('✅ Outbid notification sent to', outbidDealerId);
+  } catch(e) {
+    console.error('Outbid notification failed:', e);
+  }
+}
+
 // ── SUBMIT BID ──
 window.submitBid = async function() {
   const a      = currentAuction;
   if (!a) return;
   const amount = parseInt(document.getElementById('bidAmount').value);
   if (!amount || amount < a.floor) return;
+
+  // Capture the PREVIOUS high bidder before this bid overtakes them
+  const priorBids = [...(DEMO_BIDS[a.id]||[])].sort((x,y) => y.amount - x.amount);
+  const priorHighBidder = priorBids[0] || null;
 
   const now = new Date();
   const ts  = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
@@ -574,6 +625,11 @@ window.submitBid = async function() {
   if (!DEMO_BIDS[a.id]) DEMO_BIDS[a.id] = [];
   DEMO_BIDS[a.id].push(newBid);
   DEMO_BIDS[a.id].sort((x,y) => y.amount - x.amount);
+
+  // Notify whoever was just outbid by this new amount
+  if (priorHighBidder && amount > priorHighBidder.amount) {
+    notifyOutbidDealer(priorHighBidder.bidId, a.vehicle, priorHighBidder.amount, amount);
+  }
 
   // Save to Firebase
   try {
