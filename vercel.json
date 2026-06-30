@@ -38,7 +38,7 @@
     },
     {
       "source": "/index.html",
-      "destination": "public/index.html"
+      "destination": "public/home.html"
     },
     {
       "source": "/my-deal",
@@ -442,7 +442,7 @@
     },
     {
       "source": "/",
-      "destination": "home.html"
+      "destination": "public/home.html"
     }
   ]
 }
