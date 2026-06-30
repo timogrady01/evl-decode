@@ -258,11 +258,11 @@
     },
     {
       "source": "/tradein.html",
-      "destination": "public/index.html"
+      "destination": "public/trade-in-exchange.html"
     },
     {
       "source": "/tradein",
-      "destination": "public/index.html"
+      "destination": "public/trade-in-exchange.html"
     },
     {
       "source": "/privacy.html",
