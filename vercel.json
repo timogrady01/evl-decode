@@ -442,7 +442,7 @@
     },
     {
       "source": "/",
-      "destination": "public/home.html"
+      "destination": "home.html"
     }
   ]
 }
