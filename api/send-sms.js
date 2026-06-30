@@ -15,6 +15,18 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing required fields: to, message' });
   }
 
+  // Normalize phone number to E.164 format (Twilio requirement)
+  // Strips parentheses, dashes, spaces, dots — keeps digits only, then adds +1
+  function normalizePhone(raw) {
+    let digits = raw.replace(/[^\d]/g, ''); // strip everything except digits
+    if (digits.length === 10) digits = '1' + digits; // assume US if 10 digits
+    if (digits.length === 11 && digits.startsWith('1')) return '+' + digits;
+    if (raw.trim().startsWith('+')) return raw.trim(); // already E.164
+    return '+' + digits; // fallback
+  }
+
+  const toFormatted = normalizePhone(to);
+
   // Credentials pulled from Vercel environment variables (never exposed in code)
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const authToken  = process.env.TWILIO_AUTH_TOKEN;
@@ -29,7 +41,7 @@ export default async function handler(req, res) {
     const credentials = Buffer.from(`${accountSid}:${authToken}`).toString('base64');
 
     const body = new URLSearchParams({
-      To:   to,
+      To:   toFormatted,
       From: fromNumber,
       Body: message
     });
