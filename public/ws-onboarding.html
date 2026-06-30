@@ -953,6 +953,11 @@ window.saveOnboardingToFirestore = async function(data) {
     <div style="font-size:64px;margin-bottom:16px">✅</div>
     <div style="font-size:28px;font-weight:900;color:var(--white);letter-spacing:2px;margin-bottom:8px" id="success-name">WELCOME ABOARD</div>
     <div style="font-size:16px;color:var(--green);font-family:var(--body);margin-bottom:24px">Agreement executed · BBP framework acknowledged · Platform access active</div>
+    <div style="background:rgba(255,200,0,.1);border:2px solid var(--gold);border-radius:12px;padding:20px;max-width:500px;margin:0 auto 20px;text-align:center">
+      <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:10px">YOUR EVL-WS DEALER ID</div>
+      <div style="font-size:30px;font-weight:900;color:var(--white);letter-spacing:1px;font-family:var(--font)" id="success-dealer-id">EVL-WS-XXXXXX</div>
+      <div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-top:8px">Use this ID to bid on the Live Bid Board — save it now</div>
+    </div>
     <div style="background:var(--bg);border:2px solid var(--green);border-radius:12px;padding:24px;max-width:500px;margin:0 auto 24px;text-align:left">
       <div style="font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;margin-bottom:14px">YOUR NEXT STEPS</div>
       <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.9">
@@ -1071,7 +1076,11 @@ function submitOnboarding(){
   if(!sigName || !sigSign){ showToast('⚠️ Please complete the signature fields'); return; }
   if(!agreed){ showToast('⚠️ Please check the agreement checkbox'); return; }
   
+  // Generate unique EVL-WS Dealer ID
+  const dealerId = 'EVL-WS-' + Math.random().toString(36).substring(2,8).toUpperCase();
+
   const data = {
+    dealerId,
     dealerType,
     dealerName: document.getElementById('d-name').value,
     contact: document.getElementById('d-contact').value,
@@ -1108,6 +1117,7 @@ function submitOnboarding(){
   document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
   document.getElementById('step-success').classList.add('active');
   document.getElementById('success-name').textContent = (data.dealerName||'DEALER').toUpperCase() + ' — ' + dealerType;
+  document.getElementById('success-dealer-id').textContent = dealerId;
   document.getElementById('next-steps-role').innerHTML = dealerType==='ID' ?
     '📋 To list your first vehicle: go to WS Exchange → New Listing → submit vehicle details. EVL will run PITPO and have you live within 24 hours.' :
     '🔍 To browse available inventory: go to WS Exchange → Active Listings. All PITPO-certified vehicles are available now. Filter by make, price, and region.';
