@@ -2,447 +2,447 @@
   "rewrites": [
     {
       "source": "/trade-in-exchange",
-      "destination": "public/trade-in-exchange.html"
+      "destination": "trade-in-exchange.html"
     },
     {
       "source": "/trade-in-exchange.html",
-      "destination": "public/trade-in-exchange.html"
+      "destination": "trade-in-exchange.html"
     },
     {
       "source": "/ws-intelligence",
-      "destination": "public/ws-intelligence.html"
+      "destination": "ws-intelligence.html"
     },
     {
       "source": "/ws-intelligence.html",
-      "destination": "public/ws-intelligence.html"
+      "destination": "ws-intelligence.html"
     },
     {
       "source": "/reviews",
-      "destination": "public/reviews.html"
+      "destination": "reviews.html"
     },
     {
       "source": "/reviews.html",
-      "destination": "public/reviews.html"
+      "destination": "reviews.html"
     },
     {
       "source": "/auto-alert",
-      "destination": "public/auto-alert.html"
+      "destination": "auto-alert.html"
     },
     {
       "source": "/auto-alert.html",
-      "destination": "public/auto-alert.html"
+      "destination": "auto-alert.html"
     },
     {
       "source": "/index",
-      "destination": "public/index.html"
+      "destination": "index.html"
     },
     {
       "source": "/index.html",
-      "destination": "public/index.html"
+      "destination": "index.html"
     },
     {
       "source": "/my-deal",
-      "destination": "public/my-deal.html"
+      "destination": "my-deal.html"
     },
     {
       "source": "/my-deal.html",
-      "destination": "public/my-deal.html"
+      "destination": "my-deal.html"
     },
     {
       "source": "/compare.html",
-      "destination": "public/compare.html"
+      "destination": "compare.html"
     },
     {
       "source": "/compare",
-      "destination": "public/compare.html"
+      "destination": "compare.html"
     },
     {
       "source": "compare.html",
-      "destination": "public/compare.html"
+      "destination": "compare.html"
     },
     {
       "source": "/ws-hub",
-      "destination": "public/ws-hub.html"
+      "destination": "ws-hub.html"
     },
     {
       "source": "/ws-hub.html",
-      "destination": "public/ws-hub.html"
+      "destination": "ws-hub.html"
     },
     {
       "source": "/revenue-radar",
-      "destination": "public/revenue-radar.html"
+      "destination": "revenue-radar.html"
     },
     {
       "source": "/revenue-radar.html",
-      "destination": "public/revenue-radar.html"
+      "destination": "revenue-radar.html"
     },
     {
       "source": "/appointment",
-      "destination": "public/appointment.html"
+      "destination": "appointment.html"
     },
     {
       "source": "/appointment.html",
-      "destination": "public/appointment.html"
+      "destination": "appointment.html"
     },
     {
       "source": "/leasing",
-      "destination": "public/leasing.html"
+      "destination": "leasing.html"
     },
     {
       "source": "/leasing.html",
-      "destination": "public/leasing.html"
+      "destination": "leasing.html"
     },
     {
       "source": "/faq",
-      "destination": "public/faq.html"
+      "destination": "faq.html"
     },
     {
       "source": "/faq.html",
-      "destination": "public/faq.html"
+      "destination": "faq.html"
     },
     {
       "source": "/admin-calls",
-      "destination": "public/admin-calls.html"
+      "destination": "admin-calls.html"
     },
     {
       "source": "/admin-calls.html",
-      "destination": "public/admin-calls.html"
+      "destination": "admin-calls.html"
     },
     {
       "source": "/mastermind",
-      "destination": "public/mastermind.html"
+      "destination": "mastermind.html"
     },
     {
       "source": "/mastermind.html",
-      "destination": "public/mastermind.html"
+      "destination": "mastermind.html"
     },
     {
       "source": "/admin-comms",
-      "destination": "public/admin-comms.html"
+      "destination": "admin-comms.html"
     },
     {
       "source": "/admin-comms.html",
-      "destination": "public/admin-comms.html"
+      "destination": "admin-comms.html"
     },
     {
       "source": "/admin-docs",
-      "destination": "public/admin-docs.html"
+      "destination": "admin-docs.html"
     },
     {
       "source": "/admin-docs.html",
-      "destination": "public/admin-docs.html"
+      "destination": "admin-docs.html"
     },
     {
       "source": "/admin-scripts",
-      "destination": "public/admin-scripts.html"
+      "destination": "admin-scripts.html"
     },
     {
       "source": "/admin-scripts.html",
-      "destination": "public/admin-scripts.html"
+      "destination": "admin-scripts.html"
     },
     {
       "source": "/trade-in",
-      "destination": "public/trade-in.html"
+      "destination": "trade-in.html"
     },
     {
       "source": "/trade-in.html",
-      "destination": "public/trade-in.html"
+      "destination": "trade-in.html"
     },
     {
       "source": "/finder",
-      "destination": "public/finder.html"
+      "destination": "finder.html"
     },
     {
       "source": "/finder.html",
-      "destination": "public/finder.html"
+      "destination": "finder.html"
     },
     {
       "source": "/ws-login.html",
-      "destination": "public/ws-login.html"
+      "destination": "ws-login.html"
     },
     {
       "source": "/ws-exchange.html",
-      "destination": "public/ws-exchange.html"
+      "destination": "ws-exchange.html"
     },
     {
       "source": "/ws-exchange",
-      "destination": "public/ws-exchange.html"
+      "destination": "ws-exchange.html"
     },
     {
       "source": "/ws-vault.html",
-      "destination": "public/ws-vault.html"
+      "destination": "ws-vault.html"
     },
     {
       "source": "/ws-vault",
-      "destination": "public/ws-vault.html"
+      "destination": "ws-vault.html"
     },
     {
       "source": "/ws-onboarding.html",
-      "destination": "public/ws-onboarding.html"
+      "destination": "ws-onboarding.html"
     },
     {
       "source": "/ws-onboarding",
-      "destination": "public/ws-onboarding.html"
+      "destination": "ws-onboarding.html"
     },
     {
       "source": "/ws-dealers.html",
-      "destination": "public/ws-dealers.html"
+      "destination": "ws-dealers.html"
     },
     {
       "source": "/ws-dealers",
-      "destination": "public/ws-dealers.html"
+      "destination": "ws-dealers.html"
     },
     {
       "source": "/ws-login",
-      "destination": "public/ws-login.html"
+      "destination": "ws-login.html"
     },
     {
       "source": "/ws-dashboard.html",
-      "destination": "public/ws-dashboard.html"
+      "destination": "ws-dashboard.html"
     },
     {
       "source": "/ws-dashboard",
-      "destination": "public/ws-dashboard.html"
+      "destination": "ws-dashboard.html"
     },
     {
       "source": "/ws",
-      "destination": "public/ws-login.html"
+      "destination": "ws-login.html"
     },
     {
       "source": "/home.html",
-      "destination": "public/home.html"
+      "destination": "home.html"
     },
     {
       "source": "/home",
-      "destination": "public/home.html"
+      "destination": "home.html"
     },
     {
       "source": "/find.html",
-      "destination": "public/find.html"
+      "destination": "find.html"
     },
     {
       "source": "/find",
-      "destination": "public/find.html"
+      "destination": "find.html"
     },
     {
       "source": "/how.html",
-      "destination": "public/how.html"
+      "destination": "how.html"
     },
     {
       "source": "/how",
-      "destination": "public/how.html"
+      "destination": "how.html"
     },
     {
       "source": "/savings.html",
-      "destination": "public/savings.html"
+      "destination": "savings.html"
     },
     {
       "source": "/savings",
-      "destination": "public/savings.html"
+      "destination": "savings.html"
     },
     {
       "source": "/contact.html",
-      "destination": "public/contact.html"
+      "destination": "contact.html"
     },
     {
       "source": "/contact",
-      "destination": "public/contact.html"
+      "destination": "contact.html"
     },
     {
       "source": "/admin.html",
-      "destination": "public/admin.html"
+      "destination": "admin.html"
     },
     {
       "source": "/admin",
-      "destination": "public/admin.html"
+      "destination": "admin.html"
     },
     {
       "source": "/tradein.html",
-      "destination": "public/index.html"
+      "destination": "index.html"
     },
     {
       "source": "/tradein",
-      "destination": "public/index.html"
+      "destination": "index.html"
     },
     {
       "source": "/privacy.html",
-      "destination": "public/privacy.html"
+      "destination": "privacy.html"
     },
     {
       "source": "/privacy",
-      "destination": "public/privacy.html"
+      "destination": "privacy.html"
     },
     {
       "source": "/terms.html",
-      "destination": "public/terms.html"
+      "destination": "terms.html"
     },
     {
       "source": "/terms",
-      "destination": "public/terms.html"
+      "destination": "terms.html"
     },
     {
       "source": "/financing.html",
-      "destination": "public/financing.html"
+      "destination": "financing.html"
     },
     {
       "source": "/financing",
-      "destination": "public/financing.html"
+      "destination": "financing.html"
     },
     {
       "source": "/protection.html",
-      "destination": "public/protection.html"
+      "destination": "protection.html"
     },
     {
       "source": "/protection",
-      "destination": "public/protection.html"
+      "destination": "protection.html"
     },
     {
       "source": "/refund.html",
-      "destination": "public/refund.html"
+      "destination": "refund.html"
     },
     {
       "source": "/refund",
-      "destination": "public/refund.html"
+      "destination": "refund.html"
     },
     {
       "source": "/service-agreement.html",
-      "destination": "public/service-agreement.html"
+      "destination": "service-agreement.html"
     },
     {
       "source": "/service-agreement",
-      "destination": "public/service-agreement.html"
+      "destination": "service-agreement.html"
     },
     {
       "source": "/evl-notif-engine",
-      "destination": "public/evl-notif-engine.html"
+      "destination": "evl-notif-engine.html"
     },
     {
       "source": "/evl-notif-engine.html",
-      "destination": "public/evl-notif-engine.html"
+      "destination": "evl-notif-engine.html"
     },
     {
       "source": "/dealer-onboard",
-      "destination": "public/dealer-onboard.html"
+      "destination": "dealer-onboard.html"
     },
     {
       "source": "/dealer-onboard.html",
-      "destination": "public/dealer-onboard.html"
+      "destination": "dealer-onboard.html"
     },
     {
       "source": "/live-bid-board",
-      "destination": "public/live-bid-board.html"
+      "destination": "live-bid-board.html"
     },
     {
       "source": "/live-bid-board.html",
-      "destination": "public/live-bid-board.html"
+      "destination": "live-bid-board.html"
     },
     {
       "source": "/admin-bid-board",
-      "destination": "public/admin-bid-board.html"
+      "destination": "admin-bid-board.html"
     },
     {
       "source": "/admin-bid-board.html",
-      "destination": "public/admin-bid-board.html"
+      "destination": "admin-bid-board.html"
     },
     {
       "source": "/dealer-outreach-hub",
-      "destination": "public/dealer-outreach-hub.html"
+      "destination": "dealer-outreach-hub.html"
     },
     {
       "source": "/dealer-outreach-hub.html",
-      "destination": "public/dealer-outreach-hub.html"
+      "destination": "dealer-outreach-hub.html"
     },
     {
       "source": "/bd-submit",
-      "destination": "public/bd-submit.html"
+      "destination": "bd-submit.html"
     },
     {
       "source": "/bd-submit.html",
-      "destination": "public/bd-submit.html"
+      "destination": "bd-submit.html"
     },
     {
       "source": "/private-sale",
-      "destination": "public/private-sale.html"
+      "destination": "private-sale.html"
     },
     {
       "source": "/private-sale.html",
-      "destination": "public/private-sale.html"
+      "destination": "private-sale.html"
     },
     {
       "source": "/login.html",
-      "destination": "public/login.html"
+      "destination": "login.html"
     },
     {
       "source": "/login",
-      "destination": "public/login.html"
+      "destination": "login.html"
     },
     {
       "source": "/payment-collection",
-      "destination": "public/payment-collection.html"
+      "destination": "payment-collection.html"
     },
     {
       "source": "/payment-collection.html",
-      "destination": "public/payment-collection.html"
+      "destination": "payment-collection.html"
     },
     {
       "source": "/moment-of-truth.html",
-      "destination": "public/moment-of-truth.html"
+      "destination": "moment-of-truth.html"
     },
     {
       "source": "/moment-of-truth",
-      "destination": "public/moment-of-truth.html"
+      "destination": "moment-of-truth.html"
     },
     {
       "source": "/payment-estimator.html",
-      "destination": "public/payment-estimator.html"
+      "destination": "payment-estimator.html"
     },
     {
       "source": "/payment-estimator",
-      "destination": "public/payment-estimator.html"
+      "destination": "payment-estimator.html"
     },
     {
       "source": "/schedule.html",
-      "destination": "public/schedule.html"
+      "destination": "schedule.html"
     },
     {
       "source": "/schedule",
-      "destination": "public/schedule.html"
+      "destination": "schedule.html"
     },
     {
       "source": "/credit-score",
-      "destination": "public/credit-score.html"
+      "destination": "credit-score.html"
     },
     {
       "source": "/credit-score.html",
-      "destination": "public/credit-score.html"
+      "destination": "credit-score.html"
     },
     {
       "source": "/appointment-confirm",
-      "destination": "public/appointment-confirm.html"
+      "destination": "appointment-confirm.html"
     },
     {
       "source": "/appointment-confirm.html",
-      "destination": "public/appointment-confirm.html"
+      "destination": "appointment-confirm.html"
     },
     {
       "source": "/deal-gap",
-      "destination": "public/deal-gap.html"
+      "destination": "deal-gap.html"
     },
     {
       "source": "/deal-gap.html",
-      "destination": "public/deal-gap.html"
+      "destination": "deal-gap.html"
     },
     {
       "source": "/consult",
-      "destination": "public/consult.html"
+      "destination": "consult.html"
     },
     {
       "source": "/consult.html",
-      "destination": "public/consult.html"
+      "destination": "consult.html"
     },
     {
       "source": "/",
-      "destination": "public/index.html"
+      "destination": "index.html"
     }
   ]
 }
