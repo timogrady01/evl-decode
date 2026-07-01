@@ -444,5 +444,6 @@
       "source": "/",
       "destination": "public/home.html"
     }
-  ]
+  ],
+  "_lastDeployed": "2026-07-01-force-redeploy"
 }
