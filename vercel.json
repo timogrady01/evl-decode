@@ -34,11 +34,11 @@
     },
     {
       "source": "/index",
-      "destination": "public/home.html"
+      "destination": "public/index.html"
     },
     {
       "source": "/index.html",
-      "destination": "public/home.html"
+      "destination": "public/index.html"
     },
     {
       "source": "/my-deal",
@@ -258,11 +258,11 @@
     },
     {
       "source": "/tradein.html",
-      "destination": "public/trade-in-exchange.html"
+      "destination": "public/index.html"
     },
     {
       "source": "/tradein",
-      "destination": "public/trade-in-exchange.html"
+      "destination": "public/index.html"
     },
     {
       "source": "/privacy.html",
@@ -425,14 +425,6 @@
       "destination": "public/appointment-confirm.html"
     },
     {
-      "source": "/consult",
-      "destination": "public/consult.html"
-    },
-    {
-      "source": "/consult.html",
-      "destination": "public/consult.html"
-    },
-    {
       "source": "/deal-gap",
       "destination": "public/deal-gap.html"
     },
@@ -441,9 +433,16 @@
       "destination": "public/deal-gap.html"
     },
     {
+      "source": "/consult",
+      "destination": "public/consult.html"
+    },
+    {
+      "source": "/consult.html",
+      "destination": "public/consult.html"
+    },
+    {
       "source": "/",
-      "destination": "public/home.html"
+      "destination": "public/index.html"
     }
-  ],
-  "outputDirectory": "public"
+  ]
 }
