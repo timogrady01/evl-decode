@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVL WS Exchange | Trade Auction Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--purple:#9B59B6;--cyan:#00BCD4;--orange:#FF6B35;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:100vh;display:block!important}
+
+/* WS NAV */
+.evl-ws-nav{position:sticky;top:0;z-index:500;background:#0a0800;border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.evl-ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
+.evl-ws-nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.evl-ws-nav-link{color:#e8d88a;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap}
+.evl-ws-nav-link:hover{color:var(--gold);background:#1a1400}
+.evl-ws-nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold)}
+.ws-hamburger{display:none;background:none;border:none;color:var(--gold);font-size:22px;cursor:pointer}
+@media(max-width:768px){
+  .evl-ws-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#0a0800;border-bottom:2px solid var(--gold);padding:12px 0}
+  .evl-ws-nav-links.open{display:flex}
+  .evl-ws-nav-link{width:100%;padding:14px 24px;border-bottom:1px solid #1a1400}
+  .ws-hamburger{display:block}
+}
+
+/* TABS */
+.tab-nav{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;overflow-x:auto}
+.tab-btn{padding:14px 18px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:var(--font)}
+.tab-btn:hover{color:var(--white)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* WRAP */
+.ws-wrap{max-width:1400px;margin:0 auto;padding:20px}
+
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:10px;padding:16px;text-align:center;transition:border-color .2s}
+.stat-card:hover{border-color:var(--gold)}
+.stat-val{font-size:28px;font-weight:900;display:block;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+
+/* DISCLAIMER BANNER */
+.platform-disclaimer{background:#1a1400;border:2px solid var(--gold);border-radius:10px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px}
+.disclaimer-icon{font-size:20px;flex-shrink:0}
+.disclaimer-text{font-size:13px;color:var(--gold);font-family:var(--body);line-height:1.6;font-weight:600}
+
+/* VEHICLE AUCTION CARD */
+.auction-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;overflow:hidden;margin-bottom:16px;transition:border-color .2s}
+.auction-card:hover{border-color:var(--gold)}
+.auction-card.phase-1{border-color:var(--blue)}
+.auction-card.phase-2{border-color:var(--gold)}
+.auction-card.floor-beat{border-color:var(--green)}
+.auction-card.expired{border-color:var(--red);opacity:.7}
+.auction-header{background:var(--s2);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a2e;flex-wrap:wrap;gap:8px}
+.auction-id{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px}
+.auction-phase-badge{font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.phase-1-badge{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+.phase-2-badge{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.phase-floor-badge{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+.auction-body{padding:18px}
+.auction-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
+.auction-vehicle-section{grid-column:1/2}
+.auction-floor-section{grid-column:2/3}
+.auction-bid-section{grid-column:3/4}
+.auction-vehicle-name{font-size:18px;font-weight:900;color:var(--white);letter-spacing:0.5px;margin-bottom:6px}
+.auction-vin{font-size:11px;color:var(--muted);font-family:var(--body);margin-bottom:10px;font-weight:700;letter-spacing:1px}
+.auction-miles{font-size:14px;color:var(--dim);font-family:var(--body);margin-bottom:8px}
+
+/* PITPO BADGES */
+.pitpo-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;font-family:var(--font)}
+.badge-pitpo{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+.badge-gold{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.badge-silver{background:#0d0d1a;border:1px solid #C0C0C0;color:#C0C0C0}
+.badge-bronze{background:#1a0a00;border:1px solid var(--orange);color:var(--orange)}
+.badge-title-hand{background:#020a02;border:1px solid var(--green);color:var(--green)}
+.badge-title-transit{background:#1a1400;border:1px solid var(--gold);color:var(--gold)}
+.badge-factory-warranty{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+.badge-1owner{background:#1a0a00;border:1px solid var(--gold);color:var(--gold)}
+.badge-no-accident{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+
+/* CORPORATE FLOOR */
+.floor-card{background:var(--bg);border:2px solid var(--blue);border-radius:10px;padding:14px}
+.floor-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.floor-amount{font-size:28px;font-weight:900;color:var(--blue);margin-bottom:4px}
+.floor-source{font-size:12px;color:var(--dim);font-family:var(--body);font-weight:600;margin-bottom:10px}
+.floor-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;border-bottom:1px solid #0d0d1a;font-family:var(--body)}
+.floor-row:last-child{border-bottom:none}
+.floor-row-label{color:var(--muted)}
+.floor-row-val{font-weight:700;color:var(--dim)}
+.floor-row-val.best{color:var(--green);font-weight:900}
+
+/* BID INPUT */
+.bid-card{background:var(--bg);border:2px solid var(--gold);border-radius:10px;padding:14px}
+.bid-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.bid-timer{font-size:24px;font-weight:900;color:var(--red);margin-bottom:8px;letter-spacing:2px}
+.bid-timer.phase1{color:var(--blue)}
+.bid-input-wrap{display:flex;gap:8px;margin-bottom:8px}
+.bid-input{background:var(--s1);border:2px solid var(--gold);color:var(--white);padding:12px 14px;border-radius:8px;font-size:18px;font-family:var(--font);font-weight:900;outline:none;flex:1}
+.bid-input:focus{border-color:var(--white)}
+.bid-submit{background:var(--gold);color:#020203;border:none;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;transition:background .2s;white-space:nowrap}
+.bid-submit:hover{background:#e6c200}
+.bid-current{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600}
+.bid-floor-note{font-size:11px;color:var(--gold);font-family:var(--body);font-weight:700;margin-top:6px}
+.phase-1-note{font-size:12px;color:var(--blue);font-family:var(--body);font-weight:600;margin-top:8px;line-height:1.5;padding:8px 10px;background:#040e1a;border-radius:6px;border-left:3px solid var(--blue)}
+
+/* INVENTORY INTAKE */
+.intake-form{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;overflow:hidden;max-width:800px}
+.intake-header{background:var(--s2);padding:16px 22px;border-bottom:2px solid #1a1a2e}
+.intake-section{padding:20px;border-bottom:1px solid #1a1a2e}
+.intake-section:last-child{border-bottom:none}
+.intake-section-title{font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:11px 14px;border-radius:8px;font-size:14px;font-family:var(--font);font-weight:700;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus{border-color:var(--gold)}
+.form-input option{background:#0a0a1a}
+.photo-upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.photo-upload-btn{background:var(--bg);border:2px dashed #2a2a4e;border-radius:8px;padding:20px 12px;text-align:center;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.photo-upload-btn:hover{border-color:var(--gold);background:#1a1400}
+.photo-upload-icon{font-size:24px;display:block;margin-bottom:6px}
+.photo-upload-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;line-height:1.3}
+.title-status-toggle{display:flex;gap:12px;flex-wrap:wrap}
+.title-status-btn{padding:10px 18px;border-radius:8px;font-size:13px;font-weight:900;cursor:pointer;border:2px solid #2a2a4e;color:var(--muted);background:transparent;font-family:var(--font);letter-spacing:1px;transition:all .2s}
+.title-status-btn.active-title-hand{border-color:var(--green);color:var(--green);background:#0d1a0d}
+.title-status-btn.active-title-transit{border-color:var(--gold);color:var(--gold);background:#1a1400}
+
+/* PITPO VERIFICATION PANEL */
+.pitpo-panel{background:#020a02;border:2px solid var(--green);border-radius:10px;padding:16px;margin-bottom:16px}
+.pitpo-panel-title{font-size:13px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.pitpo-check-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #0d1a0d;font-family:var(--body);font-size:13px}
+.pitpo-check-row:last-child{border-bottom:none}
+.pitpo-check-label{color:var(--dim);font-weight:600}
+.pitpo-check-val{font-weight:900}
+.pitpo-pass{color:var(--green)}
+.pitpo-warn{color:var(--gold)}
+.pitpo-fail{color:var(--red)}
+.pitpo-pending{color:var(--muted)}
+
+/* ESCROW STATUS */
+.escrow-card{background:var(--bg);border:2px solid #2a2a4e;border-radius:10px;padding:14px}
+.escrow-title{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.escrow-amount{font-size:24px;font-weight:900;color:var(--white);margin-bottom:4px}
+.escrow-status{font-size:12px;font-weight:900;letter-spacing:1px}
+.escrow-held{color:var(--gold)}
+.escrow-released{color:var(--green)}
+.escrow-frozen{color:var(--red)}
+.countdown-bar{height:6px;background:#1a1a2e;border-radius:3px;overflow:hidden;margin-top:8px}
+.countdown-fill{height:100%;border-radius:3px;transition:width 1s linear}
+
+/* STATE COMPLIANCE FILTER */
+.state-compliance-card{background:#0d0000;border:2px solid var(--red);border-radius:10px;padding:16px;margin-bottom:16px}
+.state-compliance-title{font-size:13px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:10px}
+.excluded-states{display:flex;flex-wrap:wrap;gap:6px}
+.state-tag{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:1px;font-family:var(--font)}
+.state-excluded{background:#1a0000;border:1px solid var(--red);color:var(--red)}
+.state-ok{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+
+/* BUTTONS */
+.btn{padding:10px 20px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
+.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
+.btn-blue{background:var(--blue);color:var(--white)}.btn-blue:hover{background:#1a6fd4}
+.btn-red{background:var(--red);color:var(--white)}.btn-red:hover{background:#cc0000}
+.btn-dark{background:#1a1a2e;color:var(--white);border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--gold)}
+.btn-sm{padding:6px 12px;font-size:11px}
+
+/* SECTION HEADERS */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.section-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase}
+
+/* STRATEGY DIAGRAM */
+.phase-flow{display:flex;align-items:stretch;gap:0;margin-bottom:24px;overflow-x:auto}
+.phase-box{background:var(--s1);border:2px solid #1a1a2e;padding:16px;min-width:180px;position:relative;flex:1}
+.phase-box.phase-1{border-color:var(--blue);background:#040e1a}
+.phase-box.phase-2{border-color:var(--gold);background:#0a0800}
+.phase-box.phase-3{border-color:var(--green);background:#020a02}
+.phase-box.phase-alt{border-color:var(--purple);background:#0d001a}
+.phase-arrow{display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);padding:0 8px;align-self:center}
+.phase-title{font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.phase-timing{font-size:11px;font-weight:900;letter-spacing:1px;margin-bottom:8px}
+.phase-steps{font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.6}
+
+/* SAAS MONETIZATION */
+.monetization-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:24px}
+.revenue-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:18px;transition:border-color .2s}
+.revenue-card:hover{border-color:var(--gold)}
+.revenue-icon{font-size:28px;display:block;margin-bottom:10px}
+.revenue-title{font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:6px}
+.revenue-amount{font-size:22px;font-weight:900;color:var(--gold);display:block;margin-bottom:6px}
+.revenue-desc{font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5}
+
+/* BOL / DOCS */
+.doc-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #0d0d1a;flex-wrap:wrap;gap:8px}
+.doc-row:last-child{border-bottom:none}
+.doc-name{font-size:13px;font-weight:900;color:var(--white)}
+.doc-desc{font-size:12px;color:var(--muted);font-family:var(--body)}
+.doc-status{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.doc-required{background:#1a0000;border:1px solid var(--red);color:var(--red)}
+.doc-optional{background:#040e1a;border:1px solid var(--blue);color:var(--blue)}
+.doc-auto{background:#0d1a0d;border:1px solid var(--green);color:var(--green)}
+
+@media(max-width:900px){
+  .auction-grid{grid-template-columns:1fr}
+  .auction-vehicle-section,.auction-floor-section,.auction-bid-section{grid-column:1}
+  .form-grid{grid-template-columns:1fr}
+  .photo-upload-grid{grid-template-columns:1fr 1fr}
+  .phase-flow{flex-direction:column}
+  .phase-arrow{transform:rotate(90deg);padding:8px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- WS NAV -->
+<nav class="evl-ws-nav">
+  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
+    EVL <span style="color:var(--gold);margin-left:4px">WHOLESALE</span>
+  </a>
+  <button class="ws-hamburger" onclick="document.getElementById('ws-nav-links').classList.toggle('open')">&#9776;</button>
+  <div class="evl-ws-nav-links" id="ws-nav-links">
+    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/ws-hub" class="evl-ws-nav-link">HUB MAP</a>
+    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link active">EXCHANGE</a>
+    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
+    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
+    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
+    <a href="https://evl-decode-two.vercel.app/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px">⬅ RETAIL</a>
+    <a href="https://evl-decode-two.vercel.app/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px">🔒 LOGOUT</a>
+  </div>
+</nav>
+
+<!-- TABS -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('live',this)">⚡ LIVE AUCTION</button>
+  <button class="tab-btn" onclick="switchTab('intake',this)">➕ SUBMIT VEHICLE</button>
+  <button class="tab-btn" onclick="switchTab('flow',this)">📋 HOW IT WORKS</button>
+  <button class="tab-btn" onclick="switchTab('monetization',this)">💰 SAAS PRICING</button>
+  <button class="tab-btn" onclick="switchTab('docs',this)">📄 DOCUMENTS</button>
+  <button class="tab-btn" onclick="switchTab('compliance',this)">⚖️ COMPLIANCE</button>
+</div>
+
+<div class="ws-wrap">
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-card"><span class="stat-val" style="color:var(--gold)">7</span><div class="stat-lbl">Live Auctions</div></div>
+  <div class="stat-card"><span class="stat-val" style="color:var(--blue)">3</span><div class="stat-lbl">Phase 1 (ID Hold)</div></div>
+  <div class="stat-card"><span class="stat-val" style="color:var(--green)">4</span><div class="stat-lbl">Phase 2 (Live Bids)</div></div>
+  <div class="stat-card"><span class="stat-val" style="color:var(--cyan)">23</span><div class="stat-lbl">Active BD Bidders</div></div>
+  <div class="stat-card"><span class="stat-val" style="color:var(--gold)">$284k</div><div class="stat-lbl">Floor Value Locked</div></div>
+  <div class="stat-card"><span class="stat-val" style="color:var(--green)">$312k</span><div class="stat-lbl">Current High Bids</div></div>
+</div>
+
+<!-- PLATFORM DISCLAIMER -->
+<div class="platform-disclaimer">
+  <span class="disclaimer-icon">⚖️</span>
+  <div class="disclaimer-text">
+    <strong>EVL PLATFORM DISCLAIMER:</strong> EVL is a technology platform providing SaaS auction coordination services. EVL is NOT a licensed motor vehicle dealer, auctioneer, or broker. All vehicle transactions occur directly between the consumer (seller) and licensed dealer (buyer). EVL coordinates the process as the consumer's authorized technology agent. All purchases are subject to buyer approval. EVL accepts no mechanical liability. Arbitration limited to title defects only per NAAA standards.
+  </div>
+</div>
+
+<!-- ══ LIVE AUCTION TAB ══ -->
+<div id="tab-live" class="tab-content active">
+  <div class="section-hdr">
+    <div class="section-title">⚡ LIVE AUCTION BOARD — LICENSED DEALERS ONLY</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--muted);font-family:var(--body);font-weight:700;align-self:center">All bids are sealed and blind. Corporate floors verified by EVL.</span>
+      <button class="btn btn-gold btn-sm" onclick="switchTab('intake',document.querySelectorAll('.tab-btn')[1])">➕ SUBMIT VEHICLE</button>
+    </div>
+  </div>
+
+  <!-- LIVE AUCTION CARDS -->
+  <div id="auction-list"></div>
+</div>
+
+<!-- ══ VEHICLE INTAKE TAB ══ -->
+<div id="tab-intake" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">➕ SUBMIT YOUR VEHICLE</div>
+  <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px;line-height:1.6">Complete the EVL certification process. Takes 10-15 minutes. Corporate floor locked within 2 hours. Auction launches automatically once certified.</div>
+
+  <div class="intake-form">
+    <div class="intake-header">
+      <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px">EVL CERTIFICATION INTAKE</div>
+      <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:4px">PITPO-Powered · Licensed Dealer Auction · SaaS Platform</div>
+    </div>
+
+    <!-- STEP 1: VEHICLE INFO -->
+    <div class="intake-section">
+      <div class="intake-section-title" style="color:var(--blue)"><span>1️⃣</span> VEHICLE INFORMATION</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">VIN (17-Digit)</label><input class="form-input" id="intake-vin" placeholder="Enter VIN — auto-decodes" maxlength="17"/></div>
+        <div class="form-group"><label class="form-label">Current Odometer</label><input class="form-input" id="intake-miles" type="number" placeholder="e.g. 44200"/></div>
+        <div class="form-group"><label class="form-label">Year</label><input class="form-input" id="intake-year" type="number" placeholder="2023"/></div>
+        <div class="form-group"><label class="form-label">Make</label><input class="form-input" id="intake-make" placeholder="Toyota"/></div>
+        <div class="form-group"><label class="form-label">Model</label><input class="form-input" id="intake-model" placeholder="Tundra"/></div>
+        <div class="form-group"><label class="form-label">Trim</label><input class="form-input" id="intake-trim" placeholder="TRD Pro"/></div>
+        <div class="form-group"><label class="form-label">Exterior Color</label><input class="form-input" id="intake-color" placeholder="White"/></div>
+        <div class="form-group"><label class="form-label">State of Registration</label>
+          <select class="form-input" id="intake-state">
+            <option value="">Select State</option>
+            <option>TX</option><option>FL</option><option>GA</option><option>NC</option><option>TN</option><option>AZ</option><option>CO</option><option>WA</option><option>OR</option><option>NV</option><option>IL</option><option>OH</option><option>MI</option><option>PA</option><option>VA</option>
+            <option disabled style="color:var(--red)">── RESTRICTED STATES ──</option>
+            <option value="CA_RESTRICTED" style="color:#ff6666">CA — Processing Exceeds 30 Days</option>
+            <option value="NY_RESTRICTED" style="color:#ff6666">NY — In-Person Required</option>
+            <option value="NJ_RESTRICTED" style="color:#ff6666">NJ — Extended Backlog</option>
+            <option value="IL_RESTRICTED" style="color:#ff6666">IL — 4-8 Week Processing</option>
+          </select>
+        </div>
+      </div>
+      <div id="state-restriction-alert" style="display:none;background:#1a0000;border:1px solid var(--red);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:13px;color:var(--red);font-family:var(--body);line-height:1.6">
+        ⚠️ <strong>Trade-In Restriction:</strong> Due to this state's DMV processing timeline (exceeding our 30-day PITPO window), we cannot accept trade-in vehicles registered in this state. You may still proceed with a vehicle purchase without a trade-in. For your trade-in, we recommend <a href="https://www.carmax.com/sell" target="_blank" style="color:var(--gold)">CarMax</a> or <a href="https://www.carvana.com/sell" target="_blank" style="color:var(--gold)">Carvana</a> who have larger title processing teams.
+      </div>
+    </div>
+
+    <!-- STEP 2: TITLE STATUS -->
+    <div class="intake-section">
+      <div class="intake-section-title" style="color:var(--green)"><span>2️⃣</span> TITLE STATUS — PHYSICAL VERIFICATION</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:14px">Is the physical title in your possession RIGHT NOW?</div>
+      <div class="title-status-toggle" style="margin-bottom:16px">
+        <button class="title-status-btn" onclick="setTitleStatus('hand',this)" id="title-hand-btn">✅ YES — Title In Hand</button>
+        <button class="title-status-btn" onclick="setTitleStatus('transit',this)" id="title-transit-btn">⏳ NO — Title in Transit/Absent</button>
+        <button class="title-status-btn" onclick="setTitleStatus('lost',this)" id="title-lost-btn">❌ LOST TITLE</button>
+      </div>
+      <div id="title-transit-notice" style="display:none;background:#1a1400;border:2px solid var(--gold);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--gold);font-family:var(--body);line-height:1.7">
+        ⚠️ <strong>TITLE IN TRANSIT — ESCROW HOLD REQUIRED</strong><br>
+        By proceeding, you agree: (1) Buyer funds will be held in platform escrow. (2) You have exactly 30 calendar days to deliver the physical title. (3) Failure triggers an automatic transaction reversal and a <strong>$250 default penalty</strong> charged to your card on file. (4) A "Title Absent" badge will appear on your listing. Bidding dealers are pre-notified of this status.
+      </div>
+      <div id="title-lost-notice" style="display:none;background:#1a0000;border:2px solid var(--red);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--red);font-family:var(--body);line-height:1.7">
+        ❌ <strong>LOST TITLE — CANNOT PROCEED TO AUCTION</strong><br>
+        EVL cannot list vehicles without a verifiable title path. You must first obtain a duplicate title from your state DMV before submitting. Alternatively, <a href="https://www.carmax.com/sell" target="_blank" style="color:var(--gold)">CarMax</a> has internal legal teams that can handle lost titles directly. We cannot accept vehicle submissions without title verification.
+      </div>
+    </div>
+
+    <!-- STEP 3: PHOTO UPLOADS -->
+    <div class="intake-section">
+      <div class="intake-section-title" style="color:var(--gold)"><span>3️⃣</span> REQUIRED PHOTO UPLOADS — LIVE CAMERA ONLY</div>
+      <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:14px">⚠️ Photos must be taken live with your camera. Screenshots and photo library uploads are rejected. These photos lock your vehicle's condition at intake — protecting you from transport damage disputes.</div>
+      <div class="photo-upload-grid">
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Front Exterior')"><span class="photo-upload-icon">📷</span><div class="photo-upload-label">Front Exterior</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Rear Exterior')"><span class="photo-upload-icon">📷</span><div class="photo-upload-label">Rear Exterior</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Driver Side')"><span class="photo-upload-icon">📷</span><div class="photo-upload-label">Driver Side</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Passenger Side')"><span class="photo-upload-icon">📷</span><div class="photo-upload-label">Passenger Side</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Odometer')"><span class="photo-upload-icon">🔢</span><div class="photo-upload-label">Odometer (Required)</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Title Front')"><span class="photo-upload-icon">📋</span><div class="photo-upload-label">Title Front</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Title Back')"><span class="photo-upload-icon">📋</span><div class="photo-upload-label">Title Back</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Physical Keys')"><span class="photo-upload-icon">🔑</span><div class="photo-upload-label">Physical Keys (Required)</div></div>
+        <div class="photo-upload-btn" onclick="simulateUpload(this,'Interior')"><span class="photo-upload-icon">🪑</span><div class="photo-upload-label">Interior</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 4: EXCLUSION RULES -->
+    <div class="intake-section">
+      <div class="intake-section-title" style="color:var(--red)"><span>4️⃣</span> AUTOMATIC DISQUALIFICATION RULES</div>
+      <div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:12px">EVL reserves the right to refuse any submission. The following trigger automatic rejection:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${['Salvage / Rebuilt / Junk Title','Flood or Fire Damage History','VIN Mismatch or Error','Name Mismatch (title ≠ account)','Vehicle Over 20 Years Old (Federal Odometer Exemption)','Active Lien Detected (not payoff coordinated)','Restricted State Registration (CA, NY, NJ, IL)','Lost Title (no path to delivery within 30 days)','Vehicles with open recalls affecting safety','Commercial fleet vehicles without proper paperwork'].map(r=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0000;border:1px solid #2a0000;border-radius:6px"><span style="color:var(--red);font-size:14px;flex-shrink:0">✕</span><span style="font-size:12px;color:var(--dim);font-family:var(--body)">${r}</span></div>`).join('')}
+      </div>
+    </div>
+
+    <div style="padding:20px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-gold" onclick="submitIntake()" style="font-size:15px;padding:14px 32px">⚡ SUBMIT FOR EVL CERTIFICATION</button>
+      <button class="btn btn-dark">SAVE DRAFT</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HOW IT WORKS TAB ══ -->
+<div id="tab-flow" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">HOW THE EVL EXCHANGE WORKS</div>
+  <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px">Two-phase process. Customer never loses. Licensed dealers get pre-vetted inventory. EVL coordinates as technology platform.</div>
+
+  <!-- PHASE FLOW -->
+  <div class="phase-flow">
+    <div class="phase-box phase-1">
+      <div class="phase-title" style="color:var(--blue)">PHASE 1 — LOCAL FIRST</div>
+      <div class="phase-timing" style="color:var(--blue)">⏱ 0-48 HOURS</div>
+      <div class="phase-steps">
+        1. EVL Cert process complete<br>
+        2. Corporate floor locked (CarMax/Carvana/SMTV)<br>
+        3. Floor sent to In-Store Dealer (ID)<br>
+        4. ID has <strong style="color:var(--white)">48 hrs</strong> to match<br>
+        5. If matched → Local trade complete<br>
+        6. Tax credit applied for customer
+      </div>
+    </div>
+    <div class="phase-arrow">→</div>
+    <div class="phase-box phase-alt">
+      <div class="phase-title" style="color:var(--purple)">ID DECISION GATE</div>
+      <div class="phase-timing" style="color:var(--purple)">⏱ 15-MIN WINDOW</div>
+      <div class="phase-steps">
+        ID gets first right of refusal<br>
+        Must match tax-adjusted target<br>
+        <strong style="color:var(--white)">Formula:</strong><br>
+        Top Floor<br>
+        − TX Tax Credit (6.25%)<br>
+        − 3% Logistics Allowance<br>
+        = <strong style="color:var(--gold)">ID Match Target</strong>
+      </div>
+    </div>
+    <div class="phase-arrow">→</div>
+    <div class="phase-box phase-2">
+      <div class="phase-title" style="color:var(--gold)">PHASE 2 — LIVE AUCTION</div>
+      <div class="phase-timing" style="color:var(--gold)">⏱ 2-4 HOUR WINDOW</div>
+      <div class="phase-steps">
+        ID declines → vehicle goes live<br>
+        Corporate floor = opening bid<br>
+        Licensed BDs submit sealed bids<br>
+        Highest bid at close = WINNER<br>
+        <strong style="color:var(--white)">No takebacks. No exceptions.</strong><br>
+        Winner confirmed within 30 min
+      </div>
+    </div>
+    <div class="phase-arrow">→</div>
+    <div class="phase-box phase-3">
+      <div class="phase-title" style="color:var(--green)">SETTLEMENT</div>
+      <div class="phase-timing" style="color:var(--green)">⏱ 24-48 HOURS</div>
+      <div class="phase-steps">
+        Wire/ACH within 24 hrs (escrow held 48hrs — 12-hr mid-flight DMV sweeps run automatically)<br>
+        Porter dispatched on payment clear<br>
+        Driver PIN verification at pickup<br>
+        BOL signed — custody transferred<br>
+        Escrow released to customer<br>
+        EVL platform fee deducted
+      </div>
+    </div>
+  </div>
+
+  <!-- WARRANTY BADGE SYSTEM -->
+  <div style="font-size:16px;font-weight:900;letter-spacing:2px;margin-bottom:16px">🏅 EVL WARRANTY BADGE SYSTEM</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:24px">
+    <div style="background:#1a1400;border:2px solid var(--gold);border-radius:12px;padding:18px">
+      <div style="font-size:24px;margin-bottom:8px">🥇</div>
+      <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:6px">GOLD BADGE — FULL COVERAGE</div>
+      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Vehicle is within factory bumper-to-bumper AND powertrain warranty. Typically under 3 years / 36,000 miles. Any covered defect = OEM fixes it free.</div>
+      <div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px">WHY DEALERS BID HIGH: Zero mechanical risk. Cracked block? Factory covers it.</div>
+    </div>
+    <div style="background:#0d0d1a;border:2px solid #C0C0C0;border-radius:12px;padding:18px">
+      <div style="font-size:24px;margin-bottom:8px">🥈</div>
+      <div style="font-size:14px;font-weight:900;color:#C0C0C0;letter-spacing:1px;margin-bottom:6px">SILVER BADGE — POWERTRAIN ONLY</div>
+      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Basic warranty expired. Powertrain warranty still active. Typically under 5 years / 60,000 miles. Engine, transmission, drivetrain covered. Accessories AS-IS.</div>
+      <div style="font-size:11px;color:#C0C0C0;font-weight:700;letter-spacing:1px">WHY DEALERS BID CONFIDENT: Engine protection remains. AC/stereo/electronics = buyer risk.</div>
+    </div>
+    <div style="background:#1a0a00;border:2px solid var(--orange);border-radius:12px;padding:18px">
+      <div style="font-size:24px;margin-bottom:8px">🥉</div>
+      <div style="font-size:14px;font-weight:900;color:var(--orange);letter-spacing:1px;margin-bottom:6px">BRONZE BADGE — AS-IS CERTIFIED</div>
+      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">All factory coverage expired. Vehicle sold strictly AS-IS. PITPO certification confirms clean title and keys. No mechanical warranties of any kind.</div>
+      <div style="font-size:11px;color:var(--orange);font-weight:700;letter-spacing:1px">WHY DEALERS BID: PITPO cert = no title surprises. Price reflects condition.</div>
+    </div>
+    <div style="background:#020a02;border:2px solid var(--green);border-radius:12px;padding:18px">
+      <div style="font-size:24px;margin-bottom:8px">🛡️</div>
+      <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:6px">PITPO CERTIFIED — ALL UNITS</div>
+      <div style="font-size:12px;color:var(--dim);font-family:var(--body);line-height:1.5;margin-bottom:10px">Applied to every vehicle on the platform regardless of badge tier. Confirms: Clean title API verified, physical keys confirmed, title photos on file, no active liens, name match verified.</div>
+      <div style="font-size:11px;color:var(--green);font-weight:700;letter-spacing:1px">THE FLOOR: Title is clean. No fraud. No surprises on paperwork.</div>
+    </div>
+  </div>
+
+  <!-- ARBITRATION RULES -->
+  <div style="background:#1a1400;border:2px solid var(--gold);border-radius:12px;padding:20px;margin-bottom:24px">
+    <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">⚖️ ARBITRATION RULES — NAAA STANDARD</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:8px">✅ VALID ARBITRATION GROUNDS</div>
+        <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.8">
+          • Title issues not disclosed in PITPO cert<br>
+          • Salvage brand discovered after sale<br>
+          • Active lien not cleared per PITPO<br>
+          • VIN mismatch from platform listing<br>
+          • Odometer rollback confirmed by OBD
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:8px">❌ NOT VALID — BUYER ACCEPTS RISK</div>
+        <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.8">
+          • "I can't resell it" — market risk<br>
+          • Mechanical failures (cracked block, AC)<br>
+          • "I overbid" — buyer's remorse<br>
+          • Transport cosmetic damage (separate claim)<br>
+          • Market value changes after sale
+        </div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:12px;padding-top:12px;border-top:1px solid #2a2000">Arbitration window: <strong style="color:var(--white)">24 hours</strong> after delivery. All platform disputes governed under <strong style="color:var(--white)">Collin County, Texas</strong> law. If a dealer files action against EVL and court dismisses based on platform neutrality, dealer pays EVL's full legal fees. Title defects only. All mechanical conditions are buyer's risk as disclosed at time of bidding. EVL is a technology coordinator — not a party to the transaction.</div>
+  </div>
+</div>
+
+<!-- ══ SAAS PRICING TAB ══ -->
+<div id="tab-monetization" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:6px">💰 EVL SAAS PLATFORM PRICING</div>
+  <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:24px">Subscription + transaction model. Dealers pay for access to pre-vetted inventory. Consumers pay for the coordination service.</div>
+
+  <div class="monetization-grid">
+    <div class="revenue-card">
+      <span class="revenue-icon">🏪</span>
+      <div class="revenue-title">IN-STORE DEALER (ID) SUBSCRIPTION</div>
+      <span class="revenue-amount">$299/mo</span>
+      <div class="revenue-desc">Access to local consumer vehicle stream. Phase 1 first-right-of-refusal on all nearby trade-ins. PITPO cert + corporate floor data included. Unlocks local tax-credit calculation tool.</div>
+    </div>
+    <div class="revenue-card">
+      <span class="revenue-icon">🌐</span>
+      <div class="revenue-title">BIDDING DEALER (BD) SUBSCRIPTION</div>
+      <span class="revenue-amount">$499/mo</span>
+      <div class="revenue-desc">Access to nationwide wholesale auction board. Phase 2 bidding on all EVL-certified vehicles. Real-time bid notifications. Corporate floor displayed. Sealed blind bid system.</div>
+    </div>
+    <div class="revenue-card" style="border-color:var(--gold)">
+      <span class="revenue-icon">⭐</span>
+      <div class="revenue-title">30-DAY TRIAL — PROVE THE ROI</div>
+      <span class="revenue-amount" style="color:var(--blue)">$195</span>
+      <div class="revenue-desc">30-day trial access. We send 5 qualified leads. Track close rate vs your current 20-25% average. EVL-vetted customers close at 60%+ (pre-sold, pre-verified). Renew based on proven results.</div>
+    </div>
+    <div class="revenue-card">
+      <span class="revenue-icon">💰</span>
+      <div class="revenue-title">CONSUMER COORDINATION FEE</div>
+      <span class="revenue-amount">$199</span>
+      <div class="revenue-desc">Deducted from escrow payout at settlement. Covers: PITPO certification, corporate floor API pulls, auction management, document generation, escrow coordination, porter dispatch.</div>
+    </div>
+    <div class="revenue-card">
+      <span class="revenue-icon">🏆</span>
+      <div class="revenue-title">AUCTION SUCCESS FEE</div>
+      <span class="revenue-amount">$250</span>
+      <div class="revenue-desc">Charged to winning BD on auction close. Only charged on successful Phase 2 transactions. Phase 1 local trades have no auction success fee — flat subscription covers it.</div>
+    </div>
+    <div class="revenue-card">
+      <span class="revenue-icon">📊</span>
+      <div class="revenue-title">ENTERPRISE DATA LICENSE</div>
+      <span class="revenue-amount">TBD</span>
+      <div class="revenue-desc">Volume-tiered monthly SaaS integration fee for CarMax, Carvana, and SMTV for clean, PITPO-verified inventory data delivery. Not a referral fee — a data licensing agreement.</div>
+    </div>
+  </div>
+
+  <!-- UPGRADE TRIGGERS -->
+  <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;padding:20px">
+    <div style="font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:14px">📈 SUBSCRIPTION UPGRADE TRIGGERS</div>
+    <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:2">
+      <strong style="color:var(--gold)">30-Day Trial → Standard Renewal:</strong> Dealer closes 2+ of 5 qualified leads sent during trial period<br>
+      <strong style="color:var(--gold)">Standard → Premium Rate:</strong> Documented 40%+ close rate on EVL leads (vs industry 20-25%)<br>
+      <strong style="color:var(--gold)">Premium with Trade Add-On:</strong> +$150/mo when trade-in auction coordination is included in deal<br>
+      <strong style="color:var(--gold)">MDS Advantage Premium:</strong> Dealers in high-MDS markets (slow-moving inventory) pay premium for EVL's sourcing edge
+    </div>
+  </div>
+</div>
+
+<!-- ══ DOCUMENTS TAB ══ -->
+<div id="tab-docs" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">📄 REQUIRED TRANSACTION DOCUMENTS</div>
+  <div style="background:var(--s1);border:1px solid #1a1a2e;border-radius:12px;overflow:hidden">
+    <div style="background:var(--s2);padding:14px 20px;border-bottom:1px solid #1a1a2e;display:grid;grid-template-columns:1fr 1fr auto auto;gap:12px;font-size:11px;font-weight:900;color:var(--muted);letter-spacing:1px;text-transform:uppercase">
+      <span>DOCUMENT</span><span>DESCRIPTION</span><span>PARTIES</span><span>STATUS</span>
+    </div>
+    <div style="padding:16px 20px">
+      ${[
+        {name:'Bill of Sale (BOS)',desc:'Auto-generated at auction close. Itemizes vehicle price, platform fee, transport.',parties:'Seller ↔ Buyer',status:'AUTO'},
+        {name:'Federal Odometer Disclosure',desc:'Locks mileage at point of sale. Federal requirement. Pre-populated from intake.',parties:'Seller signs',status:'AUTO'},
+        {name:'O&O / POA Form',desc:'Ownership & Odometer Assignment. Corrects minor signing errors without title re-application.',parties:'Seller signs',status:'AUTO'},
+        {name:'PITPO Certification Report',desc:'Full title verification output — API results, lien check, name match, badge assignment.',parties:'Platform generated',status:'AUTO'},
+        {name:'Corporate Floor Data Sheet',desc:'Official CarMax/Carvana/SMTV offer with timestamp, offer code, and expiration.',parties:'Provided to ID + BD',status:'AUTO'},
+        {name:'Auction Terms & As-Is Agreement',desc:'Buyer acknowledges AS-IS condition, arbitration rules, and mechanical risk acceptance.',parties:'BD signs',status:'REQUIRED'},
+        {name:'Escrow Hold Agreement',desc:'Required when title is in transit. 30-day clock, $250 penalty clause.',parties:'Seller signs',status:'CONDITIONAL'},
+        {name:'Bill of Lading (BOL)',desc:'Off-Ramping Protocol — driver photo inspection including external lights, all glass panes, panels, odometer, VIN. Both porters sign. Burden shifts to BD at signature. Documentation is final.',parties:'Driver + Seller',status:'REQUIRED'},
+        {name:'Driver Handoff Verification Log',desc:'PIN confirmation, CDL scan, FMCSA insurance verification. Timestamped.',parties:'Platform + Driver',status:'AUTO'},
+        {name:'SaaS Dealer Subscription Agreement',desc:'Dealer license + bond verification. Platform access terms. Auto-lock on license expiry.',parties:'Dealer signs once',status:'REQUIRED'},
+        {name:'Dealer SOQ / Onboarding',desc:'Federal EIN, dealer license number, surety bond, acquisition radius preferences.',parties:'Dealer completes',status:'REQUIRED'},
+        {name:'State Title Transfer Docs',desc:'State-specific. Generated per state of registration. Excludes CA/NY/NJ/IL.',parties:'Both parties',status:'AUTO'},
+      ].map(d=>`<div class="doc-row">
+        <div><div class="doc-name">${d.name}</div></div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body)">${d.desc}</div>
+        <div style="font-size:12px;color:var(--dim);font-weight:700;font-family:var(--body);white-space:nowrap">${d.parties}</div>
+        <div><span class="doc-status ${d.status==='AUTO'?'doc-auto':d.status==='REQUIRED'?'doc-required':'doc-optional'}">${d.status}</span></div>
+      </div>`).join('')}
+    </div>
+  </div>
+</div>
+
+<!-- ══ COMPLIANCE TAB ══ -->
+<div id="tab-compliance" class="tab-content">
+  <div style="font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:20px">⚖️ PLATFORM COMPLIANCE FRAMEWORK</div>
+
+  <!-- RESTRICTED STATES -->
+  <div class="state-compliance-card">
+    <div class="state-compliance-title">🚫 RESTRICTED STATES — TRADE-IN NOT ACCEPTED</div>
+    <div style="font-size:13px;color:var(--dim);font-family:var(--body);margin-bottom:12px;line-height:1.6">The following states have DMV processing timelines exceeding EVL's 30-day PITPO escrow window. Vehicles registered in these states cannot be submitted as trade-ins. Customers may still purchase vehicles through EVL without a trade-in.</div>
+    <div class="excluded-states">
+      <span class="state-tag state-excluded">🚫 CALIFORNIA — 30-45 Day Processing</span>
+      <span class="state-tag state-excluded">🚫 NEW YORK — In-Person Required</span>
+      <span class="state-tag state-excluded">🚫 NEW JERSEY — 4-8 Week Backlog</span>
+      <span class="state-tag state-excluded">🚫 ILLINOIS — Extended Processing</span>
+    </div>
+    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:12px">Customers in these states are directed to CarMax or Carvana who have dedicated title processing teams able to handle extended DMV timelines.</div>
+  </div>
+
+  <!-- ADDITIONAL EXCLUSIONS -->
+  <div style="background:#1a0000;border:2px solid var(--red);border-radius:12px;padding:20px;margin-bottom:24px">
+    <div style="font-size:14px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:14px">❌ AUTOMATIC SUBMISSION REJECTIONS</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      ${[
+        ['Salvage / Rebuilt Title','High fraud risk. No bidding dealer will accept.'],
+        ['20+ Year Old Vehicles','Federal odometer exemption — mileage unverifiable.'],
+        ['VIN Mismatch Detected','Title and vehicle don\'t match. Title fraud risk.'],
+        ['Name Mismatch','Prevents legal title transfer. Illegal title flipping.'],
+        ['Active Lien (Not Payoff)','Cannot transfer clean title with lien attached.'],
+        ['Lost Title (No Path)','30-day window cannot be guaranteed without title.'],
+        ['Flood / Fire History','Undisclosed catastrophic damage risk.'],
+        ['Open Safety Recalls','Liability exposure. Cannot certify safe transport.'],
+      ].map(([title,reason])=>`<div style="background:var(--bg);border:1px solid #2a0000;border-radius:8px;padding:10px 12px">
+        <div style="font-size:13px;font-weight:900;color:var(--red);margin-bottom:4px">${title}</div>
+        <div style="font-size:12px;color:var(--muted);font-family:var(--body)">${reason}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- PLATFORM IDENTITY -->
+  <div style="background:#020a02;border:2px solid var(--green);border-radius:12px;padding:20px">
+    <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:14px">✅ EVL LEGAL IDENTITY — WHAT WE ARE / ARE NOT</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-family:var(--body);font-size:13px;line-height:2">
+      <div>
+        <div style="font-size:11px;color:var(--green);font-weight:900;letter-spacing:1px;margin-bottom:8px">EVL IS:</div>
+        ✅ A technology platform (SaaS)<br>
+        ✅ The consumer's authorized technology agent<br>
+        ✅ An auction coordinator (marketplace)<br>
+        ✅ A data verification service<br>
+        ✅ A subscription tool for licensed dealers
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--red);font-weight:900;letter-spacing:1px;margin-bottom:8px">EVL IS NOT:</div>
+        ❌ A licensed motor vehicle dealer<br>
+        ❌ A licensed auctioneer<br>
+        ❌ A broker or facilitator<br>
+        ❌ A party to any transaction<br>
+        ❌ Responsible for vehicle condition
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);font-family:var(--body);margin-top:14px;padding-top:12px;border-top:1px solid #0d2a0d;line-height:1.6">Platform operates under the same legal framework as eBay Motors — a technology marketplace connecting sellers and buyers. All transactions are between the consumer (seller) and licensed dealer (buyer). EVL's name appears nowhere on title, bill of sale, or financing documents. EVL charges SaaS subscription and coordination fees — not transaction commissions.</div>
+  </div>
+</div>
+
+</div><!-- /ws-wrap -->
+
+<script>
+// ── TAB SWITCH ──
+function switchTab(tab, btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+// ── LIVE AUCTION DATA ──
+const LIVE_AUCTIONS = [
+  {id:'EVL-AUC-001',phase:1,vehicle:'2023 Toyota Tundra TRD Pro',vin:'5TFLA5AB7PX123456',miles:'22,400 mi',color:'White Pearl',badges:['PITPO','GOLD','1OWNER','NO_ACCIDENT'],corporateFloor:43200,carmax:42800,carvana:43200,smtv:41900,idTarget:40000,currentBid:null,timer:1800,timerLabel:'48:00:00',phaseLabel:'PHASE 1 — ID HOLD WINDOW',description:'ID has 48 hours to match $41,364 tax-adjusted target or vehicle moves to live auction.'},
+  {id:'EVL-AUC-002',phase:2,vehicle:'2022 BMW X5 xDrive40i',vin:'5UXCR6C08N9L23456',miles:'31,800 mi',color:'Alpine White',badges:['PITPO','SILVER','1OWNER'],corporateFloor:52400,carmax:51900,carvana:52400,smtv:51200,idTarget:null,currentBid:54200,timer:3600,timerLabel:'1:42:18',phaseLabel:'PHASE 2 — LIVE BIDDING',description:'Corporate floor verified at $52,400. Bidding above floor. Sealed blind bids only.'},
+  {id:'EVL-AUC-003',phase:2,vehicle:'2021 Ford F-150 Lariat SuperCrew',vin:'1FTFW1E85MFC34567',miles:'44,200 mi',color:'Iconic Silver',badges:['PITPO','SILVER'],corporateFloor:34800,carmax:34200,carvana:34800,smtv:33900,idTarget:null,currentBid:35600,timer:7200,timerLabel:'2:01:44',phaseLabel:'PHASE 2 — LIVE BIDDING',description:'Corporate floor $34,800. Current high bid $35,600. 90+ days on market at previous dealer — motivated seller.'},
+  {id:'EVL-AUC-004',phase:1,vehicle:'2024 Honda CR-V Hybrid EX-L',vin:'2HKRW2H8XRH456789',miles:'8,100 mi',color:'Radiant Red',badges:['PITPO','GOLD','NO_ACCIDENT'],corporateFloor:31200,carmax:30800,carvana:31200,smtv:30500,idTarget:29300,currentBid:null,timer:86400,timerLabel:'23:14:32',phaseLabel:'PHASE 1 — ID HOLD WINDOW',description:'Near-new. Full Gold warranty badge — under 3yr/36k. ID first refusal active.'},
+  {id:'EVL-AUC-005',phase:2,vehicle:'2019 Jeep Grand Cherokee Limited 4x4',vin:'1C4RJFBG7KC567890',miles:'67,300 mi',color:'Granite Crystal',badges:['PITPO','BRONZE'],corporateFloor:24500,carmax:24100,carvana:24500,smtv:23800,idTarget:null,currentBid:24500,timer:1800,timerLabel:'0:28:52',phaseLabel:'PHASE 2 — CLOSING SOON',description:'Bronze badge — AS-IS certified. Clean PITPO title. High mileage all warranties expired. Starting bid at corporate floor.'},
+];
+
+const BADGE_CONFIG = {
+  'PITPO':      {label:'🛡️ PITPO CERT',cls:'badge-pitpo'},
+  'GOLD':       {label:'🥇 GOLD WARRANTY',cls:'badge-gold'},
+  'SILVER':     {label:'🥈 SILVER WARRANTY',cls:'badge-silver'},
+  'BRONZE':     {label:'🥉 AS-IS CERT',cls:'badge-bronze'},
+  '1OWNER':     {label:'🏅 1-OWNER',cls:'badge-1owner'},
+  'NO_ACCIDENT':{label:'✅ NO ACCIDENTS',cls:'badge-no-accident'},
+};
+
+function renderAuctions(){
+  const container = document.getElementById('auction-list');
+  container.innerHTML = LIVE_AUCTIONS.map(a=>{
+    const phaseClass = a.phase===1?'phase-1':a.currentBid>a.corporateFloor?'floor-beat':'phase-2';
+    const phaseBadgeClass = a.phase===1?'phase-1-badge':a.currentBid>a.corporateFloor?'phase-floor-badge':'phase-2-badge';
+    const timerClass = a.timer<3600?'bid-timer':'bid-timer phase1';
+    const floorSrc = Object.entries({CarMax:a.carmax,Carvana:a.carvana,'SMTV':a.smtv}).sort((x,y)=>y[1]-x[1]);
+    const bestFloor = floorSrc[0];
+
+    return `<div class="auction-card ${phaseClass}">
+      <div class="auction-header">
+        <div>
+          <div class="auction-id">${a.id}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--body);margin-top:2px">${a.phaseLabel}</div>
+        </div>
+        <span class="auction-phase-badge ${phaseBadgeClass}">${a.phase===1?'🔵 PHASE 1':'⚡ PHASE 2'}</span>
+      </div>
+      <div class="auction-body">
+        <div class="auction-grid">
+
+          <!-- VEHICLE INFO -->
+          <div class="auction-vehicle-section">
+            <div class="auction-vehicle-name">${a.vehicle}</div>
+            <div class="auction-vin">VIN: ${a.vin}</div>
+            <div class="auction-miles">📊 ${a.miles} · ${a.color}</div>
+            <div class="pitpo-badges">
+              ${a.badges.map(b=>`<span class="badge ${BADGE_CONFIG[b]?.cls||''}">${BADGE_CONFIG[b]?.label||b}</span>`).join('')}
+            </div>
+            <div style="font-size:12px;color:var(--muted);font-family:var(--body);line-height:1.5">${a.description}</div>
+          </div>
+
+          <!-- CORPORATE FLOOR -->
+          <div class="auction-floor-section">
+            <div class="floor-card">
+              <div class="floor-label">🔒 VERIFIED CORPORATE FLOOR</div>
+              <div class="floor-amount">$${a.corporateFloor.toLocaleString()}</div>
+              <div class="floor-source">Best offer: ${bestFloor[0]} — $${bestFloor[1].toLocaleString()}</div>
+              ${floorSrc.map(([src,amt])=>`<div class="floor-row">
+                <span class="floor-row-label">${src}</span>
+                <span class="floor-row-val ${amt===bestFloor[1]?'best':''}">$${amt.toLocaleString()}${amt===bestFloor[1]?' ⭐':''}</span>
+              </div>`).join('')}
+              ${a.phase===1&&a.idTarget?`<div style="margin-top:10px;background:#040e1a;border:1px solid var(--blue);border-radius:6px;padding:8px 10px;font-size:12px;color:var(--blue);font-weight:700;line-height:1.5">ID MATCH TARGET: <strong style="font-size:15px;color:var(--white)">$${a.idTarget.toLocaleString()}</strong><br><span style="font-size:11px;color:var(--muted)">(Floor − 6.25% TX tax credit − 3% logistics allowance)</span></div>`:''}
+            </div>
+          </div>
+
+          <!-- BID INPUT -->
+          <div class="auction-bid-section">
+            <div class="bid-card">
+              <div class="bid-label">${a.phase===1?'ID HOLD TIMER':'AUCTION CLOSES IN'}</div>
+              <div class="${timerClass}" id="timer-${a.id}">${a.timerLabel}</div>
+              ${a.currentBid?`<div class="bid-current">🏆 CURRENT HIGH BID: <strong style="color:var(--green);font-size:16px">$${a.currentBid.toLocaleString()}</strong></div>`:``}
+              ${a.phase===2?`<div class="bid-input-wrap" style="margin-top:10px">
+                <input class="bid-input" type="number" id="bid-${a.id}" placeholder="${(a.currentBid||(a.corporateFloor+100)).toLocaleString()}" min="${a.corporateFloor}"/>
+                <button class="bid-submit" onclick="submitBid('${a.id}')">BID</button>
+              </div>
+              <div class="bid-floor-note">🔒 Floor: $${a.corporateFloor.toLocaleString()} — All bids sealed & blind</div>`
+              :`<div class="phase-1-note">This vehicle is in Phase 1 — the local In-Store Dealer has first right of refusal. If the ID does not match the target within the hold window, this vehicle moves to Phase 2 live bidding automatically.</div>`}
+              <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+                <button class="btn btn-dark btn-sm">📋 PITPO REPORT</button>
+                <button class="btn btn-dark btn-sm">📸 VIEW PHOTOS</button>
+                ${a.phase===2?`<button class="btn btn-gold btn-sm" onclick="submitBid('${a.id}')">⚡ SUBMIT BID</button>`:''}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function submitBid(auctionId){
+  const input = document.getElementById('bid-'+auctionId);
+  const val = parseFloat(input?.value);
+  const auction = LIVE_AUCTIONS.find(a=>a.id===auctionId);
+  if(!val){ alert('Please enter your bid amount'); return; }
+  if(val < auction?.corporateFloor){ alert(`Bid must be at or above the corporate floor of $${auction.corporateFloor.toLocaleString()}`); return; }
+  if(confirm(`Submit SEALED blind bid of $${val.toLocaleString()} on ${auctionId}?\n\nThis bid is binding. You will be contacted within 30 minutes of auction close if you are the highest bidder.\n\nBy bidding you agree to the EVL AS-IS platform terms and NAAA arbitration rules (title defects only, 24-hour window).`)){
+    alert(`✅ Bid submitted — $${val.toLocaleString()} on ${auctionId}\n\nYour bid is sealed and confidential. EVL will contact you within 30 minutes of auction close.\n\nRemember: All sales are AS-IS. PITPO certification guarantees clean title only.`);
+    if(input) input.value='';
+  }
+}
+
+// ── INTAKE HANDLERS ──
+function setTitleStatus(status, btn){
+  document.querySelectorAll('.title-status-btn').forEach(b=>{
+    b.classList.remove('active-title-hand','active-title-transit');
+  });
+  document.getElementById('title-transit-notice').style.display='none';
+  document.getElementById('title-lost-notice').style.display='none';
+  if(status==='hand') btn.classList.add('active-title-hand');
+  if(status==='transit'){ btn.classList.add('active-title-transit'); document.getElementById('title-transit-notice').style.display='block'; }
+  if(status==='lost'){ document.getElementById('title-lost-notice').style.display='block'; }
+}
+
+function simulateUpload(btn, label){
+  btn.style.borderColor='var(--green)';
+  btn.style.background='#020a02';
+  btn.querySelector('.photo-upload-icon').textContent='✅';
+  btn.querySelector('.photo-upload-label').textContent=label+' — UPLOADED';
+}
+
+document.getElementById('intake-state')?.addEventListener('change',function(){
+  const restricted = ['CA_RESTRICTED','NY_RESTRICTED','NJ_RESTRICTED','IL_RESTRICTED'];
+  const alert = document.getElementById('state-restriction-alert');
+  if(alert) alert.style.display = restricted.includes(this.value)?'block':'none';
+});
+
+function submitIntake(){
+  const vin = document.getElementById('intake-vin')?.value?.trim();
+  if(!vin||vin.length!==17){ alert('Please enter a valid 17-digit VIN'); return; }
+  alert(`✅ VEHICLE SUBMITTED FOR EVL CERTIFICATION\n\nVIN: ${vin}\n\nNext steps:\n1. PITPO title API verification running\n2. Corporate floor API pull (CarMax/Carvana/SMTV) — est. 2 hours\n3. Warranty badge assignment based on VIN build data\n4. Phase 1 notification sent to local ID dealers\n\nYou will receive a text and email confirmation within 30 minutes.`);
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded',function(){
+  renderAuctions();
+  // Simulate countdown timers
+  setInterval(()=>{
+    LIVE_AUCTIONS.forEach(a=>{
+      if(a.timer>0){
+        a.timer--;
+        const h=Math.floor(a.timer/3600);
+        const m=Math.floor((a.timer%3600)/60);
+        const s=a.timer%60;
+        const el=document.getElementById('timer-'+a.id);
+        if(el) el.textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      }
+    });
+  },1000);
+});
+</script>
+</body>
+</html>
