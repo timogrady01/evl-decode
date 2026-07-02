@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WS Exchange Dealer Onboarding | Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:100vh}
+:root{--blue:#2B84FE;--green:#00C853;--gold:#FFD700;--red:#FF3333;--white:#fff;--muted:#A1A1AA;--dim:#ccd6e0;--bg:#020203;--s1:#090E17;--s2:#0a0f1a;--font:'Oswald',sans-serif;--body:'Barlow',sans-serif}
+
+/* NAV */
+.ws-nav{position:sticky;top:0;z-index:9999;background:#0a0800;border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.ws-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
+.ws-nav-links{display:flex;gap:16px}
+.ws-nav-link{color:#e8d88a;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 10px;transition:color .2s}
+.ws-nav-link:hover{color:var(--gold)}
+
+/* PROGRESS */
+.progress-bar{background:var(--s1);border-bottom:1px solid #1a1a2e;padding:16px 24px;display:flex;align-items:center;justify-content:center;gap:0;overflow-x:auto}
+.prog-step{display:flex;align-items:center;cursor:pointer}
+.prog-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;border:2px solid #2a2a4e;background:var(--bg);transition:all .3s;flex-shrink:0}
+.prog-dot.done{background:#0d1a0d;border-color:var(--green);color:var(--green)}
+.prog-dot.active{background:#040e1a;border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(255,215,0,0.3)}
+.prog-dot.pending{color:var(--muted)}
+.prog-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin:0 8px;white-space:nowrap}
+.prog-label.active{color:var(--gold)}
+.prog-label.done{color:var(--green)}
+.prog-line{width:40px;height:2px;background:#1a1a2e;flex-shrink:0}
+.prog-line.done{background:var(--green)}
+
+/* WRAP */
+.wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+
+/* SECTION CARDS */
+.section-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:14px;overflow:hidden;margin-bottom:20px;display:none}
+.section-card.active{display:block}
+.section-hdr{background:var(--s2);padding:18px 24px;border-bottom:2px solid #1a1a2e;display:flex;align-items:center;gap:12px}
+.section-icon{font-size:24px}
+.section-title{font-size:18px;font-weight:900;color:var(--white);letter-spacing:1px}
+.section-sub{font-size:13px;color:var(--muted);font-family:var(--body);margin-top:4px}
+.section-body{padding:24px}
+
+/* FORM ELEMENTS */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.form-label span{color:var(--red)}
+.form-input{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 16px;border-radius:8px;font-size:14px;font-family:var(--body);font-weight:600;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus{border-color:var(--blue)}
+.form-input::placeholder{color:#3a3a5e}
+.form-input option{background:#0a0a1a}
+.form-select{background:var(--bg);border:2px solid #2a2a4e;color:var(--white);padding:12px 16px;border-radius:8px;font-size:14px;font-family:var(--body);font-weight:600;outline:none;width:100%}
+
+/* DEALER TYPE TOGGLE */
+.dealer-toggle{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.dealer-type-btn{padding:20px;border-radius:12px;border:3px solid #1a1a2e;background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;text-align:center;font-family:var(--font)}
+.dealer-type-btn:hover{border-color:var(--gold);color:var(--white)}
+.dealer-type-btn.active.id{border-color:var(--gold);background:#1a1400;color:var(--gold)}
+.dealer-type-btn.active.bd{border-color:var(--green);background:#0d1a0d;color:var(--green)}
+.dealer-type-icon{font-size:32px;display:block;margin-bottom:8px}
+.dealer-type-title{font-size:16px;font-weight:900;letter-spacing:1px;display:block;margin-bottom:4px}
+.dealer-type-desc{font-size:12px;font-family:var(--body);line-height:1.4;opacity:.8}
+
+/* LEGAL DOCUMENT */
+.legal-doc{background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:24px;margin-bottom:20px;font-family:var(--body);line-height:1.8;color:var(--dim)}
+.legal-doc h2{font-size:16px;font-weight:900;color:var(--white);letter-spacing:2px;text-transform:uppercase;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid #1a1a2e;font-family:var(--font)}
+.legal-doc h2:first-child{margin-top:0}
+.legal-doc h3{font-size:14px;font-weight:900;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin:16px 0 8px;font-family:var(--font)}
+.legal-doc p{font-size:14px;margin-bottom:10px}
+.legal-doc ul{margin:8px 0 12px 20px}
+.legal-doc ul li{font-size:14px;margin-bottom:6px}
+.legal-doc .legal-highlight{background:#040e1a;border-left:3px solid var(--blue);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:13px}
+.legal-doc .legal-warning{background:#1a0000;border-left:3px solid var(--red);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:13px;color:#ffaaaa}
+.legal-doc strong{color:var(--white);font-weight:700}
+
+/* INITIALS BLOCKS */
+.initials-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:16px 0}
+.initials-block{background:var(--s2);border:2px solid #2a2a4e;border-radius:8px;padding:14px}
+.initials-label{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-family:var(--font)}
+.initials-input{background:var(--bg);border:2px solid var(--gold);color:var(--white);padding:10px;border-radius:6px;font-size:20px;font-family:serif;font-weight:900;text-align:center;width:80px;outline:none;letter-spacing:4px}
+.initials-text{font-size:11px;color:var(--muted);font-family:var(--body);margin-top:6px;line-height:1.4}
+
+/* SIGN BLOCK */
+.sign-block{background:var(--bg);border:2px solid var(--gold);border-radius:10px;padding:20px;margin:16px 0}
+.sign-title{font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.sign-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sign-field{display:flex;flex-direction:column;gap:6px}
+.sign-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:var(--font)}
+.sign-input{background:var(--bg);border-bottom:2px solid var(--gold);border-top:none;border-left:none;border-right:none;color:var(--white);padding:8px 0;font-size:14px;font-family:'Barlow',sans-serif;outline:none;width:100%}
+.sign-date{font-size:13px;color:var(--muted);font-family:var(--body);padding:8px 0;border-bottom:2px solid #2a2a4e}
+
+/* INVOICE */
+.invoice-wrap{background:#fff;border-radius:10px;padding:28px;color:#1a1a2e;font-family:var(--body)}
+.inv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;border-bottom:2px solid #1a1a2e;padding-bottom:20px}
+.inv-logo{font-size:20px;font-weight:900;font-family:var(--font);color:#1a1a2e;letter-spacing:1px}
+.inv-logo span{color:#2B84FE}
+.inv-meta{text-align:right}
+.inv-title{font-size:24px;font-weight:900;letter-spacing:2px;color:#1a1a2e;font-family:var(--font)}
+.inv-num{font-size:13px;color:#666;margin-top:4px}
+.inv-status{display:inline-block;background:#040e1a;color:#2B84FE;font-size:11px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:1px;font-family:var(--font)}
+.inv-parties{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.inv-party-label{font-size:10px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-family:var(--font)}
+.inv-party-name{font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.inv-party-detail{font-size:13px;color:#555;line-height:1.6}
+.inv-table{width:100%;border-collapse:collapse;margin-bottom:20px}
+.inv-table th{background:#f5f5f5;color:#1a1a2e;padding:10px 14px;text-align:left;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-family:var(--font);border-bottom:2px solid #1a1a2e}
+.inv-table td{padding:12px 14px;font-size:14px;color:#333;border-bottom:1px solid #eee}
+.inv-table tr:last-child td{border-bottom:none}
+.inv-total-row{background:#f9f9f9}
+.inv-total-row td{font-weight:700;color:#1a1a2e;font-size:15px;padding:14px}
+.inv-terms{background:#f5f5f5;border-radius:8px;padding:14px;font-size:12px;color:#555;line-height:1.6}
+.inv-due{display:inline-block;background:#1a1a2e;color:#FFD700;font-size:13px;font-weight:900;padding:4px 14px;border-radius:6px;font-family:var(--font)}
+
+/* BBPITPO CARDS */
+.bitpo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+.bitpo-card{background:var(--bg);border:2px solid #1a1a2e;border-radius:12px;padding:18px;transition:border-color .2s}
+.bitpo-card:hover{border-color:var(--gold)}
+.bitpo-letter{font-size:48px;font-weight:900;line-height:1;margin-bottom:8px}
+.bitpo-word{font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:4px}
+.bitpo-def{font-size:13px;color:var(--muted);font-family:var(--body);line-height:1.5;margin-bottom:10px}
+.bitpo-items{display:flex;flex-direction:column;gap:4px}
+.bitpo-item{font-size:12px;color:var(--dim);font-family:var(--body);padding:4px 8px;background:var(--s1);border-radius:4px;border-left:2px solid}
+
+/* BUTTONS */
+.btn{padding:12px 24px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn-gold{background:var(--gold);color:#020203}.btn-gold:hover{background:#e6c200}
+.btn-green{background:var(--green);color:#020203}.btn-green:hover{background:#00a844}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:#1a6fd4}
+.btn-dark{background:#1a1a2e;color:#fff;border:1px solid #2a2a4e}.btn-dark:hover{border-color:var(--gold)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid #1a1a2e}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:#0d1a0d;border:2px solid var(--green);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:900;color:var(--green);letter-spacing:1px;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+
+@media(max-width:768px){
+  .form-grid,.sign-grid,.inv-parties,.dealer-toggle{grid-template-columns:1fr}
+  .bitpo-grid{grid-template-columns:1fr}
+}
+
+/* ── BIG SIZE OVERRIDES ── */
+body { font-size: 20px !important; }
+.ws-nav { height: 72px !important; padding: 0 32px !important; }
+.ws-nav-logo { font-size: 20px !important; }
+.ws-nav-link { font-size: 14px !important; padding: 8px 14px !important; }
+.progress-bar { padding: 20px 32px !important; gap: 0 !important; }
+.prog-dot { width: 38px !important; height: 38px !important; font-size: 14px !important; }
+.prog-label { font-size: 12px !important; margin: 0 10px !important; }
+.prog-line { width: 48px !important; }
+.wrap { max-width: 1200px !important; padding: 40px 32px 100px !important; }
+.section-hdr { padding: 22px 28px !important; }
+.section-icon { font-size: 32px !important; }
+.section-title { font-size: 22px !important; letter-spacing: 2px !important; }
+.section-sub { font-size: 16px !important; margin-top: 6px !important; }
+.section-body { padding: 32px !important; }
+.dealer-toggle { gap: 20px !important; margin-bottom: 28px !important; }
+.dealer-type-btn { padding: 28px 24px !important; border-radius: 14px !important; }
+.dealer-type-icon { font-size: 44px !important; margin-bottom: 12px !important; }
+.dealer-type-title { font-size: 20px !important; letter-spacing: 2px !important; margin-bottom: 6px !important; }
+.dealer-type-desc { font-size: 15px !important; line-height: 1.6 !important; }
+.form-grid { gap: 20px !important; margin-bottom: 24px !important; }
+.form-label { font-size: 13px !important; letter-spacing: 1px !important; margin-bottom: 8px !important; }
+.form-input { font-size: 16px !important; padding: 14px 18px !important; border-radius: 10px !important; }
+.form-select { font-size: 16px !important; padding: 14px 18px !important; }
+.legal-doc { padding: 32px !important; }
+.legal-doc p { font-size: 15px !important; margin-bottom: 14px !important; line-height: 1.9 !important; }
+.legal-doc h2 { font-size: 18px !important; margin: 24px 0 12px !important; padding-bottom: 8px !important; }
+.legal-doc h3 { font-size: 16px !important; margin: 18px 0 10px !important; }
+.legal-doc ul li { font-size: 15px !important; margin-bottom: 8px !important; }
+.legal-doc .legal-highlight { font-size: 15px !important; padding: 14px 18px !important; }
+.legal-doc .legal-warning { font-size: 15px !important; padding: 14px 18px !important; }
+.initials-row { gap: 16px !important; margin: 20px 0 !important; }
+.initials-block { padding: 18px !important; }
+.initials-label { font-size: 12px !important; letter-spacing: 2px !important; margin-bottom: 10px !important; }
+.initials-input { font-size: 24px !important; padding: 12px !important; width: 100px !important; letter-spacing: 6px !important; }
+.initials-text { font-size: 13px !important; margin-top: 8px !important; line-height: 1.5 !important; }
+.sign-block { padding: 24px !important; border-radius: 12px !important; margin: 20px 0 !important; }
+.sign-title { font-size: 14px !important; letter-spacing: 2px !important; margin-bottom: 18px !important; }
+.sign-grid { gap: 20px !important; }
+.sign-label { font-size: 13px !important; letter-spacing: 1px !important; }
+.sign-input { font-size: 16px !important; padding: 10px 0 !important; }
+.invoice-wrap { padding: 36px !important; }
+.inv-logo { font-size: 22px !important; }
+.inv-title { font-size: 28px !important; }
+.inv-num { font-size: 15px !important; margin-top: 6px !important; }
+.inv-party-label { font-size: 12px !important; letter-spacing: 2px !important; margin-bottom: 8px !important; }
+.inv-party-name { font-size: 17px !important; margin-bottom: 6px !important; }
+.inv-party-detail { font-size: 14px !important; line-height: 1.7 !important; }
+.inv-table th { font-size: 13px !important; padding: 12px 16px !important; }
+.inv-table td { font-size: 15px !important; padding: 14px 16px !important; }
+.inv-total-row td { font-size: 17px !important; padding: 16px !important; }
+.inv-terms { font-size: 13px !important; padding: 16px !important; line-height: 1.7 !important; }
+.bitpo-grid { gap: 18px !important; margin-bottom: 24px !important; }
+.bitpo-card { padding: 24px !important; border-radius: 14px !important; }
+.bitpo-letter { font-size: 60px !important; margin-bottom: 12px !important; }
+.bitpo-word { font-size: 18px !important; letter-spacing: 2px !important; margin-bottom: 6px !important; }
+.bitpo-def { font-size: 14px !important; line-height: 1.7 !important; margin-bottom: 14px !important; }
+.bitpo-item { font-size: 13px !important; padding: 6px 10px !important; }
+.btn { font-size: 15px !important; padding: 14px 28px !important; border-radius: 10px !important; }
+.btn-row { gap: 12px !important; margin-top: 24px !important; padding-top: 20px !important; }
+#step-success .section-body { padding: 60px 32px !important; }
+
+
+/* ── BOLD BRIGHT OVERRIDE ── */
+
+/* Base text — everything brighter */
+body { font-size: 20px !important; color: #f0f4ff !important; }
+
+/* All muted/dim text — much brighter */
+* { color: inherit; }
+.dealer-type-desc { color: #d0d8f0 !important; font-size: 16px !important; font-weight: 600 !important; }
+.section-sub { color: #d0d8f0 !important; font-size: 16px !important; font-weight: 600 !important; }
+
+/* What each role means box — all text bright white */
+.section-body div[style*="background:var(--bg)"] * { color: #f0f4ff !important; }
+.section-body div[style*="font-size:13px"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.9 !important; }
+.section-body div[style*="font-size:14px"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.9 !important; }
+
+/* All bullet point lines */
+.section-body div[style*="line-height:1.7"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; }
+.section-body div[style*="line-height:1.6"] { color: #e8eeff !important; font-size: 16px !important; font-weight: 600 !important; }
+
+/* ID and BD role label headers */
+.section-body div[style*="color:var(--gold)"] { font-size: 16px !important; font-weight: 900 !important; letter-spacing: 2px !important; }
+.section-body div[style*="color:var(--green)"] { font-size: 16px !important; font-weight: 900 !important; letter-spacing: 2px !important; }
+
+/* Legal doc — all body text full white */
+.legal-doc { color: #e8eeff !important; }
+.legal-doc p { color: #e8eeff !important; font-size: 16px !important; line-height: 2 !important; font-weight: 500 !important; }
+.legal-doc ul li { color: #e8eeff !important; font-size: 16px !important; font-weight: 500 !important; }
+.legal-doc .legal-highlight { color: #d8e8ff !important; font-size: 16px !important; font-weight: 600 !important; }
+.legal-doc .legal-warning { color: #ffcccc !important; font-size: 16px !important; font-weight: 600 !important; }
+.legal-doc strong { color: #ffffff !important; font-weight: 900 !important; }
+
+/* BBP cards */
+.bitpo-def { color: #d8e0f8 !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.8 !important; }
+.bitpo-item { color: #e0e8ff !important; font-size: 14px !important; font-weight: 600 !important; }
+
+/* Initials text */
+.initials-text { color: #c8d4f0 !important; font-size: 14px !important; font-weight: 600 !important; }
+
+/* Form labels */
+.form-label { color: #e0e8ff !important; font-size: 14px !important; font-weight: 900 !important; letter-spacing: 2px !important; }
+
+/* Sign block */
+.sign-label { color: #e0e8ff !important; font-size: 14px !important; font-weight: 900 !important; }
+
+/* Invoice text */
+.inv-party-detail { color: #444 !important; font-size: 15px !important; font-weight: 600 !important; }
+.inv-terms { color: #444 !important; font-size: 14px !important; font-weight: 600 !important; }
+.inv-table td { color: #222 !important; font-size: 16px !important; font-weight: 600 !important; }
+
+/* Progress labels */
+.prog-label { color: #c0c8e8 !important; font-size: 13px !important; font-weight: 700 !important; }
+.prog-label.active { color: var(--gold) !important; }
+.prog-label.done { color: var(--green) !important; }
+
+/* Nav links */
+.ws-nav-link { color: #f0d870 !important; font-size: 15px !important; font-weight: 900 !important; }
+
+/* Dealer type button descriptions */
+.dealer-type-btn { color: #c0c8e8 !important; }
+.dealer-type-btn:hover { color: #ffffff !important; }
+.dealer-type-btn.active.id .dealer-type-desc { color: #ffe87a !important; font-weight: 700 !important; }
+.dealer-type-btn.active.bd .dealer-type-desc { color: #80ff80 !important; font-weight: 700 !important; }
+
+/* Process steps */
+.section-body div[style*="font-family:var(--body)"] { color: #e0e8ff !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.8 !important; }
+
+/* Section body small labels */
+.section-body div[style*="letter-spacing:2px"] { color: #e0e8ff !important; }
+.section-body div[style*="letter-spacing:1px"] { color: #e0e8ff !important; }
+
+/* Contact protocol box */
+.section-body div[style*="font-family:var(--body);font-size:13px"] { color: #d8e4ff !important; font-size: 15px !important; font-weight: 600 !important; }
+
+/* What never happens box */
+.section-body div[style*="grid-template-columns:1fr 1fr"] div { color: #ffcccc !important; font-size: 15px !important; font-weight: 700 !important; }
+
+/* Success screen */
+#step-success .section-body div[style*="font-size:14px"] { color: #e0eeff !important; font-size: 16px !important; font-weight: 600 !important; line-height: 2 !important; }
+
+/* Checkmark/agreement text */
+.section-body label span { color: #d8e4ff !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.8 !important; }
+
+/* E-SIGN notice */
+.section-body div[style*="font-size:12px"] { color: #c0cce8 !important; font-size: 14px !important; }
+
+/* Make all muted vars brighter */
+:root {
+  --muted: #b8c4e0 !important;
+  --dim: #dce4f8 !important;
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="ws-nav">
+  <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="ws-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
+    EVL <span style="color:var(--gold);margin-left:4px">WHOLESALE</span>
+  </a>
+  <div class="ws-nav-links">
+    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="ws-nav-link">DASHBOARD</a>
+    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="ws-nav-link">EXCHANGE</a>
+    <a href="https://evl-decode-two.vercel.app/ws-hub" class="ws-nav-link">HUB MAP</a>
+    <a href="https://evl-decode-two.vercel.app/home" class="ws-nav-link">⬅ RETAIL</a>
+  </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-bar">
+  <div class="prog-step" onclick="goStep(1)">
+    <div class="prog-dot active" id="dot-1">1</div>
+    <div class="prog-label active" id="lbl-1">DEALER TYPE</div>
+  </div>
+  <div class="prog-line" id="line-1"></div>
+  <div class="prog-step" onclick="goStep(2)">
+    <div class="prog-dot pending" id="dot-2">2</div>
+    <div class="prog-label" id="lbl-2">DEALER INFO</div>
+  </div>
+  <div class="prog-line" id="line-2"></div>
+  <div class="prog-step" onclick="goStep(3)">
+    <div class="prog-dot pending" id="dot-3">3</div>
+    <div class="prog-label" id="lbl-3">BBP FRAMEWORK</div>
+  </div>
+  <div class="prog-line" id="line-3"></div>
+  <div class="prog-step" onclick="goStep(4)">
+    <div class="prog-dot pending" id="dot-4">4</div>
+    <div class="prog-label" id="lbl-4">PLATFORM AGREEMENT</div>
+  </div>
+  <div class="prog-line" id="line-4"></div>
+  <div class="prog-step" onclick="goStep(5)">
+    <div class="prog-dot pending" id="dot-5">5</div>
+    <div class="prog-label" id="lbl-5">PROCESS & PROCEDURE</div>
+  </div>
+  <div class="prog-line" id="line-5"></div>
+  <div class="prog-step" onclick="goStep(6)">
+    <div class="prog-dot pending" id="dot-6">6</div>
+    <div class="prog-label" id="lbl-6">SIGN & INVOICE</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══ STEP 1: DEALER TYPE ══ -->
+<div class="section-card active" id="step-1">
+  <div class="section-hdr">
+    <div class="section-icon">🏷️</div>
+    <div>
+      <div class="section-title">SELECT YOUR DEALER ROLE</div>
+      <div class="section-sub">Are you bringing a vehicle to market or purchasing one?</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="dealer-toggle">
+      <button class="dealer-type-btn id" id="btn-id" onclick="selectDealerType('ID')">
+        <span class="dealer-type-icon">🚗</span>
+        <span class="dealer-type-title">ISSUING DEALER</span>
+        <span class="dealer-type-desc">I have a vehicle I want to sell through the EVL WS Exchange platform. I am the vehicle owner / consignor.</span>
+      </button>
+      <button class="dealer-type-btn bd" id="btn-bd" onclick="selectDealerType('BD')">
+        <span class="dealer-type-icon">🏆</span>
+        <span class="dealer-type-title">BUYING DEALER</span>
+        <span class="dealer-type-desc">I want to bid on and purchase vehicles through the EVL WS Exchange platform. I am the acquirer.</span>
+      </button>
+    </div>
+
+    <div style="background:var(--bg);border:1px solid #1a1a2e;border-radius:10px;padding:20px;margin-bottom:20px">
+      <div style="font-size:13px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:14px">⚡ WHAT EACH ROLE MEANS ON EVL WS EXCHANGE</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:8px">ISSUING DEALER (ID)</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.7">• Lists vehicle on WS Exchange<br>• Sets reserve price<br>• Pays $295 platform fee + $100 porter excise<br>• Holds vehicle until payment confirmed<br>• Executes Off-Ramping Protocol at pickup<br>• Invoiced net-30 after deal close</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:8px">BUYING DEALER (BD)</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.7">• Bids during Phase 1 (48hr hold) or Phase 2 (live auction)<br>• Wins bid → wires payment directly to ID<br>• Pays no EVL platform fee<br>• Receives release code after ID confirms payment<br>• 48-hour arbitration window for title defects only<br>• Responsible for transport from pickup point</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="nextStep(1)" id="btn-next-1" disabled>SELECT A DEALER TYPE TO CONTINUE →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 2: DEALER INFO ══ -->
+<div class="section-card" id="step-2">
+  <div class="section-hdr">
+    <div class="section-icon">📋</div>
+    <div>
+      <div class="section-title">DEALER INFORMATION</div>
+      <div class="section-sub">Required for platform registration and legal documentation</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">DEALERSHIP DETAILS</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">Legal Dealership Name <span>*</span></label>
+        <input class="form-input" id="d-name" placeholder="ABC Motors LLC"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dealer License Number <span>*</span></label>
+        <input class="form-input" id="d-license" placeholder="TX-XXXXXXXX"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">State of License <span>*</span></label>
+        <select class="form-input form-select" id="d-state">
+          <option value="">Select State</option>
+          <option>Texas</option><option>Oklahoma</option><option>Louisiana</option>
+          <option>Arkansas</option><option>New Mexico</option><option>Kansas</option>
+          <option>Missouri</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Federal Tax ID (EIN) <span>*</span></label>
+        <input class="form-input" id="d-ein" placeholder="XX-XXXXXXX"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">DMV Bond Number</label>
+        <input class="form-input" id="d-bond" placeholder="Optional"/>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Physical Dealership Address <span>*</span></label>
+        <input class="form-input" id="d-address" placeholder="1234 Auto Row, Dallas, TX 75001"/>
+      </div>
+    </div>
+
+    <div style="font-size:12px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin:20px 0 14px">PRIMARY CONTACT</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Contact Name <span>*</span></label>
+        <input class="form-input" id="d-contact" placeholder="John Smith"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Title / Role <span>*</span></label>
+        <input class="form-input" id="d-title" placeholder="General Manager / Owner"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Direct Phone <span>*</span></label>
+        <input class="form-input" id="d-phone" type="tel" placeholder="(214) 555-0100"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Business Email <span>*</span></label>
+        <input class="form-input" id="d-email" type="email" placeholder="john@abcmotors.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Floorplan Lender (if applicable)</label>
+        <input class="form-input" id="d-floor" placeholder="NextGear / AFC / Manheim / None"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Average Monthly WS Volume</label>
+        <select class="form-input form-select" id="d-volume">
+          <option>1-5 units/month</option>
+          <option>5-15 units/month</option>
+          <option>15-30 units/month</option>
+          <option>30+ units/month</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-dark" onclick="prevStep(2)">← BACK</button>
+      <button class="btn btn-gold" onclick="nextStep(2)">DEALER INFO CONFIRMED →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 3: BBP FRAMEWORK ══ -->
+<div class="section-card" id="step-3">
+  <div class="section-hdr">
+    <div class="section-icon">🧠</div>
+    <div>
+      <div class="section-title">EVL BBP FRAMEWORK</div>
+      <div class="section-sub">Best Business Practice — the EVL operating philosophy every dealer acknowledges</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.8;margin-bottom:24px">
+      EVL operates under the <strong style="color:var(--gold)">BBP Framework</strong> — Best Business Practice. Every transaction on the WS Exchange is guided by this five-part operating standard. As an onboarding dealer, you are acknowledging that you have read, understood, and agree to operate within this framework on every deal.
+    </div>
+
+    <div class="bitpo-grid">
+      <div class="bitpo-card">
+        <div class="bitpo-letter" style="color:var(--blue)">B</div>
+        <div class="bitpo-word">BEST BUSINESS PRACTICE</div>
+        <div class="bitpo-def">Every decision on EVL's platform is made with the best interest of the transaction in mind — not any single party. EVL is a neutral coordinator, not an advocate.</div>
+        <div class="bitpo-items">
+          <div class="bitpo-item" style="border-color:var(--blue)">Transparent pricing — no hidden fees</div>
+          <div class="bitpo-item" style="border-color:var(--blue)">Dealer-to-dealer payment — EVL holds no funds</div>
+          <div class="bitpo-item" style="border-color:var(--blue)">$295 flat platform fee — no percentage games</div>
+        </div>
+      </div>
+
+      <div class="bitpo-card">
+        <div class="bitpo-letter" style="color:var(--green)">I</div>
+        <div class="bitpo-word">IDEAS</div>
+        <div class="bitpo-def">EVL brings market intelligence to every deal. Data-driven pricing, days-on-lot analysis, and competitive market comparisons ensure every transaction is informed — not emotional.</div>
+        <div class="bitpo-items">
+          <div class="bitpo-item" style="border-color:var(--green)">MarketCheck live pricing data</div>
+          <div class="bitpo-item" style="border-color:var(--green)">Days-on-lot leverage identification</div>
+          <div class="bitpo-item" style="border-color:var(--green)">Regional demand and pricing intelligence</div>
+        </div>
+      </div>
+
+      <div class="bitpo-card">
+        <div class="bitpo-letter" style="color:var(--gold)">T</div>
+        <div class="bitpo-word">THOUGHTS</div>
+        <div class="bitpo-def">Before every deal, EVL considers: Is this vehicle priced fairly? Is the condition accurately represented? Are both parties properly protected? Deliberate consideration before action.</div>
+        <div class="bitpo-items">
+          <div class="bitpo-item" style="border-color:var(--gold)">PITPO vehicle verification before listing</div>
+          <div class="bitpo-item" style="border-color:var(--gold)">SOS and DMV license sweeps on both parties</div>
+          <div class="bitpo-item" style="border-color:var(--gold)">Title lien and brand check before auction</div>
+        </div>
+      </div>
+
+      <div class="bitpo-card">
+        <div class="bitpo-letter" style="color:var(--orange,#FF6B35)">P</div>
+        <div class="bitpo-word">PROCESS & PROCEDURE</div>
+        <div class="bitpo-def">Every EVL transaction follows a documented, repeatable process. No improvisation. No exceptions. The process protects everyone — ID, BD, and EVL.</div>
+        <div class="bitpo-items">
+          <div class="bitpo-item" style="border-color:#FF6B35">Phase 1 → Phase 2 → Release → Settlement</div>
+          <div class="bitpo-item" style="border-color:#FF6B35">Off-Ramping Protocol — 9-point photo verification</div>
+          <div class="bitpo-item" style="border-color:#FF6B35">48-hour arbitration window — title defects only</div>
+          <div class="bitpo-item" style="border-color:#FF6B35">Net-30 invoice after deal close</div>
+        </div>
+      </div>
+
+      <div class="bitpo-card">
+        <div class="bitpo-letter" style="color:var(--muted)">O</div>
+        <div class="bitpo-word">OTHER</div>
+        <div class="bitpo-def">Anything outside the standard process requires written documentation and mutual agreement. No verbal commitments. No informal side deals. Documentation beats conversation — every time.</div>
+        <div class="bitpo-items">
+          <div class="bitpo-item" style="border-color:var(--muted)">All exceptions require written EVL approval</div>
+          <div class="bitpo-item" style="border-color:var(--muted)">Collin County TX governs all disputes</div>
+          <div class="bitpo-item" style="border-color:var(--muted)">AAA binding arbitration before litigation</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#1a1400;border:2px solid var(--gold);border-radius:10px;padding:16px 20px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:8px">⚡ BBP ACKNOWLEDGMENT — INITIAL REQUIRED</div>
+      <div class="initials-row">
+        <div class="initials-block">
+          <div class="initials-label">BBP Framework</div>
+          <input class="initials-input" id="init-bbp" maxlength="4" placeholder="____"/>
+          <div class="initials-text">I have read and understand the EVL BBP Framework and agree to operate within it on all transactions.</div>
+        </div>
+        <div class="initials-block">
+          <div class="initials-label">Neutral Platform</div>
+          <input class="initials-input" id="init-neutral" maxlength="4" placeholder="____"/>
+          <div class="initials-text">I understand EVL is a neutral platform coordinator — not an advocate for either party in any transaction.</div>
+        </div>
+        <div class="initials-block">
+          <div class="initials-label">No Fund Holding</div>
+          <input class="initials-input" id="init-funds" maxlength="4" placeholder="____"/>
+          <div class="initials-text">I understand all payments are made dealer-to-dealer directly. EVL does not hold, escrow, or transfer transaction funds.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-dark" onclick="prevStep(3)">← BACK</button>
+      <button class="btn btn-gold" onclick="nextStep(3)">BBP ACKNOWLEDGED →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 4: PLATFORM AGREEMENT ══ -->
+<div class="section-card" id="step-4">
+  <div class="section-hdr">
+    <div class="section-icon">📜</div>
+    <div>
+      <div class="section-title">WS EXCHANGE PLATFORM AGREEMENT</div>
+      <div class="section-sub">Read carefully — this is the binding legal agreement governing all transactions</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="legal-doc">
+
+      <div style="text-align:center;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #1a1a2e">
+        <div style="font-size:20px;font-weight:900;color:var(--white);letter-spacing:2px;font-family:var(--font)">EVL WHOLESALE EXCHANGE</div>
+        <div style="font-size:14px;color:var(--gold);font-weight:700;letter-spacing:2px;font-family:var(--font);margin-top:4px">DEALER PLATFORM AGREEMENT</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Express Vehicle Locators · Collin County, Texas · Effective upon digital execution</div>
+      </div>
+
+      <h2>SECTION 1 — PARTIES AND PLATFORM ROLE</h2>
+      <p><strong>1.1 Platform Identity.</strong> Express Vehicle Locators ("EVL") operates the WS Exchange as a neutral vehicle transaction coordination platform. EVL is NOT a licensed motor vehicle dealer, auctioneer, broker, buyer, seller, or financial institution in connection with any transaction on this platform. EVL provides coordination, documentation, verification, and administrative services only.</p>
+      <p><strong>1.2 Dealer Acknowledgment.</strong> By executing this Agreement, Dealer confirms they hold a valid motor vehicle dealer license in their state of operation, are in good standing with their state DMV and SOS, and have full legal authority to transact on this platform.</p>
+      <p><strong>1.3 No Fund Holding.</strong> EVL does not hold, escrow, transfer, or take custody of any transaction funds at any time. All payments are made directly between the Issuing Dealer and the Buying Dealer. EVL's platform fee is invoiced separately and independently of the vehicle transaction.</p>
+      <div class="legal-highlight">EVL's role: Documentation, coordination, and process enforcement. Not a party to the purchase transaction. Not a financial intermediary. Not a guarantor of payment.</div>
+
+      <h2>SECTION 2 — TRANSACTION PROCESS (BBP STANDARD)</h2>
+      <h3>2.1 Phase 1 — ID Hold (48 Hours)</h3>
+      <p>Upon vehicle listing, the Issuing Dealer grants a 48-hour exclusive hold period to the first qualified Buying Dealer who meets or exceeds the reserve price. During this window, no other bids are accepted. The hold is binding on the ID — the vehicle may not be sold to any other party during Phase 1.</p>
+      <h3>2.2 Phase 2 — Live Auction (2-4 Hours)</h3>
+      <p>If Phase 1 does not result in a closed deal, the vehicle enters Phase 2 — an open auction available to all approved WS Exchange dealers. The highest bid above reserve wins. EVL issues the Transaction ID and Release Code upon auction close.</p>
+      <h3>2.3 Payment Protocol</h3>
+      <p>Upon auction close, the Buying Dealer shall wire or present a business check for the full agreed purchase price directly to the Issuing Dealer. <strong>The Release Code will not be issued until the Issuing Dealer confirms receipt of payment.</strong> EVL is not responsible for verifying payment — that responsibility rests entirely with the Issuing Dealer.</p>
+      <h3>2.4 Off-Ramping Protocol</h3>
+      <p>EVL coordinates vehicle transfer through the Off-Ramping Protocol — a documented 9-point photo inspection of the vehicle including: all exterior panels, glass, lights, interior, odometer, VIN plate, and keys. Both the Issuing Dealer's representative and the EVL porter sign the Off-Ramping Protocol. <strong>Upon porter signature, condition liability shifts to the Buying Dealer's custody.</strong></p>
+
+      <h2>SECTION 3 — ARBITRATION AND DISPUTE RESOLUTION</h2>
+      <p><strong>3.1 Arbitration Window.</strong> A 48-hour arbitration window begins upon Buying Dealer's physical receipt of the vehicle. During this window, the Buying Dealer may file a title arbitration claim for: active liens not disclosed, title brands not disclosed (salvage, flood, frame), or odometer fraud. <strong>No mechanical claims are accepted under any circumstances.</strong></p>
+      <p><strong>3.2 EVL as Neutral Referee.</strong> In the event of a dispute, EVL presents documented facts only — the Off-Ramping Protocol photos, PITPO certification results, and transaction records. EVL does not determine fault. Documentation is final. <strong>EVL's determination of documented facts is binding on both parties.</strong></p>
+      <p><strong>3.3 Mandatory Binding Arbitration.</strong> All disputes arising from or related to this Agreement shall be submitted to binding arbitration under the American Arbitration Association Commercial Rules before any litigation. Arbitration shall take place in Collin County, Texas.</p>
+      <div class="legal-warning">Any party who initiates litigation against EVL that is dismissed or decided in EVL's favor shall bear 100% of EVL's reasonable attorneys' fees, court costs, and related expenses.</div>
+      <p><strong>3.4 Governing Law.</strong> This Agreement is governed exclusively by the laws of the State of Texas. Exclusive jurisdiction and venue for all disputes is Collin County, Texas.</p>
+
+      <h2>SECTION 4 — FEES AND PAYMENT</h2>
+      <p><strong>4.1 Platform Fee.</strong> The Issuing Dealer agrees to pay EVL a platform coordination fee of <strong>$295.00 USD</strong> per closed transaction. This fee is invoiced by EVL within 24 hours of deal close and is due net-30 from invoice date.</p>
+      <p><strong>4.2 Porter Excise.</strong> The Issuing Dealer further agrees to pay a porter excise fee of <strong>$100.00 USD</strong> per transaction, representing compensation to the porter for vehicle transport and Off-Ramping Protocol execution. This replaces the auction transport cost the ID would otherwise pay.</p>
+      <p><strong>4.3 Buying Dealer Fees.</strong> The Buying Dealer pays no EVL platform fee. The Buying Dealer is responsible for all costs associated with vehicle licensing, registration, sales tax, and transport from the designated pickup point.</p>
+      <p><strong>4.4 Late Payment.</strong> Platform fees unpaid after net-30 accrue interest at 1.5% per month. EVL reserves the right to suspend platform access for accounts 60+ days past due.</p>
+      <p><strong>4.5 Non-Circumvention.</strong> Dealer agrees not to use EVL-introduced dealer contacts, vehicle intelligence, or platform relationships to transact outside the EVL platform for a period of 12 months from introduction. Violation results in liquidated damages equal to the full platform fee plus 100% penalty plus all attorneys' fees.</p>
+
+      <h2>SECTION 5 — DEALER REPRESENTATIONS AND WARRANTIES</h2>
+      <p>Dealer represents and warrants that: (a) they hold a valid, current, and unsuspended motor vehicle dealer license; (b) all vehicles listed are free of undisclosed liens unless disclosed in writing; (c) all vehicle condition representations are accurate to the best of Dealer's knowledge; (d) Dealer has full legal authority to sell any vehicle listed; (e) Dealer is not currently under investigation by any state DMV or regulatory authority.</p>
+
+      <h2>SECTION 6 — LIMITATION OF LIABILITY</h2>
+      <p>EVL's liability in connection with any transaction shall not exceed the platform fee paid for that specific transaction. EVL is not liable for: vehicle condition issues, payment disputes between dealers, title issues not identified in PITPO, transport damage after Off-Ramping Protocol signature, or any consequential, indirect, or punitive damages.</p>
+
+      <h2>SECTION 7 — PLATFORM SUSPENSION AND TERMINATION</h2>
+      <p>EVL reserves the right to suspend or permanently revoke platform access for: misrepresentation of vehicle condition, failure to pay platform fees, circumvention of the platform, filing of fraudulent arbitration claims, or any conduct that undermines the integrity of the WS Exchange.</p>
+
+    </div>
+
+    <div style="background:#1a0000;border:2px solid var(--red);border-radius:10px;padding:16px 20px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:2px;margin-bottom:8px">⚠️ AGREEMENT INITIALS — ALL REQUIRED</div>
+      <div class="initials-row">
+        <div class="initials-block">
+          <div class="initials-label">Section 1 — Platform Role</div>
+          <input class="initials-input" style="border-color:var(--red)" id="init-s1" maxlength="4" placeholder="____"/>
+          <div class="initials-text">EVL is neutral coordinator. No fund holding. Not a dealer or financial intermediary.</div>
+        </div>
+        <div class="initials-block">
+          <div class="initials-label">Section 2 — Transaction Process</div>
+          <input class="initials-input" style="border-color:var(--red)" id="init-s2" maxlength="4" placeholder="____"/>
+          <div class="initials-text">Phase 1 hold, Phase 2 auction, Off-Ramping Protocol, payment direct dealer-to-dealer.</div>
+        </div>
+        <div class="initials-block">
+          <div class="initials-label">Section 3 — Arbitration</div>
+          <input class="initials-input" style="border-color:var(--red)" id="init-s3" maxlength="4" placeholder="____"/>
+          <div class="initials-text">48-hr window, title defects only, Collin County TX, AAA binding arbitration.</div>
+        </div>
+        <div class="initials-block">
+          <div class="initials-label">Section 4 — Fees ($295 + $100)</div>
+          <input class="initials-input" style="border-color:var(--red)" id="init-s4" maxlength="4" placeholder="____"/>
+          <div class="initials-text">$295 platform fee net-30. $100 porter excise. Non-circumvention 12 months.</div>
+        </div>
+        <div class="initials-block">
+          <div class="initials-label">Sections 5-7</div>
+          <input class="initials-input" style="border-color:var(--red)" id="init-s5" maxlength="4" placeholder="____"/>
+          <div class="initials-text">Dealer warranties, EVL liability limits, suspension terms.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-dark" onclick="prevStep(4)">← BACK</button>
+      <button class="btn btn-gold" onclick="nextStep(4)">AGREEMENT REVIEWED →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 5: PROCESS & PROCEDURE ══ -->
+<div class="section-card" id="step-5">
+  <div class="section-hdr">
+    <div class="section-icon">⚙️</div>
+    <div>
+      <div class="section-title">PROCESS & PROCEDURE GUIDE</div>
+      <div class="section-sub">Your step-by-step operating guide for every EVL WS Exchange transaction</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <div id="proc-id" style="display:none">
+      <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">📤 ISSUING DEALER — YOUR PROCESS</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+        ${['Contact EVL with vehicle details — Year, Make, Model, VIN, mileage, condition, asking price',
+           'EVL runs PITPO verification — NMVTIS, title check, lien check, SOS and DMV license check on your dealership',
+           'EVL generates vehicle listing on WS Exchange — PITPO cert, condition report, warranty badge (Gold/Silver/Bronze)',
+           'Phase 1 begins — 48-hour exclusive hold. EVL notifies you of any BD interest. You hold the vehicle.',
+           'Phase 2 (if needed) — Live auction opens. EVL manages bidding. You receive winning bid notification.',
+           'Auction closes — EVL sends you the Transaction ID and deal sheet. DO NOT release vehicle yet.',
+           'BD wires or delivers payment directly to you. YOU confirm receipt. Notify EVL.',
+           'EVL issues Release Code to BD. EVL porter contacts you to schedule pickup.',
+           'Off-Ramping Protocol — 9 photos, both signatures. You hand over keys and title.',
+           'Deal closed — EVL invoices you $295 platform fee + $100 porter excise. Net-30 payment due.',
+          ].map((s,i)=>`
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1a1400;border:2px solid var(--gold);color:var(--gold);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6;flex:1">${s}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div id="proc-bd" style="display:none">
+      <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">📥 BUYING DEALER — YOUR PROCESS</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+        ${['Browse WS Exchange listings — filter by make, model, price, days on lot, warranty badge, region',
+           'Review PITPO certification, Off-Ramping Protocol standards, and deal terms before bidding',
+           'Phase 1 — Submit hold request at or above reserve price. You have exclusive 48-hour window to close.',
+           'Phase 2 — If Phase 1 expired, bid in live auction. Highest bid above reserve wins.',
+           'Win notification — EVL sends Transaction ID and deal sheet with payment instructions.',
+           'Wire or deliver payment directly to Issuing Dealer. Save proof of payment.',
+           'ID confirms receipt to EVL. EVL issues your Release Code.',
+           'Coordinate with EVL porter for vehicle pickup. Present Release Code at pickup.',
+           'Off-Ramping Protocol — EVL porter documents vehicle condition. You or your rep signs.',
+           '48-hour arbitration window begins at your physical receipt. Title defects only. No mechanical claims.',
+          ].map((s,i)=>`
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--bg);border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px">
+          <div style="width:28px;height:28px;border-radius:50%;background:#0d1a0d;border:2px solid var(--green);color:var(--green);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+          <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.6;flex:1">${s}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div style="background:#040e1a;border:1px solid var(--blue);border-radius:10px;padding:16px 20px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-bottom:12px">📞 EVL CONTACT PROTOCOL</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-family:var(--body);font-size:13px;color:var(--dim)">
+        <div><strong style="color:var(--white)">For deal questions:</strong><br>Contact your assigned EVL coordinator directly. All communications logged in Mastermind CRM under your dealer record.</div>
+        <div><strong style="color:var(--white)">For arbitration claims:</strong><br>Submit in writing within 48 hours of delivery. Include Off-Ramping Protocol reference number. EVL responds within 4 business hours.</div>
+        <div><strong style="color:var(--white)">For invoice questions:</strong><br>Net-30 from deal close date. Late fees at 1.5%/month after 30 days. Contact togradyevl@gmail.com.</div>
+        <div><strong style="color:var(--white)">For platform access:</strong><br>Credentials issued after this onboarding is complete. Login at evl-decode-two.vercel.app/ws-exchange</div>
+      </div>
+    </div>
+
+    <div style="background:#1a0000;border:2px solid var(--red);border-radius:10px;padding:14px 18px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:900;color:var(--red);letter-spacing:1px;margin-bottom:8px">🚫 WHAT NEVER HAPPENS ON EVL WS EXCHANGE</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:var(--dim);font-family:var(--body)">
+        <div>❌ EVL never holds or transfers funds</div>
+        <div>❌ No mechanical arbitration claims accepted</div>
+        <div>❌ No verbal commitments — everything in writing</div>
+        <div>❌ No side deals outside the platform</div>
+        <div>❌ No circumvention of the Off-Ramping Protocol</div>
+        <div>❌ No release code before payment confirmed</div>
+      </div>
+    </div>
+
+    <div style="background:#1a1400;border:2px solid var(--gold);border-radius:10px;padding:14px 18px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:8px">PROCESS ACKNOWLEDGMENT — INITIAL</div>
+      <div class="initials-row" style="grid-template-columns:1fr 1fr">
+        <div class="initials-block">
+          <div class="initials-label">Process & Procedure</div>
+          <input class="initials-input" id="init-proc" maxlength="4" placeholder="____"/>
+          <div class="initials-text">I have reviewed the complete transaction process for my dealer role and agree to follow it on every deal.</div>
+        </div>
+        <div class="initials-block">
+          <div class="initials-label">Contact Protocol</div>
+          <input class="initials-input" id="init-contact" maxlength="4" placeholder="____"/>
+          <div class="initials-text">I understand the EVL contact protocol, arbitration window, and invoice payment terms.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-dark" onclick="prevStep(5)">← BACK</button>
+      <button class="btn btn-gold" onclick="nextStep(5)">PROCESS CONFIRMED →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 6: SIGN & INVOICE ══ -->
+<div class="section-card" id="step-6">
+  <div class="section-hdr">
+    <div class="section-icon">✍️</div>
+    <div>
+      <div class="section-title">FINAL SIGNATURE & INVOICE</div>
+      <div class="section-sub">Execute the agreement and receive your onboarding invoice</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- SIGNATURE BLOCK -->
+    <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">AUTHORIZED SIGNATURE</div>
+    <div class="sign-block">
+      <div class="sign-title">DEALER EXECUTION — WS EXCHANGE PLATFORM AGREEMENT</div>
+      <div class="sign-grid">
+        <div class="sign-field">
+          <div class="sign-label">Authorized Signatory Name</div>
+          <input class="sign-input" id="sig-name" placeholder="Full legal name"/>
+        </div>
+        <div class="sign-field">
+          <div class="sign-label">Title / Authority</div>
+          <input class="sign-input" id="sig-title" placeholder="Owner / GM / Authorized Rep"/>
+        </div>
+        <div class="sign-field">
+          <div class="sign-label">Digital Signature</div>
+          <input class="sign-input" id="sig-sign" placeholder="Type your full name as signature" style="font-family:Georgia,serif;font-size:16px;font-style:italic"/>
+        </div>
+        <div class="sign-field">
+          <div class="sign-label">Date</div>
+          <div class="sign-date" id="sig-date"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--s2);border:1px solid #1a1a2e;border-radius:8px;padding:14px 18px;margin-bottom:20px">
+      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+        <input type="checkbox" id="final-agree" style="margin-top:2px;flex-shrink:0;accent-color:var(--gold)"/>
+        <span style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.7">By checking this box and entering my signature above, I confirm that I have read, understood, and agree to be bound by the EVL WS Exchange Platform Agreement in its entirety, including all sections, the BBP Framework, the Process & Procedure Guide, and all fee terms. I confirm I have authority to bind my dealership to this agreement. I understand this is a legally binding electronic signature under the Electronic Signatures in Global and National Commerce Act (E-SIGN Act).</span>
+      </label>
+    </div>
+
+    <!-- ONBOARDING INVOICE -->
+    <div style="font-size:13px;font-weight:900;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">ONBOARDING INVOICE</div>
+    <div class="invoice-wrap" id="invoice-preview">
+      <div class="inv-header">
+        <div>
+          <div class="inv-logo">EXPRESS <span>VEHICLE</span> LOCATORS</div>
+          <div style="font-size:12px;color:#666;margin-top:4px;font-family:'Barlow',sans-serif">WS Exchange Division<br>Collin County, Texas<br>togradyevl@gmail.com</div>
+        </div>
+        <div class="inv-meta">
+          <div class="inv-title">INVOICE</div>
+          <div class="inv-num" id="inv-number">INV-WS-2026-001</div>
+          <div style="margin-top:6px"><span class="inv-due">NET-30</span></div>
+          <div style="font-size:12px;color:#666;margin-top:6px;font-family:'Barlow',sans-serif">Invoice Date: <span id="inv-date"></span><br>Due Date: <span id="inv-due-date"></span></div>
+        </div>
+      </div>
+
+      <div class="inv-parties">
+        <div>
+          <div class="inv-party-label">Billed To</div>
+          <div class="inv-party-name" id="inv-dealer-name">Dealer Name</div>
+          <div class="inv-party-detail" id="inv-dealer-detail">Address · License · EIN</div>
+        </div>
+        <div>
+          <div class="inv-party-label">From</div>
+          <div class="inv-party-name">Express Vehicle Locators</div>
+          <div class="inv-party-detail">WS Exchange · Collin County, TX<br>togradyevl@gmail.com</div>
+        </div>
+      </div>
+
+      <table class="inv-table">
+        <thead>
+          <tr><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th></tr>
+        </thead>
+        <tbody id="inv-line-items">
+          <tr><td>WS Exchange Platform Onboarding — Annual Access</td><td>1</td><td>$0.00</td><td>$0.00</td></tr>
+          <tr><td>Platform Agreement Execution & Documentation</td><td>1</td><td>$0.00</td><td>$0.00</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="inv-total-row"><td colspan="3" style="text-align:right;color:#1a1a2e">TOTAL DUE</td><td style="color:#1a1a2e">$0.00 USD</td></tr>
+        </tfoot>
+      </table>
+
+      <div class="inv-terms">
+        <strong>Payment Terms:</strong> Net-30 from invoice date. Accepted payment methods: ACH transfer, business check, wire transfer. Make checks payable to <em>Express Vehicle Locators</em>.<br><br>
+        <strong>Per-Transaction Fees (billed after each closed deal):</strong> Platform coordination fee $295.00 + Porter excise $100.00 = $395.00 total per transaction, invoiced within 24 hours of deal close.<br><br>
+        <strong>Questions?</strong> Contact togradyevl@gmail.com · Collin County, Texas
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-dark" onclick="prevStep(6)">← BACK</button>
+      <button class="btn btn-green" onclick="submitOnboarding()" style="font-size:15px;padding:14px 32px">✅ COMPLETE ONBOARDING & EXECUTE AGREEMENT</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="section-card" id="step-success">
+  <div class="section-hdr" style="background:var(--s2);border-bottom-color:var(--green)">
+    <div class="section-icon">🏆</div>
+    <div>
+      <div class="section-title" style="color:var(--green)">ONBOARDING COMPLETE</div>
+      <div class="section-sub">Welcome to EVL WS Exchange — you are cleared for transactions</div>
+    </div>
+  </div>
+  <div class="section-body" style="text-align:center;padding:40px 24px">
+    <div style="font-size:64px;margin-bottom:16px">✅</div>
+    <div style="font-size:28px;font-weight:900;color:var(--white);letter-spacing:2px;margin-bottom:8px" id="success-name">WELCOME ABOARD</div>
+    <div style="font-size:16px;color:var(--green);font-family:var(--body);margin-bottom:24px">Agreement executed · BBP framework acknowledged · Platform access active</div>
+    <div style="background:var(--bg);border:2px solid var(--green);border-radius:12px;padding:24px;max-width:500px;margin:0 auto 24px;text-align:left">
+      <div style="font-size:12px;font-weight:900;color:var(--green);letter-spacing:2px;margin-bottom:14px">YOUR NEXT STEPS</div>
+      <div style="font-size:14px;color:var(--dim);font-family:var(--body);line-height:1.9">
+        ✅ Agreement copy sent to your email<br>
+        ✅ EVL coordinator assigned to your account<br>
+        ✅ Platform access credentials issued<br>
+        ✅ Onboarding invoice generated (net-30)<br><br>
+        <span id="next-steps-role"></span>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="https://evl-decode-two.vercel.app/ws-exchange" class="btn btn-gold">⚡ GO TO WS EXCHANGE</a>
+      <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="btn btn-dark">📊 WS DASHBOARD</a>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ONBOARD_KEY = 'evl_ws_onboarding';
+let currentStep = 1;
+let dealerType = '';
+
+function selectDealerType(type){
+  dealerType = type;
+  document.getElementById('btn-id').classList.toggle('active', type==='ID');
+  document.getElementById('btn-bd').classList.toggle('active', type==='BD');
+  document.getElementById('btn-next-1').disabled = false;
+  document.getElementById('btn-next-1').textContent = type==='ID' ? '→ CONTINUE AS ISSUING DEALER' : '→ CONTINUE AS BUYING DEALER';
+  showToast(type==='ID' ? '🚗 Issuing Dealer selected' : '🏆 Buying Dealer selected');
+}
+
+function goStep(n){
+  if(n > currentStep) return; // can only go back
+  document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  currentStep = n;
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextStep(from){
+  const next = from + 1;
+  document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('step-'+next).classList.add('active');
+  currentStep = next;
+  updateProgress();
+  
+  // Init step-specific content
+  if(next===3){
+    // nothing needed
+  }
+  if(next===5){
+    document.getElementById('proc-id').style.display = dealerType==='ID'?'block':'none';
+    document.getElementById('proc-bd').style.display = dealerType==='BD'?'block':'none';
+  }
+  if(next===6){
+    initSignPage();
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function prevStep(from){
+  goStep(from-1);
+}
+
+function updateProgress(){
+  for(let i=1;i<=6;i++){
+    const dot = document.getElementById('dot-'+i);
+    const lbl = document.getElementById('lbl-'+i);
+    const line = document.getElementById('line-'+i);
+    if(i < currentStep){
+      dot.className='prog-dot done'; dot.textContent='✓';
+      lbl.className='prog-label done';
+      if(line) line.className='prog-line done';
+    } else if(i===currentStep){
+      dot.className='prog-dot active';
+      lbl.className='prog-label active';
+    } else {
+      dot.className='prog-dot pending';
+      lbl.className='prog-label';
+    }
+  }
+}
+
+function initSignPage(){
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const dueDate = new Date(now.getTime() + 30*24*60*60*1000);
+  const dueDateStr = dueDate.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  
+  document.getElementById('sig-date').textContent = dateStr;
+  document.getElementById('inv-date').textContent = dateStr;
+  document.getElementById('inv-due-date').textContent = dueDateStr;
+  document.getElementById('inv-number').textContent = 'INV-WS-'+now.getFullYear()+'-'+String(Math.floor(Math.random()*900)+100);
+  
+  const name = document.getElementById('d-name').value || 'Dealer Name';
+  const addr = document.getElementById('d-address').value || '';
+  const lic = document.getElementById('d-license').value || '';
+  document.getElementById('inv-dealer-name').textContent = name;
+  document.getElementById('inv-dealer-detail').textContent = [addr,lic].filter(Boolean).join(' · ');
+  
+  // Update sig name from form
+  const contactName = document.getElementById('d-contact').value;
+  if(contactName) document.getElementById('sig-name').value = contactName;
+}
+
+function submitOnboarding(){
+  const sigName = document.getElementById('sig-name').value.trim();
+  const sigSign = document.getElementById('sig-sign').value.trim();
+  const agreed = document.getElementById('final-agree').checked;
+  
+  if(!sigName || !sigSign){ showToast('⚠️ Please complete the signature fields'); return; }
+  if(!agreed){ showToast('⚠️ Please check the agreement checkbox'); return; }
+  
+  const data = {
+    dealerType,
+    dealerName: document.getElementById('d-name').value,
+    contact: document.getElementById('d-contact').value,
+    email: document.getElementById('d-email').value,
+    phone: document.getElementById('d-phone').value,
+    license: document.getElementById('d-license').value,
+    state: document.getElementById('d-state').value,
+    signatory: sigName,
+    signature: sigSign,
+    completedAt: new Date().toISOString()
+  };
+  
+  const existing = JSON.parse(localStorage.getItem(ONBOARD_KEY)||'[]');
+  existing.push(data);
+  localStorage.setItem(ONBOARD_KEY, JSON.stringify(existing));
+  
+  document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('step-success').classList.add('active');
+  document.getElementById('success-name').textContent = (data.dealerName||'DEALER').toUpperCase() + ' — ' + dealerType;
+  document.getElementById('next-steps-role').innerHTML = dealerType==='ID' ?
+    '📋 To list your first vehicle: go to WS Exchange → New Listing → submit vehicle details. EVL will run PITPO and have you live within 24 hours.' :
+    '🔍 To browse available inventory: go to WS Exchange → Active Listings. All PITPO-certified vehicles are available now. Filter by make, price, and region.';
+  
+  window.scrollTo({top:0,behavior:'smooth'});
+  showToast('✅ Onboarding complete! Welcome to EVL WS Exchange!');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// Init
+window.addEventListener('DOMContentLoaded',function(){
+  updateProgress();
+  // Set today's date on sig page
+  const now = new Date();
+  const ds = now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  if(document.getElementById('sig-date')) document.getElementById('sig-date').textContent = ds;
+});
+</script>
+</body>
+</html>
