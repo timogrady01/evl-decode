@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade-In Exchange — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:    #090E17;
+    --s1:    #0d1117;
+    --s2:    #111820;
+    --blue:  #2B84FE;
+    --gold:  #FFD700;
+    --green: #00C853;
+    --red:   #FF4444;
+    --white: #ffffff;
+    --dim:   #ccd6e0;
+    --muted: #8899aa;
+    --border:#1a2a3a;
+    --font:  'Oswald', sans-serif;
+    --body:  'Barlow', sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background:var(--bg); color:var(--white); font-family:var(--font); min-height:100vh; }
+
+  /* NAV */
+  nav { background:#090E17; border-bottom:2px solid var(--blue); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+  .nav-brand { font-size:25px; font-weight:900; letter-spacing:2px; color:var(--white); text-decoration:none; }
+  .nav-brand span { color:var(--blue); }
+  .nav-links { display:flex; gap:24px; align-items:center; }
+  .nav-links a { color:#ffffff; text-decoration:none; font-size:18px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .nav-links a:hover { color:var(--white); }
+  .nav-cta { background:var(--blue); color:var(--white); padding:10px 20px; border-radius:6px; font-size:16px; font-weight:900; letter-spacing:1px; text-decoration:none; }
+
+  /* WRAP */
+  .wrap { max-width:900px; margin:0 auto; padding:40px 20px; }
+
+  /* HERO */
+  .hero { text-align:center; padding:48px 20px 32px; }
+  .hero-badge { display:inline-block; border:2px solid var(--blue); color:var(--blue); font-size:18px; font-weight:900; letter-spacing:3px; padding:10px 28px; border-radius:20px; margin-bottom:20px; text-transform:uppercase; background:rgba(43,132,254,.08); }
+  .hero-h1 { font-size:59.8px; font-weight:900; text-transform:uppercase; line-height:1; margin-bottom:12px; }
+  .hero-h1 span { color:var(--blue); }
+  .hero-sub { font-size:23px; color:#ffffff; font-family:var(--body); font-weight:600; max-width:560px; margin:0 auto 32px; line-height:1.6; }
+
+  /* LOOKUP */
+  .lookup-card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:32px; margin-bottom:32px; }
+  .lookup-title { font-size:23px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+  .lookup-row { display:flex; gap:12px; flex-wrap:wrap; }
+  .lookup-input { flex:1; background:var(--bg); border:2px solid var(--border); color:var(--white); padding:16px 20px; border-radius:8px; font-size:23px; font-family:var(--font); font-weight:700; outline:none; letter-spacing:2px; text-transform:uppercase; }
+  .lookup-input::placeholder { color:#ffffff; font-size:19px; letter-spacing:1px; text-transform:none; }
+  .lookup-input:focus { border-color:var(--blue); }
+  .lookup-btn { background:var(--blue); color:var(--white); border:none; padding:16px 32px; border-radius:8px; font-size:20px; font-weight:900; cursor:pointer; font-family:var(--font); letter-spacing:1px; white-space:nowrap; }
+  .lookup-btn:hover { background:#1a6fe0; }
+
+  /* STATUS STATES */
+  .status-wrap { display:none; }
+  .status-wrap.active { display:block; }
+
+  /* VEHICLE SUMMARY CARD */
+  .vehicle-card { background:var(--s1); border:2px solid var(--blue); border-radius:14px; padding:28px; margin-bottom:24px; }
+  .vehicle-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+  .vehicle-name { font-size:33px; font-weight:900; text-transform:uppercase; letter-spacing:1px; }
+  .vehicle-vin { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:700; letter-spacing:1px; margin-top:4px; }
+  .status-badge { font-size:16px; font-weight:900; letter-spacing:2px; padding:8px 18px; border-radius:20px; text-transform:uppercase; }
+  .status-live { background:rgba(0,200,83,.15); color:var(--green); border:1px solid rgba(0,200,83,.3); }
+  .status-pending { background:rgba(255,215,0,.1); color:var(--gold); border:1px solid rgba(255,215,0,.3); }
+  .status-closed { background:rgba(43,132,254,.1); color:var(--blue); border:1px solid rgba(43,132,254,.3); }
+
+  .vehicle-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .v-stat { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:14px; text-align:center; }
+  .v-stat-val { font-size:25px; font-weight:900; color:var(--white); }
+  .v-stat-lbl { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
+
+  /* AUCTION PROGRESS */
+  .auction-card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:28px; margin-bottom:24px; }
+  .auction-title { font-size:20px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+
+  /* TIMER */
+  .timer-row { display:flex; justify-content:space-between; align-items:center; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:20px; }
+  .timer-label { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .timer-val { font-size:35px; font-weight:900; color:var(--red); letter-spacing:3px; }
+  .timer-val.plenty { color:var(--blue); }
+
+  /* BID DISPLAY */
+  .bid-display { background:linear-gradient(135deg,rgba(0,200,83,.08),rgba(0,200,83,.03)); border:2px solid rgba(0,200,83,.3); border-radius:12px; padding:24px; text-align:center; margin-bottom:20px; }
+  .bid-label { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+  .bid-amount { font-size:59.8px; font-weight:900; color:var(--green); line-height:1; }
+  .bid-count { font-size:18px; color:#ffffff; font-family:var(--body); font-weight:600; margin-top:8px; }
+
+  .reserve-met { background:rgba(0,200,83,.1); border:1px solid rgba(0,200,83,.3); border-radius:8px; padding:10px 16px; font-size:18px; color:var(--green); font-weight:900; text-align:center; margin-bottom:16px; letter-spacing:1px; }
+  .reserve-pending { background:rgba(255,215,0,.08); border:1px solid rgba(255,215,0,.3); border-radius:8px; padding:10px 16px; font-size:18px; color:var(--gold); font-weight:900; text-align:center; margin-bottom:16px; letter-spacing:1px; }
+
+  /* BID HISTORY */
+  .bid-history { margin-top:8px; }
+  .bid-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
+  .bid-row:last-child { border-bottom:none; }
+  .bid-row-num { font-size:18px; font-weight:900; color:#ffffff; }
+  .bid-row-time { font-size:16px; color:#ffffff; font-family:var(--body); }
+  .bid-row-amt { font-size:20px; font-weight:900; color:var(--white); }
+  .bid-row-amt.top { color:var(--green); }
+
+  /* TIMELINE */
+  .timeline { margin-top:8px; }
+  .tl-item { display:flex; gap:16px; padding:12px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+  .tl-item:last-child { border-bottom:none; }
+  .tl-dot { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; margin-top:2px; }
+  .tl-dot.done { background:rgba(0,200,83,.2); border:2px solid var(--green); }
+  .tl-dot.active { background:rgba(43,132,254,.2); border:2px solid var(--blue); }
+  .tl-dot.pending { background:rgba(255,255,255,.05); border:2px solid var(--border); }
+  .tl-content { flex:1; }
+  .tl-title { font-size:19px; font-weight:900; color:var(--white); letter-spacing:0.5px; }
+  .tl-desc { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:600; margin-top:3px; line-height:1.5; }
+  .tl-time { font-size:16px; color:var(--blue); font-family:var(--body); font-weight:700; margin-top:3px; }
+
+  /* EQUITY CARD */
+  .equity-card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:28px; margin-bottom:24px; }
+  .equity-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
+  .equity-row:last-child { border-bottom:none; }
+  .equity-lbl { font-size:19px; color:#ffffff; font-family:var(--body); font-weight:600; }
+  .equity-val { font-size:20px; font-weight:900; }
+  .equity-total { background:var(--bg); border-radius:8px; padding:16px; margin-top:16px; display:flex; justify-content:space-between; align-items:center; }
+  .equity-total-lbl { font-size:20px; font-weight:900; color:var(--white); letter-spacing:1px; }
+  .equity-total-val { font-size:35px; font-weight:900; color:var(--green); }
+
+  /* CTA */
+  .cta-card { background:linear-gradient(135deg,rgba(43,132,254,.1),rgba(43,132,254,.05)); border:2px solid rgba(43,132,254,.3); border-radius:14px; padding:32px; text-align:center; margin-bottom:24px; }
+  .cta-title { font-size:28px; font-weight:900; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .cta-sub { font-size:19px; color:#ffffff; font-family:var(--body); font-weight:600; margin-bottom:24px; line-height:1.6; }
+  .cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--blue); color:var(--white); border:none; padding:16px 32px; border-radius:8px; font-size:20px; font-weight:900; cursor:pointer; font-family:var(--font); letter-spacing:1px; text-decoration:none; display:inline-block; }
+  .btn-outline { background:transparent; color:var(--white); border:2px solid var(--white); padding:14px 28px; border-radius:8px; font-size:19px; font-weight:900; cursor:pointer; font-family:var(--font); letter-spacing:1px; text-decoration:none; display:inline-block; }
+
+  /* NO RESULTS */
+  .no-results { text-align:center; padding:48px 20px; display:none; }
+  .no-results.active { display:block; }
+  .no-results-icon { font-size:55.2px; margin-bottom:16px; }
+  .no-results-title { font-size:28px; font-weight:900; margin-bottom:8px; }
+  .no-results-sub { font-size:19px; color:#ffffff; font-family:var(--body); }
+
+  /* HOW IT WORKS */
+  .how-section { margin-top:40px; padding-top:40px; border-top:2px solid var(--border); }
+  .how-title { font-size:35px; font-weight:900; text-transform:uppercase; letter-spacing:2px; text-align:center; margin-bottom:32px; }
+  .how-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .how-card { background:var(--s1); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+  .how-num { font-size:40px; font-weight:900; color:var(--blue); margin-bottom:8px; }
+  .how-card-title { font-size:19px; font-weight:900; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; color:var(--gold); }
+  .how-card-desc { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
+
+  /* EQUITY OPTIONS */
+  .equity-option { background:var(--bg); border:2px solid var(--border); border-radius:10px; padding:16px; margin-bottom:12px; cursor:pointer; transition:border-color .2s; }
+  .equity-option:hover { border-color:var(--blue); }
+  .equity-option.selected { border-color:var(--gold); background:rgba(255,215,0,.05); }
+  .equity-opt-header { display:flex; align-items:center; gap:14px; }
+  .equity-opt-icon { font-size:30px; flex-shrink:0; }
+  .equity-opt-title { font-size:20px; font-weight:900; letter-spacing:1px; text-transform:uppercase; }
+  .equity-opt-sub { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:600; margin-top:3px; }
+  .equity-opt-check { font-size:25px; color:#ffffff; margin-left:auto; flex-shrink:0; }
+  .equity-option.selected .equity-opt-check { color:var(--gold); }
+  .equity-opt-detail { margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
+  .equity-detail-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:18px; color:#ffffff; font-family:var(--body); font-weight:600; }
+  .equity-detail-row:last-of-type { border-bottom:none; }
+
+  /* NEG EQUITY PATHS */
+  .neg-path { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:12px; }
+  .neg-path-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .neg-path-badge { font-size:16px; font-weight:900; padding:4px 10px; border-radius:12px; letter-spacing:1px; white-space:nowrap; }
+  .neg-path-title { font-size:19px; font-weight:900; letter-spacing:1px; text-transform:uppercase; }
+  .neg-path-body { }
+  .neg-detail-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:16px; color:#ffffff; font-family:var(--body); font-weight:600; }
+  .neg-detail-row:last-of-type { border-bottom:none; }
+
+  /* FOOTER */
+  footer { background:#090E17; border-top:2px solid var(--border); padding:32px 40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-top:60px; }
+  .footer-brand { font-size:23px; font-weight:900; color:var(--white); letter-spacing:2px; }
+  .footer-brand span { color:var(--blue); }
+  .footer-links { display:flex; gap:24px; flex-wrap:wrap; }
+  .footer-links a { color:var(--white); text-decoration:none; font-size:20px; font-weight:900; }
+  .footer-disclaimer { font-size:18px; color:var(--white); font-family:var(--body); font-weight:700; opacity:0.75; }
+
+  @media(max-width:640px){
+    .hero-h1 { font-size:46px; }
+    .vehicle-stats { grid-template-columns:repeat(2,1fr); }
+    .how-grid { grid-template-columns:repeat(2,1fr); }
+    .lookup-row { flex-direction:column; }
+    nav { padding:0 16px; }
+    .nav-links { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/home" class="nav-brand">EXPRESS <span>VEHICLE</span> LOCATORS</a>
+  <div class="nav-links">
+    <a href="/home">Home</a>
+    <a href="/find">Find My Car</a>
+    <a href="/trade-in">Trade-In</a>
+    <a href="/compare">Research</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <a href="/find" class="nav-cta">⚡ FIND MY CAR</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">⚡ DIGITAL LIVE AUCTION — EVL SaaS PLATFORM — NOT A DEALER</div>
+  <h1 class="hero-h1">YOUR TRADE-IN<br><span>EXCHANGE</span></h1>
+  <p class="hero-sub">Track your vehicle's live auction in real time. See every bid as it comes in — no waiting, no guessing.</p>
+</div>
+
+<div class="wrap">
+
+  <!-- LOOKUP -->
+  <div class="lookup-card">
+    <div class="lookup-title">🔍 LOOK UP YOUR AUCTION</div>
+    <div class="lookup-row">
+      <input class="lookup-input" id="lookupInput" type="text" placeholder="Enter your VIN or EVL confirmation code" maxlength="20"/>
+      <button class="lookup-btn" onclick="lookupAuction()">⚡ TRACK MY AUCTION</button>
+    </div>
+    <p style="font-size:18px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:16px;line-height:1.6;">Your EVL confirmation code was emailed to you when you submitted your trade-in. You can also use your 17-digit VIN.</p>
+  </div>
+
+  <!-- NO RESULTS -->
+  <div class="no-results" id="noResults">
+    <div class="no-results-icon">🔍</div>
+    <div class="no-results-title">No Auction Found</div>
+    <div class="no-results-sub">We couldn't find an active auction for that VIN or confirmation code.<br>Please check your email or <a href="/contact" style="color:var(--blue);">contact EVL</a> for assistance.</div>
+  </div>
+
+  <!-- AUCTION STATUS — shown after lookup -->
+  <div class="status-wrap" id="statusWrap">
+
+    <!-- VEHICLE SUMMARY -->
+    <div class="vehicle-card">
+      <div class="vehicle-card-header">
+        <div>
+          <div class="vehicle-name" id="vehicleName">2023 Toyota Tundra TRD Pro</div>
+          <div class="vehicle-vin" id="vehicleVin">VIN: 5TFLA5AB7PX123456</div>
+        </div>
+        <div class="status-badge status-live" id="auctionStatus">🟢 LIVE AUCTION</div>
+      </div>
+      <div class="vehicle-stats">
+        <div class="v-stat">
+          <div class="v-stat-val" id="vehicleMiles">22,400</div>
+          <div class="v-stat-lbl">Miles</div>
+        </div>
+        <div class="v-stat">
+          <div class="v-stat-val" id="vehicleColor">White Pearl</div>
+          <div class="v-stat-lbl">Color</div>
+        </div>
+        <div class="v-stat">
+          <div class="v-stat-val" id="vehicleYear">2023</div>
+          <div class="v-stat-lbl">Year</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE AUCTION -->
+    <div class="auction-card">
+      <div class="auction-title">⚡ DIGITAL LIVE AUCTION STATUS</div>
+
+      <!-- TIMER -->
+      <div class="timer-row">
+        <div class="timer-label">Auction Closes In</div>
+        <div class="timer-val plenty" id="auctionTimer">23:14:32</div>
+      </div>
+
+      <!-- HIGHEST BID -->
+      <div class="bid-display">
+        <div class="bid-label">Current Highest Offer</div>
+        <div class="bid-amount" id="highBid">$43,200</div>
+        <div class="bid-count" id="bidCount">4 dealers have placed bids</div>
+      </div>
+
+      <!-- RESERVE STATUS -->
+      <div class="reserve-met" id="reserveStatus">✅ RESERVE MET — Your vehicle WILL sell at close</div>
+
+      <!-- BID HISTORY -->
+      <div class="auction-title" style="margin-top:20px;margin-bottom:12px;font-size:18px;">BID ACTIVITY</div>
+      <div class="bid-history" id="bidHistory">
+        <div class="bid-row">
+          <span class="bid-row-num">Bid #4</span>
+          <span class="bid-row-time">2 hrs ago</span>
+          <span class="bid-row-amt top">$43,200 ← HIGHEST</span>
+        </div>
+        <div class="bid-row">
+          <span class="bid-row-num">Bid #3</span>
+          <span class="bid-row-time">4 hrs ago</span>
+          <span class="bid-row-amt">$42,800</span>
+        </div>
+        <div class="bid-row">
+          <span class="bid-row-num">Bid #2</span>
+          <span class="bid-row-time">6 hrs ago</span>
+          <span class="bid-row-amt">$41,500</span>
+        </div>
+        <div class="bid-row">
+          <span class="bid-row-num">Bid #1</span>
+          <span class="bid-row-time">8 hrs ago</span>
+          <span class="bid-row-amt">$40,000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- YOUR EQUITY -->
+    <div class="equity-card">
+      <div class="auction-title">💰 YOUR ESTIMATED EQUITY</div>
+
+      <!-- MATH ROWS -->
+      <div class="equity-row">
+        <span class="equity-lbl">Current Highest Offer</span>
+        <span class="equity-val" style="color:var(--white);" id="equityBid">$43,200</span>
+      </div>
+      <div class="equity-row">
+        <span class="equity-lbl">Your Payoff (if any)</span>
+        <span class="equity-val" style="color:var(--red);" id="equityPayoffDisplay">—</span>
+      </div>
+      <div class="equity-row">
+        <span class="equity-lbl">EVL Platform Fee</span>
+        <span class="equity-val" style="color:var(--red);">-$495</span>
+      </div>
+      <div class="equity-total">
+        <span class="equity-total-lbl">YOUR NET EQUITY</span>
+        <span class="equity-total-val" id="netEquity">TBD</span>
+      </div>
+
+      <!-- PAYOFF INPUT -->
+      <div style="margin-top:16px;">
+        <input type="number" id="payoffInput" placeholder="Enter your payoff amount (enter 0 if paid off)" 
+          style="width:100%;background:var(--bg);border:2px solid var(--border);color:var(--white);padding:12px 16px;border-radius:8px;font-size:20px;font-family:var(--font);font-weight:700;outline:none;"
+          oninput="calcEquity()" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
+        <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:8px;">Enter $0 if your vehicle is fully paid off. Your exact equity is confirmed at closing.</p>
+      </div>
+
+      <!-- EQUITY OPTIONS — shown after payoff entered -->
+      <div id="equityOptions" style="display:none;margin-top:24px;">
+
+        <div style="font-size:18px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">⚡ WHAT WOULD YOU LIKE TO DO WITH YOUR EQUITY?</div>
+        <p style="font-size:18px;color:#ffffff;font-family:var(--body);margin-bottom:20px;line-height:1.6;">This is YOUR money — you decide how to use it. Here are your three options:</p>
+
+        <!-- OPTION 1 — KEEP ALL -->
+        <div class="equity-option" id="opt1" onclick="selectEquityOption(1)">
+          <div class="equity-opt-header">
+            <div class="equity-opt-icon">💰</div>
+            <div>
+              <div class="equity-opt-title">KEEP ALL EQUITY</div>
+              <div class="equity-opt-sub">Take the full amount as cash in your pocket</div>
+            </div>
+            <div class="equity-opt-check" id="check1">○</div>
+          </div>
+          <div class="equity-opt-detail" id="detail1" style="display:none;">
+            <div class="equity-detail-row">
+              <span>Your Net Equity</span>
+              <span id="opt1Amount" style="color:var(--green);font-weight:900;">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Applied to New Vehicle</span>
+              <span style="color:#ffffff;">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Cash to You at Closing</span>
+              <span id="opt1Cash" style="color:var(--green);font-weight:900;">$0</span>
+            </div>
+            <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:10px;line-height:1.5;">✅ Best if you have a down payment already or want to keep the cash separate. Your new vehicle purchase is financed independently.</p>
+          </div>
+        </div>
+
+        <!-- OPTION 2 — SPLIT -->
+        <div class="equity-option" id="opt2" onclick="selectEquityOption(2)">
+          <div class="equity-opt-header">
+            <div class="equity-opt-icon">✂️</div>
+            <div>
+              <div class="equity-opt-title">SPLIT YOUR EQUITY</div>
+              <div class="equity-opt-sub">Use some toward your new vehicle — keep the rest</div>
+            </div>
+            <div class="equity-opt-check" id="check2">○</div>
+          </div>
+          <div class="equity-opt-detail" id="detail2" style="display:none;">
+            <div style="margin-bottom:12px;">
+              <label style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:6px;">HOW MUCH TOWARD NEW VEHICLE?</label>
+              <input type="range" id="splitSlider" min="0" max="100" value="50"
+                style="width:100%;accent-color:var(--blue);"
+                oninput="updateSplit()"/>
+              <div style="display:flex;justify-content:space-between;font-size:16px;color:#ffffff;font-family:var(--body);margin-top:4px;">
+                <span>0%</span><span>50%</span><span>100%</span>
+              </div>
+            </div>
+            <div class="equity-detail-row">
+              <span>Applied to New Vehicle</span>
+              <span id="opt2Applied" style="color:var(--blue);font-weight:900;">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Cash to You at Closing</span>
+              <span id="opt2Cash" style="color:var(--green);font-weight:900;">$0</span>
+            </div>
+            <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:10px;line-height:1.5;">✅ Best of both worlds — reduce your monthly payment AND walk away with cash.</p>
+          </div>
+        </div>
+
+        <!-- OPTION 3 — ALL IN -->
+        <div class="equity-option" id="opt3" onclick="selectEquityOption(3)">
+          <div class="equity-opt-header">
+            <div class="equity-opt-icon">🚗</div>
+            <div>
+              <div class="equity-opt-title">ALL EQUITY TO NEW VEHICLE</div>
+              <div class="equity-opt-sub">Maximize your down payment — lowest monthly payment</div>
+            </div>
+            <div class="equity-opt-check" id="check3">○</div>
+          </div>
+          <div class="equity-opt-detail" id="detail3" style="display:none;">
+            <div class="equity-detail-row">
+              <span>Applied to New Vehicle</span>
+              <span id="opt3Applied" style="color:var(--blue);font-weight:900;">$0</span>
+            </div>
+            <div class="equity-detail-row">
+              <span>Cash to You</span>
+              <span style="color:#ffffff;">$0</span>
+            </div>
+            <div class="equity-detail-row" id="opt3Payment" style="display:none;">
+              <span>Est. Monthly Savings</span>
+              <span id="opt3Savings" style="color:var(--green);font-weight:900;">$0/mo</span>
+            </div>
+            <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:10px;line-height:1.5;">✅ Best if you want the lowest possible monthly payment on your new vehicle. Every dollar reduces what you finance.</p>
+          </div>
+        </div>
+
+        <!-- NEGATIVE EQUITY WARNING -->
+        <div id="negEquityWarning" style="display:none;background:rgba(255,68,68,.06);border:2px solid rgba(255,68,68,.3);border-radius:12px;padding:20px;margin-top:16px;">
+          
+          <div style="font-size:20px;font-weight:900;color:var(--red);margin-bottom:4px;">⚠️ NEGATIVE EQUITY DETECTED</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-bottom:16px;line-height:1.5;">Your payoff is higher than the current offer. Here's what EVL recommends based on your situation:</div>
+
+          <!-- LTV INPUTS -->
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:16px;">
+            <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:10px;">ENTER YOUR NEW VEHICLE DETAILS TO SEE YOUR OPTIONS:</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div>
+                <label style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:4px;">NEW VEHICLE PRICE</label>
+                <input type="number" id="newVehiclePrice" placeholder="e.g. 45000"
+                  style="width:100%;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:10px 12px;border-radius:6px;font-size:19px;font-family:var(--font);font-weight:700;outline:none;"
+                  oninput="calcNegEquityPaths()" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
+              </div>
+              <div>
+                <label style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:4px;">NEW VEHICLE BOOK VALUE</label>
+                <input type="number" id="newVehicleBook" placeholder="e.g. 43000"
+                  style="width:100%;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:10px 12px;border-radius:6px;font-size:19px;font-family:var(--font);font-weight:700;outline:none;"
+                  oninput="calcNegEquityPaths()" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
+              </div>
+            </div>
+            <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:8px;">Book value = KBB or NADA lending value. Your EVL advisor can provide this. Most lenders cap at 125-130% of book.</p>
+          </div>
+
+          <!-- SMART PATHS — populated by JS -->
+          <div id="negEquityPaths">
+
+            <!-- PATH A — ROLL INTO DEAL (shown if LTV allows) -->
+            <div class="neg-path" id="pathA" style="display:none;">
+              <div class="neg-path-header">
+                <div class="neg-path-badge" style="background:rgba(0,200,83,.15);color:var(--green);border:1px solid rgba(0,200,83,.3);">✅ RECOMMENDED</div>
+                <div class="neg-path-title">PATH A — ROLL INTO NEW VEHICLE LOAN</div>
+              </div>
+              <div class="neg-path-body">
+                <div class="neg-detail-row"><span>Negative Equity Gap</span><span id="pathAGap" style="color:var(--red);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>New Vehicle Price</span><span id="pathAPrice" style="color:var(--white);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>Total Amount Financed</span><span id="pathATotal" style="color:var(--white);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>LTV Ratio</span><span id="pathALTV" style="font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>Lender Max (125% book)</span><span id="pathAMax" style="color:#ffffff;font-weight:900;">$0</span></div>
+                <div id="pathAStatus" style="margin-top:10px;padding:10px;border-radius:6px;font-size:16px;font-weight:900;font-family:var(--body);"></div>
+                <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:10px;line-height:1.5;">The negative equity is rolled into your new vehicle loan. No cash out of pocket today. Monthly payment increases slightly based on the gap amount.</p>
+              </div>
+            </div>
+
+            <!-- PATH B — COVER THE GAP -->
+            <div class="neg-path" id="pathB" style="display:none;">
+              <div class="neg-path-header">
+                <div class="neg-path-badge" style="background:rgba(43,132,254,.15);color:var(--blue);border:1px solid rgba(43,132,254,.3);">💡 CLEANEST DEAL</div>
+                <div class="neg-path-title">PATH B — COVER THE GAP</div>
+              </div>
+              <div class="neg-path-body">
+                <div class="neg-detail-row"><span>Gap to Cover</span><span id="pathBGap" style="color:var(--red);font-weight:900;">$0</span></div>
+                <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                  <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+                    <div style="font-size:23px;margin-bottom:6px;">💳</div>
+                    <div style="font-size:16px;font-weight:900;color:var(--white);margin-bottom:4px;">CREDIT CARD</div>
+                    <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.4;">Pay gap today. Funds incoming from auction cover it.</div>
+                  </div>
+                  <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+                    <div style="font-size:23px;margin-bottom:6px;">🏦</div>
+                    <div style="font-size:16px;font-weight:900;color:var(--white);margin-bottom:4px;">BRIDGE LOAN</div>
+                    <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.4;">30-day CU loan. Minimal interest. Paid off at closing.</div>
+                  </div>
+                  <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+                    <div style="font-size:23px;margin-bottom:6px;">✍️</div>
+                    <div style="font-size:16px;font-weight:900;color:var(--white);margin-bottom:4px;">PERSONAL CHECK</div>
+                    <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.4;">Pay gap at closing. Cleanest transaction possible.</div>
+                  </div>
+                </div>
+                <div style="background:rgba(43,132,254,.08);border-radius:6px;padding:10px;margin-top:10px;">
+                  <div style="font-size:16px;color:var(--blue);font-family:var(--body);font-weight:700;line-height:1.5;">⚡ WHY THIS WORKS: Your auction bid money is already confirmed. Covering the gap now is temporary — the funds are coming. Clean title → clean deal → lowest rate on new loan.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PATH C — WAIT FOR HIGHER BID -->
+            <div class="neg-path" id="pathC" style="display:none;">
+              <div class="neg-path-header">
+                <div class="neg-path-badge" style="background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.3);">⏳ STILL POSSIBLE</div>
+                <div class="neg-path-title">PATH C — WAIT FOR HIGHER BID</div>
+              </div>
+              <div class="neg-path-body">
+                <div class="neg-detail-row"><span>Current Gap</span><span id="pathCGap" style="color:var(--red);font-weight:900;">$0</span></div>
+                <div class="neg-detail-row"><span>Bid Needed to Break Even</span><span id="pathCTarget" style="color:var(--gold);font-weight:900;">$0</span></div>
+                <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:10px;line-height:1.5;">Your auction is still live. Additional bids may close or eliminate the gap before the auction ends. EVL will notify you immediately if a higher bid comes in.</p>
+              </div>
+            </div>
+
+          </div><!-- /negEquityPaths -->
+
+          <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:16px;line-height:1.5;text-align:center;">Your EVL advisor will walk through the best path for your exact situation. <a href="/contact" style="color:var(--blue);">Contact EVL now →</a></p>
+        </div>
+
+        <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:16px;line-height:1.6;text-align:center;">These are estimates only. Your EVL advisor will confirm exact figures at closing. You are under no obligation until you sign.</p>
+      </div>
+
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="auction-card">
+      <div class="auction-title">📋 YOUR DEAL TIMELINE</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-content">
+            <div class="tl-title">Trade-In Submitted</div>
+            <div class="tl-desc">Your vehicle details and photos were received by EVL.</div>
+            <div class="tl-time">Completed — T+0</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-content">
+            <div class="tl-title">EVL Verified & Certified</div>
+            <div class="tl-desc">Your vehicle passed EVL inspection. PITPO certification issued.</div>
+            <div class="tl-time">Completed — T+15 min</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✅</div>
+          <div class="tl-content">
+            <div class="tl-title">Auction Launched</div>
+            <div class="tl-desc">Your vehicle was posted to the EVL dealer network. Bidding is now open.</div>
+            <div class="tl-time">Completed — T+30 min</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot active">⚡</div>
+          <div class="tl-content">
+            <div class="tl-title">Live Bidding — In Progress</div>
+            <div class="tl-desc">Dealers are actively bidding on your vehicle right now. Auction closes in 23 hours.</div>
+            <div class="tl-time">In Progress — T+2 to T+24 hrs</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot pending">4</div>
+          <div class="tl-content">
+            <div class="tl-title">Best Offer Presented to You</div>
+            <div class="tl-desc">EVL presents the highest verified offer. You review and accept or decline.</div>
+            <div class="tl-time">Upcoming — T+24 hrs</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot pending">5</div>
+          <div class="tl-content">
+            <div class="tl-title">Deal Structured & Closed</div>
+            <div class="tl-desc">Equity applied to your new vehicle purchase or paid out directly.</div>
+            <div class="tl-time">Upcoming — T+24 to T+48 hrs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BCS COMPARISON CALCULATOR -->
+    <div style="background:var(--s1);border:2px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px;">
+
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ YOUR BEST MOVE — SEE THE NUMBERS</div>
+        <div style="font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">WHICH PATH IS RIGHT FOR YOU?</div>
+        <div style="font-size:17px;color:#ffffff;font-family:var(--body);font-weight:600;max-width:560px;margin:0 auto;line-height:1.6;">No matter which way you go — EVL makes sure you get the most for your vehicle. See exactly how each path compares.</div>
+      </div>
+
+      <!-- VEHICLE VALUE INPUT -->
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:1px;margin-bottom:12px;">ENTER YOUR VEHICLE'S ESTIMATED VALUE:</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <input type="number" id="bcsValue" placeholder="e.g. 13000"
+            style="flex:1;min-width:200px;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:14px 18px;border-radius:8px;font-size:18px;font-family:var(--font);font-weight:700;outline:none;"
+            oninput="calcBCS()" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"/>
+          <button onclick="calcBCS()" style="background:var(--gold);color:#020203;border:none;padding:14px 28px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;">SEE MY OPTIONS →</button>
+        </div>
+      </div>
+
+      <!-- BCS RESULTS -->
+      <div id="bcsResults" style="display:none;">
+
+        <!-- OPTION CARDS -->
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;">
+
+          <!-- OPTION 1 — CARMAX/BD SUBMIT -->
+          <div style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:20px;position:relative;">
+            <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:2px;margin-bottom:8px;">OPTION 1</div>
+            <div style="font-size:18px;font-weight:900;color:#ffffff;text-transform:uppercase;margin-bottom:4px;">EVL BD Submit</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">CarMax · Carvana · SMTV</div>
+            <div style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. offer</span>
+                <span style="color:#ffffff;font-weight:900;" id="bcs1Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">EVL submit fee</span>
+                <span style="color:var(--red);font-weight:900;">-$199</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid var(--border);padding-top:10px;">
+                <span style="color:#ffffff;font-weight:900;">Your net</span>
+                <span style="color:#ffffff;font-weight:900;" id="bcs1Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ✅ Same day offer<br>
+                ✅ EVL submits to all BDs<br>
+                ✅ Zero hassle<br>
+                ⚠️ Lowest net value
+              </div>
+              <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:1px;text-align:center;">⏱ SAME DAY</div>
+            </div>
+          </div>
+
+          <!-- OPTION 2 — EVL AUCTION ← HIGHLIGHTED -->
+          <div style="background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,215,0,.05));border:3px solid var(--gold);border-radius:12px;padding:20px;position:relative;">
+            <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#020203;font-size:11px;font-weight:900;padding:4px 16px;border-radius:12px;letter-spacing:1px;white-space:nowrap;">⚡ BEST VALUE + SPEED</div>
+            <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:2px;margin-bottom:8px;">OPTION 2</div>
+            <div style="font-size:18px;font-weight:900;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">EVL Live Auction</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">Dealers compete for your vehicle</div>
+            <div style="border-top:1px solid rgba(255,215,0,.3);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. winning bid</span>
+                <span style="color:var(--green);font-weight:900;" id="bcs2Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">EVL platform fee</span>
+                <span style="color:var(--red);font-weight:900;">-$495</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Escrow (your half)</span>
+                <span style="color:var(--red);font-weight:900;">-$75</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid rgba(255,215,0,.3);padding-top:10px;">
+                <span style="color:var(--gold);font-weight:900;">Your net</span>
+                <span style="color:var(--gold);font-weight:900;" id="bcs2Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ✅ Dealers compete = higher price<br>
+                ✅ Reserve protects your value<br>
+                ✅ 24-48 hour close<br>
+                ✅ EVL handles everything<br>
+                ✅ Safest transaction
+              </div>
+              <div style="font-size:12px;font-weight:900;color:var(--gold);letter-spacing:1px;text-align:center;">⏱ 24-48 HOURS</div>
+            </div>
+          </div>
+
+          <!-- OPTION 3 — EVL PRIVATE SALE -->
+          <div style="background:var(--bg);border:2px solid var(--blue);border-radius:12px;padding:20px;">
+            <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:2px;margin-bottom:8px;">OPTION 3</div>
+            <div style="font-size:18px;font-weight:900;color:#ffffff;text-transform:uppercase;margin-bottom:4px;">EVL Private Sale</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">Full concierge — highest net potential</div>
+            <div style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. private sale price</span>
+                <span style="color:var(--green);font-weight:900;" id="bcs3Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">EVL concierge fee</span>
+                <span style="color:var(--red);font-weight:900;">-$299</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid var(--border);padding-top:10px;">
+                <span style="color:#ffffff;font-weight:900;">Your net</span>
+                <span style="color:var(--green);font-weight:900;" id="bcs3Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ✅ Highest potential net<br>
+                ✅ EVL lists, screens, protects<br>
+                ✅ Safe exchange coordinated<br>
+                ✅ Title + paperwork handled<br>
+                ⚠️ Takes 7-14 days
+              </div>
+              <div style="font-size:12px;font-weight:900;color:var(--blue);letter-spacing:1px;text-align:center;">⏱ 7-14 DAYS</div>
+            </div>
+          </div>
+
+          <!-- OPTION 4 — DO IT YOURSELF -->
+          <div style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:20px;opacity:0.75;">
+            <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:2px;margin-bottom:8px;">OPTION 4</div>
+            <div style="font-size:18px;font-weight:900;color:#ffffff;text-transform:uppercase;margin-bottom:4px;">On Your Own</div>
+            <div style="font-size:13px;color:#ffffff;font-family:var(--body);margin-bottom:16px;">Private sale without EVL</div>
+            <div style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Est. private sale price</span>
+                <span style="color:#ffffff;font-weight:900;" id="bcs4Offer">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Listing costs</span>
+                <span style="color:var(--red);font-weight:900;">-$150</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--body);">
+                <span style="color:#ffffff;">Price loss (no EVL optimization)</span>
+                <span style="color:var(--red);font-weight:900;" id="bcs4Loss">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px;font-family:var(--body);border-top:1px solid var(--border);padding-top:10px;">
+                <span style="color:#ffffff;font-weight:900;">Your net</span>
+                <span style="color:var(--red);font-weight:900;" id="bcs4Net">$0</span>
+              </div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);line-height:1.5;margin-bottom:12px;">
+                ❌ 30-90 days average<br>
+                ❌ Strangers at your home<br>
+                ❌ Scam risk<br>
+                ❌ Title mistakes common<br>
+                ❌ Undersell by $500-1,500
+              </div>
+              <div style="font-size:12px;font-weight:900;color:#ffffff;letter-spacing:1px;text-align:center;">⏱ 30-90 DAYS</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- EVL ADVANTAGE STATEMENT -->
+        <div style="background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,215,0,.05));border:2px solid var(--gold);border-radius:12px;padding:24px;text-align:center;margin-bottom:20px;">
+          <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">⚡ THE EVL ADVANTAGE — NO MATTER WHICH PATH YOU CHOOSE</div>
+          <div style="font-size:19px;font-weight:700;color:#ffffff;font-family:var(--body);line-height:1.7;max-width:600px;margin:0 auto;">
+            Every EVL path beats going it alone. Whether you want <span style="color:var(--gold);font-weight:900;">speed</span>, <span style="color:var(--gold);font-weight:900;">maximum value</span>, or <span style="color:var(--gold);font-weight:900;">complete hands-off convenience</span> — EVL delivers more than any alternative. We are not a dealer. We work for <span style="color:var(--gold);font-weight:900;">you</span>.
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;">
+            <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;">
+              <div style="font-size:26px;font-weight:900;color:var(--gold);" id="bcsMaxSaving">$0</div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:4px;">More vs. going alone</div>
+            </div>
+            <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;">
+              <div style="font-size:26px;font-weight:900;color:var(--green);">24-48 hrs</div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:4px;">vs. 30-90 days alone</div>
+            </div>
+            <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;">
+              <div style="font-size:26px;font-weight:900;color:var(--blue);">100%</div>
+              <div style="font-size:13px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:4px;">Transparent. No dealer games.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PATH SELECTION CTA -->
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+          <a href="/contact?path=bd-submit" style="background:var(--s1);color:#ffffff;border:2px solid var(--border);padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">BD SUBMIT — $199 →</a>
+          <a href="/trade-in?path=auction" style="background:var(--gold);color:#020203;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">⚡ START EVL AUCTION →</a>
+          <a href="/contact?path=private-sale" style="background:var(--blue);color:#ffffff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">PRIVATE SALE ASSIST →</a>
+          <a href="/contact" style="background:transparent;color:#ffffff;border:2px solid var(--border);padding:14px;border-radius:8px;font-size:15px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;text-align:center;">TALK TO EVL ADVISOR →</a>
+        </div>
+
+      </div><!-- /bcsResults -->
+
+    </div>
+
+    <!-- EVL FINANCE ADVANTAGE -->
+    <div style="background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,215,0,.03));border:2px solid rgba(255,215,0,.3);border-radius:14px;padding:28px;margin-bottom:24px;">
+      
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ THE EVL FINANCE ADVANTAGE</div>
+        <div style="font-size:33px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">LET US HANDLE YOUR FINANCING</div>
+        <div style="font-size:19px;color:#ffffff;font-family:var(--body);font-weight:600;max-width:520px;margin:0 auto;line-height:1.6;">Most dealers charge you 2 points over the buy rate — that's pure profit for them. EVL finds your best rate, best term, and best lender. Here's what that means for you:</div>
+      </div>
+
+      <!-- COMPARISON TABLE -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+        
+        <!-- HEADER ROW -->
+        <div style="background:#1a1a2e;padding:12px 16px;font-size:16px;font-weight:900;color:#ffffff;letter-spacing:2px;text-transform:uppercase;">TYPICAL DEALER F&I</div>
+        <div style="background:rgba(255,215,0,.15);padding:12px 16px;font-size:16px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;">⚡ EVL FINANCE</div>
+
+        <!-- RATE -->
+        <div style="background:var(--s1);padding:14px 16px;border-bottom:1px solid var(--border);">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">INTEREST RATE</div>
+          <div style="font-size:25px;font-weight:900;color:var(--red);">Buy Rate + 2%</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">Hidden markup = dealer profit</div>
+        </div>
+        <div style="background:rgba(255,215,0,.05);padding:14px 16px;border-bottom:1px solid rgba(255,215,0,.1);">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">INTEREST RATE</div>
+          <div style="font-size:25px;font-weight:900;color:var(--green);">True Buy Rate</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">No markup. You get the real rate.</div>
+        </div>
+
+        <!-- TERM -->
+        <div style="background:var(--s1);padding:14px 16px;border-bottom:1px solid var(--border);">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">LOAN TERM</div>
+          <div style="font-size:25px;font-weight:900;color:#ffffff;">48–60 Months</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">Shorter = higher payment</div>
+        </div>
+        <div style="background:rgba(255,215,0,.05);padding:14px 16px;border-bottom:1px solid rgba(255,215,0,.1);">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">LOAN TERM</div>
+          <div style="font-size:25px;font-weight:900;color:var(--green);">Up to 84 Months</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">Longer term = lower payment</div>
+        </div>
+
+        <!-- NEG EQUITY -->
+        <div style="background:var(--s1);padding:14px 16px;border-bottom:1px solid var(--border);">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">NEGATIVE EQUITY CARRY</div>
+          <div style="font-size:25px;font-weight:900;color:var(--red);">Limited / Denied</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">Most dealers can't place high LTV</div>
+        </div>
+        <div style="background:rgba(255,215,0,.05);padding:14px 16px;border-bottom:1px solid rgba(255,215,0,.1);">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">NEGATIVE EQUITY CARRY</div>
+          <div style="font-size:25px;font-weight:900;color:var(--green);">125–130% LTV</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">We find lenders that carry the gap</div>
+        </div>
+
+        <!-- WARRANTY -->
+        <div style="background:var(--s1);padding:14px 16px;">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">WARRANTY / GAP / PROTECTION</div>
+          <div style="font-size:25px;font-weight:900;color:var(--red);">Dealer Markup</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">$2,000–4,000 above cost</div>
+        </div>
+        <div style="background:rgba(255,215,0,.05);padding:14px 16px;">
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:4px;">WARRANTY / GAP / PROTECTION</div>
+          <div style="font-size:25px;font-weight:900;color:var(--green);">Near Cost</div>
+          <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:2px;">Significant savings vs dealer price</div>
+        </div>
+
+      </div>
+
+      <!-- SAVINGS BUBBLE CALCULATOR -->
+      <div style="background:var(--bg);border:2px solid var(--gold);border-radius:12px;padding:24px;margin-bottom:20px;">
+        <div style="font-size:18px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;text-align:center;">💰 SEE YOUR ESTIMATED SAVINGS</div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div>
+            <label style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:6px;">AMOUNT TO FINANCE</label>
+            <input type="number" id="financeAmount" placeholder="e.g. 43000"
+              style="width:100%;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:10px 12px;border-radius:6px;font-size:19px;font-family:var(--font);font-weight:700;outline:none;"
+              oninput="calcSavings()" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"/>
+          </div>
+          <div>
+            <label style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;display:block;margin-bottom:6px;">DEALER RATE OFFERED (%)</label>
+            <input type="number" id="dealerRate" placeholder="e.g. 8.9" step="0.1"
+              style="width:100%;background:var(--s1);border:2px solid var(--border);color:var(--white);padding:10px 12px;border-radius:6px;font-size:19px;font-family:var(--font);font-weight:700;outline:none;"
+              oninput="calcSavings()" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"/>
+          </div>
+        </div>
+
+        <!-- SAVINGS RESULTS -->
+        <div id="savingsResults" style="display:none;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+            <div style="background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.3);border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:6px;">DEALER MONTHLY</div>
+              <div style="font-size:30px;font-weight:900;color:var(--red);" id="dealerMonthly">$0</div>
+              <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:4px;">72 months @ dealer rate</div>
+            </div>
+            <div style="background:rgba(0,200,83,.08);border:1px solid rgba(0,200,83,.3);border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;letter-spacing:1px;margin-bottom:6px;">EVL MONTHLY</div>
+              <div style="font-size:30px;font-weight:900;color:var(--green);" id="evlMonthly">$0</div>
+              <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:4px;">84 months @ buy rate</div>
+            </div>
+            <div style="background:rgba(255,215,0,.1);border:2px solid var(--gold);border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-size:16px;color:var(--gold);font-family:var(--body);font-weight:900;letter-spacing:1px;margin-bottom:6px;">YOUR SAVINGS</div>
+              <div style="font-size:30px;font-weight:900;color:var(--gold);" id="monthlySavings">$0</div>
+              <div style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:4px;">per month</div>
+            </div>
+          </div>
+
+          <!-- BIG SAVINGS BUBBLE -->
+          <div id="savingsBubble" style="background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,215,0,.05));border:3px solid var(--gold);border-radius:16px;padding:24px;text-align:center;">
+            <div style="font-size:18px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">🏆 TOTAL EVL ADVANTAGE</div>
+            <div style="font-size:59.8px;font-weight:900;color:var(--gold);line-height:1;" id="totalSavings">$0</div>
+            <div style="font-size:20px;color:#ffffff;font-family:var(--body);font-weight:700;margin-top:8px;">estimated total savings over life of loan</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;">
+              <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:10px;">
+                <div style="font-size:23px;font-weight:900;color:var(--green);" id="rateSaving">$0</div>
+                <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;">Rate Savings</div>
+              </div>
+              <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:10px;">
+                <div style="font-size:23px;font-weight:900;color:var(--green);" id="productSaving">$0</div>
+                <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;">F&I Products</div>
+              </div>
+              <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:10px;">
+                <div style="font-size:23px;font-weight:900;color:var(--green);" id="termSaving">$0</div>
+                <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;">Extended Term</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;margin-top:16px;">
+            <a href="/contact" style="display:inline-block;background:var(--gold);color:#020203;padding:14px 32px;border-radius:8px;font-size:20px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;">⚡ LET EVL HANDLE MY FINANCING</a>
+          </div>
+        </div>
+
+        <p style="font-size:16px;color:#ffffff;font-family:var(--body);margin-top:12px;text-align:center;line-height:1.5;">Estimates based on typical dealer rate markup of 2%. Actual rates vary by credit profile and lender. EVL works with multiple lenders to find your best rate.</p>
+      </div>
+
+    </div>
+
+    <!-- EVL FULL LIFECYCLE -->
+    <div style="margin-bottom:24px;">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="font-size:16px;font-weight:900;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">⚡ EVEN GREATER SAVINGS</div>
+        <div style="font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:1px;">THE EVL FULL LIFECYCLE</div>
+        <div style="font-size:18px;color:#ffffff;font-family:var(--body);font-weight:600;margin-top:8px;">We don't just do the deal — we stay with you for the life of the vehicle.</div>
+      </div>
+
+      <!-- SERVICES GRID WITH FADE -->
+      <div style="position:relative;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+
+          <!-- SERVICE 1 — Electronic Glove Box -->
+          <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:10px;">📱</div>
+            <div style="font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Electronic Glove Box</div>
+            <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.5;">All your documents, warranties, service records — stored digitally. Never lose a paper again.</div>
+            <div style="margin-top:10px;font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px;">✅ AVAILABLE NOW</div>
+          </div>
+
+          <!-- SERVICE 2 — Best Time to Trade -->
+          <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:10px;">📊</div>
+            <div style="font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Best Time to Trade</div>
+            <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.5;">EVL monitors your vehicle's market value and equity position. We alert you when the timing is perfect to trade up.</div>
+            <div style="margin-top:10px;font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px;">✅ AVAILABLE NOW</div>
+          </div>
+
+          <!-- SERVICE 3 — Make It Yours -->
+          <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:10px;">🔧</div>
+            <div style="font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Make It Yours</div>
+            <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.5;">Accessories, upgrades, and customizations sourced at dealer cost. Protect your investment and personalize your ride.</div>
+            <div style="margin-top:10px;font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px;">✅ AVAILABLE NOW</div>
+          </div>
+
+          <!-- SERVICE 4 — Vehicle Insurance -->
+          <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:10px;">🛡️</div>
+            <div style="font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Vehicle Insurance</div>
+            <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.5;">EVL shops your insurance at every renewal. Multiple carriers compared. Best coverage at the lowest rate — automatically.</div>
+            <div style="margin-top:10px;font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px;">✅ AVAILABLE NOW</div>
+          </div>
+
+          <!-- SERVICE 5 — Trade Forensics -->
+          <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:10px;">🔍</div>
+            <div style="font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Trade Forensics</div>
+            <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.5;">Deep market analysis of your vehicle's depreciation curve. Know exactly what your car is worth — every month.</div>
+            <div style="margin-top:10px;font-size:16px;font-weight:900;color:var(--green);letter-spacing:1px;">✅ AVAILABLE NOW</div>
+          </div>
+
+          <!-- SERVICE 6 — Full Lifecycle -->
+          <div style="background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,215,0,.03));border:1px solid rgba(255,215,0,.3);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:10px;">♾️</div>
+            <div style="font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;color:var(--gold);">Full Lifecycle Member</div>
+            <div style="font-size:16px;color:#ffffff;font-family:var(--body);line-height:1.5;">One membership. Every service. From your first deal to your next — EVL is your automotive partner for life.</div>
+            <div style="margin-top:10px;font-size:16px;font-weight:900;color:var(--gold);letter-spacing:1px;">⚡ ASK ABOUT FOUNDING MEMBER PRICING</div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- COMING SOON CTA -->
+      <div style="text-align:center;margin-top:20px;">
+        <div style="font-size:16px;color:#ffffff;font-family:var(--body);font-weight:700;margin-bottom:12px;letter-spacing:1px;">ALL SERVICES AVAILABLE NOW — TALK TO YOUR EVL ADVISOR</div>
+        <a href="/contact" style="display:inline-block;background:var(--blue);color:var(--white);padding:12px 28px;border-radius:8px;font-size:18px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;">⚡ GET STARTED NOW →</a>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <div class="cta-title">Ready to Move Forward?</div>
+      <div class="cta-sub">Your auction is live and bids are coming in. While you wait, start browsing vehicles or schedule a consultation with your EVL advisor.</div>
+      <div class="cta-btns">
+        <a href="/find" class="btn-primary">⚡ BROWSE VEHICLES</a>
+        <a href="/appointment" class="btn-outline">📅 SCHEDULE CONSULT</a>
+      </div>
+    </div>
+
+  </div><!-- /status-wrap -->
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section">
+    <div class="how-title">HOW YOUR AUCTION WORKS</div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">1</div>
+        <div class="how-card-title">You Submit</div>
+        <div class="how-card-desc">Vehicle details and photos submitted through EVL. Certification happens in 15 minutes.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">2</div>
+        <div class="how-card-title">Dealers Bid</div>
+        <div class="how-card-desc">Multiple dealers compete for your vehicle. More competition means a higher offer for you.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">3</div>
+        <div class="how-card-title">Reserve Protected</div>
+        <div class="how-card-desc">Your vehicle will not sell below the EVL verified reserve. You are protected.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">4</div>
+        <div class="how-card-title">You Get Paid</div>
+        <div class="how-card-desc">Equity applied to your new purchase or paid directly to you. Closed in 48 hours.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">EXPRESS <span>VEHICLE</span> LOCATORS</div>
+  <div class="footer-links">
+    <a href="/home">Home</a>
+    <a href="/find">Find My Car</a>
+    <a href="/leasing">Leasing</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <div class="footer-disclaimer">AI specs for informational use only. EVL is a vehicle advisory platform — not a dealer.</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, query, where, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+  authDomain: "evl-acquisition-radar.firebaseapp.com",
+  projectId: "evl-acquisition-radar",
+  storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  messagingSenderId: "84195145348",
+  appId: "1:84195145348:web:b10f837bee92ce2e4674d1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ── LOOKUP AUCTION ──
+window.lookupAuction = async function() {
+  const val = document.getElementById('lookupInput').value.trim().toUpperCase();
+  if(!val) { alert('Please enter your VIN or confirmation code.'); return; }
+
+  document.getElementById('noResults').classList.remove('active');
+  document.getElementById('statusWrap').classList.remove('active');
+
+  try {
+    // Try Firebase first
+    const q = query(collection(db, 'evl_auctions'), where('vin', '==', val));
+    const snap = await getDocs(q);
+
+    if(!snap.empty) {
+      const data = snap.docs[0].data();
+      showAuction(data);
+      // Listen for real-time updates
+      onSnapshot(snap.docs[0].ref, doc => {
+        if(doc.exists()) updateBids(doc.data());
+      });
+    } else {
+      // Demo mode for sample VINs
+      if(val === '5TFLA5AB7PX123456' || val === 'EVL-2026-001') {
+        showDemoAuction();
+      } else {
+        document.getElementById('noResults').classList.add('active');
+      }
+    }
+  } catch(e) {
+    console.error(e);
+    // Fallback demo
+    if(val === '5TFLA5AB7PX123456' || val === 'EVL-2026-001') {
+      showDemoAuction();
+    } else {
+      document.getElementById('noResults').classList.add('active');
+    }
+  }
+}
+
+function showDemoAuction() {
+  showAuction({
+    vehicle: '2023 Toyota Tundra TRD Pro',
+    vin: '5TFLA5AB7PX123456',
+    miles: '22,400',
+    color: 'White Pearl',
+    year: '2023',
+    currentBid: 43200,
+    bidCount: 4,
+    reserveMet: true,
+    timerSeconds: 83672,
+    bidHistory: [
+      { amount: 43200, time: '2 hrs ago' },
+      { amount: 42800, time: '4 hrs ago' },
+      { amount: 41500, time: '6 hrs ago' },
+      { amount: 40000, time: '8 hrs ago' },
+    ]
+  });
+}
+
+function showAuction(data) {
+  document.getElementById('vehicleName').textContent = data.vehicle || 'Your Vehicle';
+  document.getElementById('vehicleVin').textContent = 'VIN: ' + (data.vin || '—');
+  document.getElementById('vehicleMiles').textContent = (data.miles || '—').toLocaleString();
+  document.getElementById('vehicleColor').textContent = data.color || '—';
+  document.getElementById('vehicleYear').textContent = data.year || '—';
+  document.getElementById('statusWrap').classList.add('active');
+  updateBids(data);
+  startTimer(data.timerSeconds || 86400);
+}
+
+function updateBids(data) {
+  const bid = data.currentBid || 0;
+  document.getElementById('highBid').textContent = '$' + bid.toLocaleString();
+  document.getElementById('equityBid').textContent = '$' + bid.toLocaleString();
+  document.getElementById('bidCount').textContent = (data.bidCount || 1) + ' dealers have placed bids';
+
+  const reserveEl = document.getElementById('reserveStatus');
+  if(data.reserveMet) {
+    reserveEl.className = 'reserve-met';
+    reserveEl.textContent = '✅ RESERVE MET — Your vehicle WILL sell at close';
+  } else {
+    reserveEl.className = 'reserve-pending';
+    reserveEl.textContent = '⏳ RESERVE PENDING — Bidding is still active';
+  }
+
+  // Bid history
+  if(data.bidHistory && data.bidHistory.length) {
+    const sorted = [...data.bidHistory].sort((a,b) => b.amount - a.amount);
+    document.getElementById('bidHistory').innerHTML = sorted.map((b,i) => `
+      <div class="bid-row">
+        <span class="bid-row-num">Bid #${sorted.length - i}</span>
+        <span class="bid-row-time">${b.time || 'Recent'}</span>
+        <span class="bid-row-amt ${i===0?'top':''}">${'$'+b.amount.toLocaleString()}${i===0?' ← HIGHEST':''}</span>
+      </div>`).join('');
+  }
+  calcEquity();
+}
+
+// ── TIMER ──
+function startTimer(seconds) {
+  const el = document.getElementById('auctionTimer');
+  let s = seconds;
+  function tick() {
+    const h = Math.floor(s/3600);
+    const m = Math.floor((s%3600)/60);
+    const sec = s%60;
+    el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    el.className = s < 3600 ? 'timer-val' : 'timer-val plenty';
+    if(s > 0) { s--; setTimeout(tick, 1000); }
+  }
+  tick();
+}
+
+// ── EQUITY CALC ──
+window.calcEquity = function() {
+  const bid = parseInt(document.getElementById('highBid').textContent.replace(/[^0-9]/g,'')) || 0;
+  const payoff = parseInt(document.getElementById('payoffInput').value) || 0;
+  const net = bid - payoff - 495;
+  const el = document.getElementById('netEquity');
+  const payoffDisplay = document.getElementById('equityPayoffDisplay');
+  const optionsDiv = document.getElementById('equityOptions');
+  const negWarning = document.getElementById('negEquityWarning');
+
+  if(payoff >= 0 && document.getElementById('payoffInput').value !== '') {
+    payoffDisplay.textContent = payoff > 0 ? '-$' + payoff.toLocaleString() : '$0';
+    el.textContent = (net >= 0 ? '$' : '-$') + Math.abs(net).toLocaleString();
+    el.style.color = net >= 0 ? 'var(--green)' : 'var(--red)';
+
+    // Show options
+    optionsDiv.style.display = 'block';
+
+    if(net < 0) {
+      // Negative equity
+      document.getElementById('opt1').style.display = 'none';
+      document.getElementById('opt2').style.display = 'none';
+      document.getElementById('opt3').style.display = 'none';
+      negWarning.style.display = 'block';
+    } else {
+      // Positive equity
+      document.getElementById('opt1').style.display = 'block';
+      document.getElementById('opt2').style.display = 'block';
+      document.getElementById('opt3').style.display = 'block';
+      negWarning.style.display = 'none';
+
+      // Update option amounts
+      document.getElementById('opt1Amount').textContent = '$' + net.toLocaleString();
+      document.getElementById('opt1Cash').textContent = '$' + net.toLocaleString();
+      document.getElementById('opt3Applied').textContent = '$' + net.toLocaleString();
+      document.getElementById('opt3Savings').textContent = '$' + Math.round(net/72).toLocaleString() + '/mo';
+      document.getElementById('opt3Payment').style.display = 'flex';
+      updateSplit();
+    }
+  }
+}
+
+window.selectEquityOption = function(num) {
+  [1,2,3].forEach(n => {
+    const opt = document.getElementById('opt'+n);
+    const detail = document.getElementById('detail'+n);
+    const check = document.getElementById('check'+n);
+    if(n === num) {
+      opt.classList.add('selected');
+      detail.style.display = 'block';
+      check.textContent = '✅';
+    } else {
+      opt.classList.remove('selected');
+      detail.style.display = 'none';
+      check.textContent = '○';
+    }
+  });
+}
+
+// ── BCS CALCULATOR ──
+window.calcBCS = function() {
+  const val = parseFloat(document.getElementById('bcsValue').value) || 0;
+  if(!val) return;
+
+  // Estimates based on typical market data
+  const carmaxOffer   = Math.round(val * 0.88);  // BDs typically 88% of market
+  const auctionOffer  = Math.round(val * 0.96);  // Competition gets 96%
+  const privateOffer  = Math.round(val * 1.04);  // Private sale 4% premium
+  const diyOffer      = Math.round(val * 0.97);  // DIY undersells by ~3%
+  const diyLoss       = Math.round(val * 0.07);  // Optimization gap + listing costs
+
+  // Net calculations
+  const bcs1Net = carmaxOffer - 199;
+  const bcs2Net = auctionOffer - 495 - 75;
+  const bcs3Net = privateOffer - 299;
+  const bcs4Net = diyOffer - 150 - diyLoss;
+
+  // Update display
+  document.getElementById('bcs1Offer').textContent = '$' + carmaxOffer.toLocaleString();
+  document.getElementById('bcs1Net').textContent = '$' + bcs1Net.toLocaleString();
+  document.getElementById('bcs2Offer').textContent = '$' + auctionOffer.toLocaleString();
+  document.getElementById('bcs2Net').textContent = '$' + bcs2Net.toLocaleString();
+  document.getElementById('bcs3Offer').textContent = '$' + privateOffer.toLocaleString();
+  document.getElementById('bcs3Net').textContent = '$' + bcs3Net.toLocaleString();
+  document.getElementById('bcs4Offer').textContent = '$' + diyOffer.toLocaleString();
+  document.getElementById('bcs4Loss').textContent = '-$' + diyLoss.toLocaleString();
+  document.getElementById('bcs4Net').textContent = '$' + bcs4Net.toLocaleString();
+
+  // EVL max saving vs DIY
+  const maxEVL = Math.max(bcs1Net, bcs2Net, bcs3Net);
+  const saving = maxEVL - bcs4Net;
+  document.getElementById('bcsMaxSaving').textContent = '+$' + saving.toLocaleString();
+
+  document.getElementById('bcsResults').style.display = 'block';
+}
+
+ = function() {
+  const amount = parseFloat(document.getElementById('financeAmount').value) || 0;
+  const dealerRatePct = parseFloat(document.getElementById('dealerRate').value) || 0;
+  if(!amount || !dealerRatePct) return;
+
+  const evlRatePct = Math.max(dealerRatePct - 2, 2.9); // EVL = true buy rate (2pts lower)
+  const dealerMonths = 72;
+  const evlMonths = 84;
+
+  function monthlyPayment(principal, annualRate, months) {
+    const r = annualRate / 100 / 12;
+    return principal * (r * Math.pow(1+r,months)) / (Math.pow(1+r,months) - 1);
+  }
+
+  const dealerPmt = monthlyPayment(amount, dealerRatePct, dealerMonths);
+  const evlPmt = monthlyPayment(amount, evlRatePct, evlMonths);
+  const monthSaving = dealerPmt - evlPmt;
+
+  const dealerTotal = dealerPmt * dealerMonths;
+  const evlTotal = evlPmt * evlMonths;
+  const rateSaving = dealerTotal - evlTotal;
+  const productSaving = 1800; // avg EVL savings on warranty/gap/protection
+  const termSaving = Math.round(monthSaving * 12); // annualized
+  const totalSaving = Math.round(rateSaving + productSaving);
+
+  document.getElementById('dealerMonthly').textContent = '$' + Math.round(dealerPmt).toLocaleString();
+  document.getElementById('evlMonthly').textContent = '$' + Math.round(evlPmt).toLocaleString();
+  document.getElementById('monthlySavings').textContent = '$' + Math.round(monthSaving).toLocaleString() + '/mo';
+  document.getElementById('totalSavings').textContent = '$' + totalSaving.toLocaleString();
+  document.getElementById('rateSaving').textContent = '$' + Math.round(rateSaving).toLocaleString();
+  document.getElementById('productSaving').textContent = '~$' + productSaving.toLocaleString();
+  document.getElementById('termSaving').textContent = '$' + termSaving.toLocaleString() + '/yr';
+  document.getElementById('savingsResults').style.display = 'block';
+}
+
+ = function() {
+  const bid = parseInt(document.getElementById('highBid').textContent.replace(/[^0-9]/g,'')) || 0;
+  const payoff = parseInt(document.getElementById('payoffInput').value) || 0;
+  const gap = Math.abs(bid - payoff - 495); // negative equity gap
+  const newPrice = parseInt(document.getElementById('newVehiclePrice').value) || 0;
+  const bookVal = parseInt(document.getElementById('newVehicleBook').value) || 0;
+
+  if(!newPrice || !bookVal) return;
+
+  const totalFinanced = newPrice + gap;
+  const ltv = Math.round((totalFinanced / bookVal) * 100);
+  const maxLTV = 125;
+  const maxLoan = Math.round(bookVal * maxLTV / 100);
+  const ltvOK = ltv <= maxLTV;
+  const payoffBreakEven = payoff + 495;
+
+  // Show all paths
+  ['pathA','pathB','pathC'].forEach(p => document.getElementById(p).style.display = 'block');
+
+  // PATH A — Roll in
+  document.getElementById('pathAGap').textContent = '$' + gap.toLocaleString();
+  document.getElementById('pathAPrice').textContent = '$' + newPrice.toLocaleString();
+  document.getElementById('pathATotal').textContent = '$' + totalFinanced.toLocaleString();
+  document.getElementById('pathALTV').textContent = ltv + '%';
+  document.getElementById('pathAMax').textContent = '$' + maxLoan.toLocaleString() + ' (' + maxLTV + '% of book)';
+  const statusEl = document.getElementById('pathAStatus');
+  if(ltvOK) {
+    statusEl.style.background = 'rgba(0,200,83,.1)';
+    statusEl.style.color = 'var(--green)';
+    statusEl.style.border = '1px solid rgba(0,200,83,.3)';
+    statusEl.textContent = '✅ LTV IS ' + ltv + '% — WITHIN LENDER LIMITS. Rolling in is viable.';
+  } else {
+    statusEl.style.background = 'rgba(255,68,68,.1)';
+    statusEl.style.color = 'var(--red)';
+    statusEl.style.border = '1px solid rgba(255,68,68,.3)';
+    statusEl.textContent = '❌ LTV IS ' + ltv + '% — EXCEEDS ' + maxLTV + '% LENDER LIMIT. Cannot roll in full gap. See Path B.';
+  }
+
+  // PATH B — Cover gap
+  document.getElementById('pathBGap').textContent = '$' + gap.toLocaleString();
+
+  // PATH C — Wait
+  document.getElementById('pathCGap').textContent = '-$' + gap.toLocaleString();
+  document.getElementById('pathCTarget').textContent = '$' + payoffBreakEven.toLocaleString();
+}
+
+ = function() {
+  const net = parseInt(document.getElementById('netEquity').textContent.replace(/[^0-9]/g,'')) || 0;
+  const pct = parseInt(document.getElementById('splitSlider').value) / 100;
+  const applied = Math.round(net * pct);
+  const cash = net - applied;
+  document.getElementById('opt2Applied').textContent = '$' + applied.toLocaleString();
+  document.getElementById('opt2Cash').textContent = '$' + cash.toLocaleString();
+}
+
+// Auto-lookup from URL param
+const urlParams = new URLSearchParams(window.location.search);
+const vinParam = urlParams.get('vin') || urlParams.get('code');
+if(vinParam) {
+  document.getElementById('lookupInput').value = vinParam;
+  window.lookupAuction();
+}
+</script>
+</body>
+</html>
