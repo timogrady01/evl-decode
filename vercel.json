@@ -428,6 +428,5 @@
       "source": "/",
       "destination": "public/index.html"
     }
-  ],
-  "_lastDeployed": "2026-07-02-root-dir-fixed"
+  ]
 }
