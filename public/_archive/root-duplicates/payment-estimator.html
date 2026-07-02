@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Estimator — EVL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F8FA;
+    --white: #FFFFFF;
+    --blue: #2563EB;
+    --blue-dark: #1D4ED8;
+    --blue-light: #EFF6FF;
+    --blue-mid: #DBEAFE;
+    --text: #111827;
+    --text-mid: #374151;
+    --text-soft: #6B7280;
+    --border: #E5E7EB;
+    --success: #16A34A;
+    --success-bg: #F0FDF4;
+    --warning: #D97706;
+    --warning-bg: #FFFBEB;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--blue); }
+
+  .nav-back {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .header-icon {
+    width: 72px;
+    height: 72px;
+    background: var(--blue-light);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+  }
+
+  .header-icon svg { width: 36px; height: 36px; color: var(--blue); }
+
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+
+  .page-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .page-header p {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 20px;
+  }
+
+  /* ── FIELDS ── */
+  .field { margin-bottom: 24px; }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+  }
+
+  input[type="number"],
+  input[type="text"],
+  select {
+    width: 100%;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--blue);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  }
+
+  input::placeholder { color: #9CA3AF; font-weight: 400; }
+
+  /* ── CREDIT SCORE SELECTOR ── */
+  .credit-options {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .credit-opt input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .credit-opt label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 6px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-mid);
+    transition: all 0.15s;
+  }
+
+  .credit-opt input:checked + label {
+    background: var(--blue-light);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .credit-opt label:hover {
+    border-color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  .credit-score-range {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  .credit-opt input:checked + label .credit-score-range {
+    color: var(--blue);
+  }
+
+  /* ── VEHICLE TYPE ── */
+  .type-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .type-opt { position: relative; }
+
+  .type-opt input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .type-opt label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-mid);
+    text-transform: none;
+    letter-spacing: 0;
+    transition: all 0.15s;
+  }
+
+  .type-opt input:checked + label {
+    background: var(--blue-light);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .type-opt label:hover {
+    border-color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  /* ── TERM SELECTOR ── */
+  .term-options {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .term-opt { position: relative; }
+
+  .term-opt input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .term-opt label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 6px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-mid);
+    text-transform: none;
+    letter-spacing: 0;
+    text-align: center;
+    transition: all 0.15s;
+  }
+
+  .term-opt label span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  .term-opt input:checked + label {
+    background: var(--blue-light);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .term-opt input:checked + label span { color: var(--blue); }
+
+  .term-opt label:hover {
+    border-color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  /* ── CALCULATE BUTTON ── */
+  .btn-calc {
+    width: 100%;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background 0.15s;
+    -webkit-font-smoothing: antialiased;
+    margin-top: 8px;
+  }
+
+  .btn-calc:hover { background: var(--blue-dark); }
+
+  /* ── RESULTS CARD ── */
+  #results { display: none; }
+
+  .results-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .results-header .results-label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 8px;
+  }
+
+  .results-header .payment-range {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .results-header .payment-sub {
+    font-size: 16px;
+    color: var(--text-soft);
+    font-weight: 500;
+  }
+
+  /* ── SCENARIO TABS ── */
+  .scenario-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .scenario-tab {
+    padding: 14px 10px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .scenario-tab.active {
+    border-color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  .scenario-tab .tab-label {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .scenario-tab.active .tab-label { color: var(--blue); }
+
+  .scenario-tab .tab-rate {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    display: block;
+  }
+
+  .scenario-tab.active .tab-rate { color: var(--blue); }
+
+  .scenario-tab .tab-payment {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-soft);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ── INFO ICON ── */
+  .info-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+    color: white;
+    font-family: serif;
+    box-shadow: 0 2px 6px rgba(37,99,235,0.3);
+  }
+
+  /* ── DISCLOSURE POPUP ── */
+  .disclosure-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .disclosure-overlay.hidden { display: none; }
+
+  .disclosure-box {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+
+  .disclosure-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .disclosure-box p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+  }
+
+  .disclosure-close {
+    width: 100%;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SCENARIO DETAIL ── */
+  .scenario-detail {
+    background: var(--blue-light);
+    border: 1px solid var(--blue-mid);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── INPUTS SUMMARY ── */
+  .inputs-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .input-chip {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+
+  .input-chip .chip-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-soft);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .input-chip .chip-value {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  /* ── PLATFORM DISCLAIMER ── */
+  .platform-disclaimer {
+    background: var(--warning-bg);
+    border: 1px solid #FDE68A;
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-top: 20px;
+  }
+
+  .platform-disclaimer strong {
+    color: var(--warning);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── NEXT STEPS ── */
+  .next-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .next-btn {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .next-btn.primary {
+    background: var(--blue);
+    color: white;
+  }
+
+  .next-btn.secondary {
+    background: var(--white);
+    color: var(--blue);
+    border: 2px solid var(--blue);
+  }
+
+  /* ── ERROR ── */
+  .msg {
+    display: none;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626;
+  }
+
+  .msg.show { display: block; }
+
+  @media (max-width: 600px) {
+    .field-row { grid-template-columns: 1fr; }
+    .credit-options { grid-template-columns: repeat(3, 1fr); }
+    .inputs-summary { grid-template-columns: repeat(2, 1fr); }
+    .next-steps { grid-template-columns: 1fr; }
+    .scenario-tabs { grid-template-columns: 1fr; }
+  }
+
+  /* ── MODE TABS ── */
+  .mode-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+  }
+
+  .mode-tab {
+    padding: 14px 10px;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mode-tab.active {
+    background: var(--white);
+    color: var(--blue);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  .mode-tab .tab-icon { font-size: 20px; }
+  .mode-tab .tab-text { font-size: 13px; font-weight: 700; }
+
+  /* ── REVERSE RESULTS ── */
+  .price-range-display {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .price-range-display .prd-label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 8px;
+  }
+
+  .price-range-display .prd-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .price-range-display .prd-sub {
+    font-size: 16px;
+    color: var(--text-soft);
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Express <span>Vehicle</span> Locators</a>
+  <a href="/my-deal.html" class="nav-back">← Back to My Deal</a>
+</nav>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-icon">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <div class="eyebrow">My EVL Portal</div>
+    <h1>Payment Estimator</h1>
+    <p>See your estimated monthly payment range.<br>No credit pull. No commitment.</p>
+  </div>
+
+  <!-- MODE TABS -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="switchMode('payment')" id="mode-payment">
+      <span class="tab-icon">💰</span>
+      <span class="tab-text">Calculate My Payment</span>
+    </button>
+    <button class="mode-tab" onclick="switchMode('reverse')" id="mode-reverse">
+      <span class="tab-icon">🎯</span>
+      <span class="tab-text">Find My Price Range</span>
+    </button>
+  </div>
+
+  <!-- INPUT CARD -->
+  <div class="card">
+    <div class="card-title" id="input-card-title">Tell Us About Your Deal</div>
+
+    <div class="msg" id="msg"></div>
+
+    <!-- Vehicle Type -->
+    <div class="field">
+      <label>Vehicle Type</label>
+      <div class="type-options">
+        <div class="type-opt">
+          <input type="radio" name="vtype" id="new" value="new" checked>
+          <label for="new">
+            <span style="font-size:22px;">🏷️</span>
+            New Vehicle
+          </label>
+        </div>
+        <div class="type-opt">
+          <input type="radio" name="vtype" id="used" value="used">
+          <label for="used">
+            <span style="font-size:22px;">🔑</span>
+            Used Vehicle
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vehicle Price + Down Payment -->
+    <div class="field-row">
+      <div>
+        <label for="price">Vehicle Price</label>
+        <input type="number" id="price" placeholder="35000" min="1000" max="200000">
+      </div>
+      <div>
+        <label for="down">Down Payment</label>
+        <input type="number" id="down" placeholder="2000" min="0">
+      </div>
+    </div>
+
+    <!-- Credit Score -->
+    <div class="field">
+      <label>Your Credit Score Range</label>
+      <div class="credit-options">
+        <div class="credit-opt">
+          <input type="radio" name="credit" id="c1" value="super_prime">
+          <label for="c1">
+            Excellent
+            <span class="credit-score-range">781–850</span>
+          </label>
+        </div>
+        <div class="credit-opt">
+          <input type="radio" name="credit" id="c2" value="prime" checked>
+          <label for="c2">
+            Good
+            <span class="credit-score-range">661–780</span>
+          </label>
+        </div>
+        <div class="credit-opt">
+          <input type="radio" name="credit" id="c3" value="near_prime">
+          <label for="c3">
+            Fair
+            <span class="credit-score-range">601–660</span>
+          </label>
+        </div>
+        <div class="credit-opt">
+          <input type="radio" name="credit" id="c4" value="subprime">
+          <label for="c4">
+            Poor
+            <span class="credit-score-range">501–600</span>
+          </label>
+        </div>
+        <div class="credit-opt">
+          <input type="radio" name="credit" id="c5" value="deep_subprime">
+          <label for="c5">
+            Rebuilding
+            <span class="credit-score-range">300–500</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loan Term -->
+    <div class="field">
+      <label>Loan Term</label>
+      <div class="term-options">
+        <div class="term-opt">
+          <input type="radio" name="term" id="t36" value="36">
+          <label for="t36">36<span>mo</span></label>
+        </div>
+        <div class="term-opt">
+          <input type="radio" name="term" id="t48" value="48">
+          <label for="t48">48<span>mo</span></label>
+        </div>
+        <div class="term-opt">
+          <input type="radio" name="term" id="t60" value="60" checked>
+          <label for="t60">60<span>mo</span></label>
+        </div>
+        <div class="term-opt">
+          <input type="radio" name="term" id="t72" value="72">
+          <label for="t72">72<span>mo</span></label>
+        </div>
+        <div class="term-opt">
+          <input type="radio" name="term" id="t84" value="84">
+          <label for="t84">84<span>mo</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- STANDARD MODE FIELDS -->
+    <div id="standard-fields">
+      <!-- already rendered above -->
+    </div>
+
+    <!-- REVERSE MODE FIELDS -->
+    <div id="reverse-fields" style="display:none;">
+      <div class="field-row">
+        <div>
+          <label for="target-payment">Target Monthly Payment</label>
+          <input type="number" id="target-payment" placeholder="650" min="100" max="5000">
+        </div>
+        <div>
+          <label for="rev-down">Down Payment</label>
+          <input type="number" id="rev-down" placeholder="2000" min="0">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Your Credit Score Range</label>
+        <div class="credit-options">
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc1" value="super_prime">
+            <label for="rc1">Excellent<span class="credit-score-range">781–850</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc2" value="prime" checked>
+            <label for="rc2">Good<span class="credit-score-range">661–780</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc3" value="near_prime">
+            <label for="rc3">Fair<span class="credit-score-range">601–660</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc4" value="subprime">
+            <label for="rc4">Poor<span class="credit-score-range">501–600</span></label>
+          </div>
+          <div class="credit-opt">
+            <input type="radio" name="rev-credit" id="rc5" value="deep_subprime">
+            <label for="rc5">Rebuilding<span class="credit-score-range">300–500</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Vehicle Type</label>
+        <div class="type-options">
+          <div class="type-opt">
+            <input type="radio" name="rev-vtype" id="rnew" value="new" checked>
+            <label for="rnew"><span style="font-size:22px;">🏷️</span>New Vehicle</label>
+          </div>
+          <div class="type-opt">
+            <input type="radio" name="rev-vtype" id="rused" value="used">
+            <label for="rused"><span style="font-size:22px;">🔑</span>Used Vehicle</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Loan Term</label>
+        <div class="term-options">
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt36" value="36">
+            <label for="rt36">36<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt48" value="48">
+            <label for="rt48">48<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt60" value="60" checked>
+            <label for="rt60">60<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt72" value="72">
+            <label for="rt72">72<span>mo</span></label>
+          </div>
+          <div class="term-opt">
+            <input type="radio" name="rev-term" id="rt84" value="84">
+            <label for="rt84">84<span>mo</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calc-btn" onclick="handleCalc()">Calculate My Payment Range</button>
+  </div>
+
+  <!-- RESULTS CARD -->
+  <div class="card" id="results">
+
+    <div class="results-header">
+      <div class="results-label">Estimated Monthly Payment Range</div>
+      <div class="payment-range" id="payment-display">$— – $—</div>
+      <div class="payment-sub" id="payment-sub">Based on standard market rate</div>
+    </div>
+
+    <!-- INPUTS SUMMARY -->
+    <div class="inputs-summary">
+      <div class="input-chip">
+        <span class="chip-label">Vehicle</span>
+        <span class="chip-value" id="sum-type">—</span>
+      </div>
+      <div class="input-chip">
+        <span class="chip-label">Price</span>
+        <span class="chip-value" id="sum-price">—</span>
+      </div>
+      <div class="input-chip">
+        <span class="chip-label">Down</span>
+        <span class="chip-value" id="sum-down">—</span>
+      </div>
+      <div class="input-chip">
+        <span class="chip-label">Term</span>
+        <span class="chip-value" id="sum-term">—</span>
+      </div>
+    </div>
+
+    <!-- SCENARIO TABS -->
+    <div class="scenario-tabs">
+      <div class="scenario-tab active" onclick="selectScenario('standard')" id="tab-standard">
+        <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('standard')">i</button>
+        <span class="tab-label">Standard Rate</span>
+        <span class="tab-rate" id="rate-standard">—%</span>
+        <span class="tab-payment" id="pay-standard">$— – $—/mo</span>
+      </div>
+      <div class="scenario-tab" onclick="selectScenario('mfr')" id="tab-mfr">
+        <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('mfr')">i</button>
+        <span class="tab-label">Mfr. 0% APR</span>
+        <span class="tab-rate" id="rate-mfr">0%</span>
+        <span class="tab-payment" id="pay-mfr">$— – $—/mo</span>
+      </div>
+      <div class="scenario-tab" onclick="selectScenario('buydown')" id="tab-buydown">
+        <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('buydown')">i</button>
+        <span class="tab-label">Special Rate</span>
+        <span class="tab-rate" id="rate-buydown">0%</span>
+        <span class="tab-payment" id="pay-buydown">$— – $—/mo</span>
+      </div>
+    </div>
+
+    <!-- SCENARIO DETAIL -->
+    <div class="scenario-detail" id="scenario-detail">
+      Select a scenario above to see details.
+    </div>
+
+    <!-- PLATFORM DISCLAIMER -->
+    <div class="platform-disclaimer">
+      <strong>⚠ EVL Platform Disclosure</strong>
+      Payment estimates provided by EVL are for informational purposes only and do not constitute a financing offer or commitment. Actual rates, terms, and approval are determined solely by the financing institution. EVL is not a lender and does not participate in any financing transaction. Manufacturer and dealer financing offers are subject to change without notice and require credit approval. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Results displayed are estimates only and may not reflect the actual terms available to you. Credit score ranges used in this estimator are based on published industry averages and are provided for general reference purposes only. Individual lender criteria and underwriting standards vary. Always consult directly with a licensed financing professional before making any financial decision.
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="next-steps">
+      <a href="/schedule.html" class="next-btn primary">Talk to an Advisor →</a>
+      <a href="/my-deal.html" class="next-btn secondary">Back to My Deal</a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- REVERSE RESULTS CARD -->
+<div class="card" id="reverse-results" style="display:none;">
+
+  <div class="price-range-display">
+    <div class="prd-label">You Can Afford a Vehicle Priced Up To</div>
+    <div class="prd-value" id="rev-price-display">$—</div>
+    <div class="prd-sub" id="rev-price-sub">Based on standard market rate</div>
+  </div>
+
+  <!-- INPUTS SUMMARY -->
+  <div class="inputs-summary">
+    <div class="input-chip">
+      <span class="chip-label">Payment</span>
+      <span class="chip-value" id="rev-sum-payment">—</span>
+    </div>
+    <div class="input-chip">
+      <span class="chip-label">Down</span>
+      <span class="chip-value" id="rev-sum-down">—</span>
+    </div>
+    <div class="input-chip">
+      <span class="chip-label">Term</span>
+      <span class="chip-value" id="rev-sum-term">—</span>
+    </div>
+    <div class="input-chip">
+      <span class="chip-label">Credit</span>
+      <span class="chip-value" id="rev-sum-credit">—</span>
+    </div>
+  </div>
+
+  <!-- SCENARIO TABS -->
+  <div class="scenario-tabs">
+    <div class="scenario-tab active" onclick="selectRevScenario('standard')" id="rev-tab-standard">
+      <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('standard')">i</button>
+      <span class="tab-label">Standard Rate</span>
+      <span class="tab-rate" id="rev-rate-standard">—%</span>
+      <span class="tab-payment" id="rev-price-standard">Up to $—</span>
+    </div>
+    <div class="scenario-tab" onclick="selectRevScenario('mfr')" id="rev-tab-mfr">
+      <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('mfr')">i</button>
+      <span class="tab-label">Mfr. 0% APR</span>
+      <span class="tab-rate" id="rev-rate-mfr">0%</span>
+      <span class="tab-payment" id="rev-price-mfr">Up to $—</span>
+    </div>
+    <div class="scenario-tab" onclick="selectRevScenario('buydown')" id="rev-tab-buydown">
+      <button class="info-btn" onclick="event.stopPropagation(); showDisclosure('buydown')">i</button>
+      <span class="tab-label">Special Rate</span>
+      <span class="tab-rate" id="rev-rate-buydown">0%</span>
+      <span class="tab-payment" id="rev-price-buydown">Up to $—</span>
+    </div>
+  </div>
+
+  <!-- SCENARIO DETAIL -->
+  <div class="scenario-detail" id="rev-scenario-detail">Select a scenario above to see details.</div>
+
+  <!-- PLATFORM DISCLAIMER -->
+  <div class="platform-disclaimer">
+    <strong>⚠ EVL Platform Disclosure</strong>
+    Payment estimates provided by EVL are for informational purposes only and do not constitute a financing offer or commitment. Actual rates, terms, and approval are determined solely by the financing institution. EVL is not a lender and does not participate in any financing transaction. Manufacturer and dealer financing offers are subject to change without notice and require credit approval. EVL does not pull credit, does not submit financing applications, and does not represent any lender or financial institution. Results displayed are estimates only and may not reflect the actual terms available to you. Credit score ranges used in this estimator are based on published industry averages and are provided for general reference purposes only. Individual lender criteria and underwriting standards vary. Always consult directly with a licensed financing professional before making any financial decision.
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="next-steps">
+    <a href="/find.html" class="next-btn primary">Find Vehicles In My Range →</a>
+    <a href="/my-deal.html" class="next-btn secondary">Back to My Deal</a>
+  </div>
+
+</div>
+
+<!-- DISCLOSURE POPUP -->
+<div class="disclosure-overlay hidden" id="disclosure-overlay">
+  <div class="disclosure-box">
+    <h3 id="disclosure-title">Rate Disclosure</h3>
+    <p id="disclosure-text"></p>
+    <button class="disclosure-close" onclick="closeDisclosure()">Got It</button>
+  </div>
+</div>
+
+<script>
+  // ── EXPERIAN Q4 2025 RATE TABLE ──
+  const RATES = {
+    new: {
+      super_prime:  5.25,
+      prime:        7.01,
+      near_prime:   9.82,
+      subprime:     13.42,
+      deep_subprime: 21.38
+    },
+    used: {
+      super_prime:  7.52,
+      prime:        9.75,
+      near_prime:   13.91,
+      subprime:     18.86,
+      deep_subprime: 22.16
+    }
+  };
+
+  // ── RATE VARIANCE — shows as a RANGE not a precise number ──
+  const VARIANCE = 0.75; // +/- 0.75% for range display
+
+  // ── DISCLOSURES ──
+  const DISCLOSURES = {
+    standard: {
+      title: 'Standard Market Rate Disclosure',
+      text: 'Rate estimates are based on Experian Q4 2025 automotive financing averages for your selected credit tier and vehicle type. Actual rates offered by lenders may vary based on your complete credit profile, lender criteria, vehicle age, loan-to-value ratio, and other factors. This estimate is updated quarterly. EVL is not a lender and this is not a financing offer.'
+    },
+    mfr: {
+      title: 'Manufacturer 0% APR Disclosure',
+      text: '0% APR financing may be available on select new vehicle models through manufacturer-approved lending sources with qualified credit. Not all buyers will qualify. Offer availability, eligible models, and terms vary by manufacturer and lender and are subject to change without notice. Higher rates apply for buyers who do not meet credit requirements. Manufacturer financing programs are administered by the affiliated lending institution of the manufacturer. See your EVL advisor for current manufacturer offer details and eligibility requirements.'
+    },
+    buydown: {
+      title: 'Special Rate / Dealer Buydown Disclosure',
+      text: 'Special rate financing may be available on select models through dealer-arranged financing programs. In some cases, rate reductions are made available in lieu of other available discounts or incentives — you may not be able to combine a special rate with all available rebates or dealer discounts. Offer availability varies by dealer, model, and lender. Not all buyers will qualify. See your EVL advisor for complete offer details before making any financing decision.'
+    }
+  };
+
+  let currentScenario = 'standard';
+  let calcResults = {};
+
+  function calcMonthly(principal, annualRate, months) {
+    if (annualRate === 0) return principal / months;
+    const r = annualRate / 100 / 12;
+    return principal * r * Math.pow(1 + r, months) / (Math.pow(1 + r, months) - 1);
+  }
+
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function calculate() {
+    const price  = parseFloat(document.getElementById('price').value);
+    const down   = parseFloat(document.getElementById('down').value) || 0;
+    const vtype  = document.querySelector('input[name="vtype"]:checked').value;
+    const credit = document.querySelector('input[name="credit"]:checked').value;
+    const term   = parseInt(document.querySelector('input[name="term"]:checked').value);
+    const msg    = document.getElementById('msg');
+
+    // Validate
+    if (!price || price < 1000) {
+      msg.textContent = 'Please enter a valid vehicle price.';
+      msg.classList.add('show');
+      return;
+    }
+    msg.classList.remove('show');
+
+    const principal = price - down;
+    if (principal <= 0) {
+      msg.textContent = 'Down payment cannot exceed vehicle price.';
+      msg.classList.add('show');
+      return;
+    }
+
+    // Standard rate calculation
+    const rate = RATES[vtype][credit];
+    const rateLow  = Math.max(0, rate - VARIANCE);
+    const rateHigh = rate + VARIANCE;
+    const payLow   = calcMonthly(principal, rateLow, term);
+    const payHigh  = calcMonthly(principal, rateHigh, term);
+
+    // 0% calculations
+    const pay0 = calcMonthly(principal, 0, term);
+
+    // Store results
+    calcResults = {
+      standard: { rate, payLow, payHigh },
+      mfr:      { rate: 0, payLow: pay0 * 0.97, payHigh: pay0 * 1.03 },
+      buydown:  { rate: 0, payLow: pay0 * 0.97, payHigh: pay0 * 1.03 },
+      principal, term, vtype, credit, price, down
+    };
+
+    // Update rate displays
+    document.getElementById('rate-standard').textContent = rate.toFixed(2) + '%';
+    document.getElementById('pay-standard').textContent  = `${fmt(payLow)} – ${fmt(payHigh)}/mo`;
+    document.getElementById('rate-mfr').textContent      = '0%*';
+    document.getElementById('pay-mfr').textContent       = `${fmt(pay0 * 0.97)} – ${fmt(pay0 * 1.03)}/mo`;
+    document.getElementById('rate-buydown').textContent  = '0%*';
+    document.getElementById('pay-buydown').textContent   = `${fmt(pay0 * 0.97)} – ${fmt(pay0 * 1.03)}/mo`;
+
+    // Summary chips
+    document.getElementById('sum-type').textContent  = vtype === 'new' ? 'New' : 'Used';
+    document.getElementById('sum-price').textContent = fmt(price);
+    document.getElementById('sum-down').textContent  = fmt(down);
+    document.getElementById('sum-term').textContent  = term + ' mo';
+
+    // Show results
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Default to standard scenario
+    selectScenario('standard');
+  }
+
+  function selectScenario(scenario) {
+    currentScenario = scenario;
+
+    // Update tabs
+    ['standard', 'mfr', 'buydown'].forEach(s => {
+      document.getElementById(`tab-${s}`).classList.toggle('active', s === scenario);
+    });
+
+    if (!calcResults.standard) return;
+
+    const r = calcResults;
+    let payLow, payHigh, detail, ratePct;
+
+    if (scenario === 'standard') {
+      payLow  = r.standard.payLow;
+      payHigh = r.standard.payHigh;
+      ratePct = r.standard.rate.toFixed(2) + '% APR';
+      detail  = `Based on the ${getCreditLabel(r.credit)} credit tier (${ratePct}) for a ${r.vtype} vehicle. Range reflects typical lender variance of ±0.75%. Source: Experian Q4 2025 automotive averages, updated quarterly.`;
+    } else if (scenario === 'mfr') {
+      payLow  = r.mfr.payLow;
+      payHigh = r.mfr.payHigh;
+      ratePct = '0% APR';
+      detail  = `Estimate assumes 0% manufacturer-subvented APR through Toyota Financial Services (TMCC) for ${r.term} months. Requires qualified credit with approved lender. Not all buyers will qualify. Tap ⓘ for full disclosure.`;
+    } else {
+      payLow  = r.buydown.payLow;
+      payHigh = r.buydown.payHigh;
+      ratePct = '0% APR';
+      detail  = `Estimate assumes 0% APR through dealer-arranged special rate financing for ${r.term} months. Special rate may be in lieu of other available discounts or incentives. See your EVL advisor for current offer eligibility. Tap ⓘ for full disclosure.`;
+    }
+
+    document.getElementById('payment-display').textContent = `${fmt(payLow)} – ${fmt(payHigh)}`;
+    document.getElementById('payment-sub').textContent     = `${r.term}-month term · ${ratePct} · ${fmt(r.down)} down`;
+    document.getElementById('scenario-detail').textContent = detail;
+  }
+
+  function getCreditLabel(credit) {
+    const labels = {
+      super_prime: 'Excellent (781–850)',
+      prime: 'Good (661–780)',
+      near_prime: 'Fair (601–660)',
+      subprime: 'Poor (501–600)',
+      deep_subprime: 'Rebuilding (300–500)'
+    };
+    return labels[credit] || credit;
+  }
+
+  function showDisclosure(scenario) {
+    const d = DISCLOSURES[scenario];
+    document.getElementById('disclosure-title').textContent = d.title;
+    document.getElementById('disclosure-text').textContent  = d.text;
+    document.getElementById('disclosure-overlay').classList.remove('hidden');
+  }
+
+  function closeDisclosure() {
+    document.getElementById('disclosure-overlay').classList.add('hidden');
+  }
+
+  // ── MODE SWITCHING ──
+  let currentMode = 'payment';
+
+  window.switchMode = function(mode) {
+    currentMode = mode;
+    
+    // Update tabs
+    document.getElementById('mode-payment').classList.toggle('active', mode === 'payment');
+    document.getElementById('mode-reverse').classList.toggle('active', mode === 'reverse');
+
+    // Show/hide fields
+    const stdFields = document.getElementById('standard-fields');
+    const revFields = document.getElementById('reverse-fields');
+    
+    if (mode === 'payment') {
+      // Show all standard fields
+      document.getElementById('price').closest('.field-row').style.display = 'grid';
+      document.querySelectorAll('input[name="vtype"]')[0].closest('.field').style.display = 'block';
+      document.querySelectorAll('input[name="credit"]')[0].closest('.field').style.display = 'block';
+      document.querySelectorAll('input[name="term"]')[0].closest('.field').style.display = 'block';
+      revFields.style.display = 'none';
+      document.getElementById('calc-btn').textContent = 'Calculate My Payment Range';
+      document.getElementById('input-card-title').textContent = 'Tell Us About Your Deal';
+      // Hide reverse results
+      document.getElementById('reverse-results').style.display = 'none';
+    } else {
+      // Hide standard fields
+      document.getElementById('price').closest('.field-row').style.display = 'none';
+      document.querySelectorAll('input[name="vtype"]')[0].closest('.field').style.display = 'none';
+      document.querySelectorAll('input[name="credit"]')[0].closest('.field').style.display = 'none';
+      document.querySelectorAll('input[name="term"]')[0].closest('.field').style.display = 'none';
+      revFields.style.display = 'block';
+      document.getElementById('calc-btn').textContent = 'Find My Price Range';
+      document.getElementById('input-card-title').textContent = 'What Can I Afford?';
+      // Hide standard results
+      document.getElementById('results').style.display = 'none';
+    }
+
+    // Clear message
+    document.getElementById('msg').classList.remove('show');
+  };
+
+  window.handleCalc = function() {
+    if (currentMode === 'payment') {
+      calculate();
+    } else {
+      calculateReverse();
+    }
+  };
+
+  // ── REVERSE CALCULATOR ──
+  function calcMaxPrice(monthlyPayment, annualRate, months, downPayment) {
+    let loanAmount;
+    if (annualRate === 0) {
+      loanAmount = monthlyPayment * months;
+    } else {
+      const r = annualRate / 100 / 12;
+      loanAmount = monthlyPayment * (1 - Math.pow(1 + r, -months)) / r;
+    }
+    return loanAmount + downPayment;
+  }
+
+  function calculateReverse() {
+    const payment = parseFloat(document.getElementById('target-payment').value);
+    const down    = parseFloat(document.getElementById('rev-down').value) || 0;
+    const credit  = document.querySelector('input[name="rev-credit"]:checked').value;
+    const vtype   = document.querySelector('input[name="rev-vtype"]:checked').value;
+    const term    = parseInt(document.querySelector('input[name="rev-term"]:checked').value);
+    const msg     = document.getElementById('msg');
+
+    if (!payment || payment < 100) {
+      msg.textContent = 'Please enter a valid target monthly payment.';
+      msg.classList.add('show');
+      return;
+    }
+    msg.classList.remove('show');
+
+    const rate     = RATES[vtype][credit];
+    const rateLow  = Math.max(0, rate - VARIANCE);
+    const rateHigh = rate + VARIANCE;
+
+    // At standard rate — use midpoint rate for max price
+    const maxStandard = calcMaxPrice(payment, rate, term, down);
+    const maxStdLow   = calcMaxPrice(payment, rateHigh, term, down); // higher rate = lower price
+    const maxStdHigh  = calcMaxPrice(payment, rateLow, term, down);  // lower rate = higher price
+
+    // At 0%
+    const max0 = calcMaxPrice(payment, 0, term, down);
+
+    // Store reverse results
+    calcResults.reverse = {
+      standard: { rate, maxLow: maxStdLow, maxHigh: maxStdHigh },
+      mfr:      { rate: 0, maxLow: max0 * 0.97, maxHigh: max0 * 1.03 },
+      buydown:  { rate: 0, maxLow: max0 * 0.97, maxHigh: max0 * 1.03 },
+      payment, down, term, vtype, credit
+    };
+
+    // Update scenario tabs
+    document.getElementById('rev-rate-standard').textContent  = rate.toFixed(2) + '%';
+    document.getElementById('rev-price-standard').textContent = `${fmt(maxStdLow)} – ${fmt(maxStdHigh)}`;
+    document.getElementById('rev-rate-mfr').textContent       = '0%*';
+    document.getElementById('rev-price-mfr').textContent      = `${fmt(max0 * 0.97)} – ${fmt(max0 * 1.03)}`;
+    document.getElementById('rev-rate-buydown').textContent   = '0%*';
+    document.getElementById('rev-price-buydown').textContent  = `${fmt(max0 * 0.97)} – ${fmt(max0 * 1.03)}`;
+
+    // Summary chips
+    document.getElementById('rev-sum-payment').textContent = fmt(payment) + '/mo';
+    document.getElementById('rev-sum-down').textContent    = fmt(down);
+    document.getElementById('rev-sum-term').textContent    = term + ' mo';
+    document.getElementById('rev-sum-credit').textContent  = getCreditLabel(credit).split(' ')[0];
+
+    // Show results
+    document.getElementById('reverse-results').style.display = 'block';
+    document.getElementById('reverse-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    selectRevScenario('standard');
+  }
+
+  function selectRevScenario(scenario) {
+    if (!calcResults.reverse) return;
+
+    ['standard', 'mfr', 'buydown'].forEach(s => {
+      document.getElementById(`rev-tab-${s}`).classList.toggle('active', s === scenario);
+    });
+
+    const r = calcResults.reverse;
+    let maxLow, maxHigh, detail, ratePct;
+
+    if (scenario === 'standard') {
+      maxLow  = r.standard.maxLow;
+      maxHigh = r.standard.maxHigh;
+      ratePct = r.standard.rate.toFixed(2) + '% APR';
+      detail  = `Based on the ${getCreditLabel(r.credit)} credit tier (${ratePct}) for a ${r.vtype} vehicle over ${r.term} months. Range reflects typical lender variance of +/-0.75%. Source: Experian Q4 2025.`;
+    } else if (scenario === 'mfr') {
+      maxLow  = r.mfr.maxLow;
+      maxHigh = r.mfr.maxHigh;
+      ratePct = '0% APR';
+      detail  = `Estimate assumes 0% manufacturer-subvented APR for ${r.term} months. Requires qualified credit with approved lender. Not all buyers will qualify. Tap the info button for full disclosure.`;
+    } else {
+      maxLow  = r.buydown.maxLow;
+      maxHigh = r.buydown.maxHigh;
+      ratePct = '0% APR';
+      detail  = `Estimate assumes 0% APR through dealer-arranged special rate financing for ${r.term} months. Special rate may be in lieu of other available discounts. Tap the info button for full disclosure.`;
+    }
+
+    document.getElementById('rev-price-display').textContent = `${fmt(maxLow)} – ${fmt(maxHigh)}`;
+    document.getElementById('rev-price-sub').textContent     = `${r.term}-month term · ${ratePct} · ${fmt(r.down)} down`;
+    document.getElementById('rev-scenario-detail').textContent = detail;
+  }
+
+  // ── Close on overlay click
+  document.getElementById('disclosure-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeDisclosure();
+  });
+
+  // Enter key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') calculate();
+    if (e.key === 'Escape') closeDisclosure();
+  });
+</script>
+
+</body>
+</html>
