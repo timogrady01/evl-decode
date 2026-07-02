@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Contact & Request — Express Vehicle Locators</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0A0A0C;--s1:#111114;--s2:#16161A;--s3:#1E1E23;--blue:#2B84FE;--blue2:#0059D9;--gold:#F5C842;--green:#00C853;--red:#FF3333;--muted:#C8C8D8;--border:rgba(43,132,254,0.2);}
+body{background:var(--bg);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding:0 48px;height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;}
+.logo{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;color:#fff;text-decoration:none;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{color:#B8B8C8;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:10px 22px;}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,#071220,var(--bg));padding:64px 48px 56px;text-align:center;border-bottom:2px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(43,132,254,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-block;background:rgba(43,132,254,0.12);border:2px solid rgba(43,132,254,0.35);color:var(--blue);font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;margin-bottom:24px;}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-size:68px;font-weight:900;text-transform:uppercase;letter-spacing:3px;line-height:.95;margin-bottom:18px;}
+.hero h1 span{color:var(--blue);}
+.hero p{color:var(--muted);font-size:19px;max-width:600px;margin:0 auto;line-height:1.75;}
+
+/* STRIP */
+.strip{background:linear-gradient(90deg,var(--blue2),var(--blue));padding:18px 48px;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;}
+.strip-item{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:40px 48px 60px;display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start;}
+
+/* DRAWERS */
+.drawer{background:var(--s1);border:2px solid var(--border);margin-bottom:12px;}
+.drawer.active{border-color:var(--blue);}
+.dhead{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;min-height:76px;}
+.dleft{display:flex;align-items:center;gap:14px;}
+.dnum{width:42px;height:42px;background:var(--s2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;color:var(--muted);flex-shrink:0;transition:all .2s;}
+.drawer.active .dnum{background:var(--blue);border-color:var(--blue);color:#fff;}
+.drawer.done .dnum{background:var(--green);border-color:var(--green);color:#000;}
+.dtitle{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.dsub{font-size:15px;color:var(--muted);margin-top:3px;}
+.dsum{font-size:14px;color:var(--blue);font-weight:700;margin-top:3px;}
+.dright{display:flex;align-items:center;gap:12px;}
+.dbadge{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border:2px solid var(--border);color:var(--muted);}
+.drawer.active .dbadge{background:rgba(43,132,254,.12);border-color:var(--blue);color:var(--blue);}
+.drawer.done .dbadge{background:rgba(0,200,83,.12);border-color:var(--green);color:var(--green);}
+.dtgl{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:8px;flex-shrink:0;}
+.dtgl:hover{color:#fff;}
+.dbody{padding:24px 26px 26px;border-top:2px solid var(--border);}
+
+/* FORM CONTROLS */
+.frow{display:grid;gap:14px;margin-bottom:14px;}
+.f2{grid-template-columns:1fr 1fr;}
+.f3{grid-template-columns:1fr 1fr 1fr;}
+.fgroup label{display:block;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.finput,.fselect,.ftextarea{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;font-weight:500;padding:14px 16px;outline:none;transition:border-color .2s;}
+.finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(--blue);}
+.fselect{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8C8D8' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-color:var(--s2);}
+.fselect option{background:#1a1a20;}
+.ftextarea{resize:vertical;min-height:120px;line-height:1.6;}
+.finput::placeholder,.ftextarea::placeholder{color:#666;}
+
+/* TOGGLE BUTTONS */
+.trow{display:flex;gap:8px;}
+.tbtn{flex:1;padding:13px;background:var(--s2);border:2px solid var(--border);color:var(--muted);font-family:"Barlow Condensed",sans-serif;font-size:19px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.tbtn:hover{border-color:var(--blue);color:#fff;}
+.tbtn.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+
+/* SERVICE SELECTOR */
+.services{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+.svc{background:var(--s2);border:2px solid var(--border);padding:16px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:12px;}
+.svc:hover{border-color:var(--blue);}
+.svc.on{background:rgba(43,132,254,.12);border-color:var(--blue);}
+.svc-icon{font-size:24px;flex-shrink:0;}
+.svc-name{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.svc-price{font-size:14px;color:var(--gold);font-weight:700;margin-top:2px;}
+.svc-desc{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.4;}
+.svc.on .svc-name{color:var(--blue);}
+
+/* NEXT / SUBMIT BUTTONS */
+.nbtn{display:block;width:100%;background:var(--blue);border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:18px;cursor:pointer;margin-top:18px;transition:all .2s;}
+.nbtn:hover{background:var(--blue2);}
+.sbtn{display:block;width:100%;background:linear-gradient(90deg,var(--blue2),var(--blue));border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:22px;cursor:pointer;transition:all .2s;}
+.sbtn:hover{background:linear-gradient(90deg,var(--blue),var(--blue2));}
+
+/* SIDEBAR */
+.sidebar{}
+.info-card{background:var(--s1);border:2px solid var(--border);padding:28px;margin-bottom:16px;}
+.info-card-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.info-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);font-size:16px;}
+.info-row:last-child{border:none;}
+.info-icon{font-size:22px;flex-shrink:0;}
+.info-label{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.info-val{font-weight:600;color:#fff;}
+.info-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+
+.promise-card{background:linear-gradient(135deg,#071828,var(--s1));border:2px solid var(--blue);padding:28px;}
+.promise-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:16px;}
+.promise-items{display:flex;flex-direction:column;gap:12px;}
+.pi{display:flex;align-items:flex-start;gap:12px;font-size:16px;color:var(--muted);line-height:1.6;}
+.pi::before{content:"✓";color:var(--green);font-weight:900;flex-shrink:0;margin-top:2px;font-size:18px;}
+
+.fee-card{background:var(--s1);border:2px solid var(--border);padding:24px;}
+.fee-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
+.fee-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:16px;}
+.fee-row:last-child{border:none;}
+.fee-lbl{color:var(--muted);font-weight:500;}
+.fee-val{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;color:var(--gold);}
+
+/* SUCCESS */
+.success{display:none;background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--green);padding:48px;text-align:center;}
+.success.show{display:block;}
+.success-icon{font-size:72px;margin-bottom:20px;}
+.success-title{font-family:"Barlow Condensed",sans-serif;font-size:52px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--green);margin-bottom:12px;}
+.success-sub{color:var(--muted);font-size:18px;line-height:1.75;max-width:500px;margin:0 auto 28px;}
+.success-next{font-size:16px;color:var(--muted);line-height:1.75;}
+.success-next strong{color:#fff;}
+
+footer{background:var(--s1);border-top:2px solid var(--border);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;}
+.fl{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;}
+.fl span{color:var(--blue);}
+.fc{color:var(--muted);font-size:14px;}
+
+@media(max-width:1000px){.main{grid-template-columns:1fr;}.sidebar{order:-1;}}
+@media(max-width:600px){nav{padding:0 16px;}.hero{padding:48px 20px 44px;}.hero h1{font-size:48px;}.main{padding:24px 16px 40px;}.strip{gap:16px;padding:14px 16px;flex-direction:column;}footer{flex-direction:column;gap:10px;text-align:center;}.f2,.f3,.services{grid-template-columns:1fr;}.trow{flex-direction:column;}}
+</style>
+<style id="evl-nav-css">
+/* ── EVL GLOBAL NAV ── */
+.evl-nav{position:sticky;top:0;z-index:500;background:#090E17;border-bottom:2px solid #2B84FE;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;font-family:'Oswald',sans-serif;}
+.evl-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;white-space:nowrap;}
+.evl-nav-links{display:flex;align-items:center;gap:4px;}
+.evl-nav-link{color:#ccd6e0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.evl-nav-link:hover{color:#fff;background:#1a1a2e;}
+.evl-nav-cta{background:#2B84FE;color:#fff!important;text-decoration:none;font-size:14px;font-weight:900;letter-spacing:1px;padding:8px 16px;border-radius:6px;margin-left:8px;transition:background .2s;white-space:nowrap;}
+.evl-nav-cta:hover{background:#1a6fd4;}
+.evl-nav-hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 8px;}
+/* ── EVL GLOBAL FOOTER ── */
+.evl-footer{background:#090E17;border-top:2px solid #1a1a2e;padding:24px 20px 16px;margin-top:40px;font-family:'Oswald',sans-serif;}
+.evl-footer-inner{max-width:1100px;margin:0 auto;}
+.evl-footer-logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#fff;letter-spacing:1px;margin-bottom:16px;}
+.evl-footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:16px;}
+.evl-footer-links a{color:#ccd6e0;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;transition:color .2s;}
+.evl-footer-links a:hover{color:#2B84FE;}
+.evl-footer-copy{font-size:13px;color:#8899aa;font-weight:600;}
+.evl-footer-copy a{color:#2B84FE;text-decoration:none;}
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .evl-nav-links{display:none;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:#090E17;border-bottom:2px solid #2B84FE;padding:12px 0;gap:0;}
+  .evl-nav-links.open{display:flex;}
+  .evl-nav-link,.evl-nav-cta{width:100%;padding:14px 24px;margin:0;border-radius:0;font-size:16px;border-bottom:1px solid #1a1a2e;}
+  .evl-nav-hamburger{display:block;}
+}
+</style>
+<style id="evl-nav-body-fix">
+/* Fix body flex centering that pushes nav down */
+body { display:block !important; align-items:unset !important; justify-content:unset !important; }
+.evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
+</style>
+</head>
+<body>
+
+<nav class="evl-nav">
+  <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-logo">
+    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+    <span>EXPRESS <span style="color:#2B84FE">VEHICLE</span> LOCATORS</span>
+  </a>
+  <button class="evl-nav-hamburger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  <div class="evl-nav-links" id="evl-nav-links">
+    <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
+    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link">FIND MY CAR</a>
+    <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
+    <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
+    <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link">COMPARE</a>
+    <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
+    <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
+    <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
+    <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
+    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">⚡ EVL Concierge — Let's Get Started</div>
+  <h1>Start Your <span>EVL Request</span></h1>
+  <p>Tell us what you need. We handle everything — find, negotiate, finance, trade-in, and delivery. No dealership. No pressure. No commission.</p>
+</section>
+
+<div class="strip">
+  <span class="strip-item">⚡ Response Within 2 Hours</span>
+  <span class="strip-item">🔒 100% Confidential</span>
+  <span class="strip-item">$0 Until You Approve</span>
+  <span class="strip-item">✅ No Obligation</span>
+</div>
+
+<div class="main">
+
+  <!-- FORM DRAWERS -->
+  <div>
+
+    <!-- SUCCESS STATE -->
+    <div class="success" id="successBox">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Request Submitted!</div>
+      <div class="success-sub">Your EVL concierge request has been received. We'll review your details and reach out within 2 business hours.</div>
+      <div class="success-next">
+        <strong>What happens next:</strong><br>
+        1. EVL reviews your request and confirms services<br>
+        2. You receive a service agreement to e-sign<br>
+        3. EVL begins working on your behalf immediately<br>
+        4. We update you every step of the way
+      </div>
+    </div>
+
+    <div id="formDrawers">
+
+    <!-- DRAWER 1: YOUR INFO -->
+    <div class="drawer active" id="d1">
+      <div class="dhead">
+        <div class="dleft">
+          <div class="dnum">1</div>
+          <div>
+            <div class="dtitle">Your Information</div>
+            <div class="dsub">Name, contact, and location</div>
+            <div class="dsum" id="d1sum"></div>
+          </div>
+        </div>
+        <div class="dright">
+          <span class="dbadge" id="d1badge">IN PROGRESS</span>
+          <button class="dtgl" onclick="tgl(1)">▲</button>
+        </div>
+      </div>
+      <div class="dbody" id="db1">
+        <div class="frow f2">
+          <div class="fgroup"><label>First Name *</label><input class="finput" id="fFirst" placeholder="John" type="text"></div>
+          <div class="fgroup"><label>Last Name *</label><input class="finput" id="fLast" placeholder="Smith" type="text"></div>
+        </div>
+        <div class="frow f2">
+          <div class="fgroup"><label>Email Address *</label><input class="finput" id="fEmail" placeholder="john@email.com" type="email"></div>
+          <div class="fgroup"><label>Phone Number *</label><input class="finput" id="fPhone" placeholder="(555) 555-5555" type="tel"></div>
+        </div>
+        <div class="frow f2">
+          <div class="fgroup"><label>ZIP Code</label><input class="finput" id="fZip" placeholder="75025" maxlength="5"></div>
+          <div class="fgroup"><label>Best Time to Reach You</label>
+            <select class="fselect" id="fTime">
+              <option>Morning (8am – 12pm)</option>
+              <option>Afternoon (12pm – 5pm)</option>
+              <option>Evening (5pm – 8pm)</option>
+              <option>Anytime</option>
+            </select>
+          </div>
+        </div>
+        <button class="nbtn" id="n1">Next — Select Services →</button>
+      </div>
+    </div>
+
+    <!-- DRAWER 2: SERVICES -->
+    <div class="drawer" id="d2">
+      <div class="dhead">
+        <div class="dleft">
+          <div class="dnum">2</div>
+          <div>
+            <div class="dtitle">Select Your Services</div>
+            <div class="dsub">Choose all that apply — each is a flat fee</div>
+            <div class="dsum" id="d2sum"></div>
+          </div>
+        </div>
+        <div class="dright">
+          <span class="dbadge" id="d2badge">PENDING</span>
+          <button class="dtgl" onclick="tgl(2)">▼</button>
+        </div>
+      </div>
+      <div class="dbody" id="db2" style="display:none;">
+        <div class="services">
+          <div class="svc" id="svc_find" onclick="toggleSvc('find',this)">
+            <span class="svc-icon">🔍</span>
+            <div>
+              <div class="svc-name">Find My Vehicle</div>
+              <div class="svc-price">$295 flat</div>
+              <div class="svc-desc">Nationwide search, negotiation & delivery coordination</div>
+            </div>
+          </div>
+          <div class="svc" id="svc_trade" onclick="toggleSvc('trade',this)">
+            <span class="svc-icon">🚗</span>
+            <div>
+              <div class="svc-name">Trade-In Service</div>
+              <div class="svc-price">$195 flat</div>
+              <div class="svc-desc">VIN appraisal + shop to Carvana, CarMax & wholesale</div>
+            </div>
+          </div>
+          <div class="svc" id="svc_finance" onclick="toggleSvc('finance',this)">
+            <span class="svc-icon">💳</span>
+            <div>
+              <div class="svc-name">Finance Shopping</div>
+              <div class="svc-price">$195 flat</div>
+              <div class="svc-desc">Shop 12+ lenders for best APR vs dealer finance</div>
+            </div>
+          </div>
+          <div class="svc" id="svc_negotiate" onclick="toggleSvc('negotiate',this)">
+            <span class="svc-icon">⚡</span>
+            <div>
+              <div class="svc-name">Full Negotiation</div>
+              <div class="svc-price">$295 flat</div>
+              <div class="svc-desc">EVL negotiates price, fees, add-ons & all terms</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:14px 18px;background:rgba(43,132,254,.06);border:2px solid rgba(43,132,254,.2);font-size:16px;color:var(--muted);line-height:1.6;">
+          💡 <strong style="color:#fff;">Most customers select all 4 services</strong> — total $980 vs average savings of $13,409. That's a 13x return on your investment.
+        </div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--s2);border:2px solid var(--border);">
+          <span style="font-size:16px;font-weight:700;color:var(--muted);">Selected Services Total:</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--gold);" id="svcTotal">$0</span>
+        </div>
+        <button class="nbtn" id="n2">Next — Vehicle Details →</button>
+      </div>
+    </div>
+
+    <!-- DRAWER 3: VEHICLE DETAILS -->
+    <div class="drawer" id="d3">
+      <div class="dhead">
+        <div class="dleft">
+          <div class="dnum">3</div>
+          <div>
+            <div class="dtitle">Vehicle Details</div>
+            <div class="dsub">Tell us exactly what you want</div>
+            <div class="dsum" id="d3sum"></div>
+          </div>
+        </div>
+        <div class="dright">
+          <span class="dbadge" id="d3badge">PENDING</span>
+          <button class="dtgl" onclick="tgl(3)">▼</button>
+        </div>
+      </div>
+      <div class="dbody" id="db3" style="display:none;">
+        <div class="frow f3">
+          <div class="fgroup"><label>Year</label>
+            <select class="fselect" id="vYear"><option value="">Any Year</option></select>
+          </div>
+          <div class="fgroup"><label>Make</label>
+            <select class="fselect" id="vMake"><option value="">Select Make</option>
+              <option>Acura</option><option>Audi</option><option>BMW</option><option>Buick</option>
+              <option>Cadillac</option><option>Chevrolet</option><option>Dodge</option><option>Ford</option>
+              <option>Genesis</option><option>GMC</option><option>Honda</option><option>Hyundai</option>
+              <option>Infiniti</option><option>Jeep</option><option>Kia</option><option>Land Rover</option>
+              <option>Lexus</option><option>Lincoln</option><option>Mazda</option><option>Mercedes-Benz</option>
+              <option>Nissan</option><option>Porsche</option><option>Ram</option><option>Rivian</option>
+              <option>Subaru</option><option>Tesla</option><option>Toyota</option><option>Volkswagen</option>
+              <option>Volvo</option><option>Other</option>
+            </select>
+          </div>
+          <div class="fgroup"><label>Model</label><input class="finput" id="vModel" placeholder="e.g. Camry"></div>
+        </div>
+        <div class="frow f3">
+          <div class="fgroup"><label>Trim / Package</label><input class="finput" id="vTrim" placeholder="e.g. XSE Premium Pkg"></div>
+          <div class="fgroup"><label>Preferred Color</label><input class="finput" id="vColor" placeholder="e.g. Midnight Black"></div>
+          <div class="fgroup"><label>Condition</label>
+            <select class="fselect" id="vCond">
+              <option>New Only</option>
+              <option>Used / Pre-Owned</option>
+              <option>Certified Pre-Owned</option>
+              <option>New or Used (best deal)</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow f2">
+          <div class="fgroup"><label>Max Budget</label><input class="finput" id="vBudget" placeholder="e.g. $45,000" type="text"></div>
+          <div class="fgroup"><label>Purchase Type</label>
+            <div class="trow">
+              <button class="tbtn on" id="ptBuy" onclick="setPT('buy')">Buy</button>
+              <button class="tbtn" id="ptLease" onclick="setPT('lease')">Lease</button>
+              <button class="tbtn" id="ptCash" onclick="setPT('cash')">Cash</button>
+            </div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fgroup"><label>Additional Notes / Must-Haves</label>
+            <textarea class="ftextarea" id="vNotes" placeholder="e.g. Must have AWD, sunroof, heated seats. Flexible on color. Need by end of month. Have a 2022 Camry to trade..."></textarea>
+          </div>
+        </div>
+        <button class="nbtn" id="n3">Next — Trade-In Info →</button>
+      </div>
+    </div>
+
+    <!-- DRAWER 4: TRADE-IN -->
+    <div class="drawer" id="d4">
+      <div class="dhead">
+        <div class="dleft">
+          <div class="dnum">4</div>
+          <div>
+            <div class="dtitle">Trade-In Vehicle</div>
+            <div class="dsub">We'll maximize your trade-in value</div>
+            <div class="dsum" id="d4sum"></div>
+          </div>
+        </div>
+        <div class="dright">
+          <span class="dbadge" id="d4badge">OPTIONAL</span>
+          <button class="dtgl" onclick="tgl(4)">▼</button>
+        </div>
+      </div>
+      <div class="dbody" id="db4" style="display:none;">
+        <div style="margin-bottom:16px;">
+          <label style="font-size:15px;font-weight:700;color:var(--muted);margin-bottom:10px;display:block;">Do you have a trade-in?</label>
+          <div class="trow" style="max-width:400px;">
+            <button class="tbtn on" id="trYes" onclick="setTrade(true)">✅ Yes</button>
+            <button class="tbtn" id="trNo" onclick="setTrade(false)">No Trade-In</button>
+          </div>
+        </div>
+        <div id="tradeFields">
+          <div class="frow f2">
+            <div class="fgroup"><label>Trade-In VIN</label><input class="finput" id="trVin" placeholder="17-character VIN"></div>
+            <div class="fgroup"><label>Current Mileage</label><input class="finput" id="trMiles" placeholder="e.g. 42,000" type="text"></div>
+          </div>
+          <div class="frow f3">
+            <div class="fgroup"><label>Year</label><input class="finput" id="trYear" placeholder="e.g. 2022"></div>
+            <div class="fgroup"><label>Make</label><input class="finput" id="trMake" placeholder="e.g. Toyota"></div>
+            <div class="fgroup"><label>Model</label><input class="finput" id="trModel" placeholder="e.g. Camry"></div>
+          </div>
+          <div class="frow f2">
+            <div class="fgroup"><label>Payoff Amount (if any)</label><input class="finput" id="trPayoff" placeholder="e.g. $12,000 or $0"></div>
+            <div class="fgroup"><label>Condition</label>
+              <select class="fselect" id="trCond">
+                <option>Excellent — No damage</option>
+                <option>Good — Minor wear</option>
+                <option>Fair — Some damage</option>
+                <option>Poor — Major issues</option>
+              </select>
+            </div>
+          </div>
+          <div style="padding:14px 18px;background:rgba(0,200,83,.06);border:2px solid rgba(0,200,83,.2);font-size:15px;color:var(--muted);line-height:1.6;margin-top:4px;">
+            🔒 <strong style="color:#fff;">EVL Trade-In Advantage:</strong> We shop your vehicle to Carvana, CarMax, Vroom, and wholesale buyers simultaneously. Highest bid wins. You get maximum value — not what one dealer offers.
+          </div>
+        </div>
+        <button class="nbtn" id="n4">Next — Review & Submit →</button>
+      </div>
+    </div>
+
+    <!-- DRAWER 5: REVIEW & SUBMIT -->
+    <div class="drawer" id="d5">
+      <div class="dhead">
+        <div class="dleft">
+          <div class="dnum">5</div>
+          <div>
+            <div class="dtitle">Review & Submit</div>
+            <div class="dsub">Confirm your request and authorize EVL</div>
+          </div>
+        </div>
+        <div class="dright">
+          <span class="dbadge" id="d5badge">FINAL STEP</span>
+          <button class="dtgl" onclick="tgl(5)">▼</button>
+        </div>
+      </div>
+      <div class="dbody" id="db5" style="display:none;">
+        <div id="reviewContent" style="background:var(--s2);border:2px solid var(--border);padding:20px;margin-bottom:16px;font-size:16px;line-height:1.8;color:var(--muted);">
+          Complete the steps above to see your summary here.
+        </div>
+        <div style="padding:16px 20px;background:rgba(43,132,254,.06);border:2px solid rgba(43,132,254,.2);font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:16px;">
+          🔒 <strong style="color:#fff;">By submitting this request</strong>, you authorize Express Vehicle Locators to act as your agent to locate, negotiate, and arrange the delivery of your requested vehicle. EVL never holds funds or titles. All payments are made directly between you and the relevant parties. This authorization is specific to this transaction and can be revoked at any time before deal approval.
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;">
+          <input type="checkbox" id="authCheck" style="width:20px;height:20px;accent-color:var(--blue);margin-top:3px;flex-shrink:0;">
+          <label for="authCheck" style="font-size:16px;color:var(--muted);line-height:1.6;cursor:pointer;">I authorize EVL to act as my agent for this transaction and agree to the <strong style="color:#fff;">EVL Service Terms</strong>. I understand there is no obligation until I approve a final deal.</label>
+        </div>
+        <button class="sbtn" onclick="submitRequest()">⚡ Submit My EVL Request — Let's Get Started</button>
+        <div style="text-align:center;color:var(--muted);font-size:14px;margin-top:12px;font-weight:700;letter-spacing:1px;">🔒 SECURE · CONFIDENTIAL · NO OBLIGATION UNTIL YOU APPROVE</div>
+      </div>
+    </div>
+
+    </div><!-- end formDrawers -->
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- COMPLETE PACKAGE CARD -->
+    <div style="background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--gold);padding:24px;margin-bottom:16px;text-align:center;position:relative;">
+      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;">⭐ MOST POPULAR</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:6px;margin-top:8px;">EVL Complete Package</div>
+      <div style="font-size:15px;color:var(--muted);margin-bottom:16px;">All 4 Services — Best Value</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:900;color:var(--gold);line-height:1;">$795</div>
+      <div style="font-size:14px;color:var(--muted);margin-top:4px;margin-bottom:16px;"><s style="color:#555;">$980</s> &nbsp;Save $185</div>
+      <div style="display:flex;flex-direction:column;gap:6px;text-align:left;margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;font-size:15px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="color:var(--muted);">🔍 Find My Vehicle</span><span style="font-weight:700;">$295</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:15px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="color:var(--muted);">🚗 Trade-In Service</span><span style="font-weight:700;">$195</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:15px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="color:var(--muted);">💳 Finance Shopping</span><span style="font-weight:700;">$195</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:15px;padding:6px 0;">
+          <span style="color:var(--muted);">⚡ Full Negotiation</span><span style="font-weight:700;">$295</span>
+        </div>
+      </div>
+      <div style="background:rgba(0,200,83,.1);border:2px solid rgba(0,200,83,.25);padding:12px;margin-bottom:14px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--green);">Avg Return: 16.8x</div>
+        <div style="font-size:13px;color:var(--muted);">Pay $795 · Save avg $13,409</div>
+      </div>
+      <button onclick="selectAllSvcs()" style="display:block;width:100%;background:var(--gold);border:none;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:14px;cursor:pointer;transition:all .2s;">Select Complete Package</button>
+    </div>
+
+    <div class="fee-card">
+      <div class="fee-title">💰 À La Carte Pricing</div>
+      <div class="fee-row"><span class="fee-lbl">🔍 Find My Vehicle</span><span class="fee-val">$295</span></div>
+      <div class="fee-row"><span class="fee-lbl">🚗 Trade-In Service</span><span class="fee-val">$195</span></div>
+      <div class="fee-row"><span class="fee-lbl">💳 Finance Shopping</span><span class="fee-val">$195</span></div>
+      <div class="fee-row"><span class="fee-lbl">⚡ Full Negotiation</span><span class="fee-val">$295</span></div>
+      <div style="margin-top:12px;font-size:13px;color:var(--muted);line-height:1.6;">Select only what you need — or choose the Complete Package above and save $185.</div>
+    </div>
+
+    <div class="promise-card">
+      <div class="promise-title">⚡ The EVL Promise</div>
+      <div class="promise-items">
+        <div class="pi">Response within 2 business hours</div>
+        <div class="pi">No obligation until you approve your deal</div>
+        <div class="pi">EVL never holds your funds or title</div>
+        <div class="pi">Full deal transparency — you see every number</div>
+        <div class="pi">Dealer info revealed only at deal approval</div>
+        <div class="pi">Cancel anytime before signing</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">📞 Contact EVL Direct</div>
+      <div class="info-row">
+        <span class="info-icon">📧</span>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-val">info@expressvehiclelocators.com</div>
+          <div class="info-sub">Monitored 7 days a week</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">⏱</span>
+        <div>
+          <div class="info-label">Response Time</div>
+          <div class="info-val">Within 2 Business Hours</div>
+          <div class="info-sub">Mon–Sat 8am–8pm CT</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">Service Area</div>
+          <div class="info-val">Nationwide</div>
+          <div class="info-sub">We deliver anywhere in the US</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="evl-footer">
+  <div class="evl-footer-inner">
+    <div class="evl-footer-logo">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
+      <span>EXPRESS <span style="color:#2B84FE">VEHICLE</span> LOCATORS</span>
+    </div>
+    <div class="evl-footer-links">
+      <a href="https://evl-decode-two.vercel.app/home">Home</a>
+      <a href="https://evl-decode-two.vercel.app/find">Find My Car</a>
+      <a href="https://evl-decode-two.vercel.app/trade-in">Trade-In</a>
+      <a href="https://evl-decode-two.vercel.app/financing">Financing</a>
+      <a href="https://evl-decode-two.vercel.app/contact">Contact</a>
+      <a href="https://evl-decode-two.vercel.app/privacy">Privacy Policy</a>
+      <a href="https://evl-decode-two.vercel.app/terms">Terms</a>
+      <a href="https://evl-decode-two.vercel.app/service-agreement">Service Agreement</a>
+    </div>
+    <div class="evl-footer-copy">
+      &copy; 2026 Express Vehicle Locators &mdash; Plano, TX &mdash; <a href="mailto:togradyevl@gmail.com">togradyevl@gmail.com</a>
+    </div>
+  </div>
+  <!-- COOKIE BANNER -->
+  <div id="evl-cookie" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#090E17;border-top:2px solid #2B84FE;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;z-index:9999;">
+    <span style="font-size:14px;color:#ccd6e0;font-weight:600;max-width:700px;">We use cookies to improve your experience. By using our site you agree to our <a href="https://evl-decode-two.vercel.app/privacy" style="color:#2B84FE;text-decoration:none;font-weight:700;">Privacy Policy</a>.</span>
+    <button onclick="acceptCookie()" style="background:#2B84FE;color:#fff;border:none;padding:10px 24px;font-size:14px;font-weight:900;border-radius:6px;cursor:pointer;letter-spacing:1px;white-space:nowrap;">ACCEPT &amp; CLOSE</button>
+  </div>
+</footer>
+
+<script>
+var selSvcs={};
+var hasTrade=true;
+var ptMode='buy';
+
+// Build year options
+(function(){
+  var s=document.getElementById('vYear');
+  var cy=new Date().getFullYear();
+  for(var y=cy+1;y>=2010;y--) s.appendChild(new Option(y,y));
+})();
+
+// DRAWER TOGGLE
+function tgl(n){
+  var body=document.getElementById('db'+n);
+  var btn=document.querySelector('#d'+n+' .dtgl');
+  var drawer=document.getElementById('d'+n);
+  var isOpen=body.style.display!=='none';
+  body.style.display=isOpen?'none':'block';
+  btn.textContent=isOpen?'▼':'▲';
+  drawer.classList.toggle('active',!isOpen);
+}
+
+// OPEN SPECIFIC DRAWER
+function openD(n){
+  [1,2,3,4,5].forEach(function(i){
+    var body=document.getElementById('db'+i);
+    var btn=document.querySelector('#d'+i+' .dtgl');
+    var drawer=document.getElementById('d'+i);
+    if(i===n){
+      body.style.display='block';
+      btn.textContent='▲';
+      drawer.classList.add('active');
+    } else {
+      body.style.display='none';
+      btn.textContent='▼';
+    }
+  });
+  setTimeout(function(){
+    var el=document.getElementById('d'+n);
+    window.scrollTo({top:el.offsetTop-80,behavior:'smooth'});
+  },100);
+}
+
+// MARK DONE
+function markDone(n,summary){
+  var drawer=document.getElementById('d'+n);
+  drawer.classList.remove('active');
+  drawer.classList.add('done');
+  var badge=document.getElementById('d'+n+'badge');
+  if(badge)badge.textContent='✓ DONE';
+  var sum=document.getElementById('d'+n+'sum');
+  if(sum&&summary)sum.textContent=summary;
+}
+
+// NEXT BUTTONS
+document.getElementById('n1').onclick=function(){
+  var first=document.getElementById('fFirst').value.trim();
+  var last=document.getElementById('fLast').value.trim();
+  var email=document.getElementById('fEmail').value.trim();
+  var phone=document.getElementById('fPhone').value.trim();
+  if(!first||!last||!email||!phone){
+    alert('Please fill in your name, email, and phone number.');return;
+  }
+  markDone(1,first+' '+last+' · '+email);
+  openD(2);
+};
+
+document.getElementById('n2').onclick=function(){
+  var keys=Object.keys(selSvcs).filter(function(k){return selSvcs[k];});
+  if(!keys.length){alert('Please select at least one service.');return;}
+  markDone(2,keys.length+' service'+(keys.length>1?'s':'')+' selected');
+  openD(3);
+};
+
+document.getElementById('n3').onclick=function(){
+  var make=document.getElementById('vMake').value;
+  var model=document.getElementById('vModel').value.trim();
+  if(!make||!model){alert('Please enter at least the vehicle make and model.');return;}
+  var year=document.getElementById('vYear').value;
+  var trim=document.getElementById('vTrim').value.trim();
+  var summary=[year,make,model,trim].filter(Boolean).join(' ');
+  markDone(3,summary);
+  document.getElementById('d3sum').textContent=summary;
+  openD(4);
+};
+
+document.getElementById('n4').onclick=function(){
+  var hasT=hasTrade&&document.getElementById('trVin').value.trim();
+  markDone(4,hasT?'Trade-in included':'No trade-in');
+  buildReview();
+  openD(5);
+};
+
+// SERVICE TOGGLE
+function toggleSvc(key,el){
+  selSvcs[key]=!selSvcs[key];
+  el.classList.toggle('on',selSvcs[key]);
+  var prices={find:295,trade:195,finance:195,negotiate:295};
+  var selected=Object.keys(selSvcs).filter(function(k){return selSvcs[k];});
+  var allFour=selected.length===4;
+  var total=allFour?795:selected.reduce(function(s,k){return s+(selSvcs[k]?prices[k]:0);},0);
+  document.getElementById('svcTotal').innerHTML=allFour?
+    '<span style="color:var(--gold)">$795</span> <span style="font-size:14px;color:var(--green);font-family:Barlow,sans-serif;font-weight:700;">Complete Package — Save $185!</span>':
+    '$'+total.toLocaleString();
+}
+
+// PURCHASE TYPE
+function setPT(t){
+  ptMode=t;
+  ['Buy','Lease','Cash'].forEach(function(x){
+    document.getElementById('pt'+x).classList.toggle('on',x.toLowerCase()===t);
+  });
+}
+
+// TRADE TOGGLE
+function setTrade(has){
+  hasTrade=has;
+  document.getElementById('trYes').classList.toggle('on',has);
+  document.getElementById('trNo').classList.toggle('on',!has);
+  document.getElementById('tradeFields').style.display=has?'block':'none';
+}
+
+// BUILD REVIEW
+function buildReview(){
+  var first=document.getElementById('fFirst').value;
+  var last=document.getElementById('fLast').value;
+  var email=document.getElementById('fEmail').value;
+  var phone=document.getElementById('fPhone').value;
+  var year=document.getElementById('vYear').value;
+  var make=document.getElementById('vMake').value;
+  var model=document.getElementById('vModel').value;
+  var trim=document.getElementById('vTrim').value;
+  var color=document.getElementById('vColor').value;
+  var budget=document.getElementById('vBudget').value;
+  var notes=document.getElementById('vNotes').value;
+  var svcs=Object.keys(selSvcs).filter(function(k){return selSvcs[k];});
+  var prices={find:295,trade:195,finance:195,negotiate:295};
+  var allSelected=svcs.length===4;
+  var total=allSelected?795:svcs.reduce(function(s,k){return s+prices[k];},0);
+  var svcNames={find:'Find My Vehicle ($295)',trade:'Trade-In Service ($195)',finance:'Finance Shopping ($195)',negotiate:'Full Negotiation ($295)'};
+
+  var html='<div style="display:grid;gap:8px;">';
+  html+='<div><strong style="color:#fff;">Customer:</strong> '+first+' '+last+'</div>';
+  html+='<div><strong style="color:#fff;">Email:</strong> '+email+' · <strong style="color:#fff;">Phone:</strong> '+phone+'</div>';
+  html+='<div><strong style="color:#fff;">Vehicle:</strong> '+[year,make,model,trim,color].filter(Boolean).join(' ')+'</div>';
+  html+='<div><strong style="color:#fff;">Budget:</strong> '+(budget||'Open')+' · <strong style="color:#fff;">Type:</strong> '+ptMode.toUpperCase()+'</div>';
+  if(notes)html+='<div><strong style="color:#fff;">Notes:</strong> '+notes+'</div>';
+  html+='<div><strong style="color:#fff;">Services:</strong> '+svcs.map(function(k){return svcNames[k];}).join(', ')+'</div>';
+  html+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;color:var(--gold);">Total EVL Fee: $'+total.toLocaleString()+'</div>';
+  html+='</div>';
+  document.getElementById('reviewContent').innerHTML=html;
+}
+
+// SELECT ALL SERVICES (Complete Package)
+function selectAllSvcs(){
+  ['find','trade','finance','negotiate'].forEach(function(k){
+    selSvcs[k]=true;
+    var el=document.getElementById('svc_'+k);
+    if(el)el.classList.add('on');
+  });
+  var prices={find:295,trade:195,finance:195,negotiate:295};
+  document.getElementById('svcTotal').innerHTML='<span style="color:var(--gold)">$795</span> <span style="font-size:14px;color:var(--green);font-family:Barlow,sans-serif;font-weight:700;">Complete Package — Save $185!</span>';
+  // Open drawer 2 if not already
+  var db2=document.getElementById('db2');
+  if(db2.style.display==='none'){
+    tgl(2);
+  }
+  // Scroll to services
+  setTimeout(function(){
+    document.getElementById('d2').scrollIntoView({behavior:'smooth',block:'nearest'});
+  },200);
+}
+
+// SUBMIT
+function submitRequest(){
+  if(!document.getElementById('authCheck').checked){
+    alert('Please check the authorization checkbox to continue.');return;
+  }
+  var first=document.getElementById('fFirst').value;
+  var last=document.getElementById('fLast').value;
+  var email=document.getElementById('fEmail').value;
+  var phone=document.getElementById('fPhone').value;
+  var year=document.getElementById('vYear').value;
+  var make=document.getElementById('vMake').value;
+  var model=document.getElementById('vModel').value;
+  var trim=document.getElementById('vTrim').value;
+  var color=document.getElementById('vColor').value;
+  var budget=document.getElementById('vBudget').value;
+  var cond=document.getElementById('vCond').value;
+  var notes=document.getElementById('vNotes').value;
+  var svcs=Object.keys(selSvcs).filter(function(k){return selSvcs[k];});
+  var prices={find:295,trade:195,finance:195,negotiate:295};
+  var allSelected=svcs.length===4;
+  var total=allSelected?795:svcs.reduce(function(s,k){return s+prices[k];},0);
+  var trVin=document.getElementById('trVin').value;
+  var trMake=document.getElementById('trMake').value;
+  var trModel=document.getElementById('trModel').value;
+  var trMiles=document.getElementById('trMiles').value;
+  var trPayoff=document.getElementById('trPayoff').value;
+  var zip=document.getElementById('fZip').value;
+  var time=document.getElementById('fTime').value;
+
+  var body=
+    'EVL CONCIERGE REQUEST\n'+
+    '=======================\n\n'+
+    'CUSTOMER INFORMATION\n'+
+    'Name: '+first+' '+last+'\n'+
+    'Email: '+email+'\n'+
+    'Phone: '+phone+'\n'+
+    'ZIP: '+(zip||'Not provided')+'\n'+
+    'Best Time: '+time+'\n\n'+
+    'REQUESTED VEHICLE\n'+
+    'Vehicle: '+[year,make,model,trim].filter(Boolean).join(' ')+'\n'+
+    'Color: '+(color||'Open')+'\n'+
+    'Condition: '+cond+'\n'+
+    'Budget: '+(budget||'Open')+'\n'+
+    'Purchase Type: '+ptMode.toUpperCase()+'\n'+
+    (notes?'Notes: '+notes+'\n':'')+'\n'+
+    'SELECTED SERVICES (Total: $'+total+')\n'+
+    svcs.map(function(k){return'• '+k+' ($'+prices[k]+')'}).join('\n')+'\n\n'+
+    (hasTrade&&trMake?
+      'TRADE-IN VEHICLE\n'+
+      'Vehicle: '+(document.getElementById('trYear').value||'')+' '+trMake+' '+trModel+'\n'+
+      'Mileage: '+(trMiles||'Not provided')+'\n'+
+      'VIN: '+(trVin||'Not provided')+'\n'+
+      'Payoff: '+(trPayoff||'$0')+'\n'+
+      'Condition: '+document.getElementById('trCond').value+'\n\n':'')+
+    'AUTHORIZATION\n'+
+    'Customer authorizes EVL to act as their agent for this transaction.\n'+
+    'Timestamp: '+new Date().toISOString();
+
+  var subject='EVL Request — '+first+' '+last+' — '+[year,make,model].filter(Boolean).join(' ');
+  window.location.href='mailto:info@expressvehiclelocators.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+
+  // Show success
+  document.getElementById('formDrawers').style.display='none';
+  document.getElementById('successBox').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+<script id="evl-nav-js">
+function toggleNav(){document.getElementById('evl-nav-links').classList.toggle('open');}
+// Cookie banner
+function acceptCookie(){document.getElementById('evl-cookie').style.display='none';localStorage.setItem('evl-cookie','1');}
+window.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem('evl-cookie')){var b=document.getElementById('evl-cookie');if(b)b.style.display='flex';}});
+// Highlight active page
+(function(){var path=window.location.pathname;document.querySelectorAll('.evl-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.endsWith(a.getAttribute('href').split('/').pop())){a.style.color='#2B84FE';a.style.borderBottom='2px solid #2B84FE';}});})();
+</script>
+</body>
+</html>
