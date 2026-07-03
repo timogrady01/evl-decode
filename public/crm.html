@@ -1336,6 +1336,27 @@
             ${type === 'deal' ? '<option value="sold" ' + (record.status === 'sold' ? 'selected' : '') + '>Sold</option>' : ''}
           </select>
         </div>
+        
+        <!-- NEW: SALESPERSON ASSIGNMENT ====> -->
+        <div class="modal-field" id="assignmentSection">
+          <label class="modal-label">Assign to Salesperson</label>
+          <div style="display:flex; gap:10px; align-items:flex-end;">
+            <select id="assignedSalesperson" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:4px; background:white; color:black;">
+              <option value="">-- Select Salesperson --</option>
+              <option value="john-smith">John Smith</option>
+              <option value="sarah-jones">Sarah Jones</option>
+              <option value="mike-johnson">Mike Johnson</option>
+              <option value="jessica-williams">Jessica Williams</option>
+              <option value="david-brown">David Brown</option>
+            </select>
+            <button onclick="assignSalesperson('${record.id}', '${type}')" style="padding:8px 16px; background:var(--blue); color:white; border:none; border-radius:4px; cursor:pointer; font-weight:600; font-size:14px; white-space:nowrap;">
+              ✓ Assign
+            </button>
+          </div>
+          <div id="assignmentStatus" style="font-size:12px; color:var(--text-soft); margin-top:8px;"></div>
+        </div>
+        <!-- <=== END ASSIGNMENT SECTION -->
+        
         <div class="modal-field">
           <label class="modal-label">Next Action</label>
           <div class="modal-value">${record.nextAction || '—'}</div>
