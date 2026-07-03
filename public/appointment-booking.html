@@ -569,7 +569,16 @@
 
         // Redirect after 2 seconds
         setTimeout(() => {
-          window.location.href = '/';
+            // Build confirmation page URL with all appointment data
+            const confirmationUrl = new URL('/appointment-confirmation', window.location.origin);
+            confirmationUrl.searchParams.append('appointmentId', docRef.id);
+            confirmationUrl.searchParams.append('customerName', customerName);
+            confirmationUrl.searchParams.append('vehicleInfo', vehicleInfo);
+            confirmationUrl.searchParams.append('appointmentDate', appointmentDate);
+            confirmationUrl.searchParams.append('appointmentTime', selectedTime);
+            confirmationUrl.searchParams.append('customerPhone', customerPhone);
+            confirmationUrl.searchParams.append('customerEmail', customerEmail);
+            window.location.href = confirmationUrl.toString();
         }, 2000);
 
       } catch (error) {
