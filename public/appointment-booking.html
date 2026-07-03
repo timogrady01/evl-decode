@@ -528,6 +528,42 @@
 
         console.log('[appointment-booking] Appointment created:', docRef.id);
 
+
+          // ══════════════════════════════════════════════════════════
+          // CALL AUTO-DEAL CREATION API
+          // ══════════════════════════════════════════════════════════
+
+          try {
+            console.log('[appointment-booking] Calling auto-create-deal API...');
+
+            const dealResponse = await fetch('/api/auto-create-deal', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                appointmentId: docRef.id,
+                customerName: customerName,
+                vehicleInfo: vehicleInfo,
+                appointmentDate: appointmentDate,
+                appointmentTimeString: selectedTime,
+                customerPhone: customerPhone,
+                customerEmail: customerEmail,
+                recordId: recordId,
+                sourceType: 'verification'
+              })
+            });
+
+            const dealData = await dealResponse.json();
+
+            if (dealResponse.ok) {
+              console.log('[appointment-booking] Deal created successfully:', dealData.dealId);
+            } else {
+              console.warn('[appointment-booking] Deal creation warning:', dealData.error);
+            }
+          } catch (dealError) {
+            console.error('[appointment-booking] Auto-deal API error:', dealError);
+            // Don't fail the appointment if deal creation fails
+          }
+
         // Show success
         showStatus('✅ Appointment booked! Check your email and SMS for confirmation.', 'success');
 
