@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Your Appointment - EVL</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: #000000;
+      padding: 20px;
+      border-bottom: 1px solid #2a3f5f;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .header h1 span {
+      color: #4a9eff;
+    }
+
+    /* Main container */
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    /* Status section */
+    .status-box {
+      background: rgba(74, 158, 255, 0.1);
+      border: 1px solid #4a9eff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .status-box .icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .status-box h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .status-box p {
+      font-size: 14px;
+      color: #a0b0c0;
+      line-height: 1.5;
+    }
+
+    /* Details section */
+    .details-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #2a3f5f;
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+
+    .details-box h3 {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #7a8aa0;
+      margin-bottom: 20px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-row .label {
+      color: #a0b0c0;
+      font-weight: 500;
+    }
+
+    .detail-row .value {
+      font-weight: 600;
+      color: #ffffff;
+      text-align: right;
+    }
+
+    /* Buttons section */
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+    }
+
+    .btn-confirm {
+      background: #4a9eff;
+      color: #ffffff;
+      grid-column: 1 / -1;
+    }
+
+    .btn-confirm:hover:not(:disabled) {
+      background: #2a7fd9;
+      transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid #2a3f5f;
+    }
+
+    .btn-cancel:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #4a9eff;
+    }
+
+    .btn:disabled {
+      background: #4a5f7f;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    /* Status messages */
+    .status-message {
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+
+    .status-message.success {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4caf50;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      display: block;
+    }
+
+    .status-message.error {
+      background: rgba(244, 67, 54, 0.1);
+      color: #f44336;
+      border: 1px solid rgba(244, 67, 54, 0.3);
+      display: block;
+    }
+
+    .status-message.info {
+      background: rgba(74, 158, 255, 0.1);
+      color: #4a9eff;
+      border: 1px solid rgba(74, 158, 255, 0.3);
+      display: block;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(74, 158, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #4a9eff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px auto;
+        padding: 15px;
+      }
+
+      .details-box {
+        padding: 20px;
+      }
+
+      .button-group {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-confirm {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>EXPRESS <span>VEHICLE</span> LOCATORS</h1>
+  </div>
+
+  <!-- Main container -->
+  <div class="container">
+    <!-- Status box -->
+    <div class="status-box">
+      <div class="icon">📋</div>
+      <h2>Review Your Appointment</h2>
+      <p>Please review the details below and confirm your appointment.</p>
+    </div>
+
+    <!-- Appointment details -->
+    <div class="details-box">
+      <h3>Appointment Details</h3>
+
+      <div class="detail-row">
+        <span class="label">Customer Name:</span>
+        <span class="value" id="customerNameDisplay">—</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Vehicle:</span>
+        <span class="value" id="vehicleDisplay">—</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Date:</span>
+        <span class="value" id="dateDisplay">—</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Time:</span>
+        <span class="value" id="timeDisplay">—</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Phone:</span>
+        <span class="value" id="phoneDisplay">—</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Email:</span>
+        <span class="value" id="emailDisplay">—</span>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="button-group">
+      <button class="btn btn-cancel" id="cancelBtn">
+        Edit Details
+      </button>
+      <button class="btn btn-confirm" id="confirmBtn">
+        Confirm Appointment
+      </button>
+    </div>
+
+    <!-- Status message -->
+    <div class="status-message" id="statusMessage"></div>
+  </div>
+
+  <script type="module">
+    // ══════════════════════════════════════════════════════════
+    // FIREBASE SETUP
+    // ══════════════════════════════════════════════════════════
+
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDvV5u1dIvvPvKwLXQZ4MfH-F5bL_yL0hA",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.appspot.com",
+      messagingSenderId: "637284038819",
+      appId: "1:637284038819:web:f57c9d21efc62c6ac890e9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ══════════════════════════════════════════════════════════
+    // PAGE INITIALIZATION
+    // ══════════════════════════════════════════════════════════
+
+    // Get URL parameters (passed from appointment booking page)
+    const params = new URLSearchParams(window.location.search);
+    const appointmentId = params.get('appointmentId');
+    const customerName = params.get('customerName') || 'Customer';
+    const vehicleInfo = params.get('vehicleInfo') || 'Your Vehicle';
+    const appointmentDate = params.get('appointmentDate') || '—';
+    const appointmentTime = params.get('appointmentTime') || '—';
+    const customerPhone = params.get('customerPhone') || '—';
+    const customerEmail = params.get('customerEmail') || '—';
+
+    // Display appointment details
+    document.getElementById('customerNameDisplay').textContent = customerName;
+    document.getElementById('vehicleDisplay').textContent = vehicleInfo;
+    document.getElementById('dateDisplay').textContent = appointmentDate;
+    document.getElementById('timeDisplay').textContent = appointmentTime;
+    document.getElementById('phoneDisplay').textContent = customerPhone;
+    document.getElementById('emailDisplay').textContent = customerEmail;
+
+    // ══════════════════════════════════════════════════════════
+    // CONFIRM BUTTON
+    // ══════════════════════════════════════════════════════════
+
+    document.getElementById('confirmBtn').addEventListener('click', async () => {
+      const confirmBtn = document.getElementById('confirmBtn');
+      const originalText = confirmBtn.textContent;
+
+      // Disable button and show loading
+      confirmBtn.disabled = true;
+      confirmBtn.innerHTML = '<span class="spinner"></span> Confirming...';
+
+      try {
+        console.log('[appointment-confirmation] Confirming appointment:', appointmentId);
+
+        // Update Firebase: Change status from "booked" to "confirmed"
+        const appointmentRef = doc(db, 'evl_appointments', appointmentId);
+        
+        await updateDoc(appointmentRef, {
+          status: 'confirmed',
+          confirmedAt: new Date(),
+          confirmationStatus: 'confirmed'
+        });
+
+        console.log('[appointment-confirmation] Appointment confirmed in Firebase');
+
+        // ══════════════════════════════════════════════════════════
+        // SEND CONFIRMATION EMAILS
+        // ══════════════════════════════════════════════════════════
+
+        try {
+          console.log('[appointment-confirmation] Sending confirmation emails...');
+
+          const emailResponse = await fetch('/api/send-appointment-notifications', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              appointmentId: appointmentId,
+              customerName: customerName,
+              vehicleInfo: vehicleInfo,
+              appointmentDate: appointmentDate,
+              appointmentTime: appointmentTime,
+              customerPhone: customerPhone,
+              customerEmail: customerEmail,
+              type: 'confirmation'
+            })
+          });
+
+          const emailData = await emailResponse.json();
+
+          if (emailResponse.ok) {
+            console.log('[appointment-confirmation] Emails sent successfully');
+          } else {
+            console.warn('[appointment-confirmation] Email warning:', emailData.error);
+          }
+        } catch (emailError) {
+          console.error('[appointment-confirmation] Email API error:', emailError);
+        }
+
+        // Show success
+        showStatus('✅ Appointment confirmed! You will receive a confirmation email shortly.', 'success');
+
+        // Redirect after 2 seconds
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+
+      } catch (error) {
+        console.error('[appointment-confirmation] Error:', error);
+        showStatus('Could not confirm appointment. Please try again.', 'error');
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = originalText;
+      }
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // CANCEL BUTTON (Go back to edit)
+    // ══════════════════════════════════════════════════════════
+
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      // Go back to previous page (appointment booking)
+      window.history.back();
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // HELPER: SHOW STATUS MESSAGE
+    // ══════════════════════════════════════════════════════════
+
+    function showStatus(message, type) {
+      const statusMsg = document.getElementById('statusMessage');
+      statusMsg.textContent = message;
+      statusMsg.className = `status-message ${type}`;
+    }
+
+  </script>
+</body>
+</html>
