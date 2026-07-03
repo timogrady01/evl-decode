@@ -475,6 +475,14 @@
     {
       "source": "/appointment-booking.html",
       "destination": "/appointment-booking.html"
+    },
+    {
+      "source": "/appointment-confirmation",
+      "destination": "/appointment-confirmation.html"
+    },
+    {
+      "source": "/appointment-confirmation.html",
+      "destination": "/appointment-confirmation.html"
     }
   ]
 }
