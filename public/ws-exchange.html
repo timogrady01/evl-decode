@@ -223,20 +223,20 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 <!-- WS NAV -->
 <nav class="evl-ws-nav">
-  <a href="https://evl-decode-two.vercel.app/ws" class="evl-ws-nav-logo">
+  <a href="https://expressvehiclelocators.com/ws" class="evl-ws-nav-logo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
     EVL <span style="color:var(--gold);margin-left:4px">WHOLESALE</span>
   </a>
   <button class="ws-hamburger" onclick="document.getElementById('ws-nav-links').classList.toggle('open')">&#9776;</button>
   <div class="evl-ws-nav-links" id="ws-nav-links">
-    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
-    <a href="https://evl-decode-two.vercel.app/ws-hub" class="evl-ws-nav-link">HUB MAP</a>
-    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="evl-ws-nav-link active">EXCHANGE</a>
-    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
-    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
-    <a href="https://evl-decode-two.vercel.app/ws-vault" class="evl-ws-nav-link">VAULT</a>
-    <a href="https://evl-decode-two.vercel.app/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px">⬅ RETAIL</a>
-    <a href="https://evl-decode-two.vercel.app/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px">🔒 LOGOUT</a>
+    <a href="https://expressvehiclelocators.com/ws-dashboard" class="evl-ws-nav-link">DASHBOARD</a>
+    <a href="https://expressvehiclelocators.com/ws-hub" class="evl-ws-nav-link">HUB MAP</a>
+    <a href="https://expressvehiclelocators.com/ws-exchange" class="evl-ws-nav-link active">EXCHANGE</a>
+    <a href="https://expressvehiclelocators.com/ws-dealers" class="evl-ws-nav-link">DEALERS</a>
+    <a href="https://expressvehiclelocators.com/ws-onboarding" class="evl-ws-nav-link">ONBOARDING</a>
+    <a href="https://expressvehiclelocators.com/ws-vault" class="evl-ws-nav-link">VAULT</a>
+    <a href="https://expressvehiclelocators.com/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:6px 10px">⬅ RETAIL</a>
+    <a href="https://expressvehiclelocators.com/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:7px 14px;border-radius:6px">🔒 LOGOUT</a>
   </div>
 </nav>
 
@@ -903,9 +903,9 @@ async function notifyHubDealers(templateKey, hub, params) {
     if (dealer.ucm1Email) {
       // Build SMS message based on template type
       const smsMessages = {
-        UNIT_CARD    : `🛡️ EVL CERTIFIED UNIT AVAILABLE — ${params.vehicle || 'New Unit'} | ${params.hub || 'DFW'} hub | Phase 1 opens now. Login: evl-decode-two.vercel.app/public/ws-exchange.html`,
-        HOURLY_NUDGE : `⏰ EVL AUCTION UPDATE — ${params.vehicle || 'Active Unit'} | ${params.time_remaining || 'Closing soon'} remaining. Place your bid: evl-decode-two.vercel.app/public/ws-exchange.html`,
-        FINAL_CALL   : `🚨 FINAL CALL — ${params.vehicle || 'Auction'} closes in 2 HOURS. Current high bid: $${params.current_bid || 'Reserve'}. Bid now: evl-decode-two.vercel.app/public/ws-exchange.html`,
+        UNIT_CARD    : `🛡️ EVL CERTIFIED UNIT AVAILABLE — ${params.vehicle || 'New Unit'} | ${params.hub || 'DFW'} hub | Phase 1 opens now. Login: expressvehiclelocators.com/ws-exchange`,
+        HOURLY_NUDGE : `⏰ EVL AUCTION UPDATE — ${params.vehicle || 'Active Unit'} | ${params.time_remaining || 'Closing soon'} remaining. Place your bid: expressvehiclelocators.com/ws-exchange`,
+        FINAL_CALL   : `🚨 FINAL CALL — ${params.vehicle || 'Auction'} closes in 2 HOURS. Current high bid: $${params.current_bid || 'Reserve'}. Bid now: expressvehiclelocators.com/ws-exchange`,
       };
       const smsBody = smsMessages[templateKey] || `EVL Auction Alert — ${params.vehicle || 'Update available'}. Login to EVL WS Exchange.`;
       sendEVLNotification(templateKey, dealer.ucm1Email, dealer.ucm1Phone, {
@@ -976,13 +976,14 @@ async function submitBidToFirebase(auctionId, bidAmount, dealerEmail) {
     // ── EMAIL: OUTBID — notify the dealer who just got bumped ──
     if (prevHighBidder && prevHighBidder !== dealerEmail) {
       // SMS: outbid alert — time-sensitive, SMS is critical here
-      sendEVLSMS(null, `🔔 EVL OUTBID ALERT — You've been outbid on ${auctionData.vehicle || 'your unit'}. New high bid: $${bidAmount.toLocaleString()}. Counter now: evl-decode-two.vercel.app/public/ws-exchange.html`);
+      sendEVLSMS(null, `🔔 EVL OUTBID ALERT — You've been outbid on ${data.vehicle || 'your unit'}. New high bid: $${bidAmount.toLocaleString()}. Counter now: expressvehiclelocators.com/ws-exchange`);
+      console.log('[EVL EMAIL] Firing OUTBID email to:', prevHighBidder);
       sendEVLEmail('OUTBID', prevHighBidder, {
         auction_id  : auctionId,
         vehicle     : auctionId,
         their_bid   : '$' + current.toLocaleString(),
         new_bid     : '$' + bidAmount.toLocaleString(),
-        auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+        auction_url : 'https://expressvehiclelocators.com/ws-exchange'
       });
     }
     return true;
@@ -1573,7 +1574,7 @@ function startTimers(auctions) {
             vehicle     : a.vehicle || a.id,
             time_left   : '2 hours',
             current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
-            auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+            auction_url : 'https://expressvehiclelocators.com/ws-exchange'
           });
         }
 
@@ -1587,7 +1588,7 @@ function startTimers(auctions) {
             vehicle     : a.vehicle || a.id,
             current_bid : a.currentBid ? '$' + a.currentBid.toLocaleString() : 'No bids yet',
             time_left   : Math.floor(a.timer / 3600) + ' hours',
-            auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+            auction_url : 'https://expressvehiclelocators.com/ws-exchange'
           });
         }
 
@@ -1662,7 +1663,7 @@ async function transitionToPhase2(a) {
       reserve     : '$' + (a.reserve || 0).toLocaleString(),
       miles       : a.miles || 'N/A',
       color       : a.color || 'N/A',
-      auction_url : 'https://evl-decode-two.vercel.app/ws-exchange'
+      auction_url : 'https://expressvehiclelocators.com/ws-exchange'
     });
 
   } catch(e) {
@@ -1715,23 +1716,23 @@ async function closeAuction(a) {
     if (winner) {
       // EVL-WINNER → winning BD dealer
       // SMS: winner notification
-      sendEVLSMS(a.highBidderPhone || null, `🏆 YOU WON — ${a.vehicle} | Winning bid: $${a.currentBid?.toLocaleString() || 'See dashboard'}. EVL team will contact you within 2 hours. evl-decode-two.vercel.app/public/ws-exchange.html`);
+      sendEVLSMS(a.highBidderPhone || null, `🏆 YOU WON — ${a.vehicle} | Winning bid: $${a.currentBid?.toLocaleString() || 'See dashboard'}. EVL team will contact you within 2 hours. expressvehiclelocators.com/ws-exchange`);
       sendEVLEmail('WINNER', a.highBidder || 'dealer@testdrive.com', {
         auction_id   : a.id,
         vehicle      : a.vehicle || a.id,
         winning_bid  : '$' + a.currentBid.toLocaleString(),
-        auction_url  : 'https://evl-decode-two.vercel.app/ws-exchange'
+        auction_url  : 'https://expressvehiclelocators.com/ws-exchange'
       });
       // EVL-UNIT-SOLD → ID dealer (issuing dealer)
       const idEmail = a.idEmail || 'togradyevl@gmail.com';
       // SMS: unit sold notification to ID dealer
-      sendEVLSMS(a.idPhone || null, `✅ EVL UNIT SOLD — ${a.vehicle} | Final price: $${a.currentBid?.toLocaleString() || 'See dashboard'}. Settlement coordination begins shortly. evl-decode-two.vercel.app/public/ws-exchange.html`);
+      sendEVLSMS(a.idPhone || null, `✅ EVL UNIT SOLD — ${a.vehicle} | Final price: $${a.currentBid?.toLocaleString() || 'See dashboard'}. Settlement coordination begins shortly. expressvehiclelocators.com/ws-exchange`);
       sendEVLEmail('UNIT_SOLD', idEmail, {
         auction_id   : a.id,
         vehicle      : a.vehicle || a.id,
         winning_bid  : '$' + a.currentBid.toLocaleString(),
         winning_dealer: a.highBidder || 'Winning Dealer',
-        auction_url  : 'https://evl-decode-two.vercel.app/ws-exchange'
+        auction_url  : 'https://expressvehiclelocators.com/ws-exchange'
       });
     }
 
