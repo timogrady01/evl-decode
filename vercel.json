@@ -481,6 +481,10 @@
       "destination": "/appointment-confirmation.html"
     },
     {
+      "source": "/fair-deal-worksheet",
+      "destination": "/fair-deal-worksheet.html"
+    },
+    {
       "source": "/appointment-confirmation.html",
       "destination": "/appointment-confirmation.html"
     }
