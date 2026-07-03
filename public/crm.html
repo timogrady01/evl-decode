@@ -940,7 +940,7 @@
         allLeads = [];
         snapshot.forEach((doc) => {
           allLeads.push({ id: doc.id, ...doc.data() });
-        }) : '—';
+        });
         renderIncomingLeads();
         updateLeadStats();
       });
