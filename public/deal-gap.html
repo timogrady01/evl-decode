@@ -1397,6 +1397,12 @@ function buildReport() {
     const payEVL    = principal * rEVL * Math.pow(1+rEVL, fTerm) / (Math.pow(1+rEVL, fTerm) - 1);
     rateMonthlySavings = payDealer - payEVL;
     totalRateSavings   = rateMonthlySavings * fTerm;
+
+  // ── TEXAS SALES TAX (6.25% on full vehicle price) ──
+  // FUTURE: Add state selector here for multi-state support
+  const taxRate = 0.0625; // Texas: 6.25%
+  const salesTax = vAsking * taxRate;
+  const totalWithTax = vAsking + salesTax;
   }
 
   // Total gap
