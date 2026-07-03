@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Intake — EVL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;900" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg: #F7F8FA;
+      --white: #FFFFFF;
+      --blue: #2563EB;
+      --blue-dark: #1D4ED8;
+      --blue-light: #EFF6FF;
+      --text: #111827;
+      --text-mid: #374151;
+      --text-soft: #6B7280;
+      --border: #E5E7EB;
+      --success-bg: #F0FDF4;
+      --success-text: #16A34A;
+      --error-bg: #FEF2F2;
+      --error-text: #DC2626;
+    }
+    
+    body {
+      overflow-x: hidden;
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    
+    /* NAV */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 17px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    
+    .nav-logout {
+      background: var(--error-bg);
+      color: var(--error-text);
+      border: 1px solid var(--error-text);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    .nav-logout:hover {
+      background: var(--error-text);
+      color: var(--white);
+    }
+    
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 600px;
+      margin: 100px auto 0;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 24px;
+    }
+    
+    /* FORM GROUPS */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px var(--blue-light);
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    /* SECTION DIVIDERS */
+    .section-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 28px;
+      margin-bottom: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    
+    /* BUTTONS */
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    
+    button {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-submit {
+      background: var(--blue);
+      color: var(--white);
+    }
+    
+    .btn-submit:hover {
+      background: var(--blue-dark);
+    }
+    
+    .btn-submit:disabled {
+      background: var(--text-soft);
+      cursor: not-allowed;
+    }
+    
+    .btn-reset {
+      background: var(--bg);
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+    }
+    
+    .btn-reset:hover {
+      background: var(--border);
+    }
+    
+    /* ALERTS */
+    .alert {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      display: none;
+    }
+    
+    .alert-success {
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 1px solid var(--success-text);
+    }
+    
+    .alert-error {
+      background: var(--error-bg);
+      color: var(--error-text);
+      border: 1px solid var(--error-text);
+    }
+    
+    .alert.show {
+      display: block;
+    }
+    
+    /* LOADING STATE */
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: var(--white);
+      animation: spin 0.8s linear infinite;
+      margin-right: 6px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="home.html" class="nav-logo">EXPRESS VEHICLE LOCATORS</a>
+  <button class="nav-logout" id="logoutBtn">Log Out</button>
+</nav>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+  <h1>📥 Lead Intake</h1>
+  <p class="subtitle">Log a new customer lead from any source (AutoTrader, phone, SMS, etc.)</p>
+  
+  <div id="alertSuccess" class="alert alert-success"></div>
+  <div id="alertError" class="alert alert-error"></div>
+  
+  <form id="leadForm">
+    
+    <!-- CUSTOMER INFORMATION -->
+    <div class="section-header">Customer Information</div>
+    
+    <div class="form-group">
+      <label for="customerName">Customer Name *</label>
+      <input type="text" id="customerName" name="customerName" placeholder="Full name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="customerEmail">Email Address</label>
+      <input type="email" id="customerEmail" name="customerEmail" placeholder="name@example.com">
+    </div>
+    
+    <div class="form-group">
+      <label for="customerPhone">Phone Number *</label>
+      <input type="tel" id="customerPhone" name="customerPhone" placeholder="(469) 269-7217" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="customerLocation">Location (City, State)</label>
+      <input type="text" id="customerLocation" name="customerLocation" placeholder="Frisco, TX 75033">
+    </div>
+    
+    <!-- VEHICLE INFORMATION -->
+    <div class="section-header">Vehicle Interest</div>
+    
+    <div class="form-group">
+      <label for="vehicleYear">Year</label>
+      <input type="number" id="vehicleYear" name="vehicleYear" placeholder="2024" min="1990" max="2030">
+    </div>
+    
+    <div class="form-group">
+      <label for="vehicleMake">Make</label>
+      <input type="text" id="vehicleMake" name="vehicleMake" placeholder="Toyota">
+    </div>
+    
+    <div class="form-group">
+      <label for="vehicleModel">Model</label>
+      <input type="text" id="vehicleModel" name="vehicleModel" placeholder="Highlander Hybrid XLE">
+    </div>
+    
+    <div class="form-group">
+      <label for="vehicleStock">Stock Number</label>
+      <input type="text" id="vehicleStock" name="vehicleStock" placeholder="728001">
+    </div>
+    
+    <div class="form-group">
+      <label for="buyingTimeframe">Buying Timeframe</label>
+      <input type="text" id="buyingTimeframe" name="buyingTimeframe" placeholder="4-6 weeks, ASAP, etc.">
+    </div>
+    
+    <!-- LEAD SOURCE -->
+    <div class="section-header">Lead Source</div>
+    
+    <div class="form-group">
+      <label for="leadSource">Where did this lead come from? *</label>
+      <select id="leadSource" name="leadSource" required>
+        <option value="">— Select one —</option>
+        <option value="AutoTrader">AutoTrader</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Website">Website</option>
+        <option value="Phone">Phone Call</option>
+        <option value="SMS">SMS/Text</option>
+        <option value="Chat">Chat</option>
+        <option value="Email">Email</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="leadType">Type of Contact *</label>
+      <select id="leadType" name="leadType" required>
+        <option value="">— Select one —</option>
+        <option value="Phone Call">Phone Call</option>
+        <option value="Form Submit">Form Submit</option>
+        <option value="SMS">SMS</option>
+        <option value="Chat">Chat</option>
+        <option value="Email">Email</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="dealerName">Which dealership?</label>
+      <input type="text" id="dealerName" name="dealerName" placeholder="Pat Lobb Toyota of McKinney">
+    </div>
+    
+    <!-- AI TRANSCRIPT & NOTES -->
+    <div class="section-header">Conversation Details</div>
+    
+    <div class="form-group">
+      <label for="aiTranscript">AI Transcript / Summary</label>
+      <textarea id="aiTranscript" name="aiTranscript" placeholder="Paste the AI summary or key points from the conversation here..."></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="notes">Additional Notes</label>
+      <textarea id="notes" name="notes" placeholder="Any other important information..."></textarea>
+    </div>
+    
+    <!-- SUBMIT -->
+    <div class="button-group">
+      <button type="submit" class="btn-submit" id="submitBtn">Save Lead</button>
+      <button type="reset" class="btn-reset">Clear Form</button>
+    </div>
+    
+  </form>
+  
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import {
+    getAuth,
+    signOut,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  import {
+    getFirestore, collection, addDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    messagingSenderId: "84195145348",
+    appId: "1:84195145348:web:b10f837bee92ce2e4674d1",
+    measurementId: "G-S746N8SY7Z"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  
+  // ── CHECK IF USER IS LOGGED IN ──
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Not logged in → redirect to login
+      window.location.href = 'login.html';
+    }
+  });
+  
+  // ── LOGOUT BUTTON ──
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+      await signOut(auth);
+      window.location.href = 'login.html';
+    } catch (e) {
+      console.error('Logout error:', e);
+    }
+  });
+  
+  // ── FORM SUBMISSION ──
+  document.getElementById('leadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const alertSuccess = document.getElementById('alertSuccess');
+    const alertError = document.getElementById('alertError');
+    
+    // Hide alerts
+    alertSuccess.classList.remove('show');
+    alertError.classList.remove('show');
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner"></span>Saving...';
+    
+    try {
+      // Collect form data
+      const leadData = {
+        customerName: document.getElementById('customerName').value,
+        customerEmail: document.getElementById('customerEmail').value,
+        customerPhone: document.getElementById('customerPhone').value,
+        customerLocation: document.getElementById('customerLocation').value,
+        vehicleYear: document.getElementById('vehicleYear').value || null,
+        vehicleMake: document.getElementById('vehicleMake').value,
+        vehicleModel: document.getElementById('vehicleModel').value,
+        vehicleStock: document.getElementById('vehicleStock').value,
+        buyingTimeframe: document.getElementById('buyingTimeframe').value,
+        leadSource: document.getElementById('leadSource').value,
+        leadType: document.getElementById('leadType').value,
+        dealerName: document.getElementById('dealerName').value,
+        aiTranscript: document.getElementById('aiTranscript').value,
+        notes: document.getElementById('notes').value,
+        dateReceived: serverTimestamp(),
+        status: 'new',
+        nextAction: 'Contact customer'
+      };
+      
+      // Save to Firestore
+      const docRef = await addDoc(collection(db, 'evl_leads'), leadData);
+      
+      // Show success
+      alertSuccess.textContent = `✅ Lead saved successfully! (ID: ${docRef.id.substring(0, 8)}...)`;
+      alertSuccess.classList.add('show');
+      
+      // Clear form
+      document.getElementById('leadForm').reset();
+      
+      // Reset button
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Save Lead';
+      
+      // Scroll to top to see success message
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+    } catch (e) {
+      // Show error
+      alertError.textContent = `❌ Error saving lead: ${e.message}`;
+      alertError.classList.add('show');
+      
+      // Reset button
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Save Lead';
+      
+      console.error('Form submission error:', e);
+    }
+  });
+  
+</script>
+
+</body>
+</html>
