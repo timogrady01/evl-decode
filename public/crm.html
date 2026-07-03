@@ -1265,6 +1265,9 @@
     document.getElementById('modalBody').innerHTML = html;
     document.getElementById('modalTitle').textContent = `${type.charAt(0).toUpperCase() + type.slice(1)}: ${record.customerName}`;
     document.getElementById('detailModal').classList.add('open');
+    
+    // START TIMER DISPLAY
+    startTimerUpdates(record, type);
   };
   
   // ── BUILD MODAL CONTENT ──
