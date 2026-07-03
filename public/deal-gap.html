@@ -1430,6 +1430,8 @@ function buildReport() {
   document.getElementById('rpt-asking').textContent   = fmt(vAsking);
   document.getElementById('rpt-market').textContent   = fmt(evlMarketLow) + ' – ' + fmt(evlMarketHigh);
   document.getElementById('rpt-price-gap').textContent = fmt(priceGap);
+  document.getElementById('rpt-tax').textContent = '$' + fmt(salesTax);
+  document.getElementById('rpt-total-tax').textContent = '$' + fmt(totalWithTax);
   document.getElementById('rpt-price-verdict').textContent =
     `EVL recommends offering ${fmt(evlOffer)}. Based on current market data, this vehicle has ${fmt(priceGap)} in negotiable margin. Here's exactly what to say when you present that offer.`;
 
