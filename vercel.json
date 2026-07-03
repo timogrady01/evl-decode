@@ -427,6 +427,14 @@
     {
       "source": "/",
       "destination": "home.html"
+    },
+    {
+      "source": "/deal-gap.html",
+      "destination": "deal-gap.html"
+    },
+    {
+      "source": "/deal-gap",
+      "destination": "deal-gap.html"
     }
   ]
 }
