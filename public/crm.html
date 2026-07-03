@@ -1016,7 +1016,7 @@
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
-      });
+        }) : '—';
       
       const vehicle = (lead.vehicleYear ? lead.vehicleYear + ' ' : '') + (lead.vehicleMake || '') + ' ' + (lead.vehicleModel || '');
       const budget = lead.budgetMin && lead.budgetMax ? `$${lead.budgetMin}–$${lead.budgetMax}` : '—';
