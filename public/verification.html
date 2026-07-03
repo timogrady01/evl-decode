@@ -619,7 +619,11 @@
 
         // Redirect after 3 seconds
         setTimeout(() => {
-          window.location.href = '/crm';
+          const appointmentUrl = new URL('/appointment-booking', window.location.origin);
+            appointmentUrl.searchParams.append('recordId', recordId);
+            appointmentUrl.searchParams.append('customerName', document.getElementById('customerName')?.textContent || 'Customer');
+            appointmentUrl.searchParams.append('vehicleInfo', document.getElementById('vehicleInfo')?.textContent || 'Vehicle');
+            window.location.href = appointmentUrl.toString();
         }, 3000);
 
       } catch (error) {
@@ -641,7 +645,11 @@
 
     document.getElementById('cancelBtn').addEventListener('click', () => {
       if (confirm('Cancel verification?')) {
-        window.location.href = '/crm';
+        const appointmentUrl = new URL('/appointment-booking', window.location.origin);
+            appointmentUrl.searchParams.append('recordId', recordId);
+            appointmentUrl.searchParams.append('customerName', document.getElementById('customerName')?.textContent || 'Customer');
+            appointmentUrl.searchParams.append('vehicleInfo', document.getElementById('vehicleInfo')?.textContent || 'Vehicle');
+            window.location.href = appointmentUrl.toString();
       }
     });
 
