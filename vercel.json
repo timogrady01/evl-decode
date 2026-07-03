@@ -443,6 +443,14 @@
     {
       "source": "/lead-intake.html",
       "destination": "/lead-intake.html"
+    },
+    {
+      "source": "/admin-leads",
+      "destination": "/admin-leads.html"
+    },
+    {
+      "source": "/admin-leads.html",
+      "destination": "/admin-leads.html"
     }
   ]
 }
