@@ -432,6 +432,210 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
+
+    /* ── PROGRESS BAR ── */
+    .progress-container {
+      margin-bottom: 20px;
+    }
+    
+    .progress-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--green);
+      transition: width 0.3s ease;
+    }
+    
+    .progress-fill.warning {
+      background: var(--yellow-text);
+    }
+    
+    .progress-fill.overdue {
+      background: var(--red-text);
+    }
+    
+    .progress-text {
+      font-size: 12px;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    /* ── TIMER DISPLAY ── */
+    .timer-section {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    
+    .timer-header {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .timer-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .timer-status.on-track {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+    }
+    
+    .timer-status.at-risk {
+      background: var(--yellow-bg);
+      color: var(--yellow-text);
+    }
+    
+    .timer-status.overdue {
+      background: var(--red-bg);
+      color: var(--red-text);
+    }
+    
+    .timer-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    
+    .timer-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .timer-item-label {
+      color: var(--text-soft);
+    }
+    
+    .timer-item-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+    
+    .stage-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    
+    .stage-indicator.on-track {
+      background: var(--green);
+    }
+    
+    .stage-indicator.at-risk {
+      background: var(--yellow-text);
+    }
+    
+    .stage-indicator.overdue {
+      background: var(--red-text);
+    }
+    
+    /* ── STIPULATION TRACKER ── */
+    .stipulation-box {
+      background: #F5F5F5;
+      border-left: 4px solid var(--blue);
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    
+    .stipulation-label {
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+    
+    .stipulation-detail {
+      color: var(--text-soft);
+      font-size: 12px;
+    }
+    
+    /* ── STAGE TIMELINE ── */
+    .stage-timeline {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+      position: relative;
+    }
+    
+    .stage-timeline::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    
+    .stage-dot {
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-soft);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .stage-dot.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: var(--white);
+    }
+    
+    .stage-dot.completed {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--white);
+    }
+    
+    .stage-label {
+      font-size: 11px;
+      color: var(--text-soft);
+      text-align: center;
+      margin-top: 8px;
+    }
+
   </style>
 </head>
 <body>
