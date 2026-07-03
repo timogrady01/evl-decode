@@ -459,6 +459,14 @@
     {
       "source": "/crm.html",
       "destination": "/crm.html"
+    },
+    {
+      "source": "/verification",
+      "destination": "/verification.html"
+    },
+    {
+      "source": "/verification.html",
+      "destination": "/verification.html"
     }
   ]
 }
