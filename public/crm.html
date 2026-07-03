@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM Dashboard — EVL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@700;900" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg: #F7F8FA;
+      --white: #FFFFFF;
+      --blue: #2563EB;
+      --blue-dark: #1D4ED8;
+      --blue-light: #EFF6FF;
+      --green: #10B981;
+      --green-light: #F0FDF4;
+      --text: #111827;
+      --text-mid: #374151;
+      --text-soft: #6B7280;
+      --border: #E5E7EB;
+      --yellow-bg: #FEF3C7;
+      --yellow-text: #D97706;
+      --red-bg: #FEE2E2;
+      --red-text: #DC2626;
+    }
+    
+    body {
+      overflow-x: hidden;
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+    }
+    
+    /* ── NAV BAR ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 17px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .nav-user {
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+    
+    .nav-logout {
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid #DC2626;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    .nav-logout:hover {
+      background: #DC2626;
+      color: var(--white);
+    }
+    
+    /* ── MAIN CONTAINER ── */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+    
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 24px;
+    }
+    
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-soft);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .tab-btn:hover {
+      color: var(--blue);
+    }
+    
+    .tab-btn.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+    
+    /* ── TAB CONTENT ── */
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    
+    /* ── TABLE ── */
+    .table-container {
+      background: var(--white);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      border-bottom: 2px solid var(--border);
+    }
+    
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    
+    tr:hover {
+      background: var(--bg);
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .text-bold {
+      font-weight: 600;
+      color: var(--text);
+    }
+    
+    .text-soft {
+      color: var(--text-soft);
+    }
+    
+    /* ── BADGES ── */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+    
+    .badge-new {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+    
+    .badge-contacted {
+      background: var(--yellow-bg);
+      color: var(--yellow-text);
+    }
+    
+    .badge-qualified {
+      background: #E0E7FF;
+      color: #4F46E5;
+    }
+    
+    .badge-booked {
+      background: var(--green-light);
+      color: var(--green);
+    }
+    
+    .badge-sold {
+      background: #F3F4F6;
+      color: #6B7280;
+    }
+    
+    /* ── BUTTONS ── */
+    .btn-view {
+      background: var(--blue-light);
+      color: var(--blue);
+      border: 1px solid var(--blue);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .btn-view:hover {
+      background: var(--blue);
+      color: var(--white);
+    }
+    
+    /* ── LOADING ── */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-soft);
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--border);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* ── MODAL ── */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      overflow-y: auto;
+    }
+    
+    .modal.open {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      margin: 20px auto;
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-soft);
+    }
+    
+    .modal-field {
+      margin-bottom: 18px;
+    }
+    
+    .modal-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+      display: block;
+    }
+    
+    .modal-value {
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      padding: 10px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+    }
+    
+    select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px var(--blue-light);
+    }
+    
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+    }
+    
+    .btn-primary:hover {
+      background: var(--blue-dark);
+    }
+    
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--border);
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="home.html" class="nav-logo">EXPRESS VEHICLE LOCATORS</a>
+  <div class="nav-right">
+    <div class="nav-user" id="userInfo">Loading...</div>
+    <button class="nav-logout" id="logoutBtn">Log Out</button>
+  </div>
+</nav>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+  <h1>📊 CRM Dashboard</h1>
+  <p class="subtitle">Unified customer relationship management — leads, deals, appointments, closed</p>
+  
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('incoming')">📥 Incoming Leads</button>
+    <button class="tab-btn" onclick="switchTab('active')">📋 Active Deals</button>
+    <button class="tab-btn" onclick="switchTab('appointments')">📅 Appointments</button>
+    <button class="tab-btn" onclick="switchTab('sold')">✅ Closed/Sold</button>
+  </div>
+  
+  <!-- TAB 1: INCOMING LEADS -->
+  <div id="incoming" class="tab-content active">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-number" id="statNew">0</div>
+        <div class="stat-label">New Leads</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statContacted">0</div>
+        <div class="stat-label">Contacted</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statQualified">0</div>
+        <div class="stat-label">Qualified</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statBooked">0</div>
+        <div class="stat-label">Booked</div>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <div id="incomingContent">
+        <div class="loading">
+          <span class="spinner"></span>
+          Loading leads...
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- TAB 2: ACTIVE DEALS -->
+  <div id="active" class="tab-content">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-number" id="statActiveDeals">0</div>
+        <div class="stat-label">Total Active</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statAwaitingAppt">0</div>
+        <div class="stat-label">Awaiting Appt</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statAwaitingConfirm">0</div>
+        <div class="stat-label">Awaiting Confirm</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statApptConfirmed">0</div>
+        <div class="stat-label">Appt Confirmed</div>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <div id="activeContent">
+        <div class="loading">
+          <span class="spinner"></span>
+          Loading deals...
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- TAB 3: APPOINTMENTS -->
+  <div id="appointments" class="tab-content">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-number" id="statTotalAppts">0</div>
+        <div class="stat-label">Total Appts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statApptSet">0</div>
+        <div class="stat-label">Set (Waiting Confirm)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statApptConfirmedStat">0</div>
+        <div class="stat-label">Confirmed by SP</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statApptCompleted">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <div id="appointmentsContent">
+        <div class="loading">
+          <span class="spinner"></span>
+          Loading appointments...
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- TAB 4: CLOSED/SOLD -->
+  <div id="sold" class="tab-content">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-number" id="statTotalSold">0</div>
+        <div class="stat-label">Total Closed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statSoldThisMonth">0</div>
+        <div class="stat-label">This Month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statSoldThisWeek">0</div>
+        <div class="stat-label">This Week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statSoldValue">$0</div>
+        <div class="stat-label">Total Value</div>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <div id="soldContent">
+        <div class="loading">
+          <span class="spinner"></span>
+          Loading closed deals...
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle">Record Details</h2>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div id="modalBody">
+      <!-- Populated by JavaScript -->
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary" id="saveBtn" onclick="saveRecord()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE & JAVASCRIPT -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import {
+    getAuth,
+    signOut,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    doc,
+    updateDoc,
+    setDoc,
+    onSnapshot,
+    query,
+    orderBy,
+    where
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    messagingSenderId: "84195145348",
+    appId: "1:84195145348:web:b10f837bee92ce2e4674d1",
+    measurementId: "G-S746N8SY7Z"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  
+  let currentUser = null;
+  let allLeads = [];
+  let allDeals = [];
+  let allAppointments = [];
+  let selectedRecord = null;
+  let selectedRecordType = null;
+  
+  // ── CHECK LOGIN ──
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = 'login.html';
+    } else {
+      currentUser = user;
+      document.getElementById('userInfo').textContent = `Logged in as: ${user.email}`;
+      loadAllData();
+    }
+  });
+  
+  // ── LOGOUT ──
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+      await signOut(auth);
+      window.location.href = 'login.html';
+    } catch (e) {
+      console.error('Logout error:', e);
+    }
+  });
+  
+  // ── LOAD ALL DATA ──
+  async function loadAllData() {
+    try {
+      // Load Leads
+      const leadsQuery = query(collection(db, 'evl_leads'), orderBy('dateReceived', 'desc'));
+      onSnapshot(leadsQuery, (snapshot) => {
+        allLeads = [];
+        snapshot.forEach((doc) => {
+          allLeads.push({ id: doc.id, ...doc.data() });
+        });
+        renderIncomingLeads();
+        updateLeadStats();
+      });
+      
+      // Load Deals
+      const dealsQuery = query(collection(db, 'evl_deals'), orderBy('dateCreated', 'desc'));
+      onSnapshot(dealsQuery, (snapshot) => {
+        allDeals = [];
+        snapshot.forEach((doc) => {
+          allDeals.push({ id: doc.id, ...doc.data() });
+        });
+        renderActiveDeals();
+        updateDealStats();
+      });
+      
+      // Load Appointments
+      const apptsQuery = query(collection(db, 'evl_appointments'), orderBy('appointmentTime', 'asc'));
+      onSnapshot(apptsQuery, (snapshot) => {
+        allAppointments = [];
+        snapshot.forEach((doc) => {
+          allAppointments.push({ id: doc.id, ...doc.data() });
+        });
+        renderAppointments();
+        updateAppointmentStats();
+      });
+      
+    } catch (e) {
+      console.error('Error loading data:', e);
+    }
+  }
+  
+  // ── SWITCH TABS ──
+  window.switchTab = function(tabName) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    
+    // Show selected tab
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+  };
+  
+  // ── RENDER INCOMING LEADS ──
+  function renderIncomingLeads() {
+    // Filter leads that are not yet "booked"
+    const incomingLeads = allLeads.filter(l => l.status !== 'booked' && l.status !== 'closed');
+    
+    if (incomingLeads.length === 0) {
+      document.getElementById('incomingContent').innerHTML = '<div class="loading">No incoming leads</div>';
+      return;
+    }
+    
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Vehicle</th>
+            <th>Source</th>
+            <th>Status</th>
+            <th>Budget</th>
+            <th>Received</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    incomingLeads.forEach((lead) => {
+      const date = new Date(lead.dateReceived.seconds * 1000).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      const vehicle = (lead.vehicleYear ? lead.vehicleYear + ' ' : '') + (lead.vehicleMake || '') + ' ' + (lead.vehicleModel || '');
+      const budget = lead.budgetMin && lead.budgetMax ? `$${lead.budgetMin}–$${lead.budgetMax}` : '—';
+      const statusBadge = getStatusBadge(lead.status || 'new');
+      
+      html += `
+        <tr>
+          <td><span class="text-bold">${lead.customerName}</span></td>
+          <td><span class="text-soft">${lead.customerPhone}</span></td>
+          <td>${vehicle.trim()}</td>
+          <td>${lead.leadSource}</td>
+          <td>${statusBadge}</td>
+          <td>${budget}</td>
+          <td>${date}</td>
+          <td><button class="btn-view" onclick="viewRecord('lead', '${lead.id}')">View</button></td>
+        </tr>
+      `;
+    });
+    
+    html += `</tbody></table>`;
+    document.getElementById('incomingContent').innerHTML = html;
+  }
+  
+  // ── RENDER ACTIVE DEALS ──
+  function renderActiveDeals() {
+    if (allDeals.length === 0) {
+      document.getElementById('activeContent').innerHTML = '<div class="loading">No active deals</div>';
+      return;
+    }
+    
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Vehicle</th>
+            <th>Budget</th>
+            <th>Dealer</th>
+            <th>Status</th>
+            <th>Next Action</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    allDeals.forEach((deal) => {
+      const vehicle = (deal.vehicleYear ? deal.vehicleYear + ' ' : '') + (deal.vehicleMake || '') + ' ' + (deal.vehicleModel || '');
+      const budget = deal.budgetMin && deal.budgetMax ? `$${deal.budgetMin}–$${deal.budgetMax}` : '—';
+      const statusBadge = getStatusBadge(deal.status || 'new');
+      
+      html += `
+        <tr>
+          <td><span class="text-bold">${deal.customerName}</span></td>
+          <td><span class="text-soft">${deal.customerPhone}</span></td>
+          <td>${vehicle.trim()}</td>
+          <td>${budget}</td>
+          <td>${deal.dealerName || '—'}</td>
+          <td>${statusBadge}</td>
+          <td>${deal.nextAction || '—'}</td>
+          <td><button class="btn-view" onclick="viewRecord('deal', '${deal.id}')">View</button></td>
+        </tr>
+      `;
+    });
+    
+    html += `</tbody></table>`;
+    document.getElementById('activeContent').innerHTML = html;
+  }
+  
+  // ── RENDER APPOINTMENTS ──
+  function renderAppointments() {
+    if (allAppointments.length === 0) {
+      document.getElementById('appointmentsContent').innerHTML = '<div class="loading">No appointments scheduled</div>';
+      return;
+    }
+    
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Appointment Time</th>
+            <th>Status</th>
+            <th>SP Confirmed</th>
+            <th>Internet Dept Notified</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    allAppointments.forEach((appt) => {
+      const apptTime = appt.appointmentTime ? new Date(appt.appointmentTime.seconds * 1000).toLocaleString() : '—';
+      const statusBadge = getStatusBadge(appt.status || 'set');
+      const spConfirmed = appt.spConfirmedBy ? `✓ ${appt.spConfirmedBy}` : '✗ Pending';
+      const internetNotified = appt.internetDeptNotified ? '✓ Yes' : '✗ No';
+      
+      html += `
+        <tr>
+          <td><span class="text-bold">${appt.customerName}</span></td>
+          <td><span class="text-soft">${appt.customerPhone}</span></td>
+          <td>${apptTime}</td>
+          <td>${statusBadge}</td>
+          <td>${spConfirmed}</td>
+          <td>${internetNotified}</td>
+          <td><button class="btn-view" onclick="viewRecord('appointment', '${appt.id}')">View</button></td>
+        </tr>
+      `;
+    });
+    
+    html += `</tbody></table>`;
+    document.getElementById('appointmentsContent').innerHTML = html;
+  }
+  
+  // ── RENDER CLOSED/SOLD ──
+  function renderClosedDeals() {
+    const closedDeals = allDeals.filter(d => d.status === 'sold');
+    
+    if (closedDeals.length === 0) {
+      document.getElementById('soldContent').innerHTML = '<div class="loading">No closed deals</div>';
+      return;
+    }
+    
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Vehicle</th>
+            <th>Price</th>
+            <th>Dealer</th>
+            <th>Closed Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    closedDeals.forEach((deal) => {
+      const vehicle = (deal.vehicleYear ? deal.vehicleYear + ' ' : '') + (deal.vehicleMake || '') + ' ' + (deal.vehicleModel || '');
+      const closedDate = deal.closedDate ? new Date(deal.closedDate.seconds * 1000).toLocaleDateString('en-US') : '—';
+      const price = deal.finalPrice ? `$${deal.finalPrice}` : '—';
+      
+      html += `
+        <tr>
+          <td><span class="text-bold">${deal.customerName}</span></td>
+          <td><span class="text-soft">${deal.customerPhone}</span></td>
+          <td>${vehicle.trim()}</td>
+          <td>${price}</td>
+          <td>${deal.dealerName || '—'}</td>
+          <td>${closedDate}</td>
+          <td><button class="btn-view" onclick="viewRecord('deal', '${deal.id}')">View</button></td>
+        </tr>
+      `;
+    });
+    
+    html += `</tbody></table>`;
+    document.getElementById('soldContent').innerHTML = html;
+  }
+  
+  // ── UPDATE STATS ──
+  function updateLeadStats() {
+    const stats = { new: 0, contacted: 0, qualified: 0, booked: 0 };
+    
+    allLeads.forEach((lead) => {
+      const status = lead.status || 'new';
+      if (stats.hasOwnProperty(status)) {
+        stats[status]++;
+      }
+    });
+    
+    document.getElementById('statNew').textContent = stats.new;
+    document.getElementById('statContacted').textContent = stats.contacted;
+    document.getElementById('statQualified').textContent = stats.qualified;
+    document.getElementById('statBooked').textContent = stats.booked;
+  }
+  
+  function updateDealStats() {
+    const activeDeals = allDeals.filter(d => d.status !== 'sold');
+    const awaitingAppt = activeDeals.filter(d => d.nextAction === 'Schedule appointment').length;
+    const awaitingConfirm = activeDeals.filter(d => d.nextAction === 'Confirm appointment').length;
+    const apptConfirmed = activeDeals.filter(d => d.nextAction === 'Appointment confirmed').length;
+    
+    document.getElementById('statActiveDeals').textContent = activeDeals.length;
+    document.getElementById('statAwaitingAppt').textContent = awaitingAppt;
+    document.getElementById('statAwaitingConfirm').textContent = awaitingConfirm;
+    document.getElementById('statApptConfirmed').textContent = apptConfirmed;
+    
+    renderClosedDeals();
+  }
+  
+  function updateAppointmentStats() {
+    const set = allAppointments.filter(a => a.status === 'set').length;
+    const confirmed = allAppointments.filter(a => a.status === 'confirmed').length;
+    const completed = allAppointments.filter(a => a.status === 'completed').length;
+    
+    document.getElementById('statTotalAppts').textContent = allAppointments.length;
+    document.getElementById('statApptSet').textContent = set;
+    document.getElementById('statApptConfirmedStat').textContent = confirmed;
+    document.getElementById('statApptCompleted').textContent = completed;
+  }
+  
+  function updateClosedStats() {
+    const closedDeals = allDeals.filter(d => d.status === 'sold');
+    const now = new Date();
+    const thisMonth = closedDeals.filter(d => {
+      const closeDate = new Date(d.closedDate.seconds * 1000);
+      return closeDate.getMonth() === now.getMonth() && closeDate.getFullYear() === now.getFullYear();
+    }).length;
+    
+    const thisWeek = closedDeals.filter(d => {
+      const closeDate = new Date(d.closedDate.seconds * 1000);
+      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      return closeDate >= weekAgo;
+    }).length;
+    
+    const totalValue = closedDeals.reduce((sum, d) => sum + (d.finalPrice || 0), 0);
+    
+    document.getElementById('statTotalSold').textContent = closedDeals.length;
+    document.getElementById('statSoldThisMonth').textContent = thisMonth;
+    document.getElementById('statSoldThisWeek').textContent = thisWeek;
+    document.getElementById('statSoldValue').textContent = `$${totalValue.toLocaleString()}`;
+  }
+  
+  // ── VIEW RECORD ──
+  window.viewRecord = function(type, id) {
+    selectedRecordType = type;
+    
+    let record;
+    if (type === 'lead') {
+      record = allLeads.find(l => l.id === id);
+    } else if (type === 'deal') {
+      record = allDeals.find(d => d.id === id);
+    } else if (type === 'appointment') {
+      record = allAppointments.find(a => a.id === id);
+    }
+    
+    if (!record) return;
+    
+    selectedRecord = record;
+    let html = buildModalContent(type, record);
+    
+    document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('modalTitle').textContent = `${type.charAt(0).toUpperCase() + type.slice(1)}: ${record.customerName}`;
+    document.getElementById('detailModal').classList.add('open');
+  };
+  
+  // ── BUILD MODAL CONTENT ──
+  function buildModalContent(type, record) {
+    let html = '';
+    
+    if (type === 'lead' || type === 'deal') {
+      html = `
+        <div class="modal-field">
+          <label class="modal-label">Customer Name</label>
+          <div class="modal-value">${record.customerName}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Phone</label>
+          <div class="modal-value">${record.customerPhone}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Email</label>
+          <div class="modal-value">${record.customerEmail || '—'}</div>
+        </div>
+        <div class="grid-2">
+          <div class="modal-field">
+            <label class="modal-label">Vehicle Year</label>
+            <div class="modal-value">${record.vehicleYear || '—'}</div>
+          </div>
+          <div class="modal-field">
+            <label class="modal-label">Make</label>
+            <div class="modal-value">${record.vehicleMake || '—'}</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="modal-field">
+            <label class="modal-label">Model</label>
+            <div class="modal-value">${record.vehicleModel || '—'}</div>
+          </div>
+          <div class="modal-field">
+            <label class="modal-label">Stock #</label>
+            <div class="modal-value">${record.vehicleStock || '—'}</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="modal-field">
+            <label class="modal-label">Budget Min</label>
+            <div class="modal-value">$${record.budgetMin || '0'}</div>
+          </div>
+          <div class="modal-field">
+            <label class="modal-label">Budget Max</label>
+            <div class="modal-value">$${record.budgetMax || '0'}</div>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Lead Source</label>
+          <div class="modal-value">${record.leadSource || '—'}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Dealer Name</label>
+          <div class="modal-value">${record.dealerName || '—'}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Status</label>
+          <select id="newStatus">
+            <option value="new" ${record.status === 'new' ? 'selected' : ''}>New</option>
+            <option value="contacted" ${record.status === 'contacted' ? 'selected' : ''}>Contacted</option>
+            <option value="qualified" ${record.status === 'qualified' ? 'selected' : ''}>Qualified</option>
+            <option value="booked" ${record.status === 'booked' ? 'selected' : ''}>Booked</option>
+            ${type === 'deal' ? '<option value="sold" ' + (record.status === 'sold' ? 'selected' : '') + '>Sold</option>' : ''}
+          </select>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Next Action</label>
+          <div class="modal-value">${record.nextAction || '—'}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Notes</label>
+          <div class="modal-value" style="white-space:pre-wrap; max-height:150px; overflow-y:auto;">${record.notes || '—'}</div>
+        </div>
+      `;
+    } else if (type === 'appointment') {
+      const apptTime = record.appointmentTime ? new Date(record.appointmentTime.seconds * 1000).toLocaleString() : '—';
+      html = `
+        <div class="modal-field">
+          <label class="modal-label">Customer Name</label>
+          <div class="modal-value">${record.customerName}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Phone</label>
+          <div class="modal-value">${record.customerPhone}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Appointment Time</label>
+          <div class="modal-value">${apptTime}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Status</label>
+          <select id="newStatus">
+            <option value="set" ${record.status === 'set' ? 'selected' : ''}>Set (Waiting Confirm)</option>
+            <option value="confirmed" ${record.status === 'confirmed' ? 'selected' : ''}>Confirmed by SP</option>
+            <option value="completed" ${record.status === 'completed' ? 'selected' : ''}>Completed</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">SP Confirmed By</label>
+          <div class="modal-value">${record.spConfirmedBy || 'Not yet confirmed'}</div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Internet Dept Notified</label>
+          <select id="internetNotified">
+            <option value="no" ${!record.internetDeptNotified ? 'selected' : ''}>Not Yet</option>
+            <option value="yes" ${record.internetDeptNotified ? 'selected' : ''}>Yes — Send Nudge</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Notes</label>
+          <div class="modal-value" style="white-space:pre-wrap; max-height:150px; overflow-y:auto;">${record.notes || '—'}</div>
+        </div>
+      `;
+    }
+    
+    return html;
+  }
+  
+  // ── SAVE RECORD ──
+  window.saveRecord = async function() {
+    if (!selectedRecord || !selectedRecordType) return;
+    
+    const newStatus = document.getElementById('newStatus').value;
+    const collectionName = selectedRecordType === 'lead' ? 'evl_leads' : selectedRecordType === 'deal' ? 'evl_deals' : 'evl_appointments';
+    const docRef = doc(db, collectionName, selectedRecord.id);
+    
+    const updates = { status: newStatus };
+    
+    // Handle appointment-specific updates
+    if (selectedRecordType === 'appointment') {
+      const internetNotified = document.getElementById('internetNotified').value === 'yes';
+      updates.internetDeptNotified = internetNotified;
+      
+      if (internetNotified && !selectedRecord.internetDeptNotified) {
+        // Send nudge to SP and Internet Dept (TODO: integrate SMS/Email)
+        console.log('Sending nudge to SP and Internet Dept for:', selectedRecord.customerName);
+      }
+    }
+    
+    try {
+      await updateDoc(docRef, updates);
+      closeModal();
+    } catch (e) {
+      console.error('Error saving:', e);
+      alert('Error saving changes');
+    }
+  };
+  
+  // ── CLOSE MODAL ──
+  window.closeModal = function() {
+    document.getElementById('detailModal').classList.remove('open');
+    selectedRecord = null;
+    selectedRecordType = null;
+  };
+  
+  // ── STATUS BADGE ──
+  function getStatusBadge(status) {
+    const statusMap = {
+      'new': '<span class="badge badge-new">New</span>',
+      'contacted': '<span class="badge badge-contacted">Contacted</span>',
+      'qualified': '<span class="badge badge-qualified">Qualified</span>',
+      'booked': '<span class="badge badge-booked">Booked</span>',
+      'set': '<span class="badge badge-contacted">Set</span>',
+      'confirmed': '<span class="badge badge-booked">Confirmed</span>',
+      'completed': '<span class="badge badge-booked">Completed</span>',
+      'sold': '<span class="badge badge-sold">Sold</span>'
+    };
+    return statusMap[status] || statusMap['new'];
+  }
+  
+</script>
+
+</body>
+</html>
