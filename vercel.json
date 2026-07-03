@@ -467,6 +467,14 @@
     {
       "source": "/verification.html",
       "destination": "/verification.html"
+    },
+    {
+      "source": "/appointment-booking",
+      "destination": "/appointment-booking.html"
+    },
+    {
+      "source": "/appointment-booking.html",
+      "destination": "/appointment-booking.html"
     }
   ]
 }
