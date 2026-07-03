@@ -1437,6 +1437,226 @@
     };
     return statusMap[status] || statusMap['new'];
   }
+
+  // ── TIMER CALCULATION FUNCTIONS ──
+  
+  // Constants for business hours and timing requirements
+  const BUSINESS_HOURS = { start: 9, end: 17 }; // 9am-5pm
+  const TIMING_RULES = {
+    contacted: { ideal: 1, warning: 4, overdue: 8 }, // hours
+    appointment: { ideal: 4, warning: 24, overdue: 48 }, // hours
+    appointed_to_sold: { ideal: 2, warning: 5, overdue: 10 } // days
+  };
+  
+  // Check if time is within business hours
+  function isBusinessHours(date) {
+    const hour = date.getHours();
+    const day = date.getDay();
+    return day !== 0 && day !== 6 && hour >= BUSINESS_HOURS.start && hour < BUSINESS_HOURS.end;
+  }
+  
+  // Get next business day start
+  function getNextBusinessDayStart(fromDate) {
+    const next = new Date(fromDate);
+    next.setDate(next.getDate() + 1);
+    next.setHours(BUSINESS_HOURS.start, 0, 0, 0);
+    
+    if (next.getDay() === 0) next.setDate(next.getDate() + 1); // Skip Sunday
+    if (next.getDay() === 6) next.setDate(next.getDate() + 2); // Skip Saturday
+    
+    return next;
+  }
+  
+  // Calculate time difference in friendly format
+  function formatTimeDifference(startDate, endDate) {
+    const diff = endDate - startDate;
+    const totalMinutes = Math.floor(diff / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    
+    if (hours === 0) return minutes + ' min';
+    if (hours < 24) return hours + 'h ' + minutes + 'm';
+    const days = Math.floor(hours / 24);
+    return days + 'd ' + (hours % 24) + 'h';
+  }
+  
+  // Determine timer status based on time elapsed and stage
+  function getTimerStatus(record, currentStage) {
+    const now = new Date();
+    const received = new Date(record.dateReceived.seconds * 1000);
+    
+    // STAGE 1: INCOMING LEAD (New → Contacted)
+    if (currentStage === 'new' || currentStage === 'contacted' || currentStage === 'qualified') {
+      const contactedDeadlineMs = TIMING_RULES.contacted.ideal * 60 * 60 * 1000;
+      const warningDeadlineMs = TIMING_RULES.contacted.warning * 60 * 60 * 1000;
+      const overdueDeadlineMs = TIMING_RULES.contacted.overdue * 60 * 60 * 1000;
+      
+      const elapsed = now - received;
+      
+      if (elapsed > overdueDeadlineMs) return 'overdue';
+      if (elapsed > warningDeadlineMs) return 'at-risk';
+      return 'on-track';
+    }
+    
+    // STAGE 2: APPOINTMENT SCHEDULING (Booked → Confirmed)
+    if (currentStage === 'booked') {
+      const stageStart = record.lastStatusChange ? new Date(record.lastStatusChange.seconds * 1000) : received;
+      const elapsed = now - stageStart;
+      
+      const idealMs = TIMING_RULES.appointment.ideal * 60 * 60 * 1000;
+      const warningMs = TIMING_RULES.appointment.warning * 60 * 60 * 1000;
+      const overdueMs = TIMING_RULES.appointment.overdue * 60 * 60 * 1000;
+      
+      if (elapsed > overdueMs) return 'overdue';
+      if (elapsed > warningMs) return 'at-risk';
+      return 'on-track';
+    }
+    
+    // STAGE 3: APPOINTMENT TO SOLD
+    if (currentStage === 'confirmed') {
+      const apptConfirmedDate = record.appointmentConfirmedTime ? new Date(record.appointmentConfirmedTime.seconds * 1000) : received;
+      const elapsedDays = Math.floor((now - apptConfirmedDate) / (24 * 60 * 60 * 1000));
+      
+      if (elapsedDays > TIMING_RULES.appointed_to_sold.overdue) return 'overdue';
+      if (elapsedDays > TIMING_RULES.appointed_to_sold.warning) return 'at-risk';
+      return 'on-track';
+    }
+    
+    return 'on-track';
+  }
+  
+  // Display timer in modal
+  function displayTimer(record, recordType) {
+    const timerSection = document.getElementById('timerSection');
+    if (!timerSection) return;
+    
+    const now = new Date();
+    const received = new Date(record.dateReceived.seconds * 1000);
+    const currentStatus = record.status || 'new';
+    
+    // Determine current stage
+    let currentStage, stageName;
+    if (currentStatus === 'new' || currentStatus === 'contacted' || currentStatus === 'qualified') {
+      currentStage = 'incoming_lead';
+      stageName = 'INCOMING LEAD (' + (currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1)) + ')';
+    } else if (currentStatus === 'booked') {
+      currentStage = 'appointment';
+      stageName = 'APPOINTMENT SCHEDULING (Booked)';
+    } else if (currentStatus === 'sold') {
+      currentStage = 'sold';
+      stageName = 'CLOSED/SOLD';
+    } else {
+      currentStage = 'appointment';
+      stageName = 'APPOINTMENT (' + currentStatus + ')';
+    }
+    
+    // Calculate timings
+    const timeSinceReceived = formatTimeDifference(received, now);
+    const timerStatus = getTimerStatus(record, currentStatus);
+    
+    // Update stage indicator color
+    const stageIndicator = document.getElementById('stageIndicator');
+    stageIndicator.className = 'stage-indicator ' + timerStatus;
+    
+    // Update progress fill
+    const progressFill = document.getElementById('progressFill');
+    progressFill.className = 'progress-fill' + (timerStatus === 'on-track' ? '' : timerStatus === 'at-risk' ? ' warning' : ' overdue');
+    
+    let progressPercent = 0;
+    if (currentStage === 'incoming_lead') {
+      const warningMs = TIMING_RULES.contacted.warning * 60 * 60 * 1000;
+      const overdueMs = TIMING_RULES.contacted.overdue * 60 * 60 * 1000;
+      const elapsed = now - received;
+      progressPercent = Math.min(100, (elapsed / overdueMs) * 100);
+    } else if (currentStage === 'appointment') {
+      const warningMs = TIMING_RULES.appointment.warning * 60 * 60 * 1000;
+      const overdueMs = TIMING_RULES.appointment.overdue * 60 * 60 * 1000;
+      const stageStart = record.lastStatusChange ? new Date(record.lastStatusChange.seconds * 1000) : received;
+      const elapsed = now - stageStart;
+      progressPercent = Math.min(100, (elapsed / overdueMs) * 100);
+    }
+    progressFill.style.width = progressPercent + '%';
+    
+    // Update timer status badge
+    const timerStatusEl = document.getElementById('timerStatus');
+    timerStatusEl.className = 'timer-status ' + timerStatus;
+    timerStatusEl.textContent = timerStatus === 'on-track' ? '✓ ON TRACK' : timerStatus === 'at-risk' ? '⚠ AT RISK' : '🔴 OVERDUE';
+    
+    // Update all timer fields
+    document.getElementById('stageName').textContent = stageName;
+    document.getElementById('timeReceived').textContent = received.toLocaleString();
+    document.getElementById('timeSinceReceived').textContent = timeSinceReceived;
+    document.getElementById('currentStage').textContent = stageName;
+    
+    // Time in current stage
+    const stageStart = record.lastStatusChange ? new Date(record.lastStatusChange.seconds * 1000) : received;
+    const timeInStage = formatTimeDifference(stageStart, now);
+    document.getElementById('timeInStage').textContent = timeInStage;
+    
+    // Next milestone
+    let nextMilestone = 'Confirm receipt';
+    if (currentStatus === 'contacted' || currentStatus === 'qualified') {
+      nextMilestone = 'Schedule appointment';
+    } else if (currentStatus === 'booked') {
+      nextMilestone = 'Confirm appointment';
+    } else if (currentStatus === 'sold') {
+      nextMilestone = 'Deal closed';
+    }
+    document.getElementById('nextMilestone').textContent = nextMilestone;
+    
+    // Time until overdue
+    let overdueDiff = '—';
+    if (currentStatus === 'new' || currentStatus === 'contacted' || currentStatus === 'qualified') {
+      const overdueTime = new Date(received.getTime() + (TIMING_RULES.contacted.overdue * 60 * 60 * 1000));
+      if (now < overdueTime) {
+        overdueDiff = formatTimeDifference(now, overdueTime);
+      } else {
+        overdueDiff = 'OVERDUE';
+      }
+    } else if (currentStatus === 'booked') {
+      const stageStart = record.lastStatusChange ? new Date(record.lastStatusChange.seconds * 1000) : received;
+      const overdueTime = new Date(stageStart.getTime() + (TIMING_RULES.appointment.overdue * 60 * 60 * 1000));
+      if (now < overdueTime) {
+        overdueDiff = formatTimeDifference(now, overdueTime);
+      } else {
+        overdueDiff = 'OVERDUE';
+      }
+    }
+    document.getElementById('timeUntilOverdue').textContent = overdueDiff;
+    
+    // Show stipulation if present
+    const stipulationBox = document.getElementById('stipulationBox');
+    if (record.timerResetReason) {
+      stipulationBox.style.display = 'block';
+      const resetTime = record.timerResetTime ? new Date(record.timerResetTime.seconds * 1000).toLocaleString() : 'Unknown';
+      document.getElementById('stipulationDetail').textContent = record.timerResetReason + ' at ' + resetTime;
+    } else {
+      stipulationBox.style.display = 'none';
+    }
+    
+    // Show timer section
+    timerSection.style.display = 'block';
+  }
+  
+  // Update timer every minute
+  function startTimerUpdates(record, recordType) {
+    displayTimer(record, recordType);
+    
+    // Update every minute
+    window.timerInterval = setInterval(() => {
+      if (selectedRecord && selectedRecordType === recordType) {
+        displayTimer(selectedRecord, selectedRecordType);
+      }
+    }, 60000); // Update every 60 seconds
+  }
+  
+  // Stop timer updates when modal closes
+  window.oldCloseModal = window.closeModal;
+  window.closeModal = function() {
+    if (window.timerInterval) clearInterval(window.timerInterval);
+    window.oldCloseModal();
+  };
+
   
 </script>
 
