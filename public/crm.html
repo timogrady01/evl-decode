@@ -1011,7 +1011,7 @@
     `;
     
     incomingLeads.forEach((lead) => {
-      const date = new Date(lead.dateReceived.seconds * 1000).toLocaleDateString('en-US', {
+      const date = lead.dateReceived ? new Date(lead.dateReceived.seconds * 1000).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
