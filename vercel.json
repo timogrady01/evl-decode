@@ -435,6 +435,14 @@
     {
       "source": "/deal-gap",
       "destination": "deal-gap.html"
+    },
+    {
+      "source": "/lead-intake",
+      "destination": "/lead-intake.html"
+    },
+    {
+      "source": "/lead-intake.html",
+      "destination": "/lead-intake.html"
     }
   ]
 }
