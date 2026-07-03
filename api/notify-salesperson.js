@@ -19,11 +19,13 @@ const client = twilio(accountSid, authToken);
 
 // Salesperson phone numbers (UPDATE THESE)
 const SALESPERSON_NUMBERS = {
-  'john-smith': '+14695552001',
-  'sarah-jones': '+14695552002',
-  'mike-johnson': '+14695552003',
-  'jessica-williams': '+14695552004',
-  'david-brown': '+14695552005'
+  'const SALESPERSON_NUMBERS = {
+  'john-smith': '+14694043192',
+  'sarah-jones': '+14694043192',
+  'mike-johnson': '+14694043192',
+  'jessica-williams': '+14694043192',
+  'david-brown': '+14694043192'
+};
 };
 
 module.exports = async (req, res) => {
