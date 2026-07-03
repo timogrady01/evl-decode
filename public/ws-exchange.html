@@ -266,7 +266,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 <div class="platform-disclaimer">
   <span class="disclaimer-icon">⚖️</span>
   <div class="disclaimer-text">
-    <strong>EVL PLATFORM DISCLAIMER:</strong> EVL is a technology platform providing SaaS auction coordination services. EVL is NOT a licensed motor vehicle dealer, auctioneer, or broker. All vehicle transactions occur directly between the consumer (seller) and licensed dealer (buyer). EVL coordinates the process as the consumer's authorized technology agent. All purchases are subject to buyer approval. EVL accepts no mechanical liability. Arbitration limited to title defects only per NAAA standards.
+    <strong>EVL PLATFORM DISCLAIMER:</strong> EVL is a technology platform providing SaaS auction coordination services. EVL is NOT a licensed motor vehicle dealer, auctioneer, or broker. All vehicle transactions occur directly between the consumer (seller) and licensed dealer (buyer). EVL coordinates the process as the consumer's authorized technology agent. All purchases are subject to buyer approval. EVL accepts no mechanical liability. All post-sale concerns and title defect claims must be directed to the Selling Dealer within 24 hours of auction close. EVL is a technology platform only and is not a party to this transaction.
   </div>
 </div>
 
@@ -518,12 +518,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     </div>
   </div>
 
-  <!-- ARBITRATION RULES -->
+  <!-- TITLE DEFECT CLAIMS -->
   <div style="background:#1a1400;border:2px solid var(--gold);border-radius:12px;padding:20px;margin-bottom:24px">
-    <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">⚖️ ARBITRATION RULES — NAAA STANDARD</div>
+    <div style="font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">⚖️ TITLE DEFECT CLAIMS — DIRECT TO SELLING DEALER (ID)</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
       <div>
-        <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:8px">✅ VALID ARBITRATION GROUNDS</div>
+        <div style="font-size:14px;font-weight:900;color:var(--green);letter-spacing:1px;margin-bottom:8px">✅ VALID TITLE DEFECT CLAIM GROUNDS</div>
         <div style="font-size:13px;color:var(--dim);font-family:var(--body);line-height:1.8">
           • Title issues not disclosed in EVL CERT<br>
           • Salvage brand discovered after sale<br>
@@ -543,7 +543,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         </div>
       </div>
     </div>
-    <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:12px;padding-top:12px;border-top:1px solid #2a2000">Arbitration window: <strong style="color:var(--white)">24 hours</strong> after delivery. All platform disputes governed under <strong style="color:var(--white)">Collin County, Texas</strong> law. If a dealer files action against EVL and court dismisses based on platform neutrality, dealer pays EVL's full legal fees. Title defects only. All mechanical conditions are buyer's risk as disclosed at time of bidding. EVL is a technology coordinator — not a party to the transaction.</div>
+    <div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-top:12px;padding-top:12px;border-top:1px solid #2a2000">Title defect claim window: <strong style="color:var(--white)">24 hours</strong> after delivery. All platform disputes governed under <strong style="color:var(--white)">Collin County, Texas</strong> law. If a dealer files action against EVL and court dismisses based on platform neutrality, dealer pays EVL's full legal fees. Title defects only. All mechanical conditions are buyer's risk as disclosed at time of bidding. EVL is a technology coordinator — not a party to the transaction.</div>
   </div>
 </div>
 
@@ -617,7 +617,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
         {name:'O&O / POA Form',desc:'Ownership & Odometer Assignment. Corrects minor signing errors without title re-application.',parties:'Seller signs',status:'AUTO'},
         {name:'EVL CERTIFIED Report',desc:'Full title verification output — API results, lien check, name match, badge assignment.',parties:'Platform generated',status:'AUTO'},
         {name:'Reserve Data Sheet',desc:'Official EVL verified reserve with timestamp and expiration.',parties:'Provided to ID + BD',status:'AUTO'},
-        {name:'Auction Terms & As-Is Agreement',desc:'Buyer acknowledges AS-IS condition, arbitration rules, and mechanical risk acceptance.',parties:'BD signs',status:'REQUIRED'},
+        {name:'Auction Terms & As-Is Agreement',desc:'Buyer (BD) acknowledges AS-IS condition. All post-sale concerns must be directed to the Selling Dealer (ID) within 24 hours of auction close.',parties:'BD signs',status:'REQUIRED'},
         {name:'Escrow Hold Agreement',desc:'Required when title is in transit. 30-day clock, $250 penalty clause.',parties:'Seller signs',status:'CONDITIONAL'},
         {name:'Bill of Lading (BOL)',desc:'Off-Ramping Protocol — driver photo inspection including external lights, all glass panes, panels, odometer, VIN. Both porters sign. Burden shifts to BD at signature. Documentation is final.',parties:'Driver + Seller',status:'REQUIRED'},
         {name:'Driver Handoff Verification Log',desc:'PIN confirmation, CDL scan, FMCSA insurance verification. Timestamped.',parties:'Platform + Driver',status:'AUTO'},
@@ -1202,7 +1202,7 @@ function submitBid(auctionId){
     return;
   }
 
-  if(!confirm('Submit SEALED blind bid of $'+val.toLocaleString()+' on '+auctionId+'?\n\nThis bid is binding. You will be contacted within 30 minutes of auction close if you are the highest bidder.\n\nBy bidding you agree to EVL AS-IS platform terms and NAAA arbitration rules (title defects only, 24-hour window).')){
+  if(!confirm('Submit SEALED blind bid of $'+val.toLocaleString()+' on '+auctionId+'?\n\nThis bid is binding. You will be contacted within 30 minutes of auction close if you are the highest bidder.\n\nBy bidding you acknowledge this is a dealer-to-dealer transaction between you (Buying Dealer) and the Selling Dealer (ID). Vehicle sold AS-IS. Any and all post-sale concerns, title defect claims, or disputes must be directed to the Selling Dealer within 24 hours of auction close. All other sales are final. EVL is a technology platform only and is not a party to this transaction.')){
     return;
   }
 
