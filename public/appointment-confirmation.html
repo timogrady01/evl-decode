@@ -72,6 +72,104 @@
       line-height: 1.5;
     }
 
+    /* Upsell banner - NEW */
+    .upsell-banner {
+      background: linear-gradient(135deg, rgba(74, 158, 255, 0.15), rgba(74, 158, 255, 0.05));
+      border: 2px solid #4a9eff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .upsell-banner h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #4a9eff;
+    }
+
+    .upsell-banner p {
+      font-size: 14px;
+      color: #a0b0c0;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .upsell-banner .bullet-list {
+      text-align: left;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    .upsell-banner .bullet-list li {
+      font-size: 13px;
+      color: #a0b0c0;
+      list-style: none;
+      padding-left: 20px;
+      margin-bottom: 6px;
+      position: relative;
+    }
+
+    .upsell-banner .bullet-list li:before {
+      content: "✓";
+      color: #4a9eff;
+      position: absolute;
+      left: 0;
+    }
+
+    .upsell-button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-upsell-yes {
+      background: #4a9eff;
+      color: #ffffff;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-upsell-yes:hover:not(:disabled) {
+      background: #2a7fd9;
+      transform: translateY(-2px);
+    }
+
+    .btn-upsell-skip {
+      background: rgba(255, 255, 255, 0.1);
+      color: #a0b0c0;
+      padding: 12px;
+      border: 1px solid #2a3f5f;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-upsell-skip:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #4a9eff;
+    }
+
     /* Details section */
     .details-box {
       background: rgba(255, 255, 255, 0.05);
@@ -248,6 +346,30 @@
       <p>Please review the details below and confirm your appointment.</p>
     </div>
 
+    <!-- Upsell banner: Fair Deal Worksheet - NEW -->
+    <div class="upsell-banner" id="upsellBanner">
+      <h3>⚡ Get Armed With Data</h3>
+      <p>Before your appointment, we can show you:</p>
+      <ul class="bullet-list">
+        <li>What your trade-in is really worth</li>
+        <li>What rates you actually qualify for</li>
+        <li>How to spot a fair deal vs. a bad one</li>
+        <li>Exact negotiation script to use</li>
+      </ul>
+      <p style="font-size: 12px; color: #7a8aa0; margin-bottom: 15px;">
+        <strong>Fair Deal Worksheet — $99</strong><br>
+        Takes 5 minutes. Could save you thousands.
+      </p>
+      <div class="upsell-button-group">
+        <button class="btn-upsell-yes" id="upsellYesBtn">
+          Yes, Get It ($99)
+        </button>
+        <button class="btn-upsell-skip" id="upsellSkipBtn">
+          Skip for Now
+        </button>
+      </div>
+    </div>
+
     <!-- Appointment details -->
     <div class="details-box">
       <h3>Appointment Details</h3>
@@ -298,9 +420,9 @@
   </div>
 
   <script type="module">
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     // FIREBASE SETUP
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
 
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
     import { getFirestore, collection, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
@@ -317,15 +439,15 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     // PAGE INITIALIZATION
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
 
     // Get URL parameters (passed from appointment booking page)
     const params = new URLSearchParams(window.location.search);
     const appointmentId = params.get('appointmentId');
-    const customerName = params.get('customerName') || 'Customer';
-    const vehicleInfo = params.get('vehicleInfo') || 'Your Vehicle';
+    const customerName = params.get('customerName') || '—';
+    const vehicleInfo = params.get('vehicleInfo') || '—';
     const appointmentDate = params.get('appointmentDate') || '—';
     const appointmentTime = params.get('appointmentTime') || '—';
     const customerPhone = params.get('customerPhone') || '—';
@@ -339,9 +461,63 @@
     document.getElementById('phoneDisplay').textContent = customerPhone;
     document.getElementById('emailDisplay').textContent = customerEmail;
 
-    // ══════════════════════════════════════════════════════════
-    // CONFIRM BUTTON
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
+    // UPSELL: FAIR DEAL WORKSHEET - NEW
+    // ════════════════════════════════════════════════════════════════
+
+    document.getElementById('upsellYesBtn').addEventListener('click', async () => {
+      const upsellYesBtn = document.getElementById('upsellYesBtn');
+      const originalText = upsellYesBtn.textContent;
+
+      // Disable button, show loading
+      upsellYesBtn.disabled = true;
+      upsellYesBtn.innerHTML = '<span class="spinner"></span> Processing...';
+
+      try {
+        console.log('[appointment-confirmation] Fair Deal Worksheet: Customer clicked YES');
+
+        // Save to Firebase: Customer purchased Fair Deal Worksheet
+        const appointmentRef = doc(db, 'evl_appointments', appointmentId);
+        
+        await updateDoc(appointmentRef, {
+          fairDealWorksheetPurchased: true,
+          fairDealWorksheetPurchasedAt: new Date(),
+          fairDealWorksheetPrice: 99,
+          upsellAccepted: true
+        });
+
+        console.log('[appointment-confirmation] Fair Deal Worksheet purchase saved to Firebase');
+
+        // Redirect to fair-deal-worksheet page with all data
+        const redirectParams = new URLSearchParams({
+          appointmentId: appointmentId,
+          customerName: customerName,
+          vehicleInfo: vehicleInfo,
+          appointmentDate: appointmentDate,
+          appointmentTime: appointmentTime,
+          customerPhone: customerPhone,
+          customerEmail: customerEmail
+        });
+
+        window.location.href = `/fair-deal-worksheet?${redirectParams.toString()}`;
+
+      } catch (error) {
+        console.error('[appointment-confirmation] Upsell error:', error);
+        upsellYesBtn.disabled = false;
+        upsellYesBtn.innerHTML = originalText;
+        showStatus('Error processing. Please try again.', 'error');
+      }
+    });
+
+    document.getElementById('upsellSkipBtn').addEventListener('click', () => {
+      // Hide the upsell banner and continue to confirmation
+      document.getElementById('upsellBanner').style.display = 'none';
+      console.log('[appointment-confirmation] Customer skipped Fair Deal Worksheet');
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    // CONFIRM APPOINTMENT BUTTON
+    // ════════════════════════════════════════════════════════════════
 
     document.getElementById('confirmBtn').addEventListener('click', async () => {
       const confirmBtn = document.getElementById('confirmBtn');
@@ -365,9 +541,9 @@
 
         console.log('[appointment-confirmation] Appointment confirmed in Firebase');
 
-        // ══════════════════════════════════════════════════════════
+        // ════════════════════════════════════════════════════════════════
         // SEND CONFIRMATION EMAILS
-        // ══════════════════════════════════════════════════════════
+        // ════════════════════════════════════════════════════════════════
 
         try {
           console.log('[appointment-confirmation] Sending confirmation emails...');
@@ -398,10 +574,10 @@
           console.error('[appointment-confirmation] Email API error:', emailError);
         }
 
-        // Show success
-        showStatus('✅ Appointment confirmed! You will receive a confirmation email shortly.', 'success');
+        // Show success message
+        showStatus('✓ Appointment confirmed! You will receive a confirmation email shortly.', 'success');
 
-        // Redirect after 2 seconds
+        // Redirect to home after 2 seconds
         setTimeout(() => {
           window.location.href = '/';
         }, 2000);
@@ -414,18 +590,18 @@
       }
     });
 
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     // CANCEL BUTTON (Go back to edit)
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
 
     document.getElementById('cancelBtn').addEventListener('click', () => {
       // Go back to previous page (appointment booking)
       window.history.back();
     });
 
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     // HELPER: SHOW STATUS MESSAGE
-    // ══════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
 
     function showStatus(message, type) {
       const statusMsg = document.getElementById('statusMessage');
