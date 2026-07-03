@@ -20,7 +20,7 @@ const client = twilio(accountSid, authToken);
 
 // EmailJS config
 const emailJsServiceId = 'service_rvscjt3';
-const emailJsTemplateId = 'template_evl_verification'; // NEED TO CREATE THIS TEMPLATE
+const emailJsTemplateId = 'template_xg4woqs'; // NEED TO CREATE THIS TEMPLATE
 const emailJsPublicKey = 'iilAte2T5SzOKb-fn';
 
 module.exports = async (req, res) => {
