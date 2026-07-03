@@ -795,6 +795,69 @@
       <h2 class="modal-title" id="modalTitle">Record Details</h2>
       <button class="modal-close" onclick="closeModal()">×</button>
     </div>
+    <!-- TIMER & PROGRESS SECTION (NEW) -->
+    <div id="timerSection" style="display:none; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--border);">
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="stage-indicator" id="stageIndicator"></span>
+          <span id="stageName">Loading...</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+        </div>
+        <div class="progress-text">
+          <span id="stageTime">Time in stage: —</span>
+          <span id="stageStatus">On Track</span>
+        </div>
+      </div>
+      
+      <div class="timer-section">
+        <div class="timer-header">
+          ⏱️ SEQUENCE TIMER
+          <span class="timer-status" id="timerStatus">ON TRACK</span>
+        </div>
+        
+        <div class="timer-row">
+          <div class="timer-item">
+            <span class="timer-item-label">Received:</span>
+            <span class="timer-item-value" id="timeReceived">—</span>
+          </div>
+          <div class="timer-item">
+            <span class="timer-item-label">Time Since Received:</span>
+            <span class="timer-item-value" id="timeSinceReceived">—</span>
+          </div>
+        </div>
+        
+        <div class="timer-row">
+          <div class="timer-item">
+            <span class="timer-item-label">Current Stage:</span>
+            <span class="timer-item-value" id="currentStage">—</span>
+          </div>
+          <div class="timer-item">
+            <span class="timer-item-label">Time in Stage:</span>
+            <span class="timer-item-value" id="timeInStage">—</span>
+          </div>
+        </div>
+        
+        <div class="timer-row">
+          <div class="timer-item">
+            <span class="timer-item-label">Next Milestone:</span>
+            <span class="timer-item-value" id="nextMilestone">—</span>
+          </div>
+          <div class="timer-item">
+            <span class="timer-item-label">Time Until Overdue:</span>
+            <span class="timer-item-value" id="timeUntilOverdue">—</span>
+          </div>
+        </div>
+        
+        <!-- STIPULATION TRACKER -->
+        <div class="stipulation-box" id="stipulationBox" style="display:none;">
+          <div class="stipulation-label">📌 Timer Reset Event</div>
+          <div class="stipulation-detail" id="stipulationDetail">—</div>
+        </div>
+      </div>
+    </div>
+    
     <div id="modalBody">
       <!-- Populated by JavaScript -->
     </div>
