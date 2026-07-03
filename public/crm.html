@@ -1682,6 +1682,88 @@
   };
 
   
+
+  // ── SALESPERSON ASSIGNMENT ──
+  async function assignSalesperson(recordId, recordType) {
+    const salesperson = document.getElementById('assignedSalesperson').value;
+    const statusDiv = document.getElementById('assignmentStatus');
+    
+    if (!salesperson) {
+      statusDiv.textContent = '❌ Please select a salesperson';
+      statusDiv.style.color = 'var(--red-text)';
+      return;
+    }
+    
+    try {
+      statusDiv.textContent = '⏳ Assigning...';
+      statusDiv.style.color = 'var(--text-soft)';
+      
+      // Get the record from Firebase
+      const docRef = db.collection(recordType === 'lead' ? 'evl_leads' : 'evl_deals').doc(recordId);
+      const snap = await docRef.get();
+      const record = snap.data();
+      
+      if (!record) {
+        statusDiv.textContent = '❌ Record not found';
+        return;
+      }
+      
+      // Update record with assignment
+      const updateData = {
+        assignedSalesperson: salesperson,
+        assignedAt: new Date(),
+        assignmentStatus: 'pending_verification'
+      };
+      
+      await docRef.update(updateData);
+      
+      // SEND SMS TO MANAGER (notify about assignment)
+      console.log('Sending SMS to manager about assignment...');
+      const managerMsg = `EVL: New lead assigned to ${salesperson}. Customer: ${record.customerName}. Vehicle: ${record.vehicleYear} ${record.vehicleMake} ${record.vehicleModel}. Verify in 20 mins.`;
+      
+      // Call API to notify manager (we'll create this next)
+      await fetch('/api/notify-manager', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          salesperson: salesperson,
+          customerName: record.customerName,
+          vehicleInfo: `${record.vehicleYear} ${record.vehicleMake} ${record.vehicleModel}`,
+          recordId: recordId
+        })
+      });
+      
+      // SEND SMS TO SALESPERSON (assign them the lead)
+      console.log('Sending SMS to salesperson about new lead...');
+      const spMsg = `EVL: New customer lead assigned to you. Customer: ${record.customerName}. Vehicle: ${record.vehicleYear} ${record.vehicleMake} ${record.vehicleModel}. Please verify vehicle in stock within 20 minutes. Reply with video proof or confirmation.`;
+      
+      await fetch('/api/notify-salesperson', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          salesperson: salesperson,
+          customerName: record.customerName,
+          vehicleInfo: `${record.vehicleYear} ${record.vehicleMake} ${record.vehicleModel}`,
+          recordId: recordId,
+          recordType: recordType
+        })
+      });
+      
+      statusDiv.textContent = '✅ Assigned! SMS sent to salesperson. Waiting for verification video...';
+      statusDiv.style.color = 'var(--green)';
+      
+      // Disable the assign button after assignment
+      document.getElementById('assignedSalesperson').disabled = true;
+      document.querySelector('button[onclick*="assignSalesperson"]').disabled = true;
+      document.querySelector('button[onclick*="assignSalesperson"]').style.opacity = '0.5';
+      
+    } catch (error) {
+      console.error('Assignment error:', error);
+      statusDiv.textContent = '❌ Error: ' + error.message;
+      statusDiv.style.color = 'var(--red-text)';
+    }
+  }
+
 </script>
 
 </body>
