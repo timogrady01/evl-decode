@@ -8,12 +8,15 @@
  * 1. Receives video file
  * 2. Uploads to Cloudinary
  * 3. Updates Firebase with video URL
- * 4. Returns success/error
+ * 4. CHARGES customer $199
+ * 5. SENDS video proof to customer
+ * 6. Returns success/error
  */
 
 const formidable = require('formidable');
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
+const axios = require('axios');
 const admin = require('firebase-admin');
 
 // Cloudinary config
@@ -59,7 +62,10 @@ module.exports = async (req, res) => {
         return res.status(400).json({ error: 'Missing recordId or recordType' });
       }
 
-      // Upload to Cloudinary
+      // ══════════════════════════════════════════════════════════
+      // UPLOAD TO CLOUDINARY
+      // ══════════════════════════════════════════════════════════
+
       console.log('[upload-verification-video] Uploading to Cloudinary...');
 
       const uploadResult = await cloudinary.uploader.upload(videoFile.filepath, {
@@ -74,9 +80,16 @@ module.exports = async (req, res) => {
       console.log('[upload-verification-video] Uploaded to Cloudinary');
       console.log(`  URL: ${uploadResult.secure_url}`);
 
-      // Update Firebase with video info
+      // ══════════════════════════════════════════════════════════
+      // UPDATE FIREBASE WITH VIDEO INFO
+      // ══════════════════════════════════════════════════════════
+
       const db = admin.firestore();
       const docRef = db.collection(recordType === 'lead' ? 'evl_leads' : 'evl_deals').doc(recordId);
+
+      // First, get current customer data
+      const docSnap = await docRef.get();
+      const currentData = docSnap.data();
 
       await docRef.update({
         verificationVideoUrl: uploadResult.secure_url,
@@ -86,7 +99,68 @@ module.exports = async (req, res) => {
         assignmentStatus: 'verified'
       });
 
-      console.log('[upload-verification-video] Firebase updated');
+      console.log('[upload-verification-video] Firebase updated with video');
+
+      // ══════════════════════════════════════════════════════════
+      // CALL CHARGE API (in background)
+      // ══════════════════════════════════════════════════════════
+
+      console.log('[upload-verification-video] Calling charge API...');
+
+      const chargePayload = {
+        recordId: recordId,
+        recordType: recordType,
+        customerEmail: currentData?.customerEmail || 'unknown@evl.local',
+        customerPhone: currentData?.customerPhone || '+14694043192',
+        amount: 199
+      };
+
+      try {
+        const chargeResponse = await axios.post(
+          process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}/api/charge-customer`
+            : 'http://localhost:3000/api/charge-customer',
+          chargePayload
+        );
+        console.log('[upload-verification-video] Charge API response:', chargeResponse.status);
+      } catch (chargeError) {
+        console.warn('[upload-verification-video] Charge API error:', chargeError.message);
+        // Continue - don't block the flow if charge fails
+      }
+
+      // ══════════════════════════════════════════════════════════
+      // CALL SEND-VERIFICATION API (in background)
+      // ══════════════════════════════════════════════════════════
+
+      console.log('[upload-verification-video] Calling send-verification API...');
+
+      const sendPayload = {
+        recordId: recordId,
+        recordType: recordType,
+        customerName: currentData?.customerName || 'Customer',
+        customerEmail: currentData?.customerEmail || 'unknown@evl.local',
+        customerPhone: currentData?.customerPhone || '+14694043192',
+        vehicleInfo: vehicleInfo,
+        videoUrl: uploadResult.secure_url,
+        salePersonName: currentData?.assignedSalesperson || 'Your Salesperson'
+      };
+
+      try {
+        const sendResponse = await axios.post(
+          process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}/api/send-verification-to-customer`
+            : 'http://localhost:3000/api/send-verification-to-customer',
+          sendPayload
+        );
+        console.log('[upload-verification-video] Send-verification API response:', sendResponse.status);
+      } catch (sendError) {
+        console.warn('[upload-verification-video] Send-verification API error:', sendError.message);
+        // Continue - don't block the flow if send fails
+      }
+
+      // ══════════════════════════════════════════════════════════
+      // CLEANUP & RESPONSE
+      // ══════════════════════════════════════════════════════════
 
       // Clean up temp file
       try {
@@ -101,7 +175,7 @@ module.exports = async (req, res) => {
         videoUrl: uploadResult.secure_url,
         cloudinaryId: uploadResult.public_id,
         recordId: recordId,
-        message: 'Video uploaded successfully. Processing payment and scheduling...'
+        message: 'Video uploaded successfully. Customer has been charged $199 and notified.'
       });
 
     } catch (error) {
