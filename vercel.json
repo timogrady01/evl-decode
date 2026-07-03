@@ -451,6 +451,14 @@
     {
       "source": "/admin-leads.html",
       "destination": "/admin-leads.html"
+    },
+    {
+      "source": "/crm",
+      "destination": "/crm.html"
+    },
+    {
+      "source": "/crm.html",
+      "destination": "/crm.html"
     }
   ]
 }
