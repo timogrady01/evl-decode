@@ -905,16 +905,18 @@
       try {
         console.log('[fair-deal-worksheet] Customer ready for appointment');
 
-        // Update Firebase: Mark that customer has reviewed worksheet
-        const appointmentRef = doc(db, 'evl_appointments', appointmentId);
-        
-        await updateDoc(appointmentRef, {
-          worksheetReviewed: true,
-          worksheetReviewedAt: new Date(),
-          customerReady: true
-        });
-
-        console.log('[fair-deal-worksheet] Appointment marked as ready');
+        // Only update Firebase if we have a valid appointmentId
+        if (appointmentId) {
+          const appointmentRef = doc(db, 'evl_appointments', appointmentId);
+          await updateDoc(appointmentRef, {
+            worksheetReviewed: true,
+            worksheetReviewedAt: new Date(),
+            customerReady: true
+          });
+          console.log('[fair-deal-worksheet] Appointment marked as ready');
+        } else {
+          console.log('[fair-deal-worksheet] No appointmentId — skipping Firebase update');
+        }
 
         showStatus('✓ Great! You\'re all set. Your appointment is confirmed. See you soon!', 'success');
 
