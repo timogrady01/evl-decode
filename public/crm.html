@@ -181,19 +181,40 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid #2a3f5f;
       border-radius: 6px;
-      padding: 20px;
+      padding: 20px 20px 14px 20px;
       cursor: pointer;
       transition: all 0.2s;
+      position: relative;
+    }
+
+    .appointment-result::after {
+      content: "\1F446  Tap to select this customer";
+      display: block;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(74,158,255,0.2);
+      color: #2B84FE;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.5px;
     }
 
     .appointment-result:hover {
       background: rgba(74, 158, 255, 0.1);
       border-color: #4a9eff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(43,132,254,0.15);
     }
 
     .appointment-result.selected {
       background: rgba(74, 158, 255, 0.15);
       border-color: #4a9eff;
+    }
+
+    .appointment-result.selected::after {
+      content: "\2713  Selected";
+      color: #00C853;
     }
 
     .appointment-detail {
