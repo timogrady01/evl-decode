@@ -1,0 +1,12 @@
+{
+  "name": "evl-decode",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "twilio": "^4.23.0",
+    "firebase-admin": "^11.11.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
