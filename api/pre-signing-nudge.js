@@ -1,6 +1,6 @@
-import twilio from 'twilio';
+const twilio = require('twilio');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -19,10 +19,6 @@ export default async function handler(req, res) {
   });
 
   try {
-    // ════════════════════════════════════════════════════════════════
-    // TWILIO SETUP
-    // ════════════════════════════════════════════════════════════════
-
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
@@ -34,24 +30,15 @@ export default async function handler(req, res) {
 
     const client = twilio(accountSid, authToken);
 
-    // ════════════════════════════════════════════════════════════════
-    // VALIDATE PHONE NUMBER
-    // ════════════════════════════════════════════════════════════════
-
     if (!customerPhone) {
       console.error('[pre-signing-nudge] No customer phone provided');
       return res.status(400).json({ error: 'Customer phone number is required' });
     }
 
-    // Normalize phone number (remove common characters)
     const normalizedPhone = customerPhone.replace(/\D/g, '');
     const e164Phone = '+1' + normalizedPhone.slice(-10);
 
     console.log('[pre-signing-nudge] Sending SMS to:', e164Phone);
-
-    // ════════════════════════════════════════════════════════════════
-    // SEND SMS VIA TWILIO
-    // ════════════════════════════════════════════════════════════════
 
     const smsBody = `Hi ${customerName}, before you sign, review your fair deal worksheet at expressvehiclelocators.com/fair-deal-worksheet. You have leverage. -EVL`;
 
@@ -62,14 +49,6 @@ export default async function handler(req, res) {
     });
 
     console.log('[pre-signing-nudge] SMS sent successfully:', message.sid);
-
-    // ════════════════════════════════════════════════════════════════
-    // UPDATE FIREBASE (optional - log that SMS was sent)
-    // ════════════════════════════════════════════════════════════════
-
-    // NOTE: In a production setup, you could update Firestore here
-    // to log that the pre-signing nudge was sent
-    // For now, we'll just return success
 
     return res.status(200).json({
       success: true,
@@ -83,4 +62,4 @@ export default async function handler(req, res) {
     console.error('[pre-signing-nudge] Error:', error);
     return res.status(500).json({ error: 'Failed to send SMS', details: error.message });
   }
-}
+};
