@@ -23,6 +23,8 @@ module.exports = async function handler(req, res) {
     type
   });
 
+  const results = {};
+
   try {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -34,7 +36,6 @@ module.exports = async function handler(req, res) {
     }
 
     const client = twilio(accountSid, authToken);
-    const results = {};
 
     // ── SMS TO CUSTOMER ──
     if (customerPhone) {
@@ -53,18 +54,59 @@ module.exports = async function handler(req, res) {
       results.customerSMS = customerMsg.sid;
     }
 
-    // ── SMS TO EVL (TIM) ──
-    const evlPhone = process.env.EVL_ADMIN_PHONE || twilioPhoneNumber;
-    const adminSMS = `NEW EVL APPOINTMENT: ${customerName} booked for ${appointmentDate} at ${appointmentTime}. Vehicle: ${vehicleInfo}. Phone: ${customerPhone}. Email: ${customerEmail}.`;
+    // ── EMAIL TO CUSTOMER via EmailJS ──
+    if (customerEmail) {
+      try {
+        const emailjsResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service_id: 'service_rvscjt3',
+            template_id: 'template_vq2a756',
+            user_id: 'iilAte2T5SzOKb-fn',
+            template_params: {
+              customerName: customerName,
+              appointmentDate: appointmentDate,
+              appointmentTime: appointmentTime,
+              vehicleInfo: vehicleInfo,
+              email: customerEmail
+            }
+          })
+        });
+        console.log('[send-appointment-notifications] Customer email sent via EmailJS');
+        results.customerEmail = 'sent';
+      } catch (emailError) {
+        console.error('[send-appointment-notifications] Customer email error:', emailError);
+        results.customerEmail = 'failed';
+      }
+    }
 
-    const adminMsg = await client.messages.create({
-      body: adminSMS,
-      from: twilioPhoneNumber,
-      to: evlPhone
-    });
-
-    console.log('[send-appointment-notifications] Admin SMS sent:', adminMsg.sid);
-    results.adminSMS = adminMsg.sid;
+    // ── EMAIL TO ADMIN (TIM) via EmailJS ──
+    try {
+      const adminEmailResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_rvscjt3',
+          template_id: 'template_1rnlq4o',
+          user_id: 'iilAte2T5SzOKb-fn',
+          template_params: {
+            customerName: customerName,
+            customerPhone: customerPhone,
+            customerEmail: customerEmail,
+            vehicleInfo: vehicleInfo,
+            appointmentDate: appointmentDate,
+            appointmentTime: appointmentTime,
+            email: 'togradyevl@gmail.com'
+          }
+        })
+      });
+      console.log('[send-appointment-notifications] Admin email sent via EmailJS');
+      results.adminEmail = 'sent';
+    } catch (adminEmailError) {
+      console.error('[send-appointment-notifications] Admin email error:', adminEmailError);
+      results.adminEmail = 'failed';
+    }
 
     return res.status(200).json({
       success: true,
