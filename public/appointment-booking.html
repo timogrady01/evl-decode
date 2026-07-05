@@ -276,6 +276,27 @@
       to { transform: rotate(360deg); }
     }
 
+    /* Hide vehicle details when no URL params */
+    .vehicle-details.hidden { display: none; }
+
+    /* Fix input field colors to match EVL dark design */
+    #customerNameInput, #vehicleInput {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0d1829 !important;
+      border: 2px solid #2a3f5f !important;
+      border-radius: 10px;
+      color: #ffffff !important;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #customerNameInput:focus, #vehicleInput:focus {
+      border-color: #2B84FE !important;
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       .container {
@@ -449,6 +470,11 @@
       document.getElementById('vehicleFieldGroup').style.display = 'none';
     } else {
       document.getElementById('vehicleDisplay').textContent = '—';
+    }
+
+    // Hide the appointment details box if no URL params provided
+    if (!customerName && !vehicleInfo && !recordId) {
+      document.querySelector('.vehicle-details').classList.add('hidden');
     }
 
     // ══════════════════════════════════════════════════════════
