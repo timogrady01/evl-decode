@@ -493,6 +493,14 @@
       "destination": "/deal-checklist.html"
     },
     {
+      "source": "/service-vault",
+      "destination": "/service-vault.html"
+    },
+    {
+      "source": "/service-vault.html",
+      "destination": "/service-vault.html"
+    },
+    {
       "source": "/appointment-confirmation.html",
       "destination": "/appointment-confirmation.html"
     }
