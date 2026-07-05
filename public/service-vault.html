@@ -821,6 +821,29 @@
           status: 'pending'
         });
 
+        // ── Notify EVL admin via EmailJS ──
+        try {
+          await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              service_id: 'service_rvscjt3',
+              template_id: 'template_1rnlq4o',
+              user_id: 'iilAte2T5SzOKb-fn',
+              template_params: {
+                name: name,
+                email: email,
+                title: '🔐 NEW SERVICE VAULT SIGNUP — ' + tier + ' ($' + price + '/yr)',
+                message: `New Service Vault signup!\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nVehicle: ${vehicle || 'Not provided'}\nTier: ${tier}\nPrice: $${price}/year\nTime: ${new Date().toLocaleString('en-US', {timeZone: 'America/Chicago'})}\n\nContact within 24 hours to activate!`,
+                to_email: 'togradyevl@gmail.com'
+              }
+            })
+          });
+          console.log('[service-vault] Admin notification sent');
+        } catch (emailErr) {
+          console.error('[service-vault] Admin email failed (non-fatal):', emailErr);
+        }
+
         statusMsg.className = 'status-message success';
         statusMsg.textContent = '✅ Thank you ' + name + '! An EVL advisor will contact you within 24 hours to activate your ' + tier + ' Service Vault.';
         btn.textContent = '✅ Request Submitted!';
