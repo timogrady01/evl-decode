@@ -509,6 +509,14 @@
       "destination": "/find-my-vehicle.html"
     },
     {
+      "source": "/my-buying-power",
+      "destination": "/my-buying-power.html"
+    },
+    {
+      "source": "/my-buying-power.html",
+      "destination": "/my-buying-power.html"
+    },
+    {
       "source": "/appointment-confirmation.html",
       "destination": "/appointment-confirmation.html"
     }
