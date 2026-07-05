@@ -485,6 +485,14 @@
       "destination": "/fair-deal-worksheet.html"
     },
     {
+      "source": "/deal-checklist",
+      "destination": "/deal-checklist.html"
+    },
+    {
+      "source": "/deal-checklist.html",
+      "destination": "/deal-checklist.html"
+    },
+    {
       "source": "/appointment-confirmation.html",
       "destination": "/appointment-confirmation.html"
     }
