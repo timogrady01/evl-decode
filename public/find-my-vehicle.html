@@ -890,6 +890,29 @@
           submittedAt: new Date()
         });
 
+        // ── Notify EVL admin via EmailJS ──
+        try {
+          await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              service_id: 'service_rvscjt3',
+              template_id: 'template_1rnlq4o',
+              user_id: 'iilAte2T5SzOKb-fn',
+              template_params: {
+                name: customerName,
+                email: email,
+                title: '🚗 NEW LEAD — Find My Vehicle ($49)',
+                message: `New EVL lead submitted!\n\nName: ${customerName}\nPhone: ${phone}\nEmail: ${email}\nBucket: Find My Vehicle — $49\nSource: find-my-vehicle page\nTime: ${new Date().toLocaleString('en-US', {timeZone: 'America/Chicago'})}\n\nCall within 2 hours!`,
+                to_email: 'togradyevl@gmail.com'
+              }
+            })
+          });
+          console.log('[find-my-vehicle] Admin notification sent');
+        } catch (emailErr) {
+          console.error('[find-my-vehicle] Admin email failed (non-fatal):', emailErr);
+        }
+
         statusMsg.className = 'status-message success';
         statusMsg.textContent = '✅ Got it, ' + firstName + '! An EVL advisor will call you within 2 hours. Check your email for a confirmation shortly.';
         btn.textContent = '✅ Request Received!';
