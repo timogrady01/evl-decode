@@ -517,6 +517,14 @@
       "destination": "/my-buying-power.html"
     },
     {
+      "source": "/admin-dashboard",
+      "destination": "/admin-dashboard.html"
+    },
+    {
+      "source": "/admin-dashboard.html",
+      "destination": "/admin-dashboard.html"
+    },
+    {
       "source": "/appointment-confirmation.html",
       "destination": "/appointment-confirmation.html"
     }
