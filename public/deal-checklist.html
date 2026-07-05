@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deal Protection Checklist - EVL</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #020203;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: #000000;
+      padding: 20px;
+      border-bottom: 1px solid #2a3f5f;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .header h1 span { color: #2B84FE; }
+
+    .hero {
+      background: linear-gradient(135deg, #090E17 0%, #070A12 100%);
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 1px solid #2a3f5f;
+    }
+
+    .hero .congrats {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero h2 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .hero .vehicle-name {
+      font-size: 20px;
+      color: #2B84FE;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: #C8D0DC;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .progress-bar-wrap {
+      background: #090E17;
+      padding: 20px;
+      border-bottom: 1px solid #2a3f5f;
+      text-align: center;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: #C8D0DC;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      background: #1a2332;
+      border-radius: 10px;
+      height: 10px;
+      max-width: 500px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2B84FE, #00C853);
+      border-radius: 10px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .progress-count {
+      font-size: 13px;
+      color: #2B84FE;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+    }
+
+    /* Phase tabs */
+    .phase-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .phase-tab {
+      flex: 1;
+      padding: 14px 10px;
+      border-radius: 10px;
+      border: 2px solid #2a3f5f;
+      background: #090E17;
+      color: #C8D0DC;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .phase-tab.active {
+      border-color: #2B84FE;
+      color: #2B84FE;
+      background: rgba(43,132,254,0.1);
+    }
+
+    .phase-tab.completed {
+      border-color: #00C853;
+      color: #00C853;
+      background: rgba(0,200,83,0.1);
+    }
+
+    /* Section */
+    .section {
+      background: #090E17;
+      border: 1px solid #2a3f5f;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 18px 20px;
+      background: rgba(43,132,254,0.08);
+      border-bottom: 1px solid #2a3f5f;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-icon { font-size: 22px; }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2B84FE;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Checklist item */
+    .checklist-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(42,63,95,0.5);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .checklist-item:last-child { border-bottom: none; }
+
+    .checklist-item:hover { background: rgba(43,132,254,0.05); }
+
+    .checklist-item.checked { background: rgba(0,200,83,0.05); }
+
+    .checkbox {
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border: 2px solid #2a3f5f;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+
+    .checklist-item.checked .checkbox {
+      background: #00C853;
+      border-color: #00C853;
+    }
+
+    .item-content { flex: 1; }
+
+    .item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 3px;
+      line-height: 1.4;
+    }
+
+    .checklist-item.checked .item-title {
+      color: #00C853;
+      text-decoration: line-through;
+      text-decoration-color: rgba(0,200,83,0.5);
+    }
+
+    .item-detail {
+      font-size: 12px;
+      color: #C8D0DC;
+      line-height: 1.5;
+    }
+
+    .item-tip {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: rgba(43,132,254,0.08);
+      border-left: 3px solid #2B84FE;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #C8D0DC;
+      display: none;
+    }
+
+    .item-tip.visible { display: block; }
+    .item-tip strong { color: #2B84FE; }
+
+    /* Tech tip button */
+    .tech-tip-btn {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      background: rgba(43,132,254,0.15);
+      border: 1px solid #2B84FE;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #2B84FE;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Phase panel */
+    .phase-panel { display: none; }
+    .phase-panel.active { display: block; }
+
+    /* Complete button */
+    .complete-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #00C853, #00a844);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: opacity 0.2s;
+    }
+
+    .complete-btn:hover { opacity: 0.9; }
+    .complete-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .next-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #2B84FE, #1a6fd4);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: opacity 0.2s;
+    }
+
+    .next-btn:hover { opacity: 0.9; }
+
+    .status-message {
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .status-message.success {
+      background: rgba(0,200,83,0.15);
+      border: 1px solid #00C853;
+      color: #00C853;
+      display: block;
+    }
+
+    .status-message.error {
+      background: rgba(255,59,48,0.15);
+      border: 1px solid #ff3b30;
+      color: #ff3b30;
+      display: block;
+    }
+
+    /* Warning box */
+    .warning-box {
+      background: rgba(255,149,0,0.1);
+      border: 1px solid rgba(255,149,0,0.4);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #ffaa44;
+      line-height: 1.6;
+    }
+
+    .warning-box strong { color: #ff9500; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>EXPRESS <span>VEHICLE</span> LOCATORS</h1>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="congrats">🎉</div>
+    <h2>Congratulations, <span id="heroName">Valued Customer</span>!</h2>
+    <div class="vehicle-name" id="heroVehicle">Your New Vehicle</div>
+    <p>Before you drive away, EVL has your back. Complete both checklists to make sure nothing is left behind.</p>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Overall Completion</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-count" id="progressCount">0 of 0 items checked</div>
+  </div>
+
+  <div class="container">
+
+    <!-- Phase tabs -->
+    <div class="phase-tabs">
+      <div class="phase-tab active" id="tab1" onclick="switchPhase(1)">
+        📋 Before Finance Office
+      </div>
+      <div class="phase-tab" id="tab2" onclick="switchPhase(2)">
+        🚗 Before You Drive Away
+      </div>
+    </div>
+
+    <!-- PHASE 1: Before Finance Office -->
+    <div class="phase-panel active" id="phase1">
+
+      <div class="warning-box">
+        <strong>⚠️ Don't go into the finance office yet!</strong> Complete this checklist first. Once you sign, it's much harder to go back.
+      </div>
+
+      <!-- Section: What to Bring -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">📄</span>
+          <span class="section-title">What You Should Have With You</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All keys to the trade-in vehicle</div>
+            <div class="item-detail">Both key fobs, valet key, any spare keys. Dealers will reduce your trade value if keys are missing.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Title to your trade-in (if you own it outright)</div>
+            <div class="item-detail">No title = no trade. If your title has a lien, you'll need your payoff information instead.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All signers are present</div>
+            <div class="item-detail">Every person on the loan or title must be physically present with a valid ID to sign. No exceptions.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Valid driver's license for ALL signers</div>
+            <div class="item-detail">Must be current and not expired. Finance office will copy it for the deal jacket.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Proof of insurance</div>
+            <div class="item-detail">You cannot legally drive your new vehicle off the lot without it. Have your insurance card or app ready.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section: Clear Your Trade -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🚙</span>
+          <span class="section-title">Clear Your Trade-In Vehicle</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remove all personal items from glove box</div>
+            <div class="item-detail">Registration, insurance cards, sunglasses, medications, pens, manuals — check every compartment.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Clear center console completely</div>
+            <div class="item-detail">Chargers, change, receipts, sunscreen, lip balm, personal items. People forget this one constantly.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remove garage door openers from sun visor</div>
+            <div class="item-detail">This is the #1 most forgotten item. Check above both visors. These give access to your home.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remove toll tags (TxTag, EZPass, etc.)</div>
+            <div class="item-detail">If left in the trade, the new owner will run up tolls on YOUR account. Peel it off the windshield.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remove parking passes and hang tags</div>
+            <div class="item-detail">Work parking passes, HOA hang tags, school permits — check the mirror and visor.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Clear all personal items from trunk</div>
+            <div class="item-detail">Jumper cables, umbrellas, sports equipment, groceries, tools — do a full trunk sweep.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remove car seats and child safety items</div>
+            <div class="item-detail">Car seats, booster seats, strollers in the trunk. These are expensive and easy to forget under stress.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section: Electronic Wipe -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">📱</span>
+          <span class="section-title">Wipe Electronic Devices in Trade-In</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Delete home & work addresses from navigation</div>
+            <div class="item-detail">Your saved addresses tell strangers exactly where you live and work. Clear your favorites and history.</div>
+            <div class="tech-tip-btn" id="navTip" onclick="event.stopPropagation(); toggleTip('navTipBox')">📖 How to do this on my vehicle</div>
+            <div class="item-tip" id="navTipBox"></div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Unpair all Bluetooth devices</div>
+            <div class="item-detail">Your phone contact list and call history may be stored in the vehicle's system. Delete all paired devices.</div>
+            <div class="tech-tip-btn" onclick="event.stopPropagation(); toggleTip('btTipBox')">📖 How to unpair Bluetooth on my vehicle</div>
+            <div class="item-tip" id="btTipBox"></div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Clear garage door programming from HomeLink</div>
+            <div class="item-detail">Many vehicles have HomeLink buttons on the mirror or overhead console. Clear all programmed doors.</div>
+            <div class="tech-tip-btn" onclick="event.stopPropagation(); toggleTip('hlTipBox')">📖 How to clear HomeLink on my vehicle</div>
+            <div class="item-tip" id="hlTipBox"></div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Cancel or transfer SiriusXM subscription</div>
+            <div class="item-detail">Call 1-866-635-2349 or go to siriusxm.com to transfer your subscription to your new vehicle or cancel.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remove dashcam and SD card</div>
+            <div class="item-detail">If you have a dashcam, remove both the device and the memory card. Your footage is on there.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section: Vehicle Inspection -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔍</span>
+          <span class="section-title">Inspect Your New Vehicle Before Signing</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Walk completely around the vehicle</div>
+            <div class="item-detail">Check all four panels, bumpers, roof, and glass for any dings, scratches, or damage. Do this in good lighting.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Confirm all negotiated equipment is on the vehicle</div>
+            <div class="item-detail">Sunroof, tow package, running boards, floor mats, cargo liner — verify every item you negotiated is actually there.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Test all major features</div>
+            <div class="item-detail">Sunroof, heated seats, blind spot monitoring, backup camera, remote start. Test before you sign.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Check fuel level</div>
+            <div class="item-detail">New vehicle should have a full tank. If not, ask the dealership to fill it before delivery.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Verify spare tire is present</div>
+            <div class="item-detail">Check under the trunk floor or under the vehicle. Some vehicles have a tire inflator kit instead — confirm which one.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="next-btn" onclick="switchPhase(2)">
+        ✅ Pre-Finance Complete — Go to Drive-Away Checklist →
+      </button>
+
+    </div>
+
+    <!-- PHASE 2: Before You Drive Away -->
+    <div class="phase-panel" id="phase2">
+
+      <div class="warning-box">
+        <strong>⚠️ Don't leave yet!</strong> Once you drive off the lot, it's very hard to come back for missing items. Take 5 minutes to complete this checklist.
+      </div>
+
+      <!-- Section: Documents -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">📋</span>
+          <span class="section-title">Documents — Take Everything With You</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Buyer's order / purchase agreement</div>
+            <div class="item-detail">Your complete deal summary showing all numbers. This is your most important document. Do not leave without it.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All finance/loan documents</div>
+            <div class="item-detail">Your retail installment contract showing your rate, term, payment, and lender. Keep this in a safe place at home.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">⚠️ WARRANTY BOOKLETS AND BROCHURES</div>
+            <div class="item-detail">You paid potentially thousands of dollars for extended warranty, GAP, tire & wheel, and paint protection. Most customers leave without these documents and have NO IDEA what their coverage is. Demand every booklet before you leave.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">GAP insurance documents (if purchased)</div>
+            <div class="item-detail">Shows your GAP provider, coverage amount, and how to file a claim if your vehicle is totaled.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Tire & wheel protection documents (if purchased)</div>
+            <div class="item-detail">Shows what's covered, the provider, and how to make a claim. Keep in your glove box.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Paint/fabric protection documents (if purchased)</div>
+            <div class="item-detail">Shows application warranty and re-application schedule. Often has a certificate you must keep.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Temporary tag / paper plate</div>
+            <div class="item-detail">Must be displayed in the rear window. Confirm expiration date — usually 30-60 days to get your permanent plates.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Title application paperwork</div>
+            <div class="item-detail">Your copy of the title application. The title itself will be mailed to you or your lender.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section: Keys & Physical Items -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔑</span>
+          <span class="section-title">Keys & Physical Items</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">ALL keys and key fobs for the new vehicle</div>
+            <div class="item-detail">Most new vehicles come with 2 key fobs. Verify the count and test each one before leaving.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Owner's manual and supplemental booklets</div>
+            <div class="item-detail">Usually in a pouch in the glove box. Includes the factory warranty booklet — very important to keep.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Floor mats (if purchased or included)</div>
+            <div class="item-detail">Check front and rear. If you paid for upgraded mats, make sure they're installed in the vehicle.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">License plate from trade-in vehicle</div>
+            <div class="item-detail">In Texas, plates belong to the owner — not the vehicle. Remove your plate before leaving the trade.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Salesperson's direct contact card</div>
+            <div class="item-detail">Get their cell number, not just the dealership's main line. You'll need it for follow-up issues.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section: Last Steps -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">✅</span>
+          <span class="section-title">Last Steps Before You Drive Away</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Connect your phone to Bluetooth</div>
+            <div class="item-detail">Do this now while the salesperson is available to help. Don't figure it out alone on the highway.</div>
+            <div class="tech-tip-btn" onclick="event.stopPropagation(); toggleTip('newBtTipBox')">📖 How to pair Bluetooth on my new vehicle</div>
+            <div class="item-tip" id="newBtTipBox"></div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Set up navigation with your home address</div>
+            <div class="item-detail">Program your home address while you're still at the dealership. Ask the salesperson to help if needed.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Adjust seat, mirrors, and steering wheel</div>
+            <div class="item-detail">Take a few minutes to get comfortable before driving. Many new vehicles have power adjustments — learn them now.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Take photos of the vehicle condition</div>
+            <div class="item-detail">Walk around and photograph any pre-existing marks or scratches. Protects you from being blamed later.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Transfer your toll tag to the new vehicle</div>
+            <div class="item-detail">Move your TxTag or EZPass to the new windshield. Update your account with the new license plate number.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="complete-btn" id="completeBtn" onclick="completeChecklist()">
+        🎉 All Done — Enjoy Your New Vehicle!
+      </button>
+
+      <div class="status-message" id="statusMsg"></div>
+
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.appspot.com",
+      messagingSenderId: "637284038819",
+      appId: "1:637284038819:web:f57c9d21efc62c6ac890e9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ── URL PARAMS ──
+    const params = new URLSearchParams(window.location.search);
+    const appointmentId = params.get('appointmentId');
+    const customerName = params.get('customerName') || 'Valued Customer';
+    const vehicleInfo = params.get('vehicleInfo') || 'Your New Vehicle';
+    const hasTrade = params.get('hasTrade') === 'true';
+
+    // ── POPULATE HERO ──
+    document.getElementById('heroName').textContent = customerName;
+    document.getElementById('heroVehicle').textContent = vehicleInfo;
+
+    // ── DETECT MAKE FOR TECH TIPS ──
+    const make = detectMake(vehicleInfo);
+    populateTechTips(make);
+
+    function detectMake(vehicleStr) {
+      const v = vehicleStr.toLowerCase();
+      if (v.includes('toyota') || v.includes('camry') || v.includes('corolla') || v.includes('rav4') || v.includes('tacoma') || v.includes('tundra')) return 'toyota';
+      if (v.includes('honda') || v.includes('civic') || v.includes('accord') || v.includes('cr-v') || v.includes('pilot') || v.includes('odyssey')) return 'honda';
+      if (v.includes('nissan') || v.includes('altima') || v.includes('maxima') || v.includes('rogue') || v.includes('frontier') || v.includes('titan')) return 'nissan';
+      if (v.includes('ford') || v.includes('f-150') || v.includes('mustang') || v.includes('explorer') || v.includes('escape') || v.includes('bronco')) return 'ford';
+      if (v.includes('chevy') || v.includes('chevrolet') || v.includes('silverado') || v.includes('equinox') || v.includes('tahoe') || v.includes('traverse')) return 'chevy';
+      if (v.includes('gmc') || v.includes('sierra') || v.includes('terrain') || v.includes('yukon') || v.includes('acadia')) return 'gmc';
+      if (v.includes('ram') || v.includes('dodge') || v.includes('durango') || v.includes('charger') || v.includes('challenger')) return 'ram';
+      if (v.includes('hyundai') || v.includes('elantra') || v.includes('sonata') || v.includes('tucson') || v.includes('santa fe')) return 'hyundai';
+      if (v.includes('kia') || v.includes('sorento') || v.includes('telluride') || v.includes('sportage') || v.includes('soul')) return 'kia';
+      if (v.includes('lexus') || v.includes('rx') || v.includes('es') || v.includes('gx')) return 'lexus';
+      if (v.includes('bmw')) return 'bmw';
+      if (v.includes('mercedes') || v.includes('benz')) return 'mercedes';
+      return 'generic';
+    }
+
+    const techTips = {
+      toyota: {
+        nav: '<strong>Toyota Navigation Clear:</strong> Press the Home button → Settings → General → Delete Personal Data → Delete. Or go to Navigation → Map → Menu → Setup → Restore Default Settings.',
+        bt: '<strong>Toyota Bluetooth Unpair:</strong> Press Home → Setup → Bluetooth → Select your phone → Delete. Confirm deletion on screen.',
+        hl: '<strong>Toyota HomeLink Clear:</strong> Press and hold buttons 1 and 3 simultaneously for about 10 seconds until the indicator light flashes rapidly. All channels are now cleared.'
+      },
+      honda: {
+        nav: '<strong>Honda Navigation Clear:</strong> From the Home screen → Settings → System → Reset → Factory Data Reset. Or go to Navigation → Settings → Map & Vehicle → Reset Map Settings.',
+        bt: '<strong>Honda Bluetooth Unpair:</strong> Phone → Bluetooth → Paired Phones → Select phone → Delete. Confirm on the screen.',
+        hl: '<strong>Honda HomeLink Clear:</strong> Press and hold the two outer HomeLink buttons simultaneously for about 10 seconds until the indicator light changes from slow to rapid blinking.'
+      },
+      nissan: {
+        nav: '<strong>Nissan Navigation Clear:</strong> Press Menu → Settings → System → Reset → Restore to Default Settings. Select Yes to confirm.',
+        bt: '<strong>Nissan Bluetooth Unpair:</strong> Press Phone button → Settings → Bluetooth → Connected Devices → Select device → Delete.',
+        hl: '<strong>Nissan HomeLink Clear:</strong> Hold the two outer buttons for 10-20 seconds until the LED flashes rapidly. Release — all programming is cleared.'
+      },
+      ford: {
+        nav: '<strong>Ford SYNC Navigation Clear:</strong> SYNC → Settings → General → Master Reset. This clears all personal data, paired phones, and navigation history.',
+        bt: '<strong>Ford SYNC Bluetooth:</strong> SYNC → Settings → Bluetooth → Manage Bluetooth Devices → Select device → Delete.',
+        hl: '<strong>Ford HomeLink Clear:</strong> Hold the two outer buttons until the HomeLink indicator light flashes rapidly (about 10 seconds).'
+      },
+      chevy: {
+        nav: '<strong>Chevy/GMC Navigation Clear:</strong> Home → Settings → System → Factory Reset. Or Navigation → Settings → Reset → Restore Navigation Settings.',
+        bt: '<strong>Chevy Bluetooth:</strong> Home → Phone → Bluetooth → Paired Devices → Select → Delete Device.',
+        hl: '<strong>Chevy HomeLink Clear:</strong> Hold the two outer buttons simultaneously for 10 seconds until indicator flashes rapidly.'
+      },
+      gmc: {
+        nav: '<strong>GMC Navigation Clear:</strong> Home → Settings → System → Factory Reset. Or Navigation → Settings → Reset.',
+        bt: '<strong>GMC Bluetooth:</strong> Home → Phone → Bluetooth → Paired Devices → Select device → Delete.',
+        hl: '<strong>GMC HomeLink Clear:</strong> Hold outer two buttons for 10 seconds until light flashes rapidly.'
+      },
+      ram: {
+        nav: '<strong>RAM Uconnect Clear:</strong> Uconnect button → Settings → System Information → Reset Uconnect. This clears navigation favorites, Bluetooth, and all personal data.',
+        bt: '<strong>RAM Uconnect Bluetooth:</strong> Phone → Bluetooth → Paired Device List → Select → Forget Device.',
+        hl: '<strong>RAM HomeLink Clear:</strong> Hold the two outer HomeLink buttons for 10 seconds until the LED flashes rapidly.'
+      },
+      hyundai: {
+        nav: '<strong>Hyundai Navigation Clear:</strong> Settings → System → Factory Reset → Confirm. Clears all saved locations, paired devices, and preferences.',
+        bt: '<strong>Hyundai Bluetooth:</strong> Setup → Bluetooth → Bluetooth Connections → Select phone → Delete.',
+        hl: '<strong>Hyundai HomeLink Clear:</strong> Hold outer buttons for 10 seconds until indicator flashes rapidly.'
+      },
+      kia: {
+        nav: '<strong>Kia Navigation Clear:</strong> Setup → General → Factory Reset. Confirm to delete all personal data.',
+        bt: '<strong>Kia Bluetooth:</strong> Setup → Bluetooth → Bluetooth Connections → Select phone → Delete.',
+        hl: '<strong>Kia HomeLink Clear:</strong> Hold outer two buttons for 10 seconds until rapid flashing.'
+      },
+      lexus: {
+        nav: '<strong>Lexus Navigation Clear:</strong> Menu → Setup → General → Delete Personal Data. Or Navigation → Destination → Saved Locations → Delete All.',
+        bt: '<strong>Lexus Bluetooth:</strong> Menu → Setup → Bluetooth → Registered Devices → Select → Delete.',
+        hl: '<strong>Lexus HomeLink Clear:</strong> Hold outer buttons for 10 seconds until rapid flash.'
+      },
+      bmw: {
+        nav: '<strong>BMW iDrive Clear:</strong> iDrive Menu → Settings → General Settings → Reset Vehicle Data → Confirm. Clears navigation, Bluetooth, and profiles.',
+        bt: '<strong>BMW Bluetooth:</strong> iDrive → Communication → Telephone → Paired Devices → Select → Delete.',
+        hl: '<strong>BMW HomeLink Clear:</strong> Hold outer buttons for 10 seconds until light flashes rapidly.'
+      },
+      mercedes: {
+        nav: '<strong>Mercedes MBUX Clear:</strong> Home → Settings → System → Reset → Factory Reset. Clears all personal data and preferences.',
+        bt: '<strong>Mercedes Bluetooth:</strong> Home → Settings → Connections → Bluetooth → Paired Devices → Delete.',
+        hl: '<strong>Mercedes HomeLink Clear:</strong> Hold outer buttons for 10 seconds until rapid flash.'
+      },
+      generic: {
+        nav: '<strong>Navigation Clear:</strong> Go to your infotainment Settings → look for System Reset, Factory Reset, or Delete Personal Data. Consult your owner\'s manual under "Infotainment" for exact steps.',
+        bt: '<strong>Bluetooth Unpair:</strong> Go to Phone or Bluetooth Settings in your infotainment system → Paired Devices → Select your phone → Delete or Forget.',
+        hl: '<strong>HomeLink Clear:</strong> Hold the two outer HomeLink buttons simultaneously for about 10 seconds until the indicator light flashes rapidly.'
+      }
+    };
+
+    function populateTechTips(make) {
+      const tips = techTips[make] || techTips.generic;
+      document.getElementById('navTipBox').innerHTML = tips.nav;
+      document.getElementById('btTipBox').innerHTML = tips.bt;
+      document.getElementById('hlTipBox').innerHTML = tips.hl;
+      document.getElementById('newBtTipBox').innerHTML = tips.bt.replace('Unpair', 'Pair your phone to your new vehicle —').replace('Delete', 'Add New Device');
+    }
+
+    // ── GLOBAL FUNCTIONS ──
+    window.toggleItem = function(el) {
+      el.classList.toggle('checked');
+      const cb = el.querySelector('.checkbox');
+      cb.textContent = el.classList.contains('checked') ? '✓' : '';
+      updateProgress();
+    };
+
+    window.toggleTip = function(id) {
+      document.getElementById(id).classList.toggle('visible');
+    };
+
+    window.switchPhase = function(phase) {
+      document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('phase' + phase).classList.add('active');
+      document.getElementById('tab' + phase).classList.add('active');
+      window.scrollTo(0, 0);
+    };
+
+    function updateProgress() {
+      const all = document.querySelectorAll('.checklist-item');
+      const checked = document.querySelectorAll('.checklist-item.checked');
+      const pct = all.length ? Math.round((checked.length / all.length) * 100) : 0;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressCount').textContent = checked.length + ' of ' + all.length + ' items checked';
+    }
+
+    window.completeChecklist = async function() {
+      const btn = document.getElementById('completeBtn');
+      const statusMsg = document.getElementById('statusMsg');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        if (appointmentId) {
+          const ref = doc(db, 'evl_appointments', appointmentId);
+          await updateDoc(ref, {
+            checklistCompleted: true,
+            checklistCompletedAt: new Date()
+          });
+        }
+
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '🎉 Congratulations! Enjoy your new ' + vehicleInfo + '. Thank you for trusting EVL!';
+
+        setTimeout(() => { window.location.href = '/'; }, 3000);
+
+      } catch (error) {
+        console.error('Checklist error:', error);
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '🎉 Congratulations! Enjoy your new vehicle. Thank you for trusting EVL!';
+        setTimeout(() => { window.location.href = '/'; }, 3000);
+      }
+    };
+
+    updateProgress();
+  </script>
+
+</body>
+</html>
