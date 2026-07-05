@@ -330,7 +330,7 @@
     </div>
 
     <!-- Vehicle details -->
-    <div class="vehicle-details">
+    <div class="vehicle-details" id="appointmentDetailsBox">
       <h3>Appointment Details</h3>
       <div class="detail-row">
         <span class="label">Customer Name:</span>
@@ -474,8 +474,24 @@
 
     // Hide the appointment details box if no URL params provided
     if (!customerName && !vehicleInfo && !recordId) {
-      document.querySelector('.vehicle-details').classList.add('hidden');
+      document.getElementById('appointmentDetailsBox').style.display = 'none';
     }
+
+    // Fix input field styling to match dark EVL design
+    ['customerNameInput', 'vehicleInput'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.backgroundColor = '#0d1829';
+        el.style.color = '#ffffff';
+        el.style.border = '2px solid #2a3f5f';
+        el.style.borderRadius = '10px';
+        el.style.padding = '14px 16px';
+        el.style.fontSize = '15px';
+        el.style.width = '100%';
+        el.addEventListener('focus', () => el.style.borderColor = '#2B84FE');
+        el.addEventListener('blur', () => el.style.borderColor = '#2a3f5f');
+      }
+    });
 
     // ══════════════════════════════════════════════════════════
     // DATE PICKER: SET MINIMUM DATE TO TOMORROW
