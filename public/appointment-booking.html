@@ -40,7 +40,7 @@
 
     /* Main container */
     .container {
-      max-width: 600px;
+      max-width: 780px;
       margin: 40px auto;
       padding: 20px;
     }
@@ -137,13 +137,22 @@
     .form-group input[type="date"],
     .form-group select {
       width: 100%;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid #2a3f5f;
-      border-radius: 6px;
+      padding: 14px 16px;
+      background: #0d1829;
+      border: 2px solid #2B84FE;
+      border-radius: 10px;
       color: #ffffff;
-      font-size: 14px;
+      font-size: 16px;
+      font-weight: 600;
       font-family: inherit;
+      cursor: pointer;
+    }
+
+    .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
     }
 
     .form-group input[type="date"]:focus,
@@ -166,16 +175,17 @@
     }
 
     .time-slot {
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.3);
+      padding: 14px 10px;
+      background: #0d1829;
       border: 1px solid #2a3f5f;
-      border-radius: 6px;
+      border-radius: 8px;
       text-align: center;
       cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
       transition: all 0.2s;
-      min-height: 48px;
+      min-height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
