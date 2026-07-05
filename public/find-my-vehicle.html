@@ -902,9 +902,12 @@
               template_params: {
                 name: customerName,
                 email: email,
-                title: '🚗 NEW LEAD — Find My Vehicle ($49)',
-                message: `New EVL lead submitted!\n\nName: ${customerName}\nPhone: ${phone}\nEmail: ${email}\nBucket: Find My Vehicle — $49\nSource: find-my-vehicle page\nTime: ${new Date().toLocaleString('en-US', {timeZone: 'America/Chicago'})}\n\nCall within 2 hours!`,
-                to_email: 'togradyevl@gmail.com'
+                customerName: customerName,
+                customerPhone: phone,
+                customerEmail: email,
+                vehicleInfo: 'Not yet specified — call to find out',
+                appointmentDate: '🚗 FIND MY VEHICLE LEAD',
+                appointmentTime: new Date().toLocaleString('en-US', {timeZone: 'America/Chicago'})
               }
             })
           });
