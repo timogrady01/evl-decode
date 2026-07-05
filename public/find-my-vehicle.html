@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find My Vehicle — EVL</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #020203;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: #000000;
+      padding: 20px;
+      border-bottom: 1px solid #2a3f5f;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .header h1 span { color: #2B84FE; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #090E17 0%, #070A12 100%);
+      padding: 60px 20px 40px;
+      text-align: center;
+      border-bottom: 1px solid #2a3f5f;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(43,132,254,0.15);
+      border: 1px solid #2B84FE;
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2B84FE;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    .hero h2 {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero h2 span { color: #2B84FE; }
+
+    .hero-tagline {
+      font-size: 18px;
+      color: #C8D0DC;
+      margin-bottom: 12px;
+      font-style: italic;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .hero-price {
+      font-size: 15px;
+      color: #C8D0DC;
+      margin-bottom: 0;
+    }
+
+    .hero-price strong {
+      color: #00C853;
+      font-size: 22px;
+    }
+
+    /* Trust bar */
+    .trust-bar {
+      background: #090E17;
+      border-bottom: 1px solid #2a3f5f;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      text-align: center;
+      font-size: 13px;
+      color: #C8D0DC;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 900;
+      color: #2B84FE;
+      margin-bottom: 2px;
+    }
+
+    /* Main form */
+    .main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* Pain point seeds */
+    .pain-seeds {
+      background: #090E17;
+      border: 1px solid #2a3f5f;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 30px;
+    }
+
+    .pain-seeds h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2B84FE;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    .pain-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(42,63,95,0.5);
+      font-size: 13px;
+      color: #C8D0DC;
+      line-height: 1.5;
+    }
+
+    .pain-item:last-child { border-bottom: none; }
+
+    .pain-icon { font-size: 18px; min-width: 24px; }
+
+    .pain-item strong { color: #ffffff; }
+
+    /* Form card */
+    .form-card {
+      background: #090E17;
+      border: 2px solid #2B84FE;
+      border-radius: 16px;
+      padding: 36px 30px;
+    }
+
+    .form-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .form-card .subtitle {
+      font-size: 14px;
+      color: #C8D0DC;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #C8D0DC;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: #020203;
+      border: 1px solid #2a3f5f;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #2B84FE;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #4a5f7f; }
+
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .form-group select option { background: #090E17; }
+
+    /* Deposit warning */
+    .deposit-warning {
+      background: rgba(255,149,0,0.1);
+      border: 2px solid #ff9500;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .deposit-warning h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ff9500;
+      margin-bottom: 8px;
+    }
+
+    .deposit-warning p {
+      font-size: 13px;
+      color: #ffaa44;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .deposit-script {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 13px;
+      color: #ffffff;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* Price summary */
+    .price-summary {
+      background: rgba(0,200,83,0.08);
+      border: 1px solid rgba(0,200,83,0.3);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price-summary .label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .price-summary .label span {
+      display: block;
+      font-size: 12px;
+      color: #C8D0DC;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .price-summary .amount {
+      font-size: 28px;
+      font-weight: 900;
+      color: #00C853;
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #2B84FE, #1a6fd4);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .submit-btn:hover { opacity: 0.9; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-note {
+      font-size: 12px;
+      color: #C8D0DC;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* Status */
+    .status-message {
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .status-message.success {
+      background: rgba(0,200,83,0.15);
+      border: 1px solid #00C853;
+      color: #00C853;
+      display: block;
+    }
+
+    .status-message.error {
+      background: rgba(255,59,48,0.15);
+      border: 1px solid #ff3b30;
+      color: #ff3b30;
+      display: block;
+    }
+
+    /* What happens next */
+    .next-steps {
+      margin-top: 40px;
+      background: #090E17;
+      border: 1px solid #2a3f5f;
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .next-steps h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #2B84FE;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .step-item:last-child { margin-bottom: 0; }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      background: rgba(43,132,254,0.15);
+      border: 2px solid #2B84FE;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #2B84FE;
+    }
+
+    .step-content { flex: 1; }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .step-desc {
+      font-size: 12px;
+      color: #C8D0DC;
+      line-height: 1.5;
+    }
+
+    .step-time {
+      font-size: 11px;
+      color: #2B84FE;
+      font-weight: 700;
+      margin-top: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>EXPRESS <span>VEHICLE</span> LOCATORS</h1>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">🚗 Step 1 of Your EVL Journey</div>
+    <h2>You're Spending <span>$40,000+.</span><br>Let's Make Sure You're Spending It Right.</h2>
+    <p class="hero-tagline">"We find your vehicle, confirm the price is real, and make sure it's still available — before you drive across town."</p>
+    <p class="hero-price">One-time fee: <strong>$49</strong> — Less than a tank of gas. Potentially saves you thousands.</p>
+  </div>
+
+  <!-- Trust bar -->
+  <div class="trust-bar">
+    <div class="trust-item">
+      <strong>$2,400+</strong>
+      Avg. client savings
+    </div>
+    <div class="trust-item">
+      <strong>24hr</strong>
+      Vehicle verification
+    </div>
+    <div class="trust-item">
+      <strong>100%</strong>
+      Automotive professionals
+    </div>
+    <div class="trust-item">
+      <strong>$0</strong>
+      Hidden fees ever
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- Pain point seeds -->
+    <div class="pain-seeds">
+      <h3>📋 What EVL Checks That You Can't</h3>
+
+      <div class="pain-item">
+        <span class="pain-icon">🔍</span>
+        <div><strong>Is the advertised price real?</strong> Many online prices require specific financing, exclude fees, or include dealer add-ons already baked in. EVL confirms what you'll actually pay.</div>
+      </div>
+
+      <div class="pain-item">
+        <span class="pain-icon">💰</span>
+        <div><strong>Are there incentives the dealer hasn't mentioned?</strong> Manufacturer rebates, loyalty discounts, military and college grad programs — these reduce your price and dealers aren't required to volunteer them.</div>
+      </div>
+
+      <div class="pain-item">
+        <span class="pain-icon">📍</span>
+        <div><strong>Is the vehicle actually available?</strong> Online listings can be days behind reality. EVL confirms the vehicle is physically on the lot before you make the trip.</div>
+      </div>
+
+      <div class="pain-item">
+        <span class="pain-icon">⏱️</span>
+        <div><strong>Time kills deals.</strong> Once you find the right vehicle, every hour you wait is an hour another buyer can take it. EVL moves fast so you don't lose the deal.</div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-card">
+      <h3>🚗 Tell Us About Your Vehicle</h3>
+      <p class="subtitle">Fill in what you know. EVL does the rest. The more detail you provide, the faster we can verify your vehicle and get you into the deal.</p>
+
+      <!-- Vehicle Info -->
+      <div class="form-group">
+        <label>Year, Make & Model *</label>
+        <input type="text" id="vehicleInfo" placeholder="e.g. 2024 Toyota Camry XLE" required />
+      </div>
+
+      <div class="form-group">
+        <label>Dealership Name (if known)</label>
+        <input type="text" id="dealerName" placeholder="e.g. Pat Lobb Toyota of McKinney" />
+      </div>
+
+      <div class="form-group">
+        <label>Stock Number or VIN (if known)</label>
+        <input type="text" id="stockNumber" placeholder="e.g. 728001 or VIN number from listing" />
+      </div>
+
+      <div class="form-group">
+        <label>Where did you find this vehicle? *</label>
+        <select id="vehicleSource">
+          <option value="">— Select one —</option>
+          <option value="dealer-website">Dealer Website</option>
+          <option value="autotrader">AutoTrader</option>
+          <option value="cars-com">Cars.com</option>
+          <option value="carmax">CarMax</option>
+          <option value="cargurus">CarGurus</option>
+          <option value="facebook">Facebook Marketplace</option>
+          <option value="walked-in">I walked into the dealership</option>
+          <option value="referral">Someone referred me to this vehicle</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Is the dealer pressuring you to put a deposit down right now?</label>
+        <select id="depositPressure" onchange="handleDepositQuestion(this.value)">
+          <option value="">— Select one —</option>
+          <option value="no">No — not yet</option>
+          <option value="yes-considering">Yes — and I'm considering it</option>
+          <option value="yes-already">Yes — I already put one down</option>
+          <option value="unsure">They mentioned holding it but I'm not sure</option>
+        </select>
+      </div>
+
+      <!-- Deposit warning — shows conditionally -->
+      <div class="deposit-warning" id="depositWarning">
+        <h4>⚠️ Hold Off on That Deposit</h4>
+        <p>A deposit locks you in emotionally before EVL has reviewed your deal. There may be incentives, price issues, or rate problems we haven't checked yet. Use this script to buy yourself time:</p>
+        <div class="deposit-script">"I'm very interested but I need 24 hours to review this with my advisor. Can you do a courtesy hold without a deposit? If not, I need the refund policy in writing before any money changes hands."</div>
+      </div>
+
+      <!-- Already deposited warning -->
+      <div class="deposit-warning" id="depositDoneWarning" style="border-color:#ff3b30;">
+        <h4 style="color:#ff3b30;">⚠️ You Already Have a Deposit Down</h4>
+        <p>That's okay — EVL can still help you. We'll review your deal and make sure the deposit terms protect you. Make sure you have written confirmation of the refund policy before we proceed.</p>
+      </div>
+
+      <!-- Customer Info -->
+      <div class="form-group">
+        <label>Your Full Name *</label>
+        <input type="text" id="customerName" placeholder="First and last name" required />
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="customerPhone" placeholder="(469) 555-0000" required />
+      </div>
+
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="customerEmail" placeholder="your@email.com" required />
+      </div>
+
+      <div class="form-group">
+        <label>Anything else we should know?</label>
+        <textarea id="additionalNotes" placeholder="Trade-in vehicle, specific trim level, must-have features, urgency, etc."></textarea>
+      </div>
+
+      <!-- Price summary -->
+      <div class="price-summary">
+        <div class="label">
+          Find My Vehicle
+          <span>One-time fee — no recurring charges</span>
+        </div>
+        <div class="amount">$49</div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+        🚗 Find My Vehicle — $49
+      </button>
+
+      <p class="form-note">
+        An EVL automotive professional will contact you within 2 hours to confirm your vehicle and begin verification. No payment is collected until EVL confirms we can help you.
+      </p>
+
+      <div class="status-message" id="statusMsg"></div>
+    </div>
+
+    <!-- What happens next -->
+    <div class="next-steps">
+      <h3>⚡ What Happens After You Submit</h3>
+
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <div class="step-title">EVL Verifies Your Vehicle</div>
+          <div class="step-desc">We confirm the vehicle is available, the price is real, and flag any obvious issues with the listing.</div>
+          <div class="step-time">⏱ Within 2 hours</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <div class="step-title">You Book Your Appointment</div>
+          <div class="step-desc">We send you a booking link — your name and vehicle are already filled in. Pick a date and time that works.</div>
+          <div class="step-time">⏱ Same day</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <div class="step-title">EVL Sends Your Fair Deal Worksheet</div>
+          <div class="step-desc">Before your appointment, you receive a complete breakdown of what this deal should look like — including any incentives we found.</div>
+          <div class="step-time">⏱ Before your appointment</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <div class="step-title">You Walk In Informed</div>
+          <div class="step-desc">EVL is in your corner at every step. You negotiate with real numbers, real leverage, and a word-for-word script if you need it.</div>
+          <div class="step-time">⏱ Day of appointment</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <div class="step-title">EVL Checks In Before You Sign</div>
+          <div class="step-desc">The moment you arrive at the dealership your EVL advisor sends a pre-signing reminder — making sure you have everything you need before the ink dries.</div>
+          <div class="step-time">⏱ Day of signing</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.appspot.com",
+      messagingSenderId: "637284038819",
+      appId: "1:637284038819:web:f57c9d21efc62c6ac890e9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.handleDepositQuestion = function(value) {
+      document.getElementById('depositWarning').style.display = 'none';
+      document.getElementById('depositDoneWarning').style.display = 'none';
+
+      if (value === 'yes-considering' || value === 'unsure') {
+        document.getElementById('depositWarning').style.display = 'block';
+      } else if (value === 'yes-already') {
+        document.getElementById('depositDoneWarning').style.display = 'block';
+      }
+    };
+
+    window.submitForm = async function() {
+      const vehicleInfo = document.getElementById('vehicleInfo').value.trim();
+      const customerName = document.getElementById('customerName').value.trim();
+      const customerPhone = document.getElementById('customerPhone').value.trim();
+      const customerEmail = document.getElementById('customerEmail').value.trim();
+      const dealerName = document.getElementById('dealerName').value.trim();
+      const stockNumber = document.getElementById('stockNumber').value.trim();
+      const vehicleSource = document.getElementById('vehicleSource').value;
+      const depositPressure = document.getElementById('depositPressure').value;
+      const additionalNotes = document.getElementById('additionalNotes').value.trim();
+      const statusMsg = document.getElementById('statusMsg');
+      const btn = document.getElementById('submitBtn');
+
+      // Validation
+      if (!vehicleInfo) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Please enter the vehicle you are looking for.';
+        return;
+      }
+      if (!customerName) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Please enter your full name.';
+        return;
+      }
+      if (!customerPhone) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Please enter your phone number.';
+        return;
+      }
+      if (!customerEmail) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Please enter your email address.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      try {
+        // Save to Firebase evl_leads collection
+        const docRef = await addDoc(collection(db, 'evl_leads'), {
+          customerName,
+          customerPhone,
+          customerEmail,
+          vehicleInfo,
+          dealerName,
+          stockNumber,
+          vehicleSource,
+          depositPressure,
+          additionalNotes,
+          bucket: 'find-my-vehicle',
+          bucketPrice: 49,
+          status: 'new',
+          source: 'find-my-vehicle-page',
+          submittedAt: new Date()
+        });
+
+        console.log('[find-my-vehicle] Lead saved:', docRef.id);
+
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '✅ Got it! An EVL advisor will contact you within 2 hours. Redirecting to book your appointment...';
+
+        // Redirect to appointment booking with info pre-filled
+        setTimeout(() => {
+          const bookingUrl = new URL('/appointment-booking', window.location.origin);
+          bookingUrl.searchParams.set('customerName', customerName);
+          bookingUrl.searchParams.set('vehicleInfo', vehicleInfo);
+          bookingUrl.searchParams.set('recordId', docRef.id);
+          window.location.href = bookingUrl.toString();
+        }, 2000);
+
+      } catch (error) {
+        console.error('[find-my-vehicle] Error:', error);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Something went wrong. Please call EVL directly or try again.';
+        btn.disabled = false;
+        btn.textContent = '🚗 Find My Vehicle — $49';
+      }
+    };
+  </script>
+
+</body>
+</html>
