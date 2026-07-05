@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deal Protection Checklist - EVL</title>
+  <title>EVL Deal Protection Checklist</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -38,16 +38,12 @@
       border-bottom: 1px solid #2a3f5f;
     }
 
-    .hero .congrats {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
+    .hero .congrats { font-size: 36px; margin-bottom: 10px; }
 
     .hero h2 {
       font-size: 26px;
       font-weight: 800;
       margin-bottom: 8px;
-      color: #ffffff;
     }
 
     .hero .vehicle-name {
@@ -72,11 +68,7 @@
       text-align: center;
     }
 
-    .progress-label {
-      font-size: 13px;
-      color: #C8D0DC;
-      margin-bottom: 8px;
-    }
+    .progress-label { font-size: 13px; color: #C8D0DC; margin-bottom: 8px; }
 
     .progress-bar {
       background: #1a2332;
@@ -111,24 +103,28 @@
     /* Phase tabs */
     .phase-tabs {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 30px;
+      overflow-x: auto;
+      padding-bottom: 4px;
     }
 
     .phase-tab {
       flex: 1;
+      min-width: 140px;
       padding: 14px 10px;
       border-radius: 10px;
       border: 2px solid #2a3f5f;
       background: #090E17;
       color: #C8D0DC;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      white-space: nowrap;
     }
 
     .phase-tab.active {
@@ -183,9 +179,7 @@
     }
 
     .checklist-item:last-child { border-bottom: none; }
-
     .checklist-item:hover { background: rgba(43,132,254,0.05); }
-
     .checklist-item.checked { background: rgba(0,200,83,0.05); }
 
     .checkbox {
@@ -238,12 +232,12 @@
       font-size: 12px;
       color: #C8D0DC;
       display: none;
+      line-height: 1.5;
     }
 
     .item-tip.visible { display: block; }
     .item-tip strong { color: #2B84FE; }
 
-    /* Tech tip button */
     .tech-tip-btn {
       display: inline-block;
       margin-top: 6px;
@@ -261,7 +255,7 @@
     .phase-panel { display: none; }
     .phase-panel.active { display: block; }
 
-    /* Complete button */
+    /* Buttons */
     .complete-btn {
       width: 100%;
       padding: 18px;
@@ -336,6 +330,173 @@
     }
 
     .warning-box strong { color: #ff9500; }
+
+    /* Alert box */
+    .alert-box {
+      background: rgba(255,59,48,0.1);
+      border: 1px solid rgba(255,59,48,0.4);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #ff6b6b;
+      line-height: 1.6;
+    }
+
+    .alert-box strong { color: #ff3b30; }
+
+    /* Info box */
+    .info-box {
+      background: rgba(43,132,254,0.1);
+      border: 1px solid rgba(43,132,254,0.4);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #7eb8ff;
+      line-height: 1.6;
+    }
+
+    .info-box strong { color: #2B84FE; }
+
+    /* Service Vault upsell card */
+    .vault-card {
+      background: linear-gradient(135deg, #090E17, #0d1525);
+      border: 2px solid #2B84FE;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .vault-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #2B84FE;
+      margin-bottom: 8px;
+    }
+
+    .vault-card p {
+      font-size: 13px;
+      color: #C8D0DC;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .vault-tiers {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .vault-tier {
+      flex: 1;
+      min-width: 140px;
+      background: #020203;
+      border: 1px solid #2a3f5f;
+      border-radius: 10px;
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vault-tier:hover {
+      border-color: #2B84FE;
+      background: rgba(43,132,254,0.05);
+    }
+
+    .vault-tier.selected {
+      border-color: #2B84FE;
+      background: rgba(43,132,254,0.1);
+    }
+
+    .vault-tier .tier-name {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #C8D0DC;
+      margin-bottom: 6px;
+    }
+
+    .vault-tier .tier-price {
+      font-size: 24px;
+      font-weight: 900;
+      color: #2B84FE;
+      margin-bottom: 4px;
+    }
+
+    .vault-tier .tier-price span {
+      font-size: 13px;
+      color: #C8D0DC;
+      font-weight: 400;
+    }
+
+    .vault-tier .tier-tagline {
+      font-size: 11px;
+      color: #C8D0DC;
+      line-height: 1.4;
+    }
+
+    .vault-tier.pro { border-color: #f5a623; }
+    .vault-tier.pro .tier-price { color: #f5a623; }
+    .vault-tier.pro .tier-name { color: #f5a623; }
+
+    .vault-tier.elite { border-color: #00C853; }
+    .vault-tier.elite .tier-price { color: #00C853; }
+    .vault-tier.elite .tier-name { color: #00C853; }
+
+    .vault-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #2B84FE, #1a6fd4);
+      border: none;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .vault-btn:hover { opacity: 0.9; }
+
+    /* Key alert */
+    .key-alert {
+      background: rgba(255,149,0,0.1);
+      border: 2px solid #ff9500;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+
+    .key-alert h4 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ff9500;
+      margin-bottom: 8px;
+    }
+
+    .key-alert p {
+      font-size: 13px;
+      color: #ffaa44;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .key-alert .key-script {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 13px;
+      color: #ffffff;
+      font-style: italic;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -350,10 +511,10 @@
     <div class="congrats">🎉</div>
     <h2>Congratulations, <span id="heroName">Valued Customer</span>!</h2>
     <div class="vehicle-name" id="heroVehicle">Your New Vehicle</div>
-    <p>Before you drive away, EVL has your back. Complete both checklists to make sure nothing is left behind.</p>
+    <p>EVL has your back every step of the way. Complete all three checklists to make sure nothing is missed before, during, and after your delivery.</p>
   </div>
 
-  <!-- Progress bar -->
+  <!-- Progress -->
   <div class="progress-bar-wrap">
     <div class="progress-label">Overall Completion</div>
     <div class="progress-bar">
@@ -364,59 +525,41 @@
 
   <div class="container">
 
-    <!-- Phase tabs -->
+    <!-- Tabs -->
     <div class="phase-tabs">
       <div class="phase-tab active" id="tab1" onclick="switchPhase(1)">
-        📋 Before Finance Office
+        📋 Before You Arrive
       </div>
       <div class="phase-tab" id="tab2" onclick="switchPhase(2)">
+        🔍 EVL Delivery Protection Check
+      </div>
+      <div class="phase-tab" id="tab3" onclick="switchPhase(3)">
         🚗 Before You Drive Away
       </div>
     </div>
 
-    <!-- PHASE 1: Before Finance Office -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TAB 1: BEFORE YOU ARRIVE               -->
+    <!-- ═══════════════════════════════════════ -->
     <div class="phase-panel active" id="phase1">
 
-      <div class="warning-box">
-        <strong>⚠️ Don't go into the finance office yet!</strong> Complete this checklist first. Once you sign, it's much harder to go back.
+      <div class="info-box">
+        <strong>📬 EVL Pre-Delivery Reminder</strong><br>
+        Review this checklist 24 hours before your appointment. Arriving prepared means your delivery goes smoothly — no delays, no surprises, no return trips.
       </div>
 
-      <!-- Section: What to Bring -->
+      <!-- Documents to Bring -->
       <div class="section">
         <div class="section-header">
           <span class="section-icon">📄</span>
-          <span class="section-title">What You Should Have With You</span>
+          <span class="section-title">Documents to Bring</span>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">All keys to the trade-in vehicle</div>
-            <div class="item-detail">Both key fobs, valet key, any spare keys. Dealers will reduce your trade value if keys are missing.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Title to your trade-in (if you own it outright)</div>
-            <div class="item-detail">No title = no trade. If your title has a lien, you'll need your payoff information instead.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">All signers are present</div>
-            <div class="item-detail">Every person on the loan or title must be physically present with a valid ID to sign. No exceptions.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Valid driver's license for ALL signers</div>
-            <div class="item-detail">Must be current and not expired. Finance office will copy it for the deal jacket.</div>
+            <div class="item-title">Valid driver's license — ALL signers</div>
+            <div class="item-detail">Every person signing the loan or title must bring a current, non-expired photo ID. No exceptions — the finance office will copy it for the deal jacket.</div>
           </div>
         </div>
 
@@ -424,32 +567,64 @@
           <div class="checkbox"></div>
           <div class="item-content">
             <div class="item-title">Proof of insurance</div>
-            <div class="item-detail">You cannot legally drive your new vehicle off the lot without it. Have your insurance card or app ready.</div>
+            <div class="item-detail">You cannot legally drive your new vehicle off the lot without it. Full coverage is required if you are financing. Have your insurance card or app ready. Call your agent before you arrive to add the new vehicle.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Payment — certified check, cashier's check, or credit union draft</div>
+            <div class="item-detail">If paying cash or making a down payment, bring a certified check or cashier's check from your bank or credit union. Personal checks may cause delays. Confirm with the dealership what forms of payment they accept.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All signers must be physically present</div>
+            <div class="item-detail">If two people are on the loan or title, both must be present with valid ID to sign. If a co-signer is in another state, contact EVL immediately — there are specific steps required.</div>
           </div>
         </div>
 
       </div>
 
-      <!-- Section: Clear Your Trade -->
+      <!-- Trade-In Prep -->
       <div class="section">
         <div class="section-header">
-          <span class="section-icon">🚙</span>
-          <span class="section-title">Clear Your Trade-In Vehicle</span>
+          <span class="section-icon">🔄</span>
+          <span class="section-title">Trade-In Preparation — Do This Before You Leave Home</span>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Remove all personal items from glove box</div>
-            <div class="item-detail">Registration, insurance cards, sunglasses, medications, pens, manuals — check every compartment.</div>
+            <div class="item-title">Bring ALL keys to the trade-in vehicle</div>
+            <div class="item-detail">Both key fobs, the valet key, and any spare keys. Missing keys reduce your trade-in value. Dealers use this as a negotiating tool against you.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Clear center console completely</div>
-            <div class="item-detail">Chargers, change, receipts, sunscreen, lip balm, personal items. People forget this one constantly.</div>
+            <div class="item-title">Bring the title to your trade-in (if you own it outright)</div>
+            <div class="item-detail">No title means no trade. If your vehicle is paid off and you don't have the title, contact your DMV to request a duplicate before your appointment.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Know your payoff amount (if you still owe on the trade)</div>
+            <div class="item-detail">Call your lender before your appointment. Payoff amounts are only good for 10-20 days due to the lag in receiving the title from the state. Get the exact 10-day payoff figure.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remove all personal items from the trade-in NOW</div>
+            <div class="item-detail">Do this before you leave home — not in the dealership parking lot. Check every compartment thoroughly.</div>
           </div>
         </div>
 
@@ -457,189 +632,427 @@
           <div class="checkbox"></div>
           <div class="item-content">
             <div class="item-title">Remove garage door openers from sun visor</div>
-            <div class="item-detail">This is the #1 most forgotten item. Check above both visors. These give access to your home.</div>
+            <div class="item-detail">This is the #1 most forgotten item. These give strangers access to your home. Check above BOTH visors before leaving.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Remove toll tags (TxTag, EZPass, etc.)</div>
-            <div class="item-detail">If left in the trade, the new owner will run up tolls on YOUR account. Peel it off the windshield.</div>
+            <div class="item-title">Remove toll tags — TxTag, EZPass, or similar</div>
+            <div class="item-detail">If left in the trade, the new owner will run up tolls on YOUR account. Peel it off the windshield before you arrive.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Remove parking passes and hang tags</div>
-            <div class="item-detail">Work parking passes, HOA hang tags, school permits — check the mirror and visor.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Clear all personal items from trunk</div>
-            <div class="item-detail">Jumper cables, umbrellas, sports equipment, groceries, tools — do a full trunk sweep.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Remove car seats and child safety items</div>
-            <div class="item-detail">Car seats, booster seats, strollers in the trunk. These are expensive and easy to forget under stress.</div>
+            <div class="item-title">Clear all electronics in the trade-in</div>
+            <div class="item-detail">Delete your home address from navigation, unpair your phone from Bluetooth, clear HomeLink garage programming, and cancel or transfer your SiriusXM subscription.</div>
           </div>
         </div>
 
       </div>
 
-      <!-- Section: Electronic Wipe -->
-      <div class="section">
-        <div class="section-header">
-          <span class="section-icon">📱</span>
-          <span class="section-title">Wipe Electronic Devices in Trade-In</span>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Delete home & work addresses from navigation</div>
-            <div class="item-detail">Your saved addresses tell strangers exactly where you live and work. Clear your favorites and history.</div>
-            <div class="tech-tip-btn" id="navTip" onclick="event.stopPropagation(); toggleTip('navTipBox')">📖 How to do this on my vehicle</div>
-            <div class="item-tip" id="navTipBox"></div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Unpair all Bluetooth devices</div>
-            <div class="item-detail">Your phone contact list and call history may be stored in the vehicle's system. Delete all paired devices.</div>
-            <div class="tech-tip-btn" onclick="event.stopPropagation(); toggleTip('btTipBox')">📖 How to unpair Bluetooth on my vehicle</div>
-            <div class="item-tip" id="btTipBox"></div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Clear garage door programming from HomeLink</div>
-            <div class="item-detail">Many vehicles have HomeLink buttons on the mirror or overhead console. Clear all programmed doors.</div>
-            <div class="tech-tip-btn" onclick="event.stopPropagation(); toggleTip('hlTipBox')">📖 How to clear HomeLink on my vehicle</div>
-            <div class="item-tip" id="hlTipBox"></div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Cancel or transfer SiriusXM subscription</div>
-            <div class="item-detail">Call 1-866-635-2349 or go to siriusxm.com to transfer your subscription to your new vehicle or cancel.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Remove dashcam and SD card</div>
-            <div class="item-detail">If you have a dashcam, remove both the device and the memory card. Your footage is on there.</div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Section: Vehicle Inspection -->
-      <div class="section">
-        <div class="section-header">
-          <span class="section-icon">🔍</span>
-          <span class="section-title">Inspect Your New Vehicle Before Signing</span>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Walk completely around the vehicle</div>
-            <div class="item-detail">Check all four panels, bumpers, roof, and glass for any dings, scratches, or damage. Do this in good lighting.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Confirm all negotiated equipment is on the vehicle</div>
-            <div class="item-detail">Sunroof, tow package, running boards, floor mats, cargo liner — verify every item you negotiated is actually there.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Test all major features</div>
-            <div class="item-detail">Sunroof, heated seats, blind spot monitoring, backup camera, remote start. Test before you sign.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Check fuel level</div>
-            <div class="item-detail">New vehicle should have a full tank. If not, ask the dealership to fill it before delivery.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Verify spare tire is present</div>
-            <div class="item-detail">Check under the trunk floor or under the vehicle. Some vehicles have a tire inflator kit instead — confirm which one.</div>
-          </div>
-        </div>
-
+      <!-- Key Alert -->
+      <div class="key-alert" id="keyAlert">
+        <h4>⚠️ EVL Pro Tip — The Key Situation</h4>
+        <p>Many new vehicles today are delivered with only ONE key fob — even on $50,000+ purchases. Dealers rarely mention this upfront. A replacement key can cost $350–$500 after the fact.</p>
+        <p><strong>Ask this question before you sign anything:</strong></p>
+        <div class="key-script">"Before we finalize the deal, can you confirm how many keys this vehicle comes with? If it's only one, I'd like a second key included in the purchase price."</div>
       </div>
 
       <button class="next-btn" onclick="switchPhase(2)">
-        ✅ Pre-Finance Complete — Go to Drive-Away Checklist →
+        ✅ Ready — Take Me to the Delivery Protection Check →
       </button>
 
     </div>
 
-    <!-- PHASE 2: Before You Drive Away -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TAB 2: EVL DELIVERY PROTECTION CHECK   -->
+    <!-- ═══════════════════════════════════════ -->
     <div class="phase-panel" id="phase2">
 
       <div class="warning-box">
-        <strong>⚠️ Don't leave yet!</strong> Once you drive off the lot, it's very hard to come back for missing items. Take 5 minutes to complete this checklist.
+        <strong>⚠️ Complete this BEFORE you go into the finance office.</strong> Once you sign, it is very difficult to address vehicle condition issues. Walk through every item below with your salesperson right now.
       </div>
 
-      <!-- Section: Documents -->
+      <!-- Test Drive -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🏎️</span>
+          <span class="section-title">Test Drive — The Exact Vehicle You Are Buying</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">I test drove THIS exact vehicle — not a demo or similar model</div>
+            <div class="item-detail">Always insist on driving the actual vehicle you are purchasing. A demo may drive differently. This is your right as a buyer.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">No unusual sounds, vibrations, or warning lights during the test drive</div>
+            <div class="item-detail">Any noise, shimmy, pull, or warning light should be addressed BEFORE signing. Document anything unusual now.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Brakes feel firm and responsive</div>
+            <div class="item-detail">Spongy brakes, grinding, or pulling to one side are red flags. Test at various speeds.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">AC and heat both work properly</div>
+            <div class="item-detail">Test both systems regardless of the weather outside. Air conditioning issues are expensive to repair.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Exterior -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔍</span>
+          <span class="section-title">Exterior Walk-Around — Do This in Good Lighting</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Walked completely around the vehicle — all four sides</div>
+            <div class="item-detail">Start at the driver's front corner and walk clockwise. Check every panel, bumper, roof, and glass surface. Take photos of any marks you find.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All glass is free of chips, cracks, or damage</div>
+            <div class="item-detail">Windshield, rear window, all side windows, and sunroof if equipped. Even a small chip can spread into a full crack.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All four tires in good condition — no damage or uneven wear</div>
+            <div class="item-detail">Check tread depth and look for sidewall damage, bulges, or bubbles. Verify all four tires match in brand and size.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">VIN on the dashboard matches ALL paperwork</div>
+            <div class="item-detail">Look through the windshield at the dashboard plate. This 17-digit number must match your buyer's order, title application, and loan documents exactly.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Monroney/window sticker present and matches what was negotiated (new vehicles)</div>
+            <div class="item-detail">The window sticker is a federal requirement. It shows MSRP, all options, and fuel economy. Verify everything you negotiated is listed. For used vehicles — confirm you received the Buyers Guide showing warranty status.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Interior -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🪑</span>
+          <span class="section-title">Interior Inspection</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All seats, carpet, and headliner are free of tears, stains, or damage</div>
+            <div class="item-detail">Check every seat including the rear. Look at the headliner for sagging or stains. Check carpet under the floor mats.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All controls, buttons, and switches work correctly</div>
+            <div class="item-detail">Test every button on the dashboard, steering wheel, and doors. Power windows, locks, mirrors — test them all.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All seatbelts retract and latch properly</div>
+            <div class="item-detail">Check every seating position. A seatbelt that doesn't retract or latch is a safety issue and a warranty claim.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">No warning lights on after the engine starts</div>
+            <div class="item-detail">Start the engine and wait 30 seconds. All warning lights should go off. Any light that stays on must be explained by the dealer before you sign.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Technology -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">📱</span>
+          <span class="section-title">Technology & Features Verification</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Infotainment screen powers on and responds correctly</div>
+            <div class="item-detail">Touch the screen in multiple spots. Test the volume, navigation if equipped, and radio. Ask the salesperson to walk you through the basics now.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Backup camera displays clearly</div>
+            <div class="item-detail">Put the vehicle in reverse and verify the camera shows a clear image. Check that the guidelines display correctly.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Driver assistance features active — blind spot, lane keep, forward collision</div>
+            <div class="item-detail">If you paid for these features verify they are present and active. Have the salesperson demonstrate each one.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Remote start works (if equipped)</div>
+            <div class="item-detail">Test the remote start from the key fob before leaving the lot. Remote start issues are a common delivery complaint.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Heated and cooled seats work (if equipped)</div>
+            <div class="item-detail">Turn them on and verify you feel heat or cooling within 60 seconds. These are expensive to repair after the fact.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Spare Tire -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔧</span>
+          <span class="section-title">Spare Tire — Know What You Have Before You Need It</span>
+        </div>
+
+        <div class="alert-box">
+          <strong>⚠️ Important:</strong> Many new vehicles no longer include a spare tire. Instead they come with a tire inflation canister — a small compressor and sealant that only works on minor punctures. This surprises most customers when they get their first flat. Know what your vehicle has RIGHT NOW.
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Confirmed whether this vehicle has a spare tire OR an inflation canister</div>
+            <div class="item-detail">Ask your salesperson right now. Check under the trunk floor or under the vehicle. If it's a canister — ask if a spare tire can be added to the deal.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Jack and lug wrench are present (if spare tire equipped)</div>
+            <div class="item-detail">Used vehicles especially — the spare, jack, and lug wrench should all be in their proper storage location. Check now.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Keys -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔑</span>
+          <span class="section-title">Key Count — Verify Before You Sign</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Counted and tested ALL keys — know exactly how many you are receiving</div>
+            <div class="item-detail">Most new vehicles come with 2 key fobs. CPO vehicles should come with 2 as part of certification standards. Used vehicles vary. Test each key fob — lock, unlock, panic button, and remote start if applicable. If you're only getting 1 key — negotiate a second key NOW before you go into the finance office.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- We-Owe -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">📝</span>
+          <span class="section-title">We-Owe Items — Document Everything Now</span>
+        </div>
+
+        <div class="info-box">
+          <strong>What is a We-Owe?</strong> If anything was promised to you that isn't on the vehicle or ready today — floor mats, window tint, a repair, an accessory — it must be documented on a We-Owe form BEFORE you go into the finance office. You get a copy. The deal jacket gets a copy. The service department gets a copy. This is your legal protection.
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">All promised items are on the vehicle OR documented on a We-Owe form</div>
+            <div class="item-detail">Floor mats, tint, accessories, repairs — if it was promised and it's not there, get it in writing right now. Verbal promises made in the showroom disappear after you sign.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">I have my copy of the We-Owe form (if applicable)</div>
+            <div class="item-detail">The We-Owe form is created in triplicate. Your copy is your legal guarantee. Do not leave without it if any items are owed to you.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">I know who will contact me and when to schedule We-Owe items</div>
+            <div class="item-detail">Before you leave, get the name and direct number of the service advisor who will handle your We-Owe items. Ask: "When can I expect to hear from someone, and what should I do if I don't hear back within 5 business days?"</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CPO -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">✅</span>
+          <span class="section-title">Certified Pre-Owned — If Applicable</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Received a copy of the CPO inspection checklist</div>
+            <div class="item-detail">Every CPO vehicle goes through a multi-point inspection. You have the right to see what was inspected and what passed. Ask for this document — it belongs to you.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">CPO vehicle came with 2 keys as required by certification standards</div>
+            <div class="item-detail">Most manufacturer CPO programs require 2 keys as part of certification. If you only received 1, ask the dealer to provide the second before delivery.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dealer Delivery Form -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">✍️</span>
+          <span class="section-title">Dealer Delivery Form — Both Parties Sign</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Dealer delivery form completed — VIN, mileage, and condition documented</div>
+            <div class="item-detail">This form records the vehicle's condition, mileage, and key count at the exact moment of delivery. Both you and the salesperson sign it. You get a copy. This is your protection if any dispute arises later.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Service Vault Intro -->
+      <div class="vault-card">
+        <h3>🔐 Protect This Vehicle for Life</h3>
+        <p>Every item you just verified — the BITOP record, your Monroney sticker, your We-Owe form, your warranty booklets — belongs in your EVL Service Vault. We store everything, track your maintenance, find you the best service prices, and tell you the exact right time to trade or sell.</p>
+
+        <div class="vault-tiers">
+          <div class="vault-tier" onclick="selectTier(this, 'basic')">
+            <div class="tier-name">🔵 Basic</div>
+            <div class="tier-price">$99<span>/yr</span></div>
+            <div class="tier-tagline">Digital glove box — all your docs in one place</div>
+          </div>
+          <div class="vault-tier pro" onclick="selectTier(this, 'pro')">
+            <div class="tier-name">🟡 Pro</div>
+            <div class="tier-price">$199<span>/yr</span></div>
+            <div class="tier-tagline">Trade analytics + tire intelligence + coupon finder</div>
+          </div>
+          <div class="vault-tier elite" onclick="selectTier(this, 'elite')">
+            <div class="tier-name">⭐ Elite</div>
+            <div class="tier-price">$299<span>/yr</span></div>
+            <div class="tier-tagline">EVL advisor access + full ownership forensics</div>
+          </div>
+        </div>
+
+        <button class="vault-btn" onclick="enrollVault()">
+          🔐 Activate My Service Vault
+        </button>
+      </div>
+
+      <button class="next-btn" onclick="switchPhase(3)">
+        ✅ Protection Check Done — Go to Drive-Away Checklist →
+      </button>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TAB 3: BEFORE YOU DRIVE AWAY           -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="phase-panel" id="phase3">
+
+      <div class="warning-box">
+        <strong>⚠️ Don't pull out of that parking spot yet!</strong> Take 5 more minutes. Once you drive off the lot it becomes much harder to address missing items.
+      </div>
+
+      <!-- Documents -->
       <div class="section">
         <div class="section-header">
           <span class="section-icon">📋</span>
-          <span class="section-title">Documents — Take Everything With You</span>
+          <span class="section-title">Documents — Every Single One Before You Leave</span>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
             <div class="item-title">Buyer's order / purchase agreement</div>
-            <div class="item-detail">Your complete deal summary showing all numbers. This is your most important document. Do not leave without it.</div>
+            <div class="item-detail">Your complete deal summary showing every number. This is your most important document. Do not leave without it.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">All finance/loan documents</div>
-            <div class="item-detail">Your retail installment contract showing your rate, term, payment, and lender. Keep this in a safe place at home.</div>
+            <div class="item-title">Finance / loan documents</div>
+            <div class="item-detail">Your retail installment contract showing your interest rate, term, monthly payment, and lender. Keep this somewhere safe at home — not in the vehicle.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">⚠️ WARRANTY BOOKLETS AND BROCHURES</div>
-            <div class="item-detail">You paid potentially thousands of dollars for extended warranty, GAP, tire & wheel, and paint protection. Most customers leave without these documents and have NO IDEA what their coverage is. Demand every booklet before you leave.</div>
+            <div class="item-title">⚠️ WARRANTY BOOKLETS — The Most Forgotten Documents</div>
+            <div class="item-detail">You may have paid thousands of dollars for an extended warranty, GAP insurance, tire and wheel protection, and paint or fabric protection. Most customers leave without these booklets and have no idea what their coverage is or how to file a claim. Demand every single warranty booklet before you leave. Open your glove box right now and count them.</div>
           </div>
         </div>
 
@@ -647,142 +1060,195 @@
           <div class="checkbox"></div>
           <div class="item-content">
             <div class="item-title">GAP insurance documents (if purchased)</div>
-            <div class="item-detail">Shows your GAP provider, coverage amount, and how to file a claim if your vehicle is totaled.</div>
+            <div class="item-detail">Shows your GAP provider, policy number, coverage amount, and exactly how to file a claim if your vehicle is totaled. This document is critical — without it you may not know your coverage was ever purchased.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Tire & wheel protection documents (if purchased)</div>
-            <div class="item-detail">Shows what's covered, the provider, and how to make a claim. Keep in your glove box.</div>
+            <div class="item-title">Tire and wheel protection documents (if purchased)</div>
+            <div class="item-detail">Shows the provider, what is covered, and how to make a claim. Store this in your glove box — you'll need it when you hit a pothole.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Paint/fabric protection documents (if purchased)</div>
-            <div class="item-detail">Shows application warranty and re-application schedule. Often has a certificate you must keep.</div>
+            <div class="item-title">Owner's manual and all supplemental booklets</div>
+            <div class="item-detail">Usually in a pouch in the glove box. The factory warranty booklet is inside — keep it. It explains exactly what Toyota, Honda, Ford, or your manufacturer will cover and for how long.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Temporary tag / paper plate</div>
-            <div class="item-detail">Must be displayed in the rear window. Confirm expiration date — usually 30-60 days to get your permanent plates.</div>
+            <div class="item-title">My copy of the We-Owe form (if any items are owed)</div>
+            <div class="item-detail">This is your legal guarantee for anything still owed to you. Keep it somewhere you can find it easily.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Title application paperwork</div>
-            <div class="item-detail">Your copy of the title application. The title itself will be mailed to you or your lender.</div>
+            <div class="item-title">Temporary tag / paper plate confirmed and displayed</div>
+            <div class="item-detail">In Texas, the temporary tag is affixed to the rear license plate holder. Verify it is secured before leaving. Your permanent steel plate will come later — confirm with the dealer whether you pick it up or it will be mailed.</div>
           </div>
         </div>
 
       </div>
 
-      <!-- Section: Keys & Physical Items -->
+      <!-- Keys -->
       <div class="section">
         <div class="section-header">
           <span class="section-icon">🔑</span>
-          <span class="section-title">Keys & Physical Items</span>
+          <span class="section-title">Keys and Physical Items</span>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">ALL keys and key fobs for the new vehicle</div>
-            <div class="item-detail">Most new vehicles come with 2 key fobs. Verify the count and test each one before leaving.</div>
+            <div class="item-title">Counted ALL keys — they are all in my possession right now</div>
+            <div class="item-detail">Do a final count. All key fobs should be in your hand before you start the car to leave.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Owner's manual and supplemental booklets</div>
-            <div class="item-detail">Usually in a pouch in the glove box. Includes the factory warranty booklet — very important to keep.</div>
+            <div class="item-title">Floor mats installed in the vehicle (if purchased or included)</div>
+            <div class="item-detail">Check front and rear. If you paid for upgraded mats, verify they are the correct ones for your vehicle.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Floor mats (if purchased or included)</div>
-            <div class="item-detail">Check front and rear. If you paid for upgraded mats, make sure they're installed in the vehicle.</div>
+            <div class="item-title">License plate removed from trade-in vehicle</div>
+            <div class="item-detail">In Texas plates belong to the owner not the vehicle. If you traded in a vehicle, confirm you removed your plate before it left the lot.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">License plate from trade-in vehicle</div>
-            <div class="item-detail">In Texas, plates belong to the owner — not the vehicle. Remove your plate before leaving the trade.</div>
-          </div>
-        </div>
-
-        <div class="checklist-item" onclick="toggleItem(this)">
-          <div class="checkbox"></div>
-          <div class="item-content">
-            <div class="item-title">Salesperson's direct contact card</div>
-            <div class="item-detail">Get their cell number, not just the dealership's main line. You'll need it for follow-up issues.</div>
+            <div class="item-title">Salesperson's direct contact information</div>
+            <div class="item-detail">Get their personal cell number — not just the dealership main line. You will need it for follow-up on We-Owe items or questions.</div>
           </div>
         </div>
 
       </div>
 
-      <!-- Section: Last Steps -->
+      <!-- Service Advisor -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-icon">🔧</span>
+          <span class="section-title">Service Department Introduction</span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Met a service advisor by name before leaving</div>
+            <div class="item-detail">Best practice is for your salesperson to walk you into the service department and introduce you to a specific service advisor by name. This builds a relationship and ensures your We-Owe items and future maintenance are handled by someone who knows you.</div>
+          </div>
+        </div>
+
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Understand what your factory maintenance plan covers</div>
+            <div class="item-detail" id="maintenanceDetail">If you purchased a Toyota — ToyotaCare covers 2 years or 25,000 miles of scheduled maintenance including oil changes and tire rotations at no cost. Oil changes are at 10,000 mile intervals — not every 5,000 miles as many customers assume. ToyotaCare Plus extends this to 5 years or 75,000 miles for an additional cost. Ask your service advisor about your specific plan before you leave.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Last Steps -->
       <div class="section">
         <div class="section-header">
           <span class="section-icon">✅</span>
-          <span class="section-title">Last Steps Before You Drive Away</span>
+          <span class="section-title">Final Steps Before You Pull Away</span>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Connect your phone to Bluetooth</div>
-            <div class="item-detail">Do this now while the salesperson is available to help. Don't figure it out alone on the highway.</div>
-            <div class="tech-tip-btn" onclick="event.stopPropagation(); toggleTip('newBtTipBox')">📖 How to pair Bluetooth on my new vehicle</div>
-            <div class="item-tip" id="newBtTipBox"></div>
+            <div class="item-title">Connected my phone to Bluetooth</div>
+            <div class="item-detail">Do this now while the salesperson is available to help. Do not figure it out alone on the highway.</div>
+            <div class="tech-tip-btn" onclick="event.stopPropagation(); toggleTip('btNewTip')">📖 How to pair Bluetooth on my vehicle</div>
+            <div class="item-tip" id="btNewTip"></div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Set up navigation with your home address</div>
-            <div class="item-detail">Program your home address while you're still at the dealership. Ask the salesperson to help if needed.</div>
+            <div class="item-title">Set up navigation with my home address</div>
+            <div class="item-detail">Program your home address before leaving. Ask the salesperson for help if needed.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Adjust seat, mirrors, and steering wheel</div>
-            <div class="item-detail">Take a few minutes to get comfortable before driving. Many new vehicles have power adjustments — learn them now.</div>
+            <div class="item-title">Adjusted seat, mirrors, and steering wheel</div>
+            <div class="item-detail">Take a few minutes to get comfortable before driving. Save your settings if this vehicle has memory seat functions.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Take photos of the vehicle condition</div>
-            <div class="item-detail">Walk around and photograph any pre-existing marks or scratches. Protects you from being blamed later.</div>
+            <div class="item-title">Took photos of the vehicle — all four sides and interior</div>
+            <div class="item-detail">Date-stamped photos from your phone protect you from being blamed for pre-existing damage later. Take them right now in the dealership parking lot.</div>
           </div>
         </div>
 
         <div class="checklist-item" onclick="toggleItem(this)">
           <div class="checkbox"></div>
           <div class="item-content">
-            <div class="item-title">Transfer your toll tag to the new vehicle</div>
-            <div class="item-detail">Move your TxTag or EZPass to the new windshield. Update your account with the new license plate number.</div>
+            <div class="item-title">Transferred my toll tag to the new vehicle</div>
+            <div class="item-detail">Move your TxTag or EZPass transponder to the new windshield. Log into your account and update it with your new license plate number.</div>
           </div>
         </div>
 
+        <div class="checklist-item" onclick="toggleItem(this)">
+          <div class="checkbox"></div>
+          <div class="item-content">
+            <div class="item-title">Updated my insurance policy with the new VIN and removed the trade-in</div>
+            <div class="item-detail">Call your insurance agent today to add the new vehicle and remove the trade-in. Confirm your lender's required coverage levels are met.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Final Service Vault CTA -->
+      <div class="vault-card">
+        <h3>🔐 Your EVL Service Vault</h3>
+        <p>Store every document you just collected — Monroney, warranty booklets, buyer's order, We-Owe forms — in your EVL Service Vault. We track your maintenance, find you the best service prices, and tell you the exact right time to trade or sell your vehicle for maximum value.</p>
+
+        <div class="vault-tiers">
+          <div class="vault-tier" onclick="selectTier(this, 'basic')">
+            <div class="tier-name">🔵 Basic</div>
+            <div class="tier-price">$99<span>/yr</span></div>
+            <div class="tier-tagline">Document archive + maintenance reminders</div>
+          </div>
+          <div class="vault-tier pro" onclick="selectTier(this, 'pro')">
+            <div class="tier-name">🟡 Pro</div>
+            <div class="tier-price">$199<span>/yr</span></div>
+            <div class="tier-tagline">Trade analytics + tire intelligence + best service pricing</div>
+          </div>
+          <div class="vault-tier elite" onclick="selectTier(this, 'elite')">
+            <div class="tier-name">⭐ Elite</div>
+            <div class="tier-price">$299<span>/yr</span></div>
+            <div class="tier-tagline">EVL advisor access + ownership forensics + trade prep</div>
+          </div>
+        </div>
+
+        <button class="vault-btn" onclick="enrollVault()">
+          🔐 Activate My Service Vault
+        </button>
       </div>
 
       <button class="complete-btn" id="completeBtn" onclick="completeChecklist()">
@@ -811,119 +1277,75 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ── URL PARAMS ──
     const params = new URLSearchParams(window.location.search);
     const appointmentId = params.get('appointmentId');
     const customerName = params.get('customerName') || 'Valued Customer';
     const vehicleInfo = params.get('vehicleInfo') || 'Your New Vehicle';
-    const hasTrade = params.get('hasTrade') === 'true';
 
-    // ── POPULATE HERO ──
     document.getElementById('heroName').textContent = customerName;
     document.getElementById('heroVehicle').textContent = vehicleInfo;
 
-    // ── DETECT MAKE FOR TECH TIPS ──
     const make = detectMake(vehicleInfo);
     populateTechTips(make);
 
-    function detectMake(vehicleStr) {
-      const v = vehicleStr.toLowerCase();
+    function detectMake(v) {
+      v = v.toLowerCase();
       if (v.includes('toyota') || v.includes('camry') || v.includes('corolla') || v.includes('rav4') || v.includes('tacoma') || v.includes('tundra')) return 'toyota';
-      if (v.includes('honda') || v.includes('civic') || v.includes('accord') || v.includes('cr-v') || v.includes('pilot') || v.includes('odyssey')) return 'honda';
-      if (v.includes('nissan') || v.includes('altima') || v.includes('maxima') || v.includes('rogue') || v.includes('frontier') || v.includes('titan')) return 'nissan';
-      if (v.includes('ford') || v.includes('f-150') || v.includes('mustang') || v.includes('explorer') || v.includes('escape') || v.includes('bronco')) return 'ford';
-      if (v.includes('chevy') || v.includes('chevrolet') || v.includes('silverado') || v.includes('equinox') || v.includes('tahoe') || v.includes('traverse')) return 'chevy';
-      if (v.includes('gmc') || v.includes('sierra') || v.includes('terrain') || v.includes('yukon') || v.includes('acadia')) return 'gmc';
-      if (v.includes('ram') || v.includes('dodge') || v.includes('durango') || v.includes('charger') || v.includes('challenger')) return 'ram';
-      if (v.includes('hyundai') || v.includes('elantra') || v.includes('sonata') || v.includes('tucson') || v.includes('santa fe')) return 'hyundai';
-      if (v.includes('kia') || v.includes('sorento') || v.includes('telluride') || v.includes('sportage') || v.includes('soul')) return 'kia';
-      if (v.includes('lexus') || v.includes('rx') || v.includes('es') || v.includes('gx')) return 'lexus';
+      if (v.includes('honda') || v.includes('civic') || v.includes('accord') || v.includes('cr-v') || v.includes('pilot')) return 'honda';
+      if (v.includes('nissan') || v.includes('altima') || v.includes('rogue') || v.includes('frontier') || v.includes('titan')) return 'nissan';
+      if (v.includes('ford') || v.includes('f-150') || v.includes('mustang') || v.includes('explorer') || v.includes('escape')) return 'ford';
+      if (v.includes('chevy') || v.includes('chevrolet') || v.includes('silverado') || v.includes('equinox') || v.includes('tahoe')) return 'chevy';
+      if (v.includes('gmc') || v.includes('sierra') || v.includes('terrain') || v.includes('yukon')) return 'gmc';
+      if (v.includes('ram') || v.includes('dodge') || v.includes('durango') || v.includes('charger')) return 'ram';
+      if (v.includes('hyundai') || v.includes('elantra') || v.includes('sonata') || v.includes('tucson')) return 'hyundai';
+      if (v.includes('kia') || v.includes('sorento') || v.includes('telluride') || v.includes('sportage')) return 'kia';
+      if (v.includes('lexus')) return 'lexus';
       if (v.includes('bmw')) return 'bmw';
-      if (v.includes('mercedes') || v.includes('benz')) return 'mercedes';
+      if (v.includes('mercedes')) return 'mercedes';
       return 'generic';
     }
 
-    const techTips = {
-      toyota: {
-        nav: '<strong>Toyota Navigation Clear:</strong> Press the Home button → Settings → General → Delete Personal Data → Delete. Or go to Navigation → Map → Menu → Setup → Restore Default Settings.',
-        bt: '<strong>Toyota Bluetooth Unpair:</strong> Press Home → Setup → Bluetooth → Select your phone → Delete. Confirm deletion on screen.',
-        hl: '<strong>Toyota HomeLink Clear:</strong> Press and hold buttons 1 and 3 simultaneously for about 10 seconds until the indicator light flashes rapidly. All channels are now cleared.'
-      },
-      honda: {
-        nav: '<strong>Honda Navigation Clear:</strong> From the Home screen → Settings → System → Reset → Factory Data Reset. Or go to Navigation → Settings → Map & Vehicle → Reset Map Settings.',
-        bt: '<strong>Honda Bluetooth Unpair:</strong> Phone → Bluetooth → Paired Phones → Select phone → Delete. Confirm on the screen.',
-        hl: '<strong>Honda HomeLink Clear:</strong> Press and hold the two outer HomeLink buttons simultaneously for about 10 seconds until the indicator light changes from slow to rapid blinking.'
-      },
-      nissan: {
-        nav: '<strong>Nissan Navigation Clear:</strong> Press Menu → Settings → System → Reset → Restore to Default Settings. Select Yes to confirm.',
-        bt: '<strong>Nissan Bluetooth Unpair:</strong> Press Phone button → Settings → Bluetooth → Connected Devices → Select device → Delete.',
-        hl: '<strong>Nissan HomeLink Clear:</strong> Hold the two outer buttons for 10-20 seconds until the LED flashes rapidly. Release — all programming is cleared.'
-      },
-      ford: {
-        nav: '<strong>Ford SYNC Navigation Clear:</strong> SYNC → Settings → General → Master Reset. This clears all personal data, paired phones, and navigation history.',
-        bt: '<strong>Ford SYNC Bluetooth:</strong> SYNC → Settings → Bluetooth → Manage Bluetooth Devices → Select device → Delete.',
-        hl: '<strong>Ford HomeLink Clear:</strong> Hold the two outer buttons until the HomeLink indicator light flashes rapidly (about 10 seconds).'
-      },
-      chevy: {
-        nav: '<strong>Chevy/GMC Navigation Clear:</strong> Home → Settings → System → Factory Reset. Or Navigation → Settings → Reset → Restore Navigation Settings.',
-        bt: '<strong>Chevy Bluetooth:</strong> Home → Phone → Bluetooth → Paired Devices → Select → Delete Device.',
-        hl: '<strong>Chevy HomeLink Clear:</strong> Hold the two outer buttons simultaneously for 10 seconds until indicator flashes rapidly.'
-      },
-      gmc: {
-        nav: '<strong>GMC Navigation Clear:</strong> Home → Settings → System → Factory Reset. Or Navigation → Settings → Reset.',
-        bt: '<strong>GMC Bluetooth:</strong> Home → Phone → Bluetooth → Paired Devices → Select device → Delete.',
-        hl: '<strong>GMC HomeLink Clear:</strong> Hold outer two buttons for 10 seconds until light flashes rapidly.'
-      },
-      ram: {
-        nav: '<strong>RAM Uconnect Clear:</strong> Uconnect button → Settings → System Information → Reset Uconnect. This clears navigation favorites, Bluetooth, and all personal data.',
-        bt: '<strong>RAM Uconnect Bluetooth:</strong> Phone → Bluetooth → Paired Device List → Select → Forget Device.',
-        hl: '<strong>RAM HomeLink Clear:</strong> Hold the two outer HomeLink buttons for 10 seconds until the LED flashes rapidly.'
-      },
-      hyundai: {
-        nav: '<strong>Hyundai Navigation Clear:</strong> Settings → System → Factory Reset → Confirm. Clears all saved locations, paired devices, and preferences.',
-        bt: '<strong>Hyundai Bluetooth:</strong> Setup → Bluetooth → Bluetooth Connections → Select phone → Delete.',
-        hl: '<strong>Hyundai HomeLink Clear:</strong> Hold outer buttons for 10 seconds until indicator flashes rapidly.'
-      },
-      kia: {
-        nav: '<strong>Kia Navigation Clear:</strong> Setup → General → Factory Reset. Confirm to delete all personal data.',
-        bt: '<strong>Kia Bluetooth:</strong> Setup → Bluetooth → Bluetooth Connections → Select phone → Delete.',
-        hl: '<strong>Kia HomeLink Clear:</strong> Hold outer two buttons for 10 seconds until rapid flashing.'
-      },
-      lexus: {
-        nav: '<strong>Lexus Navigation Clear:</strong> Menu → Setup → General → Delete Personal Data. Or Navigation → Destination → Saved Locations → Delete All.',
-        bt: '<strong>Lexus Bluetooth:</strong> Menu → Setup → Bluetooth → Registered Devices → Select → Delete.',
-        hl: '<strong>Lexus HomeLink Clear:</strong> Hold outer buttons for 10 seconds until rapid flash.'
-      },
-      bmw: {
-        nav: '<strong>BMW iDrive Clear:</strong> iDrive Menu → Settings → General Settings → Reset Vehicle Data → Confirm. Clears navigation, Bluetooth, and profiles.',
-        bt: '<strong>BMW Bluetooth:</strong> iDrive → Communication → Telephone → Paired Devices → Select → Delete.',
-        hl: '<strong>BMW HomeLink Clear:</strong> Hold outer buttons for 10 seconds until light flashes rapidly.'
-      },
-      mercedes: {
-        nav: '<strong>Mercedes MBUX Clear:</strong> Home → Settings → System → Reset → Factory Reset. Clears all personal data and preferences.',
-        bt: '<strong>Mercedes Bluetooth:</strong> Home → Settings → Connections → Bluetooth → Paired Devices → Delete.',
-        hl: '<strong>Mercedes HomeLink Clear:</strong> Hold outer buttons for 10 seconds until rapid flash.'
-      },
-      generic: {
-        nav: '<strong>Navigation Clear:</strong> Go to your infotainment Settings → look for System Reset, Factory Reset, or Delete Personal Data. Consult your owner\'s manual under "Infotainment" for exact steps.',
-        bt: '<strong>Bluetooth Unpair:</strong> Go to Phone or Bluetooth Settings in your infotainment system → Paired Devices → Select your phone → Delete or Forget.',
-        hl: '<strong>HomeLink Clear:</strong> Hold the two outer HomeLink buttons simultaneously for about 10 seconds until the indicator light flashes rapidly.'
-      }
+    const btTips = {
+      toyota: '<strong>Toyota Bluetooth:</strong> Press Home → Setup → Bluetooth → Add New Device. On your phone go to Settings → Bluetooth and select your Toyota from the list.',
+      honda: '<strong>Honda Bluetooth:</strong> From Home screen → Phone → Bluetooth → Pair Phone. On your phone go to Settings → Bluetooth and select your Honda.',
+      nissan: '<strong>Nissan Bluetooth:</strong> Press Phone button → Connect Bluetooth Device. On your phone go to Settings → Bluetooth and select your Nissan.',
+      ford: '<strong>Ford SYNC Bluetooth:</strong> SYNC → Add Bluetooth Device. On your phone go to Settings → Bluetooth and select SYNC.',
+      chevy: '<strong>Chevy Bluetooth:</strong> Home → Phone → Bluetooth → Pair Device. On your phone go to Settings → Bluetooth and select your Chevy.',
+      gmc: '<strong>GMC Bluetooth:</strong> Home → Phone → Bluetooth → Pair Device. On your phone select your GMC from Bluetooth settings.',
+      ram: '<strong>RAM Uconnect Bluetooth:</strong> Press Phone button → Bluetooth → Add Device. On your phone go to Settings → Bluetooth and select Uconnect.',
+      hyundai: '<strong>Hyundai Bluetooth:</strong> Setup → Bluetooth → Bluetooth Connections → Add New. Select your Hyundai on your phone.',
+      kia: '<strong>Kia Bluetooth:</strong> Setup → Bluetooth → Add New Device. On your phone go to Settings → Bluetooth and select your Kia.',
+      lexus: '<strong>Lexus Bluetooth:</strong> Menu → Setup → Bluetooth → Register New Device. On your phone select your Lexus from Bluetooth settings.',
+      bmw: '<strong>BMW iDrive Bluetooth:</strong> iDrive Menu → Communication → Telephone → New Device. On your phone select your BMW.',
+      mercedes: '<strong>Mercedes Bluetooth:</strong> Home → Settings → Connections → Bluetooth → New Device. On your phone select your Mercedes.',
+      generic: '<strong>Bluetooth Pairing:</strong> Go to your infotainment Settings → Bluetooth → Add New Device or Pair Phone. Then on your phone go to Settings → Bluetooth and select your vehicle from the list.'
     };
 
     function populateTechTips(make) {
-      const tips = techTips[make] || techTips.generic;
-      document.getElementById('navTipBox').innerHTML = tips.nav;
-      document.getElementById('btTipBox').innerHTML = tips.bt;
-      document.getElementById('hlTipBox').innerHTML = tips.hl;
-      document.getElementById('newBtTipBox').innerHTML = tips.bt.replace('Unpair', 'Pair your phone to your new vehicle —').replace('Delete', 'Add New Device');
+      const tip = btTips[make] || btTips.generic;
+      document.getElementById('btNewTip').innerHTML = tip;
     }
 
-    // ── GLOBAL FUNCTIONS ──
+    let selectedTier = null;
+
+    window.selectTier = function(el, tier) {
+      document.querySelectorAll('.vault-tier').forEach(t => t.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedTier = tier;
+    };
+
+    window.enrollVault = function() {
+      if (!selectedTier) {
+        alert('Please select a Service Vault tier first.');
+        return;
+      }
+      const prices = { basic: 99, pro: 199, elite: 299 };
+      window.location.href = `/service-vault?tier=${selectedTier}&price=${prices[selectedTier]}&customerName=${encodeURIComponent(customerName)}&vehicleInfo=${encodeURIComponent(vehicleInfo)}`;
+    };
+
     window.toggleItem = function(el) {
       el.classList.toggle('checked');
-      const cb = el.querySelector('.checkbox');
-      cb.textContent = el.classList.contains('checked') ? '✓' : '';
+      el.querySelector('.checkbox').textContent = el.classList.contains('checked') ? '✓' : '';
       updateProgress();
     };
 
@@ -961,14 +1383,10 @@
             checklistCompletedAt: new Date()
           });
         }
-
         statusMsg.className = 'status-message success';
         statusMsg.textContent = '🎉 Congratulations! Enjoy your new ' + vehicleInfo + '. Thank you for trusting EVL!';
-
         setTimeout(() => { window.location.href = '/'; }, 3000);
-
       } catch (error) {
-        console.error('Checklist error:', error);
         statusMsg.className = 'status-message success';
         statusMsg.textContent = '🎉 Congratulations! Enjoy your new vehicle. Thank you for trusting EVL!';
         setTimeout(() => { window.location.href = '/'; }, 3000);
