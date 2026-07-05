@@ -817,6 +817,37 @@
     console.log('[fair-deal-worksheet] Loaded for appointment:', appointmentId);
 
     // ════════════════════════════════════════════════════════════════
+    // CONTENT GATE — requires valid appointmentId to access
+    // ════════════════════════════════════════════════════════════════
+
+    if (!appointmentId) {
+      document.body.innerHTML = `
+        <div style="background:#020203;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+          <div style="background:#090E17;border:2px solid #2B84FE;border-radius:20px;padding:50px 40px;text-align:center;max-width:520px;width:100%;">
+            <div style="font-size:48px;margin-bottom:16px;">🔐</div>
+            <h1 style="font-size:24px;font-weight:900;color:#ffffff;margin-bottom:12px;">EVL Members Only</h1>
+            <p style="font-size:15px;color:#C8D0DC;line-height:1.7;margin-bottom:28px;">The Fair Deal Worksheet contains insider automotive intelligence that EVL clients use to save thousands at the dealership. Access is included when you book an EVL appointment.</p>
+            <div style="background:rgba(43,132,254,0.1);border:1px solid #2B84FE;border-radius:12px;padding:20px;margin-bottom:28px;">
+              <div style="font-size:13px;color:#C8D0DC;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;font-weight:700;">What's Inside</div>
+              <div style="font-size:13px;color:#ffffff;line-height:1.8;text-align:left;">
+                ✓ Side-by-side deal comparison — EVL research vs dealer offer<br>
+                ✓ Deal Confidence Score — is this deal fair?<br>
+                ✓ Exact savings calculator for your deal<br>
+                ✓ Word-for-word negotiation scripts<br>
+                ✓ Finance office education — what to buy and what to skip
+              </div>
+            </div>
+            <a href="/find-my-car" style="display:block;width:100%;padding:16px;background:linear-gradient(135deg,#2B84FE,#1a6fd4);border:none;border-radius:12px;color:#ffffff;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:1px;cursor:pointer;text-decoration:none;margin-bottom:12px;">
+              📋 Book an EVL Appointment — Starting at $49
+            </a>
+            <a href="/" style="font-size:13px;color:#2B84FE;text-decoration:none;">← Return to Home</a>
+          </div>
+        </div>
+      `;
+      throw new Error('Access denied — no appointmentId');
+    }
+
+    // ════════════════════════════════════════════════════════════════
     // PRINT BUTTON
     // ════════════════════════════════════════════════════════════════
 
