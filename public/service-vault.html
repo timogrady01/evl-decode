@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVL Service Vault — Protect Your Vehicle Investment</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #020203;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: #000000;
+      padding: 20px;
+      border-bottom: 1px solid #2a3f5f;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .header h1 span { color: #2B84FE; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #090E17 0%, #070A12 100%);
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom: 1px solid #2a3f5f;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(43,132,254,0.15);
+      border: 1px solid #2B84FE;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2B84FE;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .hero h2 span { color: #2B84FE; }
+
+    .hero p {
+      font-size: 16px;
+      color: #C8D0DC;
+      max-width: 560px;
+      margin: 0 auto 30px;
+      line-height: 1.7;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat .number {
+      font-size: 28px;
+      font-weight: 900;
+      color: #2B84FE;
+    }
+
+    .hero-stat .label {
+      font-size: 12px;
+      color: #C8D0DC;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* What You Get */
+    .benefits-section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: #C8D0DC;
+      text-align: center;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .benefit-card {
+      background: #090E17;
+      border: 1px solid #2a3f5f;
+      border-radius: 14px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .benefit-card:hover { border-color: #2B84FE; }
+
+    .benefit-icon { font-size: 32px; margin-bottom: 12px; }
+
+    .benefit-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .benefit-desc {
+      font-size: 13px;
+      color: #C8D0DC;
+      line-height: 1.6;
+    }
+
+    .benefit-value {
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #00C853;
+    }
+
+    /* Pricing */
+    .pricing-section {
+      padding: 60px 20px;
+      background: #090E17;
+      border-top: 1px solid #2a3f5f;
+      border-bottom: 1px solid #2a3f5f;
+    }
+
+    .pricing-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .pricing-card {
+      background: #020203;
+      border: 2px solid #2a3f5f;
+      border-radius: 16px;
+      padding: 30px 24px;
+      text-align: center;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(43,132,254,0.15);
+    }
+
+    .pricing-card.featured {
+      border-color: #2B84FE;
+      background: rgba(43,132,254,0.05);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2B84FE;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .tier-icon { font-size: 36px; margin-bottom: 12px; }
+
+    .tier-name {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #C8D0DC;
+      margin-bottom: 4px;
+    }
+
+    .tier-tagline {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .tier-price {
+      font-size: 48px;
+      font-weight: 900;
+      color: #2B84FE;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .tier-price span {
+      font-size: 16px;
+      color: #C8D0DC;
+      font-weight: 400;
+    }
+
+    .tier-billing {
+      font-size: 12px;
+      color: #C8D0DC;
+      margin-bottom: 24px;
+    }
+
+    .tier-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    .tier-features li {
+      font-size: 13px;
+      color: #C8D0DC;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(42,63,95,0.5);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+
+    .tier-features li:last-child { border-bottom: none; }
+
+    .tier-features li .check { color: #00C853; font-size: 14px; min-width: 16px; }
+
+    .tier-savings {
+      font-size: 12px;
+      font-weight: 700;
+      color: #00C853;
+      margin-bottom: 20px;
+      padding: 8px;
+      background: rgba(0,200,83,0.1);
+      border-radius: 8px;
+    }
+
+    .select-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .select-btn.basic {
+      background: #2a3f5f;
+      color: #ffffff;
+    }
+
+    .select-btn.pro {
+      background: linear-gradient(135deg, #2B84FE, #1a6fd4);
+      color: #ffffff;
+    }
+
+    .select-btn.elite {
+      background: linear-gradient(135deg, #00C853, #00a844);
+      color: #ffffff;
+    }
+
+    .select-btn:hover { opacity: 0.9; }
+
+    /* Signup Form */
+    .signup-section {
+      padding: 60px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .signup-box {
+      background: #090E17;
+      border: 2px solid #2B84FE;
+      border-radius: 16px;
+      padding: 40px 30px;
+    }
+
+    .signup-box h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #2B84FE;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .signup-box p {
+      font-size: 14px;
+      color: #C8D0DC;
+      text-align: center;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .selected-tier-display {
+      background: rgba(43,132,254,0.1);
+      border: 1px solid #2B84FE;
+      border-radius: 10px;
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .selected-tier-display .tier-info {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .selected-tier-display .tier-cost {
+      font-size: 20px;
+      font-weight: 900;
+      color: #2B84FE;
+    }
+
+    .change-tier {
+      font-size: 12px;
+      color: #2B84FE;
+      cursor: pointer;
+      text-decoration: underline;
+      display: block;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #C8D0DC;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #020203;
+      border: 1px solid #2a3f5f;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus { border-color: #2B84FE; }
+
+    .form-group input::placeholder { color: #4a5f7f; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #2B84FE, #1a6fd4);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn:hover { opacity: 0.9; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-note {
+      font-size: 12px;
+      color: #C8D0DC;
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    .status-message {
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .status-message.success {
+      background: rgba(0,200,83,0.15);
+      border: 1px solid #00C853;
+      color: #00C853;
+      display: block;
+    }
+
+    .status-message.error {
+      background: rgba(255,59,48,0.15);
+      border: 1px solid #ff3b30;
+      color: #ff3b30;
+      display: block;
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 60px 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      border-top: 1px solid #2a3f5f;
+    }
+
+    .faq-item {
+      background: #090E17;
+      border: 1px solid #2a3f5f;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 18px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      padding: 0 20px;
+      font-size: 13px;
+      color: #C8D0DC;
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .faq-answer.open {
+      max-height: 200px;
+      padding: 0 20px 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>EXPRESS <span>VEHICLE</span> LOCATORS</h1>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">🔐 EVL Service Vault</div>
+    <h2>Your Vehicle Is a <span>Major Investment.</span><br>Protect It Like One.</h2>
+    <p>Most vehicle owners lose thousands at trade-in time because they have no records, no documentation, and no idea when to sell. EVL Service Vault changes that — permanently.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="number">$2,400+</div>
+        <div class="label">Avg. saved at trade-in</div>
+      </div>
+      <div class="hero-stat">
+        <div class="number">$800+</div>
+        <div class="label">Avg. saved on service/yr</div>
+      </div>
+      <div class="hero-stat">
+        <div class="number">100%</div>
+        <div class="label">Documents always found</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <div class="benefits-section">
+    <div class="section-title">Everything Your Dealership Won't Tell You</div>
+    <div class="section-subtitle">EVL Service Vault gives you the same intelligence that automotive professionals use — to protect your investment from day one.</div>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">📁</div>
+        <div class="benefit-title">Complete Document Archive</div>
+        <div class="benefit-desc">Every important document stored permanently — Monroney sticker, warranty booklets, buyer's order, We-Owe forms, service records. Never lose a document again.</div>
+        <div class="benefit-value">💰 Dealers pay MORE for documented vehicles at trade-in</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">📈</div>
+        <div class="benefit-title">Best Time to Trade Analytics</div>
+        <div class="benefit-desc">EVL monitors your vehicle's depreciation curve and market conditions. We alert you when your vehicle hits its peak resale value — so you never trade too early or too late.</div>
+        <div class="benefit-value">💰 Avg. $2,400 more at trade-in with perfect timing</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🔧</div>
+        <div class="benefit-title">Maintenance Intelligence</div>
+        <div class="benefit-desc">We track every service interval and find you the best price — including at competitor dealerships and independent shops. We even find and apply coupons automatically.</div>
+        <div class="benefit-value">💰 Avg. $800+ saved per year on service costs</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🏎️</div>
+        <div class="benefit-title">Tire Intelligence</div>
+        <div class="benefit-desc">We monitor your tire wear by mileage and alert you before it becomes a safety issue. Then we price-compare across Discount Tire, Costco, dealer service, and independents to find you the best deal.</div>
+        <div class="benefit-value">💰 Avg. $200-400 saved per tire replacement</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🏷️</div>
+        <div class="benefit-title">Original Window Sticker Archive</div>
+        <div class="benefit-desc">Your Monroney sticker is permanently saved in your vault. When it's time to trade, you can prove every option and upgrade that was on the vehicle — adding real, provable value.</div>
+        <div class="benefit-value">💰 Documented options = higher trade-in offers</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <div class="benefit-title">Trade Preparation Package</div>
+        <div class="benefit-desc">When it's time to trade or sell, EVL tells you exactly what to fix, what NOT to fix, and what your vehicle is worth before you walk into any dealership. Knowledge is leverage.</div>
+        <div class="benefit-value">💰 Never get lowballed on a trade again</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="pricing-section">
+    <div class="pricing-container">
+      <div class="section-title">Choose Your Protection Level</div>
+      <div class="section-subtitle">All plans include a 30-day satisfaction guarantee. Cancel anytime.</div>
+
+      <div class="pricing-grid">
+
+        <!-- Basic -->
+        <div class="pricing-card">
+          <div class="tier-icon">🔵</div>
+          <div class="tier-name">Basic</div>
+          <div class="tier-tagline">Your Digital Glove Box</div>
+          <div class="tier-price">$99<span>/yr</span></div>
+          <div class="tier-billing">Less than $8.25/month</div>
+          <div class="tier-savings">Saves avg. $400+ per year</div>
+          <ul class="tier-features">
+            <li><span class="check">✓</span>Complete document archive — all your vehicle docs in one secure place</li>
+            <li><span class="check">✓</span>Monroney / window sticker permanently stored</li>
+            <li><span class="check">✓</span>Warranty booklet storage and reminders</li>
+            <li><span class="check">✓</span>Maintenance reminders by mileage and time</li>
+            <li><span class="check">✓</span>We-Owe documentation and tracking</li>
+            <li><span class="check">✓</span>BITOP delivery record archived</li>
+            <li><span class="check">✓</span>Email support</li>
+          </ul>
+          <button class="select-btn basic" onclick="selectTier('Basic', 99)">Get Started — $99/yr</button>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card featured">
+          <div class="popular-badge">⭐ Most Popular</div>
+          <div class="tier-icon">🟡</div>
+          <div class="tier-name">Pro</div>
+          <div class="tier-tagline">Your Vehicle Intelligence System</div>
+          <div class="tier-price">$199<span>/yr</span></div>
+          <div class="tier-billing">Less than $16.60/month</div>
+          <div class="tier-savings">Saves avg. $1,200+ per year</div>
+          <ul class="tier-features">
+            <li><span class="check">✓</span>Everything in Basic</li>
+            <li><span class="check">✓</span>Best time to trade analytics — we tell you exactly when to sell</li>
+            <li><span class="check">✓</span>Tire intelligence — price comparison across all providers</li>
+            <li><span class="check">✓</span>Service coupon finder — best price even at a competitor</li>
+            <li><span class="check">✓</span>Depreciation curve monitoring with alerts</li>
+            <li><span class="check">✓</span>Market value tracking — know what your vehicle is worth monthly</li>
+            <li><span class="check">✓</span>Priority email support</li>
+          </ul>
+          <button class="select-btn pro" onclick="selectTier('Pro', 199)">Get Started — $199/yr</button>
+        </div>
+
+        <!-- Elite -->
+        <div class="pricing-card">
+          <div class="tier-icon">⭐</div>
+          <div class="tier-name">Elite</div>
+          <div class="tier-tagline">Your Automotive Advisor On Call</div>
+          <div class="tier-price">$299<span>/yr</span></div>
+          <div class="tier-billing">Less than $24.92/month</div>
+          <div class="tier-savings">Saves avg. $3,000+ per year</div>
+          <ul class="tier-features">
+            <li><span class="check">✓</span>Everything in Pro</li>
+            <li><span class="check">✓</span>EVL advisor access — real automotive professionals review your situation</li>
+            <li><span class="check">✓</span>Complete ownership forensics — full vehicle history compiled and organized</li>
+            <li><span class="check">✓</span>Trade preparation package — we tell you exactly what to fix and what not to fix</li>
+            <li><span class="check">✓</span>All upgrades and modifications documented with proof of value</li>
+            <li><span class="check">✓</span>F&I product review — were your finance office products worth it?</li>
+            <li><span class="check">✓</span>Direct advisor phone and email access</li>
+          </ul>
+          <button class="select-btn elite" onclick="selectTier('Elite', 299)">Get Started — $299/yr</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Form -->
+  <div class="signup-section">
+    <div class="signup-box" id="signupBox" style="display:none;">
+      <h3>🔐 Activate Your Service Vault</h3>
+      <p>Fill in your information below and an EVL advisor will contact you within 24 hours to activate your vault and walk you through everything included.</p>
+
+      <div class="selected-tier-display">
+        <div class="tier-info" id="selectedTierDisplay">— Select a plan above —</div>
+        <div class="tier-cost" id="selectedTierCost"></div>
+      </div>
+      <span class="change-tier" onclick="changeTier()">← Change plan</span>
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="vaultName" placeholder="Your full name" />
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="vaultEmail" placeholder="your@email.com" />
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="vaultPhone" placeholder="(469) 555-0000" />
+      </div>
+
+      <div class="form-group">
+        <label>Your Vehicle (Year, Make, Model)</label>
+        <input type="text" id="vaultVehicle" placeholder="e.g. 2023 Honda Civic" />
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitVault()">
+        🔐 Activate My Service Vault
+      </button>
+
+      <div class="form-note">
+        An EVL advisor will contact you within 24 hours. No payment is collected until your vault is fully activated and you are completely satisfied.
+      </div>
+
+      <div class="status-message" id="vaultStatus"></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="section-title" style="margin-bottom:30px;">Frequently Asked Questions</div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        What documents should I upload to my vault? <span>+</span>
+      </div>
+      <div class="faq-answer">Your Monroney/window sticker, buyer's order, all warranty booklets, GAP insurance documents, tire and wheel protection, paint protection, We-Owe forms, service records, and any modification receipts. EVL will guide you through uploading everything at activation.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        How does the trade-in timing analytics work? <span>+</span>
+      </div>
+      <div class="faq-answer">EVL monitors your vehicle's depreciation curve against current market conditions for your specific year, make, model, mileage, and region. We alert you when the data shows your vehicle is at peak resale value — before it depreciates further. This is the same intelligence automotive professionals use internally.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        Can you really find better service prices than my dealer? <span>+</span>
+      </div>
+      <div class="faq-answer">Yes — and we will even send you to a competitor dealership or independent shop if the price is better. EVL's loyalty is to the customer, not the dealer. We find current coupons, service specials, and compare prices across all providers in your area for every service your vehicle needs.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        What if I already have my documents scattered everywhere? <span>+</span>
+      </div>
+      <div class="faq-answer">That is exactly why the vault exists. Your EVL advisor will walk you through a document recovery process at activation — identifying what you have, what you are missing, and how to obtain copies of missing documents from the dealership or DMV.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        Is there a contract or cancellation fee? <span>+</span>
+      </div>
+      <div class="faq-answer">No contract, no cancellation fee. You can cancel anytime within the first 30 days for a full refund. After 30 days your annual subscription runs its course and simply does not renew unless you choose to continue.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        What is included in the Elite EVL advisor access? <span>+</span>
+      </div>
+      <div class="faq-answer">Elite members get direct access to a seasoned automotive professional — the same people who work inside high-volume dealerships every day. They review your specific situation: your deal, your trade, your service history, and your options — and give you straight answers with no agenda other than your best interest.</div>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.appspot.com",
+      messagingSenderId: "637284038819",
+      appId: "1:637284038819:web:f57c9d21efc62c6ac890e9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Pre-fill from URL params if coming from deal checklist
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('customerName')) {
+      document.getElementById('vaultName').value = params.get('customerName');
+    }
+    if (params.get('vehicleInfo')) {
+      document.getElementById('vaultVehicle').value = params.get('vehicleInfo');
+    }
+    if (params.get('tier')) {
+      const tierMap = { basic: 99, pro: 199, elite: 299 };
+      const tier = params.get('tier');
+      const price = tierMap[tier] || 99;
+      selectTierInternal(tier.charAt(0).toUpperCase() + tier.slice(1), price);
+    }
+
+    window.selectTier = function(tier, price) {
+      selectTierInternal(tier, price);
+      document.getElementById('signupBox').style.display = 'block';
+      document.getElementById('signupBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
+    function selectTierInternal(tier, price) {
+      document.getElementById('selectedTierDisplay').textContent = tier + ' Plan';
+      document.getElementById('selectedTierCost').textContent = '$' + price + '/yr';
+      document.getElementById('signupBox').dataset.tier = tier;
+      document.getElementById('signupBox').dataset.price = price;
+    }
+
+    window.changeTier = function() {
+      document.getElementById('signupBox').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.submitVault = async function() {
+      const name = document.getElementById('vaultName').value.trim();
+      const email = document.getElementById('vaultEmail').value.trim();
+      const phone = document.getElementById('vaultPhone').value.trim();
+      const vehicle = document.getElementById('vaultVehicle').value.trim();
+      const tier = document.getElementById('signupBox').dataset.tier;
+      const price = document.getElementById('signupBox').dataset.price;
+      const statusMsg = document.getElementById('vaultStatus');
+      const btn = document.getElementById('submitBtn');
+
+      if (!name || !email || !phone) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Please fill in your name, email, and phone number.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      try {
+        await addDoc(collection(db, 'evl_vault_signups'), {
+          customerName: name,
+          customerEmail: email,
+          customerPhone: phone,
+          vehicleInfo: vehicle,
+          selectedTier: tier,
+          tierPrice: price,
+          submittedAt: new Date(),
+          status: 'pending'
+        });
+
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '✅ Thank you ' + name + '! An EVL advisor will contact you within 24 hours to activate your ' + tier + ' Service Vault.';
+        btn.textContent = '✅ Request Submitted!';
+
+      } catch (error) {
+        console.error('Vault signup error:', error);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Something went wrong. Please call EVL directly to activate your vault.';
+        btn.disabled = false;
+        btn.textContent = '🔐 Activate My Service Vault';
+      }
+    };
+
+    window.toggleFAQ = function(el) {
+      const answer = el.nextElementSibling;
+      const icon = el.querySelector('span');
+      answer.classList.toggle('open');
+      icon.textContent = answer.classList.contains('open') ? '−' : '+';
+    };
+  </script>
+
+</body>
+</html>
