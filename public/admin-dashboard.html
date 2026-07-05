@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVL Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #020203;
+      --s1: #090E17;
+      --s2: #070A12;
+      --blue: #2B84FE;
+      --green: #00C853;
+      --red: #FF3333;
+      --gold: #FFB800;
+      --white: #ffffff;
+      --gray: #C8D0DC;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: #000000;
+      padding: 16px 24px;
+      border-bottom: 2px solid rgba(43,132,254,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .logo span { color: var(--blue); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      background: rgba(255,184,0,0.1);
+      border: 1px solid rgba(255,184,0,0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .refresh-btn {
+      background: rgba(43,132,254,0.15);
+      border: 1px solid var(--blue);
+      border-radius: 8px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .refresh-btn:hover { background: rgba(43,132,254,0.25); }
+
+    /* ── PIN GATE ── */
+    .pin-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .pin-box {
+      background: var(--s1);
+      border: 2px solid var(--blue);
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+    }
+
+    .pin-box .icon { font-size: 48px; margin-bottom: 16px; }
+    .pin-box h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+    .pin-box p { font-size: 14px; color: var(--gray); margin-bottom: 28px; line-height: 1.6; }
+
+    .pin-input {
+      width: 100%;
+      padding: 16px;
+      background: var(--bg);
+      border: 2px solid #2a3f5f;
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 24px;
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .pin-input:focus { border-color: var(--blue); }
+
+    .pin-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--blue), #1a6fd4);
+      border: none;
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 800;
+      font-family: 'Barlow', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .pin-btn:hover { opacity: 0.9; }
+    .pin-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+
+    /* ── DASHBOARD ── */
+    .dashboard { display: none; }
+
+    /* Stats bar */
+    .stats-bar {
+      background: var(--s1);
+      border-bottom: 1px solid #2a3f5f;
+      padding: 20px 24px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-chip {
+      background: var(--bg);
+      border: 1px solid #2a3f5f;
+      border-radius: 10px;
+      padding: 12px 20px;
+      text-align: center;
+      min-width: 120px;
+    }
+
+    .stat-chip .num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-chip .lbl {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-chip.blue .num { color: var(--blue); }
+    .stat-chip.green .num { color: var(--green); }
+    .stat-chip.gold .num { color: var(--gold); }
+    .stat-chip.red .num { color: var(--red); }
+
+    /* Tab bar */
+    .tab-bar {
+      background: var(--s1);
+      border-bottom: 1px solid #2a3f5f;
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 14px 20px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--gray);
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Barlow', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tab-btn:hover { color: var(--white); }
+    .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    /* Content area */
+    .content { padding: 24px; max-width: 1100px; margin: 0 auto; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Section title */
+    .section-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-count {
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    /* Cards */
+    .card-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .lead-card {
+      background: var(--s1);
+      border: 1px solid #2a3f5f;
+      border-radius: 12px;
+      padding: 18px 20px;
+      transition: border-color 0.2s;
+    }
+
+    .lead-card:hover { border-color: var(--blue); }
+
+    .lead-card.new { border-left: 4px solid var(--blue); }
+    .lead-card.called { border-left: 4px solid var(--green); }
+    .lead-card.vault { border-left: 4px solid var(--gold); }
+
+    .lead-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .lead-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--white);
+    }
+
+    .lead-time {
+      font-size: 11px;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .lead-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .detail-chip {
+      background: var(--bg);
+      border: 1px solid #2a3f5f;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .detail-chip strong { color: var(--white); }
+
+    .lead-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Barlow', sans-serif;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .action-btn:hover { opacity: 0.85; }
+    .action-btn.call { background: var(--green); color: #000; }
+    .action-btn.email { background: var(--blue); color: #fff; }
+    .action-btn.mark { background: #2a3f5f; color: var(--white); }
+    .action-btn.sms { background: var(--gold); color: #000; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-new { background: rgba(43,132,254,0.2); color: var(--blue); }
+    .badge-called { background: rgba(0,200,83,0.2); color: var(--green); }
+    .badge-pending { background: rgba(255,184,0,0.2); color: var(--gold); }
+    .badge-checkedin { background: rgba(0,200,83,0.2); color: var(--green); }
+    .badge-scheduled { background: rgba(43,132,254,0.15); color: var(--blue); }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+
+    .empty-state .icon { font-size: 40px; margin-bottom: 14px; }
+    .empty-state p { font-size: 14px; line-height: 1.6; }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(43,132,254,0.3);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 600px) {
+      .stats-bar { gap: 12px; }
+      .stat-chip { min-width: 90px; padding: 10px 14px; }
+      .content { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">EXPRESS <span>VEHICLE</span> LOCATORS</div>
+    <div class="header-right">
+      <span class="admin-badge">⚙️ Admin</span>
+      <button class="refresh-btn" onclick="loadAllData()">↺ Refresh</button>
+    </div>
+  </div>
+
+  <!-- PIN GATE -->
+  <div class="pin-gate" id="pinGate">
+    <div class="pin-box">
+      <div class="icon">🔐</div>
+      <h2>EVL Admin Access</h2>
+      <p>Enter your 4-digit PIN to access the dashboard.</p>
+      <input type="password" class="pin-input" id="pinInput" maxlength="4" placeholder="••••"
+        onkeyup="if(event.key==='Enter') checkPin()" />
+      <button class="pin-btn" onclick="checkPin()">Enter Dashboard</button>
+      <div class="pin-error" id="pinError">Incorrect PIN. Please try again.</div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat-chip blue">
+        <div class="num" id="statLeads">—</div>
+        <div class="lbl">New Leads</div>
+      </div>
+      <div class="stat-chip green">
+        <div class="num" id="statAppts">—</div>
+        <div class="lbl">Appointments</div>
+      </div>
+      <div class="stat-chip gold">
+        <div class="num" id="statVault">—</div>
+        <div class="lbl">Vault Signups</div>
+      </div>
+      <div class="stat-chip green">
+        <div class="num" id="statCheckedIn">—</div>
+        <div class="lbl">Checked In</div>
+      </div>
+      <div class="stat-chip blue">
+        <div class="num" id="statToday">—</div>
+        <div class="lbl">Today's Activity</div>
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('leads')">🚗 Leads</button>
+      <button class="tab-btn" onclick="switchTab('appointments')">📅 Appointments</button>
+      <button class="tab-btn" onclick="switchTab('checkins')">✅ Check-Ins</button>
+      <button class="tab-btn" onclick="switchTab('vault')">🔐 Vault Signups</button>
+    </div>
+
+    <div class="content">
+
+      <!-- LEADS TAB -->
+      <div class="tab-panel active" id="panel-leads">
+        <div class="section-hdr">
+          <div class="section-title">🚗 Find My Vehicle Leads</div>
+          <div class="section-count" id="leadsCount"></div>
+        </div>
+        <div class="loading" id="leadsLoading"><span class="spinner"></span>Loading leads...</div>
+        <div class="card-list" id="leadsList"></div>
+        <div class="empty-state" id="leadsEmpty" style="display:none;">
+          <div class="icon">📭</div>
+          <p>No leads yet. When customers submit the Find My Vehicle form they'll appear here.</p>
+        </div>
+      </div>
+
+      <!-- APPOINTMENTS TAB -->
+      <div class="tab-panel" id="panel-appointments">
+        <div class="section-hdr">
+          <div class="section-title">📅 Appointments</div>
+          <div class="section-count" id="apptsCount"></div>
+        </div>
+        <div class="loading" id="apptsLoading"><span class="spinner"></span>Loading appointments...</div>
+        <div class="card-list" id="apptsList"></div>
+        <div class="empty-state" id="apptsEmpty" style="display:none;">
+          <div class="icon">📅</div>
+          <p>No appointments yet.</p>
+        </div>
+      </div>
+
+      <!-- CHECK-INS TAB -->
+      <div class="tab-panel" id="panel-checkins">
+        <div class="section-hdr">
+          <div class="section-title">✅ Customer Check-Ins</div>
+          <div class="section-count" id="checkinsCount"></div>
+        </div>
+        <div class="loading" id="checkinsLoading"><span class="spinner"></span>Loading check-ins...</div>
+        <div class="card-list" id="checkinsList"></div>
+        <div class="empty-state" id="checkinsEmpty" style="display:none;">
+          <div class="icon">✅</div>
+          <p>No check-ins yet. Customers who arrive at the dealership will appear here.</p>
+        </div>
+      </div>
+
+      <!-- VAULT TAB -->
+      <div class="tab-panel" id="panel-vault">
+        <div class="section-hdr">
+          <div class="section-title">🔐 Service Vault Signups</div>
+          <div class="section-count" id="vaultCount"></div>
+        </div>
+        <div class="loading" id="vaultLoading"><span class="spinner"></span>Loading vault signups...</div>
+        <div class="card-list" id="vaultList"></div>
+        <div class="empty-state" id="vaultEmpty" style="display:none;">
+          <div class="icon">🔐</div>
+          <p>No vault signups yet.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, getDocs, doc, updateDoc, query, orderBy, limit } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.appspot.com",
+      messagingSenderId: "637284038819",
+      appId: "1:637284038819:web:f57c9d21efc62c6ac890e9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ── PIN CHECK ──
+    window.checkPin = function() {
+      const pin = document.getElementById('pinInput').value;
+      if (pin === '1027') {
+        document.getElementById('pinGate').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        loadAllData();
+      } else {
+        document.getElementById('pinError').style.display = 'block';
+        document.getElementById('pinInput').value = '';
+        document.getElementById('pinInput').focus();
+      }
+    };
+
+    // ── TAB SWITCHING ──
+    window.switchTab = function(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+    };
+
+    // ── LOAD ALL DATA ──
+    window.loadAllData = async function() {
+      await Promise.all([
+        loadLeads(),
+        loadAppointments(),
+        loadVault()
+      ]);
+    };
+
+    // ── FORMAT DATE ──
+    function formatDate(ts) {
+      if (!ts) return '—';
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      const now = new Date();
+      const diff = Math.floor((now - d) / 60000); // minutes
+      if (diff < 1) return 'Just now';
+      if (diff < 60) return diff + 'm ago';
+      if (diff < 1440) return Math.floor(diff/60) + 'h ago';
+      return d.toLocaleDateString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
+    }
+
+    function isToday(ts) {
+      if (!ts) return false;
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      const now = new Date();
+      return d.toDateString() === now.toDateString();
+    }
+
+    // ── LOAD LEADS ──
+    async function loadLeads() {
+      const loading = document.getElementById('leadsLoading');
+      const list = document.getElementById('leadsList');
+      const empty = document.getElementById('leadsEmpty');
+      loading.style.display = 'block';
+      list.innerHTML = '';
+
+      try {
+        const q = query(collection(db, 'evl_leads'), orderBy('submittedAt', 'desc'), limit(50));
+        const snap = await getDocs(q);
+        loading.style.display = 'none';
+
+        if (snap.empty) { empty.style.display = 'block'; return; }
+
+        let newCount = 0;
+        let todayCount = 0;
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          const id = docSnap.id;
+          if (d.status === 'new-call-requested') newCount++;
+          if (isToday(d.submittedAt)) todayCount++;
+
+          const card = document.createElement('div');
+          card.className = 'lead-card ' + (d.status === 'called' ? 'called' : 'new');
+          card.innerHTML = `
+            <div class="lead-top">
+              <div>
+                <div class="lead-name">${d.customerName || '—'}</div>
+                <span class="status-badge ${d.status === 'called' ? 'badge-called' : 'badge-new'}">${d.status === 'called' ? '✓ Called' : '🆕 New'}</span>
+              </div>
+              <div class="lead-time">${formatDate(d.submittedAt)}</div>
+            </div>
+            <div class="lead-details">
+              <div class="detail-chip">📞 <strong>${d.customerPhone || '—'}</strong></div>
+              <div class="detail-chip">✉️ <strong>${d.customerEmail || '—'}</strong></div>
+              <div class="detail-chip">💰 <strong>${d.bucket || 'Find My Vehicle'} — $${d.bucketPrice || 49}</strong></div>
+            </div>
+            <div class="lead-actions">
+              <button class="action-btn call" onclick="window.open('tel:${d.customerPhone}')">📞 Call</button>
+              <button class="action-btn email" onclick="window.open('mailto:${d.customerEmail}')">✉️ Email</button>
+              <button class="action-btn mark" onclick="markLeadCalled('${id}', this)">✓ Mark Called</button>
+            </div>
+          `;
+          list.appendChild(card);
+        });
+
+        document.getElementById('statLeads').textContent = newCount;
+        document.getElementById('leadsCount').textContent = snap.size + ' total';
+        updateTodayCount(todayCount);
+
+      } catch (err) {
+        loading.style.display = 'none';
+        console.error('Leads error:', err);
+        list.innerHTML = '<div style="color:var(--red);padding:20px;">Error loading leads: ' + err.message + '</div>';
+      }
+    }
+
+    // ── LOAD APPOINTMENTS ──
+    async function loadAppointments() {
+      const loading = document.getElementById('apptsLoading');
+      const list = document.getElementById('apptsList');
+      const empty = document.getElementById('apptsEmpty');
+      loading.style.display = 'block';
+      list.innerHTML = '';
+
+      try {
+        const q = query(collection(db, 'evl_appointments'), orderBy('checkedInAt', 'desc'), limit(50));
+        const snap = await getDocs(q);
+        loading.style.display = 'none';
+
+        // Also try without orderBy if it fails
+        if (snap.empty) {
+          const q2 = query(collection(db, 'evl_appointments'), limit(50));
+          const snap2 = await getDocs(q2);
+          if (snap2.empty) { empty.style.display = 'block'; return; }
+          renderAppointments(snap2, list);
+          return;
+        }
+
+        renderAppointments(snap, list);
+
+      } catch (err) {
+        // Fallback without orderBy
+        try {
+          const snap2 = await getDocs(collection(db, 'evl_appointments'));
+          loading.style.display = 'none';
+          if (snap2.empty) { empty.style.display = 'block'; return; }
+          renderAppointments(snap2, list);
+        } catch (err2) {
+          loading.style.display = 'none';
+          list.innerHTML = '<div style="color:var(--red);padding:20px;">Error loading appointments.</div>';
+        }
+      }
+    }
+
+    function renderAppointments(snap, list) {
+      let scheduledCount = 0;
+      let checkedInCount = 0;
+
+      snap.forEach(docSnap => {
+        const d = docSnap.data();
+        const isCheckedIn = d.status === 'checked-in';
+        if (isCheckedIn) checkedInCount++;
+        else scheduledCount++;
+
+        const card = document.createElement('div');
+        card.className = 'lead-card ' + (isCheckedIn ? 'called' : 'new');
+        card.innerHTML = `
+          <div class="lead-top">
+            <div>
+              <div class="lead-name">${d.customerName || '—'}</div>
+              <span class="status-badge ${isCheckedIn ? 'badge-checkedin' : 'badge-scheduled'}">${isCheckedIn ? '✅ Checked In' : '📅 Scheduled'}</span>
+            </div>
+            <div class="lead-time">${d.appointmentDate || '—'} @ ${d.appointmentTime || '—'}</div>
+          </div>
+          <div class="lead-details">
+            <div class="detail-chip">🚗 <strong>${d.vehicleInfo || '—'}</strong></div>
+            <div class="detail-chip">📞 <strong>${d.customerPhone || '—'}</strong></div>
+            <div class="detail-chip">✉️ <strong>${d.customerEmail || '—'}</strong></div>
+            ${isCheckedIn ? '<div class="detail-chip">⏱️ <strong>Arrived: ' + (d.checkedInTime || '—') + '</strong></div>' : ''}
+          </div>
+          <div class="lead-actions">
+            <button class="action-btn call" onclick="window.open('tel:${d.customerPhone}')">📞 Call</button>
+            <button class="action-btn email" onclick="window.open('mailto:${d.customerEmail}')">✉️ Email</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      document.getElementById('statAppts').textContent = scheduledCount;
+      document.getElementById('statCheckedIn').textContent = checkedInCount;
+      document.getElementById('apptsCount').textContent = snap.size + ' total';
+
+      // Also render check-ins tab
+      renderCheckins(snap);
+    }
+
+    function renderCheckins(snap) {
+      const list = document.getElementById('checkinsList');
+      const empty = document.getElementById('checkinsEmpty');
+      const loading = document.getElementById('checkinsLoading');
+      loading.style.display = 'none';
+      list.innerHTML = '';
+
+      let count = 0;
+      snap.forEach(docSnap => {
+        const d = docSnap.data();
+        if (d.status !== 'checked-in') return;
+        count++;
+
+        const card = document.createElement('div');
+        card.className = 'lead-card called';
+        card.innerHTML = `
+          <div class="lead-top">
+            <div>
+              <div class="lead-name">${d.customerName || '—'}</div>
+              <span class="status-badge badge-checkedin">✅ Checked In ${d.checkedInTime ? 'at ' + d.checkedInTime : ''}</span>
+            </div>
+            <div class="lead-time">${d.appointmentDate || '—'}</div>
+          </div>
+          <div class="lead-details">
+            <div class="detail-chip">🚗 <strong>${d.vehicleInfo || '—'}</strong></div>
+            <div class="detail-chip">📞 <strong>${d.customerPhone || '—'}</strong></div>
+          </div>
+          <div class="lead-actions">
+            <button class="action-btn call" onclick="window.open('tel:${d.customerPhone}')">📞 Call</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      if (count === 0) empty.style.display = 'block';
+      document.getElementById('checkinsCount').textContent = count + ' today';
+    }
+
+    // ── LOAD VAULT SIGNUPS ──
+    async function loadVault() {
+      const loading = document.getElementById('vaultLoading');
+      const list = document.getElementById('vaultList');
+      const empty = document.getElementById('vaultEmpty');
+      loading.style.display = 'block';
+      list.innerHTML = '';
+
+      try {
+        const snap = await getDocs(collection(db, 'evl_vault_signups'));
+        loading.style.display = 'none';
+
+        if (snap.empty) { empty.style.display = 'block'; return; }
+
+        document.getElementById('statVault').textContent = snap.size;
+        document.getElementById('vaultCount').textContent = snap.size + ' total';
+
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          const tierColors = { Basic: 'var(--blue)', Pro: 'var(--gold)', Elite: 'var(--green)' };
+          const color = tierColors[d.selectedTier] || 'var(--blue)';
+
+          const card = document.createElement('div');
+          card.className = 'lead-card vault';
+          card.innerHTML = `
+            <div class="lead-top">
+              <div>
+                <div class="lead-name">${d.customerName || '—'}</div>
+                <span class="status-badge" style="background:rgba(255,184,0,0.15);color:${color};">
+                  🔐 ${d.selectedTier || '—'} — $${d.tierPrice || '—'}/yr
+                </span>
+              </div>
+              <div class="lead-time">${formatDate(d.submittedAt)}</div>
+            </div>
+            <div class="lead-details">
+              <div class="detail-chip">📞 <strong>${d.customerPhone || '—'}</strong></div>
+              <div class="detail-chip">✉️ <strong>${d.customerEmail || '—'}</strong></div>
+              <div class="detail-chip">🚗 <strong>${d.vehicleInfo || 'Not provided'}</strong></div>
+              <div class="detail-chip">📋 <strong>Status: ${d.status || 'pending'}</strong></div>
+            </div>
+            <div class="lead-actions">
+              <button class="action-btn call" onclick="window.open('tel:${d.customerPhone}')">📞 Call</button>
+              <button class="action-btn email" onclick="window.open('mailto:${d.customerEmail}')">✉️ Email</button>
+              <button class="action-btn mark" onclick="markVaultActivated('${docSnap.id}', this)">✓ Mark Activated</button>
+            </div>
+          `;
+          list.appendChild(card);
+        });
+
+      } catch (err) {
+        loading.style.display = 'none';
+        console.error('Vault error:', err);
+        list.innerHTML = '<div style="color:var(--red);padding:20px;">Error loading vault signups.</div>';
+      }
+    }
+
+    let todayTotal = 0;
+    function updateTodayCount(n) {
+      todayTotal += n;
+      document.getElementById('statToday').textContent = todayTotal;
+    }
+
+    // ── MARK ACTIONS ──
+    window.markLeadCalled = async function(id, btn) {
+      try {
+        await updateDoc(doc(db, 'evl_leads', id), { status: 'called', calledAt: new Date() });
+        btn.textContent = '✓ Called';
+        btn.style.background = 'var(--green)';
+        btn.style.color = '#000';
+        btn.disabled = true;
+        const card = btn.closest('.lead-card');
+        card.className = 'lead-card called';
+        const badge = card.querySelector('.status-badge');
+        if (badge) { badge.textContent = '✓ Called'; badge.className = 'status-badge badge-called'; }
+      } catch (err) {
+        alert('Error updating status. Please try again.');
+      }
+    };
+
+    window.markVaultActivated = async function(id, btn) {
+      try {
+        await updateDoc(doc(db, 'evl_vault_signups', id), { status: 'activated', activatedAt: new Date() });
+        btn.textContent = '✓ Activated';
+        btn.style.background = 'var(--green)';
+        btn.style.color = '#000';
+        btn.disabled = true;
+      } catch (err) {
+        alert('Error updating status.');
+      }
+    };
+  </script>
+
+</body>
+</html>
