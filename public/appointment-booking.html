@@ -328,6 +328,29 @@
     <!-- Booking form -->
     <div class="booking-form">
       <form id="bookingForm">
+
+        <!-- Name field — shown when not pre-populated from URL -->
+        <div class="form-group" id="nameFieldGroup">
+          <label for="customerNameInput">Your Full Name</label>
+          <input
+            type="text"
+            id="customerNameInput"
+            placeholder="Enter your full name"
+            style="width:100%;padding:14px 16px;background:#0d1829;border:2px solid #2a3f5f;border-radius:10px;color:#ffffff;font-size:15px;font-family:inherit;outline:none;"
+          />
+        </div>
+
+        <!-- Vehicle field — shown when not pre-populated from URL -->
+        <div class="form-group" id="vehicleFieldGroup">
+          <label for="vehicleInput">Vehicle of Interest (Year, Make, Model)</label>
+          <input
+            type="text"
+            id="vehicleInput"
+            placeholder="e.g. 2024 Toyota Camry XLE"
+            style="width:100%;padding:14px 16px;background:#0d1829;border:2px solid #2a3f5f;border-radius:10px;color:#ffffff;font-size:15px;font-family:inherit;outline:none;"
+          />
+        </div>
+
         <!-- Date picker -->
         <div class="form-group">
           <label for="appointmentDate">Appointment Date</label>
@@ -408,12 +431,25 @@
     // Get URL parameters (passed from verification page)
     const params = new URLSearchParams(window.location.search);
     const recordId = params.get('recordId');
-    const customerName = params.get('customerName') || 'Customer';
-    const vehicleInfo = params.get('vehicleInfo') || 'Your Vehicle';
+    const customerName = params.get('customerName') || '';
+    const vehicleInfo = params.get('vehicleInfo') || '';
 
-    // Display customer and vehicle info
-    document.getElementById('customerNameDisplay').textContent = customerName;
-    document.getElementById('vehicleDisplay').textContent = vehicleInfo;
+    // If customer info was passed in URL — display it and hide the input fields
+    if (customerName && customerName !== 'Customer') {
+      document.getElementById('customerNameDisplay').textContent = customerName;
+      document.getElementById('customerNameInput').value = customerName;
+      document.getElementById('nameFieldGroup').style.display = 'none';
+    } else {
+      document.getElementById('customerNameDisplay').textContent = '—';
+    }
+
+    if (vehicleInfo && vehicleInfo !== 'Your Vehicle') {
+      document.getElementById('vehicleDisplay').textContent = vehicleInfo;
+      document.getElementById('vehicleInput').value = vehicleInfo;
+      document.getElementById('vehicleFieldGroup').style.display = 'none';
+    } else {
+      document.getElementById('vehicleDisplay').textContent = '—';
+    }
 
     // ══════════════════════════════════════════════════════════
     // DATE PICKER: SET MINIMUM DATE TO TOMORROW
@@ -488,7 +524,16 @@
       const customerEmail = document.getElementById('customerEmail').value;
       const statusMsg = document.getElementById('statusMessage');
 
+      // Get name and vehicle — either from URL params or from the input fields
+      const finalName = document.getElementById('customerNameInput').value.trim() || customerName || 'Customer';
+      const finalVehicle = document.getElementById('vehicleInput').value.trim() || vehicleInfo || 'Vehicle';
+
       // Validation
+      if (!finalName || finalName === 'Customer') {
+        showStatus('Please enter your full name.', 'error');
+        return;
+      }
+
       if (!appointmentDate) {
         showStatus('Please select a date.', 'error');
         return;
@@ -521,8 +566,8 @@
 
         const appointmentData = {
           recordId: recordId,
-          customerName: customerName,
-          vehicleInfo: vehicleInfo,
+          customerName: finalName,
+          vehicleInfo: finalVehicle,
           appointmentDate: appointmentDate,
           appointmentTime: appointmentTime,
           appointmentTimeString: selectedTime,
@@ -582,8 +627,8 @@
             // Build confirmation page URL with all appointment data
             const confirmationUrl = new URL('/appointment-confirmation', window.location.origin);
             confirmationUrl.searchParams.append('appointmentId', docRef.id);
-            confirmationUrl.searchParams.append('customerName', customerName);
-            confirmationUrl.searchParams.append('vehicleInfo', vehicleInfo);
+            confirmationUrl.searchParams.append('customerName', finalName);
+            confirmationUrl.searchParams.append('vehicleInfo', finalVehicle);
             confirmationUrl.searchParams.append('appointmentDate', appointmentDate);
             confirmationUrl.searchParams.append('appointmentTime', selectedTime);
             confirmationUrl.searchParams.append('customerPhone', customerPhone);
