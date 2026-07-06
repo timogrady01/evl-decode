@@ -891,22 +891,22 @@
           submittedAt: new Date()
         });
 
-        // ── Notify EVL admin via EmailJS SDK ──
+        // ── Notify EVL admin via server-side API ──
         try {
-          emailjs.init('iilAte2T5SzOKb-fn');
-          await emailjs.send('service_rvscjt3', 'template_1rnlq4o', {
-            name: customerName,
-            email: email,
-            customerName: customerName,
-            customerPhone: phone,
-            customerEmail: email,
-            vehicleInfo: 'Not yet specified — EVL will call to find out',
-            appointmentDate: '🚗 NEW FIND MY VEHICLE LEAD — $49',
-            appointmentTime: new Date().toLocaleString('en-US', {timeZone: 'America/Chicago'})
+          await fetch('/api/notify-lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customerName,
+              customerPhone: phone,
+              customerEmail: email,
+              source: '🚗 NEW FIND MY VEHICLE LEAD — $49',
+              bucket: 'find-my-vehicle'
+            })
           });
-          console.log('[find-my-vehicle] Admin notification sent via EmailJS SDK');
+          console.log('[find-my-vehicle] Admin notification sent');
         } catch (emailErr) {
-          console.error('[find-my-vehicle] Admin email failed (non-fatal):', emailErr);
+          console.error('[find-my-vehicle] Admin notification failed (non-fatal):', emailErr);
         }
 
         statusMsg.className = 'status-message success';
