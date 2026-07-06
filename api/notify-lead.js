@@ -5,14 +5,15 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { customerName, customerPhone, customerEmail, source, bucket } = req.body;
+  const { customerName, customerPhone, customerEmail, source } = req.body;
 
-  console.log('[notify-lead] New lead notification:', customerName, customerPhone);
+  console.log('[notify-lead] Sending notification for:', customerName);
 
   const payload = JSON.stringify({
     service_id: 'service_rvscjt3',
     template_id: 'template_1rnlq4o',
     user_id: 'iilAte2T5SzOKb-fn',
+    accessToken: process.env.EMAILJS_PRIVATE_KEY,
     template_params: {
       name: customerName || 'New Lead',
       email: customerEmail || 'togradyevl@gmail.com',
@@ -20,7 +21,7 @@ module.exports = async function handler(req, res) {
       customerPhone: customerPhone || 'Not provided',
       customerEmail: customerEmail || 'Not provided',
       vehicleInfo: 'Not yet specified — EVL will call to find out',
-      appointmentDate: source || '🚗 NEW FIND MY VEHICLE LEAD — $49',
+      appointmentDate: source || 'NEW FIND MY VEHICLE LEAD — $49',
       appointmentTime: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })
     }
   });
