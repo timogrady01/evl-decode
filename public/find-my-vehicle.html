@@ -893,7 +893,7 @@
 
         // ── Notify EVL admin via server-side API ──
         try {
-          await fetch('/api/notify-lead', {
+          const notifyRes = await fetch('/api/notify-lead', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -904,7 +904,12 @@
               bucket: 'find-my-vehicle'
             })
           });
-          console.log('[find-my-vehicle] Admin notification sent');
+          const notifyData = await notifyRes.json().catch(() => ({}));
+          if (!notifyRes.ok) {
+            console.error('[find-my-vehicle] Admin notification FAILED:', notifyRes.status, notifyData);
+          } else {
+            console.log('[find-my-vehicle] Admin notification sent successfully');
+          }
         } catch (emailErr) {
           console.error('[find-my-vehicle] Admin notification failed (non-fatal):', emailErr);
         }
