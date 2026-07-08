@@ -8,6 +8,15 @@ module.exports = async function handler(req, res) {
   const { customerName, customerPhone, customerEmail, source } = req.body;
   console.log('[notify-lead] Firing for:', customerName, customerPhone);
 
+  // ── TEMP DIAGNOSTIC: confirm env var is actually present ──
+  const keyPresent = !!process.env.RESEND_API_KEY;
+  const keyLength = process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.length : 0;
+  const keyPrefix = process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.slice(0, 5) : 'NONE';
+  console.log('[notify-lead] DIAGNOSTIC keyPresent:', keyPresent, 'length:', keyLength, 'prefix:', keyPrefix);
+  if (!keyPresent) {
+    return res.status(500).json({ error: 'DIAGNOSTIC: RESEND_API_KEY is NOT set in this environment.' });
+  }
+
   const htmlBody = `
     <h2 style="color:#2B84FE;">🚗 New EVL Lead — Action Required</h2>
     <p><strong>Name:</strong> ${customerName || 'Not provided'}</p>
