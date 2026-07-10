@@ -665,7 +665,23 @@
           <option value="contacted" ${lead.status === 'contacted' ? 'selected' : ''}>Contacted</option>
           <option value="qualified" ${lead.status === 'qualified' ? 'selected' : ''}>Qualified</option>
           <option value="booked" ${lead.status === 'booked' ? 'selected' : ''}>Booked</option>
+          <option value="payment-sent" ${lead.status === 'payment-sent' ? 'selected' : ''}>Payment Sent</option>
         </select>
+      </div>
+      <div class="modal-field" style="background:#F0F7FF; border:1px solid #2B84FE; border-radius:6px; padding:14px;">
+        <label class="modal-label" style="color:#2B84FE;">Send Payment Link (only after customer is vetted)</label>
+        <select id="paymentBucket" style="width:100%; padding:10px; border:1px solid #E5E7EB; border-radius:4px; margin-bottom:10px;">
+          <option value="find-my-vehicle" ${lead.bucket === 'find-my-vehicle' ? 'selected' : ''}>Find My Vehicle — $49</option>
+          <option value="advisory" ${lead.bucket === 'advisory' ? 'selected' : ''}>Advisory — $249</option>
+          <option value="full-service" ${lead.bucket === 'full-service' ? 'selected' : ''}>Full Service — $399</option>
+          <option value="service-vault-99" ${lead.bucket === 'service-vault-99' ? 'selected' : ''}>Service Vault — $99/yr</option>
+          <option value="service-vault-199" ${lead.bucket === 'service-vault-199' ? 'selected' : ''}>Service Vault — $199/yr</option>
+          <option value="service-vault-299" ${lead.bucket === 'service-vault-299' ? 'selected' : ''}>Service Vault — $299/yr</option>
+        </select>
+        <button class="btn btn-primary" id="sendPaymentBtn" onclick="sendPaymentLink()" style="width:100%;">
+          💳 Send Payment Link (Text + Email)
+        </button>
+        <div id="paymentStatusMsg" style="margin-top:8px; font-size:13px;"></div>
       </div>
       <div class="modal-field">
         <label class="modal-label">AI Transcript</label>
@@ -704,6 +720,55 @@
     }
   };
   
+  // ── SEND PAYMENT LINK (SMS + EMAIL) ──
+  window.sendPaymentLink = async function() {
+    const lead = allLeads.find(l => l.id === selectedLeadId);
+    if (!lead) return;
+
+    const bucket = document.getElementById('paymentBucket').value;
+    const btn = document.getElementById('sendPaymentBtn');
+    const statusMsg = document.getElementById('paymentStatusMsg');
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    statusMsg.textContent = '';
+
+    try {
+      const response = await fetch('/api/send-payment-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: lead.customerName,
+          customerPhone: lead.customerPhone,
+          customerEmail: lead.customerEmail,
+          bucket: bucket,
+          leadId: selectedLeadId
+        })
+      });
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        const leadRef = doc(db, 'evl_leads', selectedLeadId);
+        await updateDoc(leadRef, { status: 'payment-sent', paymentBucketSent: bucket });
+
+        statusMsg.style.color = '#00A651';
+        statusMsg.textContent = '✅ Payment link sent via text and email!';
+        btn.textContent = '✅ Sent!';
+      } else {
+        statusMsg.style.color = '#D32F2F';
+        statusMsg.textContent = 'Error: ' + (result.error || 'Something went wrong.');
+        btn.disabled = false;
+        btn.textContent = '💳 Send Payment Link (Text + Email)';
+      }
+    } catch (error) {
+      console.error('Error sending payment link:', error);
+      statusMsg.style.color = '#D32F2F';
+      statusMsg.textContent = 'Error sending payment link. Please try again.';
+      btn.disabled = false;
+      btn.textContent = '💳 Send Payment Link (Text + Email)';
+    }
+  };
+
   // ── CLOSE MODAL ──
   window.closeModal = function() {
     document.getElementById('leadModal').classList.remove('open');
