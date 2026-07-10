@@ -1,5 +1,4 @@
 const twilio = require('twilio');
-const https = require('https');
 
 // ── BUCKET → STRIPE PAYMENT LINK MAP ──
 const PAYMENT_LINKS = {
@@ -34,36 +33,6 @@ const PAYMENT_LINKS = {
     price: '$299/year'
   }
 };
-
-function sendResendEmail(payload) {
-  return new Promise((resolve, reject) => {
-    const body = JSON.stringify(payload);
-    const options = {
-      hostname: 'api.resend.com',
-      path: '/emails',
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(body)
-      }
-    };
-    const request = https.request(options, (response) => {
-      let data = '';
-      response.on('data', chunk => data += chunk);
-      response.on('end', () => {
-        if (response.statusCode >= 200 && response.statusCode < 300) {
-          resolve(data);
-        } else {
-          reject(new Error('Resend returned ' + response.statusCode + ': ' + data));
-        }
-      });
-    });
-    request.on('error', reject);
-    request.write(body);
-    request.end();
-  });
-}
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -108,31 +77,26 @@ module.exports = async function handler(req, res) {
     results.customerSMS = 'failed - ' + smsError.message;
   }
 
-  // ── EMAIL TO CUSTOMER via Resend ──
+  // ── EMAIL TO CUSTOMER via EmailJS ──
   if (customerEmail) {
     try {
-      const firstName = (customerName || '').split(' ')[0] || 'there';
-      const htmlBody = `
-        <h2 style="color:#2B84FE;">Your EVL Payment Link</h2>
-        <p>Hi ${firstName},</p>
-        <p>Thanks for talking with our team! As discussed, here's your secure payment link to get started:</p>
-        <p style="margin:24px 0;">
-          <a href="${linkInfo.url}" style="background:#2B84FE;color:#fff;padding:14px 28px;text-decoration:none;font-weight:800;border-radius:4px;display:inline-block;">
-            Pay ${linkInfo.price} — ${linkInfo.label}
-          </a>
-        </p>
-        <p>Or copy this link: <a href="${linkInfo.url}">${linkInfo.url}</a></p>
-        <p>Questions? Just reply to this email or call us.</p>
-        <p>— The EVL Team</p>
-      `;
-
-      await sendResendEmail({
-        from: 'Express Vehicle Locators <onboarding@resend.dev>',
-        to: customerEmail,
-        subject: `Your EVL Payment Link — ${linkInfo.label} (${linkInfo.price})`,
-        html: htmlBody
+      await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_rvscjt3',
+          template_id: 'template_5kvb9cb',
+          user_id: 'iilAte2T5SzOKb-fn',
+          template_params: {
+            customerName: customerName,
+            email: customerEmail,
+            bucketLabel: linkInfo.label,
+            bucketPrice: linkInfo.price,
+            paymentLink: linkInfo.url
+          }
+        })
       });
-      console.log('[send-payment-link] Customer email sent successfully');
+      console.log('[send-payment-link] Customer email sent via EmailJS');
       results.customerEmail = 'sent';
     } catch (emailError) {
       console.error('[send-payment-link] Customer email failed:', emailError.message);
