@@ -718,6 +718,21 @@
       status: 'new'
     });
 
+    // ── Send welcome CTA message to customer ──
+    try {
+      await fetch('/api/send-welcome-message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: firstName + ' ' + lastName,
+          customerPhone: phone,
+          customerEmail: email
+        })
+      });
+    } catch (welcomeErr) {
+      console.error('[bd-submit] Welcome message failed (non-fatal):', welcomeErr);
+    }
+
     // Show success
     document.getElementById('formState').style.display = 'none';
     document.getElementById('successScreen').classList.add('active');

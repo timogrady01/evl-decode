@@ -549,6 +549,21 @@
       status: 'new'
     });
 
+    // ── Send welcome CTA message to customer ──
+    try {
+      await fetch('/api/send-welcome-message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: first + ' ' + last,
+          customerPhone: phone,
+          customerEmail: email
+        })
+      });
+    } catch (welcomeErr) {
+      console.error('[private-sale] Welcome message failed (non-fatal):', welcomeErr);
+    }
+
     document.getElementById('formState').style.display = 'none';
     document.getElementById('successScreen').classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});

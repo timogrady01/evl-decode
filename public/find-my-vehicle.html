@@ -914,6 +914,17 @@
           console.error('[find-my-vehicle] Admin notification failed (non-fatal):', emailErr);
         }
 
+        // ── Send welcome CTA message to customer ──
+        try {
+          await fetch('/api/send-welcome-message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customerName, customerPhone: phone, customerEmail: email })
+          });
+        } catch (welcomeErr) {
+          console.error('[find-my-vehicle] Welcome message failed (non-fatal):', welcomeErr);
+        }
+
         statusMsg.className = 'status-message success';
         statusMsg.textContent = '✅ Got it, ' + firstName + '! An EVL advisor will call you within 2 hours. Check your email for a confirmation shortly.';
         btn.textContent = '✅ Request Received!';
