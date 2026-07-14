@@ -1,4 +1,5 @@
 const twilio = require('twilio');
+const https = require('https');
 
 // ── BUCKET → STRIPE PAYMENT LINK MAP ──
 const PAYMENT_LINKS = {
@@ -77,26 +78,53 @@ module.exports = async function handler(req, res) {
     results.customerSMS = 'failed - ' + smsError.message;
   }
 
-  // ── EMAIL TO CUSTOMER via EmailJS ──
+  // ── EMAIL TO CUSTOMER via RESEND ──
   if (customerEmail) {
     try {
-      await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          service_id: 'service_rvscjt3',
-          template_id: 'template_5kvb9cb',
-          user_id: 'iilAte2T5SzOKb-fn',
-          template_params: {
-            customerName: customerName,
-            email: customerEmail,
-            bucketLabel: linkInfo.label,
-            bucketPrice: linkInfo.price,
-            paymentLink: linkInfo.url
-          }
-        })
+      const firstName = (customerName || '').split(' ')[0] || 'there';
+      const htmlBody = `
+        <h2 style="color:#2B84FE;">Your EVL Payment Link</h2>
+        <p>Hi ${firstName},</p>
+        <p>Thanks for talking with Express Vehicle Locators! Here is your secure payment link for <strong>${linkInfo.label} (${linkInfo.price})</strong>:</p>
+        <p><a href="${linkInfo.url}">${linkInfo.url}</a></p>
+        <p>— EVL</p>
+      `;
+      const payload = JSON.stringify({
+        from: 'EVL Platform <onboarding@resend.dev>',
+        to: customerEmail,
+        subject: 'Your EVL Payment Link — ' + linkInfo.label + ' (' + linkInfo.price + ')',
+        html: htmlBody
       });
-      console.log('[send-payment-link] Customer email sent via EmailJS');
+
+      await new Promise((resolve, reject) => {
+        const options = {
+          hostname: 'api.resend.com',
+          path: '/emails',
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(payload)
+          }
+        };
+        const request = https.request(options, (response) => {
+          let data = '';
+          response.on('data', chunk => data += chunk);
+          response.on('end', () => {
+            console.log('[send-payment-link] Resend response:', response.statusCode, data);
+            if (response.statusCode >= 200 && response.statusCode < 300) {
+              resolve(data);
+            } else {
+              reject(new Error('Resend returned ' + response.statusCode + ': ' + data));
+            }
+          });
+        });
+        request.on('error', reject);
+        request.write(payload);
+        request.end();
+      });
+
+      console.log('[send-payment-link] Customer email sent via Resend');
       results.customerEmail = 'sent';
     } catch (emailError) {
       console.error('[send-payment-link] Customer email failed:', emailError.message);
@@ -106,8 +134,13 @@ module.exports = async function handler(req, res) {
     results.customerEmail = 'skipped - no email provided';
   }
 
-  return res.status(200).json({
-    success: true,
+  // ── DETERMINE REAL SUCCESS (at least one channel must have actually sent) ──
+  const smsOk = typeof results.customerSMS === 'string' && !results.customerSMS.startsWith('failed') && !results.customerSMS.startsWith('skipped');
+  const emailOk = results.customerEmail === 'sent';
+  const overallSuccess = smsOk || emailOk;
+
+  return res.status(overallSuccess ? 200 : 500).json({
+    success: overallSuccess,
     bucket,
     linkSent: linkInfo.url,
     results

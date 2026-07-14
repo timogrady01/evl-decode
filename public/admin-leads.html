@@ -751,8 +751,14 @@
         const leadRef = doc(db, 'evl_leads', selectedLeadId);
         await updateDoc(leadRef, { status: 'payment-sent', paymentBucketSent: bucket });
 
+        const r = result.results || {};
+        const smsLine = (r.customerSMS && !String(r.customerSMS).startsWith('failed') && !String(r.customerSMS).startsWith('skipped'))
+          ? '✅ Text sent' : '⚠️ Text NOT sent (' + (r.customerSMS || 'unknown') + ')';
+        const emailLine = r.customerEmail === 'sent'
+          ? '✅ Email sent' : '⚠️ Email NOT sent (' + (r.customerEmail || 'unknown') + ')';
+
         statusMsg.style.color = '#00A651';
-        statusMsg.textContent = '✅ Payment link sent via text and email!';
+        statusMsg.innerHTML = smsLine + '<br>' + emailLine;
         btn.textContent = '✅ Sent!';
       } else {
         statusMsg.style.color = '#D32F2F';
