@@ -549,6 +549,29 @@
       status: 'new'
     });
 
+    // ── Notify EVL admin via server-side API ──
+    try {
+      const notifyRes = await fetch('/api/notify-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: first + ' ' + last,
+          customerPhone: phone,
+          customerEmail: email,
+          source: '🚗 NEW PRIVATE SALE LEAD — ' + ref,
+          bucket: 'private-sale'
+        })
+      });
+      const notifyData = await notifyRes.json().catch(() => ({}));
+      if (!notifyRes.ok) {
+        console.error('[private-sale] Admin notification FAILED:', notifyRes.status, notifyData);
+      } else {
+        console.log('[private-sale] Admin notification sent successfully');
+      }
+    } catch (notifyErr) {
+      console.error('[private-sale] Admin notification failed (non-fatal):', notifyErr);
+    }
+
     // ── Send welcome CTA message to customer ──
     try {
       await fetch('/api/send-welcome-message', {

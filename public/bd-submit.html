@@ -718,6 +718,29 @@
       status: 'new'
     });
 
+    // ── Notify EVL admin via server-side API ──
+    try {
+      const notifyRes = await fetch('/api/notify-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: firstName + ' ' + lastName,
+          customerPhone: phone,
+          customerEmail: email,
+          source: '🚗 NEW SELL/TRADE LEAD — ' + ref,
+          bucket: 'bd-submit'
+        })
+      });
+      const notifyData = await notifyRes.json().catch(() => ({}));
+      if (!notifyRes.ok) {
+        console.error('[bd-submit] Admin notification FAILED:', notifyRes.status, notifyData);
+      } else {
+        console.log('[bd-submit] Admin notification sent successfully');
+      }
+    } catch (notifyErr) {
+      console.error('[bd-submit] Admin notification failed (non-fatal):', notifyErr);
+    }
+
     // ── Send welcome CTA message to customer ──
     try {
       await fetch('/api/send-welcome-message', {
