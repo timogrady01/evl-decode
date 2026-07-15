@@ -57,10 +57,12 @@ module.exports = async function handler(req, res) {
         <p>That's the gap Express Vehicle Locators exists to close.</p>
         <p>We're a technology platform built by someone who has spent years on the actual dealership floor &mdash; not a broker, not a lender, not a dealer ourselves. We give you the real numbers before you negotiate, so you're working from facts instead of guesswork.</p>
         <p><a href="${homeLink}">See how it works &rarr;</a></p>
+        <p>Questions? Call or Text: (469) 404-3192</p>
         <p>&mdash; Express Vehicle Locators</p>
       `;
       const payload = JSON.stringify({
         from: 'EVL Platform <onboarding@resend.dev>',
+        reply_to: 'togradyevl@gmail.com',
         to: customerEmail,
         subject: 'What Express Vehicle Locators Actually Does For You',
         html: htmlBody

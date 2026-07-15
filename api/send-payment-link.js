@@ -87,10 +87,13 @@ module.exports = async function handler(req, res) {
         <p>Hi ${firstName},</p>
         <p>Thanks for talking with Express Vehicle Locators! Here is your secure payment link for <strong>${linkInfo.label} (${linkInfo.price})</strong>:</p>
         <p><a href="${linkInfo.url}">${linkInfo.url}</a></p>
+        <p>Questions? Call or Text: (469) 404-3192</p>
+        <p><a href="https://expressvehiclelocators.com">Visit our home page &rarr;</a></p>
         <p>— EVL</p>
       `;
       const payload = JSON.stringify({
         from: 'EVL Platform <onboarding@resend.dev>',
+        reply_to: 'togradyevl@gmail.com',
         to: customerEmail,
         subject: 'Your EVL Payment Link — ' + linkInfo.label + ' (' + linkInfo.price + ')',
         html: htmlBody
