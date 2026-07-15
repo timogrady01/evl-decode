@@ -47,7 +47,7 @@ module.exports = async function handler(req, res) {
       const normalizedPhone = customerPhone.replace(/\D/g, '');
       const e164Phone = '+1' + normalizedPhone.slice(-10);
 
-      const smsBody = `Hi ${firstName}, thank you for your inquiry with Express Vehicle Locators! Dealers typically mark up new cars 3-5% over invoice ($2K-$6K) and used cars 15-25% ($1.5K-$4K over cost). We give you the real numbers before you negotiate. See how it works: ${homeLink} Reply STOP to opt out. -EVL`;
+      const smsBody = `Hi ${firstName}, thank you for your inquiry with Express Vehicle Locators. We received your request and our team will be in touch. Learn more: ${homeLink} Reply STOP to opt out. -EVL`;
 
       const customerMsg = await client.messages.create({
         body: smsBody,
