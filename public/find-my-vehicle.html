@@ -916,11 +916,17 @@
 
         // ── Send welcome CTA message to customer ──
         try {
-          await fetch('/api/send-welcome-message', {
+          const welcomeRes = await fetch('/api/send-welcome-message', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ customerName, customerPhone: phone, customerEmail: email })
           });
+          const welcomeData = await welcomeRes.json().catch(() => ({}));
+          if (!welcomeRes.ok) {
+            console.error('[find-my-vehicle] Welcome message FAILED:', welcomeRes.status, welcomeData);
+          } else {
+            console.log('[find-my-vehicle] Welcome message sent:', welcomeData);
+          }
         } catch (welcomeErr) {
           console.error('[find-my-vehicle] Welcome message failed (non-fatal):', welcomeErr);
         }

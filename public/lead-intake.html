@@ -447,7 +447,7 @@
 
       // ── Send welcome CTA message to customer ──
       try {
-        await fetch('/api/send-welcome-message', {
+        const welcomeRes = await fetch('/api/send-welcome-message', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -456,6 +456,12 @@
             customerEmail: leadData.customerEmail
           })
         });
+        const welcomeData = await welcomeRes.json().catch(() => ({}));
+        if (!welcomeRes.ok) {
+          console.error('[lead-intake] Welcome message FAILED:', welcomeRes.status, welcomeData);
+        } else {
+          console.log('[lead-intake] Welcome message sent:', welcomeData);
+        }
       } catch (welcomeErr) {
         console.error('[lead-intake] Welcome message failed (non-fatal):', welcomeErr);
       }
