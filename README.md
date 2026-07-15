@@ -372,6 +372,8 @@ Post-Deal → Service Vault — /service-vault
 
 **TCPA SMS consent — resolved via simplification, not a checkbox system:** rather than building consent-checkbox infrastructure (which requires permanent record-keeping, cross-channel opt-out sync, and versioning if disclosure text ever changes), simplified the welcome SMS to purely informational content ("thank you for your inquiry... team will be in touch") and moved the promotional stats/value-prop pitch to email only. This keeps the SMS under the lower "prior express consent" bar (satisfied by voluntarily giving a phone number when requesting service) rather than the higher "prior express written consent" bar required for marketing texts. Email retains the full pitch since CAN-SPAM's opt-out model doesn't require prior consent.
 
+**Custom Resend sending domain — live (July 15, 2026):** added and verified `expressvehiclelocators.com` as a custom domain in Resend. 3 DNS records added in SiteGround (domain's DNS host, separate from Vercel which hosts the actual site): TXT `resend._domainkey` (DKIM), MX `send` priority 10, TXT `send` (SPF). Domain verified successfully. Both `api/send-welcome-message.js` and `api/send-payment-link.js` now send from `no-reply@expressvehiclelocators.com` instead of the shared `onboarding@resend.dev` testing address — reply_to remains `togradyevl@gmail.com`.
+
 **Number roles clarified:**
 - `+14699912870` — Twilio SYSTEM number, automated SMS only, not for public display
 - `(469) 404-3192` — Tim's real, personally-answered second business line — this is the customer-facing "Call or Text" number

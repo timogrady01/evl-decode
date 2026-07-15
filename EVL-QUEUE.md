@@ -8,8 +8,6 @@ This is the running list of things flagged mid-conversation that need to be addr
 
 ## Open Items
 
-- [ ] **Custom Resend sending domain — IN PROGRESS, verifying:** All 3 DNS records added in SiteGround (TXT `resend._domainkey`, MX `send` priority 10, TXT `send` SPF). Resend status as of July 15, 12:14 AM was "Pending / Verifying domain." Next step once verified: update `from:` address in both `api/send-welcome-message.js` and `api/send-payment-link.js` from `onboarding@resend.dev` to a real address on the new domain (e.g. `no-reply@expressvehiclelocators.com`).
-
 - [ ] **SiteGround DNS Zone Editor shows "Your domain's A record is not pointed to this website"** — noticed while adding Resend DNS records (July 14, 2026). Site is live and working via Vercel right now, so this warning is likely just SiteGround referring to its own hosting (not an actual live issue) — but worth understanding/confirming what this means before ignoring it long-term.
 
 - [ ] **If/when domain DNS fully migrates away from SiteGround** (e.g. to Vercel DNS) as part of finishing the WordPress→Vercel migration: remember to re-add the 3 Resend email verification DNS records (TXT `resend._domainkey`, MX `send`, TXT `send`) at the new DNS host — email verification does not automatically carry over between DNS providers.
