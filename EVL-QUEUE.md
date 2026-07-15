@@ -8,7 +8,6 @@ This is the running list of things flagged mid-conversation that need to be addr
 
 ## Open Items
 
-- [ ] **Footer phone number rollout** — 16 separate HTML files duplicate the footer with no shared component. Decision needed: patch all 16 now vs. build shared footer component first.
 - [ ] **Custom Resend sending domain** — currently sending from shared `onboarding@resend.dev`. Setting up `no-reply@expressvehiclelocators.com` would look more professional but needs a DNS record added in Resend.
 - [ ] **"Already have a quote" intake qualifier** — need a question at the start of intake to route customers who already have a vehicle + dealer quote directly to Advisory ($249) instead of Find My Vehicle ($49).
 - [ ] **Remaining Stripe payment links** — Advisory ($249), Full Service ($399), Service Vault tiers ($99/$199/$299/yr) still need live payment links created and embedded.
