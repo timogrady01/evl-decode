@@ -8,7 +8,7 @@ This is the running list of things flagged mid-conversation that need to be addr
 
 ## Open Items
 
-- [ ] **Custom Resend sending domain** — currently sending from shared `onboarding@resend.dev`. Setting up `no-reply@expressvehiclelocators.com` would look more professional but needs a DNS record added in Resend.
+- [ ] **If/when domain DNS fully migrates away from SiteGround** (e.g. to Vercel DNS) as part of finishing the WordPress\u2192Vercel migration: remember to re-add the 3 Resend email verification DNS records (TXT `resend._domainkey`, MX `send`, TXT `send`) at the new DNS host \u2014 email verification does not automatically carry over between DNS providers.- [ ] **Custom Resend sending domain** — currently sending from shared `onboarding@resend.dev`. Setting up `no-reply@expressvehiclelocators.com` would look more professional but needs a DNS record added in Resend.
 - [ ] **"Already have a quote" intake qualifier** — need a question at the start of intake to route customers who already have a vehicle + dealer quote directly to Advisory ($249) instead of Find My Vehicle ($49).
 - [ ] **Remaining Stripe payment links** — Advisory ($249), Full Service ($399), Service Vault tiers ($99/$199/$299/yr) still need live payment links created and embedded.
 - [ ] **Stripe live mode switch** — still in test/sandbox mode; must switch before real customer payments.
