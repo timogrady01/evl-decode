@@ -85,7 +85,7 @@ module.exports = async function handler(req, res) {
       const htmlBody = `
         <h2 style="color:#2B84FE;">Your EVL Payment Link</h2>
         <p>Hi ${firstName},</p>
-        <p>Thanks for talking with Express Vehicle Locators! Here is your secure payment link for <strong>${linkInfo.label} (${linkInfo.price})</strong>:</p>
+        <p>Thank you for your interest in Express Vehicle Locators! Here is your secure payment link for <strong>${linkInfo.label} (${linkInfo.price})</strong>:</p>
         <p><a href="${linkInfo.url}">${linkInfo.url}</a></p>
         <p>Questions? Call or Text: (469) 404-3192</p>
         <p><a href="https://expressvehiclelocators.com">Visit our home page &rarr;</a></p>

@@ -334,5 +334,45 @@ Post-Deal → Service Vault — /service-vault
 
 ---
 
-*Last updated: July 5, 2026*
+## SESSION LOG — July 14, 2026
+
+**Payment link delivery — fixed:**
+- Root cause: `api/send-payment-link.js` was using dead EmailJS (wrong/deprecated template) and always returned `success: true` regardless of actual send result
+- Fixed: email now sends via Resend (matching working pattern), response now reflects real per-channel success/failure
+- Confirmed live end-to-end: both SMS and email delivery tested and working
+
+**New: automatic welcome CTA message** (`api/send-welcome-message.js`):
+- Fires automatically from all 4 customer intake forms: `find-my-vehicle.html`, `lead-intake.html`, `bd-submit.html`, `private-sale.html`
+- Sends SMS + email with industry-stat value prop (dealer markup data) + home page link
+- Uses general industry stats for now (Edmunds/NADA sourced) — swap in EVL's own performance stats once real volume exists
+
+**Admin notification gap — fixed:**
+- `bd-submit.html` and `private-sale.html` previously had NO admin alert at all (only `find-my-vehicle.html` did) — now all 4 forms alert `togradyevl@gmail.com` on submission
+
+**Email consistency standardized across all customer emails:**
+- All now include: "Thank you for your inquiry" opener, home page link, Call/Text number (469) 404-3192, and `reply_to: togradyevl@gmail.com` (previously replies would go nowhere, since `from` address is Resend's shared `onboarding@resend.dev`)
+
+**BITOP defined and locked in:** B = Best Business Practice, I = Ideas, T = Thoughts, O = Other, P = Process & Procedures — internal decision framework, never shown in customer-facing copy
+
+**Product decisions made:**
+- Customers who already have a vehicle + dealer quote in hand should skip Find My Vehicle and route directly to Advisory — needs an intake qualifier question (not yet built)
+- Trade-in evaluation is NOT a standalone bucket — it's bundled inside Advisory ($249)
+- Bidding Dealer partners (CarMax/Carvana/SMTV) should NOT be named by brand before payment on `trade-in-exchange.html` — both CarMax and Carvana offer free instant online offers, so naming them upfront risks customers bypassing EVL entirely. Real value prop = simultaneous submission + side-by-side comparison + payoff coordination, not access itself
+- Unrealistic customer price targets should be handled with data-backed range comparisons (target vs. realistic range with sourcing), not silence or false promises
+
+**Twilio A2P status:** Campaign approved as of July 14, 2026 — SMS confirmed delivering end-to-end for the first time
+
+**Number roles clarified:**
+- `+14699912870` — Twilio SYSTEM number, automated SMS only, not for public display
+- `(469) 404-3192` — Tim's real, personally-answered second business line — this is the customer-facing "Call or Text" number
+
+**Still open / pending decisions:**
+- [ ] Footer phone number rollout — 16 separate HTML files currently duplicate the footer with no shared component; decision needed: patch all 16 now vs. build shared footer component first
+- [ ] Custom Resend sending domain (`no-reply@expressvehiclelocators.com`) instead of shared `onboarding@resend.dev` — needs DNS setup
+- [ ] Intake qualifier question for "already have a quote" customer routing — not yet built
+- [ ] Stripe payment links still needed for Advisory ($249), Full Service ($399), Service Vault tiers
+
+---
+
+*Last updated: July 14, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*

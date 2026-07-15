@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
       const normalizedPhone = customerPhone.replace(/\D/g, '');
       const e164Phone = '+1' + normalizedPhone.slice(-10);
 
-      const smsBody = `Hi ${firstName}, thanks for reaching out to Express Vehicle Locators! Dealers typically mark up new cars 3-5% over invoice ($2K-$6K) and used cars 15-25% ($1.5K-$4K over cost). We give you the real numbers before you negotiate. See how it works: ${homeLink} Reply STOP to opt out. -EVL`;
+      const smsBody = `Hi ${firstName}, thank you for your inquiry with Express Vehicle Locators! Dealers typically mark up new cars 3-5% over invoice ($2K-$6K) and used cars 15-25% ($1.5K-$4K over cost). We give you the real numbers before you negotiate. See how it works: ${homeLink} Reply STOP to opt out. -EVL`;
 
       const customerMsg = await client.messages.create({
         body: smsBody,
@@ -48,6 +48,7 @@ module.exports = async function handler(req, res) {
       const htmlBody = `
         <h2 style="color:#2B84FE;">What Express Vehicle Locators Actually Does For You</h2>
         <p>Hi ${firstName},</p>
+        <p>Thank you for your inquiry with Express Vehicle Locators!</p>
         <p>Before you ever walk onto a dealer lot, here's what you're up against:</p>
         <ul>
           <li>New cars typically sell 3-5% over invoice in 2026 &mdash; often $2,000 to $6,000 above what the dealer actually paid, depending on the vehicle.</li>
