@@ -437,6 +437,14 @@
       "destination": "success.html"
     },
     {
+      "source": "/unsubscribe",
+      "destination": "unsubscribe.html"
+    },
+    {
+      "source": "/unsubscribe.html",
+      "destination": "unsubscribe.html"
+    },
+    {
       "source": "/",
       "destination": "home.html"
     },

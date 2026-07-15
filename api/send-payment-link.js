@@ -1,6 +1,27 @@
 const twilio = require('twilio');
 const https = require('https');
 
+// Check if this email has unsubscribed - checks evl_email_suppression in Firestore
+function isEmailSuppressed(email) {
+  return new Promise((resolve) => {
+    if (!email) return resolve(false);
+    const docId = email.trim().toLowerCase().replace(/\//g, '_SLASH_');
+    const projectId = 'evl-acquisition-radar';
+    const apiKey = 'AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho';
+    const path = `/v1/projects/${projectId}/databases/(default)/documents/evl_email_suppression/${encodeURIComponent(docId)}?key=${apiKey}`;
+    const options = { hostname: 'firestore.googleapis.com', path, method: 'GET' };
+    const request = https.request(options, (response) => {
+      let data = '';
+      response.on('data', chunk => data += chunk);
+      response.on('end', () => {
+        resolve(response.statusCode === 200);
+      });
+    });
+    request.on('error', () => resolve(false));
+    request.end();
+  });
+}
+
 // ── BUCKET → STRIPE PAYMENT LINK MAP ──
 const PAYMENT_LINKS = {
   'find-my-vehicle': {
@@ -80,8 +101,14 @@ module.exports = async function handler(req, res) {
 
   // ── EMAIL TO CUSTOMER via RESEND ──
   if (customerEmail) {
+    const suppressed = await isEmailSuppressed(customerEmail);
+    if (suppressed) {
+      console.log('[send-payment-link] Email skipped - unsubscribed:', customerEmail);
+      results.customerEmail = 'skipped - unsubscribed';
+    } else {
     try {
       const firstName = (customerName || '').split(' ')[0] || 'there';
+      const unsubLink = `https://expressvehiclelocators.com/unsubscribe?email=${encodeURIComponent(customerEmail)}`;
       const htmlBody = `
         <h2 style="color:#2B84FE;">Your EVL Payment Link</h2>
         <p>Hi ${firstName},</p>
@@ -90,6 +117,11 @@ module.exports = async function handler(req, res) {
         <p>Questions? Call or Text: (469) 404-3192</p>
         <p><a href="https://expressvehiclelocators.com">Visit our home page &rarr;</a></p>
         <p>— EVL</p>
+        <hr style="border:none;border-top:1px solid #ddd;margin:24px 0;">
+        <p style="font-size:12px;color:#888;">
+          Evest Data Technology &mdash; 6860 North Dallas Parkway STE# 200, Plano, TX 75024<br>
+          <a href="${unsubLink}" style="color:#888;">Unsubscribe</a> &middot; <a href="https://expressvehiclelocators.com/terms" style="color:#888;">Terms and Conditions</a>
+        </p>
       `;
       const payload = JSON.stringify({
         from: 'EVL Platform <onboarding@resend.dev>',
@@ -132,6 +164,7 @@ module.exports = async function handler(req, res) {
     } catch (emailError) {
       console.error('[send-payment-link] Customer email failed:', emailError.message);
       results.customerEmail = 'failed - ' + emailError.message;
+    }
     }
   } else {
     results.customerEmail = 'skipped - no email provided';

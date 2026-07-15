@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unsubscribe — Express Vehicle Locators</title>
+<style>
+  :root{--bg:#020203;--surface:#090E17;--blue:#2B84FE;--green:#00C853;--dim:#C8D0DC;}
+  html,body{overflow-x:hidden;box-sizing:border-box;}
+  *{box-sizing:border-box;}
+  body{background:var(--bg);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0;padding:0;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+  .card{max-width:520px;width:100%;margin:20px;background:var(--surface);border:2px solid #1a1a2e;border-radius:12px;padding:40px 32px;text-align:center;}
+  h1{font-size:24px;font-weight:900;margin:0 0 16px;letter-spacing:1px;}
+  p{font-size:15px;color:var(--dim);line-height:1.6;margin:0 0 24px;}
+  .email-display{color:var(--blue);font-weight:700;}
+  button{font-size:16px;font-weight:900;letter-spacing:1px;padding:14px 28px;border-radius:8px;border:none;cursor:pointer;margin:0 6px;min-height:48px;}
+  .btn-yes{background:var(--blue);color:#fff;}
+  .btn-no{background:transparent;color:var(--dim);border:2px solid #333;}
+  .btn-yes:hover{opacity:.9;}
+  .success{display:none;}
+  .success.show{display:block;}
+  .form.hide{display:none;}
+  a{color:var(--blue);}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="form" id="form-view">
+    <h1>Unsubscribe</h1>
+    <p>You've requested to no longer receive emails from <strong>Express Vehicle Locators</strong> at <span class="email-display" id="email-display">this address</span>.</p>
+    <p style="font-size:13px;">If you'd rather just stop specific messages, <a href="mailto:togradyevl@gmail.com">contact us directly</a> instead.</p>
+    <button class="btn-yes" id="btn-confirm">Yes, Unsubscribe Me</button>
+    <button class="btn-no" onclick="window.location.href='/home'">No, Keep Me Subscribed</button>
+  </div>
+  <div class="success" id="success-view">
+    <h1 style="color:var(--green);">✓ Unsubscribed</h1>
+    <p>You won't receive any further emails from Express Vehicle Locators at this address.</p>
+    <p style="font-size:13px;">Changed your mind? <a href="mailto:togradyevl@gmail.com">Email us</a> to resubscribe.</p>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.appspot.com",
+    messagingSenderId: "637284038819",
+    appId: "1:637284038819:web:f57c9d21efc62c6ac890e9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const params = new URLSearchParams(window.location.search);
+  const email = (params.get('email') || '').trim().toLowerCase();
+
+  if (email) {
+    document.getElementById('email-display').textContent = email;
+  }
+
+  document.getElementById('btn-confirm').addEventListener('click', async function() {
+    if (!email) {
+      alert('No email address found in this link. Please contact togradyevl@gmail.com directly to unsubscribe.');
+      return;
+    }
+    this.disabled = true;
+    this.textContent = 'Processing...';
+    try {
+      // Firestore doc IDs can't contain forward slashes - email addresses are safe otherwise
+      const docId = email.replace(/\//g, '_SLASH_');
+      await setDoc(doc(db, 'evl_email_suppression', docId), {
+        email: email,
+        unsubscribedAt: serverTimestamp(),
+        source: 'unsubscribe-page'
+      });
+      document.getElementById('form-view').classList.add('hide');
+      document.getElementById('success-view').classList.add('show');
+    } catch (err) {
+      console.error('Unsubscribe error:', err);
+      alert('Something went wrong. Please email togradyevl@gmail.com directly to unsubscribe.');
+      this.disabled = false;
+      this.textContent = 'Yes, Unsubscribe Me';
+    }
+  });
+</script>
+
+</body>
+</html>
