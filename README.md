@@ -362,6 +362,8 @@ Post-Deal → Service Vault — /service-vault
 
 **Twilio A2P status:** Campaign approved as of July 14, 2026 — SMS confirmed delivering end-to-end for the first time
 
+**Repo naming — decided, closed:** GitHub repo name (`evl-decode`) traces back to the original VIN decoder build in May 2026, before the platform expanded — it no longer matches what the platform actually does, and doesn't match the Vercel project name (`evl-pro`). Considered renaming to `evl-pro` for consistency, but decided to leave it as-is — purely cosmetic naming mismatch, not a functional issue, not worth the risk/hassle of a rename. Not an open item — do not re-raise unless Tim brings it up.
+
 **Number roles clarified:**
 - `+14699912870` — Twilio SYSTEM number, automated SMS only, not for public display
 - `(469) 404-3192` — Tim's real, personally-answered second business line — this is the customer-facing "Call or Text" number
