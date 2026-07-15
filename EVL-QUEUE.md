@@ -8,7 +8,6 @@ This is the running list of things flagged mid-conversation that need to be addr
 
 ## Open Items
 
-- [ ] **TCPA SMS consent checkbox** — the 4 intake forms have no consent checkbox/disclosure before capturing phone number. Welcome SMS blends informational + marketing-style content, which could require "prior express written consent" (higher bar) rather than just informational consent. Attorney review recommended given financial exposure ($500-$1,500/message, no damages cap). Email side (CAN-SPAM) already fixed — this is SMS-specific.
 - [ ] **Custom Resend sending domain** — currently sending from shared `onboarding@resend.dev`. Setting up `no-reply@expressvehiclelocators.com` would look more professional but needs a DNS record added in Resend.
 - [ ] **"Already have a quote" intake qualifier** — need a question at the start of intake to route customers who already have a vehicle + dealer quote directly to Advisory ($249) instead of Find My Vehicle ($49).
 - [ ] **Remaining Stripe payment links** — Advisory ($249), Full Service ($399), Service Vault tiers ($99/$199/$299/yr) still need live payment links created and embedded.
