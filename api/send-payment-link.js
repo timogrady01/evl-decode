@@ -124,7 +124,7 @@ module.exports = async function handler(req, res) {
         </p>
       `;
       const payload = JSON.stringify({
-        from: 'EVL Platform <onboarding@resend.dev>',
+        from: 'Express Vehicle Locators <no-reply@expressvehiclelocators.com>',
         reply_to: 'togradyevl@gmail.com',
         to: customerEmail,
         subject: 'Your EVL Payment Link — ' + linkInfo.label + ' (' + linkInfo.price + ')',
