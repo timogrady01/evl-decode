@@ -177,18 +177,18 @@ body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(-
 
 <!-- ADMIN NAV -->
 <nav class="evl-admin-nav">
-  <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-logo">
+  <a href="/admin" class="evl-admin-logo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#00C853" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#00C853"/></svg>
     EVL <span style="color:var(--green);margin-left:4px">ADMIN</span>
   </a>
   <div class="evl-admin-links">
-    <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-link">🛡️ DASHBOARD</a>
-    <a href="https://evl-decode-two.vercel.app/mastermind" class="evl-admin-link">🧠 MASTERMIND</a>
-    <a href="https://evl-decode-two.vercel.app/admin-docs" class="evl-admin-link">📋 DOCUMENTS</a>
-    <a href="https://evl-decode-two.vercel.app/admin-comms" class="evl-admin-link">📨 TEMPLATES</a>
-    <a href="https://evl-decode-two.vercel.app/admin-scripts" class="evl-admin-link">⚙️ SCRIPTS</a>
-    <a href="https://evl-decode-two.vercel.app/admin-calls" class="evl-admin-link active-link">📞 CALLS</a>
-    <a href="https://evl-decode-two.vercel.app/home" class="evl-admin-link">🌐 RETAIL</a>
+    <a href="/admin" class="evl-admin-link">🛡️ DASHBOARD</a>
+    <a href="/mastermind" class="evl-admin-link">🧠 MASTERMIND</a>
+    <a href="/admin-docs" class="evl-admin-link">📋 DOCUMENTS</a>
+    <a href="/admin-comms" class="evl-admin-link">📨 TEMPLATES</a>
+    <a href="/admin-scripts" class="evl-admin-link">⚙️ SCRIPTS</a>
+    <a href="/admin-calls" class="evl-admin-link active-link">📞 CALLS</a>
+    <a href="/home" class="evl-admin-link">🌐 RETAIL</a>
     <button class="evl-logout" onclick="logout()">LOGOUT</button>
   </div>
 </nav>
@@ -788,7 +788,7 @@ function renderCalls(filter='all'){
         <div class="btn-row">
           <a href="tel:${call.phone}" class="btn btn-green btn-sm">📞 CALL BACK</a>
           <a href="sms:${call.phone}" class="btn btn-dark btn-sm">💬 TEXT</a>
-          ${!call.customerId ? `<button class="btn btn-gold btn-sm" onclick="quickAddToMastermind('${call.id}')">➕ ADD TO CRM</button>` : `<a href="https://evl-decode-two.vercel.app/mastermind" target="_blank" class="btn btn-dark btn-sm">🧠 CRM</a>`}
+          ${!call.customerId ? `<button class="btn btn-gold btn-sm" onclick="quickAddToMastermind('${call.id}')">➕ ADD TO CRM</button>` : `<a href="/mastermind" target="_blank" class="btn btn-dark btn-sm">🧠 CRM</a>`}
           <button class="btn btn-dark btn-sm" onclick="deleteCall('${call.id}')">🗑</button>
         </div>
       </div>
@@ -1033,7 +1033,7 @@ function quickAddToMastermind(callId){
   const call = loadCalls().find(c=>c.id===callId);
   if(!call) return;
   alert(`Open Mastermind and add:\nName: ${call.name}\nPhone: ${call.phone}\nSource: Direct Call\n\nThen link back here.`);
-  window.open('https://evl-decode-two.vercel.app/mastermind','_blank');
+  window.open('/mastermind','_blank');
 }
 
 // TAB SWITCHING

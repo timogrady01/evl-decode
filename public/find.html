@@ -427,23 +427,23 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 
 <!-- NAV -->
 <nav class="evl-nav">
-  <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-logo">
+  <a href="/home" class="evl-nav-logo">
     <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#2B84FE" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#2B84FE"/></svg>
     EXPRESS <span style="color:#2B84FE;margin-left:4px">VEHICLE</span> LOCATORS
   </a>
   <button class="evl-nav-hamburger" onclick="document.getElementById('evl-nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
   <div class="evl-nav-links" id="evl-nav-links">
-    <a href="https://evl-decode-two.vercel.app/home" class="evl-nav-link">HOME</a>
-    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-link active">FIND MY CAR</a>
-    <a href="https://evl-decode-two.vercel.app/trade-in" class="evl-nav-link">TRADE-IN</a>
-    <a href="https://evl-decode-two.vercel.app/leasing" class="evl-nav-link">LEASING</a>
-    <a href="https://evl-decode-two.vercel.app/compare" class="evl-nav-link">COMPARE</a>
-    <a href="https://evl-decode-two.vercel.app/savings" class="evl-nav-link">SAVINGS</a>
-    <a href="https://evl-decode-two.vercel.app/reviews" class="evl-nav-link">CLIENT WINS</a>
-    <a href="https://evl-decode-two.vercel.app/faq" class="evl-nav-link">FAQ</a>
-    <a href="https://evl-decode-two.vercel.app/contact" class="evl-nav-link">CONTACT</a>
-    <a href="https://evl-decode-two.vercel.app/appointment" class="evl-nav-link">SCHEDULE</a>
-    <a href="https://evl-decode-two.vercel.app/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
+    <a href="/home" class="evl-nav-link">HOME</a>
+    <a href="/find" class="evl-nav-link active">FIND MY CAR</a>
+    <a href="/trade-in" class="evl-nav-link">TRADE-IN</a>
+    <a href="/leasing" class="evl-nav-link">LEASING</a>
+    <a href="/compare" class="evl-nav-link">COMPARE</a>
+    <a href="/savings" class="evl-nav-link">SAVINGS</a>
+    <a href="/reviews" class="evl-nav-link">CLIENT WINS</a>
+    <a href="/faq" class="evl-nav-link">FAQ</a>
+    <a href="/contact" class="evl-nav-link">CONTACT</a>
+    <a href="/appointment" class="evl-nav-link">SCHEDULE</a>
+    <a href="/find" class="evl-nav-cta">⚡ FIND MY CAR</a>
   </div>
 </nav>
 
@@ -667,7 +667,7 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
       <div style="font-size:20px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px">CAN'T FIND EXACTLY WHAT YOU WANT?</div>
       <div style="font-size:16px;font-weight:600;color:#C8D0DC;font-family:var(--body);margin-bottom:16px;line-height:1.6;">EVL searches beyond public listings — wholesale inventory, fleet returns, lease returns, and dealer trades that never hit retail. Tell us exactly what you want and we'll find it.</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <a href="https://evl-decode-two.vercel.app/finder" class="btn btn-green">⚡ DESCRIBE WHAT YOU WANT</a>
+        <a href="/finder" class="btn btn-green">⚡ DESCRIBE WHAT YOU WANT</a>
 
       </div>
     </div>
@@ -679,12 +679,12 @@ body{background:#020203;color:#fff;font-family:'Oswald',sans-serif;min-height:10
 <footer class="evl-footer">
   <div class="evl-footer-inner">
     <div class="evl-footer-links">
-      <a href="https://evl-decode-two.vercel.app/home">Home</a>
-      <a href="https://evl-decode-two.vercel.app/find">Find My Car</a>
-      <a href="https://evl-decode-two.vercel.app/trade-in">Trade-In</a>
-      <a href="https://evl-decode-two.vercel.app/compare">Compare</a>
-      <a href="https://evl-decode-two.vercel.app/faq">FAQ</a>
-      <a href="https://evl-decode-two.vercel.app/contact">Contact</a>
+      <a href="/home">Home</a>
+      <a href="/find">Find My Car</a>
+      <a href="/trade-in">Trade-In</a>
+      <a href="/compare">Compare</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contact">Contact</a>
     </div>
     <div class="evl-footer-copy">&copy; 2026 Express Vehicle Locators · Plano, TX</div>
   </div>
@@ -953,7 +953,7 @@ function renderVehicles(reset=true){
   const isList = currentView==='list';
 
   if(allVehicles.length===0){
-    container.innerHTML=`<div class="no-results" style="grid-column:1/-1"><span class="no-results-icon">🔍</span><div style="font-size:18px;font-weight:900;color:var(--white);margin-bottom:8px">No Vehicles Found</div><div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:20px">Try adjusting your filters or expanding your search radius.</div><a href="https://evl-decode-two.vercel.app/finder" class="btn btn-green" style="display:inline-flex;margin:0 auto">⚡ LET EVL SEARCH BEYOND LISTINGS</a></div>`;
+    container.innerHTML=`<div class="no-results" style="grid-column:1/-1"><span class="no-results-icon">🔍</span><div style="font-size:18px;font-weight:900;color:var(--white);margin-bottom:8px">No Vehicles Found</div><div style="font-size:14px;color:var(--muted);font-family:var(--body);margin-bottom:20px">Try adjusting your filters or expanding your search radius.</div><a href="/finder" class="btn btn-green" style="display:inline-flex;margin:0 auto">⚡ LET EVL SEARCH BEYOND LISTINGS</a></div>`;
     document.getElementById('load-more-wrap').style.display='none';
     return;
   }
@@ -1314,8 +1314,8 @@ async function openVDP(vin){
     </div>
     <div style="display:flex;flex-direction:column;gap:8px">
       <button class="btn btn-green" onclick="requestAdvisory('${vin}','${year} ${make} ${model} ${trim}')" style="width:100%;justify-content:center">⚡ I WANT THIS VEHICLE</button>
-      <a href="https://evl-decode-two.vercel.app/appointment" class="btn btn-blue" style="width:100%;justify-content:center">📅 BOOK CONSULTATION</a>
-      <a href="https://evl-decode-two.vercel.app/trade-in" class="btn btn-dark" style="width:100%;justify-content:center">🚗 VALUE MY TRADE-IN</a>
+      <a href="/appointment" class="btn btn-blue" style="width:100%;justify-content:center">📅 BOOK CONSULTATION</a>
+      <a href="/trade-in" class="btn btn-dark" style="width:100%;justify-content:center">🚗 VALUE MY TRADE-IN</a>
     </div>
     <div style="font-size:11px;color:var(--muted);font-family:var(--body);text-align:center;line-height:1.6">VIN: ${vin}</div>`;
 }
@@ -1380,7 +1380,7 @@ function showAPIError(msg){
     <div style="font-size:40px;margin-bottom:14px">⚠️</div>
     <div style="font-size:16px;font-weight:900;color:var(--white);margin-bottom:8px">SEARCH TEMPORARILY UNAVAILABLE</div>
     <div style="font-size:13px;color:var(--muted);font-family:var(--body);margin-bottom:20px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.6">${msg||'The search engine is temporarily offline. Try again in a moment or let an EVL advisor search for you.'}</div>
-    <a href="https://evl-decode-two.vercel.app/finder" class="btn btn-green" style="display:inline-flex">⚡ LET EVL SEARCH INSTEAD</a>
+    <a href="/finder" class="btn btn-green" style="display:inline-flex">⚡ LET EVL SEARCH INSTEAD</a>
   </div>`;
 }
 

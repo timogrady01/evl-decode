@@ -111,18 +111,18 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 <!-- NAV -->
 <nav class="ws-nav">
-  <a href="https://evl-decode-two.vercel.app/ws" class="ws-nav-logo">
+  <a href="/ws" class="ws-nav-logo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#FFD700" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#FFD700"/></svg>
     EVL <span style="color:var(--gold);margin-left:4px">WHOLESALE</span>
   </a>
   <div class="ws-nav-links">
-    <a href="https://evl-decode-two.vercel.app/ws-dashboard" class="ws-nav-link active">DASHBOARD</a>
-    <a href="https://evl-decode-two.vercel.app/ws-hub" class="ws-nav-link">HUB MAP</a>
-    <a href="https://evl-decode-two.vercel.app/ws-exchange" class="ws-nav-link">EXCHANGE</a>
-    <a href="https://evl-decode-two.vercel.app/ws-dealers" class="ws-nav-link">DEALERS</a>
-    <a href="https://evl-decode-two.vercel.app/ws-onboarding" class="ws-nav-link">ONBOARDING</a>
-    <a href="https://evl-decode-two.vercel.app/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:8px 10px">⬅ RETAIL</a>
-    <a href="https://evl-decode-two.vercel.app/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:9px 14px;border-radius:6px">🔒 LOGOUT</a>
+    <a href="/ws-dashboard" class="ws-nav-link active">DASHBOARD</a>
+    <a href="/ws-hub" class="ws-nav-link">HUB MAP</a>
+    <a href="/ws-exchange" class="ws-nav-link">EXCHANGE</a>
+    <a href="/ws-dealers" class="ws-nav-link">DEALERS</a>
+    <a href="/ws-onboarding" class="ws-nav-link">ONBOARDING</a>
+    <a href="/home" style="color:var(--dim);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;padding:8px 10px">⬅ RETAIL</a>
+    <a href="/ws" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:1px;padding:9px 14px;border-radius:6px">🔒 LOGOUT</a>
   </div>
 </nav>
 
@@ -135,7 +135,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
   <div style="display:flex;gap:10px;align-items:center">
     <span id="last-refresh" style="font-size:13px;color:var(--muted);font-family:var(--body)"></span>
     <button onclick="refreshAll()" style="background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:6px;font-size:14px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px">🔄 REFRESH</button>
-    <a href="https://evl-decode-two.vercel.app/ws-exchange" style="background:var(--gold);color:#020203;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px">⚡ LIVE EXCHANGE</a>
+    <a href="/ws-exchange" style="background:var(--gold);color:#020203;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px">⚡ LIVE EXCHANGE</a>
   </div>
 </div>
 
@@ -202,10 +202,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
     <div class="side-panel">
       <div class="side-panel-title">⚡ QUICK ACTIONS</div>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <a href="https://evl-decode-two.vercel.app/ws-exchange" style="display:block;background:var(--gold);color:#020203;text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px">⚡ OPEN EXCHANGE</a>
+        <a href="/ws-exchange" style="display:block;background:var(--gold);color:#020203;text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px">⚡ OPEN EXCHANGE</a>
         <button onclick="openCertifyModal()" style="background:var(--blue);color:var(--white);border:none;padding:12px;border-radius:6px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;width:100%">🛡️ CERTIFY VEHICLE</button>
         <button onclick="openMatchModal()" style="background:var(--green);color:#020203;border:none;padding:12px;border-radius:6px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--font);letter-spacing:1px;width:100%">🎯 RUN BRAND MATCH</button>
-        <a href="https://evl-decode-two.vercel.app/ws-hub" style="display:block;background:#1a1a2e;color:var(--dim);text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;border:1px solid #2a2a4e">🗺️ HUB MAP</a>
+        <a href="/ws-hub" style="display:block;background:#1a1a2e;color:var(--dim);text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;border:1px solid #2a2a4e">🗺️ HUB MAP</a>
         <a href="https://console.firebase.google.com/project/evl-acquisition-radar/firestore" target="_blank" style="display:block;background:#1a1a2e;color:var(--muted);text-align:center;padding:12px;border-radius:6px;font-size:13px;font-weight:900;text-decoration:none;font-family:var(--font);letter-spacing:1px;border:1px solid #2a2a4e">🔥 FIRESTORE CONSOLE</a>
       </div>
     </div>

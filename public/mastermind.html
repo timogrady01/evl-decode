@@ -289,19 +289,19 @@ body{display:block !important;align-items:unset !important;justify-content:unset
 </head>
 <body>
 <nav class="evl-admin-nav">
-  <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-logo">
+  <a href="/admin" class="evl-admin-logo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,18 2,18" stroke="#00C853" stroke-width="2" fill="none"/><circle cx="10" cy="10" r="3" fill="#00C853"/></svg>
     <span>EVL <span style="color:#00C853">ADMIN</span></span>
   </a>
   <button class="evl-admin-hamburger" onclick="toggleAdminNav()" aria-label="Menu">&#9776;</button>
   <div class="evl-admin-links" id="evl-admin-links">
-    <a href="https://evl-decode-two.vercel.app/admin" class="evl-admin-link">🛡️ DASHBOARD</a>
-    <a href="https://evl-decode-two.vercel.app/mastermind" class="evl-admin-link">🧠 MASTERMIND</a>
-    <a href="https://evl-decode-two.vercel.app/admin-docs" class="evl-admin-link">📋 DOCUMENTS</a>
-    <a href="https://evl-decode-two.vercel.app/admin-comms" class="evl-admin-link">📨 TEMPLATES</a>
-    <a href="https://evl-decode-two.vercel.app/admin-scripts" class="evl-admin-link">⚙️ SCRIPTS</a>
-    <a href="https://evl-decode-two.vercel.app/ws" class="evl-admin-link">⚡ WHOLESALE</a>
-    <a href="https://evl-decode-two.vercel.app/home" class="evl-admin-retail">🌐 RETAIL SITE</a>
+    <a href="/admin" class="evl-admin-link">🛡️ DASHBOARD</a>
+    <a href="/mastermind" class="evl-admin-link">🧠 MASTERMIND</a>
+    <a href="/admin-docs" class="evl-admin-link">📋 DOCUMENTS</a>
+    <a href="/admin-comms" class="evl-admin-link">📨 TEMPLATES</a>
+    <a href="/admin-scripts" class="evl-admin-link">⚙️ SCRIPTS</a>
+    <a href="/ws" class="evl-admin-link">⚡ WHOLESALE</a>
+    <a href="/home" class="evl-admin-retail">🌐 RETAIL SITE</a>
   </div>
 </nav>
 
@@ -334,7 +334,7 @@ body{display:block !important;align-items:unset !important;justify-content:unset
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-active" style="font-size:18px;color:var(--green)">0</span><span class="rev-lbl" style="font-size:10px">Active Deals</span></div>
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-followup" style="font-size:18px;color:var(--gold)">0</span><span class="rev-lbl" style="font-size:10px">Follow-Ups Due</span></div>
     <div class="hdr-stat"><span class="stat-val rev-val" id="hdr-equity" style="font-size:18px;color:var(--purple)">0</span><span class="rev-lbl" style="font-size:10px">Equity Alerts</span></div>
-    <a href="https://evl-decode-two.vercel.app/admin-scripts" style="color:var(--blue);font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:8px 10px">⬅ ADMIN</a>
+    <a href="/admin-scripts" style="color:var(--blue);font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:8px 10px">⬅ ADMIN</a>
     <button class="evl-logout" onclick="logout()">LOGOUT</button>
   </div>
 </div>
@@ -1020,7 +1020,7 @@ function openProfile(id){
           <div style="display:flex;flex-wrap:wrap;gap:8px">
             <a href="tel:${c.phone}" class="btn btn-blue btn-sm">📞 CALL</a>
             <a href="mailto:${c.email}" class="btn btn-dark btn-sm">📧 EMAIL</a>
-            <a href="https://evl-decode-two.vercel.app/admin-comms" target="_blank" class="btn btn-gold btn-sm">✉️ TEMPLATES</a>
+            <a href="/admin-comms" target="_blank" class="btn btn-gold btn-sm">✉️ TEMPLATES</a>
             <button class="btn btn-green btn-sm" onclick="markContacted('${id}')">✅ MARK CONTACTED</button>
             <button class="btn btn-dark btn-sm" onclick="advanceStage('${id}')">⏭ ADVANCE STAGE</button>
           </div>
@@ -1549,7 +1549,7 @@ function toggleAdminNav(){{document.getElementById('evl-admin-links').classList.
 let currentCommCustomer = null;
 let currentEmailMode = 'customer';
 
-const BASE_URL = 'https://evl-decode-two.vercel.app';
+const BASE_URL = '';
 const COMM_STORAGE = 'evl_comm_history';
 
 function loadCommHistory(){ try{ return JSON.parse(localStorage.getItem(COMM_STORAGE)||'{}'); }catch(e){ return {}; } }
