@@ -834,6 +834,58 @@
           </div>
         </details>
 
+        <!-- DRAWER 8: INCIDENT DOSSIER -->
+        <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">📋 8. Incident Dossier — Everyone's Info, In One Place</summary>
+          <div style="padding:20px;">
+            <div style="color:#C8D0DC;font-size:13px;line-height:1.7;margin-bottom:18px;">Fill this in after an accident so you have everything ready when your insurance, the body shop, or anyone else has questions.</div>
+
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin-bottom:10px;">My Vehicle</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <input type="text" id="acVehYear" placeholder="Year" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              <input type="text" id="acVehMake" placeholder="Make" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <input type="text" id="acVehModel" placeholder="Model" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              <input type="text" id="acVehMiles" placeholder="Current Mileage" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+            <input type="text" id="acVehVin" placeholder="VIN" style="width:100%;padding:12px;margin-bottom:20px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin-bottom:10px;">Other Party(ies)</div>
+            <div id="acOtherParties"></div>
+            <button type="button" onclick="addOtherParty()" style="width:100%;background:transparent;color:#2B84FE;border:1px dashed #2B84FE;font-weight:700;font-size:12px;padding:10px;border-radius:8px;cursor:pointer;margin-bottom:20px;">+ Add Another Party</button>
+
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin-bottom:10px;">Witnesses</div>
+            <div id="acWitnesses"></div>
+            <button type="button" onclick="addWitness()" style="width:100%;background:transparent;color:#2B84FE;border:1px dashed #2B84FE;font-weight:700;font-size:12px;padding:10px;border-radius:8px;cursor:pointer;margin-bottom:20px;">+ Add Witness</button>
+
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin-bottom:10px;">Photos</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div>
+                <label style="display:block;font-size:11px;color:#C8D0DC;margin-bottom:4px;">Damage Photos</label>
+                <input type="file" accept="image/*" multiple onchange="uploadDossierPhoto(this,'damage')" style="width:100%;font-size:12px;color:#C8D0DC;">
+              </div>
+              <div>
+                <label style="display:block;font-size:11px;color:#C8D0DC;margin-bottom:4px;">My Driver's License</label>
+                <input type="file" accept="image/*" onchange="uploadDossierPhoto(this,'myDL')" style="width:100%;font-size:12px;color:#C8D0DC;">
+              </div>
+              <div>
+                <label style="display:block;font-size:11px;color:#C8D0DC;margin-bottom:4px;">My Insurance Card</label>
+                <input type="file" accept="image/*" onchange="uploadDossierPhoto(this,'myInsuranceCard')" style="width:100%;font-size:12px;color:#C8D0DC;">
+              </div>
+              <div>
+                <label style="display:block;font-size:11px;color:#C8D0DC;margin-bottom:4px;">Other Party's DL</label>
+                <input type="file" accept="image/*" onchange="uploadDossierPhoto(this,'otherDL')" style="width:100%;font-size:12px;color:#C8D0DC;">
+              </div>
+              <div>
+                <label style="display:block;font-size:11px;color:#C8D0DC;margin-bottom:4px;">Other Party's Insurance Card</label>
+                <input type="file" accept="image/*" onchange="uploadDossierPhoto(this,'otherInsuranceCard')" style="width:100%;font-size:12px;color:#C8D0DC;">
+              </div>
+            </div>
+            <div id="acPhotoStatus" style="font-size:12px;color:#00C853;margin-top:12px;"></div>
+          </div>
+        </details>
+
         <!-- DRAWER 7: WORD TRACKS & Q&A -->
         <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
           <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">🗣️ 7. What To Say — Word Tracks & Q&A</summary>
@@ -1098,6 +1150,80 @@
     };
 
     // ── IN CASE OF ACCIDENT CARD — save/load by email ──
+    // ── DOSSIER: dynamic other party / witness rows ──
+    let acPartyCount = 0;
+    let acWitnessCount = 0;
+    const acPhotoUrls = { damage: [], myDL: '', myInsuranceCard: '', otherDL: '', otherInsuranceCard: '' };
+
+    window.addOtherParty = function() {
+      acPartyCount++;
+      const id = acPartyCount;
+      const div = document.createElement('div');
+      div.id = 'acParty' + id;
+      div.style.cssText = 'background:#090E17;border:1px solid #2a3f5f;border-radius:8px;padding:14px;margin-bottom:10px;';
+      div.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+          <input type="text" class="acPartyName" placeholder="Name" style="padding:10px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:13px;">
+          <input type="tel" class="acPartyPhone" placeholder="Phone" style="padding:10px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:13px;">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+          <input type="text" class="acPartyInsCo" placeholder="Insurance Company" style="padding:10px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:13px;">
+          <input type="text" class="acPartyPolicy" placeholder="Policy Number" style="padding:10px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:13px;">
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="text" class="acPartyPlate" placeholder="License Plate" style="flex:1;padding:10px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:13px;">
+          <button type="button" onclick="document.getElementById('acParty${id}').remove()" style="background:transparent;color:#e53e3e;border:1px solid #e53e3e;font-size:12px;padding:10px 14px;border-radius:8px;cursor:pointer;">Remove</button>
+        </div>
+      `;
+      document.getElementById('acOtherParties').appendChild(div);
+    };
+
+    window.addWitness = function() {
+      acWitnessCount++;
+      const id = acWitnessCount;
+      const div = document.createElement('div');
+      div.id = 'acWitness' + id;
+      div.style.cssText = 'background:#090E17;border:1px solid #2a3f5f;border-radius:8px;padding:14px;margin-bottom:10px;display:flex;gap:10px;align-items:center;';
+      div.innerHTML = `
+        <input type="text" class="acWitnessName" placeholder="Name" style="flex:1;padding:10px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:13px;">
+        <input type="tel" class="acWitnessPhone" placeholder="Phone" style="flex:1;padding:10px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:13px;">
+        <button type="button" onclick="document.getElementById('acWitness${id}').remove()" style="background:transparent;color:#e53e3e;border:1px solid #e53e3e;font-size:12px;padding:10px 14px;border-radius:8px;cursor:pointer;">Remove</button>
+      `;
+      document.getElementById('acWitnesses').appendChild(div);
+    };
+
+    window.uploadDossierPhoto = function(input, slot) {
+      const files = input.files;
+      if (!files || files.length === 0) return;
+      const statusEl = document.getElementById('acPhotoStatus');
+      statusEl.textContent = 'Uploading...';
+
+      const uploadOne = (file) => {
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', 'evl_photos');
+        fd.append('public_id', 'evl_accident_' + slot + '_' + Date.now());
+        return fetch('https://api.cloudinary.com/v1_1/dv8cpebgp/image/upload', { method: 'POST', body: fd })
+          .then(r => r.json())
+          .then(d => d.secure_url || null);
+      };
+
+      const uploads = Array.from(files).map(uploadOne);
+      Promise.all(uploads).then(urls => {
+        const validUrls = urls.filter(u => u);
+        if (slot === 'damage') {
+          acPhotoUrls.damage = acPhotoUrls.damage.concat(validUrls);
+        } else {
+          acPhotoUrls[slot] = validUrls[0] || acPhotoUrls[slot];
+        }
+        statusEl.textContent = '✅ Photo(s) uploaded';
+      }).catch(err => {
+        console.error('[service-vault] Dossier photo upload failed:', err);
+        statusEl.style.color = '#e53e3e';
+        statusEl.textContent = 'Photo upload failed. Please try again.';
+      });
+    };
+
     window.saveAccidentCard = async function() {
       const email = document.getElementById('acEmail').value.trim().toLowerCase();
       const statusMsg = document.getElementById('acStatusMsg');
@@ -1148,6 +1274,25 @@
             expectedCompletionDate: document.getElementById('acRepairDate').value,
             stage: document.getElementById('acRepairStage').value
           },
+          myVehicle: {
+            year: document.getElementById('acVehYear').value.trim(),
+            make: document.getElementById('acVehMake').value.trim(),
+            model: document.getElementById('acVehModel').value.trim(),
+            mileage: document.getElementById('acVehMiles').value.trim(),
+            vin: document.getElementById('acVehVin').value.trim()
+          },
+          otherParties: Array.from(document.querySelectorAll('#acOtherParties > div')).map(row => ({
+            name: row.querySelector('.acPartyName').value.trim(),
+            phone: row.querySelector('.acPartyPhone').value.trim(),
+            insuranceCompany: row.querySelector('.acPartyInsCo').value.trim(),
+            policyNumber: row.querySelector('.acPartyPolicy').value.trim(),
+            licensePlate: row.querySelector('.acPartyPlate').value.trim()
+          })),
+          witnesses: Array.from(document.querySelectorAll('#acWitnesses > div')).map(row => ({
+            name: row.querySelector('.acWitnessName').value.trim(),
+            phone: row.querySelector('.acWitnessPhone').value.trim()
+          })),
+          photos: acPhotoUrls,
           updatedAt: new Date()
         });
         statusMsg.style.color = '#00C853';
@@ -1213,6 +1358,43 @@
         document.getElementById('acRepairCost').value = repair.expectedCost || '';
         document.getElementById('acRepairDate').value = repair.expectedCompletionDate || '';
         document.getElementById('acRepairStage').value = repair.stage || '';
+
+        const veh = data.myVehicle || {};
+        document.getElementById('acVehYear').value = veh.year || '';
+        document.getElementById('acVehMake').value = veh.make || '';
+        document.getElementById('acVehModel').value = veh.model || '';
+        document.getElementById('acVehMiles').value = veh.mileage || '';
+        document.getElementById('acVehVin').value = veh.vin || '';
+
+        document.getElementById('acOtherParties').innerHTML = '';
+        acPartyCount = 0;
+        (data.otherParties || []).forEach(p => {
+          addOtherParty();
+          const row = document.getElementById('acParty' + acPartyCount);
+          row.querySelector('.acPartyName').value = p.name || '';
+          row.querySelector('.acPartyPhone').value = p.phone || '';
+          row.querySelector('.acPartyInsCo').value = p.insuranceCompany || '';
+          row.querySelector('.acPartyPolicy').value = p.policyNumber || '';
+          row.querySelector('.acPartyPlate').value = p.licensePlate || '';
+        });
+
+        document.getElementById('acWitnesses').innerHTML = '';
+        acWitnessCount = 0;
+        (data.witnesses || []).forEach(w => {
+          addWitness();
+          const row = document.getElementById('acWitness' + acWitnessCount);
+          row.querySelector('.acWitnessName').value = w.name || '';
+          row.querySelector('.acWitnessPhone').value = w.phone || '';
+        });
+
+        if (data.photos) {
+          Object.assign(acPhotoUrls, data.photos);
+          document.getElementById('acPhotoStatus').style.color = '#00C853';
+          const photoCount = (acPhotoUrls.damage || []).length + ['myDL','myInsuranceCard','otherDL','otherInsuranceCard'].filter(k => acPhotoUrls[k]).length;
+          if (photoCount > 0) {
+            document.getElementById('acPhotoStatus').textContent = '✅ ' + photoCount + ' photo(s) previously uploaded';
+          }
+        }
 
         statusMsg.style.color = '#00C853';
         statusMsg.textContent = '✅ Loaded your saved card.';
