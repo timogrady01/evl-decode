@@ -387,6 +387,8 @@ Every email send anywhere in the platform now reports real success/failure via R
 
 **Note on `notify-lead.js`:** still sends from the old `onboarding@resend.dev` shared address rather than the verified custom domain — minor inconsistency, low priority, could be updated to match the other endpoints later.
 
+**WS Exchange side brought to compliance parity with retail (July 15, 2026):** Tim caught that the CAN-SPAM/suppression work only covered the retail intake side. Created `lib/emailCompliance.js` (shared `isEmailSuppressed()` + `complianceFooter()`, one source of truth) and applied it to all real third-party emails: `send-auction-notification.js` (dealers), `send-appointment-confirmation-emails.js` (GSM/Salesperson/Customer — not the Admin portion), `send-verification-to-customer.js` (customer), `send-appointment-notifications.js` (customer — not the Admin portion). Admin-only alerts to Tim deliberately excluded since those aren't third-party commercial email. Shared suppression list decision: same `evl_email_suppression` collection used for both dealers and retail customers (simpler, more conservative — an unsubscribe anywhere is honored everywhere).
+
 **Number roles clarified:**
 - `+14699912870` — Twilio SYSTEM number, automated SMS only, not for public display
 - `(469) 404-3192` — Tim's real, personally-answered second business line — this is the customer-facing "Call or Text" number
