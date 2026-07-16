@@ -17,7 +17,7 @@ const formidable = require('formidable');
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
 const axios = require('axios');
-const admin = require('firebase-admin');
+const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 // Cloudinary config
 cloudinary.config({
@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
       // UPDATE FIREBASE WITH VIDEO INFO
       // ══════════════════════════════════════════════════════════
 
-      const db = admin.firestore();
+      const db = getFirebaseAdmin().firestore();
       const docRef = db.collection(recordType === 'lead' ? 'evl_leads' : 'evl_deals').doc(recordId);
 
       // First, get current customer data

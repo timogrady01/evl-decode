@@ -10,7 +10,7 @@
  */
 
 const twilio = require('twilio');
-const admin = require('firebase-admin');
+const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 // Twilio credentials from environment
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -119,7 +119,7 @@ ${verificationLink}`;
     // UPDATE FIREBASE
     // ══════════════════════════════════════════════════════════
 
-    const db = admin.firestore();
+    const db = getFirebaseAdmin().firestore();
     const collectionName = recordType === 'lead' ? 'evl_leads' : 'evl_deals';
     const docRef = db.collection(collectionName).doc(recordId);
 

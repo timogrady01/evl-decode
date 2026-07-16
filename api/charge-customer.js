@@ -9,7 +9,7 @@
  */
 
 const stripe = require('stripe')(process.env.STRIPE_RESTRICTED_API_KEY);
-const admin = require('firebase-admin');
+const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
     console.log('[charge-customer] Charge intent logged (Stripe integration needed)');
 
     // Update Firebase to record charge attempt
-    const db = admin.firestore();
+    const db = getFirebaseAdmin().firestore();
     const docRef = db.collection(recordType === 'lead' ? 'evl_leads' : 'evl_deals').doc(recordId);
 
     await docRef.update({

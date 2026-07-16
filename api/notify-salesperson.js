@@ -9,7 +9,7 @@
  */
 
 const twilio = require('twilio');
-const admin = require('firebase-admin');
+const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -17,15 +17,13 @@ const fromNumber = process.env.TWILIO_PHONE_NUMBER;
 
 const client = twilio(accountSid, authToken);
 
-// Salesperson phone numbers (UPDATE THESE)
+// Salesperson phone numbers (UPDATE THESE - all currently point to placeholder number)
 const SALESPERSON_NUMBERS = {
-  'const SALESPERSON_NUMBERS = {
   'john-smith': '+14694043192',
   'sarah-jones': '+14694043192',
   'mike-johnson': '+14694043192',
   'jessica-williams': '+14694043192',
   'david-brown': '+14694043192'
-};
 };
 
 module.exports = async (req, res) => {
@@ -63,7 +61,7 @@ module.exports = async (req, res) => {
     
     // Update Firebase record with notification timestamp
     try {
-      const db = admin.firestore();
+      const db = getFirebaseAdmin().firestore();
       const docRef = db.collection(recordType === 'lead' ? 'evl_leads' : 'evl_deals').doc(recordId);
       
       await docRef.update({

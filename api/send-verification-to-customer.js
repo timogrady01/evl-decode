@@ -10,7 +10,7 @@
 
 const twilio = require('twilio');
 const axios = require('axios');
-const admin = require('firebase-admin');
+const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -97,7 +97,7 @@ Video proof: ${videoUrl}`;
     // UPDATE FIREBASE
     // ══════════════════════════════════════════════════════════
 
-    const db = admin.firestore();
+    const db = getFirebaseAdmin().firestore();
     const docRef = db.collection(recordType === 'lead' ? 'evl_leads' : 'evl_deals').doc(recordId);
 
     await docRef.update({

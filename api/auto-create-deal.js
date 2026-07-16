@@ -8,7 +8,7 @@
  * a matching deal record in the evl_deals collection.
  */
 
-const admin = require('firebase-admin');
+const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 module.exports = async (req, res) => {
   // Only allow POST requests
@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
     // CREATE DEAL IN FIREBASE
     // ══════════════════════════════════════════════════════════
 
-    const db = admin.firestore();
+    const db = getFirebaseAdmin().firestore();
 
     // Parse appointment date
     const appointmentDateTime = new Date(`${appointmentDate}T${appointmentTimeString}:00`);

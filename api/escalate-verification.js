@@ -9,7 +9,7 @@
  */
 
 const twilio = require('twilio');
-const admin = require('firebase-admin');
+const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 // Twilio credentials from environment variables
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -130,7 +130,7 @@ Record Status: ESCALATED (pending manager action)`;
     // UPDATE FIREBASE - MARK AS ESCALATED
     // ══════════════════════════════════════════════════════════
 
-    const db = admin.firestore();
+    const db = getFirebaseAdmin().firestore();
     const collectionName = recordType === 'lead' ? 'evl_leads' : 'evl_deals';
     const docRef = db.collection(collectionName).doc(recordId);
 
