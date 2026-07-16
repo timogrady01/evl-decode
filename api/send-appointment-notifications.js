@@ -1,6 +1,7 @@
 const twilio = require('twilio');
 const https = require('https');
 const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
+const { logCommunication } = require('../lib/commsLog');
 
 function sendResendEmail({ to, subject, html, fromLabel }) {
   return new Promise((resolve, reject) => {
@@ -139,6 +140,21 @@ module.exports = async function handler(req, res) {
   const customerEmailOk = results.customerEmail === 'sent';
   const adminEmailOk = results.adminEmail === 'sent';
   const overallSuccess = smsOk || customerEmailOk || adminEmailOk;
+
+  // ── LOG customer-facing communications only (admin alert is internal, not logged) ──
+  if (customerPhone) {
+    await logCommunication({
+      customerPhone, customerEmail, leadId: appointmentId, type: 'sms', purpose: 'appointment-notification',
+      status: smsOk ? 'sent' : (results.customerSMS || '').startsWith('skipped') ? 'skipped' : 'failed',
+      providerMessageId: smsOk ? results.customerSMS : null
+    });
+  }
+  if (customerEmail) {
+    await logCommunication({
+      customerPhone, customerEmail, leadId: appointmentId, type: 'email', purpose: 'appointment-notification',
+      status: customerEmailOk ? 'sent' : (results.customerEmail || '').startsWith('skipped') ? 'skipped' : 'failed'
+    });
+  }
 
   return res.status(overallSuccess ? 200 : 500).json({
     success: overallSuccess,

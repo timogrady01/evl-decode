@@ -1,5 +1,6 @@
 const twilio = require('twilio');
 const https = require('https');
+const { logCommunication } = require('../lib/commsLog');
 
 // Check if this email has unsubscribed - checks evl_email_suppression in Firestore
 function isEmailSuppressed(email) {
@@ -144,6 +145,21 @@ module.exports = async function handler(req, res) {
   const smsOk = typeof results.customerSMS === 'string' && !results.customerSMS.startsWith('failed') && !results.customerSMS.startsWith('skipped');
   const emailOk = results.customerEmail === 'sent';
   const overallSuccess = smsOk || emailOk;
+
+  // ── LOG BOTH COMMUNICATIONS ──
+  if (customerPhone) {
+    await logCommunication({
+      customerPhone, customerEmail, type: 'sms', purpose: 'welcome-message',
+      status: smsOk ? 'sent' : (results.customerSMS || '').startsWith('skipped') ? 'skipped' : 'failed',
+      providerMessageId: smsOk ? results.customerSMS : null
+    });
+  }
+  if (customerEmail) {
+    await logCommunication({
+      customerPhone, customerEmail, type: 'email', purpose: 'welcome-message',
+      status: emailOk ? 'sent' : (results.customerEmail || '').startsWith('skipped') ? 'skipped' : 'failed'
+    });
+  }
 
   return res.status(overallSuccess ? 200 : 500).json({
     success: overallSuccess,

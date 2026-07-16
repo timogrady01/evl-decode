@@ -12,6 +12,7 @@ const twilio = require('twilio');
 const https = require('https');
 const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
+const { logCommunication } = require('../lib/commsLog');
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -145,6 +146,16 @@ Video proof: ${videoUrl}`;
     });
 
     console.log('[send-verification] Firebase updated');
+
+    await logCommunication({
+      customerPhone, customerEmail, leadId: recordId, type: 'sms', purpose: 'vehicle-verification',
+      content: videoUrl, status: 'sent', providerMessageId: smsResult.sid
+    });
+    await logCommunication({
+      customerPhone, customerEmail, leadId: recordId, type: 'email', purpose: 'vehicle-verification',
+      content: videoUrl,
+      status: emailStatus === 'sent' ? 'sent' : emailStatus.startsWith('skipped') ? 'skipped' : 'failed'
+    });
 
     return res.status(200).json({
       success: true,

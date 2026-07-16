@@ -3,6 +3,7 @@
 
 const https = require('https');
 const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
+const { logCommunication } = require('../lib/commsLog');
 
 function sendResendEmail({ to, subject, html }) {
   return new Promise((resolve, reject) => {
@@ -142,6 +143,16 @@ module.exports = async function handler(req, res) {
   }
 
   const anySucceeded = Object.values(results).some(v => v === 'sent');
+
+  // ── LOG customer-facing communication only (GSM/SP/Admin are internal, not logged) ──
+  if (apptData.custEmail) {
+    await logCommunication({
+      customerPhone: apptData.custPhone, customerEmail: apptData.custEmail,
+      type: 'email', purpose: 'appointment-confirmation',
+      content: apptData.confirmNum ? ('Confirmation #' + apptData.confirmNum) : null,
+      status: results.customer === 'sent' ? 'sent' : (results.customer || '').startsWith('skipped') ? 'skipped' : 'failed'
+    });
+  }
 
   return res.status(anySucceeded ? 200 : 500).json({
     success: anySucceeded,

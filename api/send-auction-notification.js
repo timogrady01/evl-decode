@@ -4,6 +4,7 @@
 
 const https = require('https');
 const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
+const { logCommunication } = require('../lib/commsLog');
 
 function buildEmail(type, p) {
   switch (type) {
@@ -98,6 +99,7 @@ module.exports = async function handler(req, res) {
   const suppressed = await isEmailSuppressed(params.to_email);
   if (suppressed) {
     console.log('[send-auction-notification] Skipped - unsubscribed:', params.to_email);
+    await logCommunication({ customerEmail: params.to_email, type: 'email', purpose: 'auction-' + type, status: 'skipped' });
     return res.status(200).json({ success: false, skipped: true, reason: 'unsubscribed' });
   }
 
@@ -143,9 +145,11 @@ module.exports = async function handler(req, res) {
       request.end();
     });
 
+    await logCommunication({ customerEmail: params.to_email, type: 'email', purpose: 'auction-' + type, content: emailContent.subject, status: 'sent' });
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error('[send-auction-notification] Error:', error.message);
+    await logCommunication({ customerEmail: params.to_email, type: 'email', purpose: 'auction-' + type, content: emailContent.subject, status: 'failed' });
     return res.status(500).json({ success: false, error: error.message });
   }
 };
