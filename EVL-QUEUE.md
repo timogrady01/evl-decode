@@ -8,11 +8,13 @@ This is the running list of things flagged mid-conversation that need to be addr
 
 ## Open Items
 
-- [ ] **HIGH PRIORITY \u2014 WS Exchange EmailJS silent-failure bug still needs fixing.** (Firebase Admin init bug in these same files was fixed and confirmed working July 15, 2026 \u2014 see build log.) Still remaining: `api/send-verification-to-customer.js`, `api/send-appointment-notifications.js` both always return `success: true` regardless of actual EmailJS result. Plus 4 files calling EmailJS directly from the browser: `service-vault.html`, `deal-gap.html`, `evl-notif-engine.html`, `ws-exchange.html`. Affects live auction notifications (outbid alerts, final call, winner notification per the 6 active EmailJS templates: EVL-UNIT-CARD, EVL-HOURLY-NUDGE, EVL-OUTBID, EVL-FINAL-CALL, EVL-WINNER, EVL-UNIT-SOLD). Fix: same Resend-based pattern already proven working on the retail side.- [ ] **Communications log (`evl_communications` collection)** — no permanent record currently exists of emails/texts sent to customers (only ephemeral Vercel server logs). Need a new collection logging every send: customerPhone, customerEmail, leadId, type (sms/email), purpose, content, status, providerMessageId, timestamp. Should be viewable per-customer from `crm.html`.
+- [ ] **Communications log (`evl_communications` collection)** — no permanent record currently exists of emails/texts sent to customers (only ephemeral Vercel server logs). Need a new collection logging every send: customerPhone, customerEmail, leadId, type (sms/email), purpose, content, status, providerMessageId, timestamp. Should be viewable per-customer from `crm.html`.
 
 - [ ] **admin-leads.html vs crm.html consolidation** — two overlapping admin tools both read `evl_leads` independently (crm.html also pulls evl_deals, evl_appointments, evl_notes; admin-leads.html has the Send Payment Link button crm.html lacks). Decided to keep separate for now given solo-operator scale; `crm.html` is the intended long-term home for full customer view (including future comms log). Revisit consolidation later.
 
-- [ ] **Role-Based Access Control (RBAC) — future, not urgent.** Currently NO real per-user authentication exists anywhere in the admin tools (all PINs unified to 1027 during dev, Firestore rules mostly `allow read, write: if true`). DealerSocket-style Manager vs. Salesperson access levels aren't buildable until real auth (actual logins) exists first. Revisit once EVL actually onboards staff or dealer partners needing restricted logins \u2014 not needed while solo-operated.- [ ] **SiteGround DNS Zone Editor shows "Your domain's A record is not pointed to this website"** — noticed while adding Resend DNS records (July 14, 2026). Site is live and working via Vercel right now, so this warning is likely just SiteGround referring to its own hosting (not an actual live issue) — but worth understanding/confirming what this means before ignoring it long-term.
+- [ ] **Role-Based Access Control (RBAC) — future, not urgent.** Currently NO real per-user authentication exists anywhere in the admin tools (all PINs unified to 1027 during dev, Firestore rules mostly `allow read, write: if true`). DealerSocket-style Manager vs. Salesperson access levels aren't buildable until real auth (actual logins) exists first. Revisit once EVL actually onboards staff or dealer partners needing restricted logins — not needed while solo-operated.
+
+- [ ] **SiteGround DNS Zone Editor shows "Your domain's A record is not pointed to this website"** — noticed while adding Resend DNS records (July 14, 2026). Site is live and working via Vercel right now, so this warning is likely just SiteGround referring to its own hosting (not an actual live issue) — but worth understanding/confirming what this means before ignoring it long-term.
 
 - [ ] **If/when domain DNS fully migrates away from SiteGround** (e.g. to Vercel DNS) as part of finishing the WordPress→Vercel migration: remember to re-add the 3 Resend email verification DNS records (TXT `resend._domainkey`, MX `send`, TXT `send`) at the new DNS host — email verification does not automatically carry over between DNS providers.
 
@@ -23,6 +25,8 @@ This is the running list of things flagged mid-conversation that need to be addr
 - [ ] **Stripe live mode switch** — still in test/sandbox mode; must switch before real customer payments.
 
 - [ ] **ESS and DDT full inventory/labeling** — still pending from a prior session, not yet done.
+
+- [ ] **notify-lead.js still sends from old `onboarding@resend.dev`** — minor inconsistency, low priority. Every other endpoint now sends from the verified `no-reply@expressvehiclelocators.com` domain; this one file was missed. Quick fix whenever convenient.
 
 ---
 
