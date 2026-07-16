@@ -6,7 +6,7 @@
 <title>EVL Notification Engine — Internal Test</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- EmailJS SDK -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- EmailJS removed - all email now sent server-side via Resend (see api/send-auction-notification.js) -->
 <style>
   :root{--bg:#090E17;--s1:#0d1117;--blue:#2B84FE;--gold:#FFD700;--green:#00C853;
     --red:#FF4444;--white:#ffffff;--muted:#8899aa;--border:#1a2a3a;
@@ -377,28 +377,32 @@ const EVL_NOTIF = {
   },
   bidBoardUrl: '/live-bid-board',
 
-  // ── INITIALIZE EMAILJS ──
+  // ── INITIALIZE (no EmailJS needed anymore - emails go through server-side Resend) ──
   init() {
-    if (this.emailjs.publicKey) {
-      emailjs.init(this.emailjs.publicKey);
-      this.log('✅ EmailJS initialized — Public Key loaded');
-    } else {
-      this.log('⚠️ EmailJS not initialized — enter Public Key first');
-    }
+    this.log('✅ Notification engine initialized (server-side email via Resend)');
   },
 
-  // ── SEND EMAIL via EmailJS ──
-  async sendEmail(templateId, params) {
-    if (!this.emailjs.publicKey || !templateId) {
-      this.log('❌ Email skipped — missing Public Key or Template ID');
+  // ── SEND EMAIL via server-side Resend endpoint ──
+  async sendEmail(notificationType, params) {
+    if (!notificationType || !params.to_email) {
+      this.log('❌ Email skipped — missing notification type or recipient');
       return false;
     }
     try {
-      await emailjs.send(this.emailjs.serviceId, templateId, params);
-      this.log(`✅ EMAIL SENT → ${params.to_email || 'recipient'} | Template: ${templateId}`);
+      const response = await fetch('/api/send-auction-notification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: notificationType, params: params })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) {
+        this.log(`❌ EMAIL FAILED → ${params.to_email || 'recipient'} | ${data.error || response.status}`);
+        return false;
+      }
+      this.log(`✅ EMAIL SENT → ${params.to_email || 'recipient'} | Type: ${notificationType}`);
       return true;
     } catch(e) {
-      this.log(`❌ EMAIL FAILED: ${e.text || e.message}`);
+      this.log(`❌ EMAIL FAILED: ${e.message}`);
       return false;
     }
   },
@@ -459,7 +463,7 @@ const EVL_NOTIF = {
     };
 
     // Email UCM1
-    await this.sendEmail(this.emailjs.templates.unitCard, params);
+    await this.sendEmail('unitCard', params);
 
     // SMS UCM1
     const sms = `⚡ EVL ALERT: ${auction.vehicle} now available. WS Floor: $${(auction.floor||0).toLocaleString()}. ${auction.days}d on lot. Bid: ${this.bidBoardUrl}`;
@@ -467,7 +471,7 @@ const EVL_NOTIF = {
 
     // If UCM2 exists, notify them too
     if (dealer.ucm2?.email) {
-      await this.sendEmail(this.emailjs.templates.unitCard, {...params, to_email: dealer.ucm2.email, to_name: dealer.ucm2.name});
+      await this.sendEmail('unitCard', {...params, to_email: dealer.ucm2.email, to_name: dealer.ucm2.name});
       if (dealer.ucm2.cell) await this.sendSMS(dealer.ucm2.cell, sms);
     }
   },
@@ -495,7 +499,7 @@ const EVL_NOTIF = {
       bid_url:        this.bidBoardUrl,
     };
 
-    await this.sendEmail(this.emailjs.templates.nudge, params);
+    await this.sendEmail('nudge', params);
 
     // SMS — short version
     const sms = `📡 EVL: ${auction.vehicle} - High: $${highBid.toLocaleString()} - ${timeRemaining} left - ${status.substring(0,40)} - ${this.bidBoardUrl}`;
@@ -503,7 +507,7 @@ const EVL_NOTIF = {
 
     // Backup to UCM2 if UCM1 hasn't responded in 2 hours
     if (dealer.ucm2?.email && dealer.ucm2NudgeBackup) {
-      await this.sendEmail(this.emailjs.templates.nudge, {...params, to_email: dealer.ucm2.email, to_name: dealer.ucm2.name});
+      await this.sendEmail('nudge', {...params, to_email: dealer.ucm2.email, to_name: dealer.ucm2.name});
       if (dealer.ucm2.cell) await this.sendSMS(dealer.ucm2.cell, sms);
     }
   },
@@ -523,7 +527,7 @@ const EVL_NOTIF = {
       bid_url:      this.bidBoardUrl,
     };
 
-    await this.sendEmail(this.emailjs.templates.outbid, params);
+    await this.sendEmail('outbid', params);
 
     const sms = `⚠️ EVL: Outbid on ${auction.vehicle}. New high: $${newHighBid.toLocaleString()}. Counter: ${this.bidBoardUrl}`;
     await this.sendSMS(dealer.ucm1.cell, sms);
@@ -543,7 +547,7 @@ const EVL_NOTIF = {
       bid_url:       this.bidBoardUrl,
     };
 
-    await this.sendEmail(this.emailjs.templates.finalCall, params);
+    await this.sendEmail('finalCall', params);
 
     const sms = `🚨 EVL FINAL HOUR: ${auction.vehicle} closes in 60min. High: $${highBid.toLocaleString()}. Last chance: ${this.bidBoardUrl}`;
     await this.sendSMS(dealer.ucm1.cell, sms);
@@ -566,7 +570,7 @@ const EVL_NOTIF = {
       ref_number:  ref,
     };
 
-    await this.sendEmail(this.emailjs.templates.winner, params);
+    await this.sendEmail('winner', params);
 
     const sms = `✅ EVL: You won ${auction.vehicle} at $${winningBid.toLocaleString()}! EVL will call you within 2hrs. Ref: ${ref}`;
     await this.sendSMS(dealer.ucm1.cell, sms);
@@ -645,7 +649,7 @@ async function testUnitCard() {
   const email = document.getElementById('testEmail').value;
   const vehicle = document.getElementById('testVehicle').value;
   if (!email) { alert('Enter test email first'); return; }
-  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.unitCard || 'template_test', {
+  await EVL_NOTIF.sendEmail('unitCard', {
     to_email: email, to_name: 'UCM Test', dealer_name: 'Test Dealer',
     vehicle, vin: '1GKS2BKL5MR123456', miles: '47,200', condition: 'Excellent',
     source_dealer: 'Hendrick Honda Frisco', days: 142,
@@ -660,7 +664,7 @@ async function testNudge() {
   const vehicle = document.getElementById('testVehicle').value;
   const bid = document.getElementById('testBid').value;
   if (!email) { alert('Enter test email first'); return; }
-  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.nudge || 'template_test', {
+  await EVL_NOTIF.sendEmail('nudge', {
     to_email: email, to_name: 'UCM Test', vehicle,
     auction_id: 'AUC-2026-TEST', high_bid: bid,
     my_status: '⚠️ OUTBID — Counter now', active_bidders: '4',
@@ -674,7 +678,7 @@ async function testOutbid() {
   const email = document.getElementById('testEmail').value;
   const vehicle = document.getElementById('testVehicle').value;
   if (!email) { alert('Enter test email first'); return; }
-  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.outbid || 'template_test', {
+  await EVL_NOTIF.sendEmail('outbid', {
     to_email: email, to_name: 'UCM Test', vehicle,
     auction_id: 'AUC-2026-TEST',
     your_bid: '$46,500', high_bid: '$47,200', difference: '$700',
@@ -686,7 +690,7 @@ async function testFinal() {
   const email = document.getElementById('testEmail').value;
   const vehicle = document.getElementById('testVehicle').value;
   if (!email) { alert('Enter test email first'); return; }
-  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.finalCall || 'template_test', {
+  await EVL_NOTIF.sendEmail('finalCall', {
     to_email: email, to_name: 'UCM Test', vehicle,
     auction_id: 'AUC-2026-TEST', high_bid: '$47,200',
     my_status: 'OUTBID', deadline_time: '5:00 PM CST',
@@ -699,7 +703,7 @@ async function testWinner() {
   const vehicle = document.getElementById('testVehicle').value;
   const bid = document.getElementById('testBid').value;
   if (!email) { alert('Enter test email first'); return; }
-  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.winner || 'template_test', {
+  await EVL_NOTIF.sendEmail('winner', {
     to_email: email, to_name: 'UCM Test', dealer_name: 'Test Dealer',
     vehicle, auction_id: 'AUC-2026-TEST', winning_bid: bid,
     evl_fee: '$250', ucm_name: 'UCM Test', ucm_cell: '(972) 555-0000',
@@ -712,11 +716,7 @@ async function testUnitSold() {
   const vehicle = document.getElementById('testVehicle').value;
   const bid = document.getElementById('testBid').value;
   if (!email) { alert('Enter test email first'); return; }
-  if (!EVL_NOTIF.emailjs.templates.unitSold) {
-    alert('Enter the Unit Sold template ID in Credentials first — create it in EmailJS dashboard.');
-    return;
-  }
-  await EVL_NOTIF.sendEmail(EVL_NOTIF.emailjs.templates.unitSold, {
+  await EVL_NOTIF.sendEmail('unitSold', {
     to_email: email, to_name: 'UCM Test',
     vehicle, vin: '1GKS2BKL5MR123456',
     winning_bid: bid, ref_number: 'EVL-WIN-TEST001',

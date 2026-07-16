@@ -336,75 +336,23 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// EmailJS — send notifications to GSM, SP, customer, and EVL
-function sendEmailNotifications(apptData) {
-  emailjs.init('iilAte2T5SzOKb-fn');
-
-  // 1 — GSM notification
-  if(apptData.gsmEmail) {
-    emailjs.send('service_rvscjt3', 'template_wcb59jb', {
-      to_email:      apptData.gsmEmail,
-      to_name:       apptData.gsmName || 'General Sales Manager',
-      role:          'General Sales Manager',
-      customer_name: apptData.custName,
-      customer_phone:apptData.custPhone,
-      customer_email:apptData.custEmail,
-      vehicle:       apptData.vehicle,
-      appt_date:     apptData.date,
-      appt_time:     apptData.time,
-      dealer_name:   apptData.dealerName,
-      credit_tier:   apptData.creditLabel || 'Not provided',
-      payment_range: apptData.paymentRange || 'Not provided',
-      notes:         apptData.notes || 'None',
-      confirm_num:   apptData.confirmNum
-    }).catch(e => console.warn('GSM email error:', e));
+// Send all appointment notifications server-side via Resend (replaces dead EmailJS)
+async function sendEmailNotifications(apptData) {
+  try {
+    const response = await fetch('/api/send-appointment-confirmation-emails', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(apptData)
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.success) {
+      console.error('[appointment-confirm] Notification emails FAILED:', data);
+    } else {
+      console.log('[appointment-confirm] Notification emails sent:', data.results);
+    }
+  } catch (e) {
+    console.error('[appointment-confirm] Notification emails error:', e);
   }
-
-  // 2 — Salesperson notification
-  if(apptData.spEmail) {
-    emailjs.send('service_rvscjt3', 'template_wcb59jb', {
-      to_email:      apptData.spEmail,
-      to_name:       apptData.spName || 'Salesperson',
-      role:          'Salesperson',
-      customer_name: apptData.custName,
-      customer_phone:apptData.custPhone,
-      customer_email:apptData.custEmail,
-      vehicle:       apptData.vehicle,
-      appt_date:     apptData.date,
-      appt_time:     apptData.time,
-      dealer_name:   apptData.dealerName,
-      credit_tier:   apptData.creditLabel || 'Not provided',
-      payment_range: apptData.paymentRange || 'Not provided',
-      notes:         apptData.notes || 'None',
-      confirm_num:   apptData.confirmNum
-    }).catch(e => console.warn('SP email error:', e));
-  }
-
-  // 3 — Customer confirmation
-  emailjs.send('service_rvscjt3', 'template_pedlfa6', {
-    to_email:      apptData.custEmail,
-    to_name:       apptData.custName,
-    vehicle:       apptData.vehicle,
-    appt_date:     apptData.date,
-    appt_time:     apptData.time,
-    dealer_name:   apptData.dealerName,
-    dealer_address:apptData.dealerAddress || 'Your EVL advisor will confirm the address',
-    dealer_phone:  apptData.dealerPhone || '',
-    confirm_num:   apptData.confirmNum
-  }).catch(e => console.warn('Customer email error:', e));
-
-  // 4 — EVL Admin alert (to Tim)
-  emailjs.send('service_rvscjt3', 'template_hxbn2x6', {
-    to_email:      'togradyevl@gmail.com',
-    customer_name: apptData.custName,
-    customer_phone:apptData.custPhone,
-    vehicle:       apptData.vehicle,
-    appt_date:     apptData.date,
-    appt_time:     apptData.time,
-    dealer_name:   apptData.dealerName,
-    credit_tier:   apptData.creditLabel || 'Not provided',
-    confirm_num:   apptData.confirmNum
-  }).catch(e => console.warn('Admin email error:', e));
 }
 
 window.submitAppointment = async function() {
@@ -500,7 +448,7 @@ window.submitAppointment = async function() {
 </script>
 
 <!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- EmailJS removed - all email now sent server-side via Resend (see api/send-appointment-confirmation-emails.js) -->
 
 </body>
 </html>

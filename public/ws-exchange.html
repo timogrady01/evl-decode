@@ -698,11 +698,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--font);min-height:
 
 </div><!-- /ws-wrap -->
 
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  emailjs.init("iilAte2T5SzOKb-fn");
-</script>
+<!-- EmailJS removed - all email now sent server-side via Resend (see api/send-auction-notification.js) -->
 
 <script type="module">
 // ── TAB SWITCH ──
@@ -810,26 +806,41 @@ function initExchange() {
   }
 }
 
-// ── EVL EMAIL ENGINE ──
-const EVL_SERVICE  = 'service_rvscjt3';
-const EVL_TEMPLATES = {
-  UNIT_CARD   : 'template_5xxsm0m',
-  HOURLY_NUDGE: 'template_h8ka8lx',
-  OUTBID      : 'template_bjy763u',
-  FINAL_CALL  : 'template_8k0u7bw',
-  WINNER      : 'template_4w8mvtm',
-  UNIT_SOLD   : 'template_ze974sd'
+// ── EVL EMAIL ENGINE (now server-side via Resend, not EmailJS) ──
+const EVL_TEMPLATE_TO_TYPE = {
+  UNIT_CARD   : 'unitCard',
+  HOURLY_NUDGE: 'nudge',
+  OUTBID      : 'outbid',
+  FINAL_CALL  : 'finalCall',
+  WINNER      : 'winner',
+  UNIT_SOLD   : 'unitSold'
 };
 
 async function sendEVLEmail(templateKey, toEmail, params) {
+  const notificationType = EVL_TEMPLATE_TO_TYPE[templateKey];
+  if (!notificationType) {
+    console.error(`[EVL EMAIL ERROR] Unknown template key: ${templateKey}`);
+    return false;
+  }
   try {
-    await emailjs.send(EVL_SERVICE, EVL_TEMPLATES[templateKey], {
-      to_email : toEmail,
-      ...params
+    const response = await fetch('/api/send-auction-notification', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: notificationType,
+        params: { to_email: toEmail, ...params }
+      })
     });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.success) {
+      console.error(`[EVL EMAIL FAILED] ${templateKey} → ${toEmail}:`, data.error || response.status);
+      return false;
+    }
     console.log(`[EVL EMAIL] ${templateKey} → ${toEmail}`);
+    return true;
   } catch(e) {
     console.error(`[EVL EMAIL ERROR] ${templateKey}`, e);
+    return false;
   }
 }
 
