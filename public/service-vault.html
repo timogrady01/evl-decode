@@ -656,87 +656,193 @@
       <div class="section-title" style="text-align:center;">In Case of Accident</div>
       <div class="section-subtitle" style="text-align:center;margin-bottom:30px;">Part of every Service Vault — the information you need, exactly when you need it most.</div>
 
-      <div style="background:#090E17;border:2px solid #2a3f5f;border-radius:16px;padding:30px 24px;">
+      <div style="background:#090E17;border:2px solid #2a3f5f;border-radius:16px;padding:20px;">
 
-        <!-- Emergency call button -->
-        <a href="tel:911" style="display:block;text-align:center;background:linear-gradient(135deg,#e53e3e,#c53030);color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:20px;padding:20px;border-radius:12px;text-decoration:none;margin-bottom:24px;">
-          🚨 Call 911
-        </a>
+        <!-- Email field spans all drawers -->
+        <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Your Email (to save/retrieve your card)</label>
+        <input type="email" id="acEmail" placeholder="you@email.com" style="width:100%;padding:12px;margin-bottom:20px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
 
-        <!-- Guidance steps -->
-        <div style="background:#020203;border:1px solid #2a3f5f;border-radius:12px;padding:20px;margin-bottom:24px;">
-          <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:13px;letter-spacing:1px;margin-bottom:12px;">If You're In An Accident</div>
-          <ol style="color:#C8D0DC;font-size:14px;line-height:1.9;padding-left:20px;">
-            <li>Call 911 if anyone is injured or the vehicles are blocking traffic.</li>
-            <li>If your vehicle is drivable and it's safe to do so, move it out of the flow of traffic.</li>
-            <li>If it's not safe to move your vehicle, stay inside with your seatbelt on until help arrives — do not stand in a traffic lane.</li>
-            <li>Turn on hazard lights and set out flares or triangles if you have them and it's safe to do so.</li>
-            <li>Exchange insurance information with the other driver(s), and photograph all vehicles and the scene.</li>
-            <li>Contact your Next of Kin and your insurance company using the saved info below.</li>
-          </ol>
-        </div>
+        <!-- DRAWER 1: EMERGENCY -->
+        <details open style="margin-bottom:14px;border:1px solid #e53e3e;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;background:rgba(229,62,62,0.1);">🚨 1. Emergency — At The Scene</summary>
+          <div style="padding:20px;">
+            <a href="tel:911" style="display:block;text-align:center;background:linear-gradient(135deg,#e53e3e,#c53030);color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:20px;padding:20px;border-radius:12px;text-decoration:none;margin-bottom:20px;">📞 Call 911</a>
 
-        <!-- Saved info form -->
-        <div style="font-weight:700;color:#fff;text-transform:uppercase;font-size:13px;letter-spacing:1px;margin-bottom:14px;">Your Saved Emergency Info</div>
+            <div style="background:#e53e3e;color:#fff;font-weight:900;text-transform:uppercase;text-align:center;font-size:14px;letter-spacing:1px;padding:12px;border-radius:8px;margin-bottom:20px;">Do Not Admit Guilt</div>
 
-        <div id="accidentCardForm">
-          <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Your Email (to save/retrieve your card)</label>
-          <input type="email" id="acEmail" placeholder="you@email.com" style="width:100%;padding:12px;margin-bottom:14px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            <ol style="color:#C8D0DC;font-size:14px;line-height:1.9;padding-left:20px;margin-bottom:16px;">
+              <li>Call 911 if anyone is injured or the vehicles are blocking traffic.</li>
+              <li>If your vehicle is drivable and it's safe to do so, move it out of the flow of traffic.</li>
+              <li>If it's not safe to move your vehicle, stay inside with your seatbelt on until help arrives — do not stand in a traffic lane.</li>
+              <li>Turn on hazard lights and set out flares or triangles if you have them and it's safe to do so.</li>
+              <li>Exchange insurance information, license plate, and government-issued ID (driver's license, passport, etc.) with the other driver(s).</li>
+              <li>Photograph the damage to all vehicles and the overall scene.</li>
+              <li>Contact your Next of Kin using the saved info in Drawer 4 below.</li>
+              <li>Request a copy of the police accident report — ask the responding officer how and where to obtain it (most departments provide this online or through their records division within a few business days).</li>
+            </ol>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Next of Kin Name</label>
-              <input type="text" id="acKinName" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
-            </div>
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Next of Kin Phone</label>
-              <input type="tel" id="acKinPhone" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
-            </div>
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin-bottom:10px;">Helpful Videos</div>
+            <div style="background:#090E17;border:1px solid #2a3f5f;border-radius:8px;padding:14px;color:#C8D0DC;font-size:13px;margin-bottom:8px;">🎥 How to change a flat tire <span style="color:#666;">(video coming soon)</span></div>
+            <div style="background:#090E17;border:1px solid #2a3f5f;border-radius:8px;padding:14px;color:#C8D0DC;font-size:13px;">🎥 How to use a tow strap <span style="color:#666;">(video coming soon)</span></div>
           </div>
+        </details>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Body Shop Name</label>
-              <input type="text" id="acBodyShopName" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+        <!-- DRAWER 2: TOWING -->
+        <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">🚚 2. If Towing Is Needed</summary>
+          <div style="padding:20px;">
+            <div style="background:#090E17;border:1px solid #2B84FE;border-radius:8px;padding:16px;color:#C8D0DC;font-size:14px;line-height:1.7;margin-bottom:16px;">
+              Have your vehicle towed to a <strong style="color:#fff;">local dealership of the same make</strong> — not a wrecking yard. A same-make dealership has the right diagnostic tools, factory parts, and trained technicians for your specific vehicle.
             </div>
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Body Shop Phone</label>
-              <input type="tel" id="acBodyShopPhone" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
-            </div>
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin-bottom:10px;">Before It's Towed, Remove:</div>
+            <ul style="color:#C8D0DC;font-size:14px;line-height:1.9;padding-left:20px;margin:0;">
+              <li>All personal items and valuables</li>
+              <li>Garage door opener</li>
+              <li>House keys and any other keys off your keychain (keep only the vehicle key)</li>
+            </ul>
           </div>
+        </details>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Wrecker Company</label>
-              <input type="text" id="acWreckerName" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+        <!-- DRAWER 3: TRUNK KIT -->
+        <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">🎒 3. Trunk Emergency Kit</summary>
+          <div style="padding:20px;">
+            <div style="color:#C8D0DC;font-size:13px;margin-bottom:14px;">Check off what you already keep in your trunk:</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;cursor:pointer;"><input type="checkbox" id="acKitBlankets" style="width:16px;height:16px;">Blankets</label>
+              <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;cursor:pointer;"><input type="checkbox" id="acKitFlashlight" style="width:16px;height:16px;">Flashlight</label>
+              <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;cursor:pointer;"><input type="checkbox" id="acKitCutter" style="width:16px;height:16px;">Cutting device</label>
+              <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;cursor:pointer;"><input type="checkbox" id="acKitWater" style="width:16px;height:16px;">Water</label>
+              <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;cursor:pointer;"><input type="checkbox" id="acKitTriangles" style="width:16px;height:16px;">Triangles</label>
+              <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;cursor:pointer;"><input type="checkbox" id="acKitFlares" style="width:16px;height:16px;">Flares</label>
+              <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;cursor:pointer;"><input type="checkbox" id="acKitExtinguisher" style="width:16px;height:16px;">Fire extinguisher</label>
             </div>
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Wrecker Phone</label>
-              <input type="tel" id="acWreckerPhone" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
-            </div>
+            <label style="display:block;font-size:12px;color:#C8D0DC;margin:14px 0 4px;">Other</label>
+            <input type="text" id="acKitOther" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
           </div>
+        </details>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Insurance Company</label>
-              <input type="text" id="acInsuranceCo" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+        <!-- DRAWER 4: SAVED CONTACTS -->
+        <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">📇 4. Saved Contacts</summary>
+          <div style="padding:20px;">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Next of Kin Name</label>
+                <input type="text" id="acKinName" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Next of Kin Phone</label>
+                <input type="tel" id="acKinPhone" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
             </div>
-            <div>
-              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Policy Number</label>
-              <input type="text" id="acPolicyNumber" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Body Shop Name</label>
+                <input type="text" id="acBodyShopName" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Body Shop Phone</label>
+                <input type="tel" id="acBodyShopPhone" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
             </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Wrecker Company</label>
+                <input type="text" id="acWreckerName" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Wrecker Phone</label>
+                <input type="tel" id="acWreckerPhone" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Insurance Company</label>
+                <input type="text" id="acInsuranceCo" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Policy Number</label>
+                <input type="text" id="acPolicyNumber" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+            </div>
+
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin:18px 0 10px;">Insurance Agent</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Agent Name</label>
+                <input type="text" id="acAgentName" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Agent Phone</label>
+                <input type="tel" id="acAgentPhone" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+            </div>
+            <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Agent Address</label>
+            <input type="text" id="acAgentAddress" style="width:100%;padding:12px;margin-bottom:14px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
           </div>
+        </details>
 
-          <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;margin-bottom:20px;cursor:pointer;">
-            <input type="checkbox" id="acFlaresConfirmed" style="width:18px;height:18px;">
-            I keep flares/reflective triangles in my vehicle
-          </label>
+        <!-- DRAWER 5: PROACTIVE COVERAGE REVIEW -->
+        <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">🛡️ 5. Coverage Review — Do This Now, Not After</summary>
+          <div style="padding:20px;">
+            <div style="color:#C8D0DC;font-size:14px;line-height:1.7;margin-bottom:16px;">Before anything happens, call your insurance agent and confirm these — they matter far more once you actually need them:</div>
+            <label style="display:flex;align-items:flex-start;gap:10px;color:#C8D0DC;font-size:13px;margin-bottom:14px;cursor:pointer;">
+              <input type="checkbox" id="acUninsuredMotorist" style="width:16px;height:16px;margin-top:2px;">
+              <span>I've confirmed my <strong style="color:#fff;">uninsured motorist coverage</strong></span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:10px;color:#C8D0DC;font-size:13px;margin-bottom:14px;cursor:pointer;">
+              <input type="checkbox" id="acRentalTerms" style="width:16px;height:16px;margin-top:2px;">
+              <span>I've confirmed my <strong style="color:#fff;">rental car terms</strong> (whether a rental is covered while my car is repaired, and for how long)</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:10px;color:#C8D0DC;font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="acOemParts" style="width:16px;height:16px;margin-top:2px;">
+              <span>I've confirmed whether my insurer uses <strong style="color:#fff;">OEM (factory) or aftermarket parts</strong> for repairs</span>
+            </label>
+          </div>
+        </details>
 
-          <button onclick="saveAccidentCard()" id="acSaveBtn" style="width:100%;background:#2B84FE;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:14px;padding:16px;border:none;border-radius:8px;cursor:pointer;">Save My Card</button>
-          <div id="acStatusMsg" style="text-align:center;font-size:13px;margin-top:12px;min-height:18px;"></div>
+        <!-- DRAWER 6: BODY SHOP REPAIR TRACKING -->
+        <details style="margin-bottom:20px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">🔧 6. Body Shop Repair Tracking</summary>
+          <div style="padding:20px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Expected Cost</label>
+                <input type="text" id="acRepairCost" placeholder="$" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Expected Completion Date</label>
+                <input type="date" id="acRepairDate" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              </div>
+            </div>
+            <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Current Stage</label>
+            <select id="acRepairStage" style="width:100%;padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+              <option value="">— Select —</option>
+              <option value="estimate">Estimate</option>
+              <option value="approved">Approved by Insurance</option>
+              <option value="in_repair">In Repair</option>
+              <option value="quality_check">Quality Check</option>
+              <option value="ready">Ready for Pickup</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </details>
 
-          <button onclick="loadAccidentCard()" style="width:100%;background:transparent;color:#2B84FE;border:1px solid #2B84FE;font-weight:700;font-size:13px;padding:12px;border-radius:8px;cursor:pointer;margin-top:8px;">Load My Saved Card</button>
-        </div>
+        <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;margin-bottom:16px;cursor:pointer;">
+          <input type="checkbox" id="acFlaresConfirmed" style="width:18px;height:18px;">
+          I keep flares/reflective triangles in my vehicle
+        </label>
+
+        <button onclick="saveAccidentCard()" id="acSaveBtn" style="width:100%;background:#2B84FE;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:14px;padding:16px;border:none;border-radius:8px;cursor:pointer;">Save My Card</button>
+        <div id="acStatusMsg" style="text-align:center;font-size:13px;margin-top:12px;min-height:18px;"></div>
+
+        <button onclick="loadAccidentCard()" style="width:100%;background:transparent;color:#2B84FE;border:1px solid #2B84FE;font-weight:700;font-size:13px;padding:12px;border-radius:8px;cursor:pointer;margin-top:8px;">Load My Saved Card</button>
       </div>
     </div>
   </div>
@@ -973,7 +1079,30 @@
           wreckerPhone: document.getElementById('acWreckerPhone').value.trim(),
           insuranceCompany: document.getElementById('acInsuranceCo').value.trim(),
           policyNumber: document.getElementById('acPolicyNumber').value.trim(),
+          insuranceAgentName: document.getElementById('acAgentName').value.trim(),
+          insuranceAgentPhone: document.getElementById('acAgentPhone').value.trim(),
+          insuranceAgentAddress: document.getElementById('acAgentAddress').value.trim(),
           flaresConfirmed: document.getElementById('acFlaresConfirmed').checked,
+          trunkKit: {
+            blankets: document.getElementById('acKitBlankets').checked,
+            flashlight: document.getElementById('acKitFlashlight').checked,
+            cuttingDevice: document.getElementById('acKitCutter').checked,
+            water: document.getElementById('acKitWater').checked,
+            triangles: document.getElementById('acKitTriangles').checked,
+            flares: document.getElementById('acKitFlares').checked,
+            fireExtinguisher: document.getElementById('acKitExtinguisher').checked,
+            other: document.getElementById('acKitOther').value.trim()
+          },
+          coverageReview: {
+            uninsuredMotorist: document.getElementById('acUninsuredMotorist').checked,
+            rentalTerms: document.getElementById('acRentalTerms').checked,
+            oemParts: document.getElementById('acOemParts').checked
+          },
+          bodyShopRepair: {
+            expectedCost: document.getElementById('acRepairCost').value.trim(),
+            expectedCompletionDate: document.getElementById('acRepairDate').value,
+            stage: document.getElementById('acRepairStage').value
+          },
           updatedAt: new Date()
         });
         statusMsg.style.color = '#00C853';
@@ -1015,7 +1144,31 @@
         document.getElementById('acWreckerPhone').value = data.wreckerPhone || '';
         document.getElementById('acInsuranceCo').value = data.insuranceCompany || '';
         document.getElementById('acPolicyNumber').value = data.policyNumber || '';
+        document.getElementById('acAgentName').value = data.insuranceAgentName || '';
+        document.getElementById('acAgentPhone').value = data.insuranceAgentPhone || '';
+        document.getElementById('acAgentAddress').value = data.insuranceAgentAddress || '';
         document.getElementById('acFlaresConfirmed').checked = !!data.flaresConfirmed;
+
+        const kit = data.trunkKit || {};
+        document.getElementById('acKitBlankets').checked = !!kit.blankets;
+        document.getElementById('acKitFlashlight').checked = !!kit.flashlight;
+        document.getElementById('acKitCutter').checked = !!kit.cuttingDevice;
+        document.getElementById('acKitWater').checked = !!kit.water;
+        document.getElementById('acKitTriangles').checked = !!kit.triangles;
+        document.getElementById('acKitFlares').checked = !!kit.flares;
+        document.getElementById('acKitExtinguisher').checked = !!kit.fireExtinguisher;
+        document.getElementById('acKitOther').value = kit.other || '';
+
+        const coverage = data.coverageReview || {};
+        document.getElementById('acUninsuredMotorist').checked = !!coverage.uninsuredMotorist;
+        document.getElementById('acRentalTerms').checked = !!coverage.rentalTerms;
+        document.getElementById('acOemParts').checked = !!coverage.oemParts;
+
+        const repair = data.bodyShopRepair || {};
+        document.getElementById('acRepairCost').value = repair.expectedCost || '';
+        document.getElementById('acRepairDate').value = repair.expectedCompletionDate || '';
+        document.getElementById('acRepairStage').value = repair.stage || '';
+
         statusMsg.style.color = '#00C853';
         statusMsg.textContent = '✅ Loaded your saved card.';
       } catch (err) {
