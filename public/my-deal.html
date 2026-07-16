@@ -649,39 +649,39 @@
       </div>
 
       <div class="tl-step">
-        <div class="tl-dot completed">✓</div>
-        <div class="tl-label">Submitted</div>
+        <div class="tl-dot completed" id="dot-submitted">✓</div>
+        <div class="tl-label" id="label-submitted">Submitted</div>
         <div class="tl-date" id="date-submitted">—</div>
       </div>
 
       <div class="tl-step">
         <div class="tl-dot current" id="dot-review">●</div>
-        <div class="tl-label current">In Review</div>
-        <div class="tl-date">Today</div>
+        <div class="tl-label current" id="label-review">In Review</div>
+        <div class="tl-date" id="date-review">Today</div>
       </div>
 
       <div class="tl-step">
-        <div class="tl-dot upcoming">3</div>
-        <div class="tl-label upcoming">Match Found</div>
-        <div class="tl-date">—</div>
+        <div class="tl-dot upcoming" id="dot-matchFound">3</div>
+        <div class="tl-label upcoming" id="label-matchFound">Match Found</div>
+        <div class="tl-date" id="date-matchFound">—</div>
       </div>
 
       <div class="tl-step">
-        <div class="tl-dot upcoming">4</div>
-        <div class="tl-label upcoming">Offer Ready</div>
-        <div class="tl-date">—</div>
+        <div class="tl-dot upcoming" id="dot-offerReady">4</div>
+        <div class="tl-label upcoming" id="label-offerReady">Offer Ready</div>
+        <div class="tl-date" id="date-offerReady">—</div>
       </div>
 
       <div class="tl-step">
-        <div class="tl-dot upcoming">5</div>
-        <div class="tl-label upcoming">In Process</div>
-        <div class="tl-date">—</div>
+        <div class="tl-dot upcoming" id="dot-inProcess">5</div>
+        <div class="tl-label upcoming" id="label-inProcess">In Process</div>
+        <div class="tl-date" id="date-inProcess">—</div>
       </div>
 
       <div class="tl-step">
-        <div class="tl-dot upcoming">6</div>
-        <div class="tl-label upcoming">Delivered</div>
-        <div class="tl-date">—</div>
+        <div class="tl-dot upcoming" id="dot-delivered">6</div>
+        <div class="tl-label upcoming" id="label-delivered">Delivered</div>
+        <div class="tl-date" id="date-delivered">—</div>
       </div>
     </div>
   </div>
@@ -930,6 +930,53 @@
   // ── ADMIN UID ──
   const ADMIN_UID = 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
 
+  // ── DEAL STAGE TIMELINE (real data, not hardcoded) ──
+  const STAGE_ORDER = ['submitted', 'review', 'matchFound', 'offerReady', 'inProcess', 'delivered'];
+  const STAGE_ICONS = { submitted: '✓', review: '✓', matchFound: '✓', offerReady: '✓', inProcess: '✓', delivered: '✓' };
+  const STAGE_NUMBERS = { review: '2', matchFound: '3', offerReady: '4', inProcess: '5', delivered: '6' };
+
+  function renderDealStage(dealStage, stageDates) {
+    // Default to 'review' if no stage has been set yet (matches prior hardcoded default)
+    const currentIndex = STAGE_ORDER.indexOf(dealStage);
+    const effectiveIndex = currentIndex === -1 ? 1 : currentIndex;
+
+    STAGE_ORDER.forEach((stage, i) => {
+      const dot = document.getElementById('dot-' + stage);
+      const label = document.getElementById('label-' + stage);
+      const dateEl = document.getElementById('date-' + stage);
+      if (!dot || !label) return;
+
+      if (i < effectiveIndex) {
+        // Completed
+        dot.className = 'tl-dot completed';
+        dot.textContent = '✓';
+        label.className = 'tl-label';
+      } else if (i === effectiveIndex) {
+        // Current
+        dot.className = 'tl-dot current';
+        dot.textContent = '●';
+        label.className = 'tl-label current';
+        if (dateEl && dateEl.textContent === '—') dateEl.textContent = 'Today';
+      } else {
+        // Upcoming
+        dot.className = 'tl-dot upcoming';
+        dot.textContent = STAGE_NUMBERS[stage] || String(i + 1);
+        label.className = 'tl-label upcoming';
+      }
+
+      // Fill in real dates where available (stageDates is a map like { review: Timestamp, ... })
+      if (dateEl && stageDates && stageDates[stage]) {
+        const d = stageDates[stage].toDate ? stageDates[stage].toDate() : new Date(stageDates[stage]);
+        dateEl.textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+    });
+
+    // Progress bar width - percentage through the 6 stages
+    const progressPct = Math.round((effectiveIndex / (STAGE_ORDER.length - 1)) * 100);
+    const bar = document.getElementById('timeline-bar');
+    if (bar) bar.style.width = Math.max(progressPct, 8) + '%'; // minimum 8% so the bar is always visible
+  }
+
   // ── AUTH GATE ──
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
@@ -974,6 +1021,9 @@
         document.getElementById('payment-value').textContent =
           `$${data.paymentMin}–$${data.paymentMax}/mo`;
       }
+
+      // Deal stage timeline - real data, not hardcoded
+      renderDealStage(data.dealStage, data.dealStageDates);
 
     } catch(e) {
       console.log('Could not load deal data:', e.message);

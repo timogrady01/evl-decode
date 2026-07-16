@@ -483,6 +483,18 @@
     </div>
   </div>
 
+  <!-- Admin Login Gate -->
+  <div id="crmLoginGate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0a0e17;">
+    <div style="background:#fff;border-radius:12px;padding:40px;max-width:360px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.15);">
+      <h2 style="margin:0 0 20px;text-align:center;">EVL CRM — Admin Login</h2>
+      <input type="email" id="crmLoginEmail" placeholder="Email" style="width:100%;padding:12px;margin-bottom:12px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
+      <input type="password" id="crmLoginPassword" placeholder="Password" style="width:100%;padding:12px;margin-bottom:16px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
+      <button id="crmLoginBtn" style="width:100%;background:#2B84FE;color:#fff;font-weight:700;padding:14px;border:none;border-radius:8px;cursor:pointer;font-size:14px;">Log In</button>
+      <div id="crmLoginError" style="color:#e53e3e;font-size:13px;margin-top:12px;text-align:center;"></div>
+    </div>
+  </div>
+
+  <div id="mainCrmContent" style="display:none;">
   <div class="header">
     <h1>EXPRESS <span>VEHICLE</span> LOCATORS</h1>
   </div>
@@ -494,6 +506,7 @@
       <button class="tab-btn" data-tab="appointments">📅 Appointments</button>
       <button class="tab-btn" data-tab="notes">📝 Notes</button>
       <button class="tab-btn" data-tab="checkin">✅ Check-In</button>
+      <button class="tab-btn" data-tab="dealstage">📊 Deal Stage</button>
     </div>
 
     <div id="leads" class="tab-content active">
@@ -599,11 +612,64 @@
         </div>
       </div>
     </div>
+
+    <div id="dealstage" class="tab-content">
+      <div class="checkin-container">
+        <div class="search-box">
+          <input type="text" id="dealStageEmailInput" placeholder="Enter customer's email to look them up...">
+          <button class="btn" id="dealStageLookupBtn" style="margin-top:10px;width:100%;">🔍 Look Up Customer</button>
+        </div>
+
+        <div class="checkin-details" id="dealStageDetails" style="display:none;">
+          <h3>Customer Found</h3>
+          <div class="detail-row">
+            <span class="label">Name:</span>
+            <span class="value" id="dsName">—</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Email:</span>
+            <span class="value" id="dsEmail">—</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Vehicle:</span>
+            <span class="value" id="dsVehicle">—</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Current Stage:</span>
+            <span class="value" id="dsCurrentStage">—</span>
+          </div>
+
+          <div style="margin-top:20px;">
+            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Move To Stage:</label>
+            <select id="dsNewStage" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:14px;">
+              <option value="submitted">Submitted</option>
+              <option value="review">In Review</option>
+              <option value="matchFound">Match Found</option>
+              <option value="offerReady">Offer Ready</option>
+              <option value="inProcess">In Process</option>
+              <option value="delivered">Delivered</option>
+            </select>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-checkin" id="dsSaveBtn">✓ Update Stage</button>
+          </div>
+
+          <div class="status-message" id="dsStatusMsg"></div>
+        </div>
+
+        <div id="dealStageEmpty" class="no-data" style="padding: 60px 20px;">
+          Look up a customer by email to update their deal stage
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, where, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyDvV5u1dIvvPvKwLXQZ4MfH-F5bL_yL0hA",
@@ -616,6 +682,39 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const ADMIN_UID = 'XJRYpmaBichWwlb3meNQRFwNnxZ2';
+
+    onAuthStateChanged(auth, (user) => {
+      if (user && user.uid === ADMIN_UID) {
+        document.getElementById('crmLoginGate').style.display = 'none';
+        document.getElementById('mainCrmContent').style.display = 'block';
+      } else {
+        document.getElementById('crmLoginGate').style.display = 'flex';
+        document.getElementById('mainCrmContent').style.display = 'none';
+        if (user) {
+          // Signed in, but not the admin account - kick them out
+          signOut(auth);
+          document.getElementById('crmLoginError').textContent = 'This account does not have CRM access.';
+        }
+      }
+    });
+
+    document.getElementById('crmLoginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('crmLoginEmail').value.trim();
+      const password = document.getElementById('crmLoginPassword').value;
+      const errorEl = document.getElementById('crmLoginError');
+      errorEl.textContent = '';
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        // onAuthStateChanged above handles showing the CRM content
+      } catch (err) {
+        console.error('[crm] Login failed:', err);
+        errorEl.textContent = 'Login failed: incorrect email or password.';
+      }
+    });
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -829,6 +928,79 @@
       document.getElementById('checkinStatusMsg').className = 'status-message';
       selectedAppointmentId = null;
       selectedAppointmentData = null;
+    });
+
+    // ── DEAL STAGE: look up customer by email, update their stage ──
+    const STAGE_LABELS = {
+      submitted: 'Submitted', review: 'In Review', matchFound: 'Match Found',
+      offerReady: 'Offer Ready', inProcess: 'In Process', delivered: 'Delivered'
+    };
+    let dsFoundUid = null;
+
+    document.getElementById('dealStageLookupBtn').addEventListener('click', async () => {
+      const email = document.getElementById('dealStageEmailInput').value.trim().toLowerCase();
+      const statusMsg = document.getElementById('dsStatusMsg');
+      statusMsg.className = 'status-message';
+      statusMsg.textContent = '';
+
+      if (!email) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Enter an email first.';
+        return;
+      }
+
+      try {
+        const q = query(collection(db, 'evl_customers'), where('email', '==', email));
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          document.getElementById('dealStageDetails').style.display = 'none';
+          document.getElementById('dealStageEmpty').style.display = 'block';
+          document.getElementById('dealStageEmpty').textContent = 'No customer account found with that email. (Note: this only finds customers who have created an account via login.html - not raw leads.)';
+          dsFoundUid = null;
+          return;
+        }
+
+        const docSnap = snap.docs[0];
+        const data = docSnap.data();
+        dsFoundUid = docSnap.id;
+
+        document.getElementById('dsName').textContent = data.name || '—';
+        document.getElementById('dsEmail').textContent = data.email || email;
+        document.getElementById('dsVehicle').textContent = data.vehicle || '—';
+        document.getElementById('dsCurrentStage').textContent = STAGE_LABELS[data.dealStage] || 'Not set (defaults to In Review)';
+        document.getElementById('dsNewStage').value = data.dealStage || 'review';
+
+        document.getElementById('dealStageDetails').style.display = 'block';
+        document.getElementById('dealStageEmpty').style.display = 'none';
+      } catch (err) {
+        console.error('[crm] Deal stage lookup failed:', err);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Lookup failed: ' + err.message;
+      }
+    });
+
+    document.getElementById('dsSaveBtn').addEventListener('click', async () => {
+      if (!dsFoundUid) return;
+      const newStage = document.getElementById('dsNewStage').value;
+      const statusMsg = document.getElementById('dsStatusMsg');
+      const btn = document.getElementById('dsSaveBtn');
+      btn.disabled = true;
+
+      try {
+        await updateDoc(doc(db, 'evl_customers', dsFoundUid), {
+          dealStage: newStage,
+          ['dealStageDates.' + newStage]: serverTimestamp()
+        });
+        document.getElementById('dsCurrentStage').textContent = STAGE_LABELS[newStage];
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '✅ Stage updated to "' + STAGE_LABELS[newStage] + '"';
+      } catch (err) {
+        console.error('[crm] Deal stage update failed:', err);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Update failed: ' + err.message;
+      }
+      btn.disabled = false;
     });
   </script>
 </body>
