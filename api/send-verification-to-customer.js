@@ -9,7 +9,7 @@
  */
 
 const twilio = require('twilio');
-const axios = require('axios');
+const https = require('https');
 const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -17,11 +17,6 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const fromNumber = process.env.TWILIO_PHONE_NUMBER;
 
 const client = twilio(accountSid, authToken);
-
-// EmailJS config
-const emailJsServiceId = 'service_rvscjt3';
-const emailJsTemplateId = 'template_xg4woqs'; // NEED TO CREATE THIS TEMPLATE
-const emailJsPublicKey = 'iilAte2T5SzOKb-fn';
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -69,28 +64,64 @@ Video proof: ${videoUrl}`;
     console.log('[send-verification] SMS sent to customer:', smsResult.sid);
 
     // ══════════════════════════════════════════════════════════
-    // SEND EMAIL TO CUSTOMER VIA EMAILJS
+    // SEND EMAIL TO CUSTOMER VIA RESEND
     // ══════════════════════════════════════════════════════════
 
-    const emailParams = {
-      service_id: emailJsServiceId,
-      template_id: emailJsTemplateId,
-      user_id: emailJsPublicKey,
-      template_params: {
-        customer_name: customerName,
-        vehicle_info: vehicleInfo,
-        salesperson_name: salePersonName,
-        video_url: videoUrl,
-        message: `Your requested vehicle has been verified and is ready for inspection. Click the link below to view the verification video.`
-      }
-    };
+    let emailStatus = 'skipped - no email provided';
 
-    try {
-      const emailResult = await axios.post('https://api.emailjs.com/api/v1.0/email/send', emailParams);
-      console.log('[send-verification] Email sent via EmailJS:', emailResult.status);
-    } catch (emailError) {
-      console.warn('[send-verification] EmailJS error (non-critical):', emailError.message);
-      // Continue - SMS was sent successfully
+    if (customerEmail) {
+      try {
+        const htmlBody = `
+          <h2 style="color:#2B84FE;">Vehicle Confirmed In Stock!</h2>
+          <p>Hi ${customerName || 'there'},</p>
+          <p>&#9989; <strong>${vehicleInfo}</strong> is ready for you. Your salesperson ${salePersonName || ''} has verified the vehicle in person.</p>
+          <p><a href="${videoUrl}">View the verification video &rarr;</a></p>
+          <p>Next step: schedule your face-to-face appointment. Reply to this email or call your salesperson to confirm a time.</p>
+          <p>Questions? Call or Text: (469) 404-3192</p>
+          <p>&mdash; Express Vehicle Locators</p>
+        `;
+        const payload = JSON.stringify({
+          from: 'Express Vehicle Locators <no-reply@expressvehiclelocators.com>',
+          reply_to: 'togradyevl@gmail.com',
+          to: customerEmail,
+          subject: 'Vehicle Confirmed In Stock — ' + (vehicleInfo || ''),
+          html: htmlBody
+        });
+
+        await new Promise((resolve, reject) => {
+          const options = {
+            hostname: 'api.resend.com',
+            path: '/emails',
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
+              'Content-Type': 'application/json',
+              'Content-Length': Buffer.byteLength(payload)
+            }
+          };
+          const request = https.request(options, (response) => {
+            let data = '';
+            response.on('data', chunk => data += chunk);
+            response.on('end', () => {
+              console.log('[send-verification] Resend response:', response.statusCode, data);
+              if (response.statusCode >= 200 && response.statusCode < 300) {
+                resolve(data);
+              } else {
+                reject(new Error('Resend returned ' + response.statusCode + ': ' + data));
+              }
+            });
+          });
+          request.on('error', reject);
+          request.write(payload);
+          request.end();
+        });
+
+        console.log('[send-verification] Email sent via Resend');
+        emailStatus = 'sent';
+      } catch (emailError) {
+        console.error('[send-verification] Email failed:', emailError.message);
+        emailStatus = 'failed - ' + emailError.message;
+      }
     }
 
     // ══════════════════════════════════════════════════════════
@@ -112,7 +143,8 @@ Video proof: ${videoUrl}`;
       success: true,
       recordId: recordId,
       smsSid: smsResult.sid,
-      message: 'Verification sent to customer via SMS and Email'
+      emailStatus: emailStatus,
+      message: 'Verification sent to customer via SMS' + (emailStatus === 'sent' ? ' and Email' : ' (email: ' + emailStatus + ')')
     });
 
   } catch (error) {
