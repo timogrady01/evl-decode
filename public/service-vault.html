@@ -650,6 +650,97 @@
     </div>
   </div>
 
+  <!-- In Case of Accident Card -->
+  <div class="section" style="padding:60px 20px;">
+    <div class="container" style="max-width:700px;margin:0 auto;">
+      <div class="section-title" style="text-align:center;">In Case of Accident</div>
+      <div class="section-subtitle" style="text-align:center;margin-bottom:30px;">Part of every Service Vault — the information you need, exactly when you need it most.</div>
+
+      <div style="background:#090E17;border:2px solid #2a3f5f;border-radius:16px;padding:30px 24px;">
+
+        <!-- Emergency call button -->
+        <a href="tel:911" style="display:block;text-align:center;background:linear-gradient(135deg,#e53e3e,#c53030);color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:20px;padding:20px;border-radius:12px;text-decoration:none;margin-bottom:24px;">
+          🚨 Call 911
+        </a>
+
+        <!-- Guidance steps -->
+        <div style="background:#020203;border:1px solid #2a3f5f;border-radius:12px;padding:20px;margin-bottom:24px;">
+          <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:13px;letter-spacing:1px;margin-bottom:12px;">If You're In An Accident</div>
+          <ol style="color:#C8D0DC;font-size:14px;line-height:1.9;padding-left:20px;">
+            <li>Call 911 if anyone is injured or the vehicles are blocking traffic.</li>
+            <li>If your vehicle is drivable and it's safe to do so, move it out of the flow of traffic.</li>
+            <li>If it's not safe to move your vehicle, stay inside with your seatbelt on until help arrives — do not stand in a traffic lane.</li>
+            <li>Turn on hazard lights and set out flares or triangles if you have them and it's safe to do so.</li>
+            <li>Exchange insurance information with the other driver(s), and photograph all vehicles and the scene.</li>
+            <li>Contact your Next of Kin and your insurance company using the saved info below.</li>
+          </ol>
+        </div>
+
+        <!-- Saved info form -->
+        <div style="font-weight:700;color:#fff;text-transform:uppercase;font-size:13px;letter-spacing:1px;margin-bottom:14px;">Your Saved Emergency Info</div>
+
+        <div id="accidentCardForm">
+          <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Your Email (to save/retrieve your card)</label>
+          <input type="email" id="acEmail" placeholder="you@email.com" style="width:100%;padding:12px;margin-bottom:14px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Next of Kin Name</label>
+              <input type="text" id="acKinName" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Next of Kin Phone</label>
+              <input type="tel" id="acKinPhone" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Body Shop Name</label>
+              <input type="text" id="acBodyShopName" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Body Shop Phone</label>
+              <input type="tel" id="acBodyShopPhone" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Wrecker Company</label>
+              <input type="text" id="acWreckerName" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Wrecker Phone</label>
+              <input type="tel" id="acWreckerPhone" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Insurance Company</label>
+              <input type="text" id="acInsuranceCo" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:#C8D0DC;margin-bottom:4px;">Policy Number</label>
+              <input type="text" id="acPolicyNumber" style="width:100%;padding:12px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:14px;">
+            </div>
+          </div>
+
+          <label style="display:flex;align-items:center;gap:8px;color:#C8D0DC;font-size:13px;margin-bottom:20px;cursor:pointer;">
+            <input type="checkbox" id="acFlaresConfirmed" style="width:18px;height:18px;">
+            I keep flares/reflective triangles in my vehicle
+          </label>
+
+          <button onclick="saveAccidentCard()" id="acSaveBtn" style="width:100%;background:#2B84FE;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:14px;padding:16px;border:none;border-radius:8px;cursor:pointer;">Save My Card</button>
+          <div id="acStatusMsg" style="text-align:center;font-size:13px;margin-top:12px;min-height:18px;"></div>
+
+          <button onclick="loadAccidentCard()" style="width:100%;background:transparent;color:#2B84FE;border:1px solid #2B84FE;font-weight:700;font-size:13px;padding:12px;border-radius:8px;cursor:pointer;margin-top:8px;">Load My Saved Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Signup Form -->
   <div class="signup-section">
     <div class="signup-box" id="signupBox" style="display:none;">
@@ -744,7 +835,7 @@
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
@@ -852,6 +943,85 @@
         statusMsg.textContent = 'Something went wrong. Please call EVL directly to activate your vault.';
         btn.disabled = false;
         btn.textContent = '🔐 Activate My Service Vault';
+      }
+    };
+
+    // ── IN CASE OF ACCIDENT CARD — save/load by email ──
+    window.saveAccidentCard = async function() {
+      const email = document.getElementById('acEmail').value.trim().toLowerCase();
+      const statusMsg = document.getElementById('acStatusMsg');
+      const btn = document.getElementById('acSaveBtn');
+
+      if (!email || !email.includes('@')) {
+        statusMsg.style.color = '#e53e3e';
+        statusMsg.textContent = 'Please enter a valid email first.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        const docId = email.replace(/\//g, '_SLASH_');
+        await setDoc(doc(db, 'evl_accident_cards', docId), {
+          email: email,
+          nextOfKinName: document.getElementById('acKinName').value.trim(),
+          nextOfKinPhone: document.getElementById('acKinPhone').value.trim(),
+          bodyShopName: document.getElementById('acBodyShopName').value.trim(),
+          bodyShopPhone: document.getElementById('acBodyShopPhone').value.trim(),
+          wreckerName: document.getElementById('acWreckerName').value.trim(),
+          wreckerPhone: document.getElementById('acWreckerPhone').value.trim(),
+          insuranceCompany: document.getElementById('acInsuranceCo').value.trim(),
+          policyNumber: document.getElementById('acPolicyNumber').value.trim(),
+          flaresConfirmed: document.getElementById('acFlaresConfirmed').checked,
+          updatedAt: new Date()
+        });
+        statusMsg.style.color = '#00C853';
+        statusMsg.textContent = '✅ Saved! You can load this anytime with your email.';
+      } catch (err) {
+        console.error('[service-vault] Accident card save failed:', err);
+        statusMsg.style.color = '#e53e3e';
+        statusMsg.textContent = 'Something went wrong saving your card. Please try again.';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Save My Card';
+    };
+
+    window.loadAccidentCard = async function() {
+      const email = document.getElementById('acEmail').value.trim().toLowerCase();
+      const statusMsg = document.getElementById('acStatusMsg');
+
+      if (!email || !email.includes('@')) {
+        statusMsg.style.color = '#e53e3e';
+        statusMsg.textContent = 'Enter your email above, then click Load.';
+        return;
+      }
+
+      try {
+        const docId = email.replace(/\//g, '_SLASH_');
+        const snap = await getDoc(doc(db, 'evl_accident_cards', docId));
+        if (!snap.exists()) {
+          statusMsg.style.color = '#e53e3e';
+          statusMsg.textContent = 'No saved card found for that email.';
+          return;
+        }
+        const data = snap.data();
+        document.getElementById('acKinName').value = data.nextOfKinName || '';
+        document.getElementById('acKinPhone').value = data.nextOfKinPhone || '';
+        document.getElementById('acBodyShopName').value = data.bodyShopName || '';
+        document.getElementById('acBodyShopPhone').value = data.bodyShopPhone || '';
+        document.getElementById('acWreckerName').value = data.wreckerName || '';
+        document.getElementById('acWreckerPhone').value = data.wreckerPhone || '';
+        document.getElementById('acInsuranceCo').value = data.insuranceCompany || '';
+        document.getElementById('acPolicyNumber').value = data.policyNumber || '';
+        document.getElementById('acFlaresConfirmed').checked = !!data.flaresConfirmed;
+        statusMsg.style.color = '#00C853';
+        statusMsg.textContent = '✅ Loaded your saved card.';
+      } catch (err) {
+        console.error('[service-vault] Accident card load failed:', err);
+        statusMsg.style.color = '#e53e3e';
+        statusMsg.textContent = 'Something went wrong loading your card.';
       }
     };
 
