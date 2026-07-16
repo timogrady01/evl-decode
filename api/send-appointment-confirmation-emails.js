@@ -2,6 +2,7 @@
 // via Resend, replacing the dead EmailJS calls previously in appointment-confirm.html.
 
 const https = require('https');
+const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
 
 function sendResendEmail({ to, subject, html }) {
   return new Promise((resolve, reject) => {
@@ -65,12 +66,12 @@ module.exports = async function handler(req, res) {
   const results = {};
 
   // 1 — GSM notification
-  if (apptData.gsmEmail) {
+  if (apptData.gsmEmail && !(await isEmailSuppressed(apptData.gsmEmail))) {
     try {
       await sendResendEmail({
         to: apptData.gsmEmail,
         subject: 'New Appointment — ' + (apptData.custName || 'Customer'),
-        html: staffHtml(apptData, 'General Sales Manager', apptData.gsmName)
+        html: staffHtml(apptData, 'General Sales Manager', apptData.gsmName) + complianceFooter(apptData.gsmEmail)
       });
       results.gsm = 'sent';
     } catch (e) {
@@ -78,16 +79,16 @@ module.exports = async function handler(req, res) {
       results.gsm = 'failed - ' + e.message;
     }
   } else {
-    results.gsm = 'skipped - no GSM email provided';
+    results.gsm = apptData.gsmEmail ? 'skipped - unsubscribed' : 'skipped - no GSM email provided';
   }
 
   // 2 — Salesperson notification
-  if (apptData.spEmail) {
+  if (apptData.spEmail && !(await isEmailSuppressed(apptData.spEmail))) {
     try {
       await sendResendEmail({
         to: apptData.spEmail,
         subject: 'New Appointment — ' + (apptData.custName || 'Customer'),
-        html: staffHtml(apptData, 'Salesperson', apptData.spName)
+        html: staffHtml(apptData, 'Salesperson', apptData.spName) + complianceFooter(apptData.spEmail)
       });
       results.salesperson = 'sent';
     } catch (e) {
@@ -95,11 +96,11 @@ module.exports = async function handler(req, res) {
       results.salesperson = 'failed - ' + e.message;
     }
   } else {
-    results.salesperson = 'skipped - no salesperson email provided';
+    results.salesperson = apptData.spEmail ? 'skipped - unsubscribed' : 'skipped - no salesperson email provided';
   }
 
   // 3 — Customer confirmation
-  if (apptData.custEmail) {
+  if (apptData.custEmail && !(await isEmailSuppressed(apptData.custEmail))) {
     try {
       const html = `
         <h2 style="color:#2B84FE;">Your Appointment Is Confirmed</h2>
@@ -111,7 +112,7 @@ module.exports = async function handler(req, res) {
         <p><strong>Confirmation #:</strong> ${apptData.confirmNum || ''}</p>
         <p>Questions? Call or Text: (469) 404-3192</p>
         <p>&mdash; Express Vehicle Locators</p>
-      `;
+      ` + complianceFooter(apptData.custEmail);
       await sendResendEmail({
         to: apptData.custEmail,
         subject: 'Your EVL Appointment Is Confirmed',
@@ -123,7 +124,7 @@ module.exports = async function handler(req, res) {
       results.customer = 'failed - ' + e.message;
     }
   } else {
-    results.customer = 'skipped - no customer email provided';
+    results.customer = apptData.custEmail ? 'skipped - unsubscribed' : 'skipped - no customer email provided';
   }
 
   // 4 — EVL Admin alert (to Tim)

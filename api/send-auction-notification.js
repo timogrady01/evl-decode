@@ -3,6 +3,7 @@
 // evl-notif-engine.html used to call directly from the browser.
 
 const https = require('https');
+const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
 
 function buildEmail(type, p) {
   switch (type) {
@@ -94,6 +95,12 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ success: false, error: 'Missing type, params, or to_email' });
   }
 
+  const suppressed = await isEmailSuppressed(params.to_email);
+  if (suppressed) {
+    console.log('[send-auction-notification] Skipped - unsubscribed:', params.to_email);
+    return res.status(200).json({ success: false, skipped: true, reason: 'unsubscribed' });
+  }
+
   const emailContent = buildEmail(type, params);
   if (!emailContent) {
     return res.status(400).json({ success: false, error: 'Unknown notification type: ' + type });
@@ -104,7 +111,7 @@ module.exports = async function handler(req, res) {
     reply_to: 'togradyevl@gmail.com',
     to: params.to_email,
     subject: emailContent.subject,
-    html: emailContent.html
+    html: emailContent.html + complianceFooter(params.to_email)
   });
 
   try {

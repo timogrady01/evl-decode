@@ -1,5 +1,6 @@
 const twilio = require('twilio');
 const https = require('https');
+const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
 
 function sendResendEmail({ to, subject, html, fromLabel }) {
   return new Promise((resolve, reject) => {
@@ -86,7 +87,7 @@ module.exports = async function handler(req, res) {
   }
 
   // ── EMAIL TO CUSTOMER via RESEND ──
-  if (customerEmail) {
+  if (customerEmail && !(await isEmailSuppressed(customerEmail))) {
     try {
       const html = `
         <h2 style="color:#2B84FE;">Your Appointment Is Confirmed</h2>
@@ -95,7 +96,7 @@ module.exports = async function handler(req, res) {
         <p>Vehicle: ${vehicleInfo || ''}</p>
         <p>Our team will be in touch. Questions? Call or Text: (469) 404-3192</p>
         <p>&mdash; Express Vehicle Locators</p>
-      `;
+      ` + complianceFooter(customerEmail);
       await sendResendEmail({
         to: customerEmail,
         subject: 'Your EVL Appointment Is Confirmed',
@@ -108,7 +109,7 @@ module.exports = async function handler(req, res) {
       results.customerEmail = 'failed - ' + emailError.message;
     }
   } else {
-    results.customerEmail = 'skipped - no email provided';
+    results.customerEmail = customerEmail ? 'skipped - unsubscribed' : 'skipped - no email provided';
   }
 
   // ── EMAIL TO ADMIN (TIM) via RESEND ──

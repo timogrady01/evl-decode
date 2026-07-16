@@ -11,6 +11,7 @@
 const twilio = require('twilio');
 const https = require('https');
 const { getFirebaseAdmin } = require('../lib/firebaseAdmin');
+const { isEmailSuppressed, complianceFooter } = require('../lib/emailCompliance');
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -70,6 +71,11 @@ Video proof: ${videoUrl}`;
     let emailStatus = 'skipped - no email provided';
 
     if (customerEmail) {
+      const suppressed = await isEmailSuppressed(customerEmail);
+      if (suppressed) {
+        console.log('[send-verification] Email skipped - unsubscribed:', customerEmail);
+        emailStatus = 'skipped - unsubscribed';
+      } else {
       try {
         const htmlBody = `
           <h2 style="color:#2B84FE;">Vehicle Confirmed In Stock!</h2>
@@ -79,7 +85,7 @@ Video proof: ${videoUrl}`;
           <p>Next step: schedule your face-to-face appointment. Reply to this email or call your salesperson to confirm a time.</p>
           <p>Questions? Call or Text: (469) 404-3192</p>
           <p>&mdash; Express Vehicle Locators</p>
-        `;
+        ` + complianceFooter(customerEmail);
         const payload = JSON.stringify({
           from: 'Express Vehicle Locators <no-reply@expressvehiclelocators.com>',
           reply_to: 'togradyevl@gmail.com',
@@ -121,6 +127,7 @@ Video proof: ${videoUrl}`;
       } catch (emailError) {
         console.error('[send-verification] Email failed:', emailError.message);
         emailStatus = 'failed - ' + emailError.message;
+      }
       }
     }
 
