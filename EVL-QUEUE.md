@@ -8,7 +8,11 @@ This is the running list of things flagged mid-conversation that need to be addr
 
 ## Open Items
 
-- [ ] **SiteGround DNS Zone Editor shows "Your domain's A record is not pointed to this website"** — noticed while adding Resend DNS records (July 14, 2026). Site is live and working via Vercel right now, so this warning is likely just SiteGround referring to its own hosting (not an actual live issue) — but worth understanding/confirming what this means before ignoring it long-term.
+- [ ] **Communications log (`evl_communications` collection)** — no permanent record currently exists of emails/texts sent to customers (only ephemeral Vercel server logs). Need a new collection logging every send: customerPhone, customerEmail, leadId, type (sms/email), purpose, content, status, providerMessageId, timestamp. Should be viewable per-customer from `crm.html`.
+
+- [ ] **admin-leads.html vs crm.html consolidation** — two overlapping admin tools both read `evl_leads` independently (crm.html also pulls evl_deals, evl_appointments, evl_notes; admin-leads.html has the Send Payment Link button crm.html lacks). Decided to keep separate for now given solo-operator scale; `crm.html` is the intended long-term home for full customer view (including future comms log). Revisit consolidation later.
+
+- [ ] **Role-Based Access Control (RBAC) — future, not urgent.** Currently NO real per-user authentication exists anywhere in the admin tools (all PINs unified to 1027 during dev, Firestore rules mostly `allow read, write: if true`). DealerSocket-style Manager vs. Salesperson access levels aren't buildable until real auth (actual logins) exists first. Revisit once EVL actually onboards staff or dealer partners needing restricted logins \u2014 not needed while solo-operated.- [ ] **SiteGround DNS Zone Editor shows "Your domain's A record is not pointed to this website"** — noticed while adding Resend DNS records (July 14, 2026). Site is live and working via Vercel right now, so this warning is likely just SiteGround referring to its own hosting (not an actual live issue) — but worth understanding/confirming what this means before ignoring it long-term.
 
 - [ ] **If/when domain DNS fully migrates away from SiteGround** (e.g. to Vercel DNS) as part of finishing the WordPress→Vercel migration: remember to re-add the 3 Resend email verification DNS records (TXT `resend._domainkey`, MX `send`, TXT `send`) at the new DNS host — email verification does not automatically carry over between DNS providers.
 
