@@ -8,6 +8,14 @@ This is the running list of things flagged mid-conversation that need to be addr
 
 ## Open Items
 
+- [ ] **Full revenue-bucket logic tree/customer lifecycle (confirmed July 16, 2026) - this is the master plan the revenue-bucket nudge system (see item below) needs to execute.** Two-phase cycle, not a one-time transaction:
+
+  **Phase 1 - Purchase Journey:** Find My Vehicle ($49, vehicle located) → Trade-In Exchange (best trade offer secured via WS Exchange bidding process) → Full Service ($399, contains BOTH the Finance nudge and the F&I nudge - see the detailed 7-step Finance/F&I process above) → Delivered.
+
+  **Phase 2 - Ownership Lifecycle (loops back into Phase 1):** Delivered → Service Vault nudge ($99-299/yr, electronic glovebox/document storage/accident card) → Trade-timing nudge (Service Vault's "best time to sell" intelligence signal) → loops back to Trade-In Exchange, starting a new Phase 1 cycle for the customer's next vehicle.
+
+  **New idea raised, NOT yet decided - needs licensing review before building:** an auto insurance comparison/cross-sell nudge somewhere in the lifecycle, similar to how LendingTree bundles insurance offers alongside loan products. Important caution: recommending or comparing insurance products specifically (distinct from financing or extended warranties) often triggers actual insurance producer licensing requirements at the state level - a different, generally stricter regulatory category than the Finance/F&I guardrails already established. Do not build this without a separate licensing review first.
+
 - [ ] **Credit bureau affiliate revenue opportunity (found July 16, 2026).** `my-buying-power.html` and `credit-score.html` already recommend customers check their credit score at Experian/Credit Karma via plain links with zero commission. TransUnion confirmed to run a real affiliate program (~$45-$80 per paid subscription signup via CJ Affiliate or Impact network) - genuinely free incremental revenue since EVL is already giving this advice, just needs EVL's own tracked link instead of a plain one. **Action needed:** sign up as a publisher at signup.cj.com (free), then apply to the TransUnion program specifically once approved. Also worth checking - Experian and Equifax likely run similar affiliate programs (standard in this industry), worth applying to those too. **Important note:** a TransUnion link Tim found elsewhere (AID=10432536) is NOT EVL's - using it as-is would credit a stranger's account. EVL needs its own affiliate account/link before using any tracked link on the live site.
 
 - [ ] **Finance/F&I active comparison process (part of Full Service $399 - not standalone).** Decided July 16, 2026: this stays bundled inside Full Service, not a new bucket. Advisory currently only *tells* the customer what rate/terms they should qualify for; this process goes further by actually *shopping and comparing* real offers on their behalf. Full 7-step process worked out (BITOP):
