@@ -811,7 +811,7 @@
             <div class="radio-dot"></div>
             <div style="flex:1;">
               <div class="radio-label">Excellent — 781 to 850</div>
-              <div class="radio-sub" id="rate_super_prime">New: ~5.25% | Used: ~7.52%</div>
+              <div class="radio-sub" id="rate_super_prime">New: ~4.55% | Used: ~6.30%</div>
             </div>
           </div>
 
@@ -819,7 +819,7 @@
             <div class="radio-dot"></div>
             <div style="flex:1;">
               <div class="radio-label">Good — 661 to 780</div>
-              <div class="radio-sub" id="rate_prime">New: ~7.01% | Used: ~9.75%</div>
+              <div class="radio-sub" id="rate_prime">New: ~6.23% | Used: ~8.77%</div>
             </div>
           </div>
 
@@ -827,7 +827,7 @@
             <div class="radio-dot"></div>
             <div style="flex:1;">
               <div class="radio-label">Fair — 601 to 660</div>
-              <div class="radio-sub" id="rate_near_prime">New: ~9.82% | Used: ~13.91%</div>
+              <div class="radio-sub" id="rate_near_prime">New: ~9.67% | Used: ~14.03%</div>
             </div>
           </div>
 
@@ -835,7 +835,7 @@
             <div class="radio-dot"></div>
             <div style="flex:1;">
               <div class="radio-label">Below Average — 501 to 600</div>
-              <div class="radio-sub" id="rate_subprime">New: ~13.42% | Used: ~18.86%</div>
+              <div class="radio-sub" id="rate_subprime">New: ~13.44% | Used: ~19.42%</div>
             </div>
           </div>
 
@@ -1088,9 +1088,11 @@
   <script>
     // ── EXPERIAN Q4 2025 RATES ──
     const RATES = {
-      new:  { super_prime:5.25, prime:7.01, near_prime:9.82,  subprime:13.42, deep_subprime:21.38 },
-      used: { super_prime:7.52, prime:9.75, near_prime:13.91, subprime:18.86, deep_subprime:22.16 }
+      new:  { super_prime:4.55, prime:6.23, near_prime:9.67,  subprime:13.44, deep_subprime:16.01 },
+      used: { super_prime:6.30, prime:8.77, near_prime:14.03, subprime:19.42, deep_subprime:21.77 }
     };
+    // Source: Experian State of the Automotive Finance Market, Q1 2026 (VantageScore 4.0)
+    // Update quarterly - Experian releases ~6 weeks after quarter end (Q2 2026 data expected ~mid-August 2026)
 
     const TIER_LABELS = {
       super_prime:'Excellent (781–850)', prime:'Good (661–780)',
