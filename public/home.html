@@ -375,6 +375,25 @@ footer { background:var(--bg); border-top:1px solid #111; padding:48px; }
 body { display:block !important; align-items:unset !important; justify-content:unset !important; }
 .evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
 </style>
+<style id="quick-search-css">
+.quick-search-section{padding:56px 20px 64px;background:var(--bg);}
+.quick-search-inner{max-width:900px;margin:0 auto;text-align:center;}
+.quick-search-box{background:var(--s1);border:2px solid rgba(43,132,254,0.25);border-radius:16px;padding:18px 24px;display:flex;align-items:center;gap:12px;}
+.quick-search-box input{flex:1;background:transparent;border:none;outline:none;color:var(--gray);font-size:15px;font-family:'Barlow',sans-serif;min-width:0;}
+.quick-search-box input::placeholder{color:var(--gray);opacity:0.7;}
+.quick-cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px;}
+.quick-cat-card{background:var(--s2);border:1px solid rgba(43,132,254,0.2);border-radius:12px;padding:28px 18px;text-decoration:none;display:block;transition:all .2s;min-height:48px;}
+.quick-cat-card:hover{border-color:var(--blue);transform:translateY(-4px);}
+.quick-cat-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.quick-cat-sub{font-size:13px;color:var(--gray);line-height:1.6;}
+@media(max-width:768px){
+  .quick-cat-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:480px){
+  .quick-cat-grid{grid-template-columns:1fr;}
+  .quick-search-box{flex-wrap:wrap;}
+}
+</style>
 </head>
 <body>
 
@@ -399,6 +418,34 @@ body { display:block !important; align-items:unset !important; justify-content:u
     <a href="/my-buying-power" class="evl-nav-cta">⚡ MY BUYING POWER</a>
   </div>
 </nav>
+
+<!-- QUICK SEARCH + CATEGORIES -->
+<section class="quick-search-section">
+  <div class="quick-search-inner">
+    <div class="quick-search-box">
+      <span style="font-size:18px;">🔍</span>
+      <input type="text" id="evlQuickSearch" placeholder="F-150 vs Tundra · Best SUV under $45k · Mustang trim levels...">
+    </div>
+    <div class="quick-cat-grid">
+      <a href="/find-my-vehicle?cat=trucks" class="quick-cat-card">
+        <div class="quick-cat-title">Trucks</div>
+        <div class="quick-cat-sub">F-150, Tundra, Silverado, RAM — full comparison</div>
+      </a>
+      <a href="/find-my-vehicle?cat=suvs" class="quick-cat-card">
+        <div class="quick-cat-title">SUVs</div>
+        <div class="quick-cat-sub">Compact, midsize, full-size — find the right one</div>
+      </a>
+      <a href="/find-my-vehicle?cat=luxury" class="quick-cat-card">
+        <div class="quick-cat-title">Luxury</div>
+        <div class="quick-cat-sub">BMW, Mercedes, Audi, Lexus — objectively compared</div>
+      </a>
+      <a href="/find-my-vehicle?cat=electric" class="quick-cat-card">
+        <div class="quick-cat-title">Electric</div>
+        <div class="quick-cat-sub">Tesla, Rivian, EV comparisons — real costs</div>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- HERO -->
 <section class="hero">
@@ -836,6 +883,18 @@ function acceptCookie(){document.getElementById('evl-cookie').style.display='non
 window.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem('evl-cookie')){var b=document.getElementById('evl-cookie');if(b)b.style.display='flex';}});
 // Highlight active page
 (function(){var path=window.location.pathname;document.querySelectorAll('.evl-nav-link').forEach(function(a){if(a.getAttribute('href')&&path.endsWith(a.getAttribute('href').split('/').pop())){a.style.color='#2B84FE';a.style.borderBottom='2px solid #2B84FE';}});})();
+</script>
+<script id="quick-search-js">
+(function(){
+  var box = document.getElementById('evlQuickSearch');
+  if(box){
+    box.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && this.value.trim().length > 0){
+        window.location.href = '/find-my-vehicle?q=' + encodeURIComponent(this.value.trim());
+      }
+    });
+  }
+})();
 </script>
 </body>
 </html>
