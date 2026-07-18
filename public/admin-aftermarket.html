@@ -144,6 +144,14 @@
     }
 
     const CAT_LABELS = { lift:'Lift Kits', wheels:'Wheels & Tires', lights:'Light Bars', bed:'Bed Accessories' };
+    const HUB_LABELS = {
+      dfw:'DFW / Plano, TX', houston:'Houston, TX', atlanta:'Atlanta, GA', chicago:'Chicago, IL',
+      denver:'Denver, CO', phoenix:'Phoenix, AZ', la:'Los Angeles, CA', nyc:'NYC / NJ',
+      miami:'Miami, FL', nashville:'Nashville, TN', seattle:'Seattle, WA', minneapolis:'Minneapolis, MN',
+      charlotte:'Charlotte, NC', columbus:'Columbus, OH', philly:'Philadelphia, PA', detroit:'Detroit, MI',
+      richmond:'Richmond, VA', indy:'Indianapolis, IN', stlouis:'St. Louis, MO', milwaukee:'Milwaukee, WI',
+      baltimore:'Baltimore, MD', lasvegas:'Las Vegas, NV'
+    };
 
     async function waitForDb(){
       if(!window.EVL_AM_ADMIN_DB){
@@ -169,7 +177,7 @@
               <div class="app-name">${esc(a.shopName)}</div>
               <div class="app-cats">${(a.categories||[]).map(c=>CAT_LABELS[c]||c).join(' · ')}</div>
             </div>
-            <div class="app-detail"><strong>Hub:</strong> ${esc(a.hub)}</div>
+            <div class="app-detail"><strong>Hub:</strong> ${HUB_LABELS[a.hub] || esc(a.hub)}</div>
             <div class="app-detail"><strong>Contact:</strong> ${esc(a.contactName)} — ${esc(a.phone)} — ${esc(a.email)}</div>
             <div class="app-detail"><strong>Years in business:</strong> ${esc(a.yearsInBusiness||'—')}</div>
             <div class="app-detail"><strong>Certifications:</strong> ${esc(a.certifications)}</div>
@@ -195,7 +203,7 @@
         el.innerHTML = shops.map(s => `
           <div class="shop-card">
             <div>
-              <strong>${esc(s.shopName)}</strong> — ${CAT_LABELS[s.category]||s.category} — ${esc(s.hub)}
+              <strong>${esc(s.shopName)}</strong> — ${CAT_LABELS[s.category]||s.category} — ${HUB_LABELS[s.hub] || esc(s.hub)}
             </div>
             <div class="shop-status">✅ Approved</div>
           </div>
