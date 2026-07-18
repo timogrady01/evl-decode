@@ -944,6 +944,88 @@
     </div>
   </div>
 
+  <!-- Maintenance Ledger -->
+  <div class="section" style="padding:60px 20px;">
+    <div class="container" style="max-width:700px;margin:0 auto;">
+      <div class="section-title" style="text-align:center;">Maintenance Ledger</div>
+      <div class="section-subtitle" style="text-align:center;margin-bottom:30px;">What's due, what's already been done, and proof for both — in one place for the life of your vehicle.</div>
+
+      <div style="background:#090E17;border:2px solid #2a3f5f;border-radius:16px;padding:20px;">
+
+        <label style="display:block;font-size:18px;color:#C8D0DC;margin-bottom:4px;">Your Email (to save/retrieve your ledger)</label>
+        <input type="email" id="slEmail" placeholder="you@email.com" style="width:100%;padding:12px;margin-bottom:20px;background:#020203;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:18px;">
+
+        <!-- DRAWER 1: WHAT'S DUE -->
+        <details open style="margin-bottom:14px;border:1px solid #2B84FE;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;background:rgba(43,132,254,0.1);">🔧 1. What's Due</summary>
+          <div style="padding:20px;">
+            <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:16px;">
+              <input type="text" id="slVin" placeholder="17-digit VIN" maxlength="17" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:18px;">
+              <input type="number" id="slMileage" placeholder="Current mileage" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:18px;">
+              <button onclick="calculateWhatsDue()" id="slDueBtn" style="width:100%;background:#2B84FE;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:16px;padding:14px;border:none;border-radius:8px;cursor:pointer;">Check What's Due</button>
+            </div>
+            <div style="background:rgba(43,132,254,0.08);border:1px solid #2B84FE;border-radius:8px;padding:12px 16px;color:#C8D0DC;font-size:14px;line-height:1.6;margin-bottom:16px;">
+              Using a general mileage-interval schedule for now. This upgrades to your vehicle's exact factory schedule once EVL activates a licensed OEM data source.
+            </div>
+            <div id="slDueResults"></div>
+          </div>
+        </details>
+
+        <!-- DRAWER 2: TIRE AGE CHECK -->
+        <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">🛞 2. Tire Age Check</summary>
+          <div style="padding:20px;">
+            <div style="background:#090E17;border:1px solid #2a3f5f;border-radius:8px;padding:16px;color:#C8D0DC;font-size:16px;line-height:1.7;margin-bottom:16px;">
+              Find the DOT code on your tire's sidewall — it ends in 4 digits, like <strong style="color:#fff;">2318</strong>. The first 2 digits are the week, the last 2 are the year the tire was actually made. This is the tire's real age — not how long you've owned it.
+            </div>
+            <input type="text" id="slDotCode" placeholder="4-digit DOT code, e.g. 2318" maxlength="4" style="width:100%;padding:12px;margin-bottom:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:18px;text-align:center;letter-spacing:4px;">
+            <button onclick="checkTireAge()" style="width:100%;background:#2B84FE;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:16px;padding:14px;border:none;border-radius:8px;cursor:pointer;">Check Tire Age</button>
+            <div id="slTireResult" style="margin-top:16px;"></div>
+          </div>
+        </details>
+
+        <!-- DRAWER 3: SERVICE LEDGER -->
+        <details style="margin-bottom:14px;border:1px solid #2a3f5f;border-radius:12px;background:#020203;overflow:hidden;">
+          <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;">📋 3. Service History Ledger</summary>
+          <div style="padding:20px;">
+
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:16px;letter-spacing:1px;margin-bottom:12px;">Log a Service</div>
+
+            <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px;">
+              <input type="text" id="slServiceName" placeholder="What was done? (e.g. Oil change)" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <input type="date" id="slServiceDate" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:16px;">
+                <input type="number" id="slServiceMileage" placeholder="Mileage" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:16px;">
+              </div>
+            </div>
+
+            <label style="display:block;font-size:14px;color:#C8D0DC;margin-bottom:6px;">How was this done?</label>
+            <select id="slConfidence" style="width:100%;padding:12px;margin-bottom:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:15px;">
+              <option value="self_reported">I'm just noting it happened (no proof)</option>
+              <option value="receipt">I have a receipt to upload</option>
+              <option value="pre_evl">This happened before I started using EVL</option>
+            </select>
+
+            <div id="slReceiptUploadWrap" style="display:none;margin-bottom:14px;">
+              <input type="file" id="slReceiptFile" accept="image/*" onchange="uploadLedgerReceipt(this)" style="width:100%;padding:10px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#C8D0DC;font-size:14px;">
+              <div id="slReceiptStatus" style="font-size:13px;color:#C8D0DC;margin-top:6px;"></div>
+            </div>
+
+            <button onclick="logServiceEntry()" id="slLogBtn" style="width:100%;background:#2B84FE;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:16px;padding:14px;border:none;border-radius:8px;cursor:pointer;margin-bottom:8px;">Save to Ledger</button>
+            <div id="slLogStatus" style="text-align:center;font-size:15px;margin-bottom:20px;min-height:18px;"></div>
+
+            <button onclick="loadServiceLedger()" style="width:100%;background:transparent;color:#2B84FE;border:1px solid #2B84FE;font-weight:700;font-size:16px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:20px;">Load My Ledger</button>
+
+            <div style="font-weight:700;color:#2B84FE;text-transform:uppercase;font-size:16px;letter-spacing:1px;margin-bottom:12px;border-top:1px solid #2a3f5f;padding-top:20px;">Your History</div>
+            <div id="slLedgerEntries" style="color:#C8D0DC;font-size:14px;">Enter your email above and click "Load My Ledger" to view your history.</div>
+
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Signup Form -->
   <div class="signup-section">
     <div class="signup-box" id="signupBox" style="display:none;">
@@ -1038,7 +1120,7 @@
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, collection, addDoc, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, doc, setDoc, getDoc, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
@@ -1411,6 +1493,260 @@
       answer.classList.toggle('open');
       icon.textContent = answer.classList.contains('open') ? '−' : '+';
     };
+
+    // ── MAINTENANCE LEDGER ──
+
+    // Generic mileage-interval schedule — placeholder until a licensed OEM data
+    // source (VehicleDatabases.com or DataOne) is subscribed to for exact factory schedules
+    const GENERIC_SCHEDULE = [
+      { name: 'Oil and filter change', interval: 10000, costLow: 45, costHigh: 75 },
+      { name: 'Tire rotation', interval: 7500, costLow: 25, costHigh: 45 },
+      { name: 'Cabin air filter', interval: 15000, costLow: 30, costHigh: 55 },
+      { name: 'Engine air filter', interval: 20000, costLow: 25, costHigh: 45 },
+      { name: 'Brake fluid flush', interval: 30000, costLow: 89, costHigh: 140 },
+      { name: 'Transmission fluid service', interval: 60000, costLow: 150, costHigh: 280 },
+      { name: 'Spark plug replacement', interval: 60000, costLow: 120, costHigh: 240 },
+      { name: 'Coolant flush', interval: 60000, costLow: 100, costHigh: 180 }
+    ];
+
+    window.calculateWhatsDue = async function() {
+      const vin = document.getElementById('slVin').value.trim().toUpperCase();
+      const mileage = parseInt(document.getElementById('slMileage').value, 10);
+      const resultsEl = document.getElementById('slDueResults');
+      const btn = document.getElementById('slDueBtn');
+
+      if (!mileage || mileage < 0) {
+        resultsEl.innerHTML = '<div style="color:#e53e3e;font-size:15px;">Enter your current mileage.</div>';
+        return;
+      }
+
+      let vehicleLabel = '';
+      if (vin && vin.length === 17) {
+        btn.textContent = 'Decoding VIN…';
+        btn.disabled = true;
+        try {
+          const res = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/' + vin + '?format=json');
+          const data = await res.json();
+          const v = data?.Results?.[0];
+          if (v && v.ErrorCode === '0' && v.Make) {
+            vehicleLabel = v.ModelYear + ' ' + v.Make.charAt(0) + v.Make.slice(1).toLowerCase() + ' ' + v.Model;
+          }
+        } catch (e) {
+          console.error('[service-vault] VIN decode failed:', e);
+        }
+        btn.textContent = 'Check What\'s Due';
+        btn.disabled = false;
+      }
+
+      const dueNow = GENERIC_SCHEDULE.filter(s => mileage % s.interval < 2000 || mileage % s.interval > s.interval - 500);
+      const rows = GENERIC_SCHEDULE.map(s => {
+        const remainder = s.interval - (mileage % s.interval);
+        const isDue = remainder <= 500 || remainder >= s.interval - 500;
+        const isSoon = !isDue && remainder <= 1500;
+        const status = isDue ? { label: 'Due now', color: '#e53e3e', bg: 'rgba(229,62,62,0.12)' }
+          : isSoon ? { label: 'Due soon', color: '#FFD700', bg: 'rgba(255,215,0,0.1)' }
+          : { label: (remainder) + ' mi left', color: '#00C853', bg: 'rgba(0,200,83,0.1)' };
+        return `
+          <div style="background:#090E17;border:1px solid #2a3f5f;border-radius:8px;padding:14px 16px;margin-bottom:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-weight:700;color:#fff;font-size:15px;">${s.name}</div>
+              <span style="background:${status.bg};color:${status.color};font-size:12px;font-weight:700;padding:4px 10px;border-radius:6px;white-space:nowrap;">${status.label}</span>
+            </div>
+            <div style="font-size:13px;color:#C8D0DC;margin-top:4px;">Every ${s.interval.toLocaleString()} mi &middot; Est. $${s.costLow}&ndash;$${s.costHigh}</div>
+          </div>
+        `;
+      }).join('');
+
+      resultsEl.innerHTML = (vehicleLabel ? `<div style="color:#2B84FE;font-weight:700;font-size:15px;margin-bottom:12px;">${vehicleLabel} &middot; ${mileage.toLocaleString()} mi</div>` : '') + rows;
+    };
+
+    window.checkTireAge = function() {
+      const code = document.getElementById('slDotCode').value.trim();
+      const resultEl = document.getElementById('slTireResult');
+
+      if (!/^\d{4}$/.test(code)) {
+        resultEl.innerHTML = '<div style="color:#e53e3e;font-size:15px;">Enter the 4-digit DOT code (week + year).</div>';
+        return;
+      }
+
+      const week = parseInt(code.substring(0, 2), 10);
+      const yearShort = parseInt(code.substring(2, 4), 10);
+      if (week < 1 || week > 53) {
+        resultEl.innerHTML = '<div style="color:#e53e3e;font-size:15px;">That doesn\'t look like a valid week (01-53). Double-check the code.</div>';
+        return;
+      }
+
+      // DOT codes only use 2-digit years; treat as 2000s (correct for any tire currently in service)
+      const fullYear = 2000 + yearShort;
+      const manufactureDate = new Date(fullYear, 0, 1);
+      manufactureDate.setDate(manufactureDate.getDate() + (week - 1) * 7);
+      const ageYears = ((new Date()) - manufactureDate) / (1000 * 60 * 60 * 24 * 365.25);
+      const ageRounded = Math.floor(ageYears);
+
+      let message, color, bg;
+      if (ageYears >= 10) {
+        message = `These tires are ${ageRounded} years old — past the 10-year hard replacement limit nearly every manufacturer sets, regardless of tread depth.`;
+        color = '#e53e3e'; bg = 'rgba(229,62,62,0.1)';
+      } else if (ageYears >= 6) {
+        message = `These tires are ${ageRounded} years old — inside the 6 to 10 year window where most manufacturers recommend inspection or replacement, regardless of tread depth.`;
+        color = '#FFD700'; bg = 'rgba(255,215,0,0.1)';
+      } else {
+        message = `These tires are ${ageRounded} years old — within the typical safe age range.`;
+        color = '#00C853'; bg = 'rgba(0,200,83,0.1)';
+      }
+
+      resultEl.innerHTML = `
+        <div style="background:${bg};border:1px solid ${color};border-radius:8px;padding:14px 16px;">
+          <div style="font-size:13px;color:#C8D0DC;margin-bottom:6px;">Manufactured week ${week} of ${fullYear}</div>
+          <div style="color:${color};font-size:15px;font-weight:700;line-height:1.6;">${message}</div>
+        </div>
+      `;
+    };
+
+    document.getElementById('slConfidence').addEventListener('change', function() {
+      document.getElementById('slReceiptUploadWrap').style.display = this.value === 'receipt' ? 'block' : 'none';
+    });
+
+    let slReceiptUrl = '';
+    window.uploadLedgerReceipt = function(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const statusEl = document.getElementById('slReceiptStatus');
+      statusEl.textContent = 'Uploading…';
+
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', 'evl_photos');
+      fd.append('public_id', 'evl_ledger_receipt_' + Date.now());
+
+      fetch('https://api.cloudinary.com/v1_1/dv8cpebgp/image/upload', { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(d => {
+          if (d.secure_url) {
+            slReceiptUrl = d.secure_url;
+            statusEl.style.color = '#00C853';
+            statusEl.textContent = '✅ Receipt uploaded';
+          } else {
+            throw new Error('No URL returned');
+          }
+        })
+        .catch(err => {
+          console.error('[service-vault] Receipt upload failed:', err);
+          statusEl.style.color = '#e53e3e';
+          statusEl.textContent = 'Upload failed. Please try again.';
+        });
+    };
+
+    window.logServiceEntry = async function() {
+      const email = document.getElementById('slEmail').value.trim().toLowerCase();
+      const serviceName = document.getElementById('slServiceName').value.trim();
+      const serviceDate = document.getElementById('slServiceDate').value;
+      const serviceMileage = document.getElementById('slServiceMileage').value;
+      const confidence = document.getElementById('slConfidence').value;
+      const statusEl = document.getElementById('slLogStatus');
+      const btn = document.getElementById('slLogBtn');
+
+      if (!email || !email.includes('@')) {
+        statusEl.style.color = '#e53e3e';
+        statusEl.textContent = 'Enter your email above first.';
+        return;
+      }
+      if (!serviceName) {
+        statusEl.style.color = '#e53e3e';
+        statusEl.textContent = 'Enter what service was done.';
+        return;
+      }
+      if (confidence === 'receipt' && !slReceiptUrl) {
+        statusEl.style.color = '#e53e3e';
+        statusEl.textContent = 'Upload your receipt, or switch to a different option above.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+
+      try {
+        await addDoc(collection(db, 'evl_service_ledger'), {
+          email: email,
+          serviceName: serviceName,
+          serviceDate: serviceDate || null,
+          mileage: serviceMileage ? parseInt(serviceMileage, 10) : null,
+          confidenceLevel: confidence,
+          receiptUrl: confidence === 'receipt' ? slReceiptUrl : null,
+          createdAt: new Date().toISOString()
+        });
+
+        statusEl.style.color = '#00C853';
+        statusEl.textContent = '✅ Saved to your ledger.';
+        document.getElementById('slServiceName').value = '';
+        document.getElementById('slServiceDate').value = '';
+        document.getElementById('slServiceMileage').value = '';
+        document.getElementById('slReceiptFile').value = '';
+        document.getElementById('slReceiptStatus').textContent = '';
+        slReceiptUrl = '';
+        loadServiceLedger();
+      } catch (err) {
+        console.error('[service-vault] Log service entry failed:', err);
+        statusEl.style.color = '#e53e3e';
+        statusEl.textContent = 'Something went wrong saving. Please try again.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save to Ledger';
+      }
+    };
+
+    const CONFIDENCE_LABELS = {
+      certified: { label: '✅ EVL Certified shop', color: '#00C853' },
+      receipt: { label: '✅ Receipt on file', color: '#00C853' },
+      self_reported: { label: 'Self-reported', color: '#C8D0DC' },
+      pre_evl: { label: 'Logged before EVL', color: '#C8D0DC' }
+    };
+
+    window.loadServiceLedger = async function() {
+      const email = document.getElementById('slEmail').value.trim().toLowerCase();
+      const listEl = document.getElementById('slLedgerEntries');
+
+      if (!email || !email.includes('@')) {
+        listEl.innerHTML = '<div style="color:#e53e3e;">Enter your email above first.</div>';
+        return;
+      }
+
+      listEl.innerHTML = 'Loading…';
+
+      try {
+        const q = query(collection(db, 'evl_service_ledger'), where('email', '==', email));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          listEl.innerHTML = 'No service history logged yet.';
+          return;
+        }
+        const entries = snap.docs.map(d => d.data()).sort((a, b) => (b.serviceDate || '').localeCompare(a.serviceDate || ''));
+        listEl.innerHTML = entries.map(e => {
+          const conf = CONFIDENCE_LABELS[e.confidenceLevel] || CONFIDENCE_LABELS.self_reported;
+          return `
+            <div style="background:#090E17;border:1px solid #2a3f5f;border-radius:8px;padding:14px 16px;margin-bottom:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+                <div>
+                  <div style="font-weight:700;color:#fff;font-size:15px;">${escapeHtmlSL(e.serviceName)}</div>
+                  <div style="font-size:13px;color:#C8D0DC;margin-top:2px;">${e.serviceDate || 'Date not recorded'}${e.mileage ? ' &middot; ' + e.mileage.toLocaleString() + ' mi' : ''}</div>
+                </div>
+                <span style="color:${conf.color};font-size:12px;font-weight:700;white-space:nowrap;">${conf.label}</span>
+              </div>
+              ${e.receiptUrl ? `<a href="${e.receiptUrl}" target="_blank" style="display:inline-block;margin-top:8px;color:#2B84FE;font-size:13px;">View receipt</a>` : ''}
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error('[service-vault] Load ledger failed:', err);
+        listEl.innerHTML = '<div style="color:#e53e3e;">Something went wrong loading your ledger.</div>';
+      }
+    };
+
+    function escapeHtmlSL(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
   </script>
 
 </body>
