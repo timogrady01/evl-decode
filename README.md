@@ -403,5 +403,60 @@ Every email send anywhere in the platform now reports real success/failure via R
 
 ---
 
-*Last updated: July 14, 2026*
+## BUCKET 10 — AFTERMARKET UPGRADES (Spec locked July 17, 2026, not yet built)
+
+**Business model:** RepairPal/CarAdvise style (subscription/certification), explicitly NOT Angi/HomeAdvisor style (pay-per-lead auction). Angi flagged as cautionary tale — shared leads sold to 3-8 competing shops, true cost-per-customer $250-$1,200+, 15-20% close rates, real lawsuit history over lead quality.
+
+**Why NOT to copy Angi:** contradicts EVL's trust-first brand. EVL's structural advantage over Angi: referrals are warm (customer already trusts EVL from the vehicle purchase) vs. Angi's cold web-form leads — should convert far above Angi's 15-20%.
+
+**Scope decision — what's IN vs OUT:**
+- IN (real white space dealers don't cover): Lift Kits & Suspension, Wheels & Tires, Light Bars/Off-Road Lighting, Bed Accessories
+- OUT — Tint / Wraps: most dealers already sell this as a pack item or F&I add-on. Upselling it would directly contradict EVL's own Deal Gap Analysis, which flags "dealer add-ons baked into the listing" as something to question, not something to buy more of.
+- OUT — Audio/Electronics: not a priority category per Tim.
+- Only surfaces for Truck/SUV customers (ties to existing Trucks/SUVs/Luxury/Electric category cards on home.html) — Luxury/Electric buyers never see this feature.
+
+**Two-sided brand logic (no contradiction):**
+- Dealer already installed something (tint, etch guards, wheel locks) → EVL's job is to flag it as a possible markup via Deal Gap Analysis, not sell more of it.
+- Dealer doesn't offer something (lift, wheels, light bars) → EVL's job is to connect the customer to a vetted certified shop at fair, transparent pricing.
+
+**Certified Shop Network — vetting bar:**
+Higher than a typical tint-shop certification, because lift kits and wheel/tire upgrades can affect factory warranty coverage and insurance. Certification should require: verified installer credentials, proof of liability insurance, and a workmanship warranty that doesn't void the vehicle's factory coverage.
+
+**Customer-facing flow:**
+```
+TRIGGER: post-delivery, surfaces inside Glovebox/Service Vault
+        ↓
+STEP 1 — Category Select (Trucks/SUV customers only)
+  🔧 Lift Kits & Suspension
+  🛞 Wheels & Tires
+  💡 Light Bars / Off-Road Lighting
+  🛏️ Bed Accessories
+        ↓
+STEP 2 — Certified Shop Results (2-3 shops max — never a bidding war / shared-lead auction)
+  Each card: ✅ EVL Certified badge, shop name + distance, verified rating
+  (pulled from shop's own system), warranty terms, "EVL Certified Pricing"
+        ↓
+STEP 3 — Customer picks a shop
+  → EVL logs referral (new Firestore collection: evl_aftermarket_referrals)
+  → Customer gets shop's direct contact info to book
+```
+
+**Shop-side flow (separate, admin-facing, build order TBD):**
+```
+Shop applies to join "EVL Certified" network
+        ↓
+EVL vets: install certs, liability insurance, warranty terms, customer satisfaction data
+        ↓
+Approved → shop pays monthly certification fee (Stripe subscription)
+        ↓
+Shop appears in customer-facing directory for their category + hub
+```
+
+**Revenue shape:** Referral/commission per closed job (original Bucket 10 scope) PLUS shop-side monthly certification fee (RepairPal layer, added July 17, 2026). Optional future layer: use EVL's aggregated customer volume across certified shops to negotiate real bulk pricing (CarAdvise-style), same synthesis used for the general Service Vault / service-shopping research from July 16, 2026.
+
+**Status:** Flow locked. Not yet built. Next decision needed: customer directory build vs. shop application build first, and exact page location (Glovebox/Service Vault link vs. standalone page).
+
+---
+
+*Last updated: July 17, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
