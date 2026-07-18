@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Maintenance Ledger</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; font-family:-apple-system, BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#020203; color:#fff; overflow-x:hidden; }
+
+    #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .login-box { background:#090E17; border:1px solid rgba(43,132,254,0.2); border-radius:12px; padding:40px 30px; max-width:340px; width:100%; text-align:center; }
+    .login-box h2 { font-size:18px; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px; }
+    .login-box p { color:#C8D0DC; font-size:13px; }
+
+    #app { display:none; }
+    .header { background:#000; padding:20px; border-bottom:1px solid #2a3f5f; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .header h1 { font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:1px; }
+    .header h1 span { color:#2B84FE; }
+    .logout-btn { background:none; border:1px solid #2a3f5f; color:#C8D0DC; padding:8px 16px; border-radius:6px; font-size:12px; cursor:pointer; min-height:48px; }
+
+    .container { max-width:700px; margin:0 auto; padding:30px 20px 80px; }
+
+    .search-box { display:flex; gap:10px; margin-bottom:30px; }
+    .search-box input { flex:1; padding:14px; background:#090E17; border:1px solid #2a3f5f; border-radius:8px; color:#fff; font-size:15px; min-height:48px; }
+    .search-box button { padding:14px 24px; background:#2B84FE; color:#fff; border:none; border-radius:8px; font-weight:800; text-transform:uppercase; font-size:13px; cursor:pointer; min-height:48px; }
+
+    .section-title { font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; color:#2B84FE; margin:24px 0 14px; }
+
+    .entry-card { background:#090E17; border:1px solid rgba(43,132,254,0.2); border-left:3px solid #2B84FE; border-radius:0 8px 8px 0; padding:16px 20px; margin-bottom:10px; }
+    .entry-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+    .entry-name { font-weight:900; font-size:15px; }
+    .entry-meta { font-size:13px; color:#C8D0DC; margin-top:4px; }
+    .entry-conf { font-size:12px; font-weight:800; white-space:nowrap; }
+    .conf-verified { color:#00C853; }
+    .conf-unverified { color:#C8D0DC; }
+    .entry-receipt { display:inline-block; margin-top:8px; color:#2B84FE; font-size:13px; text-decoration:none; }
+
+    .empty { color:#C8D0DC; font-size:14px; padding:16px 0; }
+  </style>
+</head>
+<body>
+
+  <div id="login-screen">
+    <div class="login-box">
+      <h2>Checking Login…</h2>
+      <p>If you're not signed in, you'll be sent to the login page.</p>
+    </div>
+  </div>
+
+  <div id="app">
+    <div class="header">
+      <h1>EVL <span>MAINTENANCE LEDGER</span> ADMIN</h1>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <span id="userInfo" style="font-size:12px; color:#C8D0DC;"></span>
+        <button class="logout-btn" onclick="doLogout()">Log Out</button>
+      </div>
+    </div>
+    <div class="container">
+
+      <div class="search-box">
+        <input type="email" id="searchEmail" placeholder="customer@email.com">
+        <button onclick="searchLedger()">Search</button>
+      </div>
+
+      <div class="section-title">Service Ledger</div>
+      <div id="ledgerResults"><div class="empty">Enter a customer's email above to view their maintenance ledger.</div></div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut }
+      from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, query, where }
+      from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.firebasestorage.app",
+      messagingSenderId: "84195145348",
+      appId: "1:84195145348:web:b10f837bee92ce2e4674d1",
+      measurementId: "G-S746N8SY7Z"
+    };
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const LEDGER_COL = "evl_service_ledger";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        localStorage.setItem('evl_last_page', '/admin-service-ledger');
+        window.location.href = '/login.html';
+      } else {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('userInfo').textContent = `Logged in as: ${user.email}`;
+      }
+    });
+
+    window.doLogout = async function(){
+      await signOut(auth);
+      window.location.href = '/login.html';
+    };
+
+    window.EVL_LEDGER_ADMIN_DB = {
+      async getEntriesByEmail(email){
+        const q = query(collection(db, LEDGER_COL), where("email","==",email));
+        const snap = await getDocs(q);
+        return snap.docs.map(d => d.data());
+      }
+    };
+  </script>
+
+  <script>
+    const CONFIDENCE_LABELS = {
+      certified: { label: 'EVL Certified shop', cls: 'conf-verified' },
+      receipt: { label: 'Receipt on file', cls: 'conf-verified' },
+      self_reported: { label: 'Self-reported, no proof', cls: 'conf-unverified' },
+      pre_evl: { label: 'Logged before EVL, no proof', cls: 'conf-unverified' }
+    };
+
+    async function searchLedger(){
+      const email = document.getElementById('searchEmail').value.trim().toLowerCase();
+      const resultsEl = document.getElementById('ledgerResults');
+
+      if(!email || !email.includes('@')){
+        resultsEl.innerHTML = '<div class="empty">Enter a valid email address.</div>';
+        return;
+      }
+
+      resultsEl.innerHTML = '<div class="empty">Loading…</div>';
+
+      try {
+        const entries = await window.EVL_LEDGER_ADMIN_DB.getEntriesByEmail(email);
+        if(!entries.length){
+          resultsEl.innerHTML = '<div class="empty">No ledger entries found for that email.</div>';
+          return;
+        }
+        entries.sort((a,b) => (b.serviceDate||'').localeCompare(a.serviceDate||''));
+        resultsEl.innerHTML = entries.map(e => {
+          const conf = CONFIDENCE_LABELS[e.confidenceLevel] || CONFIDENCE_LABELS.self_reported;
+          return `
+            <div class="entry-card">
+              <div class="entry-top">
+                <div>
+                  <div class="entry-name">${esc(e.serviceName)}</div>
+                  <div class="entry-meta">${e.serviceDate || 'Date not recorded'}${e.mileage ? ' · ' + e.mileage.toLocaleString() + ' mi' : ''}</div>
+                </div>
+                <span class="entry-conf ${conf.cls}">${conf.label}</span>
+              </div>
+              ${e.receiptUrl ? `<a href="${e.receiptUrl}" target="_blank" class="entry-receipt">View receipt</a>` : ''}
+            </div>
+          `;
+        }).join('');
+      } catch(err){
+        console.error('[EVL Ledger Admin] Search failed:', err);
+        resultsEl.innerHTML = '<div class="empty">Something went wrong loading this ledger.</div>';
+      }
+    }
+
+    function esc(str){
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    document.getElementById('searchEmail').addEventListener('keydown', e => { if(e.key === 'Enter') searchLedger(); });
+    window.searchLedger = searchLedger;
+  </script>
+
+</body>
+</html>
