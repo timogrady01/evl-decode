@@ -791,8 +791,82 @@
     </div>
   </div>
 
-  <!-- ── CONTACT FORM ── -->
-  <div class="contact-section" id="get-started">
+  <!-- ── VEHICLE VIABILITY PRE-QUALIFIER ── -->
+  <div class="contact-section" id="prequalifier">
+    <div class="contact-card">
+      <div class="icon">🔍</div>
+      <h3>Let's Check Real Availability First</h3>
+      <p>Before anything else, EVL checks real, currently-listed inventory against your budget — so you're never charged for a search that can't succeed.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Make *</label>
+          <input type="text" id="vqMake" placeholder="Toyota" />
+        </div>
+        <div class="form-group">
+          <label>Model *</label>
+          <input type="text" id="vqModel" placeholder="RAV4 Hybrid" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Budget *</label>
+          <input type="number" id="vqBudget" placeholder="20000" />
+        </div>
+        <div class="form-group">
+          <label>Your ZIP Code *</label>
+          <input type="text" id="vqZip" placeholder="75024" maxlength="5" />
+        </div>
+      </div>
+
+      <button class="cta-btn" id="vqCheckBtn" onclick="checkViability()">
+        🔍 Check Real Availability
+      </button>
+
+      <div class="status-message" id="vqStatusMsg"></div>
+
+      <!-- Shown when NOT viable -->
+      <div id="vqNotViable" style="display:none;margin-top:20px;text-align:left;background:#fff5f5;border:1px solid #feb2b2;border-radius:8px;padding:18px;">
+        <div id="vqNotViableText" style="margin-bottom:16px;color:#333;font-size:14px;line-height:1.6;"></div>
+
+        <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">What would help close the gap?</label>
+        <select id="vqGapReason" style="width:100%;padding:10px;margin-bottom:14px;border:1px solid #ccc;border-radius:8px;">
+          <option value="">— Select —</option>
+          <option value="more_capital">More money saved for down payment</option>
+          <option value="cosigner">A co-signer</option>
+          <option value="trade_in">A trade-in I didn't mention</option>
+          <option value="wait_for_market">Wait for market pricing to shift</option>
+          <option value="other">Something else</option>
+        </select>
+
+        <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">When's a good time for us to check back in?</label>
+        <select id="vqFollowupTime" style="width:100%;padding:10px;margin-bottom:14px;border:1px solid #ccc;border-radius:8px;">
+          <option value="2weeks">In 2 weeks</option>
+          <option value="1month">In 1 month</option>
+          <option value="3months">In 3 months</option>
+          <option value="6months">In 6 months</option>
+        </select>
+
+        <div class="form-group" style="margin-bottom:14px;text-align:left;">
+          <label>Your Name *</label>
+          <input type="text" id="vqName" placeholder="Timothy O'Grady" />
+        </div>
+        <div class="form-group" style="margin-bottom:14px;text-align:left;">
+          <label>Phone or Email *</label>
+          <input type="text" id="vqContact" placeholder="(469) 555-0000 or you@email.com" />
+        </div>
+
+        <button class="btn" id="vqScheduleBtn" onclick="scheduleFollowup()" style="width:100%;">
+          📅 Save My Info — No Charge
+        </button>
+        <div class="status-message" id="vqScheduleStatusMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTACT FORM (revealed only once viability confirmed) ── -->
+  <div class="contact-section" id="get-started" style="display:none;">
     <div class="contact-card">
       <div class="icon">🚗</div>
       <h3>Let's Find Your Vehicle</h3>
@@ -847,6 +921,114 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    window.checkViability = async function() {
+      const make = document.getElementById('vqMake').value.trim();
+      const model = document.getElementById('vqModel').value.trim();
+      const budget = document.getElementById('vqBudget').value.trim();
+      const zip = document.getElementById('vqZip').value.trim();
+      const statusMsg = document.getElementById('vqStatusMsg');
+      const btn = document.getElementById('vqCheckBtn');
+
+      document.getElementById('vqNotViable').style.display = 'none';
+      document.getElementById('get-started').style.display = 'none';
+
+      if (!make || !model || !budget || !zip) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Please fill in make, model, budget, and ZIP code.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Checking real inventory...';
+      statusMsg.className = 'status-message';
+      statusMsg.textContent = '';
+
+      try {
+        const url = `/api/check-vehicle-viability?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&maxPrice=${encodeURIComponent(budget)}&zip=${encodeURIComponent(zip)}`;
+        const resp = await fetch(url);
+        const data = await resp.json();
+
+        if (!resp.ok) {
+          throw new Error(data.error || 'Viability check failed');
+        }
+
+        if (data.viable) {
+          statusMsg.className = 'status-message success';
+          statusMsg.textContent = `✅ Good news — we found ${data.matchCount} real match${data.matchCount === 1 ? '' : 'es'} for a ${make} ${model} at your budget. Let's get you connected.`;
+          document.getElementById('get-started').style.display = 'block';
+          document.getElementById('get-started').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          statusMsg.textContent = '';
+          const stats = data.marketStats;
+          let explainText = `We didn't find a current ${make} ${model} listed at or near $${parseInt(budget).toLocaleString()}.`;
+          if (stats && stats.avgPrice) {
+            explainText += ` Right now, these are typically running around $${stats.avgPrice.toLocaleString()}` +
+              (stats.minPrice ? ` (as low as $${stats.minPrice.toLocaleString()})` : '') + '.';
+          }
+          explainText += ' We don\'t want to charge you for a search that can\'t succeed yet — let\'s figure out what would help, and when to check back in.';
+          document.getElementById('vqNotViableText').textContent = explainText;
+          document.getElementById('vqNotViable').style.display = 'block';
+        }
+      } catch (err) {
+        console.error('[find-my-vehicle] Viability check failed:', err);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Something went wrong checking availability. Please try again.';
+      }
+
+      btn.disabled = false;
+      btn.textContent = '🔍 Check Real Availability';
+    };
+
+    window.scheduleFollowup = async function() {
+      const name = document.getElementById('vqName').value.trim();
+      const contact = document.getElementById('vqContact').value.trim();
+      const gapReason = document.getElementById('vqGapReason').value;
+      const followupTime = document.getElementById('vqFollowupTime').value;
+      const statusMsg = document.getElementById('vqScheduleStatusMsg');
+      const btn = document.getElementById('vqScheduleBtn');
+
+      if (!name || !contact || !gapReason) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Please fill in your name, contact info, and what would help.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      const followupDays = { '2weeks': 14, '1month': 30, '3months': 90, '6months': 180 };
+      const followupDate = new Date();
+      followupDate.setDate(followupDate.getDate() + (followupDays[followupTime] || 30));
+
+      try {
+        const isEmail = contact.includes('@');
+        await addDoc(collection(db, 'evl_leads'), {
+          customerName: name,
+          customerPhone: isEmail ? null : contact,
+          customerEmail: isEmail ? contact : null,
+          bucket: 'find-my-vehicle',
+          status: 'not-viable-scheduled-followup',
+          source: 'find-my-vehicle-prequalifier',
+          desiredMake: document.getElementById('vqMake').value.trim(),
+          desiredModel: document.getElementById('vqModel').value.trim(),
+          statedBudget: document.getElementById('vqBudget').value.trim(),
+          gapReason,
+          followupDate,
+          submittedAt: new Date()
+        });
+
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '✅ Got it — we\'ll reach back out around then. No charge, no obligation.';
+        btn.textContent = '✅ Saved!';
+      } catch (err) {
+        console.error('[find-my-vehicle] Schedule followup failed:', err);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Something went wrong. Please try again.';
+        btn.disabled = false;
+        btn.textContent = '📅 Save My Info — No Charge';
+      }
+    };
 
     window.submitLead = async function() {
       const firstName = document.getElementById('firstName').value.trim();
