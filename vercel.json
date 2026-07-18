@@ -521,6 +521,30 @@
       "destination": "/service-vault.html"
     },
     {
+      "source": "/aftermarket",
+      "destination": "/aftermarket.html"
+    },
+    {
+      "source": "/aftermarket.html",
+      "destination": "/aftermarket.html"
+    },
+    {
+      "source": "/aftermarket-apply",
+      "destination": "/aftermarket-apply.html"
+    },
+    {
+      "source": "/aftermarket-apply.html",
+      "destination": "/aftermarket-apply.html"
+    },
+    {
+      "source": "/admin-aftermarket",
+      "destination": "/admin-aftermarket.html"
+    },
+    {
+      "source": "/admin-aftermarket.html",
+      "destination": "/admin-aftermarket.html"
+    },
+    {
       "source": "/find-my-vehicle",
       "destination": "/find-my-vehicle.html"
     },
