@@ -960,7 +960,13 @@
           <summary style="padding:16px 20px;color:#fff;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;list-style:none;background:rgba(43,132,254,0.1);">🔧 1. What's Due</summary>
           <div style="padding:20px;">
             <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:16px;">
-              <input type="text" id="slVin" placeholder="17-digit VIN" maxlength="17" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:18px;">
+              <input type="text" id="slVin" placeholder="17-digit VIN (optional)" maxlength="17" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:18px;">
+              <div style="text-align:center;color:#C8D0DC;font-size:13px;margin:2px 0;">Don't have your VIN? No problem — just tell us the basics.</div>
+              <div style="display:grid;grid-template-columns:1fr 2fr 2fr;gap:10px;">
+                <input type="text" id="slYear" placeholder="Year" maxlength="4" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:16px;">
+                <input type="text" id="slMake" placeholder="Make" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:16px;">
+                <input type="text" id="slModel" placeholder="Model" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:16px;">
+              </div>
               <input type="number" id="slMileage" placeholder="Current mileage" style="padding:12px;background:#090E17;border:1px solid #2a3f5f;border-radius:8px;color:#fff;font-size:18px;">
               <button onclick="calculateWhatsDue()" id="slDueBtn" style="width:100%;background:#2B84FE;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:16px;padding:14px;border:none;border-radius:8px;cursor:pointer;">Check What's Due</button>
             </div>
@@ -1511,6 +1517,9 @@
 
     window.calculateWhatsDue = async function() {
       const vin = document.getElementById('slVin').value.trim().toUpperCase();
+      const year = document.getElementById('slYear').value.trim();
+      const make = document.getElementById('slMake').value.trim();
+      const model = document.getElementById('slModel').value.trim();
       const mileage = parseInt(document.getElementById('slMileage').value, 10);
       const resultsEl = document.getElementById('slDueResults');
       const btn = document.getElementById('slDueBtn');
@@ -1521,6 +1530,8 @@
       }
 
       let vehicleLabel = '';
+
+      // Try VIN decode first if one was entered
       if (vin && vin.length === 17) {
         btn.textContent = 'Decoding VIN…';
         btn.disabled = true;
@@ -1538,7 +1549,16 @@
         btn.disabled = false;
       }
 
-      const dueNow = GENERIC_SCHEDULE.filter(s => mileage % s.interval < 2000 || mileage % s.interval > s.interval - 500);
+      // No VIN, or VIN decode came back empty — fall back to whatever Year/Make/Model was typed in
+      if (!vehicleLabel && (year || make || model)) {
+        vehicleLabel = [year, make, model].filter(Boolean).join(' ');
+      }
+
+      // Still nothing at all — that's fine, the generic schedule works on mileage alone
+      if (!vehicleLabel) {
+        vehicleLabel = '';
+      }
+
       const rows = GENERIC_SCHEDULE.map(s => {
         const remainder = s.interval - (mileage % s.interval);
         const isDue = remainder <= 500 || remainder >= s.interval - 500;
