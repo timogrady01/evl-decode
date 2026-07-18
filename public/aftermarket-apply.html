@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the EVL Certified Aftermarket Network</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #020203;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+    .header { background: #000000; padding: 20px; border-bottom: 1px solid #2a3f5f; text-align: center; }
+    .header h1 { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+    .header h1 span { color: #2B84FE; }
+
+    .hero { background: linear-gradient(135deg, #090E17 0%, #070A12 100%); padding: 48px 20px 40px; text-align: center; border-bottom: 1px solid #2a3f5f; }
+    .hero-badge { display:inline-block; background:rgba(43,132,254,0.15); border:1px solid #2B84FE; border-radius:24px; padding:10px 22px; font-size:13px; font-weight:700; color:#2B84FE; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
+    .hero h2 { font-size: 26px; font-weight: 900; margin-bottom: 12px; line-height:1.2; }
+    .hero p { font-size: 14px; color: #C8D0DC; max-width: 540px; margin: 0 auto; line-height: 1.7; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    .req-box { background:#090E17; border:1px solid rgba(43,132,254,0.2); border-left:3px solid #2B84FE; border-radius:8px; padding:20px; margin-bottom:32px; }
+    .req-box h3 { font-size:14px; text-transform:uppercase; letter-spacing:1px; color:#2B84FE; margin-bottom:12px; }
+    .req-box li { font-size:14px; color:#C8D0DC; line-height:1.8; margin-left:18px; }
+
+    label { display:block; font-size:13px; font-weight:700; color:#C8D0DC; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; margin-top:20px; }
+    input[type=text], input[type=email], input[type=tel], textarea, select {
+      width:100%; padding:14px; background:#090E17; border:1px solid #2a3f5f; border-radius:8px;
+      color:#fff; font-size:14px; font-family:inherit; min-height:48px;
+    }
+    textarea { min-height:90px; resize:vertical; }
+    input:focus, textarea:focus, select:focus { outline:none; border-color:#2B84FE; }
+
+    .cat-checks { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+    .cat-check-item { display:flex; align-items:center; gap:8px; background:#090E17; border:1px solid #2a3f5f; border-radius:8px; padding:12px; cursor:pointer; min-height:48px; }
+    .cat-check-item input { width:auto; min-height:auto; }
+    .cat-check-item.checked { border-color:#2B84FE; background:rgba(43,132,254,0.1); }
+
+    .checkbox-row { display:flex; align-items:flex-start; gap:10px; margin-top:20px; }
+    .checkbox-row input { width:auto; min-height:auto; margin-top:3px; }
+    .checkbox-row label { margin:0; text-transform:none; letter-spacing:0; font-weight:500; font-size:14px; color:#fff; }
+
+    .submit-btn { display:block; width:100%; padding:16px; background:#2B84FE; color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; cursor:pointer; margin-top:32px; min-height:48px; }
+    .submit-btn:hover { background:#1e6fd8; }
+    .submit-btn:disabled { opacity:0.5; cursor:not-allowed; }
+
+    #successScreen { display:none; text-align:center; padding:60px 20px; }
+    #successScreen .check { font-size:48px; margin-bottom:20px; }
+    #successScreen h2 { font-size:22px; margin-bottom:12px; }
+    #successScreen p { color:#C8D0DC; font-size:14px; line-height:1.7; max-width:440px; margin:0 auto; }
+
+    @media(max-width:480px){ .cat-checks { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="header"><h1>EXPRESS <span style="color:#2B84FE;">VEHICLE</span> LOCATORS</h1></div>
+
+  <div class="hero">
+    <div class="hero-badge">🔧 Shop Application</div>
+    <h2>Join the EVL Certified Aftermarket Network</h2>
+    <p>EVL sends warm, high-intent referrals — customers who just bought a truck or SUV through us and are ready to upgrade. No pay-per-lead auctions, no shared leads. A modest monthly certification fee, real vetting, and customers who already trust the EVL name.</p>
+  </div>
+
+  <div class="container" id="formContainer">
+
+    <div class="req-box">
+      <h3>Certification Requirements</h3>
+      <ul>
+        <li>Verified installer certifications for your category</li>
+        <li>Proof of active liability insurance</li>
+        <li>Workmanship warranty that does not void the vehicle's factory coverage</li>
+        <li>Agreement to honor EVL Certified transparent pricing — no surprise markups</li>
+      </ul>
+    </div>
+
+    <form id="applyForm">
+      <label>Shop Name</label>
+      <input type="text" id="shopName" required>
+
+      <label>Categories You Service</label>
+      <div class="cat-checks">
+        <label class="cat-check-item"><input type="checkbox" value="lift" onclick="toggleCatCheck(this)"> Lift Kits & Suspension</label>
+        <label class="cat-check-item"><input type="checkbox" value="wheels" onclick="toggleCatCheck(this)"> Wheels & Tires</label>
+        <label class="cat-check-item"><input type="checkbox" value="lights" onclick="toggleCatCheck(this)"> Light Bars / Lighting</label>
+        <label class="cat-check-item"><input type="checkbox" value="bed" onclick="toggleCatCheck(this)"> Bed Accessories</label>
+      </div>
+
+      <label>Hub / Metro Area</label>
+      <input type="text" id="hub" placeholder="e.g. DFW" required>
+
+      <label>Contact Name</label>
+      <input type="text" id="contactName" required>
+
+      <label>Phone</label>
+      <input type="tel" id="phone" required>
+
+      <label>Email</label>
+      <input type="email" id="email" required>
+
+      <label>Website (optional)</label>
+      <input type="text" id="website">
+
+      <label>Years in Business</label>
+      <input type="text" id="yearsInBusiness">
+
+      <label>Installer Certifications</label>
+      <textarea id="certifications" placeholder="Describe your team's certifications and training" required></textarea>
+
+      <label>Warranty Terms Offered</label>
+      <textarea id="warrantyTerms" placeholder="e.g. 2-year / 24,000-mile workmanship warranty" required></textarea>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="insuranceConfirm" required>
+        <label for="insuranceConfirm">I confirm this shop carries active liability insurance and can provide proof upon request.</label>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="pricingConfirm" required>
+        <label for="pricingConfirm">I agree to honor EVL Certified transparent pricing with no undisclosed markups for EVL-referred customers.</label>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
+    </form>
+
+  </div>
+
+  <div id="successScreen">
+    <div class="check">✅</div>
+    <h2>Application Received</h2>
+    <p>EVL will review your application and reach out to verify certification details. Once approved, you'll appear in the EVL Certified directory for your categories and hub.</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+    const APPLICATIONS_COL = "evl_aftermarket_applications";
+
+    window.EVL_AM_APPLY_DB = {
+      async submitApplication(data){
+        await addDoc(collection(db, APPLICATIONS_COL), {
+          ...data,
+          status: 'pending',
+          submittedAt: serverTimestamp()
+        });
+      }
+    };
+    window.dispatchEvent(new Event("evl-am-apply-db-ready"));
+  </script>
+
+  <script>
+    function toggleCatCheck(input){
+      input.parentElement.classList.toggle('checked', input.checked);
+    }
+
+    document.getElementById('applyForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      const categories = Array.from(document.querySelectorAll('.cat-check-item input:checked')).map(el => el.value);
+      if(categories.length === 0){
+        alert('Please select at least one category.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application';
+        return;
+      }
+
+      const data = {
+        shopName: document.getElementById('shopName').value,
+        categories: categories,
+        hub: document.getElementById('hub').value,
+        contactName: document.getElementById('contactName').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        website: document.getElementById('website').value,
+        yearsInBusiness: document.getElementById('yearsInBusiness').value,
+        certifications: document.getElementById('certifications').value,
+        warrantyTerms: document.getElementById('warrantyTerms').value,
+        insuranceConfirmed: document.getElementById('insuranceConfirm').checked,
+        pricingConfirmed: document.getElementById('pricingConfirm').checked
+      };
+
+      try {
+        if(!window.EVL_AM_APPLY_DB){
+          await new Promise(res => window.addEventListener('evl-am-apply-db-ready', res, { once:true }));
+        }
+        await window.EVL_AM_APPLY_DB.submitApplication(data);
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successScreen').style.display = 'block';
+      } catch(err){
+        console.error('[EVL Aftermarket Apply] Submission failed:', err);
+        alert('Something went wrong submitting your application. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application';
+      }
+    });
+  </script>
+
+</body>
+</html>
