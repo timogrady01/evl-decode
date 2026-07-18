@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVL Certified Aftermarket — Lift Kits, Wheels & More</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #020203;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: #000000;
+      padding: 20px;
+      border-bottom: 1px solid #2a3f5f;
+      text-align: center;
+    }
+    .header h1 { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+    .header h1 span { color: #2B84FE; }
+
+    .hero {
+      background: linear-gradient(135deg, #090E17 0%, #070A12 100%);
+      padding: 56px 20px 48px;
+      text-align: center;
+      border-bottom: 1px solid #2a3f5f;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(43,132,254,0.15);
+      border: 1px solid #2B84FE;
+      border-radius: 24px;
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #2B84FE;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+    .hero h2 { font-size: 30px; font-weight: 900; margin-bottom: 14px; line-height: 1.2; }
+    .hero h2 span { color: #2B84FE; }
+    .hero p { font-size: 15px; color: #C8D0DC; max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    /* Category select */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .cat-card {
+      background: #090E17;
+      border: 1px solid rgba(43,132,254,0.2);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .cat-card:hover, .cat-card.active { border-color: #2B84FE; transform: translateY(-3px); }
+    .cat-icon { font-size: 32px; margin-bottom: 12px; }
+    .cat-title { font-size: 16px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom:6px; }
+    .cat-sub { font-size: 13px; color: #C8D0DC; line-height: 1.5; }
+
+    /* Directory */
+    #directory { display: none; margin-top: 40px; }
+    .dir-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+    .dir-title { font-size: 20px; font-weight: 900; text-transform:uppercase; }
+    .back-btn { background:none; border:1px solid #2a3f5f; color:#C8D0DC; padding:10px 18px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; min-height:48px; }
+    .back-btn:hover { border-color:#2B84FE; color:#fff; }
+
+    .shop-card {
+      background: #090E17;
+      border: 1px solid rgba(43,132,254,0.2);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+    .shop-top { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
+    .shop-name { font-size: 18px; font-weight: 900; color: #fff; }
+    .cert-badge { display:inline-flex; align-items:center; gap:5px; background:rgba(0,200,83,0.15); border:1px solid #00C853; color:#00C853; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; padding:5px 10px; border-radius:20px; margin-top:6px; }
+    .shop-rating { font-size:14px; color:#C8D0DC; white-space:nowrap; }
+    .shop-meta { display:flex; gap:18px; flex-wrap:wrap; margin:14px 0; font-size:13px; color:#C8D0DC; }
+    .shop-meta strong { color:#fff; }
+    .shop-pricing-tag { display:inline-block; background:rgba(43,132,254,0.15); border:1px solid #2B84FE; color:#2B84FE; font-size:12px; font-weight:700; padding:5px 12px; border-radius:6px; margin-bottom:14px; }
+    .contact-btn { display:block; width:100%; text-align:center; padding:14px; background:#2B84FE; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; cursor:pointer; min-height:48px; }
+    .contact-btn:hover { background:#1e6fd8; }
+
+    .empty-state { text-align:center; padding:40px 20px; color:#C8D0DC; font-size:14px; line-height:1.7; }
+
+    .shop-contact-reveal { display:none; margin-top:14px; padding:14px; background:rgba(0,200,83,0.08); border:1px solid rgba(0,200,83,0.3); border-radius:8px; font-size:14px; color:#fff; }
+
+    @media(max-width:480px){
+      .cat-grid { grid-template-columns: 1fr; }
+      .hero h2 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header"><h1>EXPRESS <span>VEHICLE</span> LOCATORS</h1></div>
+
+  <div class="hero">
+    <div class="hero-badge">🔧 EVL Certified Network</div>
+    <h2>Lift It. <span>Wheel It.</span> Light It Up.</h2>
+    <p>Dealers don't offer this stuff — but they should have. EVL connects you with vetted, certified shops for the upgrades your truck or SUV actually needs, at transparent pricing. No bidding war, no spam calls — just shops we've already checked out for you.</p>
+  </div>
+
+  <div class="container">
+
+    <div id="catSelect">
+      <div class="cat-grid">
+        <div class="cat-card" data-cat="lift" onclick="selectCategory('lift','Lift Kits & Suspension')">
+          <div class="cat-icon">🔧</div>
+          <div class="cat-title">Lift Kits &amp; Suspension</div>
+          <div class="cat-sub">Leveling kits, full lifts, off-road suspension</div>
+        </div>
+        <div class="cat-card" data-cat="wheels" onclick="selectCategory('wheels','Wheels & Tires')">
+          <div class="cat-icon">🛞</div>
+          <div class="cat-title">Wheels &amp; Tires</div>
+          <div class="cat-sub">Off-road, oversized, and custom fitments</div>
+        </div>
+        <div class="cat-card" data-cat="lights" onclick="selectCategory('lights','Light Bars / Off-Road Lighting')">
+          <div class="cat-icon">💡</div>
+          <div class="cat-title">Light Bars &amp; Off-Road Lighting</div>
+          <div class="cat-sub">Bumper, roof, and light bar installs</div>
+        </div>
+        <div class="cat-card" data-cat="bed" onclick="selectCategory('bed','Bed Accessories')">
+          <div class="cat-icon">🛏️</div>
+          <div class="cat-title">Bed Accessories</div>
+          <div class="cat-sub">Tonneau covers, bed liners, toolboxes</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="directory">
+      <div class="dir-header">
+        <div class="dir-title" id="dirTitle"></div>
+        <button class="back-btn" onclick="backToCategories()">← All Categories</button>
+      </div>
+      <div id="shopList"></div>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where, addDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.firebasestorage.app",
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+    const SHOPS_COL = "evl_aftermarket_shops";
+    const REFERRALS_COL = "evl_aftermarket_referrals";
+
+    window.EVL_AM_DB = {
+      async getShopsByCategory(cat){
+        const q = query(collection(db, SHOPS_COL), where("category","==",cat), where("status","==","approved"));
+        const snap = await getDocs(q);
+        return snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      },
+      async logReferral(shopId, shopName, category){
+        await addDoc(collection(db, REFERRALS_COL), {
+          shopId, shopName, category,
+          timestamp: serverTimestamp(),
+          page: 'aftermarket.html'
+        });
+      }
+    };
+    window.dispatchEvent(new Event("evl-am-db-ready"));
+  </script>
+
+  <script>
+    const CATEGORY_LABELS = {
+      lift: 'Lift Kits & Suspension',
+      wheels: 'Wheels & Tires',
+      lights: 'Light Bars / Off-Road Lighting',
+      bed: 'Bed Accessories'
+    };
+
+    async function selectCategory(cat, label){
+      document.getElementById('catSelect').style.display = 'none';
+      document.getElementById('directory').style.display = 'block';
+      document.getElementById('dirTitle').textContent = label;
+      const listEl = document.getElementById('shopList');
+      listEl.innerHTML = '<div class="empty-state">Loading certified shops…</div>';
+
+      // Wait for Firestore bridge if not ready yet
+      if(!window.EVL_AM_DB){
+        await new Promise(res => window.addEventListener('evl-am-db-ready', res, { once:true }));
+      }
+
+      try {
+        const shops = await window.EVL_AM_DB.getShopsByCategory(cat);
+        renderShops(shops, cat, label);
+      } catch(e){
+        console.error('[EVL Aftermarket] Failed to load shops:', e);
+        listEl.innerHTML = '<div class="empty-state">Something went wrong loading shops. Please try again shortly.</div>';
+      }
+    }
+
+    function renderShops(shops, cat, label){
+      const listEl = document.getElementById('shopList');
+      if(!shops.length){
+        listEl.innerHTML = `<div class="empty-state">We don't have an EVL Certified shop for <strong>${label}</strong> in your area yet — check back soon, or <a href="/aftermarket-apply" style="color:#2B84FE;">know a shop that should be certified?</a></div>`;
+        return;
+      }
+      listEl.innerHTML = shops.map(shop => `
+        <div class="shop-card">
+          <div class="shop-top">
+            <div>
+              <div class="shop-name">${escapeHtml(shop.shopName || 'Certified Shop')}</div>
+              <div class="cert-badge">✅ EVL Certified</div>
+            </div>
+            <div class="shop-rating">⭐ ${shop.rating || 'New'} ${shop.reviewCount ? '('+shop.reviewCount+' reviews)' : ''}</div>
+          </div>
+          <div class="shop-meta">
+            <span>📍 <strong>${escapeHtml(shop.hub || shop.metro || 'DFW')}</strong></span>
+            <span>🛡️ <strong>${escapeHtml(shop.warrantyTerms || 'Warranty on file')}</strong></span>
+          </div>
+          <div class="shop-pricing-tag">EVL Certified Pricing</div>
+          <div class="shop-contact-reveal" id="reveal-${shop.id}">
+            📞 ${escapeHtml(shop.phone || 'Contact info on file')}<br>
+            ${shop.website ? `🔗 ${escapeHtml(shop.website)}` : ''}
+          </div>
+          <button class="contact-btn" onclick="revealContact('${shop.id}','${escapeHtml(shop.shopName||'')}','${cat}')">Get Contact Info</button>
+        </div>
+      `).join('');
+    }
+
+    async function revealContact(shopId, shopName, cat){
+      document.getElementById('reveal-'+shopId).style.display = 'block';
+      try {
+        await window.EVL_AM_DB.logReferral(shopId, shopName, cat);
+      } catch(e){ console.error('[EVL Aftermarket] Referral log failed (non-fatal):', e); }
+    }
+
+    function backToCategories(){
+      document.getElementById('directory').style.display = 'none';
+      document.getElementById('catSelect').style.display = 'block';
+    }
+
+    function escapeHtml(str){
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    window.selectCategory = selectCategory;
+    window.revealContact = revealContact;
+    window.backToCategories = backToCategories;
+  </script>
+
+</body>
+</html>
