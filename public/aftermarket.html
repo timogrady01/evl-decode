@@ -97,6 +97,19 @@
 
     .shop-contact-reveal { display:none; margin-top:14px; padding:14px; background:rgba(0,200,83,0.08); border:1px solid rgba(0,200,83,0.3); border-radius:8px; font-size:14px; color:#fff; }
 
+    /* ZIP step */
+    #zipStep { max-width: 420px; margin: 0 auto; text-align: center; }
+    #zipStep p { font-size: 14px; color: #C8D0DC; margin-bottom: 20px; line-height: 1.6; }
+    #zipStep input { width: 100%; padding: 16px; background: #090E17; border: 1px solid #2a3f5f; border-radius: 8px; color: #fff; font-size: 18px; text-align: center; letter-spacing: 2px; min-height: 48px; margin-bottom: 14px; }
+    #zipStep input:focus { outline: none; border-color: #2B84FE; }
+    #zipStep button { width: 100%; padding: 16px; background: #2B84FE; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; min-height: 48px; }
+    #zipStep button:hover { background: #1e6fd8; }
+    #zipStep button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #zipError { color: #ff4444; font-size: 13px; margin-top: 10px; display: none; }
+
+    .hub-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(0,200,83,0.12); border:1px solid #00C853; color:#00C853; font-size:13px; font-weight:700; padding:8px 16px; border-radius:20px; margin-bottom:24px; }
+    .hub-badge button { background:none; border:none; color:#00C853; text-decoration:underline; cursor:pointer; font-size:13px; font-weight:700; padding:0; margin-left:4px; }
+
     @media(max-width:480px){
       .cat-grid { grid-template-columns: 1fr; }
       .hero h2 { font-size: 24px; }
@@ -115,7 +128,15 @@
 
   <div class="container">
 
-    <div id="catSelect">
+    <div id="zipStep">
+      <p>What's your ZIP code? We'll show you EVL Certified shops near you.</p>
+      <input type="text" id="zipInput" placeholder="75024" maxlength="5" inputmode="numeric">
+      <button id="zipSubmit" onclick="submitZip()">Find Shops Near Me</button>
+      <div id="zipError">Couldn't find that ZIP code — double check and try again.</div>
+    </div>
+
+    <div id="catSelect" style="display:none;">
+      <div class="hub-badge">📍 <span id="hubBadgeText"></span> <button onclick="changeZip()">Change ZIP</button></div>
       <div class="cat-grid">
         <div class="cat-card" data-cat="lift" onclick="selectCategory('lift','Lift Kits & Suspension')">
           <div class="cat-icon">🔧</div>
@@ -167,14 +188,14 @@
     const REFERRALS_COL = "evl_aftermarket_referrals";
 
     window.EVL_AM_DB = {
-      async getShopsByCategory(cat){
-        const q = query(collection(db, SHOPS_COL), where("category","==",cat), where("status","==","approved"));
+      async getShopsByCategoryAndHub(cat, hub){
+        const q = query(collection(db, SHOPS_COL), where("category","==",cat), where("hub","==",hub), where("status","==","approved"));
         const snap = await getDocs(q);
         return snap.docs.map(d => ({ id:d.id, ...d.data() }));
       },
-      async logReferral(shopId, shopName, category){
+      async logReferral(shopId, shopName, category, hub){
         await addDoc(collection(db, REFERRALS_COL), {
-          shopId, shopName, category,
+          shopId, shopName, category, hub,
           timestamp: serverTimestamp(),
           page: 'aftermarket.html'
         });
@@ -184,6 +205,100 @@
   </script>
 
   <script>
+    // Canonical hub list — same coordinates as public/ws-hub.html HUBS object,
+    // using dfw-style lowercase codes to match dealer records there
+    const HUB_LIST = [
+      { key:'dfw',        name:'DFW / Plano, TX', lat:33.0198, lng:-96.6989 },
+      { key:'houston',    name:'Houston, TX',      lat:29.7604, lng:-95.3698 },
+      { key:'atlanta',    name:'Atlanta, GA',      lat:33.7490, lng:-84.3880 },
+      { key:'chicago',    name:'Chicago, IL',      lat:41.8781, lng:-87.6298 },
+      { key:'denver',     name:'Denver, CO',       lat:39.7392, lng:-104.9903 },
+      { key:'phoenix',    name:'Phoenix, AZ',      lat:33.4484, lng:-112.0740 },
+      { key:'la',         name:'Los Angeles, CA',  lat:34.0522, lng:-118.2437 },
+      { key:'nyc',        name:'NYC / NJ',         lat:40.7128, lng:-74.0060 },
+      { key:'miami',      name:'Miami, FL',        lat:25.7617, lng:-80.1918 },
+      { key:'nashville',  name:'Nashville, TN',    lat:36.1627, lng:-86.7816 },
+      { key:'seattle',    name:'Seattle, WA',      lat:47.6062, lng:-122.3321 },
+      { key:'minneapolis',name:'Minneapolis, MN',  lat:44.9778, lng:-93.2650 },
+      { key:'charlotte',  name:'Charlotte, NC',    lat:35.2271, lng:-80.8431 },
+      { key:'columbus',   name:'Columbus, OH',     lat:39.9612, lng:-82.9988 },
+      { key:'philly',     name:'Philadelphia, PA', lat:39.9526, lng:-75.1652 },
+      { key:'detroit',    name:'Detroit, MI',      lat:42.3314, lng:-83.0458 },
+      { key:'richmond',   name:'Richmond, VA',     lat:37.5407, lng:-77.4360 },
+      { key:'indy',       name:'Indianapolis, IN', lat:39.7684, lng:-86.1581 },
+      { key:'stlouis',    name:'St. Louis, MO',    lat:38.6270, lng:-90.1994 },
+      { key:'milwaukee',  name:'Milwaukee, WI',    lat:43.0389, lng:-87.9065 },
+      { key:'baltimore',  name:'Baltimore, MD',    lat:39.2904, lng:-76.6122 },
+      { key:'lasvegas',   name:'Las Vegas, NV',    lat:36.1699, lng:-115.1398 }
+    ];
+
+    let customerHub = null; // set after ZIP lookup
+
+    function haversineMiles(lat1, lng1, lat2, lng2){
+      const R = 3958.8;
+      const dLat = (lat2-lat1) * Math.PI/180;
+      const dLng = (lng2-lng1) * Math.PI/180;
+      const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    function nearestHub(lat, lng){
+      let best = null, bestDist = Infinity;
+      for(const h of HUB_LIST){
+        const d = haversineMiles(lat, lng, h.lat, h.lng);
+        if(d < bestDist){ bestDist = d; best = h; }
+      }
+      return best;
+    }
+
+    async function submitZip(){
+      const zip = document.getElementById('zipInput').value.trim();
+      const errEl = document.getElementById('zipError');
+      const btn = document.getElementById('zipSubmit');
+      errEl.style.display = 'none';
+
+      if(!/^\d{5}$/.test(zip)){
+        errEl.textContent = 'Please enter a valid 5-digit ZIP code.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Looking up…';
+
+      try {
+        // Free, no-key ZIP lookup — returns lat/lng for a US ZIP code
+        const res = await fetch(`https://api.zippopotam.us/us/${zip}`);
+        if(!res.ok) throw new Error('ZIP not found');
+        const data = await res.json();
+        const place = data.places[0];
+        const lat = parseFloat(place.latitude);
+        const lng = parseFloat(place.longitude);
+
+        customerHub = nearestHub(lat, lng);
+        document.getElementById('hubBadgeText').textContent = `Showing shops near ${customerHub.name}`;
+        document.getElementById('zipStep').style.display = 'none';
+        document.getElementById('catSelect').style.display = 'block';
+      } catch(e){
+        console.error('[EVL Aftermarket] ZIP lookup failed:', e);
+        errEl.textContent = "Couldn't find that ZIP code — double check and try again.";
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Find Shops Near Me';
+      }
+    }
+
+    function changeZip(){
+      document.getElementById('catSelect').style.display = 'none';
+      document.getElementById('zipStep').style.display = 'block';
+      document.getElementById('zipInput').value = '';
+    }
+
+    document.getElementById('zipInput').addEventListener('keydown', function(e){
+      if(e.key === 'Enter') submitZip();
+    });
+
     const CATEGORY_LABELS = {
       lift: 'Lift Kits & Suspension',
       wheels: 'Wheels & Tires',
@@ -204,7 +319,7 @@
       }
 
       try {
-        const shops = await window.EVL_AM_DB.getShopsByCategory(cat);
+        const shops = await window.EVL_AM_DB.getShopsByCategoryAndHub(cat, customerHub.key);
         renderShops(shops, cat, label);
       } catch(e){
         console.error('[EVL Aftermarket] Failed to load shops:', e);
@@ -215,7 +330,7 @@
     function renderShops(shops, cat, label){
       const listEl = document.getElementById('shopList');
       if(!shops.length){
-        listEl.innerHTML = `<div class="empty-state">We don't have an EVL Certified shop for <strong>${label}</strong> in your area yet — check back soon, or <a href="/aftermarket-apply" style="color:#2B84FE;">know a shop that should be certified?</a></div>`;
+        listEl.innerHTML = `<div class="empty-state">We don't have an EVL Certified shop for <strong>${label}</strong> near ${customerHub.name} yet — check back soon, or <a href="/aftermarket-apply" style="color:#2B84FE;">know a shop that should be certified?</a></div>`;
         return;
       }
       listEl.innerHTML = shops.map(shop => `
@@ -228,7 +343,7 @@
             <div class="shop-rating">⭐ ${shop.rating || 'New'} ${shop.reviewCount ? '('+shop.reviewCount+' reviews)' : ''}</div>
           </div>
           <div class="shop-meta">
-            <span>📍 <strong>${escapeHtml(shop.hub || shop.metro || 'DFW')}</strong></span>
+            <span>📍 <strong>${escapeHtml(customerHub.name)}</strong></span>
             <span>🛡️ <strong>${escapeHtml(shop.warrantyTerms || 'Warranty on file')}</strong></span>
           </div>
           <div class="shop-pricing-tag">EVL Certified Pricing</div>
@@ -244,7 +359,7 @@
     async function revealContact(shopId, shopName, cat){
       document.getElementById('reveal-'+shopId).style.display = 'block';
       try {
-        await window.EVL_AM_DB.logReferral(shopId, shopName, cat);
+        await window.EVL_AM_DB.logReferral(shopId, shopName, cat, customerHub.key);
       } catch(e){ console.error('[EVL Aftermarket] Referral log failed (non-fatal):', e); }
     }
 
@@ -259,6 +374,8 @@
       return d.innerHTML;
     }
 
+    window.submitZip = submitZip;
+    window.changeZip = changeZip;
     window.selectCategory = selectCategory;
     window.revealContact = revealContact;
     window.backToCategories = backToCategories;
