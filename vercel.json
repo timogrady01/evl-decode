@@ -545,6 +545,14 @@
       "destination": "/admin-aftermarket.html"
     },
     {
+      "source": "/admin-service-ledger",
+      "destination": "/admin-service-ledger.html"
+    },
+    {
+      "source": "/admin-service-ledger.html",
+      "destination": "/admin-service-ledger.html"
+    },
+    {
       "source": "/find-my-vehicle",
       "destination": "/find-my-vehicle.html"
     },
