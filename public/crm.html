@@ -507,6 +507,7 @@
       <button class="tab-btn" data-tab="notes">📝 Notes</button>
       <button class="tab-btn" data-tab="checkin">✅ Check-In</button>
       <button class="tab-btn" data-tab="dealstage">📊 Deal Stage</button>
+      <button class="tab-btn" data-tab="shipcalc">🚚 Shipping Calc</button>
     </div>
 
     <div id="leads" class="tab-content active">
@@ -660,6 +661,39 @@
 
         <div id="dealStageEmpty" class="no-data" style="padding: 60px 20px;">
           Look up a customer by email to update their deal stage
+        </div>
+      </div>
+    </div>
+
+    <div id="shipcalc" class="tab-content">
+      <div class="checkin-container">
+        <div class="search-box">
+          <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Distance to Vehicle (miles)</label>
+          <input type="number" id="shipMiles" placeholder="e.g. 850" min="0">
+          <button class="btn" id="shipCalcBtn" style="margin-top:10px;width:100%;">🚚 Estimate Shipping Cost</button>
+        </div>
+
+        <div class="checkin-details" id="shipCalcResult" style="display:none;">
+          <h3>Estimated Shipping Cost</h3>
+          <div class="detail-row">
+            <span class="label">Distance:</span>
+            <span class="value" id="shipDistanceOut">—</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Estimated Range:</span>
+            <span class="value" id="shipCostOut">—</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Rate Tier:</span>
+            <span class="value" id="shipTierOut">—</span>
+          </div>
+          <div style="margin-top:16px;padding:14px;background:#f5f7fa;border-radius:8px;font-size:13px;color:#555;">
+            Based on open-carrier transport, standard sedan/SUV, 2026 market averages. SUVs/trucks may run higher; enclosed transport runs 30-60% more. This is an estimate for the "willing to ship?" conversation - not a binding quote.
+          </div>
+        </div>
+
+        <div id="shipCalcEmpty" class="no-data" style="padding: 60px 20px;">
+          Enter the distance to a vehicle to estimate shipping cost for the customer conversation
         </div>
       </div>
     </div>
@@ -1001,6 +1035,44 @@
         statusMsg.textContent = 'Update failed: ' + err.message;
       }
       btn.disabled = false;
+    });
+
+    // ── SHIPPING COST ESTIMATOR ──
+    // Real 2026 open-carrier market rates (per-mile drops as distance increases - fixed costs spread over more miles)
+    function estimateShippingCost(miles) {
+      let low, high, tier;
+      if (miles <= 0) {
+        return null;
+      } else if (miles < 500) {
+        low = miles * 0.80; high = miles * 1.20; tier = 'Short-distance (under 500 mi)';
+      } else if (miles < 1500) {
+        low = miles * 0.50; high = miles * 0.80; tier = 'Mid-range (500-1,500 mi)';
+      } else {
+        low = miles * 0.40; high = miles * 0.95; tier = 'Long-distance (1,500+ mi)';
+      }
+      return {
+        low: Math.round(low / 10) * 10,   // round to nearest $10
+        high: Math.round(high / 10) * 10,
+        tier
+      };
+    }
+
+    document.getElementById('shipCalcBtn').addEventListener('click', () => {
+      const miles = parseFloat(document.getElementById('shipMiles').value);
+
+      if (!miles || miles <= 0) {
+        alert('Enter a distance greater than 0 miles.');
+        return;
+      }
+
+      const result = estimateShippingCost(miles);
+
+      document.getElementById('shipDistanceOut').textContent = miles.toLocaleString() + ' miles';
+      document.getElementById('shipCostOut').textContent = '$' + result.low.toLocaleString() + ' - $' + result.high.toLocaleString();
+      document.getElementById('shipTierOut').textContent = result.tier;
+
+      document.getElementById('shipCalcResult').style.display = 'block';
+      document.getElementById('shipCalcEmpty').style.display = 'none';
     });
   </script>
 </body>
