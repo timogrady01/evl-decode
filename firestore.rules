@@ -79,5 +79,26 @@ service cloud.firestore {
       allow update: if isAdmin() || isOwner(dealerId);
     }
 
+    // ── AFTERMARKET NETWORK COLLECTIONS ──
+
+    // evl_aftermarket_shops — public read so customers can browse the certified directory,
+    // admin-only write (records are created via the admin approval flow, not directly)
+    match /evl_aftermarket_shops/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // evl_aftermarket_referrals — logged when a customer taps "Get Contact Info" on a shop card
+    match /evl_aftermarket_referrals/{docId} {
+      allow create: if true; // allow unauthenticated referral logging
+      allow read, update, delete: if isAdmin();
+    }
+
+    // evl_aftermarket_applications — submitted by shops via the public application form
+    match /evl_aftermarket_applications/{docId} {
+      allow create: if true; // allow unauthenticated shop application submission
+      allow read, update, delete: if isAdmin();
+    }
+
   }
 }
