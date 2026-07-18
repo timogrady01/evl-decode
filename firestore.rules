@@ -77,6 +77,12 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    // evl_service_ledger — Maintenance Ledger entries, same open email-based access
+    // pattern as evl_accident_cards (customer identified by email, not Firebase Auth login)
+    match /evl_service_ledger/{docId} {
+      allow read, write: if true;
+    }
+
     // evl_ws_dealers — dealer owns their record, admin controls status
     match /evl_ws_dealers/{dealerId} {
       allow read: if isAdmin() || isActiveDealer();
