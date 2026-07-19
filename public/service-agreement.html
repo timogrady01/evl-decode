@@ -31,8 +31,8 @@ nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding
 .frow{display:grid;gap:14px;margin-bottom:14px;}
 .f2{grid-template-columns:1fr 1fr;}
 .f3{grid-template-columns:1fr 1fr 1fr;}
-.fgroup label{display:block;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.finput,.fselect{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:17px;font-weight:500;padding:14px 16px;outline:none;transition:border-color .2s;}
+.fgroup label{display:block;font-size:18px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.finput,.fselect{width:100%;background:var(--s2);border:2px solid var(--border);color:#fff;font-family:"Barlow",sans-serif;font-size:18px;font-weight:500;padding:14px 16px;outline:none;transition:border-color .2s;}
 .finput:focus,.fselect:focus{border-color:var(--blue);}
 .finput::placeholder{color:#555;}
 .fselect{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8C8D8' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-color:var(--s2);}
@@ -44,22 +44,22 @@ nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding
 .svc-item:hover{border-color:var(--blue);}
 .svc-item.on{background:rgba(43,132,254,.1);border-color:var(--blue);}
 .svc-check{width:22px;height:22px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all .2s;}
-.svc-item.on .svc-check{background:var(--blue);border-color:var(--blue);color:#fff;font-size:14px;}
+.svc-item.on .svc-check{background:var(--blue);border-color:var(--blue);color:#fff;font-size:18px;}
 .svc-name{font-family:"Barlow Condensed",sans-serif;font-size:19px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
-.svc-price{font-size:14px;color:var(--gold);font-weight:700;margin-top:2px;}
-.svc-desc{font-size:14px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.svc-price{font-size:18px;color:var(--gold);font-weight:700;margin-top:2px;}
+.svc-desc{font-size:18px;color:var(--muted);margin-top:3px;line-height:1.5;}
 .svc-item.on .svc-name{color:var(--blue);}
 
 /* FEE SUMMARY */
 .fee-summary{background:var(--s2);border:2px solid var(--border);padding:20px 24px;margin-top:16px;}
-.fee-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:16px;}
+.fee-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:18px;}
 .fee-row:last-child{border:none;padding-top:14px;margin-top:4px;}
 .fee-lbl{color:var(--muted);}
 .fee-val{font-weight:700;}
 .fee-total{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;color:var(--gold);}
 
 /* LEGAL TEXT */
-.legal-text{background:var(--s2);border:2px solid var(--border);border-left:4px solid var(--blue);padding:24px;margin:20px 0;font-size:16px;color:var(--muted);line-height:1.8;max-height:320px;overflow-y:auto;}
+.legal-text{background:var(--s2);border:2px solid var(--border);border-left:4px solid var(--blue);padding:24px;margin:20px 0;font-size:18px;color:var(--muted);line-height:1.8;max-height:320px;overflow-y:auto;}
 .legal-text h4{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:#fff;margin:18px 0 8px;}
 .legal-text h4:first-child{margin-top:0;}
 .legal-text p{margin-bottom:12px;}
@@ -71,9 +71,9 @@ nav{background:rgba(10,10,12,0.98);border-bottom:2px solid var(--border);padding
 /* SIGNATURE */
 .sig-area{margin-top:20px;}
 .sig-canvas-wrap{background:var(--s2);border:2px solid var(--border);padding:0;position:relative;margin-top:10px;}
-.sig-label-bar{background:var(--s2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.sig-label-bar{background:var(--s2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
 canvas#sigPad{display:block;width:100%;height:160px;cursor:crosshair;touch-action:none;}
-.sig-clear{background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.sig-clear{background:none;border:1px solid var(--border);color:var(--muted);font-size:18px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
 .sig-clear:hover{border-color:var(--red);color:var(--red);}
 
 /* TYPED SIG */
@@ -82,13 +82,13 @@ canvas#sigPad{display:block;width:100%;height:160px;cursor:crosshair;touch-actio
 /* CHECKBOXES */
 .auth-check{display:flex;align-items:flex-start;gap:14px;margin:16px 0;padding:16px 18px;background:var(--s2);border:2px solid var(--border);}
 .auth-check input[type=checkbox]{width:22px;height:22px;accent-color:var(--blue);flex-shrink:0;margin-top:3px;cursor:pointer;}
-.auth-check label{font-size:16px;color:var(--muted);line-height:1.6;cursor:pointer;}
+.auth-check label{font-size:18px;color:var(--muted);line-height:1.6;cursor:pointer;}
 .auth-check label strong{color:#fff;}
 
 /* SUBMIT */
 .submit-btn{display:block;width:100%;background:linear-gradient(90deg,var(--blue2),var(--blue));border:none;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:22px;cursor:pointer;margin-top:20px;transition:all .2s;}
 .submit-btn:hover{background:linear-gradient(90deg,var(--blue),var(--blue2));}
-.submit-note{text-align:center;color:var(--muted);font-size:14px;margin-top:12px;font-weight:700;letter-spacing:1px;}
+.submit-note{text-align:center;color:var(--muted);font-size:18px;margin-top:12px;font-weight:700;letter-spacing:1px;}
 
 /* SUCCESS */
 .success-box{display:none;background:linear-gradient(135deg,#071828,var(--s1));border:3px solid var(--green);padding:48px;text-align:center;margin-bottom:24px;}
@@ -97,7 +97,7 @@ canvas#sigPad{display:block;width:100%;height:160px;cursor:crosshair;touch-actio
 .success-title{font-family:"Barlow Condensed",sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--green);margin-bottom:12px;}
 .success-sub{color:var(--muted);font-size:18px;line-height:1.75;max-width:500px;margin:0 auto 24px;}
 .success-ref{background:var(--s2);border:2px solid var(--border);padding:16px 24px;display:inline-block;margin-top:8px;}
-.success-ref-lbl{font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.success-ref-lbl{font-size:18px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .success-ref-num{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;color:var(--gold);}
 
 /* HIGHLIGHT */
@@ -122,25 +122,25 @@ footer{background:var(--s1);border-top:2px solid var(--border);padding:28px 48px
 body {overflow-x:hidden; font-size: 19px !important; }
 label { font-size:18px !important; letter-spacing: 1px !important; margin-bottom: 9px !important; }
 .finput, .fselect { font-size: 18px !important; padding: 16px 18px !important; min-height: 54px !important; }
-.finput::placeholder { font-size: 17px !important; }
+.finput::placeholder { font-size:18px !important; }
 .svc-name { font-size: 21px !important; }
-.svc-price { font-size: 16px !important; }
-.svc-desc { font-size: 16px !important; line-height: 1.6 !important; }
+.svc-price { font-size:18px !important; }
+.svc-desc { font-size:18px !important; line-height: 1.6 !important; }
 .form-section-title { font-size: 24px !important; margin-bottom: 22px !important; }
-.legal-text { font-size: 17px !important; line-height: 1.8 !important; }
+.legal-text { font-size:18px !important; line-height: 1.8 !important; }
 .legal-text h4 { font-size: 20px !important; margin: 20px 0 10px !important; }
-.auth-check label { font-size: 17px !important; line-height: 1.7 !important; }
+.auth-check label { font-size:18px !important; line-height: 1.7 !important; }
 .auth-check input[type=checkbox] { width: 24px !important; height: 24px !important; }
 .fee-row { font-size: 18px !important; padding: 12px 0 !important; }
 .fee-total { font-size: 36px !important; }
-.fee-lbl { font-size: 17px !important; }
+.fee-lbl { font-size:18px !important; }
 .fee-val { font-size: 18px !important; }
 .submit-btn { font-size: 26px !important; padding: 24px !important; }
-.submit-note { font-size: 15px !important; margin-top: 14px !important; }
+.submit-note { font-size:18px !important; margin-top: 14px !important; }
 .highlight-box { font-size: 18px !important; line-height: 1.8 !important; }
 .highlight-box strong { font-size: 18px !important; }
-.sig-label-bar { font-size: 15px !important; }
-.sig-clear { font-size: 14px !important; padding: 7px 14px !important; }
+.sig-label-bar { font-size:18px !important; }
+.sig-clear { font-size:18px !important; padding: 7px 14px !important; }
 .typed-sig { font-size: 32px !important; }
 .hero h1 { font-size: 60px !important; }
 .hero-meta { font-size:18px !important; }
