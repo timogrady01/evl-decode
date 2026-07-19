@@ -475,8 +475,31 @@ Shop appears in customer-facing directory for their category + hub
 
 ## NEXT-SESSION TASKS
 
-**1. WordPress legacy page audit (flagged July 18, 2026)**
-The old WordPress site has 68 total pages. Before more new features get built, do a full pass: page by page, decide keep/port to Vercel/discard for each one, cross-reference against what already exists on the current platform so no good prior work gets lost or silently duplicated. Partial list of WP page titles surfaced so far (not exhaustive — needs the real full list pulled from WP admin): Virtual Test Drive, Truck Customization Protocol, Vehicle Acquisition Radar, Vehicle Location Services, Vehicle Protection, Vendor Membership, Vendor Registration, Trade-in Evaluation (this one already exists on Vercel in some form).
+**1. WordPress legacy page audit (started July 18-19, 2026)**
+
+**How to reconnect (no DNS changes needed):** `expressvehiclelocators.com` now points to Vercel, so `wp-admin` and the SiteGround "auto-login" button both fail — they route through the real domain, which Vercel intercepts. The working path that bypasses this entirely:
+SiteGround Site Tools → **Site → MySQL → phpMyAdmin**. This runs on `tools.siteground.com` directly, never touches the actual domain. Database is `dblfsbge2zuuxx` (label: `expressvehiclelocators.com/`), table prefix is `yvl_` (not the WordPress default `wp_`). Page content lives in `yvl_posts`, filtered with `WHERE post_type = 'page'`.
+⚠️ If phpMyAdmin auto-fills a query box with an `UPDATE ... WHERE 1` template, do NOT run it — that overwrites every row in the table with placeholder text. Always clear the box and paste a plain `SELECT` first.
+For actual visual wp-admin access (not just raw content pulls), the next option to try is SiteGround **Domain → DNS Zone Editor** — add a new A record (e.g. `wpaudit` → `34.174.62.87`), which creates a subdomain pointing straight to the SiteGround server, sidestepping Vercel without touching the main site's DNS at all. Not yet attempted — phpMyAdmin worked first.
+
+**Full page list pulled** — 69 pages total in `yvl_posts` (not 68 as first estimated). Triaged into three buckets:
+
+🟢 **Clearly superseded — safe to leave alone on WP:** 01//HOME (×2), 02//FIND, 03//EXCHANGE, Find Your Vehicle 2, Home Page, Home Page - Template, HOME TEST, Trade-in Evaluation, Privacy Policy (draft), EVL-Admin, EVL Console 2026, EVL Dashboard 2026, 06//Onboarding
+
+🟡 **Low priority, likely generic/duplicate:** Experience, Finance, Financing Assistance Services, How It Works, Services, Success, Thank You, Results, Checkout, Audit-Success, Contact, Dealer Registration Porta
+
+🔴 **High-value — review content before next build, in this order:**
+1. **Truck Customization Protocol** (2 copies, IDs 543 & 514) — likely directly relevant to the Aftermarket Network built July 17-18
+2. **Vendor Membership** / **Vendor Registration** — possibly a more thought-out shop-application flow than what was built from scratch for Aftermarket
+3. **EVL Trade-In: Legal, Documentation, and ID Verification Requirements** — likely real compliance research tied to the Title Eligibility Gate
+4. **Incentive Reference Links (Private)** — could feed Deal Gap Analysis rebate/incentive research directly
+5. **Real Time Lease Calculus**, **EVL - Lease Match Console** — possible unbuilt lease features
+6. **07//WS-CLAUDE - USED CAR TITLE CLERK DIRECTORY** — appears to be prior AI-assisted work, possibly ready-made
+7. **Aged Inventory & Market Analytics**, **EVL - Nationwide Scan Engine**, **Vehicle Acquisition Radar** — possible dealer-sourcing tools relevant to WS Exchange's planned national expansion
+8. **Electric Charging Stations**, **Vehicle Protection**, **Protective Service Center**, **Paintless Dent Repair (PDR) service** — possible content for Service Vault or future Aftermarket categories
+9. **Virtual Test Drive** — the page that originally prompted this whole audit; read actual content before building the Low-tier version from scratch
+
+**Status:** List pulled and triaged. Actual content of the 🔴 list has not yet been reviewed — that's the next-session starting point, beginning with Truck Customization Protocol.
 
 **2. Virtual Test Drive (concept locked July 18, 2026, not yet built)**
 Customer video-calls someone at the dealership to remotely walk around/inspect a vehicle before committing — especially valuable given EVL's multi-hub model, where a customer may be shopping a vehicle in a market they can't easily drive to.
