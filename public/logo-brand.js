@@ -6,7 +6,7 @@
 document.write(`
 <style>
   .evl-brand-link{display:flex;align-items:center;gap:10px;text-decoration:none;}
-  .evl-brand-icon{height:40px;width:auto;display:block;}
+  .evl-brand-icon{height:60px;width:auto;display:block;}
   .evl-brand-text{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;}
   .evl-brand-text span{color:#2B84FE;}
   @media(max-width:700px){.evl-brand-icon{height:32px;}.evl-brand-text{font-size:18px;}}
