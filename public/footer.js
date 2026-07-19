@@ -8,9 +8,9 @@ document.write(`
   .footer-brand{font-size:22px;font-weight:900;letter-spacing:2px;margin-bottom:16px;color:#fff;font-family:var(--font,sans-serif);}
   .footer-brand span{color:var(--blue,#2B84FE);}
   .footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:16px;flex-wrap:wrap;}
-  .footer-links a{color:#ffffff;text-decoration:none;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-family:var(--body,sans-serif);}
-  .footer-contact{font-size:15px;color:#C8D0DC;font-family:var(--body,sans-serif);font-weight:700;margin-bottom:10px;}
-  .footer-disclaimer{font-size:14px;color:#ffffff;font-family:var(--body,sans-serif);font-weight:600;}
+  .footer-links a{color:#ffffff;text-decoration:none;font-size:18px;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-family:var(--body,sans-serif);}
+  .footer-contact{font-size:18px;color:#C8D0DC;font-family:var(--body,sans-serif);font-weight:700;margin-bottom:10px;}
+  .footer-disclaimer{font-size:18px;color:#ffffff;font-family:var(--body,sans-serif);font-weight:600;}
 </style>
 <footer>
   <div class="footer-brand">EXPRESS <span>VEHICLE</span> LOCATORS</div>
