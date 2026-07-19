@@ -94,7 +94,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 
 /* VEHICLE SOURCES */
 .sources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:40px}
-.source-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:20px;transition:border-color .2s}
+.source-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:24px;transition:border-color .2s}
 .source-card:hover{border-color:var(--blue)}
 .source-icon{font-size:32px;margin-bottom:12px;display:block}
 .source-title{font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px}
@@ -107,7 +107,7 @@ body{overflow-x:hidden;background:#020203;color:#fff;font-family:'Oswald',sans-s
 
 /* HOW EVL HELPS */
 .steps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;counter-reset:steps}
-.step-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:20px;position:relative;transition:border-color .2s;counter-increment:steps}
+.step-card{background:var(--s1);border:2px solid #1a1a2e;border-radius:12px;padding:24px;position:relative;transition:border-color .2s;counter-increment:steps}
 .step-card:hover{border-color:var(--blue)}
 .step-card::before{content:counter(steps);position:absolute;top:-14px;left:20px;background:var(--blue);color:var(--white);font-size:13px;font-weight:900;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font)}
 .step-title{font-size:14px;font-weight:900;color:var(--white);letter-spacing:1px;margin-bottom:8px;margin-top:4px}
