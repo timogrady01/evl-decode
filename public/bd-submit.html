@@ -55,8 +55,8 @@
   .step-label.active { color:var(--white); }
 
   /* SECTION CARDS */
-  .card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:28px; margin-bottom:24px; }
-  .card-title { font-size:20px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+  .card{ background:var(--s1); border:2px solid var(--border); border-radius:12px; padding:24px; margin-bottom:24px; }
+  .card-title{ font-size:20px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
 
   /* VEHICLE SUMMARY */
   .vehicle-summary { background:var(--bg); border:2px solid var(--blue); border-radius:12px; padding:20px 24px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
@@ -70,7 +70,7 @@
 
   /* BD PARTNER CARDS */
   .bd-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:8px; }
-  .bd-card { background:var(--bg); border:2px solid var(--border); border-radius:12px; padding:20px; text-align:center; transition:border-color .2s; cursor:pointer; position:relative; }
+  .bd-card{ background:var(--bg); border:2px solid var(--border); border-radius:12px; padding:24px; text-align:center; transition:border-color .2s; cursor:pointer; position:relative; }
   .bd-card:hover { border-color:var(--blue); }
   .bd-card.selected { border-color:var(--gold); background:rgba(255,215,0,.04); }
   .bd-card.selected::after { content:'✓ SELECTED'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--gold); color:#000; font-size:13px; font-weight:900; padding:2px 10px; border-radius:10px; letter-spacing:1px; font-family:var(--body); }
@@ -118,7 +118,7 @@
 
   /* WHAT HAPPENS NEXT */
   .next-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  .next-card { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:20px; text-align:center; }
+  .next-card{ background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:24px; text-align:center; }
   .next-icon { font-size:32px; margin-bottom:10px; }
   .next-time { font-size:14px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:6px; font-family:var(--body); }
   .next-desc { font-size:15px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
