@@ -36,19 +36,19 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .page-title span { color:var(--blue); }
 .page-sub { font-size:16px; font-weight:600; color:#ffffff; line-height:1.7; }
 
-.card { background:var(--s1); border:2px solid var(--border); border-radius:14px; padding:28px; margin-bottom:20px; }
-.card-title { font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--white); margin-bottom:6px; }
-.card-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:20px; }
+.card{ background:var(--s1); border:2px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
+.card-title{ font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--white); margin-bottom:6px; }
+.card-sub{ font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:20px; }
 
 /* VEHICLE CARD */
-.vehicle-card { background:linear-gradient(135deg,rgba(43,132,254,0.1),rgba(43,132,254,0.03)); border:2px solid var(--blue); border-radius:12px; padding:20px; margin-bottom:20px; display:flex; align-items:center; gap:16px; }
+.vehicle-card{ background:linear-gradient(135deg,rgba(43,132,254,0.1),rgba(43,132,254,0.03)); border:2px solid var(--blue); border-radius:12px; padding:24px; margin-bottom:20px; display:flex; align-items:center; gap:16px; }
 .vehicle-icon { font-size:36px; flex-shrink:0; }
 .vehicle-detail-title { font-family:var(--font); font-size:22px; font-weight:900; color:#ffffff; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
 .vehicle-detail-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
 .vehicle-badge { display:inline-block; background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); color:var(--green); font-size:13px; font-weight:900; letter-spacing:1px; padding:4px 10px; border-radius:4px; text-transform:uppercase; margin-top:6px; }
 
 /* DEALER CARD */
-.dealer-card { background:var(--s2); border:2px solid rgba(255,184,0,0.25); border-radius:12px; padding:20px; margin-bottom:20px; }
+.dealer-card{ background:var(--s2); border:2px solid rgba(255,184,0,0.25); border-radius:12px; padding:24px; margin-bottom:20px; }
 .dealer-name { font-family:var(--font); font-size:20px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
 .dealer-info { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
 .dealer-call-btn { display:inline-flex; align-items:center; gap:8px; background:var(--green); color:#020203; padding:10px 20px; border-radius:6px; font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; margin-top:12px; transition:all .2s; }
@@ -115,7 +115,7 @@ footer { background:var(--s1); border-top:1px solid var(--border); padding:24px;
 @media(max-width:500px) {
   .datetime-grid { grid-template-columns:1fr; }
   .time-slots { grid-template-columns:1fr 1fr; }
-  .vehicle-card { flex-direction:column; text-align:center; }
+  .vehicle-card{ flex-direction:column; text-align:center; }
 }
 </style>
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
