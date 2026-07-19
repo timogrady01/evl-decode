@@ -474,6 +474,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+<style>
+.evl-std-nav{position:sticky;top:0;z-index:9999;background:#0A0A0C;border-bottom:2px solid #2B84FE;padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;font-family:'Barlow',sans-serif;}
+.evl-std-nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:1px;color:#fff;text-transform:uppercase;text-decoration:none;}
+.evl-std-nav-logo span{color:#2B84FE;}
+.evl-std-nav-links{display:flex;gap:20px;align-items:center;}
+.evl-std-nav-links a{color:#fff;text-decoration:none;font-size:18px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;}
+.evl-std-nav-links a:hover{color:#2B84FE;}
+.evl-std-nav-cta{background:#2B84FE;color:#fff;padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-decoration:none;}
+@media(max-width:800px){.evl-std-nav-links{display:none;}}
+</style>
+<nav class="evl-std-nav">
+  <a href="/home.html" class="evl-std-nav-logo">Express <span>Vehicle</span> Locators</a>
+  <div class="evl-std-nav-links">
+    <a href="/home.html">Home</a>
+    <a href="/find-my-vehicle.html">Find My Vehicle</a>
+    <a href="/trade-in.html">Trade-In</a>
+    <a href="/leasing.html">Leasing</a>
+    <a href="/contact.html">Contact</a>
+  </div>
+  <a href="/find-my-vehicle.html" class="evl-std-nav-cta">Get Started</a>
+</nav>
+
   <!-- QR Code Modal -->
   <div class="qr-modal" id="qrModal">
     <div class="qr-modal-box">
