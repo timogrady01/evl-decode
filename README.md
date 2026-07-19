@@ -454,9 +454,41 @@ Shop appears in customer-facing directory for their category + hub
 
 **Revenue shape:** Referral/commission per closed job (original Bucket 10 scope) PLUS shop-side monthly certification fee (RepairPal layer, added July 17, 2026). Optional future layer: use EVL's aggregated customer volume across certified shops to negotiate real bulk pricing (CarAdvise-style), same synthesis used for the general Service Vault / service-shopping research from July 16, 2026.
 
-**Status:** Flow locked. Not yet built. Next decision needed: customer directory build vs. shop application build first, and exact page location (Glovebox/Service Vault link vs. standalone page).
+**Status:** ✅ Built and tested end-to-end, July 17-18, 2026. Customer directory (`/aftermarket`), shop application (`/aftermarket-apply`), admin approval (`/admin-aftermarket`) all live. ZIP-based hub matching added so results are location-filtered across all 22 canonical hub markets, not just DFW. Admin auth upgraded from PIN-only to real Firebase Auth login (matches admin-leads.html pattern) so Firestore `isAdmin()` rules actually work. Firestore rules for `evl_aftermarket_shops`, `evl_aftermarket_referrals`, `evl_aftermarket_applications` published to Firebase Console.
 
 ---
 
-*Last updated: July 17, 2026*
+## MAINTENANCE LEDGER (Built July 17-18, 2026)
+
+**What it is:** A drawer inside `service-vault.html`, alongside the existing window sticker and In Case of Accident sections. Three parts:
+1. **What's Due** — VIN decode (NHTSA) or Year/Make/Model fallback (VIN is optional, customer is never stuck without one) + current mileage → generic mileage-interval maintenance schedule. Placeholder until a licensed OEM data source (VehicleDatabases.com or DataOne) is subscribed to for exact factory schedules.
+2. **Tire Age Check** — customer enters the 4-digit DOT code from the tire sidewall, gets real manufacture date and age, flagged against the 6-10 year safety window. Explicitly independent of tread depth or how long the customer has owned the vehicle — ownership length was never a reliable proxy for tire age, since tires can sit unsold for years before ever being mounted.
+3. **Service History Ledger** — customer logs service entries with 3 confidence tiers: self-reported (no proof), receipt upload (Cloudinary), or pre-EVL (happened before the customer started using EVL). A 4th tier, "EVL Certified shop," exists in the code (`CONFIDENCE_LABELS.certified`) but nothing sets it yet — that activates once a certified service-shop network (Aftermarket-style) exists for maintenance categories.
+
+**Identity model:** Same as the existing accident-cards feature on the same page — customer identified by email, not a Firebase Auth login. Matches the existing precedent already in `service-vault.html`.
+
+**Admin mirrored view:** `/admin-service-ledger` — real Firebase Auth login (not PIN), search any customer's ledger by email, same entries and same confidence badges the customer sees, nothing hidden or added on the admin side.
+
+**Status:** ✅ Built and tested end-to-end, July 17-18, 2026. Firestore rule for `evl_service_ledger` published.
+
+---
+
+## NEXT-SESSION TASKS
+
+**1. WordPress legacy page audit (flagged July 18, 2026)**
+The old WordPress site has 68 total pages. Before more new features get built, do a full pass: page by page, decide keep/port to Vercel/discard for each one, cross-reference against what already exists on the current platform so no good prior work gets lost or silently duplicated. Partial list of WP page titles surfaced so far (not exhaustive — needs the real full list pulled from WP admin): Virtual Test Drive, Truck Customization Protocol, Vehicle Acquisition Radar, Vehicle Location Services, Vehicle Protection, Vendor Membership, Vendor Registration, Trade-in Evaluation (this one already exists on Vercel in some form).
+
+**2. Virtual Test Drive (concept locked July 18, 2026, not yet built)**
+Customer video-calls someone at the dealership to remotely walk around/inspect a vehicle before committing — especially valuable given EVL's multi-hub model, where a customer may be shopping a vehicle in a market they can't easily drive to.
+
+Three build-effort tiers discussed:
+- **Low** (recommended starting point) — new appointment type reusing 100% of existing appointment + Twilio SMS infrastructure. Salesperson manually starts a FaceTime/Zoom/Google Meet call at the scheduled time; EVL just handles scheduling and reminder texts. No new vendor integration, no new cost.
+- **Medium** — EVL auto-generates a real Zoom meeting link at time of booking via Zoom API integration. Requires a new Zoom developer account/OAuth setup.
+- **High** — video calling fully embedded inside the EVL platform itself (Twilio Video or similar), no external app needed. Real ongoing per-minute cost, biggest technical lift.
+
+Direction discussed but not yet confirmed as final: start with Low tier to validate demand before investing in Medium or High.
+
+---
+
+*Last updated: July 18, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
