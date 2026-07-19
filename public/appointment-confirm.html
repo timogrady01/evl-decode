@@ -31,35 +31,35 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .wrap { max-width:680px; margin:0 auto; padding:40px 20px 80px; }
 
 .page-hero { text-align:center; margin-bottom:32px; }
-.page-badge { display:inline-block; background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.3); color:var(--blue); font-size:14px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
+.page-badge { display:inline-block; background:rgba(43,132,254,0.1); border:2px solid rgba(43,132,254,0.3); color:var(--blue); font-size:18px; font-weight:900; letter-spacing:3px; padding:8px 20px; text-transform:uppercase; margin-bottom:16px; font-family:var(--font); }
 .page-title { font-family:var(--font); font-size:clamp(32px,6vw,50px); font-weight:900; text-transform:uppercase; line-height:1.05; margin-bottom:10px; }
 .page-title span { color:var(--blue); }
-.page-sub { font-size:16px; font-weight:600; color:#ffffff; line-height:1.7; }
+.page-sub { font-size:18px; font-weight:600; color:#ffffff; line-height:1.7; }
 
 .card{ background:var(--s1); border:2px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
 .card-title{ font-family:var(--font); font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:2px; color:var(--white); margin-bottom:6px; }
-.card-sub{ font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:20px; }
+.card-sub{ font-size:18px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; margin-bottom:20px; }
 
 /* VEHICLE CARD */
 .vehicle-card{ background:linear-gradient(135deg,rgba(43,132,254,0.1),rgba(43,132,254,0.03)); border:2px solid var(--blue); border-radius:12px; padding:24px; margin-bottom:20px; display:flex; align-items:center; gap:16px; }
 .vehicle-icon { font-size:36px; flex-shrink:0; }
 .vehicle-detail-title { font-family:var(--font); font-size:22px; font-weight:900; color:#ffffff; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
-.vehicle-detail-sub { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
-.vehicle-badge { display:inline-block; background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); color:var(--green); font-size:13px; font-weight:900; letter-spacing:1px; padding:4px 10px; border-radius:4px; text-transform:uppercase; margin-top:6px; }
+.vehicle-detail-sub { font-size:18px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.5; }
+.vehicle-badge { display:inline-block; background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.3); color:var(--green); font-size:18px; font-weight:900; letter-spacing:1px; padding:4px 10px; border-radius:4px; text-transform:uppercase; margin-top:6px; }
 
 /* DEALER CARD */
 .dealer-card{ background:var(--s2); border:2px solid rgba(255,184,0,0.25); border-radius:12px; padding:24px; margin-bottom:20px; }
 .dealer-name { font-family:var(--font); font-size:20px; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
-.dealer-info { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
-.dealer-call-btn { display:inline-flex; align-items:center; gap:8px; background:var(--green); color:#020203; padding:10px 20px; border-radius:6px; font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; margin-top:12px; transition:all .2s; }
+.dealer-info { font-size:18px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.6; }
+.dealer-call-btn { display:inline-flex; align-items:center; gap:8px; background:var(--green); color:#020203; padding:10px 20px; border-radius:6px; font-family:var(--font); font-size:18px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; margin-top:12px; transition:all .2s; }
 .dealer-call-btn:hover { background:#00a844; }
 
 /* FORM */
 .field { margin-bottom:16px; }
-.field label { display:block; font-size:14px; font-weight:900; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; font-family:var(--font); }
+.field label { display:block; font-size:18px; font-weight:900; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; font-family:var(--font); }
 .field input, .field select, .field textarea {
   width:100%; background:var(--bg); border:2px solid var(--border); color:#ffffff;
-  padding:13px 16px; border-radius:8px; font-size:16px; font-family:var(--body);
+  padding:13px 16px; border-radius:8px; font-size:18px; font-family:var(--body);
   font-weight:600; outline:none; transition:border-color .2s;
 }
 .field input:focus, .field select:focus, .field textarea:focus { border-color:var(--blue); }
@@ -74,13 +74,13 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .time-slot:hover { border-color:var(--blue); }
 .time-slot.selected { border-color:var(--blue); background:rgba(43,132,254,0.1); }
 .time-slot-icon { font-size:20px; margin-bottom:4px; display:block; }
-.time-slot-label { font-family:var(--font); font-size:14px; font-weight:900; color:#ffffff; text-transform:uppercase; display:block; margin-bottom:2px; }
-.time-slot-range { font-size:14px; color:#ffffff; font-family:var(--body); font-weight:600; display:block; }
+.time-slot-label { font-family:var(--font); font-size:18px; font-weight:900; color:#ffffff; text-transform:uppercase; display:block; margin-bottom:2px; }
+.time-slot-range { font-size:18px; color:#ffffff; font-family:var(--body); font-weight:600; display:block; }
 
 /* NOTIFICATION PREVIEW */
 .notification-preview { background:rgba(0,200,83,0.05); border:2px solid rgba(0,200,83,0.2); border-radius:10px; padding:18px; margin-bottom:20px; }
-.notif-title { font-size:13px; font-weight:900; color:var(--green); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; font-family:var(--font); }
-.notif-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; font-family:var(--body); font-weight:600; color:#ffffff; }
+.notif-title { font-size:18px; font-weight:900; color:var(--green); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; font-family:var(--font); }
+.notif-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:18px; font-family:var(--body); font-weight:600; color:#ffffff; }
 .notif-row:last-child { border-bottom:none; }
 .notif-row span { font-size:18px; flex-shrink:0; }
 
@@ -94,23 +94,23 @@ html, body {overflow-x:hidden; background:var(--bg); color:var(--white); font-fa
 .success-state.active { display:block; }
 .success-icon { font-size:72px; margin-bottom:20px; }
 .success-title { font-family:var(--font); font-size:42px; font-weight:900; text-transform:uppercase; color:var(--green); margin-bottom:12px; }
-.success-sub { font-size:16px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.7; max-width:480px; margin:0 auto 28px; }
+.success-sub { font-size:18px; color:#ffffff; font-family:var(--body); font-weight:600; line-height:1.7; max-width:480px; margin:0 auto 28px; }
 .success-ref { background:var(--s1); border:2px solid var(--green); border-radius:10px; padding:20px; max-width:400px; margin:0 auto 24px; }
-.success-ref-label { font-size:14px; color:var(--green); font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.success-ref-label { font-size:18px; color:var(--green); font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
 .success-ref-num { font-family:var(--font); font-size:28px; font-weight:900; color:#ffffff; letter-spacing:2px; }
 .success-who { background:var(--s2); border:1px solid var(--border); border-radius:8px; padding:16px; max-width:400px; margin:0 auto 20px; text-align:left; }
-.success-who-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:14px; font-family:var(--body); font-weight:600; color:#ffffff; }
-.success-who-row span { font-size:16px; }
+.success-who-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:18px; font-family:var(--body); font-weight:600; color:#ffffff; }
+.success-who-row span { font-size:18px; }
 .success-btns { display:flex; flex-direction:column; gap:12px; max-width:400px; margin:0 auto; }
 .success-btn { display:block; background:var(--blue); color:#fff; padding:16px; border-radius:8px; font-family:var(--font); font-size:18px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; text-align:center; }
-.success-btn-out { display:block; background:transparent; color:#ffffff; padding:14px; border-radius:8px; border:2px solid var(--border); font-family:var(--font); font-size:16px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; text-align:center; }
+.success-btn-out { display:block; background:transparent; color:#ffffff; padding:14px; border-radius:8px; border:2px solid var(--border); font-family:var(--font); font-size:18px; font-weight:900; letter-spacing:1px; text-decoration:none; text-transform:uppercase; text-align:center; }
 
 /* TRUST */
 .trust-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:24px; }
-.trust-badge { background:var(--s1); border:1px solid var(--border); border-radius:8px; padding:10px 16px; display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:#ffffff; font-family:var(--body); }
+.trust-badge { background:var(--s1); border:1px solid var(--border); border-radius:8px; padding:10px 16px; display:flex; align-items:center; gap:8px; font-size:18px; font-weight:700; color:#ffffff; font-family:var(--body); }
 
 footer { background:var(--s1); border-top:1px solid var(--border); padding:24px; text-align:center; margin-top:40px; }
-.footer-copy { font-size:13px; color:var(--gray); font-family:var(--body); }
+.footer-copy { font-size:18px; color:var(--gray); font-family:var(--body); }
 
 @media(max-width:500px) {
   .datetime-grid { grid-template-columns:1fr; }
