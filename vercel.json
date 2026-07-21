@@ -553,6 +553,14 @@
       "destination": "/admin-service-ledger.html"
     },
     {
+      "source": "/admin-ucd-directory",
+      "destination": "/admin-ucd-directory.html"
+    },
+    {
+      "source": "/admin-ucd-directory.html",
+      "destination": "/admin-ucd-directory.html"
+    },
+    {
       "source": "/find-my-vehicle",
       "destination": "/find-my-vehicle.html"
     },
