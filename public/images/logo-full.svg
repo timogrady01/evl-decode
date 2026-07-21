@@ -1,0 +1,34 @@
+<svg width="700" height="1020" viewBox="0 0 700 1020" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- PIN + CAR ICON (same shape as logo-icon.svg, site blue) -->
+  <path d="M350,40 C255,40 178,117 178,212 C178,280 220,330 350,540 C480,330 522,280 522,212 C522,117 445,40 350,40 Z" fill="#0043A6"/>
+  <circle cx="350" cy="212" r="128" fill="#F2F2F2"/>
+
+  <g fill="#101114">
+    <path d="M270,175 C270,150 300,128 350,128 C400,128 430,150 430,175 L420,178 C415,158 388,144 350,144 C312,144 285,158 280,178 Z"/>
+    <path d="M240,200 C240,192 248,183 262,178 L438,178 C452,183 460,192 460,200 L468,235 C470,245 465,253 455,253 L245,253 C235,253 230,245 232,235 Z"/>
+    <path d="M225,215 L245,213 L245,232 L227,235 C220,236 216,230 218,224 Z"/>
+    <path d="M475,215 L455,213 L455,232 L473,235 C480,236 484,230 482,224 Z"/>
+    <rect x="235" y="253" width="230" height="45" rx="14"/>
+    <circle cx="255" cy="278" r="9" fill="#0043A6"/>
+    <circle cx="445" cy="278" r="9" fill="#0043A6"/>
+  </g>
+  <ellipse cx="290" cy="222" rx="16" ry="8" fill="#F2F2F2" transform="rotate(-8 290 222)"/>
+  <ellipse cx="410" cy="222" rx="16" ry="8" fill="#F2F2F2" transform="rotate(8 410 222)"/>
+  <rect x="345" y="185" width="10" height="60" rx="4" fill="#F2F2F2" opacity="0.55"/>
+
+  <line x1="90" y1="192" x2="238" y2="192" stroke="#101114" stroke-width="9" stroke-linecap="round"/>
+  <line x1="115" y1="212" x2="238" y2="212" stroke="#101114" stroke-width="9" stroke-linecap="round"/>
+  <line x1="140" y1="232" x2="238" y2="232" stroke="#101114" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- EVL RING - two open arcs, gapped at top where the pin passes through -->
+  <path d="M 145,565 A 205,62 0 1 0 300,506" fill="none" stroke="#0043A6" stroke-width="24" stroke-linecap="round"/>
+  <path d="M 555,565 A 205,62 0 1 1 400,506" fill="none" stroke="#0043A6" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- EVL letters sitting across the ring -->
+  <text x="350" y="600" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="115" fill="#101114" text-anchor="middle" letter-spacing="16">EVL</text>
+
+  <!-- WORDMARK -->
+  <text x="350" y="770" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="68" fill="#101114" text-anchor="middle">Express Vehicle Locators</text>
+
+</svg>
