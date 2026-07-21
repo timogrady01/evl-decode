@@ -550,6 +550,15 @@ Special legal scenarios covered — genuinely valuable edge cases not currently 
 
 **Verdict:** the overall structure (standard doc checklist + deceased-owner/divorce edge cases) is good and worth building into the trade-in flow eventually — these are real situations that will come up. But the specific form numbers must be re-verified per state before any of this becomes customer-facing or salesperson-facing guidance. Not a "port as-is" — a "good outline, wrong jurisdiction" situation. Flagged for correction, not yet built anywhere.
 
+**8. WordPress audit — Real Time Lease Calculus / EVL - Lease Match Console confirmed, corrected verdict (July 21, 2026)**
+IDs 1635 & 1654. Both are styled dark-theme mockups pitching a "pay $495 to unlock the exact matched vehicle" lease concept — but the payment figures are hardcoded static text, sliders don't actually compute anything, both CTA buttons link to a literal placeholder (`INSERT_PAYMENT_LINK_HERE`), and the "live activity ticker" at the bottom is fabricated fake social proof (static text dressed as a real-time feed) — a deceptive pattern worth explicitly avoiding, not just noting.
+
+**Initial assessment was wrong and got corrected in-session:** first pass called this a "worth keeping as a future roadmap concept" since it looked like a novel unbuilt idea. Tim asked directly whether EVL already has a lease calculator — checking the live repo confirmed `leasing.html` already has a **real, working lease math engine**: an actual `calculateLease()` JS function computing residual dollar value, depreciation charge, and finance charge from real inputs (MSRP, cap cost, residual %, money factor, term, tax), plus genuine educational content (money factor markup detection, MF-to-APR conversion, per-brand residual/MF tracking sourced from Edmunds/Leasehackr/MarketCheck) built around an "EVL Lease Intelligence Report" concept.
+
+**Corrected verdict:** these two WP pages are **fully superseded** by something that already exists in a genuinely better state (real math vs. hardcoded fake numbers and a fabricated activity feed) — same category as Truck Customization Protocol. Discard, nothing to port. Lesson for the rest of this audit: check the live site before assessing a WP page's value, not just the page title/content in isolation.
+
+**Audit progress:** 6 of 8 high-value items reviewed. Next up: 07//WS-CLAUDE - USED CAR TITLE CLERK DIRECTORY.
+
 ---
 
 *Last updated: July 21, 2026*
