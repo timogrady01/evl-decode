@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — UCD / Dealer Contact Directory</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; font-family:-apple-system, BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#020203; color:#fff; overflow-x:hidden; }
+
+    #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .login-box { background:#090E17; border:1px solid rgba(43,132,254,0.2); border-radius:12px; padding:40px 30px; max-width:340px; width:100%; text-align:center; }
+    .login-box h2 { font-size:18px; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px; }
+    .login-box p { color:#C8D0DC; font-size:13px; }
+
+    #app { display:none; }
+    .header { background:#000; padding:20px; border-bottom:1px solid #2a3f5f; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .header h1 { font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:1px; }
+    .header h1 span { color:#2B84FE; }
+    .logout-btn { background:none; border:1px solid #2a3f5f; color:#C8D0DC; padding:8px 16px; border-radius:6px; font-size:12px; cursor:pointer; min-height:48px; }
+
+    .container { max-width:900px; margin:0 auto; padding:30px 20px 80px; }
+
+    .search-box { display:flex; gap:10px; margin-bottom:24px; }
+    .search-box input { flex:1; padding:14px; background:#090E17; border:1px solid #2a3f5f; border-radius:8px; color:#fff; font-size:15px; min-height:48px; }
+
+    .dealer-count { font-size:13px; color:#C8D0DC; margin-bottom:20px; }
+
+    .dealer-card { background:#090E17; border:1px solid rgba(43,132,254,0.2); border-radius:12px; padding:20px; margin-bottom:16px; }
+    .dealer-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap; margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid #2a3f5f; }
+    .dealer-name { font-size:18px; font-weight:900; color:#fff; }
+    .dealer-meta { font-size:13px; color:#C8D0DC; margin-top:4px; }
+    .tier-badge { font-size:11px; font-weight:800; padding:4px 10px; border-radius:6px; text-transform:uppercase; white-space:nowrap; }
+    .tier-badge.active { background:rgba(0,200,83,0.15); color:#00C853; }
+    .tier-badge.pending { background:rgba(255,215,0,0.15); color:#FFD700; }
+
+    .contact-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; }
+    .contact-block { background:#070A12; border-radius:8px; padding:14px; }
+    .contact-role { font-size:11px; font-weight:800; color:#2B84FE; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+    .contact-name { font-size:14px; font-weight:700; color:#fff; margin-bottom:4px; }
+    .contact-line { font-size:13px; color:#C8D0DC; line-height:1.6; }
+    .contact-empty { font-size:13px; color:#555; font-style:italic; }
+
+    .empty { color:#C8D0DC; font-size:14px; padding:16px 0; text-align:center; }
+  </style>
+</head>
+<body>
+
+  <div id="login-screen">
+    <div class="login-box">
+      <h2>Checking Login…</h2>
+      <p>If you're not signed in, you'll be sent to the login page.</p>
+    </div>
+  </div>
+
+  <div id="app">
+    <div class="header">
+      <h1>EVL <span>UCD / DEALER CONTACT</span> DIRECTORY</h1>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <span id="userInfo" style="font-size:12px; color:#C8D0DC;"></span>
+        <button class="logout-btn" onclick="doLogout()">Log Out</button>
+      </div>
+    </div>
+    <div class="container">
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search by dealer name, city, hub, or brand..." oninput="filterDealers()">
+      </div>
+
+      <div class="dealer-count" id="dealerCount"></div>
+      <div id="dealerList"><div class="empty">Loading dealers…</div></div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut }
+      from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs }
+      from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+      authDomain: "evl-acquisition-radar.firebaseapp.com",
+      projectId: "evl-acquisition-radar",
+      storageBucket: "evl-acquisition-radar.firebasestorage.app",
+      messagingSenderId: "84195145348",
+      appId: "1:84195145348:web:b10f837bee92ce2e4674d1",
+      measurementId: "G-S746N8SY7Z"
+    };
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const DEALERS_COL = "evl_ws_dealers";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        localStorage.setItem('evl_last_page', '/admin-ucd-directory');
+        window.location.href = '/login.html';
+      } else {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('userInfo').textContent = `Logged in as: ${user.email}`;
+        loadDealers();
+      }
+    });
+
+    window.doLogout = async function(){
+      await signOut(auth);
+      window.location.href = '/login.html';
+    };
+
+    let allDealers = [];
+
+    async function loadDealers(){
+      const listEl = document.getElementById('dealerList');
+      try {
+        const snap = await getDocs(collection(db, DEALERS_COL));
+        allDealers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderDealers(allDealers);
+      } catch (err) {
+        console.error('[UCD Directory] Load failed:', err);
+        listEl.innerHTML = '<div class="empty">Something went wrong loading dealers. Check console.</div>';
+      }
+    }
+
+    function contactBlock(role, contact, showExt) {
+      if (!contact || (!contact.name && !contact.office && !contact.cell && !contact.email)) {
+        return `<div class="contact-block"><div class="contact-role">${role}</div><div class="contact-empty">Not provided</div></div>`;
+      }
+      const officeLine = contact.office ? `📞 ${esc(contact.office)}${showExt && contact.ext ? ' ext ' + esc(contact.ext) : ''}` : '';
+      const cellLine = contact.cell ? `📱 ${esc(contact.cell)}` : '';
+      const emailLine = contact.email ? `✉️ ${esc(contact.email)}` : '';
+      return `
+        <div class="contact-block">
+          <div class="contact-role">${role}</div>
+          <div class="contact-name">${esc(contact.name) || '—'}</div>
+          ${officeLine ? `<div class="contact-line">${officeLine}</div>` : ''}
+          ${cellLine ? `<div class="contact-line">${cellLine}</div>` : ''}
+          ${emailLine ? `<div class="contact-line">${emailLine}</div>` : ''}
+        </div>
+      `;
+    }
+
+    function renderDealers(dealers){
+      const listEl = document.getElementById('dealerList');
+      document.getElementById('dealerCount').textContent = `${dealers.length} dealer${dealers.length === 1 ? '' : 's'}`;
+
+      if (!dealers.length) {
+        listEl.innerHTML = '<div class="empty">No dealers found.</div>';
+        return;
+      }
+
+      listEl.innerHTML = dealers.map(d => `
+        <div class="dealer-card">
+          <div class="dealer-top">
+            <div>
+              <div class="dealer-name">${esc(d.dealerName)}</div>
+              <div class="dealer-meta">${esc(d.brand || '—')} · ${esc(d.city || '')}${d.city && d.state ? ', ' : ''}${esc(d.state || '')} · Hub: ${esc(d.hub || '—')}</div>
+              <div class="dealer-meta">📞 ${esc(d.phone || '—')} ${d.website ? '· 🔗 ' + esc(d.website) : ''}</div>
+            </div>
+            <span class="tier-badge ${d.active ? 'active' : 'pending'}">${d.active ? 'Active' : (d.status || 'Pending')}</span>
+          </div>
+          <div class="contact-grid">
+            ${contactBlock('Reception', d.rec, false)}
+            ${contactBlock('Used Car Director (UCD)', d.ucd, true)}
+            ${contactBlock('UCM — Primary', d.ucm1, true)}
+            ${contactBlock('UCM — Secondary', d.ucm2, true)}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterDealers(){
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      if (!q) { renderDealers(allDealers); return; }
+      const filtered = allDealers.filter(d => {
+        const haystack = [d.dealerName, d.city, d.state, d.hub, d.brand].filter(Boolean).join(' ').toLowerCase();
+        return haystack.includes(q);
+      });
+      renderDealers(filtered);
+    }
+
+    function esc(str){
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    window.filterDealers = filterDealers;
+  </script>
+
+</body>
+</html>
