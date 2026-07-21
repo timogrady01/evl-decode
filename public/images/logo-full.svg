@@ -15,6 +15,6 @@
   <path d="M 220,660 Q 350,700 480,660" fill="none" stroke="#0043A6" stroke-width="4" stroke-linecap="round"/>
 
   <!-- WORDMARK, flat, below everything -->
-  <text x="350" y="770" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="68" fill="#FFFFFF" text-anchor="middle">Express Vehicle Locators</text>
+  <text x="350" y="770" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="52" fill="#FFFFFF" text-anchor="middle" textLength="640" lengthAdjust="spacingAndGlyphs">Express Vehicle Locators</text>
 
 </svg>
