@@ -523,6 +523,16 @@ Sparked by a TrueCar/Lifecare lead Tim saw at his dealership (Dow Chemical emplo
 
 **Why this matters for EVL, if pursued later:** two possible angles — (a) approach the 8 portal companies to get EVL listed as an alternative to TrueCar, or (b) approach large employers directly to pitch EVL as a better version of what TrueCar already gives their employees. Any EVL-side perk wouldn't need new revenue to fund it — could mirror TrueCar's model and be paid for out of existing EVL service margin (Find My Vehicle, Deal Gap, Trade-In, Finance Rate) as a customer-acquisition/retention cost, not a new business line. **Status: idea logged for future discussion, no action taken.**
 
+**5. WordPress audit — Truck Customization Protocol content confirmed, data harvested (July 21, 2026)**
+Pulled content for both copies (IDs 543 & 514). Both are simple "request a custom build" contact forms (customer fills in truck year/make/model, lift type, brand, wheel/tire size, accessories, budget, contact info, submits via `mailto:`) — no vetted-shop matching, no certification, no backend database. **Fully superseded by the Aftermarket Network built July 17-18** — nothing here needs porting as a page. Both copies safe to leave alone on WP or delete later.
+
+Reference data worth keeping for a future Aftermarket price-reference sheet (same pattern as the Maintenance Ledger's admin-only price reference):
+- **Real lift kit brand names** (useful for shop vetting/certification criteria): Rough Country, Pro Comp, Fabtech, BDS Suspension, Fox Racing, King Shocks, ICON Vehicle Dynamics
+- **Lift height price bands**: Leveling (1-3"): $800-1,500 · Suspension Lift (3-6"): $2,500-4,500 · Long Travel (6-10"): $5,000-8,000 · Extreme Lift (10"+): $8,000-15,000
+- **Additional category ideas beyond the current 4** (Lift Kits & Suspension, Wheels & Tires, Light Bars, Bed Accessories): custom bumpers, winch, off-road lighting, performance exhaust, engine tuning, running boards/steps — not yet evaluated for inclusion, flagging for future discussion since some (exhaust, engine tuning) may carry emissions/warranty complexity worth a BITOP pass before adding.
+
+**Audit progress:** Incentive Reference Links ✅ reviewed (low-value) · Truck Customization Protocol ✅ reviewed (superseded, data harvested) · Next up: Vendor Membership / Vendor Registration.
+
 ---
 
 *Last updated: July 21, 2026*
