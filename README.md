@@ -557,7 +557,12 @@ IDs 1635 & 1654. Both are styled dark-theme mockups pitching a "pay $495 to unlo
 
 **Corrected verdict:** these two WP pages are **fully superseded** by something that already exists in a genuinely better state (real math vs. hardcoded fake numbers and a fabricated activity feed) — same category as Truck Customization Protocol. Discard, nothing to port. Lesson for the rest of this audit: check the live site before assessing a WP page's value, not just the page title/content in isolation.
 
-**Audit progress:** 6 of 8 high-value items reviewed. Next up: 07//WS-CLAUDE - USED CAR TITLE CLERK DIRECTORY.
+**9. WordPress audit — 07//WS-CLAUDE - USED CAR TITLE CLERK DIRECTORY confirmed (July 21, 2026)**
+ID 2365. A styled dark-theme mockup titled "USED CAR TITLE CLERK DIRECTORY" — a table tracking dealership title-clerk contacts for verifying title status on aged inventory before a wholesale transaction (dealer/holding location, clerk name + phone extension, vehicle + days-in-stock, verification status). Contains real dealership names (Five Star Ford Carrollton, AutoNation Ford Frisco) but Tim confirmed the individual names and extensions (Sarah Jenkins, Amanda Ross, etc.) are placeholder/mockup data, not real contacts — no privacy concern.
+
+**Verdict:** the underlying concept is genuinely valuable and fits WS Exchange's real operational need — verifying title cleanliness on aged inventory before facilitating a dealer-to-dealer wholesale trade is exactly the kind of due-diligence work WS Exchange already claims to do. Worth building for real eventually as a private, admin-only tracker (never customer-facing, same non-disclosure pattern as lender rate sheets and WS reserve prices). The page itself is just static mockup styling with fake data and no backend — nothing to port as-is.
+
+**Audit progress:** 7 of 8 high-value items reviewed. Next up: Aged Inventory & Market Analytics, EVL - Nationwide Scan Engine, Vehicle Acquisition Radar.
 
 ---
 
