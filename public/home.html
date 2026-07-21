@@ -401,8 +401,9 @@ body { display:block !important; align-items:unset !important; justify-content:u
 .evl-nav, .evl-ws-nav { position:sticky !important; top:0 !important; z-index:9999 !important; width:100% !important; }
 </style>
 <style id="quick-search-css">
-.quick-search-section{padding:56px 20px 64px;background:var(--bg);}
-.quick-search-inner{max-width:900px;margin:0 auto;text-align:center;}
+.quick-search-section{padding:56px 20px 64px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:48px;max-width:1400px;margin:0 auto;}
+.quick-search-logo{flex-shrink:0;width:190px;height:auto;}
+.quick-search-inner{max-width:900px;flex:1;text-align:center;}
 .quick-search-box{background:var(--s1);border:2px solid rgba(43,132,254,0.25);border-radius:16px;padding:18px 24px;display:flex;align-items:center;gap:12px;}
 .quick-search-box input{flex:1;background:transparent;border:none;outline:none;color:var(--gray);font-size:18px;font-family:'Barlow',sans-serif;min-width:0;}
 .quick-search-box input::placeholder{color:var(--gray);opacity:0.7;}
@@ -411,6 +412,9 @@ body { display:block !important; align-items:unset !important; justify-content:u
 .quick-cat-card:hover{border-color:var(--blue);transform:translateY(-4px);}
 .quick-cat-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
 .quick-cat-sub{font-size:18px;color:var(--gray);line-height:1.6;}
+@media(max-width:1150px){
+  .quick-search-logo{display:none;}
+}
 @media(max-width:768px){
   .quick-cat-grid{grid-template-columns:1fr 1fr;}
 }
@@ -453,6 +457,7 @@ body { display:block !important; align-items:unset !important; justify-content:u
 
 <!-- QUICK SEARCH + CATEGORIES -->
 <section class="quick-search-section">
+  <img src="/images/logo-icon-blue.png" alt="Express Vehicle Locators" class="quick-search-logo">
   <div class="quick-search-inner">
     <div class="quick-search-box">
       <span style="font-size:18px;">🔍</span>
