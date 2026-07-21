@@ -511,7 +511,19 @@ Three build-effort tiers discussed:
 
 Direction discussed but not yet confirmed as final: start with Low tier to validate demand before investing in Medium or High.
 
+**3. WordPress audit — Incentive Reference Links (Private) content confirmed (July 21, 2026)**
+Pulled the actual content of this page (ID 817) via phpMyAdmin. It's just a static list of 16 manufacturer incentive page URLs (Toyota, Ford, Chevrolet, Honda, Nissan, Hyundai, Kia, Jeep, Dodge, Ram, Subaru, Volkswagen, Mazda, Chrysler, GMC, Buick), no researched rebate data, no employer-perks content. Reclassified from 🔴 high-value to 🟡 low-priority/easily-recreated — nothing here needs careful migration. Remaining 🔴 pages from the July 18 audit still need the same treatment (pull actual content before deciding keep/port/discard), starting with Truck Customization Protocol.
+
+**4. Employer-perks auto-buying channel — research only, not yet actioned (July 21, 2026)**
+Sparked by a TrueCar/Lifecare lead Tim saw at his dealership (Dow Chemical employee, "Buyer's Bonus up to $2,000"). Confirmed via web research: this is **one single TrueCar-funded program**, white-labeled across at least 8 employee-perks marketplace portals (Lifecare, PerkSpot, Beneplace, Working Advantage, BenefitHub, Perks At Work, Carperks, Corporate Perks). Mechanics confirmed from actual terms and conditions:
+- The $2,000 is a cap on two separate insurance-backed reimbursements (20% repair cost up to $500 x2/year, plus deductible reimbursement up to $500 x2/year), underwritten by Voyager Indemnity Insurance Company (an Assurant company)
+- TrueCar funds the insurance premium itself as a customer-acquisition cost
+- TrueCar's real revenue comes from fees charged to Certified Dealers for access to the buyer pipeline this whole network (including all 8 portals) feeds them
+- The 8 portals are pure distribution/branding partners, not separate funders — employers pay the portal company one flat fee for the whole perks catalog, not specifically for the car-buying line item
+
+**Why this matters for EVL, if pursued later:** two possible angles — (a) approach the 8 portal companies to get EVL listed as an alternative to TrueCar, or (b) approach large employers directly to pitch EVL as a better version of what TrueCar already gives their employees. Any EVL-side perk wouldn't need new revenue to fund it — could mirror TrueCar's model and be paid for out of existing EVL service margin (Find My Vehicle, Deal Gap, Trade-In, Finance Rate) as a customer-acquisition/retention cost, not a new business line. **Status: idea logged for future discussion, no action taken.**
+
 ---
 
-*Last updated: July 18, 2026*
+*Last updated: July 21, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
