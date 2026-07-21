@@ -531,7 +531,24 @@ Reference data worth keeping for a future Aftermarket price-reference sheet (sam
 - **Lift height price bands**: Leveling (1-3"): $800-1,500 · Suspension Lift (3-6"): $2,500-4,500 · Long Travel (6-10"): $5,000-8,000 · Extreme Lift (10"+): $8,000-15,000
 - **Additional category ideas beyond the current 4** (Lift Kits & Suspension, Wheels & Tires, Light Bars, Bed Accessories): custom bumpers, winch, off-road lighting, performance exhaust, engine tuning, running boards/steps — not yet evaluated for inclusion, flagging for future discussion since some (exhaust, engine tuning) may carry emissions/warranty complexity worth a BITOP pass before adding.
 
-**Audit progress:** Incentive Reference Links ✅ reviewed (low-value) · Truck Customization Protocol ✅ reviewed (superseded, data harvested) · Next up: Vendor Membership / Vendor Registration.
+**Audit progress:** Incentive Reference Links ✅ reviewed (low-value) · Truck Customization Protocol ✅ reviewed (superseded, data harvested) · Vendor Membership/Vendor Registration ✅ reviewed (empty plugin shortcodes, no content) · EVL Trade-In Legal/Documentation ✅ reviewed (see below, needs form-number correction) · Next up: Real Time Lease Calculus / EVL - Lease Match Console.
+
+**6. WordPress audit — Vendor Membership / Vendor Registration confirmed empty (July 21, 2026)**
+IDs 288 & 289. Both pages contain only a single WCFM Marketplace plugin shortcode each (`[wcfm_vendor_membership]`, `[wcfm_vendor_registration]`) — zero custom content, purely plugin-generated placeholder pages. Nothing to review, port, or preserve. Safe to delete or ignore.
+
+**7. WordPress audit — EVL Trade-In: Legal, Documentation, and ID Verification Requirements confirmed (July 21, 2026)**
+ID 1062. This one has real substance — worth handling carefully rather than discarding.
+
+Standard trade-in document checklist (with requirement levels): Vehicle Title (mandatory, must match seller's government ID), Government-Issued ID (mandatory), Vehicle Registration (mandatory), Proof of Insurance (mandatory), Loan Payoff Information (as applicable), Lien Release (as applicable), Maintenance Records (recommended), All Keys and Manuals (recommended).
+
+Special legal scenarios covered — genuinely valuable edge cases not currently handled anywhere on the live platform:
+- **Deceased owner, in probate:** Letters of Administration, certified death certificate, vehicle title (or replacement form), Statement of Facts, odometer disclosure if applicable
+- **Deceased owner, without probate:** Affidavit for Transfer Without Probate, certified death certificate, vehicle title, plus a required 40-day waiting period after the owner's death
+- **Divorce:** both parties must mutually agree and sign the title (content appears to cut off here in the source — may be incomplete)
+
+**⚠️ Critical flag before this goes anywhere customer- or salesperson-facing:** the specific form numbers cited (REG 5, REG 227, REG 256, REG 262) are **California DMV form numbers** — the "REG" prefix is a California-specific naming convention. EVL's launch state is Texas, with TX/TN/CO/WA/MN/NC/OH/MI/NV as the other green-light states. **None of these California form numbers are correct for any state EVL currently operates in.** Texas uses different forms entirely (e.g., Form 130-U for title applications, VTR-262 for heirship affidavits). If this were used as-is with a Texas customer, it would be actively incorrect legal/procedural guidance.
+
+**Verdict:** the overall structure (standard doc checklist + deceased-owner/divorce edge cases) is good and worth building into the trade-in flow eventually — these are real situations that will come up. But the specific form numbers must be re-verified per state before any of this becomes customer-facing or salesperson-facing guidance. Not a "port as-is" — a "good outline, wrong jurisdiction" situation. Flagged for correction, not yet built anywhere.
 
 ---
 
