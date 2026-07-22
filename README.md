@@ -564,6 +564,43 @@ ID 2365. A styled dark-theme mockup titled "USED CAR TITLE CLERK DIRECTORY" — 
 
 **Audit progress:** 7 of 8 high-value items reviewed. Next up: Aged Inventory & Market Analytics, EVL - Nationwide Scan Engine, Vehicle Acquisition Radar.
 
+**10. WordPress audit — Aged Inventory & Market Analytics, Nationwide Scan Engine confirmed superseded (July 21, 2026)**
+- **EVL - Nationwide Scan Engine** (ID 1662) — barely-started stub, just a header and empty CSS grid, never populated with real content. Also references a broken image URL from the old WP media library. Discard.
+- **Aged Inventory & Market Analytics** (ID 1785) — two hardcoded demo rows with fake "days on lot" data. Checked against the live site first this time — `ws-hub.html` already has real, live aged-inventory tracking (15 references confirmed). Fully superseded, same as the lease pages. Discard.
+
+**11. WordPress audit — Vehicle Acquisition Radar built for real, Certified Value Evaluator absorbed into it (July 21, 2026)**
+ID 2394 (Vehicle Acquisition Radar) turned out to be genuinely new ground — checked `trade-in-exchange.html` first and confirmed it has zero VIN decode and zero condition-report fields (it only handles equity/lien/LTV/bidding math). Also checked Certified Value Evaluator (ID 1762), which turned out to be an earlier, thinner draft of the same underlying idea — just a "Titanium 10 Grid" photo checklist and a value reveal, no VIN decode, no condition Q&A.
+
+**Built and shipped:** `public/vehicle-evaluation.html` — real NHTSA VIN decode, full 8-category condition report (keys, title status with lien guidance, paint, hail, body damage, glass, tires, interior), the exact 10-photo EVL Certified angle set absorbed from Certified Value Evaluator (Front-L/R, Rear-L/R, Interior, Console, VIN/ID, Odometer, Bed/Cargo, Spare), real Cloudinary uploads, an honest value **range** (not a fake precise number) with a "pending EVL team review" disclaimer, and a real Firestore save to `evl_vehicle_evaluations` with a reference number. Firestore rule published. Tested end-to-end live — VIN decoded a real 2019 Toyota Highlander, all 10 photos uploaded successfully, value range displayed ($11,400–$30,400 on the test run), submission confirmed with reference `EVL-EVAL-851492`. Built once, no debugging needed.
+
+**Note on this session:** mid-build, the GitHub personal access token expired ("Claude access" token, expired same-day). Generated a replacement token with `repo` scope; all pushes resumed normally once the new token was in place.
+
+**12. WordPress audit — Virtual Test Drive confirmed, closes out the audit (July 21, 2026)**
+ID 131, the page that originally prompted this whole audit. Confirmed correct ID after an initial mix-up (leftover query text in the SQL box pulled dozens of unrelated revision-history rows on the first attempt — cleared and re-queried cleanly).
+
+Content is pure marketing copy, zero functional code (no scheduling widget, no video embed, no 360 viewer). Describes four modalities:
+1. **Personalized Walkthroughs** — live video call with a consultant — this exactly matches the "Low tier" plan already locked on July 18. Validates the existing plan, nothing to change.
+2. **HD Video Library** — pre-recorded professional videos per model
+3. **360-Degree Views** — interactive interior/exterior tours (Matterport/Spincar-style)
+4. **Feature Demonstrations** and **Detailed Specifications** — overlaps with existing platform content elsewhere (Compare, My Buying Power)
+
+Items 2 and 3 are content-production or third-party-vendor decisions, not development tasks — logged as future considerations requiring a business decision (film in-house vs. hire an imaging vendor) before any code gets written. Stray dead snippet found at the top of the page (`EVL FX: Confetti Burst` placeholder link) — not meaningful, ignored.
+
+---
+
+## ✅ WORDPRESS AUDIT COMPLETE (July 18-21, 2026)
+
+All 69 pages inventoried, all 8 flagged high-value items individually reviewed against actual page content and cross-checked against the live platform before any verdict was made. Final tally:
+- **Fully superseded, safe to discard:** Truck Customization Protocol, Real Time Lease Calculus, EVL - Lease Match Console, Aged Inventory & Market Analytics, EVL - Nationwide Scan Engine
+- **Empty/no content:** Vendor Membership, Vendor Registration
+- **Low value, easily recreated:** Incentive Reference Links
+- **Reference data harvested for later use:** lift kit brands + price bands (from Truck Customization Protocol)
+- **Flagged for correction before use:** EVL Trade-In Legal/Documentation (good structure, California-specific form numbers need Texas/green-light-state correction)
+- **Built for real, shipped, tested:** Vehicle Acquisition Radar (absorbing Certified Value Evaluator's photo standard) → `vehicle-evaluation.html`
+- **Validated existing plan, no changes needed:** Virtual Test Drive → confirms the Low-tier video-call plan from July 18 is correct
+- **New future considerations surfaced:** employer-perks auto-buying channel (separate thread), HD video library + 360° tours for Virtual Test Drive (both need a vendor/production decision, not code)
+- **Also live from this session:** UCD / Dealer Contact Directory (`admin-ucd-directory.html`) — pulls real onboarding data already being collected, no new fields needed
+
 ---
 
 *Last updated: July 21, 2026*
