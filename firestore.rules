@@ -83,6 +83,12 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    // evl_vehicle_evaluations — EVL Certified Vehicle Evaluation submissions
+    // (VIN decode + condition report + photos + contact info), same open pattern
+    match /evl_vehicle_evaluations/{docId} {
+      allow read, write: if true;
+    }
+
     // evl_ws_dealers — dealer owns their record, admin controls status
     match /evl_ws_dealers/{dealerId} {
       allow read: if isAdmin() || isActiveDealer();
