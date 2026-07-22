@@ -561,6 +561,14 @@
       "destination": "/admin-ucd-directory.html"
     },
     {
+      "source": "/vehicle-evaluation",
+      "destination": "/vehicle-evaluation.html"
+    },
+    {
+      "source": "/vehicle-evaluation.html",
+      "destination": "/vehicle-evaluation.html"
+    },
+    {
       "source": "/find-my-vehicle",
       "destination": "/find-my-vehicle.html"
     },
