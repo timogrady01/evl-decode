@@ -399,6 +399,22 @@
           />
         </div>
 
+        <!-- Appointment Type selector -->
+        <div class="form-group">
+          <label>Appointment Type</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+            <div class="apt-type-option selected" id="typeInPerson" onclick="selectAppointmentType('in_person')" style="background:#0d1829;border:2px solid #4a9eff;border-radius:10px;padding:14px;text-align:center;cursor:pointer;min-height:48px;">
+              <div style="font-size:20px;margin-bottom:4px;">🏢</div>
+              <div style="font-size:13px;font-weight:700;">In-Person Visit</div>
+            </div>
+            <div class="apt-type-option" id="typeVirtual" onclick="selectAppointmentType('virtual_test_drive')" style="background:#0d1829;border:2px solid #2a3f5f;border-radius:10px;padding:14px;text-align:center;cursor:pointer;min-height:48px;">
+              <div style="font-size:20px;margin-bottom:4px;">🎥</div>
+              <div style="font-size:13px;font-weight:700;">Virtual Test Drive</div>
+            </div>
+          </div>
+          <small id="apptTypeNote" style="color:#7a8aa0;margin-top:8px;display:block;">We'll see you at the scheduled time and location.</small>
+        </div>
+
         <!-- Date picker -->
         <div class="form-group">
           <label for="appointmentDate">Appointment Date</label>
@@ -585,6 +601,30 @@
     // FORM SUBMISSION
     // ══════════════════════════════════════════════════════════
 
+    let selectedAppointmentType = 'in_person';
+
+    function selectAppointmentType(type) {
+      selectedAppointmentType = type;
+      const inPersonEl = document.getElementById('typeInPerson');
+      const virtualEl = document.getElementById('typeVirtual');
+      const noteEl = document.getElementById('apptTypeNote');
+
+      if (type === 'in_person') {
+        inPersonEl.style.borderColor = '#4a9eff';
+        inPersonEl.classList.add('selected');
+        virtualEl.style.borderColor = '#2a3f5f';
+        virtualEl.classList.remove('selected');
+        noteEl.textContent = "We'll see you at the scheduled time and location.";
+      } else {
+        virtualEl.style.borderColor = '#4a9eff';
+        virtualEl.classList.add('selected');
+        inPersonEl.style.borderColor = '#2a3f5f';
+        inPersonEl.classList.remove('selected');
+        noteEl.textContent = "Your EVL consultant will video call you at the scheduled time — no need to drive anywhere. You'll get a text with their contact info shortly before your appointment.";
+      }
+    }
+    window.selectAppointmentType = selectAppointmentType;
+
     document.getElementById('bookingForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -644,7 +684,8 @@
           customerEmail: customerEmail,
           status: 'booked',
           createdAt: serverTimestamp(),
-          sourceType: 'verification'
+          sourceType: 'verification',
+          appointmentType: selectedAppointmentType
         };
 
         // Add to Firebase
@@ -702,6 +743,7 @@
             confirmationUrl.searchParams.append('appointmentTime', selectedTime);
             confirmationUrl.searchParams.append('customerPhone', customerPhone);
             confirmationUrl.searchParams.append('customerEmail', customerEmail);
+            confirmationUrl.searchParams.append('appointmentType', selectedAppointmentType);
             window.location.href = confirmationUrl.toString();
         }, 2000);
 
