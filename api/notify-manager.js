@@ -17,7 +17,7 @@ const client = twilio(accountSid, authToken);
 
 // Manager phone numbers (UPDATE THESE)
 const MANAGER_NUMBERS = {
-  'sales-manager': '+14698772165',
+  'sales-manager': '+14694043192',
   'internet-manager': '+14694043192'
 };
 
