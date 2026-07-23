@@ -562,6 +562,16 @@
     // TIME SLOTS: GENERATE 8AM - 5PM, EVERY 30 MINUTES
     // ══════════════════════════════════════════════════════════
 
+    function formatTime12hr(time24) {
+      const [hourStr, minStr] = time24.split(':');
+      let hour = parseInt(hourStr, 10);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      hour = hour % 12;
+      if (hour === 0) hour = 12;
+      return `${hour}:${minStr} ${ampm}`;
+    }
+    window.formatTime12hr = formatTime12hr;
+
     function generateTimeSlots() {
       const slotsContainer = document.getElementById('timeSlots');
       slotsContainer.innerHTML = '';
@@ -578,7 +588,7 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'time-slot';
-        btn.textContent = time;
+        btn.textContent = formatTime12hr(time);
         
         btn.addEventListener('click', (e) => {
           e.preventDefault();
@@ -679,7 +689,7 @@
           vehicleInfo: finalVehicle,
           appointmentDate: appointmentDate,
           appointmentTime: appointmentTime,
-          appointmentTimeString: selectedTime,
+          appointmentTimeString: formatTime12hr(selectedTime),
           customerPhone: customerPhone,
           customerEmail: customerEmail,
           status: 'booked',
@@ -709,7 +719,7 @@
                 customerName: customerName,
                 vehicleInfo: vehicleInfo,
                 appointmentDate: appointmentDate,
-                appointmentTimeString: selectedTime,
+                appointmentTimeString: formatTime12hr(selectedTime),
                 customerPhone: customerPhone,
                 customerEmail: customerEmail,
                 recordId: recordId,
@@ -740,7 +750,7 @@
             confirmationUrl.searchParams.append('customerName', finalName);
             confirmationUrl.searchParams.append('vehicleInfo', finalVehicle);
             confirmationUrl.searchParams.append('appointmentDate', appointmentDate);
-            confirmationUrl.searchParams.append('appointmentTime', selectedTime);
+            confirmationUrl.searchParams.append('appointmentTime', formatTime12hr(selectedTime));
             confirmationUrl.searchParams.append('customerPhone', customerPhone);
             confirmationUrl.searchParams.append('customerEmail', customerEmail);
             confirmationUrl.searchParams.append('appointmentType', selectedAppointmentType);
