@@ -632,5 +632,17 @@ All 69 pages inventoried, all 8 flagged high-value items individually reviewed a
 
 ---
 
+## STATE SALES TAX / TRADE-IN CREDIT — MOVED TO FIRESTORE (July 22, 2026)
+
+**What changed:** `deal-gap.html` previously hardcoded Texas's 6.25% rate directly in the JS with no way to handle other states. Added a new Firestore collection, `evl_state_tax_rules` (one doc per state, keyed by 2-letter code), and a "Vehicle Will Be Registered In" state selector on the form. The tax calculation now fetches the selected state's rate, trade-in credit eligibility, and flat-cap rules (if any) live from Firestore, replacing the Texas-only hardcode.
+
+**Deliberately seeded honestly — only Texas so far:** Texas is the only state with real, verified data (6.25%, trade-in credit eligible, sourced directly from the Texas Comptroller's own published rules). Every other state was left intentionally unseeded rather than filled in with the loosely-sourced generic numbers from earlier research passes — presenting unverified tax data as reliable would be worse than leaving it blank. `deal-gap.html` gracefully falls back to Texas's rate as a placeholder for any state without a real record, and shows a clear "this state's exact tax rules haven't been verified yet" note to whoever's using the tool, so nobody mistakes a placeholder for a confirmed number.
+
+**Fields per state document:** `taxRate`, `taxType` ('percentage' | 'flat_cap' | 'ad_valorem'), `tradeInCredit` (boolean), `capAmount` (for flat-cap states), `confidence` ('confirmed' | 'unconfirmed'), `source`, `note`.
+
+**Next step, whenever picked back up:** research and verify each of the other 20 states' actual sales tax and trade-in credit rules against that state's own tax authority — same standard as Texas — before seeding real data for them. Same underlying research gap as the WS Exchange licensing table (15 states there also still need re-verification) — worth tackling together as one state-by-state pass covering both licensing and tax rules per state, rather than two separate passes.
+
+---
+
 *Last updated: July 22, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
