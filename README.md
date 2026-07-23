@@ -652,5 +652,20 @@ Talked through a few honest alternative angles (discount EVL's own services, lea
 
 ---
 
+## CHARITY DONATION FEATURE — TABLED, THINKING IT THROUGH (July 22, 2026)
+
+Came up as a replacement idea for the scrapped Employer Perks Channel — instead of a cash-back perk competing with TrueCar, EVL gives back to a cause with every transaction. Genuinely different, values-based differentiator rather than a smaller version of TrueCar's play.
+
+**Decisions locked in so far:**
+- Flat dollar amount per transaction (consistent with EVL's overall flat-fee, no-commission identity) — starting at **$5**, with the explicit plan to increase as revenue grows
+- Curated list only, **no write-in field** — verification, payout scalability, and brand-control reasons all point the same direction
+- Cause list: **Tunnel to Towers (T2T)** and **Susan G. Komen** confirmed. **Wounded Warrior Project** was researched and confirmed as a legitimate 501(c)(3) (EIN 20-2370934) — but Tim wants to hold off on including it for now after seeing mixed charity-rating reviews (Charity Navigator: 4-star/positive; CharitiesForVets.org: flags 29.8% overhead vs. their 25% recommended max, does not recommend). Not disqualified — just wants to look closer himself first.
+
+**Why this is tabled, not built:** discovered mid-build that the actual checkout flow isn't a webpage form — a salesperson/system triggers `/api/send-payment-link`, which texts/emails the customer a pre-made Stripe Payment Link (`buy.stripe.com/...`), and the customer completes payment entirely on Stripe's hosted page. There's no on-site form field to just attach a cause-selector to. Two real options exist (capture the cause during lead intake before the link is sent, or add it as a Stripe-native custom field configured directly in the Stripe Dashboard) — **Tim wants to think this through further before picking either.**
+
+**Status: tabled, not queued with a specific next step. Revisit when ready.**
+
+---
+
 *Last updated: July 22, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
