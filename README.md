@@ -644,5 +644,13 @@ All 69 pages inventoried, all 8 flagged high-value items individually reviewed a
 
 ---
 
+## EMPLOYER PERKS CHANNEL — EXPLORED AND SCRAPPED (July 22, 2026)
+
+Picked back up from the July 21 research (TrueCar's $2,000 Buyer's Bonus, the 8 white-label portal companies). Talked through the real strategic tension: TrueCar's perk is funded by fees they charge Certified Dealers — a revenue stream EVL's direct-to-customer paid-services model doesn't have — so EVL couldn't copy the mechanic dollar-for-dollar without funding it entirely out of its own margin. Also confirmed the "$2,000" figure is a marketing ceiling, not a typical payout (requires two separate repair events AND two separate deductible claims in the same year to max out).
+
+Talked through a few honest alternative angles (discount EVL's own services, lead with advisory expertise instead of a cash perk, a smaller "up to $X" credit modeled on the same anchor-number psychology as TrueCar's headline). **Tim's call: the whole direction didn't feel right, scrapped rather than force it.** No further action — not queued for later, genuinely closed out.
+
+---
+
 *Last updated: July 22, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
