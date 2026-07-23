@@ -55,9 +55,10 @@ service cloud.firestore {
     }
 
     // evl_appointments — appointment notification engine
-    // Customer can create, admin can read all
+    // Customer can create AND update (e.g. confirm status), admin can read/write all
     match /evl_appointments/{docId} {
       allow create: if true; // allow any authenticated or guest customer to book
+      allow update: if true; // allow guest customer to confirm their own appointment
       allow read, write: if isAdmin();
       allow read: if request.auth != null &&
         resource.data.uid == request.auth.uid;
