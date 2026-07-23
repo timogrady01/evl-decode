@@ -479,6 +479,7 @@
     const appointmentTime = params.get('appointmentTime') || '—';
     const customerPhone = params.get('customerPhone') || '—';
     const customerEmail = params.get('customerEmail') || '—';
+    const appointmentType = params.get('appointmentType') || 'in_person';
 
     // Display appointment details
     document.getElementById('customerNameDisplay').textContent = customerName;
@@ -487,6 +488,17 @@
     document.getElementById('timeDisplay').textContent = appointmentTime;
     document.getElementById('phoneDisplay').textContent = customerPhone;
     document.getElementById('emailDisplay').textContent = customerEmail;
+
+    // Show a note if this is a Virtual Test Drive so the customer knows what to expect
+    if (appointmentType === 'virtual_test_drive') {
+      const noteEl = document.createElement('p');
+      noteEl.style.cssText = 'color:#4a9eff;font-size:14px;margin-top:10px;padding:12px;background:rgba(74,158,255,0.1);border-radius:8px;';
+      noteEl.textContent = '🎥 This is a Virtual Test Drive — your EVL consultant will video call you at the scheduled time. No need to drive anywhere.';
+      const emailDisplayEl = document.getElementById('emailDisplay');
+      if (emailDisplayEl && emailDisplayEl.parentElement && emailDisplayEl.parentElement.parentElement) {
+        emailDisplayEl.parentElement.parentElement.appendChild(noteEl);
+      }
+    }
 
     // ════════════════════════════════════════════════════════════════
     // UPSELL: FAIR DEAL WORKSHEET - NEW
@@ -586,7 +598,8 @@
               appointmentTime: appointmentTime,
               customerPhone: customerPhone,
               customerEmail: customerEmail,
-              type: 'confirmation'
+              type: 'confirmation',
+              appointmentType: appointmentType
             })
           });
 
