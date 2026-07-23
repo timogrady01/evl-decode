@@ -1134,6 +1134,7 @@ window.saveDealGap = async function(data) {
         <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(43,132,254,0.2);">
           <div style="font-size:13px;color:#C8D0DC;margin-bottom:8px;">Sales Tax (6.25%)</div>
           <div style="font-size:18px;font-weight:700;color:#2B84FE;" id="rpt-tax">—</div>
+          <div style="font-size:12px;color:#C8D0DC;margin-top:4px;display:none;" id="rpt-tax-credit-note">—</div>
         </div>
         <div style="margin-top:16px;padding:16px;background:rgba(0,200,83,0.1);border-radius:8px;">
           <div style="font-size:12px;color:#C8D0DC;margin-bottom:6px;">Total with Tax</div>
@@ -1421,14 +1422,27 @@ function buildReport() {
     const payEVL    = principal * rEVL * Math.pow(1+rEVL, fTerm) / (Math.pow(1+rEVL, fTerm) - 1);
     rateMonthlySavings = payDealer - payEVL;
     totalRateSavings   = rateMonthlySavings * fTerm;
+  }
 
-  // ── TEXAS SALES TAX (6.25% on full vehicle price) ──
-  // FUTURE: Add state selector here for multi-state support
+  // ── TEXAS SALES TAX (6.25%, with trade-in credit per Texas Comptroller rules) ──
+  // Tax is computed on (asking price - trade-in allowance), floored at $0 —
+  // a "trade-down" (trade worth more than the new vehicle) owes no tax at all.
+  // FUTURE: Add state selector here for multi-state support — other states
+  // have different rules (e.g. NC caps at $250 flat, SC at $500 flat, some
+  // states don't allow a trade-in credit at all).
   const taxRate = 0.0625; // Texas: 6.25%
-  const salesTax = vAsking * taxRate;
+  const tradeCredit = (hasTrade && tOffer > 0) ? tOffer : 0;
+  const taxableAmount = Math.max(vAsking - tradeCredit, 0);
+  const salesTax = taxableAmount * taxRate;
   const totalWithTax = vAsking + salesTax;
   document.getElementById('rpt-tax').textContent = '$' + fmt(salesTax);
   document.getElementById('rpt-total-tax').textContent = '$' + fmt(totalWithTax);
+  const taxCreditNoteEl = document.getElementById('rpt-tax-credit-note');
+  if (tradeCredit > 0) {
+    taxCreditNoteEl.textContent = 'Includes a $' + fmt(tradeCredit) + ' trade-in tax credit — Texas only taxes the price difference, not the full vehicle price.';
+    taxCreditNoteEl.style.display = 'block';
+  } else {
+    taxCreditNoteEl.style.display = 'none';
   }
 
   // Total gap
