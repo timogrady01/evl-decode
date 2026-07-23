@@ -603,5 +603,20 @@ All 69 pages inventoried, all 8 flagged high-value items individually reviewed a
 
 ---
 
-*Last updated: July 21, 2026*
+## SALES TAX / STATE FEE ACCURACY (July 22, 2026)
+
+**Bug fixed — deal-gap.html Texas sales tax calculation:** Was calculating tax on the full asking price with zero trade-in credit applied, and the whole tax calculation only ran when there happened to be a finance rate gap. Confirmed via Texas Comptroller's own published rules that Texas allows a trade-in tax credit — tax is owed only on (price − trade-in allowance), floored at $0 (a "trade-down," where the trade is worth more than the new vehicle, owes no tax at all). Fixed: tax now always calculates regardless of rate gap, correctly subtracts the trade-in allowance (`tOffer`), and a new UI note shows the customer exactly how much trade-in credit was applied and why.
+
+**Confirmed: this is not just a Texas edge case — every state has its own rulebook.** Researched real examples while investigating an Alaska/Kodiak fee question from Tim's day job:
+- **North Carolina** (a green-light state) caps its vehicle tax at a flat **$250** regardless of price
+- **South Carolina** caps at a flat **$500**
+- **Georgia** uses a flat title ad valorem tax instead of sales tax entirely
+- **Alaska** has no state sales tax at all, but individual boroughs/cities can levy their own — Kodiak charges 7% but caps the *taxable amount* at $3,000 per transaction (confirmed via the City of Kodiak's own published tax ordinance), meaning tax on any vehicle over $3,000 is capped at $210 regardless of price
+- Some states don't allow a trade-in credit at all
+
+**Action needed before expanding to any new green-light state (TN, CO, WA, MN, NC, OH, MI, NV):** research and verify that state's actual trade-in credit eligibility, tax structure (percentage vs. flat cap vs. ad valorem), and any local/municipal overlay rules against that state's own official tax authority — same standard already applied to the Texas title-forms research. Not yet started for the other 8 states.
+
+---
+
+*Last updated: July 22, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
