@@ -667,5 +667,20 @@ Came up as a replacement idea for the scrapped Employer Perks Channel — instea
 
 ---
 
+## VIRTUAL TEST DRIVE — LOW TIER BUILT AND SHIPPED (July 22, 2026)
+
+Built exactly to the Low-tier spec locked July 18 and validated against the original WordPress page's "personalized walkthrough via live video call" description on July 21-22. No new vendor integration, no new cost — reuses 100% of the existing appointment booking + Twilio/Resend notification infrastructure.
+
+**What changed, three files:**
+- **`appointment-booking.html`** — new "Appointment Type" selector (🏢 In-Person / 🎥 Virtual Test Drive), saved as `appointmentType` field on the Firestore appointment record, carried through the confirmation flow via URL params
+- **`appointment-confirmation.html`** — shows a clear on-screen note for Virtual Test Drive bookings explaining what to expect (consultant will video call, no driving needed)
+- **`api/send-appointment-notifications.js`** — customer SMS/email customized to explain the video-call format. **Critically, the admin/salesperson email is now clearly flagged** ("🎥 New Virtual Test Drive Booked — this is a video call appointment, not an in-person visit. Start a FaceTime, Zoom, or Google Meet call at the scheduled time.") — this is the piece that actually makes Low tier functional, since there's no auto-generated meeting link; the salesperson has to know to initiate the call themselves.
+
+**Not yet tested end-to-end** — built and validated for syntax, but a real booking hasn't been run through the full flow yet (customer books → confirms → Tim receives the "start a video call" admin alert). Good first task next session: book a test Virtual Test Drive appointment and confirm all three notification paths (customer SMS, customer email, admin email) come through correctly with the video-call framing.
+
+**Still on the roadmap, not started:** HD video library and 360° interactive tours — both need a real business decision (film in-house vs. hire a third-party imaging vendor like Matterport/Spincar) before any code gets written, per the July 21-22 audit findings.
+
+---
+
 *Last updated: July 22, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
