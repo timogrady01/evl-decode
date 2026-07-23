@@ -618,5 +618,19 @@ All 69 pages inventoried, all 8 flagged high-value items individually reviewed a
 
 ---
 
+## WS EXCHANGE STATE LICENSING — MOVED TO FIRESTORE (July 22, 2026)
+
+**What changed:** The green/yellow/red per-state licensing tier data (previously only hardcoded inside `ws-hub.html`) is now centralized in a new Firestore collection, `evl_state_licensing` — one document per state, keyed by 2-letter state code. `ws-hub.html`'s `showHub()` now fetches this live at click-time and displays it dynamically, with a safe fallback to the old static value if the fetch fails. Updating a state's status going forward means editing one Firestore record, not hunting through HTML.
+
+**Georgia specifically — put on hold, not resolved:** Deep-dived the actual Georgia statute (O.C.G.A. § 43-47-2) during this session. Confirmed the "motor vehicle broker" definition is narrower than initially assumed — it requires negotiating a sale "on behalf of another," which may not capture a neutral platform where dealers bid directly with each other. However, the same statute has a **separate auction-company provision** ("Any motor vehicle auction company selling or offering for sale used motor vehicles to independent motor vehicle dealers... shall be deemed to be a used motor vehicle dealer") that appears to apply directly to WS Exchange's actual phase-based bidding mechanics (Phase 1 FROR, Phase 2 sealed bidding), regardless of the broker question. **Genuine legal gray area — not resolved either direction.** Tim's call: put Georgia on the back burner rather than resolve now, since it's only one of 22 hub markets. Seeded as `pending_review`, `atlanta` hub already correctly shows `live: false` in `ws-hub.html` (confirmed this was already the case before any of tonight's changes — no active exposure, contrary to initial concern raised this session).
+
+**Confidence levels seeded honestly, not uniformly:** Of the 21 non-Texas states, only MN, NC, OH, MI, NV (green) and CA (red) were independently re-verified against actual statute text or official sources this session — marked `confidence: 'confirmed'`. The remaining states (IL, FL, PA, MI, VA, IN, MO, WI, MD — yellow; NJ — red; CO, AZ, TN, WA — pending_review) are carried over from the June 23, 2026 research pass and marked `confidence: 'unconfirmed'` — not independently re-verified this session, should not be treated as fully reliable until checked against each state's actual statute the same way Texas and Georgia were.
+
+**Environment note:** Firestore isn't reachable from Claude's sandboxed bash environment (network egress is allowlisted to GitHub/npm/PyPI only, not Google/Firebase domains) — direct Node.js seeding scripts fail. The working pattern is a one-time browser-based seed page that runs the same logic via the client SDK in the user's browser, which has full internet access. Used this pattern to seed `evl_state_licensing`; the one-time seed page was removed from the repo after successful use.
+
+**Next step, whenever picked back up:** independently re-verify the 15 states still marked `confidence: 'unconfirmed'`, one at a time, against each state's actual statute — same standard already applied to Texas (title forms), Texas (trade-in tax credit), and Georgia (broker/auction-company provisions).
+
+---
+
 *Last updated: July 22, 2026*
 *Maintained by: Claude (Anthropic) in partnership with Tim O'Grady, EVL Founder*
