@@ -911,7 +911,31 @@ body{overflow-x:hidden;background:var(--bg);color:var(--white);font-family:var(-
 
 </div><!-- /ws-wrap -->
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho",
+    authDomain: "evl-acquisition-radar.firebaseapp.com",
+    projectId: "evl-acquisition-radar",
+    storageBucket: "evl-acquisition-radar.firebasestorage.app",
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  window.EVL_HUB_DB = {
+    async getStateLicensing(stateCode){
+      if(!stateCode) return null;
+      const snap = await getDoc(doc(db, 'evl_state_licensing', stateCode));
+      return snap.exists() ? snap.data() : null;
+    }
+  };
+  window.dispatchEvent(new Event('evl-hub-db-ready'));
+</script>
+
 <script>
+// ── FIREBASE: LIVE STATE LICENSING LOOKUP ──
 // ── TAB SWITCH ──
 function switchTab(tab,btn){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
@@ -953,18 +977,48 @@ const HUBS = {
   lasvegas:{name:'LAS VEGAS, NV',        state:'NV',lat:36.1699, lng:-115.1398,live:false, status:'🔜 COMING SOON',color:'#FFD700', label:'COMING SOON'}
 };
 
-function showHub(key){
+async function showHub(key){
   const h = HUBS[key];
   if(!h) return;
   const panel = document.getElementById('hub-info');
   document.getElementById('hub-name').textContent = '📍 '+h.name;
+
+  // Pull live licensing tier from Firestore, falling back to the static
+  // hardcoded value if the fetch fails or no record exists yet for this state
+  let statusVal = h.status;
+  let statusColor = 'var(--gold)';
+  try {
+    if(!window.EVL_HUB_DB){
+      await new Promise(res => window.addEventListener('evl-hub-db-ready', res, { once:true, }));
+    }
+    const licensing = await window.EVL_HUB_DB.getStateLicensing(h.state);
+    if(licensing){
+      const TIER_LABELS = {
+        green: '🟢 LIVE / OPEN',
+        yellow: '🟡 LICENSING REQUIRED',
+        red: '🔴 NOT AVAILABLE',
+        pending_review: '🟡 UNDER LEGAL REVIEW'
+      };
+      const TIER_COLORS = {
+        green: 'var(--green)',
+        yellow: 'var(--gold)',
+        red: '#FF3333',
+        pending_review: 'var(--gold)'
+      };
+      statusVal = TIER_LABELS[licensing.tier] || h.status;
+      statusColor = TIER_COLORS[licensing.tier] || 'var(--gold)';
+    }
+  } catch(e){
+    console.error('[ws-hub] Licensing lookup failed, using static fallback:', e);
+  }
+
   document.getElementById('hub-stats').innerHTML = [
     {lbl:'Network Dealers',val:h.dealers,color:'var(--gold)'},
     {lbl:'Active Deals',val:h.activeDeals,color:'var(--blue)'},
     {lbl:'Porters Deployed',val:h.porters,color:'var(--green)'},
     {lbl:'30-Day Volume',val:h.deals30,color:'var(--cyan)'},
     {lbl:'Inventory Access',val:h.units,color:'var(--dim)'},
-    {lbl:'Hub Status',val:h.status,color:'var(--gold)'},
+    {lbl:'Hub Status',val:statusVal,color:statusColor},
   ].map(s=>`<div style="background:var(--bg);border:1px solid #2a2a2e;border-radius:8px;padding:10px 12px">
     <div style="font-size:13px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">${s.lbl}</div>
     <div style="font-size:15px;font-weight:900;color:${s.color}">${s.val}</div>
