@@ -52,8 +52,11 @@ module.exports = async function handler(req, res) {
     appointmentTime,
     customerPhone,
     customerEmail,
-    type
+    type,
+    appointmentType
   } = req.body;
+
+  const isVirtual = appointmentType === 'virtual_test_drive';
 
   console.log('[send-appointment-notifications] Incoming request:', {
     appointmentId, customerName, customerEmail, type
@@ -71,7 +74,9 @@ module.exports = async function handler(req, res) {
       const client = twilio(accountSid, authToken);
       const normalizedPhone = customerPhone.replace(/\D/g, '');
       const e164Phone = '+1' + normalizedPhone.slice(-10);
-      const customerSMS = `Hi ${customerName}, your EVL appointment is confirmed for ${appointmentDate} at ${appointmentTime}. Vehicle: ${vehicleInfo}. Our team will be in touch. -EVL`;
+      const customerSMS = isVirtual
+        ? `Hi ${customerName}, your EVL Virtual Test Drive is confirmed for ${appointmentDate} at ${appointmentTime}. Vehicle: ${vehicleInfo}. Your EVL consultant will video call you at that time — no need to drive anywhere. -EVL`
+        : `Hi ${customerName}, your EVL appointment is confirmed for ${appointmentDate} at ${appointmentTime}. Vehicle: ${vehicleInfo}. Our team will be in touch. -EVL`;
       const customerMsg = await client.messages.create({
         body: customerSMS,
         from: twilioPhoneNumber,
@@ -93,9 +98,11 @@ module.exports = async function handler(req, res) {
       const html = `
         <h2 style="color:#2B84FE;">Your Appointment Is Confirmed</h2>
         <p>Hi ${customerName || 'there'},</p>
-        <p>Your EVL appointment is confirmed for <strong>${appointmentDate} at ${appointmentTime}</strong>.</p>
+        <p>Your EVL ${isVirtual ? 'Virtual Test Drive' : 'appointment'} is confirmed for <strong>${appointmentDate} at ${appointmentTime}</strong>.</p>
         <p>Vehicle: ${vehicleInfo || ''}</p>
-        <p>Our team will be in touch. Questions? Call or Text: (469) 404-3192</p>
+        ${isVirtual
+          ? '<p>🎥 <strong>This is a Virtual Test Drive.</strong> Your EVL consultant will video call you at the scheduled time — no need to drive anywhere. You\'ll get a text shortly before your appointment with their contact info to start the call.</p>'
+          : '<p>Our team will be in touch. Questions? Call or Text: (469) 404-3192</p>'}
         <p>&mdash; Express Vehicle Locators</p>
       ` + complianceFooter(customerEmail);
       await sendResendEmail({
@@ -116,7 +123,8 @@ module.exports = async function handler(req, res) {
   // ── EMAIL TO ADMIN (TIM) via RESEND ──
   try {
     const adminHtml = `
-      <h2>New Appointment Booked</h2>
+      <h2>${isVirtual ? '🎥 New Virtual Test Drive Booked' : 'New Appointment Booked'}</h2>
+      ${isVirtual ? '<p style="background:#e8f2ff;border-left:4px solid #2B84FE;padding:10px;"><strong>This is a video call appointment, not an in-person visit.</strong> Start a FaceTime, Zoom, or Google Meet call with the customer at the scheduled time.</p>' : ''}
       <p><strong>Customer:</strong> ${customerName || ''}</p>
       <p><strong>Phone:</strong> ${customerPhone || ''}</p>
       <p><strong>Email:</strong> ${customerEmail || ''}</p>
@@ -125,7 +133,7 @@ module.exports = async function handler(req, res) {
     `;
     await sendResendEmail({
       to: 'togradyevl@gmail.com',
-      subject: 'New Appointment Booked - ' + (customerName || 'Customer'),
+      subject: (isVirtual ? '🎥 Virtual Test Drive Booked - ' : 'New Appointment Booked - ') + (customerName || 'Customer'),
       html: adminHtml,
       fromLabel: 'EVL Admin Alerts'
     });
