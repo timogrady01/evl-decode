@@ -576,6 +576,7 @@
       <button class="tab-btn" data-tab="checkin">✅ Check-In</button>
       <button class="tab-btn" data-tab="dealstage">📊 Deal Stage</button>
       <button class="tab-btn" data-tab="shipcalc">🚚 Shipping Calc</button>
+      <button class="tab-btn" data-tab="templates">✉️ Templates</button>
     </div>
 
     <div id="leads" class="tab-content active">
@@ -809,13 +810,46 @@
         </div>
       </div>
     </div>
+
+    <div id="templates" class="tab-content">
+      <div class="deal-card" style="margin-bottom:24px;">
+        <h3 id="templateFormTitle">+ New Template</h3>
+        <input type="hidden" id="templateEditId" value="">
+        <div style="margin-bottom:14px;">
+          <label style="display:block;color:#a0b0c0;font-size:16px;margin-bottom:6px;">Template Name</label>
+          <input type="text" id="templateName" placeholder="e.g. Please Call Me" style="width:100%;padding:12px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:18px;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;color:#a0b0c0;font-size:16px;margin-bottom:6px;">Category</label>
+          <input type="text" id="templateCategory" placeholder="e.g. Purchase Inquiry Follow up" style="width:100%;padding:12px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:18px;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;color:#a0b0c0;font-size:16px;margin-bottom:6px;">Subject Line</label>
+          <input type="text" id="templateSubject" placeholder="e.g. Tim at Toyota of McKinney - Please Call" style="width:100%;padding:12px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:18px;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;color:#a0b0c0;font-size:16px;margin-bottom:6px;">Body (plain text or simple HTML)</label>
+          <textarea id="templateBody" rows="8" placeholder="Hi {{customerName}},..." style="width:100%;padding:12px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:16px;resize:vertical;font-family:monospace;"></textarea>
+          <div style="color:#7a8aa0;font-size:13px;margin-top:6px;">Use {{customerName}} as a placeholder — it gets swapped for the real name when a template is used.</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button id="saveTemplateBtn" style="background:#2B84FE;color:#fff;font-weight:700;padding:12px 24px;border:none;border-radius:8px;cursor:pointer;font-size:16px;">Save Template</button>
+          <button id="cancelTemplateEditBtn" style="display:none;background:transparent;color:#a0b0c0;font-weight:700;padding:12px 24px;border:1px solid #2a3f5f;border-radius:8px;cursor:pointer;font-size:16px;">Cancel Edit</button>
+        </div>
+        <div id="templateStatusMsg" class="status-message"></div>
+      </div>
+
+      <div id="templatesList"></div>
+      <div id="templatesEmpty" class="no-data">No templates yet — create your first one above</div>
+    </div>
   </div>
   </div>
+
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-    import { getFirestore, collection, query, orderBy, onSnapshot, doc, addDoc, updateDoc, where, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getFirestore, collection, query, orderBy, onSnapshot, doc, addDoc, updateDoc, deleteDoc, where, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyDvV5u1dIvvPvKwLXQZ4MfH-F5bL_yL0hA",
@@ -1346,6 +1380,118 @@
 
       document.getElementById('shipCalcResult').style.display = 'block';
       document.getElementById('shipCalcEmpty').style.display = 'none';
+    });
+
+    // ── EMAIL TEMPLATE LIBRARY ──
+    const templatesQuery = query(collection(db, 'evl_email_templates'), orderBy('updatedAt', 'desc'));
+    onSnapshot(templatesQuery, (snapshot) => {
+      const container = document.getElementById('templatesList');
+      const empty = document.getElementById('templatesEmpty');
+      container.innerHTML = '';
+      if (snapshot.empty) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const card = document.createElement('div');
+        card.className = 'deal-card';
+        card.style.marginBottom = '14px';
+        card.innerHTML = `
+          <h3>${data.name || 'Untitled'} ${data.category ? '<span style="font-size:13px;color:#a0b0c0;font-weight:400;">— ' + data.category + '</span>' : ''}</h3>
+          <div class="deal-row"><span class="label">Subject:</span><span class="value">${data.subject || '—'}</span></div>
+          <div style="margin-top:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:6px;font-size:14px;color:#c0ccdc;white-space:pre-wrap;max-height:120px;overflow:auto;">${(data.body || '').substring(0, 400)}</div>
+          <div style="display:flex;gap:10px;margin-top:12px;">
+            <button class="template-edit-btn" data-id="${docSnap.id}" style="background:transparent;border:1px solid #4a9eff;color:#4a9eff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:14px;">Edit</button>
+            <button class="template-delete-btn" data-id="${docSnap.id}" style="background:transparent;border:1px solid #e53e3e;color:#e53e3e;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:14px;">Delete</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    });
+
+    document.getElementById('saveTemplateBtn').addEventListener('click', async () => {
+      const editId = document.getElementById('templateEditId').value;
+      const name = document.getElementById('templateName').value.trim();
+      const category = document.getElementById('templateCategory').value.trim();
+      const subject = document.getElementById('templateSubject').value.trim();
+      const body = document.getElementById('templateBody').value;
+      const statusMsg = document.getElementById('templateStatusMsg');
+      const btn = document.getElementById('saveTemplateBtn');
+
+      if (!name || !body) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Template name and body are required.';
+        return;
+      }
+
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Saving...';
+
+      try {
+        const payload = { name, category, subject, body, updatedAt: serverTimestamp() };
+        if (editId) {
+          await updateDoc(doc(db, 'evl_email_templates', editId), payload);
+        } else {
+          payload.createdAt = serverTimestamp();
+          await addDoc(collection(db, 'evl_email_templates'), payload);
+        }
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '✓ Template saved.';
+        resetTemplateForm();
+        setTimeout(() => { statusMsg.className = 'status-message'; statusMsg.textContent = ''; }, 3000);
+      } catch (err) {
+        console.error('[crm] Failed to save template:', err);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Failed to save: ' + err.message;
+      }
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+
+    function resetTemplateForm() {
+      document.getElementById('templateEditId').value = '';
+      document.getElementById('templateName').value = '';
+      document.getElementById('templateCategory').value = '';
+      document.getElementById('templateSubject').value = '';
+      document.getElementById('templateBody').value = '';
+      document.getElementById('templateFormTitle').textContent = '+ New Template';
+      document.getElementById('cancelTemplateEditBtn').style.display = 'none';
+    }
+
+    document.getElementById('cancelTemplateEditBtn').addEventListener('click', resetTemplateForm);
+
+    document.getElementById('templatesList').addEventListener('click', async (e) => {
+      const editBtn = e.target.closest('.template-edit-btn');
+      const deleteBtn = e.target.closest('.template-delete-btn');
+
+      if (editBtn) {
+        const id = editBtn.dataset.id;
+        const snap = await getDocs(query(collection(db, 'evl_email_templates')));
+        const docSnap = snap.docs.find(d => d.id === id);
+        if (!docSnap) return;
+        const data = docSnap.data();
+        document.getElementById('templateEditId').value = id;
+        document.getElementById('templateName').value = data.name || '';
+        document.getElementById('templateCategory').value = data.category || '';
+        document.getElementById('templateSubject').value = data.subject || '';
+        document.getElementById('templateBody').value = data.body || '';
+        document.getElementById('templateFormTitle').textContent = 'Editing: ' + (data.name || '');
+        document.getElementById('cancelTemplateEditBtn').style.display = 'inline-block';
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.getElementById('templates').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (deleteBtn) {
+        if (!confirm('Delete this template? This cannot be undone.')) return;
+        try {
+          await deleteDoc(doc(db, 'evl_email_templates', deleteBtn.dataset.id));
+        } catch (err) {
+          console.error('[crm] Failed to delete template:', err);
+          alert('Failed to delete: ' + err.message);
+        }
+      }
     });
   </script>
 <script src="/footer.js"></script>

@@ -150,5 +150,11 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
+    // evl_email_templates — reusable email template library, managed from the
+    // CRM Templates tab. Admin only, same auth pattern as evl_notes above.
+    match /evl_email_templates/{docId} {
+      allow read, write: if isAdmin();
+    }
+
   }
 }
