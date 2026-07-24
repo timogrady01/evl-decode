@@ -1,27 +1,8 @@
 const twilio = require('twilio');
 const https = require('https');
 const { logCommunication } = require('../lib/commsLog');
+const { isEmailSuppressed } = require('../lib/emailCompliance');
 
-// Check if this email has unsubscribed - checks evl_email_suppression in Firestore
-function isEmailSuppressed(email) {
-  return new Promise((resolve) => {
-    if (!email) return resolve(false);
-    const docId = email.trim().toLowerCase().replace(/\//g, '_SLASH_');
-    const projectId = 'evl-acquisition-radar';
-    const apiKey = 'AIzaSyCvvH8bYkoHM933iwODK4AlT2T4HVAJzho';
-    const path = `/v1/projects/${projectId}/databases/(default)/documents/evl_email_suppression/${encodeURIComponent(docId)}?key=${apiKey}`;
-    const options = { hostname: 'firestore.googleapis.com', path, method: 'GET' };
-    const request = https.request(options, (response) => {
-      let data = '';
-      response.on('data', chunk => data += chunk);
-      response.on('end', () => {
-        resolve(response.statusCode === 200);
-      });
-    });
-    request.on('error', () => resolve(false));
-    request.end();
-  });
-}
 
 // ── BUCKET → STRIPE PAYMENT LINK MAP ──
 const PAYMENT_LINKS = {
