@@ -125,6 +125,34 @@
     .temp-select.temp-cool { background: rgba(74,158,255,0.15); color: #4a9eff; border-color: rgba(74,158,255,0.4); }
     .temp-select.temp-none { background: rgba(255,255,255,0.06); color: #7a8aa0; }
 
+    .stage-progress-wrap {
+      margin: 20px 0 24px;
+    }
+    .stage-progress-track {
+      position: relative;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+    .stage-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4a9eff, #00C853);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .stage-progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #7a8aa0;
+    }
+    .stage-progress-labels span.reached {
+      color: #4a9eff;
+      font-weight: 700;
+    }
+
     .deals-section {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -690,6 +718,21 @@
             <span class="label">Vehicle:</span>
             <span class="value" id="dsVehicle">—</span>
           </div>
+
+          <div class="stage-progress-wrap">
+            <div class="stage-progress-track">
+              <div class="stage-progress-fill" id="stageProgressFill"></div>
+            </div>
+            <div class="stage-progress-labels" id="stageProgressLabels">
+              <span data-stage="submitted">Submitted</span>
+              <span data-stage="review">Review</span>
+              <span data-stage="matchFound">Match</span>
+              <span data-stage="offerReady">Offer</span>
+              <span data-stage="inProcess">Process</span>
+              <span data-stage="delivered">Delivered</span>
+            </div>
+          </div>
+
           <div class="detail-row">
             <span class="label">Current Stage:</span>
             <span class="value" id="dsCurrentStage">—</span>
@@ -1098,7 +1141,19 @@
       submitted: 'Submitted', review: 'In Review', matchFound: 'Match Found',
       offerReady: 'Offer Ready', inProcess: 'In Process', delivered: 'Delivered'
     };
+    const STAGE_ORDER = ['submitted', 'review', 'matchFound', 'offerReady', 'inProcess', 'delivered'];
     let dsFoundUid = null;
+
+    function updateStageProgress(stageKey) {
+      const idx = STAGE_ORDER.indexOf(stageKey);
+      const safeIdx = idx === -1 ? 0 : idx;
+      const pct = (safeIdx / (STAGE_ORDER.length - 1)) * 100;
+      document.getElementById('stageProgressFill').style.width = pct + '%';
+      document.querySelectorAll('#stageProgressLabels span').forEach(span => {
+        const spanIdx = STAGE_ORDER.indexOf(span.dataset.stage);
+        span.classList.toggle('reached', spanIdx <= safeIdx);
+      });
+    }
 
     document.getElementById('dealStageLookupBtn').addEventListener('click', async () => {
       const email = document.getElementById('dealStageEmailInput').value.trim().toLowerCase();
@@ -1133,6 +1188,7 @@
         document.getElementById('dsVehicle').textContent = data.vehicle || '—';
         document.getElementById('dsCurrentStage').textContent = STAGE_LABELS[data.dealStage] || 'Not set (defaults to In Review)';
         document.getElementById('dsNewStage').value = data.dealStage || 'review';
+        updateStageProgress(data.dealStage || 'review');
 
         document.getElementById('dealStageDetails').style.display = 'block';
         document.getElementById('dealStageEmpty').style.display = 'none';
@@ -1156,6 +1212,7 @@
           ['dealStageDates.' + newStage]: serverTimestamp()
         });
         document.getElementById('dsCurrentStage').textContent = STAGE_LABELS[newStage];
+        updateStageProgress(newStage);
         statusMsg.className = 'status-message success';
         statusMsg.textContent = '✅ Stage updated to "' + STAGE_LABELS[newStage] + '"';
       } catch (err) {
