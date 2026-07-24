@@ -112,6 +112,19 @@
       background: rgba(74, 158, 255, 0.05);
     }
 
+    .temp-select {
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid #2a3f5f;
+      cursor: pointer;
+    }
+    .temp-select.temp-hot { background: rgba(255,69,58,0.18); color: #ff6b5e; border-color: rgba(255,69,58,0.4); }
+    .temp-select.temp-warm { background: rgba(255,159,10,0.18); color: #ffb340; border-color: rgba(255,159,10,0.4); }
+    .temp-select.temp-cool { background: rgba(74,158,255,0.15); color: #4a9eff; border-color: rgba(74,158,255,0.4); }
+    .temp-select.temp-none { background: rgba(255,255,255,0.06); color: #7a8aa0; }
+
     .deals-section {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -545,6 +558,7 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Status</th>
+            <th>Temp</th>
             <th>Date</th>
             <th>Actions</th>
           </tr>
@@ -815,7 +829,9 @@
         const data = doc.data();
         const row = document.createElement('tr');
         const safeName = (data.customerName || '').replace(/"/g, '&quot;');
-        row.innerHTML = `<td>${data.customerName || '—'}</td><td>${data.customerPhone || '—'}</td><td>${data.customerEmail || '—'}</td><td>${data.status || 'new'}</td><td>${data.dateReceived ? new Date(data.dateReceived.toDate()).toLocaleDateString() : '—'}</td><td><button class="lead-note-btn" data-name="${safeName}" style="background:transparent;border:1px solid #4a9eff;color:#4a9eff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:14px;">+ Note</button></td>`;
+        const temp = data.temperature || '';
+        const tempClass = temp === 'hot' ? 'temp-hot' : temp === 'warm' ? 'temp-warm' : temp === 'cool' ? 'temp-cool' : 'temp-none';
+        row.innerHTML = `<td>${data.customerName || '—'}</td><td>${data.customerPhone || '—'}</td><td>${data.customerEmail || '—'}</td><td>${data.status || 'new'}</td><td><select class="temp-select ${tempClass}" data-lead-id="${doc.id}"><option value="" ${temp === '' ? 'selected' : ''}>—</option><option value="hot" ${temp === 'hot' ? 'selected' : ''}>🔥 Hot</option><option value="warm" ${temp === 'warm' ? 'selected' : ''}>🌤️ Warm</option><option value="cool" ${temp === 'cool' ? 'selected' : ''}>❄️ Cool</option></select></td><td>${data.dateReceived ? new Date(data.dateReceived.toDate()).toLocaleDateString() : '—'}</td><td><button class="lead-note-btn" data-name="${safeName}" style="background:transparent;border:1px solid #4a9eff;color:#4a9eff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:14px;">+ Note</button></td>`;
         tbody.appendChild(row);
       });
     });
@@ -929,6 +945,21 @@
       document.querySelector('.tab-btn[data-tab="notes"]').classList.add('active');
       document.getElementById('notes').classList.add('active');
       document.getElementById('noteText').focus();
+    });
+
+    // ── TEMPERATURE DROPDOWN ON LEAD ROWS: saves hot/warm/cool directly to the lead ──
+    document.getElementById('leadsTableBody').addEventListener('change', async (e) => {
+      const select = e.target.closest('.temp-select');
+      if (!select) return;
+      const leadId = select.dataset.leadId;
+      const newTemp = select.value;
+      select.className = 'temp-select ' + (newTemp === 'hot' ? 'temp-hot' : newTemp === 'warm' ? 'temp-warm' : newTemp === 'cool' ? 'temp-cool' : 'temp-none');
+      try {
+        await updateDoc(doc(db, 'evl_leads', leadId), { temperature: newTemp });
+      } catch (err) {
+        console.error('[crm] Failed to update lead temperature:', err);
+        alert('Failed to save temperature: ' + err.message);
+      }
     });
 
     let allAppointments = [];
