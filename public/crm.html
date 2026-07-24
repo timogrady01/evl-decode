@@ -546,6 +546,7 @@
             <th>Email</th>
             <th>Status</th>
             <th>Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="leadsTableBody"></tbody>
@@ -575,6 +576,19 @@
     </div>
 
     <div id="notes" class="tab-content">
+      <div class="deal-card" style="margin-bottom:24px;">
+        <h3>+ Add Note</h3>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;color:#a0b0c0;font-size:16px;margin-bottom:6px;">Related To (customer / lead name)</label>
+          <input type="text" id="noteRelatedTo" placeholder="e.g. John Smith" style="width:100%;padding:12px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:18px;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;color:#a0b0c0;font-size:16px;margin-bottom:6px;">Note</label>
+          <textarea id="noteText" rows="3" placeholder="What happened, what's next..." style="width:100%;padding:12px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:18px;resize:vertical;"></textarea>
+        </div>
+        <button id="addNoteBtn" style="background:#2B84FE;color:#fff;font-weight:700;padding:12px 24px;border:none;border-radius:8px;cursor:pointer;font-size:16px;">Save Note</button>
+        <div id="noteStatusMsg" class="status-message"></div>
+      </div>
       <table class="leads-table">
         <thead>
           <tr>
@@ -730,7 +744,7 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-    import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, where, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getFirestore, collection, query, orderBy, onSnapshot, doc, addDoc, updateDoc, where, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyDvV5u1dIvvPvKwLXQZ4MfH-F5bL_yL0hA",
@@ -800,7 +814,8 @@
       snapshot.forEach(doc => {
         const data = doc.data();
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${data.customerName || '—'}</td><td>${data.customerPhone || '—'}</td><td>${data.customerEmail || '—'}</td><td>${data.status || 'new'}</td><td>${data.dateReceived ? new Date(data.dateReceived.toDate()).toLocaleDateString() : '—'}</td>`;
+        const safeName = (data.customerName || '').replace(/"/g, '&quot;');
+        row.innerHTML = `<td>${data.customerName || '—'}</td><td>${data.customerPhone || '—'}</td><td>${data.customerEmail || '—'}</td><td>${data.status || 'new'}</td><td>${data.dateReceived ? new Date(data.dateReceived.toDate()).toLocaleDateString() : '—'}</td><td><button class="lead-note-btn" data-name="${safeName}" style="background:transparent;border:1px solid #4a9eff;color:#4a9eff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:14px;">+ Note</button></td>`;
         tbody.appendChild(row);
       });
     });
@@ -852,12 +867,68 @@
         return;
       }
       empty.style.display = 'none';
-      snapshot.forEach(doc => {
-        const data = doc.data();
+      const notesList = [];
+      snapshot.forEach(doc => notesList.push({ id: doc.id, ...doc.data() }));
+      notesList.sort((a, b) => {
+        const at = a.createdAt ? a.createdAt.toMillis() : 0;
+        const bt = b.createdAt ? b.createdAt.toMillis() : 0;
+        return bt - at;
+      });
+      notesList.forEach(data => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleDateString() : '—'}</td><td>${data.relatedTo || '—'}</td><td>${data.noteText || '—'}</td>`;
+        row.innerHTML = `<td>${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleString() : '—'}</td><td>${data.relatedTo || '—'}</td><td>${data.noteText || '—'}</td>`;
         tbody.appendChild(row);
       });
+    });
+
+    // ── ADD NOTE ──
+    document.getElementById('addNoteBtn').addEventListener('click', async () => {
+      const relatedTo = document.getElementById('noteRelatedTo').value.trim();
+      const noteText = document.getElementById('noteText').value.trim();
+      const statusMsg = document.getElementById('noteStatusMsg');
+      const btn = document.getElementById('addNoteBtn');
+
+      if (!noteText) {
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Enter a note before saving.';
+        return;
+      }
+
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Saving...';
+
+      try {
+        await addDoc(collection(db, 'evl_notes'), {
+          relatedTo: relatedTo || 'General',
+          noteText: noteText,
+          createdBy: auth.currentUser ? auth.currentUser.email : 'unknown',
+          createdAt: serverTimestamp()
+        });
+        document.getElementById('noteRelatedTo').value = '';
+        document.getElementById('noteText').value = '';
+        statusMsg.className = 'status-message success';
+        statusMsg.textContent = '✓ Note saved.';
+        setTimeout(() => { statusMsg.className = 'status-message'; statusMsg.textContent = ''; }, 3000);
+      } catch (err) {
+        console.error('[crm] Failed to save note:', err);
+        statusMsg.className = 'status-message error';
+        statusMsg.textContent = 'Failed to save: ' + err.message;
+      }
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+
+    // ── +NOTE BUTTON ON LEAD ROWS: jumps to Notes tab, pre-fills Related To ──
+    document.getElementById('leadsTableBody').addEventListener('click', (e) => {
+      const btn = e.target.closest('.lead-note-btn');
+      if (!btn) return;
+      document.getElementById('noteRelatedTo').value = btn.dataset.name || '';
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector('.tab-btn[data-tab="notes"]').classList.add('active');
+      document.getElementById('notes').classList.add('active');
+      document.getElementById('noteText').focus();
     });
 
     let allAppointments = [];

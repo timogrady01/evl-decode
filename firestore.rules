@@ -143,5 +143,12 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
+    // evl_notes — internal CRM notes, admin only (crm.html requires Firebase Auth
+    // login via the crmLoginGate before any Firestore call runs, so request.auth.uid
+    // will match isAdmin() once logged in).
+    match /evl_notes/{docId} {
+      allow read, write: if isAdmin();
+    }
+
   }
 }
