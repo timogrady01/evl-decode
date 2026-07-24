@@ -133,5 +133,15 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // evl_email_suppression — CAN-SPAM unsubscribe list. Written by unsubscribe.html
+    // (guest, no login) and read by lib/emailCompliance.js before every customer/dealer
+    // email via a raw REST call (also unauthenticated). Doc ID is the email address,
+    // so read/create must both be open the same way the other guest-facing
+    // collections above are.
+    match /evl_email_suppression/{docId} {
+      allow read, create: if true;
+      allow update, delete: if isAdmin();
+    }
+
   }
 }
