@@ -738,6 +738,20 @@
             <span class="value" id="dsCurrentStage">—</span>
           </div>
 
+          <div class="voi-section" style="margin-top:24px;">
+            <h3 style="font-size:16px;color:#4a9eff;margin-bottom:12px;">Vehicles of Interest</h3>
+            <div id="voiList"></div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+              <input type="text" id="voiDescInput" placeholder="e.g. 2026 Toyota RAV4 XSE AWD" style="flex:2;min-width:180px;padding:10px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:15px;">
+              <select id="voiAvailInput" style="flex:1;min-width:130px;padding:10px;background:rgba(255,255,255,0.08);border:1px solid #2a3f5f;border-radius:6px;color:#fff;font-size:15px;">
+                <option value="in_stock">In Stock</option>
+                <option value="unavailable">Unavailable</option>
+                <option value="not_on_lot">Not on Lot</option>
+              </select>
+              <button id="voiAddBtn" style="background:#2B84FE;color:#fff;font-weight:700;padding:10px 18px;border:none;border-radius:8px;cursor:pointer;font-size:14px;">+ Add</button>
+            </div>
+          </div>
+
           <div style="margin-top:20px;">
             <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Move To Stage:</label>
             <select id="dsNewStage" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:14px;">
@@ -1155,6 +1169,76 @@
       });
     }
 
+    // ── VEHICLES OF INTEREST (ranked list, tied to the looked-up customer) ──
+    let dsVehiclesOfInterest = [];
+
+    function renderVOIList() {
+      const container = document.getElementById('voiList');
+      if (!dsVehiclesOfInterest.length) {
+        container.innerHTML = '<div class="no-data" style="padding:16px;">No vehicles of interest yet.</div>';
+        return;
+      }
+      // Top choice always sorts first
+      const sorted = dsVehiclesOfInterest.map((v, i) => ({ ...v, _idx: i })).sort((a, b) => (b.topChoice ? 1 : 0) - (a.topChoice ? 1 : 0));
+      container.innerHTML = sorted.map(v => {
+        const availClass = v.availability === 'in_stock' ? 'temp-cool' : v.availability === 'unavailable' ? 'temp-hot' : 'temp-warm';
+        const availLabel = v.availability === 'in_stock' ? 'In Stock' : v.availability === 'unavailable' ? 'Unavailable' : 'Not on Lot';
+        return `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,0.05);border:1px solid #2a3f5f;border-radius:8px;padding:12px 14px;margin-bottom:8px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;">
+            ${v.topChoice ? '<span style="background:rgba(255,215,0,0.15);color:#ffd700;font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;margin-right:8px;">TOP CHOICE</span>' : ''}
+            <span style="font-weight:600;">${v.description}</span>
+            <span class="temp-select ${availClass}" style="margin-left:10px;padding:2px 8px;">${availLabel}</span>
+          </div>
+          <div style="display:flex;gap:6px;">
+            ${!v.topChoice ? `<button data-idx="${v._idx}" class="voi-top-btn" style="background:transparent;border:1px solid #ffd700;color:#ffd700;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Set Top</button>` : ''}
+            <button data-idx="${v._idx}" class="voi-remove-btn" style="background:transparent;border:1px solid #e53e3e;color:#e53e3e;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Remove</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    async function saveVOI() {
+      if (!dsFoundUid) return;
+      try {
+        await updateDoc(doc(db, 'evl_customers', dsFoundUid), { vehiclesOfInterest: dsVehiclesOfInterest });
+      } catch (err) {
+        console.error('[crm] Failed to save vehicles of interest:', err);
+        alert('Failed to save: ' + err.message);
+      }
+    }
+
+    document.getElementById('voiAddBtn').addEventListener('click', () => {
+      if (!dsFoundUid) { alert('Look up a customer first.'); return; }
+      const desc = document.getElementById('voiDescInput').value.trim();
+      if (!desc) return;
+      const availability = document.getElementById('voiAvailInput').value;
+      dsVehiclesOfInterest.push({
+        description: desc,
+        availability,
+        topChoice: dsVehiclesOfInterest.length === 0,
+        addedAt: new Date().toISOString()
+      });
+      document.getElementById('voiDescInput').value = '';
+      renderVOIList();
+      saveVOI();
+    });
+
+    document.getElementById('voiList').addEventListener('click', (e) => {
+      const topBtn = e.target.closest('.voi-top-btn');
+      const removeBtn = e.target.closest('.voi-remove-btn');
+      if (topBtn) {
+        const idx = parseInt(topBtn.dataset.idx, 10);
+        dsVehiclesOfInterest.forEach((v, i) => v.topChoice = (i === idx));
+        renderVOIList();
+        saveVOI();
+      } else if (removeBtn) {
+        const idx = parseInt(removeBtn.dataset.idx, 10);
+        dsVehiclesOfInterest.splice(idx, 1);
+        renderVOIList();
+        saveVOI();
+      }
+    });
+
     document.getElementById('dealStageLookupBtn').addEventListener('click', async () => {
       const email = document.getElementById('dealStageEmailInput').value.trim().toLowerCase();
       const statusMsg = document.getElementById('dsStatusMsg');
@@ -1189,6 +1273,9 @@
         document.getElementById('dsCurrentStage').textContent = STAGE_LABELS[data.dealStage] || 'Not set (defaults to In Review)';
         document.getElementById('dsNewStage').value = data.dealStage || 'review';
         updateStageProgress(data.dealStage || 'review');
+
+        dsVehiclesOfInterest = data.vehiclesOfInterest || [];
+        renderVOIList();
 
         document.getElementById('dealStageDetails').style.display = 'block';
         document.getElementById('dealStageEmpty').style.display = 'none';
